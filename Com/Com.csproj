@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ADEE9DFA-D58D-48C6-B4E6-E98ADE889EB6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Com</RootNamespace>
+    <AssemblyName>Com</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Com.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Com.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Com.WinForm\ControlSubstitution.cs" />
+    <Compile Include="Com.WinForm\EventKey.cs" />
+    <Compile Include="Com.WinForm\FormBorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Com.WinForm\FormBorder.Designer.cs">
+      <DependentUpon>FormBorder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Com.WinForm\FormManager.cs" />
+    <Compile Include="Com.WinForm\FormState.cs" />
+    <Compile Include="Com.WinForm\FormStyle.cs" />
+    <Compile Include="Com.WinForm\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Com.WinForm\SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Com.WinForm\FormTitleBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Com.WinForm\FormTitleBar.Designer.cs">
+      <DependentUpon>FormTitleBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Com.WinForm\UpdateLayoutBehavior.cs" />
+    <Compile Include="Com.WinForm\UpdateLayoutEventType.cs" />
+    <Compile Include="Com\BitSet.cs" />
+    <Compile Include="Com\ColorManipulation.cs" />
+    <Compile Include="WindowsAPI\Gdi32.cs" />
+    <Compile Include="Com.WinForm\RecommendColors.cs" />
+    <Compile Include="Com.WinForm\Theme.cs" />
+    <Compile Include="WindowsAPI\User32.cs" />
+    <Compile Include="Com\Animation.cs" />
+    <Compile Include="Com\BitOperation.cs" />
+    <Compile Include="Com\ColorX.cs" />
+    <Compile Include="Com\Complex.cs" />
+    <Compile Include="Com\Geometry.cs" />
+    <Compile Include="Com\DateTimeX.cs" />
+    <Compile Include="Com\IO.cs" />
+    <Compile Include="Com\Matrix2D.cs" />
+    <Compile Include="Com\Painting2D.cs" />
+    <Compile Include="Com\Painting3D.cs" />
+    <Compile Include="Com\PointD.cs" />
+    <Compile Include="Com\PointD3D.cs" />
+    <Compile Include="Com\PointD4D.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Com\Statistics.cs" />
+    <Compile Include="Com\Text.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Com.WinForm\FormBorder.resx">
+      <DependentUpon>FormBorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Com.WinForm\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Com.WinForm\FormTitleBar.resx">
+      <DependentUpon>FormTitleBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_DarkImage_EnterFullScreen_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_DarkImage_Exit_MouseOver_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_DarkImage_Exit_Normal_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_DarkImage_ExitFullScreen_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_DarkImage_Maximize_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_DarkImage_Minimize_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_DarkImage_Return_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_LightImage_EnterFullScreen_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_LightImage_Exit_MouseOver_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_LightImage_Exit_Normal_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_LightImage_ExitFullScreen_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_LightImage_Maximize_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_LightImage_Minimize_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ControlBox_LightImage_Return_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuItem_Exit_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuItem_Maximize_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuItem_Minimize_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuItem_Return_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LicenseInfo\GPLv3.txt" />
+    <Content Include="LicenseInfo\License.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
