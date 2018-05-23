@@ -5,7 +5,7 @@ Com是一个DLL，用于支持向量与矩阵运算、浮点精度的非线性�
 - Com.BitSet 管理位（Bit）的集合（至多68719472640位），提供基本的位运算功能
 - Com.ColorX 浮点精度的色彩解决方案，支持RGB、HSV、HSL、CMYK、LAB等色彩空间
 - Com.Complex 直角坐标形式的二元复数
-- Com.DateTimeX 大型日期时间（范围BC25252756133808173~AD25252756133808174）
+- Com.DateTimeX 大型日期时间（范围B.C.25252756133808173~A.D.25252756133808174）
 - Com.PointD 二维欧式空间中表示的坐标（向量）
 - Com.PointD3D 三维欧式空间中表示的坐标（向量）
 - Com.PointD4D 四维欧式空间中表示的坐标（向量）
@@ -26,4 +26,4 @@ Com是一个DLL，用于支持向量与矩阵运算、浮点精度的非线性�
 - Com.WinForm.ControlSubstitution 提供控件的替代使用方案
 
 ### License
-[GPLv3](dnSpy/dnSpy/LicenseInfo/GPLv3.txt)
+[GPLv3](Com/Com/LicenseInfo/GPLv3.txt)
