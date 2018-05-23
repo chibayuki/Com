@@ -26,4 +26,4 @@ Com是一个DLL，用于支持向量与矩阵运算、浮点精度的非线性�
 - Com.WinForm.ControlSubstitution 提供控件的替代使用方案
 
 ### License
-[GPLv3](Com/Com/LicenseInfo/GPLv3.txt)
+[GPLv3](Com/LicenseInfo/GPLv3.txt)
