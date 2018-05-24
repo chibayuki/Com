@@ -1,6 +1,6 @@
 ﻿namespace Com.WinForm
 {
-    partial class FormTitleBar
+    partial class CaptionBar
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTitleBar));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CaptionBar));
             this.ImageList_ControlBox_LightImage = new System.Windows.Forms.ImageList(this.components);
             this.ContextMenuStrip_Main = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_Return = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,7 +38,7 @@
             this.ToolStripSeparator_Main = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.ImageList_ControlBox_DarkImage = new System.Windows.Forms.ImageList(this.components);
-            this.Panel_TitleBar = new System.Windows.Forms.Panel();
+            this.Panel_CaptionBar = new System.Windows.Forms.Panel();
             this.Panel_FormIcon = new System.Windows.Forms.Panel();
             this.PictureBox_FormIcon = new System.Windows.Forms.PictureBox();
             this.Panel_ControlBox = new System.Windows.Forms.Panel();
@@ -49,7 +49,7 @@
             this.ToolTip_ControlBox = new System.Windows.Forms.ToolTip(this.components);
             this.BackgroundWorker_UpdateLayoutDelay = new System.ComponentModel.BackgroundWorker();
             this.ContextMenuStrip_Main.SuspendLayout();
-            this.Panel_TitleBar.SuspendLayout();
+            this.Panel_CaptionBar.SuspendLayout();
             this.Panel_FormIcon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_FormIcon)).BeginInit();
             this.Panel_ControlBox.SuspendLayout();
@@ -149,21 +149,21 @@
             this.ImageList_ControlBox_DarkImage.Images.SetKeyName(5, "ControlBox_DarkImage_EnterFullScreen_16.png");
             this.ImageList_ControlBox_DarkImage.Images.SetKeyName(6, "ControlBox_DarkImage_ExitFullScreen_16.png");
             // 
-            // Panel_TitleBar
+            // Panel_CaptionBar
             // 
-            this.Panel_TitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Panel_TitleBar.ContextMenuStrip = this.ContextMenuStrip_Main;
-            this.Panel_TitleBar.Controls.Add(this.Panel_FormIcon);
-            this.Panel_TitleBar.Controls.Add(this.Panel_ControlBox);
-            this.Panel_TitleBar.Location = new System.Drawing.Point(0, 0);
-            this.Panel_TitleBar.Name = "Panel_TitleBar";
-            this.Panel_TitleBar.Size = new System.Drawing.Size(300, 32);
-            this.Panel_TitleBar.TabIndex = 0;
-            this.Panel_TitleBar.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_TitleBar_Paint);
-            this.Panel_TitleBar.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Panel_TitleBar_MouseDoubleClick);
-            this.Panel_TitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_TitleBar_MouseDown);
-            this.Panel_TitleBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_TitleBar_MouseMove);
-            this.Panel_TitleBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Panel_TitleBar_MouseUp);
+            this.Panel_CaptionBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Panel_CaptionBar.ContextMenuStrip = this.ContextMenuStrip_Main;
+            this.Panel_CaptionBar.Controls.Add(this.Panel_FormIcon);
+            this.Panel_CaptionBar.Controls.Add(this.Panel_ControlBox);
+            this.Panel_CaptionBar.Location = new System.Drawing.Point(0, 0);
+            this.Panel_CaptionBar.Name = "Panel_CaptionBar";
+            this.Panel_CaptionBar.Size = new System.Drawing.Size(300, 32);
+            this.Panel_CaptionBar.TabIndex = 0;
+            this.Panel_CaptionBar.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_CaptionBar_Paint);
+            this.Panel_CaptionBar.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Panel_CaptionBar_MouseDoubleClick);
+            this.Panel_CaptionBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Panel_CaptionBar_MouseDown);
+            this.Panel_CaptionBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_CaptionBar_MouseMove);
+            this.Panel_CaptionBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Panel_CaptionBar_MouseUp);
             // 
             // Panel_FormIcon
             // 
@@ -287,22 +287,22 @@
             this.BackgroundWorker_UpdateLayoutDelay.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker_UpdateLayoutDelay_DoWork);
             this.BackgroundWorker_UpdateLayoutDelay.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted);
             // 
-            // FormTitleBar
+            // CaptionBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(300, 300);
-            this.Controls.Add(this.Panel_TitleBar);
+            this.Controls.Add(this.Panel_CaptionBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "FormTitleBar";
+            this.Name = "CaptionBar";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Load += new System.EventHandler(this.FormTitleBar_Load);
-            this.LocationChanged += new System.EventHandler(this.FormTitleBar_LocationChanged);
-            this.SizeChanged += new System.EventHandler(this.FormTitleBar_SizeChanged);
+            this.Load += new System.EventHandler(this.CaptionBar_Load);
+            this.LocationChanged += new System.EventHandler(this.CaptionBar_LocationChanged);
+            this.SizeChanged += new System.EventHandler(this.CaptionBar_SizeChanged);
             this.ContextMenuStrip_Main.ResumeLayout(false);
-            this.Panel_TitleBar.ResumeLayout(false);
+            this.Panel_CaptionBar.ResumeLayout(false);
             this.Panel_FormIcon.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_FormIcon)).EndInit();
             this.Panel_ControlBox.ResumeLayout(false);
@@ -323,7 +323,7 @@
         private System.Windows.Forms.ToolStripSeparator ToolStripSeparator_Main;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Exit;
         private System.Windows.Forms.ImageList ImageList_ControlBox_DarkImage;
-        private System.Windows.Forms.Panel Panel_TitleBar;
+        private System.Windows.Forms.Panel Panel_CaptionBar;
         private System.Windows.Forms.Panel Panel_ControlBox;
         private System.Windows.Forms.Panel Panel_FormIcon;
         private System.Windows.Forms.PictureBox PictureBox_FormIcon;

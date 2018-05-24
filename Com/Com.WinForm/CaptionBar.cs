@@ -1,8 +1,8 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Copyright © 2013-2018 chibayuki@foxmail.com
 
-Com.WinForm.FormTitleBar
-Version 18.5.24.0000
+Com.WinForm.CaptionBar
+Version 18.5.25.0000
 
 This file is part of Com
 
@@ -24,47 +24,47 @@ using System.Threading;
 
 namespace Com.WinForm
 {
-    internal partial class FormTitleBar : Form // 窗体标题栏。
+    internal partial class CaptionBar : Form // 标题栏。
     {
         #region 私有与内部成员
 
-        private FormManager Me; // 窗体管理器。
+        private FormManager Me; // 窗口管理器。
 
         //
 
-        private Point _CursorPositionOfMe = new Point(); // 鼠标指针在窗体的坐标。
+        private Point _CursorPositionOfMe = new Point(); // 鼠标指针在窗口的坐标。
 
-        private bool _MeWillMove = false; // 是否即将移动窗体。
-        private bool _MeIsMoving = false; // 是否正在移动窗体。
+        private bool _MeWillMove = false; // 是否即将移动窗口。
+        private bool _MeIsMoving = false; // 是否正在移动窗口。
 
         private const int _ExtendDist = 2; // 扩展距离，用于某些鼠标动作的判定。
 
         //
 
-        private Bitmap _FormCaptionBitmap; // 窗体标题栏绘图。
+        private Bitmap _CaptionBarBitmap; // 标题栏绘图。
 
-        private void _RefreshFormCaptionBitmap() // 更新窗体标题栏绘图。
+        private void _RefreshCaptionBarBitmap() // 更新标题栏绘图。
         {
-            if (_FormCaptionBitmap != null)
+            if (_CaptionBarBitmap != null)
             {
-                _FormCaptionBitmap.Dispose();
+                _CaptionBarBitmap.Dispose();
             }
 
-            _FormCaptionBitmap = new Bitmap(Math.Max(1, Panel_TitleBar.Width), Math.Max(1, Math.Min(Panel_TitleBar.Height, Panel_ControlBox.Height)));
+            _CaptionBarBitmap = new Bitmap(Math.Max(1, Panel_CaptionBar.Width), Math.Max(1, Math.Min(Panel_CaptionBar.Height, Panel_ControlBox.Height)));
 
-            using (Graphics CreateFormCaptionBmp = Graphics.FromImage(_FormCaptionBitmap))
+            using (Graphics CreateFormCaptionBmp = Graphics.FromImage(_CaptionBarBitmap))
             {
                 CreateFormCaptionBmp.SmoothingMode = SmoothingMode.AntiAlias;
 
                 //
 
-                CreateFormCaptionBmp.Clear(Me.RecommendColors.FormTitleBar.ToColor());
+                CreateFormCaptionBmp.Clear(Me.RecommendColors.CaptionBar.ToColor());
 
                 //
 
-                if (Me.FormTitleBarBackgroundImage != null)
+                if (Me.CaptionBarBackgroundImage != null)
                 {
-                    CreateFormCaptionBmp.DrawImage(Me.FormTitleBarBackgroundImage, new Point(0, 0));
+                    CreateFormCaptionBmp.DrawImage(Me.CaptionBarBackgroundImage, new Point(0, 0));
                 }
 
                 //
@@ -102,10 +102,10 @@ namespace Com.WinForm
                     {
                         PointF CaptionLocF = new PointF(CaptionArea.X + (CaptionArea.Width - CaptionSizeF.Width) / 2, CaptionArea.Y + (CaptionArea.Height - CaptionSizeF.Height) / 2);
 
-                        Color Cr_Caption_Fr = Me.RecommendColors.FormCaption.ToColor();
+                        Color Cr_Caption_Fr = Me.RecommendColors.Caption.ToColor();
                         Color Cr_Caption_Bk_Outer, Cr_Caption_Bk_Inner;
 
-                        if (!RecommendColors._BackColorFitLightText(Me.RecommendColors.FormCaption))
+                        if (!RecommendColors.BackColorFitLightText(Me.RecommendColors.Caption))
                         {
                             Cr_Caption_Bk_Outer = Color.FromArgb(32, Color.Black);
                             Cr_Caption_Bk_Inner = Color.FromArgb(64, Color.Black);
@@ -132,15 +132,15 @@ namespace Com.WinForm
             }
         }
 
-        private void _RepaintFormCaptionBitmap() // 更新并重绘窗体标题栏绘图。
+        private void _RepaintCaptionBarBitmap() // 更新并重绘标题栏绘图。
         {
             if (Me.FormState != FormState.FullScreen)
             {
-                _RefreshFormCaptionBitmap();
+                _RefreshCaptionBarBitmap();
 
-                if (_FormCaptionBitmap != null)
+                if (_CaptionBarBitmap != null)
                 {
-                    Panel_TitleBar.CreateGraphics().DrawImage(_FormCaptionBitmap, new Point(0, 0));
+                    Panel_CaptionBar.CreateGraphics().DrawImage(_CaptionBarBitmap, new Point(0, 0));
 
                     Panel_FormIcon.Refresh();
                     Panel_ControlBox.Refresh();
@@ -237,7 +237,7 @@ namespace Com.WinForm
 
         private void _UpdateControlBoxImage() // 更新控制按钮的图像。
         {
-            bool Flag = !RecommendColors._BackColorFitLightText(Me.RecommendColors.FormTitleBar);
+            bool Flag = !RecommendColors.BackColorFitLightText(Me.RecommendColors.CaptionBar);
 
             PictureBox_FullScreen.Image = (Flag ? (Me.FormState == FormState.FullScreen ? Properties.Resources.ControlBox_DarkImage_ExitFullScreen_16 : Properties.Resources.ControlBox_DarkImage_EnterFullScreen_16) : (Me.FormState == FormState.FullScreen ? Properties.Resources.ControlBox_LightImage_ExitFullScreen_16 : Properties.Resources.ControlBox_LightImage_EnterFullScreen_16));
             PictureBox_Minimize.Image = (Flag ? Properties.Resources.ControlBox_DarkImage_Minimize_16 : Properties.Resources.ControlBox_LightImage_Minimize_16);
@@ -247,9 +247,9 @@ namespace Com.WinForm
 
         //
 
-        private DateTime _LastUpdateLayout = new DateTime(); // 上次更新窗体标题栏布局的日期时间。
+        private DateTime _LastUpdateLayout = new DateTime(); // 上次更新标题栏布局的日期时间。
 
-        private void _TryToUpdateLayout() // 尝试更新窗体标题栏布局。
+        private void _TryToUpdateLayout() // 尝试更新标题栏布局。
         {
             if (!BackgroundWorker_UpdateLayoutDelay.IsBusy)
             {
@@ -261,9 +261,9 @@ namespace Com.WinForm
 
         #region 回调函数
 
-        private void FormTitleBar_Load(object sender, EventArgs e) // FormTitleBar 的 Load 事件的回调函数。
+        private void CaptionBar_Load(object sender, EventArgs e) // CaptionBar 的 Load 事件的回调函数。
         {
-            PictureBox_FormIcon.Image = Me.FormClient.Icon.ToBitmap();
+            PictureBox_FormIcon.Image = Me.Client.Icon.ToBitmap();
 
             //
 
@@ -275,19 +275,19 @@ namespace Com.WinForm
 
             //
 
-            FormTitleBar_SizeChanged(this, EventArgs.Empty);
+            CaptionBar_SizeChanged(this, EventArgs.Empty);
 
             //
 
             Panel_FormIcon.Visible = Panel_ControlBox.Visible = false;
         }
 
-        private void FormTitleBar_LocationChanged(object sender, EventArgs e) // FormTitleBar 的 LocationChanged 事件的回调函数。
+        private void CaptionBar_LocationChanged(object sender, EventArgs e) // CaptionBar 的 LocationChanged 事件的回调函数。
         {
-            _RepaintFormCaptionBitmap();
+            _RepaintCaptionBarBitmap();
         }
 
-        private void FormTitleBar_SizeChanged(object sender, EventArgs e) // FormTitleBar 的 SizeChanged 事件的回调函数。
+        private void CaptionBar_SizeChanged(object sender, EventArgs e) // CaptionBar 的 SizeChanged 事件的回调函数。
         {
             if (this.WindowState == FormWindowState.Maximized)
             {
@@ -296,43 +296,43 @@ namespace Com.WinForm
 
             //
 
-            Panel_TitleBar.Size = new Size(Me.Width, Me.FormTitleBarHeight);
+            Panel_CaptionBar.Size = new Size(Me.Width, Me.CaptionBarHeight);
 
             if (Me.FormState == FormState.FullScreen)
             {
-                this.Size = Panel_TitleBar.Size = Panel_ControlBox.Size;
+                this.Size = Panel_CaptionBar.Size = Panel_ControlBox.Size;
                 this.Location = new Point(Me.Right - Panel_ControlBox.Width, Me.Y);
             }
 
-            Panel_FormIcon.Size = new Size(Math.Min(Panel_TitleBar.Height, Panel_ControlBox.Height), Math.Min(Panel_TitleBar.Height, Panel_ControlBox.Height));
+            Panel_FormIcon.Size = new Size(Math.Min(Panel_CaptionBar.Height, Panel_ControlBox.Height), Math.Min(Panel_CaptionBar.Height, Panel_ControlBox.Height));
             PictureBox_FormIcon.Location = new Point((Panel_FormIcon.Width - PictureBox_FormIcon.Width) / 2, (Panel_FormIcon.Height - PictureBox_FormIcon.Height) / 2);
 
-            Panel_ControlBox.Location = new Point(Panel_TitleBar.Width - Panel_ControlBox.Width, Math.Min(0, (Panel_TitleBar.Height - Panel_ControlBox.Height) / 2));
+            Panel_ControlBox.Location = new Point(Panel_CaptionBar.Width - Panel_ControlBox.Width, Math.Min(0, (Panel_CaptionBar.Height - Panel_ControlBox.Height) / 2));
 
             //
 
-            _RepaintFormCaptionBitmap();
+            _RepaintCaptionBarBitmap();
         }
 
         //
 
-        private void Panel_TitleBar_Paint(object sender, PaintEventArgs e) // Panel_TitleBar 的 Paint 事件的回调函数。
+        private void Panel_CaptionBar_Paint(object sender, PaintEventArgs e) // Panel_CaptionBar 的 Paint 事件的回调函数。
         {
             if (Me.FormState != FormState.FullScreen)
             {
-                if (_FormCaptionBitmap == null)
+                if (_CaptionBarBitmap == null)
                 {
-                    _RefreshFormCaptionBitmap();
+                    _RefreshCaptionBarBitmap();
                 }
 
-                if (_FormCaptionBitmap != null)
+                if (_CaptionBarBitmap != null)
                 {
-                    e.Graphics.DrawImage(_FormCaptionBitmap, new Point(0, 0));
+                    e.Graphics.DrawImage(_CaptionBarBitmap, new Point(0, 0));
                 }
             }
         }
 
-        private void Panel_TitleBar_MouseDoubleClick(object sender, MouseEventArgs e) // Panel_TitleBar 的 MouseDoubleClick 事件的回调函数。
+        private void Panel_CaptionBar_MouseDoubleClick(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseDoubleClick 事件的回调函数。
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -350,53 +350,53 @@ namespace Com.WinForm
             }
         }
 
-        private void Panel_TitleBar_MouseDown(object sender, MouseEventArgs e) // Panel_TitleBar 的 MouseDown 事件的回调函数。
+        private void Panel_CaptionBar_MouseDown(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseDown 事件的回调函数。
         {
-            Me.FormClient.Focus();
+            Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
             {
                 if (Me.FormState != FormState.FullScreen)
                 {
-                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_TitleBar);
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_CaptionBar);
 
                     _MeWillMove = true;
 
-                    Cursor.Clip = FormManager._PrimaryScreenClient;
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
                 }
             }
         }
 
-        private void Panel_TitleBar_MouseUp(object sender, MouseEventArgs e) // Panel_TitleBar 的 MouseUp 事件的回调函数。
+        private void Panel_CaptionBar_MouseUp(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseUp 事件的回调函数。
         {
-            Me.FormClient.Focus();
+            Me.Client.Focus();
 
             if (_MeIsMoving == true && e.Button == MouseButtons.Left)
             {
                 Action ReleaseAndCheckY = () =>
                 {
-                    Me._Bounds_Current_Y = Math.Max(Me._Bounds_Current_Location.Y, FormManager._PrimaryScreenClient.Y);
+                    Me.Bounds_Current_Y = Math.Max(Me.Bounds_Current_Location.Y, FormManager.PrimaryScreenClient.Y);
 
-                    Me._UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.All);
 
                     if (Me.FormState != FormState.HighAsScreen)
                     {
-                        Me._Bounds_Normal_Location = Me._Bounds_Current_Location;
+                        Me.Bounds_Normal_Location = Me.Bounds_Current_Location;
                     }
                 };
 
                 if (Me.FormStyle == FormStyle.Sizable)
                 {
-                    if (FormManager._CursorPosition.X >= FormManager._PrimaryScreenClient.X && FormManager._CursorPosition.X <= FormManager._PrimaryScreenClient.X + _ExtendDist)
+                    if (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.X && FormManager.CursorPosition.X <= FormManager.PrimaryScreenClient.X + _ExtendDist)
                     {
-                        if (FormManager._CursorPosition.Y >= FormManager._PrimaryScreenClient.Y && FormManager._CursorPosition.Y <= FormManager._PrimaryScreenClient.Y + _ExtendDist)
+                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Y && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y + _ExtendDist)
                         {
                             if (!Me.TopLeftQuarterScreen())
                             {
                                 ReleaseAndCheckY();
                             }
                         }
-                        else if (FormManager._CursorPosition.Y >= FormManager._PrimaryScreenClient.Bottom - _ExtendDist && FormManager._CursorPosition.Y <= FormManager._PrimaryScreenBounds.Bottom)
+                        else if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - _ExtendDist && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenBounds.Bottom)
                         {
                             if (!Me.BottomLeftQuarterScreen())
                             {
@@ -411,16 +411,16 @@ namespace Com.WinForm
                             }
                         }
                     }
-                    else if (FormManager._CursorPosition.X >= FormManager._PrimaryScreenClient.Right - _ExtendDist && FormManager._CursorPosition.X <= FormManager._PrimaryScreenBounds.Right)
+                    else if (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.Right - _ExtendDist && FormManager.CursorPosition.X <= FormManager.PrimaryScreenBounds.Right)
                     {
-                        if (FormManager._CursorPosition.Y >= FormManager._PrimaryScreenClient.Y && FormManager._CursorPosition.Y <= FormManager._PrimaryScreenClient.Y + _ExtendDist)
+                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Y && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y + _ExtendDist)
                         {
                             if (!Me.TopRightQuarterScreen())
                             {
                                 ReleaseAndCheckY();
                             }
                         }
-                        else if (FormManager._CursorPosition.Y >= FormManager._PrimaryScreenClient.Bottom - _ExtendDist && FormManager._CursorPosition.Y <= FormManager._PrimaryScreenBounds.Bottom)
+                        else if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - _ExtendDist && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenBounds.Bottom)
                         {
                             if (!Me.BottomRightQuarterScreen())
                             {
@@ -435,7 +435,7 @@ namespace Com.WinForm
                             }
                         }
                     }
-                    else if (FormManager._CursorPosition.Y >= FormManager._PrimaryScreenClient.Y && FormManager._CursorPosition.Y <= FormManager._PrimaryScreenClient.Y + _ExtendDist)
+                    else if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Y && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y + _ExtendDist)
                     {
                         if (Me.FormState == FormState.Normal)
                         {
@@ -458,14 +458,14 @@ namespace Com.WinForm
 
             _MeWillMove = _MeIsMoving = false;
 
-            Cursor.Clip = FormManager._PrimaryScreenBounds;
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
-        private void Panel_TitleBar_MouseMove(object sender, MouseEventArgs e) // Panel_TitleBar 的 MouseMove 事件的回调函数。
+        private void Panel_CaptionBar_MouseMove(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseMove 事件的回调函数。
         {
             if (_MeWillMove)
             {
-                Point CurPt = Geometry.GetCursorPositionOfControl(Panel_TitleBar);
+                Point CurPt = Geometry.GetCursorPositionOfControl(Panel_CaptionBar);
 
                 if (PointD.DistanceBetween(new PointD(CurPt), new PointD(_CursorPositionOfMe)) >= _ExtendDist)
                 {
@@ -478,37 +478,37 @@ namespace Com.WinForm
             {
                 if (Me.FormState != FormState.FullScreen)
                 {
-                    if ((Me.FormState == FormState.Maximized && (FormManager._CursorPosition.Y > FormManager._PrimaryScreenClient.Y + _ExtendDist || (FormManager._CursorPosition.X >= FormManager._PrimaryScreenClient.X && FormManager._CursorPosition.X <= FormManager._PrimaryScreenClient.X + _ExtendDist) || (FormManager._CursorPosition.X >= FormManager._PrimaryScreenClient.Right - _ExtendDist && FormManager._CursorPosition.X <= FormManager._PrimaryScreenBounds.Right))) || (Me.FormState == FormState.HighAsScreen && FormManager._CursorPosition.Y > FormManager._PrimaryScreenClient.Y + Me.FormTitleBarHeight + _ExtendDist) || Me.FormState == FormState.QuarterScreen)
+                    if ((Me.FormState == FormState.Maximized && (FormManager.CursorPosition.Y > FormManager.PrimaryScreenClient.Y + _ExtendDist || (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.X && FormManager.CursorPosition.X <= FormManager.PrimaryScreenClient.X + _ExtendDist) || (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.Right - _ExtendDist && FormManager.CursorPosition.X <= FormManager.PrimaryScreenBounds.Right))) || (Me.FormState == FormState.HighAsScreen && FormManager.CursorPosition.Y > FormManager.PrimaryScreenClient.Y + Me.CaptionBarHeight + _ExtendDist) || Me.FormState == FormState.QuarterScreen)
                     {
-                        if (_CursorPositionOfMe.X >= Me._Bounds_Current_Width - Me._Bounds_Normal_Width / 2)
+                        if (_CursorPositionOfMe.X >= Me.Bounds_Current_Width - Me.Bounds_Normal_Width / 2)
                         {
-                            _CursorPositionOfMe.X = Me._Bounds_Normal_Width - (Me._Bounds_Current_Width - _CursorPositionOfMe.X);
+                            _CursorPositionOfMe.X = Me.Bounds_Normal_Width - (Me.Bounds_Current_Width - _CursorPositionOfMe.X);
                         }
-                        else if (_CursorPositionOfMe.X > Me._Bounds_Normal_Width / 2 && _CursorPositionOfMe.X < Me._Bounds_Current_Width - Me._Bounds_Normal_Width / 2)
+                        else if (_CursorPositionOfMe.X > Me.Bounds_Normal_Width / 2 && _CursorPositionOfMe.X < Me.Bounds_Current_Width - Me.Bounds_Normal_Width / 2)
                         {
-                            _CursorPositionOfMe.X = Me._Bounds_Normal_Width / 2;
+                            _CursorPositionOfMe.X = Me.Bounds_Normal_Width / 2;
                         }
 
-                        if (Me._CanReturn())
+                        if (Me.CanReturn())
                         {
-                            Me._ReturnByMoveForm();
+                            Me.ReturnByMoveForm();
 
-                            Me._Bounds_Current_Location = new Point(FormManager._CursorPosition.X - _CursorPositionOfMe.X, FormManager._CursorPosition.Y - _CursorPositionOfMe.Y);
+                            Me.Bounds_Current_Location = new Point(FormManager.CursorPosition.X - _CursorPositionOfMe.X, FormManager.CursorPosition.Y - _CursorPositionOfMe.Y);
 
-                            Me._UpdateLayout(UpdateLayoutEventType.All);
+                            Me.UpdateLayout(UpdateLayoutEventType.All);
                         }
                     }
                     else
                     {
                         if (Me.FormState == FormState.Normal)
                         {
-                            Me._Bounds_Current_Location = new Point(FormManager._CursorPosition.X - _CursorPositionOfMe.X, FormManager._CursorPosition.Y - _CursorPositionOfMe.Y);
+                            Me.Bounds_Current_Location = new Point(FormManager.CursorPosition.X - _CursorPositionOfMe.X, FormManager.CursorPosition.Y - _CursorPositionOfMe.Y);
 
                             _TryToUpdateLayout();
                         }
                         else if (Me.FormState == FormState.HighAsScreen)
                         {
-                            Me._Bounds_Current_X = FormManager._CursorPosition.X - _CursorPositionOfMe.X;
+                            Me.Bounds_Current_X = FormManager.CursorPosition.X - _CursorPositionOfMe.X;
 
                             _TryToUpdateLayout();
                         }
@@ -523,7 +523,7 @@ namespace Com.WinForm
         {
             if (e.Button == MouseButtons.Left)
             {
-                ContextMenuStrip_Main.Show(Panel_TitleBar, new Point(0, Panel_FormIcon.Height));
+                ContextMenuStrip_Main.Show(Panel_CaptionBar, new Point(0, Panel_FormIcon.Height));
             }
         }
 
@@ -551,7 +551,7 @@ namespace Com.WinForm
 
         private void PictureBox_FullScreen_MouseClick(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseClick 事件的回调函数。
         {
-            Me.FormClient.Focus();
+            Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
             {
@@ -568,19 +568,19 @@ namespace Com.WinForm
 
         private void PictureBox_FullScreen_MouseEnter(object sender, EventArgs e) // PictureBox_FullScreen 的 MouseEnter 事件的回调函数。
         {
-            PictureBox_FullScreen.BackColor = Me.RecommendColors._ControlButton_DEC.ToColor();
+            PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
         }
 
         private void PictureBox_FullScreen_MouseLeave(object sender, EventArgs e) // PictureBox_FullScreen 的 MouseLeave 事件的回调函数。
         {
-            PictureBox_FullScreen.BackColor = Me.RecommendColors._ControlButton.ToColor();
+            PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton.ToColor();
         }
 
         private void PictureBox_FullScreen_MouseDown(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseDown 事件的回调函数。
         {
             if (e.Button == MouseButtons.Left)
             {
-                PictureBox_FullScreen.BackColor = Me.RecommendColors._ControlButton_INC.ToColor();
+                PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
             }
         }
 
@@ -590,7 +590,7 @@ namespace Com.WinForm
             {
                 if (Geometry.CursorIsInControl(PictureBox_FullScreen))
                 {
-                    PictureBox_FullScreen.BackColor = Me.RecommendColors._ControlButton_DEC.ToColor();
+                    PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
                 }
                 else
                 {
@@ -601,7 +601,7 @@ namespace Com.WinForm
 
         private void PictureBox_Minimize_MouseClick(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseClick 事件的回调函数。
         {
-            Me.FormClient.Focus();
+            Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
             {
@@ -611,19 +611,19 @@ namespace Com.WinForm
 
         private void PictureBox_Minimize_MouseEnter(object sender, EventArgs e) // PictureBox_Minimize 的 MouseEnter 事件的回调函数。
         {
-            PictureBox_Minimize.BackColor = Me.RecommendColors._ControlButton_DEC.ToColor();
+            PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
         }
 
         private void PictureBox_Minimize_MouseLeave(object sender, EventArgs e) // PictureBox_Minimize 的 MouseLeave 事件的回调函数。
         {
-            PictureBox_Minimize.BackColor = Me.RecommendColors._ControlButton.ToColor();
+            PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton.ToColor();
         }
 
         private void PictureBox_Minimize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseDown 事件的回调函数。
         {
             if (e.Button == MouseButtons.Left)
             {
-                PictureBox_Minimize.BackColor = Me.RecommendColors._ControlButton_INC.ToColor();
+                PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
             }
         }
 
@@ -633,7 +633,7 @@ namespace Com.WinForm
             {
                 if (Geometry.CursorIsInControl(PictureBox_Minimize))
                 {
-                    PictureBox_Minimize.BackColor = Me.RecommendColors._ControlButton_DEC.ToColor();
+                    PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
                 }
                 else
                 {
@@ -644,7 +644,7 @@ namespace Com.WinForm
 
         private void PictureBox_Maximize_MouseClick(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseClick 事件的回调函数。
         {
-            Me.FormClient.Focus();
+            Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
             {
@@ -661,19 +661,19 @@ namespace Com.WinForm
 
         private void PictureBox_Maximize_MouseEnter(object sender, EventArgs e) // PictureBox_Maximize 的 MouseEnter 事件的回调函数。
         {
-            PictureBox_Maximize.BackColor = Me.RecommendColors._ControlButton_DEC.ToColor();
+            PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
         }
 
         private void PictureBox_Maximize_MouseLeave(object sender, EventArgs e) // PictureBox_Maximize 的 MouseLeave 事件的回调函数。
         {
-            PictureBox_Maximize.BackColor = Me.RecommendColors._ControlButton.ToColor();
+            PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton.ToColor();
         }
 
         private void PictureBox_Maximize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseDown 事件的回调函数。
         {
             if (e.Button == MouseButtons.Left)
             {
-                PictureBox_Maximize.BackColor = Me.RecommendColors._ControlButton_INC.ToColor();
+                PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
             }
         }
 
@@ -683,7 +683,7 @@ namespace Com.WinForm
             {
                 if (Geometry.CursorIsInControl(PictureBox_Maximize))
                 {
-                    PictureBox_Maximize.BackColor = Me.RecommendColors._ControlButton_DEC.ToColor();
+                    PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
                 }
                 else
                 {
@@ -694,7 +694,7 @@ namespace Com.WinForm
 
         private void PictureBox_Exit_MouseClick(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseClick 事件的回调函数。
         {
-            Me.FormClient.Focus();
+            Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
             {
@@ -704,19 +704,19 @@ namespace Com.WinForm
 
         private void PictureBox_Exit_MouseEnter(object sender, EventArgs e) // PictureBox_Exit 的 MouseEnter 事件的回调函数。
         {
-            PictureBox_Exit.BackColor = Me.RecommendColors._ExitButton_DEC.ToColor();
+            PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_DEC.ToColor();
         }
 
         private void PictureBox_Exit_MouseLeave(object sender, EventArgs e) // PictureBox_Exit 的 MouseLeave 事件的回调函数。
         {
-            PictureBox_Exit.BackColor = Me.RecommendColors._ExitButton.ToColor();
+            PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton.ToColor();
         }
 
         private void PictureBox_Exit_MouseDown(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseDown 事件的回调函数。
         {
             if (e.Button == MouseButtons.Left)
             {
-                PictureBox_Exit.BackColor = Me.RecommendColors._ExitButton_INC.ToColor();
+                PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_INC.ToColor();
             }
         }
 
@@ -726,7 +726,7 @@ namespace Com.WinForm
             {
                 if (Geometry.CursorIsInControl(PictureBox_Exit))
                 {
-                    PictureBox_Exit.BackColor = Me.RecommendColors._ExitButton_DEC.ToColor();
+                    PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_DEC.ToColor();
                 }
                 else
                 {
@@ -741,7 +741,7 @@ namespace Com.WinForm
         {
             if (!ContextMenuStrip_Main.Visible)
             {
-                Me.FormClient.Focus();
+                Me.Client.Focus();
             }
         }
 
@@ -777,7 +777,7 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            Me._UpdateLayout(UpdateLayoutEventType.Manual);
+            Me.UpdateLayout(UpdateLayoutEventType.Manual);
 
             _LastUpdateLayout = DateTime.Now;
         }
@@ -786,7 +786,7 @@ namespace Com.WinForm
 
         #region 构造与析构函数
 
-        public FormTitleBar(FormManager formManager) // 使用 FormManager 对象初始化 FormTitleBar 的新实例。
+        public CaptionBar(FormManager formManager) // 使用 FormManager 对象初始化 CaptionBar 的新实例。
         {
             InitializeComponent();
 
@@ -818,7 +818,7 @@ namespace Com.WinForm
 
             //
 
-            FormTitleBar_SizeChanged(this, EventArgs.Empty);
+            CaptionBar_SizeChanged(this, EventArgs.Empty);
         }
 
         public void OnFormStateChanged() // 在 FormStateChanged 事件发生时发生。
@@ -829,12 +829,12 @@ namespace Com.WinForm
 
             //
 
-            FormTitleBar_SizeChanged(this, EventArgs.Empty);
+            CaptionBar_SizeChanged(this, EventArgs.Empty);
         }
 
         public void OnCaptionChanged() // 在 CaptionChanged 事件发生时发生。
         {
-            _RepaintFormCaptionBitmap();
+            _RepaintCaptionBarBitmap();
         }
 
         public void OnThemeChanged() // 在 ThemeChanged 事件发生时发生。
@@ -844,12 +844,12 @@ namespace Com.WinForm
 
         public void OnThemeColorChanged() // 在 ThemeColorChanged 事件发生时发生。
         {
-            Panel_TitleBar.BackColor = Me.RecommendColors.FormTitleBar.ToColor();
+            Panel_CaptionBar.BackColor = Me.RecommendColors.CaptionBar.ToColor();
 
             //
 
-            PictureBox_FullScreen.BackColor = PictureBox_Minimize.BackColor = PictureBox_Maximize.BackColor = Me.RecommendColors._ControlButton.ToColor();
-            PictureBox_Exit.BackColor = Me.RecommendColors._ExitButton.ToColor();
+            PictureBox_FullScreen.BackColor = PictureBox_Minimize.BackColor = PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton.ToColor();
+            PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton.ToColor();
 
             //
 
@@ -860,7 +860,7 @@ namespace Com.WinForm
 
             _UpdateControlBoxImage();
 
-            _RepaintFormCaptionBitmap();
+            _RepaintCaptionBarBitmap();
         }
 
         #endregion

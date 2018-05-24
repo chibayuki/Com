@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormState
-Version 18.5.23.0000
+Version 18.5.25.0000
 
 This file is part of Com
 
@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Com.WinForm
 {
     /// <summary>
-    /// 窗体状态枚举。
+    /// 窗口状态枚举。
     /// </summary>
     public enum FormState
     {

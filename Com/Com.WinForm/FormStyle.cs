@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormStyle
-Version 18.5.23.0000
+Version 18.5.25.0000
 
 This file is part of Com
 
@@ -18,17 +18,17 @@ using System.Threading.Tasks;
 namespace Com.WinForm
 {
     /// <summary>
-    /// 窗体样式枚举。
+    /// 窗口样式枚举。
     /// </summary>
     public enum FormStyle
     {
         /// <summary>
-        /// 大小可调的窗体。
+        /// 大小可调的窗口。
         /// </summary>
         Sizable = 0,
 
         /// <summary>
-        /// 大小固定的窗体。
+        /// 大小固定的窗口。
         /// </summary>
         Fixed,
 

@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.RecommendColors
-Version 18.5.23.0000
+Version 18.5.25.0000
 
 This file is part of Com
 
@@ -26,17 +26,17 @@ namespace Com.WinForm
     {
         #region 私有与内部成员
 
-        private ColorX _FormBackground = new ColorX(); // 窗体背景颜色。
-        private ColorX _FormTitleBar = new ColorX(); // 窗体标题栏颜色。
-        private ColorX _FormCaption = new ColorX(); // 窗体标题颜色。
+        private ColorX _FormBackground = new ColorX(); // 窗口背景颜色。
+        private ColorX _CaptionBar = new ColorX(); // 标题栏颜色。
+        private ColorX _Caption = new ColorX(); // 窗口标题颜色。
 
-        private ColorX __ControlButton = new ColorX(); // 控制按钮颜色。
-        private ColorX __ControlButton_DEC = new ColorX(); // 控制按钮颜色，降低对比度。
-        private ColorX __ControlButton_INC = new ColorX(); // 控制按钮颜色，提高对比度。
+        private ColorX _ControlButton = new ColorX(); // 控制按钮颜色。
+        private ColorX _ControlButton_DEC = new ColorX(); // 控制按钮颜色，降低对比度。
+        private ColorX _ControlButton_INC = new ColorX(); // 控制按钮颜色，提高对比度。
 
-        private ColorX __ExitButton = new ColorX(); // 退出按钮颜色。
-        private ColorX __ExitButton_DEC = new ColorX(); // 退出按钮颜色，降低对比度。
-        private ColorX __ExitButton_INC = new ColorX(); // 退出按钮颜色，提高对比度。
+        private ColorX _ExitButton = new ColorX(); // 退出按钮颜色。
+        private ColorX _ExitButton_DEC = new ColorX(); // 退出按钮颜色，降低对比度。
+        private ColorX _ExitButton_INC = new ColorX(); // 退出按钮颜色，提高对比度。
 
         private ColorX _MenuItemBackground = new ColorX(); // 菜单项背景颜色。
         private ColorX _MenuItemText = new ColorX(); // 菜单项文字颜色。
@@ -71,71 +71,71 @@ namespace Com.WinForm
 
         //
 
-        internal ColorX _ControlButton // 控制按钮颜色。
+        internal ColorX ControlButton // 控制按钮颜色。
         {
             get
             {
-                return __ControlButton;
+                return _ControlButton;
             }
         }
 
-        internal ColorX _ControlButton_DEC // 控制按钮颜色，降低对比度。
+        internal ColorX ControlButton_DEC // 控制按钮颜色，降低对比度。
         {
             get
             {
-                return __ControlButton_DEC;
+                return _ControlButton_DEC;
             }
         }
 
-        internal ColorX _ControlButton_INC // 控制按钮颜色，提高对比度。
+        internal ColorX ControlButton_INC // 控制按钮颜色，提高对比度。
         {
             get
             {
-                return __ControlButton_INC;
-            }
-        }
-
-        //
-
-        internal ColorX _ExitButton // 退出按钮颜色。
-        {
-            get
-            {
-                return __ExitButton;
-            }
-        }
-
-        internal ColorX _ExitButton_DEC // 退出按钮颜色，降低对比度。
-        {
-            get
-            {
-                return __ExitButton_DEC;
-            }
-        }
-
-        internal ColorX _ExitButton_INC // 退出按钮颜色，提高对比度。
-        {
-            get
-            {
-                return __ExitButton_INC;
+                return _ControlButton_INC;
             }
         }
 
         //
 
-        internal static bool _BackColorFitLightText(ColorX color) // 返回表示指定的背景色是否与浅色文本相符的布尔值。
+        internal ColorX ExitButton // 退出按钮颜色。
+        {
+            get
+            {
+                return _ExitButton;
+            }
+        }
+
+        internal ColorX ExitButton_DEC // 退出按钮颜色，降低对比度。
+        {
+            get
+            {
+                return _ExitButton_DEC;
+            }
+        }
+
+        internal ColorX ExitButton_INC // 退出按钮颜色，提高对比度。
+        {
+            get
+            {
+                return _ExitButton_INC;
+            }
+        }
+
+        //
+
+        internal static bool BackColorFitLightText(ColorX color) // 返回表示指定的背景色是否与浅色文本相符的布尔值。
         {
             return (color.Lightness_LAB < 70);
         }
 
-        internal static bool _BackColorFitDarkText(ColorX color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
+        internal static bool BackColorFitDarkText(ColorX color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
         {
             return (color.Lightness_LAB > 30);
         }
 
         //
 
-        internal void _Ctor(Theme theme, ColorX themeColor, bool showFormTitleBarColor) // 为以主题、主题色与表示是否在窗体标题栏上显示主题色的布尔值为参数的构造函数提供实现。
+        private void _Ctor(Theme theme, ColorX themeColor, bool showCaptionBarColor) // 为以主题、主题色与表示是否在标题栏上显示主题色的布尔值为参数的构造函数提供实现。
         {
             switch (theme)
             {
@@ -148,24 +148,24 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(98);
 
-                        if (showFormTitleBarColor)
+                        if (showCaptionBarColor)
                         {
-                            _FormTitleBar = _Main;
-                            _FormCaption = new ColorX(!_BackColorFitLightText(_FormTitleBar) ? Color.Black : Color.White);
+                            _CaptionBar = _Main;
+                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
                         }
                         else
                         {
-                            _FormTitleBar = _FormBackground;
-                            _FormCaption = themeColor.AtLightness_HSL(24);
+                            _CaptionBar = _FormBackground;
+                            _Caption = themeColor.AtLightness_HSL(24);
                         }
 
-                        __ControlButton = ColorX.Transparent;
-                        __ControlButton_INC = (!_BackColorFitLightText(_FormTitleBar) ? ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, 0.3)).AtOpacity(70);
-                        __ControlButton_DEC = __ControlButton_INC.AtOpacity(50);
+                        _ControlButton = ColorX.Transparent;
+                        _ControlButton_INC = (!BackColorFitLightText(_CaptionBar) ? ColorManipulation.ShiftLightnessByHSL(_CaptionBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_CaptionBar, 0.3)).AtOpacity(70);
+                        _ControlButton_DEC = _ControlButton_INC.AtOpacity(50);
 
-                        __ExitButton = ColorX.Transparent;
-                        __ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
-                        __ExitButton_INC = __ExitButton_DEC.AtOpacity(70);
+                        _ExitButton = ColorX.Transparent;
+                        _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
+                        _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
                         _MenuItemBackground = themeColor.AtLightness_HSL(98);
                         _MenuItemText = themeColor.AtLightness_HSL(24);
@@ -205,24 +205,24 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
 
-                        if (showFormTitleBarColor)
+                        if (showCaptionBarColor)
                         {
-                            _FormTitleBar = _Main;
-                            _FormCaption = new ColorX(!_BackColorFitLightText(_FormTitleBar) ? Color.Black : Color.White);
+                            _CaptionBar = _Main;
+                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
                         }
                         else
                         {
-                            _FormTitleBar = _FormBackground;
-                            _FormCaption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                            _CaptionBar = _FormBackground;
+                            _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
                         }
 
-                        __ControlButton = ColorX.Transparent;
-                        __ControlButton_INC = (!_BackColorFitLightText(_FormTitleBar) ? ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, 0.3)).AtOpacity(70);
-                        __ControlButton_DEC = __ControlButton_INC.AtOpacity(50);
+                        _ControlButton = ColorX.Transparent;
+                        _ControlButton_INC = (!BackColorFitLightText(_CaptionBar) ? ColorManipulation.ShiftLightnessByHSL(_CaptionBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_CaptionBar, 0.3)).AtOpacity(70);
+                        _ControlButton_DEC = _ControlButton_INC.AtOpacity(50);
 
-                        __ExitButton = ColorX.Transparent;
-                        __ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
-                        __ExitButton_INC = __ExitButton_DEC.AtOpacity(70);
+                        _ExitButton = ColorX.Transparent;
+                        _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
+                        _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
                         _MenuItemBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
                         _MenuItemText = themeColor.AtLightness_HSL(24).GrayscaleColor;
@@ -262,24 +262,24 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
 
-                        if (showFormTitleBarColor)
+                        if (showCaptionBarColor)
                         {
-                            _FormTitleBar = _Main;
-                            _FormCaption = new ColorX(!_BackColorFitLightText(_FormTitleBar) ? Color.Black : Color.White);
+                            _CaptionBar = _Main;
+                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
                         }
                         else
                         {
-                            _FormTitleBar = _FormBackground;
-                            _FormCaption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                            _CaptionBar = _FormBackground;
+                            _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
                         }
 
-                        __ControlButton = ColorX.Transparent;
-                        __ControlButton_INC = (!_BackColorFitLightText(_FormTitleBar) ? ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, 0.3)).AtOpacity(70);
-                        __ControlButton_DEC = __ControlButton_INC.AtOpacity(50);
+                        _ControlButton = ColorX.Transparent;
+                        _ControlButton_INC = (!BackColorFitLightText(_CaptionBar) ? ColorManipulation.ShiftLightnessByHSL(_CaptionBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_CaptionBar, 0.3)).AtOpacity(70);
+                        _ControlButton_DEC = _ControlButton_INC.AtOpacity(50);
 
-                        __ExitButton = ColorX.Transparent;
-                        __ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
-                        __ExitButton_INC = __ExitButton_DEC.AtOpacity(70);
+                        _ExitButton = ColorX.Transparent;
+                        _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
+                        _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
                         _MenuItemBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
                         _MenuItemText = themeColor.AtLightness_HSL(24).GrayscaleColor;
@@ -319,24 +319,24 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(2).GrayscaleColor;
 
-                        if (showFormTitleBarColor)
+                        if (showCaptionBarColor)
                         {
-                            _FormTitleBar = _Main;
-                            _FormCaption = new ColorX(!_BackColorFitLightText(_FormTitleBar) ? Color.Black : Color.White);
+                            _CaptionBar = _Main;
+                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
                         }
                         else
                         {
-                            _FormTitleBar = _FormBackground;
-                            _FormCaption = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                            _CaptionBar = _FormBackground;
+                            _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
                         }
 
-                        __ControlButton = ColorX.Transparent;
-                        __ControlButton_INC = (!_BackColorFitLightText(_FormTitleBar) ? ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, 0.3)).AtOpacity(70);
-                        __ControlButton_DEC = __ControlButton_INC.AtOpacity(50);
+                        _ControlButton = ColorX.Transparent;
+                        _ControlButton_INC = (!BackColorFitLightText(_CaptionBar) ? ColorManipulation.ShiftLightnessByHSL(_CaptionBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_CaptionBar, 0.3)).AtOpacity(70);
+                        _ControlButton_DEC = _ControlButton_INC.AtOpacity(50);
 
-                        __ExitButton = ColorX.Transparent;
-                        __ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
-                        __ExitButton_INC = __ExitButton_DEC.AtOpacity(70);
+                        _ExitButton = ColorX.Transparent;
+                        _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
+                        _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
                         _MenuItemBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
                         _MenuItemText = themeColor.AtLightness_HSL(24).GrayscaleColor;
@@ -376,24 +376,24 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(2).GrayscaleColor;
 
-                        if (showFormTitleBarColor)
+                        if (showCaptionBarColor)
                         {
-                            _FormTitleBar = _Main;
-                            _FormCaption = new ColorX(!_BackColorFitLightText(_FormTitleBar) ? Color.Black : Color.White);
+                            _CaptionBar = _Main;
+                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
                         }
                         else
                         {
-                            _FormTitleBar = _FormBackground;
-                            _FormCaption = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                            _CaptionBar = _FormBackground;
+                            _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
                         }
 
-                        __ControlButton = ColorX.Transparent;
-                        __ControlButton_INC = (!_BackColorFitLightText(_FormTitleBar) ? ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_FormTitleBar, 0.3)).AtOpacity(70);
-                        __ControlButton_DEC = __ControlButton_INC.AtOpacity(50);
+                        _ControlButton = ColorX.Transparent;
+                        _ControlButton_INC = (!BackColorFitLightText(_CaptionBar) ? ColorManipulation.ShiftLightnessByHSL(_CaptionBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_CaptionBar, 0.3)).AtOpacity(70);
+                        _ControlButton_DEC = _ControlButton_INC.AtOpacity(50);
 
-                        __ExitButton = ColorX.Transparent;
-                        __ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
-                        __ExitButton_INC = __ExitButton_DEC.AtOpacity(70);
+                        _ExitButton = ColorX.Transparent;
+                        _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
+                        _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
                         _MenuItemBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
                         _MenuItemText = themeColor.AtLightness_HSL(24).GrayscaleColor;
@@ -430,9 +430,9 @@ namespace Com.WinForm
 
         #region 构造与析构函数
 
-        internal RecommendColors(Theme theme, ColorX themeColorX, bool showFormTitleColorX) // 使用主题、主题色与表示是否在窗体标题栏上显示主题色的布尔值初始化 RecommendColors 的新实例。
+        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor) // 使用主题、主题色与表示是否在标题栏上显示主题色的布尔值初始化 RecommendColors 的新实例。
         {
-            _Ctor(theme, themeColorX, showFormTitleColorX);
+            _Ctor(theme, themeColor, showCaptionBarColor);
         }
 
         #endregion
@@ -440,7 +440,7 @@ namespace Com.WinForm
         #region 属性
 
         /// <summary>
-        /// 窗体背景颜色。
+        /// 窗口背景颜色。
         /// </summary>
         public ColorX FormBackground
         {
@@ -451,24 +451,24 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 窗体标题栏颜色。
+        /// 标题栏颜色。
         /// </summary>
-        public ColorX FormTitleBar
+        public ColorX CaptionBar
         {
             get
             {
-                return _FormTitleBar;
+                return _CaptionBar;
             }
         }
 
         /// <summary>
-        /// 窗体标题颜色。
+        /// 窗口标题颜色。
         /// </summary>
-        public ColorX FormCaption
+        public ColorX Caption
         {
             get
             {
-                return _FormCaption;
+                return _Caption;
             }
         }
 

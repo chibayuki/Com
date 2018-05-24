@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.EventKey
-Version 18.5.24.0000
+Version 18.5.25.0000
 
 This file is part of Com
 
@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Com.WinForm
 {
-    internal static class EventKey // 窗体事件键值。
+    internal static class EventKey // 窗口事件键值。
     {
         public static readonly object Loading = new object(); // Loading 事件键值。
 

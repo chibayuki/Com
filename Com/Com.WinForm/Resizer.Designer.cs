@@ -1,6 +1,6 @@
 ﻿namespace Com.WinForm
 {
-    partial class FormBorder
+    partial class Resizer
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -171,7 +171,7 @@
             this.BackgroundWorker_UpdateLayoutDelay.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker_UpdateLayoutDelay_DoWork);
             this.BackgroundWorker_UpdateLayoutDelay.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted);
             // 
-            // FormBorder
+            // Resizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -179,11 +179,11 @@
             this.ClientSize = new System.Drawing.Size(300, 300);
             this.Controls.Add(this.Panel_Border);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "FormBorder";
+            this.Name = "Resizer";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Load += new System.EventHandler(this.FormBorder_Load);
-            this.SizeChanged += new System.EventHandler(this.FormBorder_SizeChanged);
+            this.Load += new System.EventHandler(this.Resizer_Load);
+            this.SizeChanged += new System.EventHandler(this.Resizer_SizeChanged);
             this.Panel_Border.ResumeLayout(false);
             this.ResumeLayout(false);
 

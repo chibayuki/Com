@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.SplashScreen
-Version 18.5.23.0000
+Version 18.5.25.0000
 
 This file is part of Com
 
@@ -25,7 +25,7 @@ namespace Com.WinForm
     {
         #region 私有与内部成员
 
-        private FormManager Me; // 窗体管理器。
+        private FormManager Me; // 窗口管理器。
 
         //
 
@@ -42,7 +42,7 @@ namespace Com.WinForm
 
             using (Graphics CreateSplashBmp = Graphics.FromImage(_FormSplashBitmap))
             {
-                CreateSplashBmp.Clear(Me.RecommendColors.FormTitleBar.ToColor());
+                CreateSplashBmp.Clear(Me.RecommendColors.CaptionBar.ToColor());
 
                 //
 
@@ -69,7 +69,7 @@ namespace Com.WinForm
                 PictureBox_AppLogo.Size = new Size(AppLogoSize, AppLogoSize);
                 PictureBox_AppLogo.Location = new Point(0, (Panel_Splash.Height - PictureBox_AppLogo.Height) / 2);
 
-                CreateSplashBmp.DrawString(AppName, AppNameFont, new SolidBrush(Me.RecommendColors.FormCaption.ToColor()), AppNameRect.Location);
+                CreateSplashBmp.DrawString(AppName, AppNameFont, new SolidBrush(Me.RecommendColors.Caption.ToColor()), AppNameRect.Location);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Com.WinForm
 
         private void SplashScreen_Load(object sender, EventArgs e) // SplashScreen 的 Load 事件的回调函数。
         {
-            PictureBox_AppLogo.Image = Me.FormClient.Icon.ToBitmap();
+            PictureBox_AppLogo.Image = Me.Client.Icon.ToBitmap();
 
             //
 
@@ -166,7 +166,7 @@ namespace Com.WinForm
         public void OnThemeColorChanged() // 在 ThemeColorChanged 事件发生时发生。
         {
             this.BackColor = Me.RecommendColors.FormBackground.ToColor();
-            Panel_SplashScreen.BackColor = Me.RecommendColors.FormTitleBar.ToColor();
+            Panel_SplashScreen.BackColor = Me.RecommendColors.CaptionBar.ToColor();
 
             //
 
