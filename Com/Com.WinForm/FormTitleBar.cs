@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormTitleBar
-Version 18.5.23.0000
+Version 18.5.24.0000
 
 This file is part of Com
 
@@ -19,6 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Drawing.Drawing2D;
 using System.Threading;
 
 namespace Com.WinForm
@@ -53,13 +54,24 @@ namespace Com.WinForm
 
             using (Graphics CreateFormCaptionBmp = Graphics.FromImage(_FormCaptionBitmap))
             {
+                CreateFormCaptionBmp.SmoothingMode = SmoothingMode.AntiAlias;
+
+                //
+
                 CreateFormCaptionBmp.Clear(Me.RecommendColors.FormTitleBar.ToColor());
+
+                //
+
+                if (Me.FormTitleBarBackgroundImage != null)
+                {
+                    CreateFormCaptionBmp.DrawImage(Me.FormTitleBarBackgroundImage, new Point(0, 0));
+                }
 
                 //
 
                 if (Me.Caption.Length > 0)
                 {
-                    Rectangle CaptionArea = new Rectangle(new Point(Panel_FormIcon.Width, 0), new Size(Math.Max(1, Panel_ControlBox.Left - Panel_FormIcon.Width), Math.Max(1, Panel_FormIcon.Height)));
+                    Rectangle CaptionArea = new Rectangle(new Point(Panel_FormIcon.Right, 0), new Size(Math.Max(1, Panel_ControlBox.Left - Panel_FormIcon.Right), Math.Max(1, Panel_FormIcon.Height)));
 
                     Font CaptionFont = Me.CaptionFont;
 
@@ -129,6 +141,9 @@ namespace Com.WinForm
                 if (_FormCaptionBitmap != null)
                 {
                     Panel_TitleBar.CreateGraphics().DrawImage(_FormCaptionBitmap, new Point(0, 0));
+
+                    Panel_FormIcon.Refresh();
+                    Panel_ControlBox.Refresh();
                 }
             }
         }
@@ -164,15 +179,11 @@ namespace Com.WinForm
                 {
                     case FormStyle.Sizable:
                     case FormStyle.Fixed:
-                        {
-                            EnableMinimize = true;
-                        }
+                        EnableMinimize = true;
                         break;
 
                     case FormStyle.Dialog:
-                        {
-                            EnableMinimize = false;
-                        }
+                        EnableMinimize = false;
                         break;
                 }
             }
@@ -802,15 +813,6 @@ namespace Com.WinForm
         }
 
         public void OnFormStyleChanged() // 在 FormStyleChanged 事件发生时发生。
-        {
-            _UpdateForStyleOrStateChanged();
-
-            //
-
-            FormTitleBar_SizeChanged(this, EventArgs.Empty);
-        }
-
-        public void OnEnableFullScreenChanged() // 在 EnableFullScreenChanged 事件发生时发生。
         {
             _UpdateForStyleOrStateChanged();
 

@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.5.23.0000
+Version 18.5.24.0000
 
 This file is part of Com
 
@@ -273,11 +273,12 @@ namespace Com.WinForm
         //
 
         private bool _Enabled = true; // 表示窗体是否对用户交互作出响应的布尔值。
+        private double _Opacity = 1.0; // 窗体的不透明度。
         private string _Caption = string.Empty; // 窗体的标题。
         private Font _CaptionFont = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134); // 窗体标题的字体。
-        private double _Opacity = 1.0; // 窗体的不透明度。
         private Theme _Theme = Theme.Colorful; // 窗体的主题。
         private ColorX _ThemeColor = ColorX.FromRGB(128, 128, 128); // 窗体的主题色。
+        private Bitmap _FormTitleBarBackgroundImage = null; // 窗体标题栏的背景图像。
         private bool _ShowFormTitleBarColor = true; // 表示是否在窗体标题栏上显示主题色的布尔值。
         private bool _EnableFormTitleBarTransparent = true; // 表示是否允许以半透明方式显示窗体标题栏的布尔值。
         private RecommendColors _RecommendColors = null; // 当前主题建议的颜色。
@@ -937,14 +938,14 @@ namespace Com.WinForm
             _TrigEvent(EventKey.EnabledChanged);
         }
 
-        private void _OnCaptionChanged() // 引发 CaptionChanged 事件。
-        {
-            _TrigEvent(EventKey.CaptionChanged);
-        }
-
         private void _OnOpacityChanged() // 引发 OpacityChanged 事件。
         {
             _TrigEvent(EventKey.OpacityChanged);
+        }
+
+        private void _OnCaptionChanged() // 引发 CaptionChanged 事件。
+        {
+            _TrigEvent(EventKey.CaptionChanged);
         }
 
         private void _OnThemeChanged() // 引发 ThemeChanged 事件。
@@ -1523,7 +1524,6 @@ namespace Com.WinForm
             _FormTitleBar.OnFormStyleChanged();
             _FormBorder.OnFormStyleChanged();
 
-            _FormTitleBar.OnEnableFullScreenChanged();
             _FormTitleBar.OnCaptionChanged();
             _FormTitleBar.OnThemeChanged();
 
@@ -1867,7 +1867,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _FormTitleBar.OnEnableFullScreenChanged();
+                        _FormTitleBar.OnFormStyleChanged();
 
                         if (!_EnableFullScreen && _FormState == FormState.FullScreen)
                         {
@@ -2142,6 +2142,49 @@ namespace Com.WinForm
         }
 
         /// <summary>
+        /// 获取或设置窗体的不透明度，取值范围为 [0, 1] 或 (1, 100]。
+        /// </summary>
+        public double Opacity
+        {
+            get
+            {
+                return _Opacity;
+            }
+
+            set
+            {
+                if (double.IsNaN(value) || double.IsInfinity(value))
+                {
+                    _Opacity = 1;
+                }
+                else
+                {
+                    _Opacity = Math.Max(0, Math.Min(value, 100));
+
+                    if (_Opacity > 1)
+                    {
+                        _Opacity /= 100;
+                    }
+                }
+
+                if (_Initialized)
+                {
+                    Action InvokeMethod = () =>
+                    {
+                        _FormClient.Opacity = _SplashScreen.Opacity = _Opacity;
+                        _FormTitleBar.Opacity = (_EnableFormTitleBarTransparent ? _Opacity * 0.9 : _Opacity);
+
+                        _FormBorder.OnOpacityChanged();
+
+                        _OnOpacityChanged();
+                    };
+
+                    _FormClient.Invoke(InvokeMethod);
+                }
+            }
+        }
+
+        /// <summary>
         /// 获取或设置窗体的标题。
         /// </summary>
         public string Caption
@@ -2190,49 +2233,6 @@ namespace Com.WinForm
                     Action InvokeMethod = () =>
                     {
                         _FormTitleBar.OnCaptionChanged();
-                    };
-
-                    _FormClient.Invoke(InvokeMethod);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置窗体的不透明度，取值范围为 [0, 1] 或 (1, 100]。
-        /// </summary>
-        public double Opacity
-        {
-            get
-            {
-                return _Opacity;
-            }
-
-            set
-            {
-                if (double.IsNaN(value) || double.IsInfinity(value))
-                {
-                    _Opacity = 1;
-                }
-                else
-                {
-                    _Opacity = Math.Max(0, Math.Min(value, 100));
-
-                    if (_Opacity > 1)
-                    {
-                        _Opacity /= 100;
-                    }
-                }
-
-                if (_Initialized)
-                {
-                    Action InvokeMethod = () =>
-                    {
-                        _FormClient.Opacity = _SplashScreen.Opacity = _Opacity;
-                        _FormTitleBar.Opacity = (_EnableFormTitleBarTransparent ? _Opacity * 0.9 : _Opacity);
-
-                        _FormBorder.OnOpacityChanged();
-
-                        _OnOpacityChanged();
                     };
 
                     _FormClient.Invoke(InvokeMethod);
@@ -2299,6 +2299,32 @@ namespace Com.WinForm
                         _SplashScreen.OnThemeColorChanged();
 
                         _OnThemeColorChanged();
+                    };
+
+                    _FormClient.Invoke(InvokeMethod);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置窗体标题栏的背景图像。
+        /// </summary>
+        public Bitmap FormTitleBarBackgroundImage
+        {
+            get
+            {
+                return _FormTitleBarBackgroundImage;
+            }
+
+            set
+            {
+                _FormTitleBarBackgroundImage = value;
+
+                if (_Initialized)
+                {
+                    Action InvokeMethod = () =>
+                    {
+                        _FormTitleBar.OnCaptionChanged();
                     };
 
                     _FormClient.Invoke(InvokeMethod);
@@ -3058,28 +3084,6 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 在窗体的标题更改时发生。
-        /// </summary>
-        public event EventHandler CaptionChanged
-        {
-            add
-            {
-                if (value != null)
-                {
-                    _Events.AddHandler(EventKey.CaptionChanged, value);
-                }
-            }
-
-            remove
-            {
-                if (value != null)
-                {
-                    _Events.RemoveHandler(EventKey.CaptionChanged, value);
-                }
-            }
-        }
-
-        /// <summary>
         /// 在窗体的不透明度更改时发生。
         /// </summary>
         public event EventHandler OpacityChanged
@@ -3097,6 +3101,28 @@ namespace Com.WinForm
                 if (value != null)
                 {
                     _Events.RemoveHandler(EventKey.OpacityChanged, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 在窗体的标题更改时发生。
+        /// </summary>
+        public event EventHandler CaptionChanged
+        {
+            add
+            {
+                if (value != null)
+                {
+                    _Events.AddHandler(EventKey.CaptionChanged, value);
+                }
+            }
+
+            remove
+            {
+                if (value != null)
+                {
+                    _Events.RemoveHandler(EventKey.CaptionChanged, value);
                 }
             }
         }

@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.EventKey
-Version 18.5.23.0000
+Version 18.5.24.0000
 
 This file is part of Com
 
@@ -41,9 +41,9 @@ namespace Com.WinForm
 
         public static readonly object EnabledChanged = new object(); // EnabledChanged 事件键值。
 
-        public static readonly object CaptionChanged = new object(); // CaptionChanged 事件键值。
-
         public static readonly object OpacityChanged = new object(); // OpacityChanged 事件键值。
+
+        public static readonly object CaptionChanged = new object(); // CaptionChanged 事件键值。
 
         public static readonly object ThemeChanged = new object(); // ThemeChanged 事件键值。
 
