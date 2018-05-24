@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Painting2D
-Version 18.5.23.0000
+Version 18.5.25.0000
 
 This file is part of Com
 
@@ -1201,9 +1201,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 在透明窗体中绘制图像，并返回表示是否已经实际完成绘图的布尔值。
+        /// 在透明窗口中绘制图像，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="form">绘制图像的窗体。</param>
+        /// <param name="form">绘制图像的窗口。</param>
         /// <param name="bmp">绘制的图像。</param>
         /// <param name="opacity">绘制图像的不透明度。</param>
         public static bool PaintImageOnTransparentForm(Form form, Bitmap bmp, double opacity)
