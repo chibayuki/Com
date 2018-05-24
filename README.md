@@ -1,5 +1,5 @@
 # Com
-Com是一个DLL，用于支持向量与矩阵运算、浮点精度的非线性色彩处理、用于天文学的大型日期时间、动画、窗体管理等功能。
+Com是一个DLL，用于支持线性代数运算、位运算、天文学日期时间计算、高精度非线性色彩处理、动画呈现、窗体管理等功能。
 
 ### 公开的类与结构
 - Com.BitSet 管理位（Bit）的集合（至多68719472640位），提供基本的位运算功能
@@ -13,12 +13,12 @@ Com是一个DLL，用于支持向量与矩阵运算、浮点精度的非线性�
 - Com.WinForm.RecommendColors 窗体管理器的建议配色方案
 
 ### 公开的静态类
-- Com.Animation 使用指定的帧率、帧数、关键帧与绘制方法等呈现动画
+- Com.Animation 使用指定的帧率、帧数与绘制方法呈现动画
 - Com.BitOperation 快速的位运算方案（性能远高于BitSet，但至多64位）
 - Com.ColorManipulation 提供基于ColorX的非线性色彩处理方案
 - Com.Geometry 提供几何学的基本计算
 - Com.IO 提供文件操作功能
-- Com.Matrix2D 提供基于二维矩阵的线性计算
+- Com.Matrix2D 提供基于二维矩阵的线性代数运算
 - Com.Painting2D 提供基本的2D绘图方案
 - Com.Painting3D 提供基本的3D绘图方案
 - Com.Statistics 提供统计学的基本计算
