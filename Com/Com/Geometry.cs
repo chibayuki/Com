@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Geometry
-Version 18.5.23.0000
+Version 18.5.24.0000
 
 This file is part of Com
 
@@ -730,7 +730,8 @@ namespace Com
         /// </summary>
         /// <param name="bmp">被旋转的位图。</param>
         /// <param name="rotateAngle">旋转的角度（弧度）。</param>
-        public static Bitmap RotateBitmap(Bitmap bmp, double rotateAngle)
+        /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        public static Bitmap RotateBitmap(Bitmap bmp, double rotateAngle, bool antiAlias)
         {
             try
             {
@@ -745,9 +746,16 @@ namespace Com
 
                     using (Bitmap Bmp = new Bitmap(W, H, PixelFormat.Format32bppArgb))
                     {
-                        using (Graphics Grap = Graphics.FromImage(Bmp))
+                        using (Graphics Grph = Graphics.FromImage(Bmp))
                         {
-                            Grap.DrawImageUnscaled(bmp, 1, 1);
+                            if (antiAlias)
+                            {
+                                Grph.SmoothingMode = SmoothingMode.AntiAlias;
+                            }
+
+                            //
+
+                            Grph.DrawImage(bmp, new Point(1, 1));
                         }
 
                         RectangleF Rect = new RectangleF();
@@ -764,12 +772,19 @@ namespace Com
 
                         Bitmap Dst = new Bitmap((int)Rect.Width, (int)Rect.Height, PixelFormat.Format32bppArgb);
 
-                        using (Graphics Grap = Graphics.FromImage(Dst))
+                        using (Graphics Grph = Graphics.FromImage(Dst))
                         {
-                            Grap.TranslateTransform(-Rect.X, -Rect.Y);
-                            Grap.RotateTransform((float)(rotateAngle * 180 / Math.PI));
-                            Grap.InterpolationMode = InterpolationMode.HighQualityBilinear;
-                            Grap.DrawImageUnscaled(Bmp, 0, 0);
+                            if (antiAlias)
+                            {
+                                Grph.SmoothingMode = SmoothingMode.AntiAlias;
+                            }
+
+                            //
+
+                            Grph.TranslateTransform(-Rect.X, -Rect.Y);
+                            Grph.RotateTransform((float)(rotateAngle * 180 / Math.PI));
+                            Grph.InterpolationMode = InterpolationMode.HighQualityBilinear;
+                            Grph.DrawImage(Bmp, new Point(0, 0));
                         }
 
                         return Dst;
