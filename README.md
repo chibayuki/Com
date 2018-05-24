@@ -9,8 +9,8 @@ Com是一个DLL，用于支持线性代数运算、位运算、天文学日期�
 - Com.PointD 二维欧式空间中表示的坐标（向量）
 - Com.PointD3D 三维欧式空间中表示的坐标（向量）
 - Com.PointD4D 四维欧式空间中表示的坐标（向量）
-- Com.WinForm.FormManager 窗体管理器
-- Com.WinForm.RecommendColors 窗体管理器的建议配色方案
+- Com.WinForm.FormManager 窗口管理器
+- Com.WinForm.RecommendColors 窗口管理器提供的建议配色方案
 
 ### 公开的静态类
 - Com.Animation 使用指定的帧率、帧数与绘制方法呈现动画
