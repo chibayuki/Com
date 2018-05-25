@@ -50,7 +50,7 @@ namespace Com.WinForm
                 _CaptionBarBitmap.Dispose();
             }
 
-            _CaptionBarBitmap = new Bitmap(Math.Max(1, Panel_CaptionBar.Width), Math.Max(1, Math.Min(Panel_CaptionBar.Height, Panel_ControlBox.Height)));
+            _CaptionBarBitmap = new Bitmap(Math.Max(1, Panel_CaptionBar.Width), Math.Max(1, Panel_CaptionBar.Height));
 
             using (Graphics CreateFormCaptionBmp = Graphics.FromImage(_CaptionBarBitmap))
             {
@@ -64,14 +64,21 @@ namespace Com.WinForm
 
                 if (Me.CaptionBarBackgroundImage != null)
                 {
-                    CreateFormCaptionBmp.DrawImage(Me.CaptionBarBackgroundImage, new Point(0, 0));
+                    Bitmap BkgImg = Me.CaptionBarBackgroundImage;
+
+                    if (BkgImg.Width > _CaptionBarBitmap.Width || BkgImg.Height > _CaptionBarBitmap.Height)
+                    {
+                        BkgImg = BkgImg.Clone(new Rectangle(new Point(0, 0), new Size(Math.Min(BkgImg.Width, _CaptionBarBitmap.Width), Math.Min(BkgImg.Height, _CaptionBarBitmap.Height))), BkgImg.PixelFormat);
+                    }
+
+                    CreateFormCaptionBmp.DrawImage(BkgImg, new Point(0, 0));
                 }
 
                 //
 
                 if (Me.Caption.Length > 0)
                 {
-                    Rectangle CaptionArea = new Rectangle(new Point(Panel_FormIcon.Right, 0), new Size(Math.Max(1, Panel_ControlBox.Left - Panel_FormIcon.Right), Math.Max(1, Panel_FormIcon.Height)));
+                    Rectangle CaptionArea = new Rectangle(new Point(Panel_FormIcon.Right, 0), new Size(Math.Max(1, Panel_ControlBox.Left - Panel_FormIcon.Right), Math.Max(1, Panel_CaptionBar.Height)));
 
                     Font CaptionFont = Me.CaptionFont;
 
@@ -85,9 +92,9 @@ namespace Com.WinForm
                         {
                             Caption = Caption.Substring(0, i);
 
-                            SizeF FCSizeF = TextRenderer.MeasureText(Caption + "...", CaptionFont);
+                            SizeF CapSizeF = TextRenderer.MeasureText(Caption + "...", CaptionFont);
 
-                            if (FCSizeF.Width <= CaptionArea.Width)
+                            if (CapSizeF.Width <= CaptionArea.Width)
                             {
                                 Caption += "...";
 
@@ -100,7 +107,37 @@ namespace Com.WinForm
 
                     if (CaptionSizeF.Width <= CaptionArea.Width)
                     {
-                        PointF CaptionLocF = new PointF(CaptionArea.X + (CaptionArea.Width - CaptionSizeF.Width) / 2, CaptionArea.Y + (CaptionArea.Height - CaptionSizeF.Height) / 2);
+                        RectangleF CaptionBounds = new RectangleF(new PointF(CaptionArea.X, Math.Max(0, CaptionArea.Y + (Panel_FormIcon.Height - CaptionSizeF.Height) / 2)), new SizeF(CaptionArea.Width, Math.Max(1, CaptionArea.Height - Math.Max(0, Panel_FormIcon.Height - CaptionSizeF.Height))));
+
+                        PointF CaptionLocF = CaptionBounds.Location;
+
+                        ContentAlignment CA = Me.CaptionAlign;
+
+                        if (CA == ContentAlignment.TopLeft || CA == ContentAlignment.MiddleLeft || CA == ContentAlignment.BottomLeft)
+                        {
+                            CaptionLocF.X = CaptionBounds.X;
+                        }
+                        else if (CA == ContentAlignment.TopCenter || CA == ContentAlignment.MiddleCenter || CA == ContentAlignment.BottomCenter)
+                        {
+                            CaptionLocF.X = CaptionBounds.X + Math.Max(0, (CaptionBounds.Width - CaptionSizeF.Width) / 2);
+                        }
+                        else if (CA == ContentAlignment.TopRight || CA == ContentAlignment.MiddleRight || CA == ContentAlignment.BottomRight)
+                        {
+                            CaptionLocF.X = CaptionBounds.X + Math.Max(0, CaptionBounds.Width - CaptionSizeF.Width);
+                        }
+
+                        if (CA == ContentAlignment.TopLeft || CA == ContentAlignment.TopCenter || CA == ContentAlignment.TopRight)
+                        {
+                            CaptionLocF.Y = CaptionBounds.Y;
+                        }
+                        else if (CA == ContentAlignment.MiddleLeft || CA == ContentAlignment.MiddleCenter || CA == ContentAlignment.MiddleRight)
+                        {
+                            CaptionLocF.Y = CaptionBounds.Y + Math.Max(0, (CaptionBounds.Height - CaptionSizeF.Height) / 2);
+                        }
+                        else if (CA == ContentAlignment.BottomLeft || CA == ContentAlignment.BottomCenter || CA == ContentAlignment.BottomRight)
+                        {
+                            CaptionLocF.Y = CaptionBounds.Y + Math.Max(0, CaptionBounds.Height - CaptionSizeF.Height);
+                        }
 
                         Color Cr_Caption_Fr = Me.RecommendColors.Caption.ToColor();
                         Color Cr_Caption_Bk_Outer, Cr_Caption_Bk_Inner;

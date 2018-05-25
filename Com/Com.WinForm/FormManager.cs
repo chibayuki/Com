@@ -202,7 +202,7 @@ namespace Com.WinForm
         {
             get
             {
-                return Math.Max(_CaptionBarHeight + 46, Math.Min(PrimaryScreenBounds.Width, _MinimumWidth));
+                return Math.Max(Math.Min(32, _CaptionBarHeight) + 46, Math.Min(PrimaryScreenBounds.Width, _MinimumWidth));
             }
         }
 
@@ -286,9 +286,10 @@ namespace Com.WinForm
         private double _Opacity = 1.0; // 窗口的不透明度。
         private string _Caption = string.Empty; // 窗口的标题。
         private Font _CaptionFont = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134); // 窗口标题的字体。
+        private ContentAlignment _CaptionAlign = ContentAlignment.TopCenter; // 窗口标题的文本对齐方式。
+        private Bitmap _CaptionBarBackgroundImage = null; // 标题栏的背景图像。
         private Theme _Theme = Theme.Colorful; // 窗口的主题。
         private ColorX _ThemeColor = ColorX.FromRGB(128, 128, 128); // 窗口的主题色。
-        private Bitmap _CaptionBarBackgroundImage = null; // 标题栏的背景图像。
         private bool _ShowCaptionBarColor = true; // 表示是否在标题栏上显示主题色的布尔值。
         private bool _EnableCaptionBarTransparent = true; // 表示是否允许以半透明方式显示标题栏的布尔值。
         private RecommendColors _RecommendColors = null; // 当前主题建议的颜色。
@@ -2250,6 +2251,58 @@ namespace Com.WinForm
         }
 
         /// <summary>
+        /// 获取或设置窗口标题的文本对齐方式。
+        /// </summary>
+        public ContentAlignment CaptionAlign
+        {
+            get
+            {
+                return _CaptionAlign;
+            }
+
+            set
+            {
+                _CaptionAlign = value;
+
+                if (_Initialized)
+                {
+                    Action InvokeMethod = () =>
+                    {
+                        _CaptionBar.OnCaptionChanged();
+                    };
+
+                    _Client.Invoke(InvokeMethod);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置标题栏的背景图像。
+        /// </summary>
+        public Bitmap CaptionBarBackgroundImage
+        {
+            get
+            {
+                return _CaptionBarBackgroundImage;
+            }
+
+            set
+            {
+                _CaptionBarBackgroundImage = value;
+
+                if (_Initialized)
+                {
+                    Action InvokeMethod = () =>
+                    {
+                        _CaptionBar.OnCaptionChanged();
+                    };
+
+                    _Client.Invoke(InvokeMethod);
+                }
+            }
+        }
+
+        /// <summary>
         /// 获取或设置窗口的主题。
         /// </summary>
         public Theme Theme
@@ -2308,32 +2361,6 @@ namespace Com.WinForm
                         _SplashScreen.OnThemeColorChanged();
 
                         _OnThemeColorChanged();
-                    };
-
-                    _Client.Invoke(InvokeMethod);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置标题栏的背景图像。
-        /// </summary>
-        public Bitmap CaptionBarBackgroundImage
-        {
-            get
-            {
-                return _CaptionBarBackgroundImage;
-            }
-
-            set
-            {
-                _CaptionBarBackgroundImage = value;
-
-                if (_Initialized)
-                {
-                    Action InvokeMethod = () =>
-                    {
-                        _CaptionBar.OnCaptionChanged();
                     };
 
                     _Client.Invoke(InvokeMethod);
