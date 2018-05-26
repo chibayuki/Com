@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.5.25.0000
+Version 18.5.26.0000
 
 This file is part of Com
 
@@ -43,7 +43,7 @@ namespace Com.WinForm
 
         private Bitmap _CaptionBarBitmap; // 标题栏绘图。
 
-        private void _RefreshCaptionBarBitmap() // 更新标题栏绘图。
+        private void _UpdateCaptionBarBitmap() // 更新标题栏绘图。
         {
             if (_CaptionBarBitmap != null)
             {
@@ -173,7 +173,7 @@ namespace Com.WinForm
         {
             if (Me.FormState != FormState.FullScreen)
             {
-                _RefreshCaptionBarBitmap();
+                _UpdateCaptionBarBitmap();
 
                 if (_CaptionBarBitmap != null)
                 {
@@ -304,6 +304,12 @@ namespace Com.WinForm
 
             //
 
+            PictureBox_FullScreen.Size = PictureBox_Minimize.Size = PictureBox_Maximize.Size = PictureBox_Exit.Size = Me.ControlBoxButtonSize;
+
+            Panel_ControlBox.Height = Me.ControlBoxButtonHeight;
+
+            //
+
             _UpdateForStyleOrStateChanged();
 
             //
@@ -359,7 +365,7 @@ namespace Com.WinForm
             {
                 if (_CaptionBarBitmap == null)
                 {
-                    _RefreshCaptionBarBitmap();
+                    _UpdateCaptionBarBitmap();
                 }
 
                 if (_CaptionBarBitmap != null)

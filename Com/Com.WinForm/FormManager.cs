@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.5.25.0000
+Version 18.5.26.0000
 
 This file is part of Com
 
@@ -42,6 +42,7 @@ namespace Com.WinForm
         //
 
         private Form _Client = null; // 表示工作区的 Form 对象。
+
         internal Form Client // 获取表示工作区的 Form 对象。
         {
             get
@@ -51,6 +52,7 @@ namespace Com.WinForm
         }
 
         private CaptionBar _CaptionBar = null; // 表示标题栏的 CaptionBar 对象。
+
         internal CaptionBar CaptionBar // 获取表示标题栏的 CaptionBar 对象。
         {
             get
@@ -60,6 +62,7 @@ namespace Com.WinForm
         }
 
         private Resizer _Resizer = null; // 表示窗口大小调节器的 Resizer 对象。
+
         internal Resizer Resizer // 获取表示窗口大小调节器的 Resizer 对象。
         {
             get
@@ -69,6 +72,7 @@ namespace Com.WinForm
         }
 
         private SplashScreen _SplashScreen = null; // 表示启动屏幕的 SplashScreen 对象。
+
         internal SplashScreen SplashScreen // 获取表示启动屏幕的 SplashScreen 对象。
         {
             get
@@ -141,19 +145,32 @@ namespace Com.WinForm
 
         //
 
-        private FormWindowState _LastFormWindowState = FormWindowState.Normal; // _Client.WindowState 的最终值。
+        private const int _ControlBoxButtonWidth = 46; // 控制按钮的宽度。
+        private const int _ControlBoxButtonHeight = 32; // 控制按钮的高度。
 
-        //
+        internal int ControlBoxButtonWidth // 获取控制按钮的宽度。
+        {
+            get
+            {
+                return _ControlBoxButtonWidth;
+            }
+        }
 
-        private FormStyle _FormStyle = FormStyle.Sizable; // 窗口的样式。
+        internal int ControlBoxButtonHeight // 获取控制按钮的高度。
+        {
+            get
+            {
+                return _ControlBoxButtonHeight;
+            }
+        }
 
-        private bool _EnableFullScreen = true; // 表示是否允许窗口以全屏幕模式运行的布尔值。
-        private bool _TopMost = false; // 表示是否允许窗口置于顶层的布尔值。
-        private bool _ShowInTaskbar = true; // 表示窗口是否在任务栏显示的布尔值。
-
-        //
-
-        private int _CaptionBarHeight = 32; // 标题栏的高度。
+        internal Size ControlBoxButtonSize // 获取控制按钮的大小。
+        {
+            get
+            {
+                return new Size(_ControlBoxButtonWidth, _ControlBoxButtonHeight);
+            }
+        }
 
         //
 
@@ -166,6 +183,22 @@ namespace Com.WinForm
                 return _ResizerSize;
             }
         }
+
+        //
+
+        private FormWindowState _LastFormWindowState = FormWindowState.Normal; // _Client.WindowState 的最终值。
+
+        //
+
+        private FormStyle _FormStyle = FormStyle.Sizable; // 窗口的样式。
+
+        private bool _EnableFullScreen = true; // 表示是否允许窗口以全屏幕模式运行的布尔值。
+        private bool _TopMost = false; // 表示是否允许窗口置于顶层的布尔值。
+        private bool _ShowInTaskbar = true; // 表示窗口是否在任务栏显示的布尔值。
+
+        //
+
+        private int _CaptionBarHeight = _ControlBoxButtonHeight; // 标题栏的高度。
 
         //
 
@@ -202,7 +235,7 @@ namespace Com.WinForm
         {
             get
             {
-                return Math.Max(Math.Min(32, _CaptionBarHeight) + 46, Math.Min(PrimaryScreenBounds.Width, _MinimumWidth));
+                return Math.Max(Math.Min(_ControlBoxButtonHeight, _CaptionBarHeight) + _ControlBoxButtonWidth, Math.Min(PrimaryScreenBounds.Width, _MinimumWidth));
             }
         }
 

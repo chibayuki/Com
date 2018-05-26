@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.Resizer
-Version 18.5.25.0000
+Version 18.5.26.0000
 
 This file is part of Com
 
@@ -40,7 +40,7 @@ namespace Com.WinForm
 
         private Bitmap _ResizerBitmap; // 窗口大小调节器绘图。
 
-        private void _RefreshResizerBitmap() // 更新窗口大小调节器绘图。
+        private void _UpdateResizerBitmap() // 更新窗口大小调节器绘图。
         {
             if (_ResizerBitmap != null)
             {
@@ -76,7 +76,7 @@ namespace Com.WinForm
 
         private void _RepaintResizerBitmap() // 更新并重绘窗口大小调节器绘图。
         {
-            _RefreshResizerBitmap();
+            _UpdateResizerBitmap();
 
             if (_ResizerBitmap != null)
             {

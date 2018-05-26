@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.SplashScreen
-Version 18.5.25.0000
+Version 18.5.26.0000
 
 This file is part of Com
 
@@ -31,7 +31,7 @@ namespace Com.WinForm
 
         private Bitmap _FormSplashBitmap; // 启动屏幕绘图。
 
-        private void _RefreshSplashBitmap() // 更新启动屏幕绘图。
+        private void _UpdateSplashBitmap() // 更新启动屏幕绘图。
         {
             if (_FormSplashBitmap != null)
             {
@@ -77,7 +77,7 @@ namespace Com.WinForm
         {
             if (Panel_SplashScreen.Visible)
             {
-                _RefreshSplashBitmap();
+                _UpdateSplashBitmap();
 
                 if (_FormSplashBitmap != null)
                 {
@@ -121,7 +121,7 @@ namespace Com.WinForm
             {
                 if (_FormSplashBitmap == null)
                 {
-                    _RefreshSplashBitmap();
+                    _UpdateSplashBitmap();
                 }
 
                 if (_FormSplashBitmap != null)
