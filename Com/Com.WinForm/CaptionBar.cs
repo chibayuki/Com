@@ -78,7 +78,7 @@ namespace Com.WinForm
 
                 if (Me.Caption.Length > 0)
                 {
-                    Rectangle CaptionArea = new Rectangle(new Point(Panel_FormIcon.Right, 0), new Size(Math.Max(1, Panel_ControlBox.Left - Panel_FormIcon.Right), Math.Max(1, Panel_CaptionBar.Height)));
+                    Rectangle CaptionArea = new Rectangle(new Point((Me.ShowIconOnCaptionBar ? Panel_FormIcon.Right : 0), 0), new Size(Math.Max(1, Panel_ControlBox.Left - (Me.ShowIconOnCaptionBar ? Panel_FormIcon.Right : 0)), Math.Max(1, Panel_CaptionBar.Height)));
 
                     Font CaptionFont = Me.CaptionFont;
 
@@ -107,7 +107,7 @@ namespace Com.WinForm
 
                     if (CaptionSizeF.Width <= CaptionArea.Width)
                     {
-                        RectangleF CaptionBounds = new RectangleF(new PointF(CaptionArea.X, Math.Max(0, CaptionArea.Y + (Panel_FormIcon.Height - CaptionSizeF.Height) / 2)), new SizeF(CaptionArea.Width, Math.Max(1, CaptionArea.Height - Math.Max(0, Panel_FormIcon.Height - CaptionSizeF.Height))));
+                        RectangleF CaptionBounds = new RectangleF(new PointF(CaptionArea.X, Math.Max(0, CaptionArea.Y + (Math.Min(Panel_CaptionBar.Height, Panel_ControlBox.Height) - CaptionSizeF.Height) / 2)), new SizeF(CaptionArea.Width, Math.Max(1, CaptionArea.Height - Math.Max(0, Math.Min(Panel_CaptionBar.Height, Panel_ControlBox.Height) - CaptionSizeF.Height))));
 
                         PointF CaptionLocF = CaptionBounds.Location;
 
@@ -226,7 +226,7 @@ namespace Com.WinForm
             }
             else
             {
-                Panel_FormIcon.Visible = true;
+                Panel_FormIcon.Visible = Me.ShowIconOnCaptionBar;
 
                 EnableFullScreen = Me.EnableFullScreen;
 
@@ -844,7 +844,8 @@ namespace Com.WinForm
 
         public void OnLoading() // 在 Loading 事件发生时发生。
         {
-            Panel_FormIcon.Visible = Panel_ControlBox.Visible = true;
+            Panel_FormIcon.Visible = Me.ShowIconOnCaptionBar;
+            Panel_ControlBox.Visible = true;
         }
 
         public void OnClosing() // 在 Closing 事件发生时发生。

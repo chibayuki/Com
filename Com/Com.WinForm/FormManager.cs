@@ -35,12 +35,6 @@ namespace Com.WinForm
 
         //
 
-        private static List<FormManager> _FormManagerList = new List<FormManager>(1); // 窗口管理器列表。
-
-        private bool _IsMainForm = false; // 表示此窗口是否为主窗口的布尔值。
-
-        //
-
         private Form _Client = null; // 表示工作区的 Form 对象。
 
         internal Form Client // 获取表示工作区的 Form 对象。
@@ -80,6 +74,12 @@ namespace Com.WinForm
                 return _SplashScreen;
             }
         }
+
+        //
+
+        private static List<FormManager> _FormManagerList = new List<FormManager>(1); // 窗口管理器列表。
+
+        private bool _IsMainForm = false; // 表示此窗口是否为主窗口的布尔值。
 
         //
 
@@ -183,22 +183,6 @@ namespace Com.WinForm
                 return _ResizerSize;
             }
         }
-
-        //
-
-        private FormWindowState _LastFormWindowState = FormWindowState.Normal; // _Client.WindowState 的最终值。
-
-        //
-
-        private FormStyle _FormStyle = FormStyle.Sizable; // 窗口的样式。
-
-        private bool _EnableFullScreen = true; // 表示是否允许窗口以全屏幕模式运行的布尔值。
-        private bool _TopMost = false; // 表示是否允许窗口置于顶层的布尔值。
-        private bool _ShowInTaskbar = true; // 表示窗口是否在任务栏显示的布尔值。
-
-        //
-
-        private int _CaptionBarHeight = _ControlBoxButtonHeight; // 标题栏的高度。
 
         //
 
@@ -310,8 +294,16 @@ namespace Com.WinForm
 
         //
 
-        private FormState _FormState = FormState.Normal; // 窗口的状态。
-        private FormState _FormState_BeforeFullScreen = FormState.Normal; // 进入全屏幕状态之前窗口的状态。
+        private FormStyle _FormStyle = FormStyle.Sizable; // 窗口的样式。
+
+        private bool _EnableFullScreen = true; // 表示是否允许窗口以全屏幕模式运行的布尔值。
+        private bool _ShowIconOnCaptionBar = true; // 表示是否在标题栏上显示图标的布尔值。
+        private bool _TopMost = false; // 表示是否允许窗口置于顶层的布尔值。
+        private bool _ShowInTaskbar = true; // 表示窗口是否在任务栏显示的布尔值。
+
+        //
+
+        private int _CaptionBarHeight = _ControlBoxButtonHeight; // 标题栏的高度。
 
         //
 
@@ -326,6 +318,15 @@ namespace Com.WinForm
         private bool _ShowCaptionBarColor = true; // 表示是否在标题栏上显示主题色的布尔值。
         private bool _EnableCaptionBarTransparent = true; // 表示是否允许以半透明方式显示标题栏的布尔值。
         private RecommendColors _RecommendColors = null; // 当前主题建议的颜色。
+
+        //
+
+        private FormWindowState _LastFormWindowState = FormWindowState.Normal; // _Client.WindowState 的最终值。
+
+        //
+
+        private FormState _FormState = FormState.Normal; // 窗口的状态。
+        private FormState _FormState_BeforeFullScreen = FormState.Normal; // 进入全屏幕状态之前窗口的状态。
 
         //
 
@@ -1862,6 +1863,48 @@ namespace Com.WinForm
         //
 
         /// <summary>
+        /// 获取或设置窗口的最小大小。
+        /// </summary>
+        public Size MinimumSize
+        {
+            get
+            {
+                return new Size(_MinimumWidth, _MinimumHeight);
+            }
+
+            set
+            {
+                if (!_Initialized)
+                {
+                    _MinimumWidth = Math.Max(0, value.Width);
+                    _MinimumHeight = Math.Max(0, value.Height);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置窗口的最大大小。
+        /// </summary>
+        public Size MaximumSize
+        {
+            get
+            {
+                return new Size(_MaximumWidth, _MaximumHeight);
+            }
+
+            set
+            {
+                if (!_Initialized)
+                {
+                    _MaximumWidth = Math.Max(0, value.Width);
+                    _MaximumHeight = Math.Max(0, value.Height);
+                }
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 获取或设置窗口的样式。
         /// </summary>
         public FormStyle FormStyle
@@ -1932,6 +1975,32 @@ namespace Com.WinForm
                         }
 
                         _OnFormStyleChanged();
+                    };
+
+                    _Client.Invoke(InvokeMethod);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示是否在标题栏上显示图标的布尔值。
+        /// </summary>
+        public bool ShowIconOnCaptionBar
+        {
+            get
+            {
+                return _ShowIconOnCaptionBar;
+            }
+
+            set
+            {
+                _ShowIconOnCaptionBar = value;
+
+                if (_Initialized)
+                {
+                    Action InvokeMethod = () =>
+                    {
+                        _CaptionBar.OnFormStyleChanged();
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -2025,135 +2094,6 @@ namespace Com.WinForm
 
                     _Client.Invoke(InvokeMethod);
                 }
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取或设置窗口的最小大小。
-        /// </summary>
-        public Size MinimumSize
-        {
-            get
-            {
-                return new Size(_MinimumWidth, _MinimumHeight);
-            }
-
-            set
-            {
-                if (!_Initialized)
-                {
-                    _MinimumWidth = Math.Max(0, value.Width);
-                    _MinimumHeight = Math.Max(0, value.Height);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置窗口的最大大小。
-        /// </summary>
-        public Size MaximumSize
-        {
-            get
-            {
-                return new Size(_MaximumWidth, _MaximumHeight);
-            }
-
-            set
-            {
-                if (!_Initialized)
-                {
-                    _MaximumWidth = Math.Max(0, value.Width);
-                    _MaximumHeight = Math.Max(0, value.Height);
-                }
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取或设置窗口的状态。
-        /// </summary>
-        public FormState FormState
-        {
-            get
-            {
-                if (_Client.WindowState == FormWindowState.Minimized)
-                {
-                    return FormState.Minimized;
-                }
-
-                return _FormState;
-            }
-
-            set
-            {
-                Action InvokeMethod = () =>
-                {
-                    if (_Client.WindowState == FormWindowState.Minimized)
-                    {
-                        if (value == FormState.Normal || value == _FormState)
-                        {
-                            if (_Initialized)
-                            {
-                                Return();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (_FormState == FormState.FullScreen && (value == FormState.Normal || value == _FormState_BeforeFullScreen))
-                        {
-                            if (_Initialized)
-                            {
-                                ExitFullScreen();
-                            }
-                        }
-                        else if (_FormState != FormState.Normal && value == FormState.Normal)
-                        {
-                            if (_Initialized)
-                            {
-                                Return();
-                            }
-                            else
-                            {
-                                _FormState = FormState.Normal;
-                            }
-                        }
-                        else if (value == FormState.Minimized)
-                        {
-                            if (_Initialized)
-                            {
-                                Minimize();
-                            }
-                        }
-                        else if (_FormState != FormState.Maximized && value == FormState.Maximized)
-                        {
-                            if (_Initialized)
-                            {
-                                Maximize();
-                            }
-                            else if (_FormStyle == FormStyle.Sizable)
-                            {
-                                _FormState = FormState.Maximized;
-                            }
-                        }
-                        else if (_FormState != FormState.FullScreen && value == FormState.FullScreen)
-                        {
-                            if (_Initialized)
-                            {
-                                EnterFullScreen();
-                            }
-                            else if (_EnableFullScreen)
-                            {
-                                _FormState = FormState.FullScreen;
-                            }
-                        }
-                    }
-                };
-
-                _Client.Invoke(InvokeMethod);
             }
         }
 
@@ -2467,6 +2407,93 @@ namespace Com.WinForm
             get
             {
                 return _RecommendColors;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取或设置窗口的状态。
+        /// </summary>
+        public FormState FormState
+        {
+            get
+            {
+                if (_Client.WindowState == FormWindowState.Minimized)
+                {
+                    return FormState.Minimized;
+                }
+
+                return _FormState;
+            }
+
+            set
+            {
+                Action InvokeMethod = () =>
+                {
+                    if (_Client.WindowState == FormWindowState.Minimized)
+                    {
+                        if (value == FormState.Normal || value == _FormState)
+                        {
+                            if (_Initialized)
+                            {
+                                Return();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (_FormState == FormState.FullScreen && (value == FormState.Normal || value == _FormState_BeforeFullScreen))
+                        {
+                            if (_Initialized)
+                            {
+                                ExitFullScreen();
+                            }
+                        }
+                        else if (_FormState != FormState.Normal && value == FormState.Normal)
+                        {
+                            if (_Initialized)
+                            {
+                                Return();
+                            }
+                            else
+                            {
+                                _FormState = FormState.Normal;
+                            }
+                        }
+                        else if (value == FormState.Minimized)
+                        {
+                            if (_Initialized)
+                            {
+                                Minimize();
+                            }
+                        }
+                        else if (_FormState != FormState.Maximized && value == FormState.Maximized)
+                        {
+                            if (_Initialized)
+                            {
+                                Maximize();
+                            }
+                            else if (_FormStyle == FormStyle.Sizable)
+                            {
+                                _FormState = FormState.Maximized;
+                            }
+                        }
+                        else if (_FormState != FormState.FullScreen && value == FormState.FullScreen)
+                        {
+                            if (_Initialized)
+                            {
+                                EnterFullScreen();
+                            }
+                            else if (_EnableFullScreen)
+                            {
+                                _FormState = FormState.FullScreen;
+                            }
+                        }
+                    }
+                };
+
+                _Client.Invoke(InvokeMethod);
             }
         }
 
