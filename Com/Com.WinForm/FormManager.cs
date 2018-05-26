@@ -1456,9 +1456,12 @@ namespace Com.WinForm
                 //
 
                 _Opacity = _Owner._Opacity;
+                _CaptionFont = _Owner._CaptionFont;
+                _CaptionAlign = _Owner._CaptionAlign;
                 _Theme = _Owner._Theme;
                 _ThemeColor = _Owner._ThemeColor;
                 _ShowCaptionBarColor = _Owner._ShowCaptionBarColor;
+                _EnableCaptionBarTransparent = _Owner._EnableCaptionBarTransparent;
             }
 
             //
