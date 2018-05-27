@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Text
-Version 18.5.25.0000
+Version 18.5.27.0000
 
 This file is part of Com
 
@@ -312,7 +312,7 @@ namespace Com
 
                     meter = Math.Abs(meter);
 
-                    return string.Concat(((Sign == -1 ? "-" : string.Empty), (meter >= 9460730472580800E12 ? string.Concat(meter / 9460730472580800E12, " Tly") : (meter >= 9460730472580800E9 ? string.Concat(meter / 9460730472580800E9, " Gly") : (meter >= 9460730472580800E6 ? string.Concat(meter / 9460730472580800E6, " Mly") : (meter >= 9460730472580800E3 ? string.Concat(meter / 9460730472580800E3, " kly") : (meter >= 9460730472580800.0 ? string.Concat(meter / 9460730472580800.0, " ly") : (meter >= 149597870700.0 ? string.Concat(meter / 149597870700.0, " AU") : (meter >= 1000.0 ? string.Concat(meter / 1000.0, " km") : string.Concat(meter, " m"))))))))));
+                    return string.Concat((Sign == -1 ? "-" : string.Empty), (meter >= 9460730472580800E12 ? string.Concat(meter / 9460730472580800E12, " Tly") : (meter >= 9460730472580800E9 ? string.Concat(meter / 9460730472580800E9, " Gly") : (meter >= 9460730472580800E6 ? string.Concat(meter / 9460730472580800E6, " Mly") : (meter >= 9460730472580800E3 ? string.Concat(meter / 9460730472580800E3, " kly") : (meter >= 9460730472580800.0 ? string.Concat(meter / 9460730472580800.0, " ly") : (meter >= 149597870700.0 ? string.Concat(meter / 149597870700.0, " AU") : (meter >= 1000.0 ? string.Concat(meter / 1000.0, " km") : string.Concat(meter, " m")))))))));
                 }
 
                 return "0";
