@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.5.26.0000
+Version 18.5.27.0000
 
 This file is part of Com
 
@@ -811,15 +811,24 @@ namespace Com.WinForm
 
             _Resizer.Bounds = new Rectangle(new Point(Bounds_Current_X - _ResizerSize, Bounds_Current_Y - _ResizerSize), new Size(Bounds_Current_Width + 2 * _ResizerSize, Bounds_Current_Height + 2 * _ResizerSize));
 
-            if (updateLayoutEventType == UpdateLayoutEventType.Manual)
-            {
-                _OnMove();
-                _OnResize();
-            }
-            else if (updateLayoutEventType == UpdateLayoutEventType.All)
+            //
+
+            if (updateLayoutEventType.HasFlag(UpdateLayoutEventType.LocationChanged))
             {
                 _OnLocationChanged();
+            }
+            else if (updateLayoutEventType.HasFlag(UpdateLayoutEventType.Move))
+            {
+                _OnMove();
+            }
+
+            if (updateLayoutEventType.HasFlag(UpdateLayoutEventType.SizeChanged))
+            {
                 _OnSizeChanged();
+            }
+            else if (updateLayoutEventType.HasFlag(UpdateLayoutEventType.Resize))
+            {
+                _OnResize();
             }
         }
 
@@ -1068,7 +1077,7 @@ namespace Com.WinForm
             Rectangle NewBounds = Bounds_Current;
             Bounds_Current = OldBounds;
 
-            _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.Static, UpdateLayoutEventType.All);
+            _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.Static, UpdateLayoutEventType.Result);
 
             _OnFormStateChanged();
         }
@@ -1916,35 +1925,38 @@ namespace Com.WinForm
 
             set
             {
-                _FormStyle = value;
-
-                if (_Initialized)
+                if (_FormStyle != value)
                 {
-                    Action InvokeMethod = () =>
+                    _FormStyle = value;
+
+                    if (_Initialized)
                     {
-                        _CaptionBar.OnFormStyleChanged();
-                        _Resizer.OnFormStyleChanged();
-
-                        if (_FormStyle == FormStyle.Dialog && _Client.WindowState == FormWindowState.Minimized)
+                        Action InvokeMethod = () =>
                         {
-                            if (_FormState == FormState.FullScreen)
-                            {
-                                _Client.WindowState = FormWindowState.Maximized;
-                            }
-                            else
-                            {
-                                _Client.WindowState = FormWindowState.Normal;
-                            }
-                        }
-                        else if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.FullScreen))
-                        {
-                            _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
-                        }
+                            _CaptionBar.OnFormStyleChanged();
+                            _Resizer.OnFormStyleChanged();
 
-                        _OnFormStyleChanged();
-                    };
+                            if (_FormStyle == FormStyle.Dialog && _Client.WindowState == FormWindowState.Minimized)
+                            {
+                                if (_FormState == FormState.FullScreen)
+                                {
+                                    _Client.WindowState = FormWindowState.Maximized;
+                                }
+                                else
+                                {
+                                    _Client.WindowState = FormWindowState.Normal;
+                                }
+                            }
+                            else if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.FullScreen))
+                            {
+                                _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
+                            }
 
-                    _Client.Invoke(InvokeMethod);
+                            _OnFormStyleChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -1961,23 +1973,26 @@ namespace Com.WinForm
 
             set
             {
-                _EnableFullScreen = value;
-
-                if (_Initialized)
+                if (_EnableFullScreen != value)
                 {
-                    Action InvokeMethod = () =>
+                    _EnableFullScreen = value;
+
+                    if (_Initialized)
                     {
-                        _CaptionBar.OnFormStyleChanged();
-
-                        if (!_EnableFullScreen && _FormState == FormState.FullScreen)
+                        Action InvokeMethod = () =>
                         {
-                            _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
-                        }
+                            _CaptionBar.OnFormStyleChanged();
 
-                        _OnFormStyleChanged();
-                    };
+                            if (!_EnableFullScreen && _FormState == FormState.FullScreen)
+                            {
+                                _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
+                            }
 
-                    _Client.Invoke(InvokeMethod);
+                            _OnFormStyleChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -1994,16 +2009,19 @@ namespace Com.WinForm
 
             set
             {
-                _ShowIconOnCaptionBar = value;
-
-                if (_Initialized)
+                if (_ShowIconOnCaptionBar != value)
                 {
-                    Action InvokeMethod = () =>
-                    {
-                        _CaptionBar.OnFormStyleChanged();
-                    };
+                    _ShowIconOnCaptionBar = value;
 
-                    _Client.Invoke(InvokeMethod);
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnFormStyleChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2020,18 +2038,21 @@ namespace Com.WinForm
 
             set
             {
-                _TopMost = value;
-
-                if (_Initialized)
+                if (_TopMost != value)
                 {
-                    Action InvokeMethod = () =>
+                    _TopMost = value;
+
+                    if (_Initialized)
                     {
-                        _Client.TopMost = _TopMost;
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.TopMost = _TopMost;
 
-                        _OnFormStyleChanged();
-                    };
+                            _OnFormStyleChanged();
+                        };
 
-                    _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2048,23 +2069,26 @@ namespace Com.WinForm
 
             set
             {
-                _ShowInTaskbar = value;
-
-                if (_Initialized)
+                if (_ShowInTaskbar != value)
                 {
-                    Action InvokeMethod = () =>
+                    _ShowInTaskbar = value;
+
+                    if (_Initialized)
                     {
-                        _Client.ShowInTaskbar = _ShowInTaskbar;
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.ShowInTaskbar = _ShowInTaskbar;
 
-                        _Resizer.BringToFront();
-                        _CaptionBar.BringToFront();
-                        _Client.BringToFront();
-                        _Client.Focus();
+                            _Resizer.BringToFront();
+                            _CaptionBar.BringToFront();
+                            _Client.BringToFront();
+                            _Client.Focus();
 
-                        _OnFormStyleChanged();
-                    };
+                            _OnFormStyleChanged();
+                        };
 
-                    _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2089,7 +2113,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _UpdateLayout(UpdateLayoutEventType.All);
+                        _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -2111,18 +2135,21 @@ namespace Com.WinForm
 
             set
             {
-                _Enabled = value;
-
-                if (_Initialized)
+                if (_Enabled != value && (_Owned.Count <= 0 || (_Owned.Count > 0 && value == false)))
                 {
-                    Action InvokeMethod = () =>
+                    _Enabled = value;
+
+                    if (_Initialized)
                     {
-                        _Client.Enabled = _CaptionBar.Enabled = _Resizer.Enabled = _SplashScreen.Enabled = _Enabled;
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.Enabled = _CaptionBar.Enabled = _Resizer.Enabled = _SplashScreen.Enabled = _Enabled;
 
-                        _OnEnabledChanged();
-                    };
+                            _OnEnabledChanged();
+                        };
 
-                    _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2141,31 +2168,36 @@ namespace Com.WinForm
             {
                 if (double.IsNaN(value) || double.IsInfinity(value))
                 {
-                    _Opacity = 1;
+                    value = 1;
                 }
                 else
                 {
-                    _Opacity = Math.Max(0, Math.Min(value, 100));
+                    value = Math.Max(0, Math.Min(value, 100));
 
-                    if (_Opacity > 1)
+                    if (value > 1)
                     {
-                        _Opacity /= 100;
+                        value /= 100;
                     }
                 }
 
-                if (_Initialized)
+                if (_Opacity != value)
                 {
-                    Action InvokeMethod = () =>
+                    _Opacity = value;
+
+                    if (_Initialized)
                     {
-                        _Client.Opacity = _SplashScreen.Opacity = _Opacity;
-                        _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.Opacity = _SplashScreen.Opacity = _Opacity;
+                            _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
 
-                        _Resizer.OnOpacityChanged();
+                            _Resizer.OnOpacityChanged();
 
-                        _OnOpacityChanged();
-                    };
+                            _OnOpacityChanged();
+                        };
 
-                    _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2182,20 +2214,23 @@ namespace Com.WinForm
 
             set
             {
-                _Caption = value;
-
-                if (_Initialized)
+                if (_Caption != value)
                 {
-                    Action InvokeMethod = () =>
+                    _Caption = value;
+
+                    if (_Initialized)
                     {
-                        _Client.Text = _Caption;
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.Text = _Caption;
 
-                        _CaptionBar.OnCaptionChanged();
+                            _CaptionBar.OnCaptionChanged();
 
-                        _OnCaptionChanged();
-                    };
+                            _OnCaptionChanged();
+                        };
 
-                    _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2212,16 +2247,19 @@ namespace Com.WinForm
 
             set
             {
-                _CaptionFont = value;
-
-                if (_Initialized)
+                if (!_CaptionFont.Equals(value))
                 {
-                    Action InvokeMethod = () =>
-                    {
-                        _CaptionBar.OnCaptionChanged();
-                    };
+                    _CaptionFont = value;
 
-                    _Client.Invoke(InvokeMethod);
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnCaptionChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2238,16 +2276,19 @@ namespace Com.WinForm
 
             set
             {
-                _CaptionAlign = value;
-
-                if (_Initialized)
+                if (_CaptionAlign != value)
                 {
-                    Action InvokeMethod = () =>
-                    {
-                        _CaptionBar.OnCaptionChanged();
-                    };
+                    _CaptionAlign = value;
 
-                    _Client.Invoke(InvokeMethod);
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnCaptionChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2290,23 +2331,26 @@ namespace Com.WinForm
 
             set
             {
-                _Theme = value;
-
-                _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
-
-                if (_Initialized)
+                if (_Theme != value)
                 {
-                    Action InvokeMethod = () =>
+                    _Theme = value;
+
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
+
+                    if (_Initialized)
                     {
-                        _Client.BackColor = RecommendColors.FormBackground.ToColor();
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.BackColor = RecommendColors.FormBackground.ToColor();
 
-                        _CaptionBar.OnThemeChanged();
-                        _SplashScreen.OnThemeChanged();
+                            _CaptionBar.OnThemeChanged();
+                            _SplashScreen.OnThemeChanged();
 
-                        _OnThemeChanged();
-                    };
+                            _OnThemeChanged();
+                        };
 
-                    _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2323,23 +2367,26 @@ namespace Com.WinForm
 
             set
             {
-                _ThemeColor = value;
-
-                _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
-
-                if (_Initialized)
+                if (!_ThemeColor.Equals(value))
                 {
-                    Action InvokeMethod = () =>
+                    _ThemeColor = value;
+
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
+
+                    if (_Initialized)
                     {
-                        _Client.BackColor = RecommendColors.FormBackground.ToColor();
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.BackColor = RecommendColors.FormBackground.ToColor();
 
-                        _CaptionBar.OnThemeColorChanged();
-                        _SplashScreen.OnThemeColorChanged();
+                            _CaptionBar.OnThemeColorChanged();
+                            _SplashScreen.OnThemeColorChanged();
 
-                        _OnThemeColorChanged();
-                    };
+                            _OnThemeColorChanged();
+                        };
 
-                    _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2356,19 +2403,22 @@ namespace Com.WinForm
 
             set
             {
-                _ShowCaptionBarColor = value;
-
-                _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
-
-                if (_Initialized)
+                if (_ShowCaptionBarColor != value)
                 {
-                    Action InvokeMethod = () =>
-                    {
-                        _CaptionBar.OnThemeChanged();
-                        _SplashScreen.OnThemeChanged();
-                    };
+                    _ShowCaptionBarColor = value;
 
-                    _Client.Invoke(InvokeMethod);
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnThemeChanged();
+                            _SplashScreen.OnThemeChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2385,16 +2435,19 @@ namespace Com.WinForm
 
             set
             {
-                _EnableCaptionBarTransparent = value;
-
-                if (_Initialized)
+                if (_EnableCaptionBarTransparent != value)
                 {
-                    Action InvokeMethod = () =>
-                    {
-                        _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
-                    };
+                    _EnableCaptionBarTransparent = value;
 
-                    _Client.Invoke(InvokeMethod);
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2532,7 +2585,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _UpdateLayout(UpdateLayoutEventType.All);
+                        _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -2569,7 +2622,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _UpdateLayout(UpdateLayoutEventType.All);
+                        _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -2664,7 +2717,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _UpdateLayout(UpdateLayoutEventType.All);
+                        _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -2703,7 +2756,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _UpdateLayout(UpdateLayoutEventType.All);
+                        _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -2738,7 +2791,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _UpdateLayout(UpdateLayoutEventType.All);
+                        _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -2777,7 +2830,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _UpdateLayout(UpdateLayoutEventType.All);
+                        _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -2821,7 +2874,7 @@ namespace Com.WinForm
                 {
                     Action InvokeMethod = () =>
                     {
-                        _UpdateLayout(UpdateLayoutEventType.All);
+                        _UpdateLayout(UpdateLayoutEventType.Result);
                     };
 
                     _Client.Invoke(InvokeMethod);
@@ -3298,13 +3351,13 @@ namespace Com.WinForm
                 {
                     if (_CanExitFullScreen())
                     {
-                        _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                        _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                         return true;
                     }
                     else if (_CanReturn())
                     {
-                        _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                        _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                         return true;
                     }
@@ -3345,7 +3398,7 @@ namespace Com.WinForm
             {
                 if (_CanMaximize())
                 {
-                    _Maximize(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _Maximize(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3365,7 +3418,7 @@ namespace Com.WinForm
             {
                 if (_CanEnterFullScreen())
                 {
-                    _EnterFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _EnterFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3385,7 +3438,7 @@ namespace Com.WinForm
             {
                 if (_CanExitFullScreen())
                 {
-                    _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3405,7 +3458,7 @@ namespace Com.WinForm
             {
                 if (_CanHighAsScreen())
                 {
-                    _LeftHalfScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _LeftHalfScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3425,7 +3478,7 @@ namespace Com.WinForm
             {
                 if (_CanHighAsScreen())
                 {
-                    _RightHalfScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _RightHalfScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3445,7 +3498,7 @@ namespace Com.WinForm
             {
                 if (_CanHighAsScreen())
                 {
-                    _HighAsScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _HighAsScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3465,7 +3518,7 @@ namespace Com.WinForm
             {
                 if (_CanQuarterScreen())
                 {
-                    _TopLeftQuarterScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _TopLeftQuarterScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3485,7 +3538,7 @@ namespace Com.WinForm
             {
                 if (_CanQuarterScreen())
                 {
-                    _TopRightQuarterScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _TopRightQuarterScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3505,7 +3558,7 @@ namespace Com.WinForm
             {
                 if (_CanQuarterScreen())
                 {
-                    _BottomLeftQuarterScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _BottomLeftQuarterScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }
@@ -3525,7 +3578,7 @@ namespace Com.WinForm
             {
                 if (_CanQuarterScreen())
                 {
-                    _BottomRightQuarterScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.All);
+                    _BottomRightQuarterScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
 
                     return true;
                 }

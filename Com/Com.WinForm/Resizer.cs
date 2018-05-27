@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.Resizer
-Version 18.5.26.0000
+Version 18.5.27.0000
 
 This file is part of Com
 
@@ -200,14 +200,14 @@ namespace Com.WinForm
                     {
                         if (!Me.HighAsScreen())
                         {
-                            Me.UpdateLayout(UpdateLayoutEventType.All);
+                            Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
                     else
                     {
                         Me.Bounds_Normal = Me.Bounds_Current;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.All);
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
@@ -215,7 +215,7 @@ namespace Com.WinForm
                     Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
                     Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
             }
 
@@ -327,14 +327,14 @@ namespace Com.WinForm
                     {
                         if (!Me.HighAsScreen())
                         {
-                            Me.UpdateLayout(UpdateLayoutEventType.All);
+                            Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
                     else
                     {
                         Me.Bounds_Normal = Me.Bounds_Current;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.All);
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
@@ -342,7 +342,7 @@ namespace Com.WinForm
                     Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
                     Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
             }
 
@@ -430,14 +430,14 @@ namespace Com.WinForm
                     Me.Bounds_Normal_X = Me.Bounds_Current_X;
                     Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     Me.Bounds_QuarterScreen_X = Me.Bounds_Current_X;
                     Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
             }
 
@@ -533,13 +533,13 @@ namespace Com.WinForm
                 {
                     Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
             }
 
@@ -624,21 +624,21 @@ namespace Com.WinForm
 
                         if (!Me.HighAsScreen())
                         {
-                            Me.UpdateLayout(UpdateLayoutEventType.All);
+                            Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
                     else
                     {
                         Me.Bounds_Normal = Me.Bounds_Current;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.All);
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
             }
 
@@ -782,21 +782,21 @@ namespace Com.WinForm
 
                         if (!Me.HighAsScreen())
                         {
-                            Me.UpdateLayout(UpdateLayoutEventType.All);
+                            Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
                     else
                     {
                         Me.Bounds_Normal = Me.Bounds_Current;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.All);
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
             }
 
@@ -924,21 +924,21 @@ namespace Com.WinForm
 
                         if (!Me.HighAsScreen())
                         {
-                            Me.UpdateLayout(UpdateLayoutEventType.All);
+                            Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
                     else
                     {
                         Me.Bounds_Normal = Me.Bounds_Current;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.All);
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
             }
 
@@ -1068,21 +1068,21 @@ namespace Com.WinForm
 
                         if (!Me.HighAsScreen())
                         {
-                            Me.UpdateLayout(UpdateLayoutEventType.All);
+                            Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
                     else
                     {
                         Me.Bounds_Normal = Me.Bounds_Current;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.All);
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.Result);
                 }
             }
 
@@ -1169,7 +1169,7 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            Me.UpdateLayout(UpdateLayoutEventType.Manual);
+            Me.UpdateLayout(UpdateLayoutEventType.Process);
 
             _LastUpdateLayout = DateTime.Now;
         }

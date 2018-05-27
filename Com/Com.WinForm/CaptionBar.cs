@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.5.26.0000
+Version 18.5.27.0000
 
 This file is part of Com
 
@@ -420,7 +420,7 @@ namespace Com.WinForm
                 {
                     Me.Bounds_Current_Y = Math.Max(Me.Bounds_Current_Location.Y, FormManager.PrimaryScreenClient.Y);
 
-                    Me.UpdateLayout(UpdateLayoutEventType.All);
+                    Me.UpdateLayout(UpdateLayoutEventType.LocationChanged);
 
                     if (Me.FormState != FormState.HighAsScreen)
                     {
@@ -538,7 +538,7 @@ namespace Com.WinForm
 
                             Me.Bounds_Current_Location = new Point(FormManager.CursorPosition.X - _CursorPositionOfMe.X, FormManager.CursorPosition.Y - _CursorPositionOfMe.Y);
 
-                            Me.UpdateLayout(UpdateLayoutEventType.All);
+                            Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
                     else
@@ -820,7 +820,7 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            Me.UpdateLayout(UpdateLayoutEventType.Manual);
+            Me.UpdateLayout(UpdateLayoutEventType.Process);
 
             _LastUpdateLayout = DateTime.Now;
         }
