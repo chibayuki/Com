@@ -26,4 +26,4 @@ Com是一个DLL，用于支持线性代数运算、位运算、天文学日期�
 - Com.WinForm.ControlSubstitution 提供控件的替代使用方案
 
 ### License
-[GPLv3](Com/LicenseInfo/GPLv3.txt)
+Com is released under [GPLv3](Com/LicenseInfo/GPLv3.txt).
