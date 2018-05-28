@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.5.28.0000
+Version 18.5.29.0000
 
 This file is part of Com
 
@@ -1776,6 +1776,10 @@ namespace Com.WinForm
 
             //
 
+            _OnClosed();
+
+            //
+
             _Client.ShowInTaskbar = false;
 
             //
@@ -1799,10 +1803,6 @@ namespace Com.WinForm
             };
 
             Animation.Show(Frame, 9, 15);
-
-            //
-
-            _OnClosed();
 
             //
 
