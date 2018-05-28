@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.ColorX
-Version 18.5.25.0000
+Version 18.5.28.0000
 
 This file is part of Com
 
@@ -1144,7 +1144,7 @@ namespace Com
 
         #endregion
 
-        #region 构造与析构函数
+        #region 构造函数
 
         /// <summary>
         /// 使用 Color 结构初始化 ColorX 结构的新实例。

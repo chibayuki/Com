@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.DateTimeX
-Version 18.5.25.0000
+Version 18.5.28.0000
 
 This file is part of Com
 
@@ -481,7 +481,7 @@ namespace Com
 
         #endregion
 
-        #region 构造与析构函数
+        #region 构造函数
 
         /// <summary>
         /// 使用十进制数表示的自公元时刻以来的总毫秒与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数数初始化 DateTimeX 结构的新实例。

@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.PointD3D
-Version 18.5.25.0000
+Version 18.5.28.0000
 
 This file is part of Com
 
@@ -63,7 +63,7 @@ namespace Com
 
         #endregion
 
-        #region 构造与析构函数
+        #region 构造函数
 
         /// <summary>
         /// 使用双精度浮点数表示的 X 坐标、Y 坐标与 Z 坐标初始化 PointD3D 结构的新实例。

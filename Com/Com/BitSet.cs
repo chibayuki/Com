@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.BitSet
-Version 18.5.25.0000
+Version 18.5.28.0000
 
 This file is part of Com
 
@@ -67,7 +67,7 @@ namespace Com
 
         #endregion
 
-        #region 构造与析构函数
+        #region 构造函数
 
         /// <summary>
         /// 使用指定的元素数量与默认的位值（false）初始化 BitSet 的新实例。
