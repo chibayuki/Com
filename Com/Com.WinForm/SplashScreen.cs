@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.SplashScreen
-Version 18.5.26.0000
+Version 18.5.28.0000
 
 This file is part of Com
 
@@ -133,7 +133,7 @@ namespace Com.WinForm
 
         #endregion
 
-        #region 构造与析构函数
+        #region 构造函数
 
         public SplashScreen(FormManager formManager) // 使用 FormManager 对象初始化 SplashScreen 的新实例。
         {

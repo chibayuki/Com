@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.Resizer
-Version 18.5.27.0000
+Version 18.5.28.0000
 
 This file is part of Com
 
@@ -1176,7 +1176,7 @@ namespace Com.WinForm
 
         #endregion
 
-        #region 构造与析构函数
+        #region 构造函数
 
         public Resizer(FormManager formManager) // 使用 FormManager 对象初始化 Resizer 的新实例。
         {

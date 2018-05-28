@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.5.27.0000
+Version 18.5.28.0000
 
 This file is part of Com
 
@@ -1380,6 +1380,17 @@ namespace Com.WinForm
 
                 //
 
+                _FormManagerList.Remove(this);
+
+                //
+
+                if (_Owner != null)
+                {
+                    _Owner._RemoveOwned(this);
+                }
+
+                //
+
                 _Client.Close();
             }
         }
@@ -1401,6 +1412,17 @@ namespace Com.WinForm
 
                 _OnClosing();
                 _OnClosed();
+            }
+
+            //
+
+            _FormManagerList.Remove(this);
+
+            //
+
+            if (_Owner != null)
+            {
+                _Owner._RemoveOwned(this);
             }
 
             //
@@ -1513,18 +1535,6 @@ namespace Com.WinForm
             //
 
             _LoadingNow = true;
-        }
-
-        private void _Dtor() // 为析构函数提供实现。
-        {
-            _FormManagerList.Remove(this);
-
-            //
-
-            if (_Owner != null)
-            {
-                _Owner._RemoveOwned(this);
-            }
         }
 
         #endregion
@@ -1796,12 +1806,23 @@ namespace Com.WinForm
 
             //
 
+            _FormManagerList.Remove(this);
+
+            //
+
+            if (_Owner != null)
+            {
+                _Owner._RemoveOwned(this);
+            }
+
+            //
+
             _Client.Close();
         }
 
         #endregion
 
-        #region 构造与析构函数
+        #region 构造函数
 
         /// <summary>
         /// 使用 Form 对象初始化 FormManager 的新实例。
@@ -1820,14 +1841,6 @@ namespace Com.WinForm
         public FormManager(Form client, FormManager owner)
         {
             _Ctor(client, owner);
-        }
-
-        /// <summary>
-        /// 在垃圾回收将此 FormManager 对象回收前尝试释放资源并执行其他清理操作。
-        /// </summary>
-        ~FormManager()
-        {
-            _Dtor();
         }
 
         #endregion
@@ -3607,6 +3620,158 @@ namespace Com.WinForm
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
+        }
+
+        //
+
+        /// <summary>
+        /// 引发 Loading 事件。
+        /// </summary>
+        public void OnLoading()
+        {
+            Action InvokeMethod = () => _OnLoading();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 Loaded 事件。
+        /// </summary>
+        public void OnLoaded()
+        {
+            Action InvokeMethod = () => _OnLoaded();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 Closing 事件。
+        /// </summary>
+        public void OnClosing()
+        {
+            Action InvokeMethod = () => _OnClosing();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 Closed 事件。
+        /// </summary>
+        public void OnClosed()
+        {
+            Action InvokeMethod = () => _OnClosed();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 Move 事件。
+        /// </summary>
+        public void OnMove()
+        {
+            Action InvokeMethod = () => _OnMove();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 LocationChanged 事件。
+        /// </summary>
+        public void OnLocationChanged()
+        {
+            Action InvokeMethod = () => _OnLocationChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 Resize 事件。
+        /// </summary>
+        public void OnResize()
+        {
+            Action InvokeMethod = () => _OnResize();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 SizeChanged 事件。
+        /// </summary>
+        public void OnSizeChanged()
+        {
+            Action InvokeMethod = () => _OnSizeChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 FormStyleChanged 事件。
+        /// </summary>
+        public void OnFormStyleChanged()
+        {
+            Action InvokeMethod = () => _OnFormStyleChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 FormStateChanged 事件。
+        /// </summary>
+        public void OnFormStateChanged()
+        {
+            Action InvokeMethod = () => _OnFormStateChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 EnabledChanged 事件。
+        /// </summary>
+        public void OnEnabledChanged()
+        {
+            Action InvokeMethod = () => _OnEnabledChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 OpacityChanged 事件。
+        /// </summary>
+        public void OnOpacityChanged()
+        {
+            Action InvokeMethod = () => _OnOpacityChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 CaptionChanged 事件。
+        /// </summary>
+        public void OnCaptionChanged()
+        {
+            Action InvokeMethod = () => _OnCaptionChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 ThemeChanged 事件。
+        /// </summary>
+        public void OnThemeChanged()
+        {
+            Action InvokeMethod = () => _OnThemeChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 ThemeColorChanged 事件。
+        /// </summary>
+        public void OnThemeColorChanged()
+        {
+            Action InvokeMethod = () => _OnThemeColorChanged();
+
+            _Client.Invoke(InvokeMethod);
         }
 
         #endregion

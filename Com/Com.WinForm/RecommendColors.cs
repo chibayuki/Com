@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.RecommendColors
-Version 18.5.25.0000
+Version 18.5.28.0000
 
 This file is part of Com
 
@@ -428,7 +428,7 @@ namespace Com.WinForm
 
         #endregion
 
-        #region 构造与析构函数
+        #region 构造函数
 
         internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor) // 使用主题、主题色与表示是否在标题栏上显示主题色的布尔值初始化 RecommendColors 的新实例。
         {
