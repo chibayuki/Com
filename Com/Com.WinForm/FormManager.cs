@@ -308,6 +308,7 @@ namespace Com.WinForm
         //
 
         private bool _Enabled = true; // 表示窗口是否对用户交互作出响应的布尔值。
+        private bool _Visible = true; // 表示窗口是否可见的布尔值。
         private double _Opacity = 1.0; // 窗口的不透明度。
         private string _Caption = string.Empty; // 窗口的标题。
         private Font _CaptionFont = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134); // 窗口标题的字体。
@@ -1002,6 +1003,11 @@ namespace Com.WinForm
             _TrigEvent(EventKey.EnabledChanged);
         }
 
+        private void _OnVisibleChanged() // 引发 VisibleChanged 事件。
+        {
+            _TrigEvent(EventKey.VisibleChanged);
+        }
+
         private void _OnOpacityChanged() // 引发 OpacityChanged 事件。
         {
             _TrigEvent(EventKey.OpacityChanged);
@@ -1348,7 +1354,7 @@ namespace Com.WinForm
             else
             {
                 _SplashScreen.OnClosing();
-                _SplashScreen.Visible = true;
+                _SplashScreen.Visible = _Visible;
 
                 _Client.Visible = false;
 
@@ -1358,25 +1364,28 @@ namespace Com.WinForm
 
                 //
 
-                double Opacity = _Opacity;
-                int Bounds_Current_Y = this.Bounds_Current_Y;
-
-                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                if (_Visible)
                 {
-                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Opa = _Opacity;
+                    int CurrY = Bounds_Current_Y;
 
-                    _Opacity = Opacity * (1 - Pct_F);
+                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                    {
+                        double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                    _SplashScreen.Opacity = _Opacity;
-                    _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
-                    _Resizer.OnOpacityChanged();
+                        _Opacity = Opa * (1 - Pct_F);
 
-                    this.Bounds_Current_Y = Bounds_Current_Y - (int)(16 * Pct_F);
+                        _SplashScreen.Opacity = _Opacity;
+                        _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+                        _Resizer.OnOpacityChanged();
 
-                    _UpdateLayout(UpdateLayoutEventType.None);
-                };
+                        Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
 
-                Animation.Show(Frame, 9, 15);
+                        _UpdateLayout(UpdateLayoutEventType.None);
+                    };
+
+                    Animation.Show(Frame, 9, 15);
+                }
 
                 //
 
@@ -1551,6 +1560,11 @@ namespace Com.WinForm
             _Resizer.Show();
             _SplashScreen.Show();
 
+            if (!_Visible)
+            {
+                _CaptionBar.Visible = _Resizer.Visible = _SplashScreen.Visible = false;
+            }
+
             //
 
             Size = Bounds_Current_Size;
@@ -1649,20 +1663,20 @@ namespace Com.WinForm
 
             //
 
-            double Opacity = _Opacity;
-            int Bounds_Current_Y = this.Bounds_Current_Y;
+            double Opa = _Opacity;
+            int CurrY = Bounds_Current_Y;
 
             Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
             {
                 double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                _Opacity = Opacity * Pct_F;
+                _Opacity = Opa * Pct_F;
 
-                _SplashScreen.Opacity = _Opacity;
+                _Client.Opacity = _SplashScreen.Opacity = _Opacity;
                 _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
                 _Resizer.OnOpacityChanged();
 
-                this.Bounds_Current_Y = Bounds_Current_Y - (int)(16 * (1 - Pct_F));
+                Bounds_Current_Y = CurrY - (int)(16 * (1 - Pct_F));
 
                 _UpdateLayout(UpdateLayoutEventType.None);
             };
@@ -1745,9 +1759,7 @@ namespace Com.WinForm
 
         private void FormLoadingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // FormLoadingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
         {
-            _Client.Visible = true;
-            _Client.Opacity = _Opacity;
-
+            _Client.Visible = _Visible;
             _SplashScreen.Visible = false;
 
             //
@@ -1770,7 +1782,7 @@ namespace Com.WinForm
         private void FormClosingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // FormClosingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
         {
             _SplashScreen.OnClosing();
-            _SplashScreen.Visible = true;
+            _SplashScreen.Visible = _Visible;
 
             _Client.Visible = false;
 
@@ -1784,25 +1796,28 @@ namespace Com.WinForm
 
             //
 
-            double Opacity = _Opacity;
-            int Bounds_Current_Y = this.Bounds_Current_Y;
-
-            Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+            if (_Visible)
             {
-                double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                double Opa = _Opacity;
+                int CurrY = Bounds_Current_Y;
 
-                _Opacity = Opacity * (1 - Pct_F);
+                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                {
+                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                _SplashScreen.Opacity = _Opacity;
-                _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
-                _Resizer.OnOpacityChanged();
+                    _Opacity = Opa * (1 - Pct_F);
 
-                this.Bounds_Current_Y = Bounds_Current_Y - (int)(16 * Pct_F);
+                    _SplashScreen.Opacity = _Opacity;
+                    _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+                    _Resizer.OnOpacityChanged();
 
-                _UpdateLayout(UpdateLayoutEventType.None);
-            };
+                    Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
 
-            Animation.Show(Frame, 9, 15);
+                    _UpdateLayout(UpdateLayoutEventType.None);
+                };
+
+                Animation.Show(Frame, 9, 15);
+            }
 
             //
 
@@ -2168,6 +2183,44 @@ namespace Com.WinForm
         }
 
         /// <summary>
+        /// 获取或设置表示窗口是否可见的布尔值。
+        /// </summary>
+        public bool Visible
+        {
+            get
+            {
+                return _Visible;
+            }
+
+            set
+            {
+                if (_Visible != value)
+                {
+                    _Visible = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            if (!_LoadingNow && !_ClosingNow)
+                            {
+                                _Client.Visible = _CaptionBar.Visible = _Resizer.Visible = _Visible;
+                            }
+                            else
+                            {
+                                _CaptionBar.Visible = _Resizer.Visible = _SplashScreen.Visible = _Visible;
+                            }
+
+                            _OnVisibleChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// 获取或设置窗口的不透明度，取值范围为 [0, 1] 或 (1, 100]。
         /// </summary>
         public double Opacity
@@ -2179,23 +2232,25 @@ namespace Com.WinForm
 
             set
             {
+                double Opa = 1;
+
                 if (double.IsNaN(value) || double.IsInfinity(value))
                 {
-                    value = 1;
+                    Opa = 1;
                 }
                 else
                 {
-                    value = Math.Max(0, Math.Min(value, 100));
+                    Opa = Math.Max(0, Math.Min(value, 100));
 
-                    if (value > 1)
+                    if (Opa > 1)
                     {
-                        value /= 100;
+                        Opa /= 100;
                     }
                 }
 
-                if (_Opacity != value)
+                if (_Opacity != Opa)
                 {
-                    _Opacity = value;
+                    _Opacity = Opa;
 
                     if (_Initialized)
                     {
@@ -3249,6 +3304,28 @@ namespace Com.WinForm
         }
 
         /// <summary>
+        /// 在表示窗口是否可见的布尔值更改时发生。
+        /// </summary>
+        public event EventHandler VisibleChanged
+        {
+            add
+            {
+                if (value != null)
+                {
+                    _Events.AddHandler(EventKey.VisibleChanged, value);
+                }
+            }
+
+            remove
+            {
+                if (value != null)
+                {
+                    _Events.RemoveHandler(EventKey.VisibleChanged, value);
+                }
+            }
+        }
+
+        /// <summary>
         /// 在窗口的不透明度更改时发生。
         /// </summary>
         public event EventHandler OpacityChanged
@@ -3730,6 +3807,16 @@ namespace Com.WinForm
         public void OnEnabledChanged()
         {
             Action InvokeMethod = () => _OnEnabledChanged();
+
+            _Client.Invoke(InvokeMethod);
+        }
+
+        /// <summary>
+        /// 引发 VisibleChanged 事件。
+        /// </summary>
+        public void OnVisibleChanged()
+        {
+            Action InvokeMethod = () => _OnVisibleChanged();
 
             _Client.Invoke(InvokeMethod);
         }
