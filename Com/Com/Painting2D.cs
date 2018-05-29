@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Painting2D
-Version 18.5.25.0000
+Version 18.5.29.0000
 
 This file is part of Com
 
@@ -293,7 +293,7 @@ namespace Com
                                 {
                                     DivPhase = 2 * Math.PI / DivCount;
 
-                                    List<PointF> L_PF = new List<PointF>(DivCount + 1);
+                                    List<PointF> L_PF = new List<PointF>(DivCount + 2);
 
                                     for (int i = 0; i <= DivCount; i++)
                                     {
@@ -357,7 +357,7 @@ namespace Com
                                     DivCount = (DivCount + 1) / 2;
                                     DivPhase = (Phase_Max - Phase_Min) / DivCount;
 
-                                    List<PointD> L_PD = new List<PointD>(DivCount + 1);
+                                    List<PointD> L_PD = new List<PointD>(DivCount + 2);
 
                                     for (int i = 0; i <= DivCount; i++)
                                     {
@@ -467,7 +467,7 @@ namespace Com
                                     {
                                         DivPhase = 2 * Math.PI / DivCount;
 
-                                        List<PointF> L_PF = new List<PointF>(DivCount + 1);
+                                        List<PointF> L_PF = new List<PointF>(DivCount + 2);
 
                                         for (int i = 0; i <= DivCount; i++)
                                         {
@@ -531,7 +531,7 @@ namespace Com
                                         DivCount = (DivCount + 1) / 2;
                                         DivPhase = (Phase_Max - Phase_Min) / DivCount;
 
-                                        List<PointD> L_PD = new List<PointD>(DivCount + 1 + 8);
+                                        List<PointD> L_PD = new List<PointD>(DivCount + 2 + 8);
 
                                         for (int i = 0; i <= DivCount; i++)
                                         {
@@ -727,7 +727,7 @@ namespace Com
                                 {
                                     DivPhase = 2 * Math.PI / DivCount;
 
-                                    List<PointF> L_PF = new List<PointF>(DivCount + 1);
+                                    List<PointF> L_PF = new List<PointF>(DivCount + 2);
 
                                     for (int i = 0; i <= DivCount; i++)
                                     {
@@ -802,7 +802,7 @@ namespace Com
                                     DivCount = (DivCount + 1) / 2;
                                     DivPhase = (Phase_Max - Phase_Min) / DivCount;
 
-                                    List<PointD> L_PD = new List<PointD>(DivCount + 1);
+                                    List<PointD> L_PD = new List<PointD>(DivCount + 2);
 
                                     for (int i = 0; i <= DivCount; i++)
                                     {
@@ -934,7 +934,7 @@ namespace Com
                                     {
                                         DivPhase = 2 * Math.PI / DivCount;
 
-                                        List<PointF> L_PF = new List<PointF>(DivCount + 1);
+                                        List<PointF> L_PF = new List<PointF>(DivCount + 2);
 
                                         for (int i = 0; i <= DivCount; i++)
                                         {
@@ -1009,7 +1009,7 @@ namespace Com
                                         DivCount = (DivCount + 1) / 2;
                                         DivPhase = (Phase_Max - Phase_Min) / DivCount;
 
-                                        List<PointD> L_PD = new List<PointD>(DivCount + 1 + 8);
+                                        List<PointD> L_PD = new List<PointD>(DivCount + 2 + 8);
 
                                         for (int i = 0; i <= DivCount; i++)
                                         {
