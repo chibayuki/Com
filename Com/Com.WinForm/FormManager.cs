@@ -1354,8 +1354,10 @@ namespace Com.WinForm
             else
             {
                 _SplashScreen.OnClosing();
-                _SplashScreen.Visible = _Visible;
 
+                //
+
+                _SplashScreen.Visible = _Visible;
                 _Client.Visible = false;
 
                 //
@@ -1782,13 +1784,11 @@ namespace Com.WinForm
         private void FormClosingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // FormClosingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
         {
             _SplashScreen.OnClosing();
-            _SplashScreen.Visible = _Visible;
-
-            _Client.Visible = false;
 
             //
 
-            _OnClosed();
+            _SplashScreen.Visible = _Visible;
+            _Client.Visible = false;
 
             //
 
@@ -1817,7 +1817,15 @@ namespace Com.WinForm
                 };
 
                 Animation.Show(Frame, 9, 15);
+
+                //
+
+                Bounds_Current_Y = CurrY;
             }
+
+            //
+
+            _OnClosed();
 
             //
 
