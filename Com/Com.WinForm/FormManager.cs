@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.5.29.0000
+Version 18.5.31.0000
 
 This file is part of Com
 
@@ -3714,9 +3714,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnLoading()
         {
-            Action InvokeMethod = () => _OnLoading();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnLoading();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3724,9 +3727,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnLoaded()
         {
-            Action InvokeMethod = () => _OnLoaded();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnLoaded();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3734,9 +3740,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnClosing()
         {
-            Action InvokeMethod = () => _OnClosing();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnClosing();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3744,9 +3753,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnClosed()
         {
-            Action InvokeMethod = () => _OnClosed();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnClosed();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3754,9 +3766,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnMove()
         {
-            Action InvokeMethod = () => _OnMove();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnMove();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3764,9 +3779,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnLocationChanged()
         {
-            Action InvokeMethod = () => _OnLocationChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnLocationChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3774,9 +3792,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnResize()
         {
-            Action InvokeMethod = () => _OnResize();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnResize();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3784,9 +3805,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnSizeChanged()
         {
-            Action InvokeMethod = () => _OnSizeChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnSizeChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3794,9 +3818,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnFormStyleChanged()
         {
-            Action InvokeMethod = () => _OnFormStyleChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnFormStyleChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3804,9 +3831,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnFormStateChanged()
         {
-            Action InvokeMethod = () => _OnFormStateChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnFormStateChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3814,9 +3844,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnEnabledChanged()
         {
-            Action InvokeMethod = () => _OnEnabledChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnEnabledChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3824,9 +3857,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnVisibleChanged()
         {
-            Action InvokeMethod = () => _OnVisibleChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnVisibleChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3834,9 +3870,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnOpacityChanged()
         {
-            Action InvokeMethod = () => _OnOpacityChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnOpacityChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3844,9 +3883,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnCaptionChanged()
         {
-            Action InvokeMethod = () => _OnCaptionChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnCaptionChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3854,9 +3896,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnThemeChanged()
         {
-            Action InvokeMethod = () => _OnThemeChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnThemeChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         /// <summary>
@@ -3864,9 +3909,12 @@ namespace Com.WinForm
         /// </summary>
         public void OnThemeColorChanged()
         {
-            Action InvokeMethod = () => _OnThemeColorChanged();
+            if (_Initialized)
+            {
+                Action InvokeMethod = () => _OnThemeColorChanged();
 
-            _Client.Invoke(InvokeMethod);
+                _Client.Invoke(InvokeMethod);
+            }
         }
 
         #endregion
