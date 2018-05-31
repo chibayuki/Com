@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.Resizer
-Version 18.5.28.0000
+Version 18.6.1.0000
 
 This file is part of Com
 
@@ -57,13 +57,15 @@ namespace Com.WinForm
 
                     //
 
-                    for (int i = 0; i <= Me.ResizerSize; i++)
+                    for (int i = 0; i < Me.ResizerSize; i++)
                     {
                         using (Pen Pn = new Pen(Color.FromArgb(24 * (i + 1) * (i + 1) / (Me.ResizerSize + 1) / (Me.ResizerSize + 1), Color.Black), Math.Max(1F, Math.Min(Me.ResizerSize - i, 3F))))
                         {
-                            using (GraphicsPath Path = Geometry.CreateRoundedRectanglePath(new Rectangle(new Point(i, i), new Size(_ResizerBitmap.Width - (2 * i) - 1, _ResizerBitmap.Height - (2 * i) - 1)), Me.ResizerSize - i + 2))
+                            using (GraphicsPath Path = Geometry.CreateRoundedRectanglePath(new Rectangle(new Point(i, i), new Size(_ResizerBitmap.Width - 2 * i - 1, _ResizerBitmap.Height - 2 * i - 1)), Me.ResizerSize - i + 2))
                             {
-                                for (int j = 0; j < (Pn.Width < 3F ? 2 : 1); j++)
+                                int N = (Pn.Width >= 3F ? 1 : (Pn.Width == 2F ? 2 : (Pn.Width == 1 ? 3 : 0)));
+
+                                for (int j = 0; j < N; j++)
                                 {
                                     CreateResizerBmp.DrawPath(Pn, Path);
                                 }
