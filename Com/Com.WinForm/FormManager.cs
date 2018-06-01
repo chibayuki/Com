@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.5.31.0000
+Version 18.6.1.0000
 
 This file is part of Com
 
@@ -313,7 +313,9 @@ namespace Com.WinForm
         private string _Caption = string.Empty; // 窗口的标题。
         private Font _CaptionFont = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134); // 窗口标题的字体。
         private ContentAlignment _CaptionAlign = ContentAlignment.TopCenter; // 窗口标题的文本对齐方式。
-        private Bitmap _CaptionBarBackgroundImage = null; // 标题栏的背景图像。
+        private Bitmap _CaptionBarBackgroundImage = null; // 窗口标题栏的背景图像。
+        private ColorX _ShadowColor = new ColorX(Color.Black); // 窗口投影的颜色。
+        private double _ShadowOpacity = 0.1; // 窗口投影的不透明度。
         private Theme _Theme = Theme.Colorful; // 窗口的主题。
         private ColorX _ThemeColor = ColorX.FromRGB(128, 128, 128); // 窗口的主题色。
         private bool _ShowCaptionBarColor = true; // 表示是否在标题栏上显示主题色的布尔值。
@@ -1501,6 +1503,8 @@ namespace Com.WinForm
                 _Opacity = _Owner._Opacity;
                 _CaptionFont = _Owner._CaptionFont;
                 _CaptionAlign = _Owner._CaptionAlign;
+                _ShadowColor = _Owner._ShadowColor;
+                _ShadowOpacity = _Owner._ShadowOpacity;
                 _Theme = _Owner._Theme;
                 _ThemeColor = _Owner._ThemeColor;
                 _ShowCaptionBarColor = _Owner._ShowCaptionBarColor;
@@ -1618,9 +1622,9 @@ namespace Com.WinForm
             _Resizer.OnFormStyleChanged();
 
             _CaptionBar.OnCaptionChanged();
-            _CaptionBar.OnThemeChanged();
+            _CaptionBar.OnThemeColorChanged();
 
-            _SplashScreen.OnThemeChanged();
+            _SplashScreen.OnThemeColorChanged();
 
             //
 
@@ -2290,9 +2294,11 @@ namespace Com.WinForm
 
             set
             {
-                if (_Caption != value)
+                string Cap = (value == null ? string.Empty : value);
+
+                if (_Caption != Cap)
                 {
-                    _Caption = value;
+                    _Caption = Cap;
 
                     if (_Initialized)
                     {
@@ -2323,7 +2329,7 @@ namespace Com.WinForm
 
             set
             {
-                if (!_CaptionFont.Equals(value))
+                if (value != null && !_CaptionFont.Equals(value))
                 {
                     _CaptionFont = value;
 
@@ -2370,7 +2376,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 获取或设置标题栏的背景图像。
+        /// 获取或设置窗口标题栏的背景图像。
         /// </summary>
         public Bitmap CaptionBarBackgroundImage
         {
@@ -2391,6 +2397,80 @@ namespace Com.WinForm
                     };
 
                     _Client.Invoke(InvokeMethod);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置窗口投影的颜色。
+        /// </summary>
+        public ColorX ShadowColor
+        {
+            get
+            {
+                return _ShadowColor;
+            }
+
+            set
+            {
+                if (!value.IsEmpty && !value.IsTransparent && !_ShadowColor.Equals(value))
+                {
+                    _ShadowColor = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _Resizer.OnOpacityChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置窗口投影的不透明度，取值范围为 [0, 1] 或 (1, 100]。
+        /// </summary>
+        public double ShadowOpacity
+        {
+            get
+            {
+                return _ShadowOpacity;
+            }
+
+            set
+            {
+                double Opa = 0.1;
+
+                if (double.IsNaN(value) || double.IsInfinity(value))
+                {
+                    Opa = 0.1;
+                }
+                else
+                {
+                    Opa = Math.Max(0, Math.Min(value, 100));
+
+                    if (Opa > 1)
+                    {
+                        Opa /= 100;
+                    }
+                }
+
+                if (_ShadowOpacity != Opa)
+                {
+                    _ShadowOpacity = Opa;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _Resizer.OnOpacityChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2419,8 +2499,8 @@ namespace Com.WinForm
                         {
                             _Client.BackColor = RecommendColors.FormBackground.ToColor();
 
-                            _CaptionBar.OnThemeChanged();
-                            _SplashScreen.OnThemeChanged();
+                            _CaptionBar.OnThemeColorChanged();
+                            _SplashScreen.OnThemeColorChanged();
 
                             _OnThemeChanged();
                         };
@@ -2443,7 +2523,7 @@ namespace Com.WinForm
 
             set
             {
-                if (!_ThemeColor.Equals(value))
+                if (!value.IsEmpty && !value.IsTransparent && !_ThemeColor.Equals(value))
                 {
                     _ThemeColor = value;
 
@@ -2489,8 +2569,8 @@ namespace Com.WinForm
                     {
                         Action InvokeMethod = () =>
                         {
-                            _CaptionBar.OnThemeChanged();
-                            _SplashScreen.OnThemeChanged();
+                            _CaptionBar.OnThemeColorChanged();
+                            _SplashScreen.OnThemeColorChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);

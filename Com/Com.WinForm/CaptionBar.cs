@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.5.28.0000
+Version 18.6.1.0000
 
 This file is part of Com
 
@@ -314,7 +314,7 @@ namespace Com.WinForm
 
             //
 
-            OnThemeChanged();
+            OnThemeColorChanged();
 
             //
 
@@ -879,11 +879,6 @@ namespace Com.WinForm
         public void OnCaptionChanged() // 在 CaptionChanged 事件发生时发生。
         {
             _RepaintCaptionBarBitmap();
-        }
-
-        public void OnThemeChanged() // 在 ThemeChanged 事件发生时发生。
-        {
-            OnThemeColorChanged();
         }
 
         public void OnThemeColorChanged() // 在 ThemeColorChanged 事件发生时发生。

@@ -57,9 +57,12 @@ namespace Com.WinForm
 
                     //
 
+                    Color ShadowColor = Me.ShadowColor.ToColor();
+                    int ShadowOpacity = (int)(255 * Me.ShadowOpacity);
+
                     for (int i = 0; i < Me.ResizerSize; i++)
                     {
-                        using (Pen Pn = new Pen(Color.FromArgb(24 * (i + 1) * (i + 1) / (Me.ResizerSize + 1) / (Me.ResizerSize + 1), Color.Black), Math.Max(1F, Math.Min(Me.ResizerSize - i, 3F))))
+                        using (Pen Pn = new Pen(Color.FromArgb(ShadowOpacity * (i + 1) * (i + 1) / Me.ResizerSize / Me.ResizerSize, ShadowColor), Math.Max(1F, Math.Min(Me.ResizerSize - i, 3F))))
                         {
                             using (GraphicsPath Path = Geometry.CreateRoundedRectanglePath(new Rectangle(new Point(i, i), new Size(_ResizerBitmap.Width - 2 * i - 1, _ResizerBitmap.Height - 2 * i - 1)), Me.ResizerSize - i + 2))
                             {
