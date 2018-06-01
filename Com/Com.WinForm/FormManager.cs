@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.6.1.0000
+Version 18.6.2.0000
 
 This file is part of Com
 
@@ -1823,6 +1823,8 @@ namespace Com.WinForm
                 Animation.Show(Frame, 9, 15);
 
                 //
+
+                _Opacity = Opa;
 
                 Bounds_Current_Y = CurrY;
             }
