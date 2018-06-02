@@ -81,6 +81,14 @@ namespace Com.WinForm
 
         private bool _IsMainForm = false; // 表示此窗口是否为主窗口的布尔值。
 
+        internal bool IsMainForm // 获取表示此窗口是否为主窗口的布尔值。
+        {
+            get
+            {
+                return _IsMainForm;
+            }
+        }
+
         //
 
         private FormManager _Owner = null; // 拥有此窗口的窗口的窗口管理器。
@@ -127,19 +135,19 @@ namespace Com.WinForm
             }
         }
 
-        internal static Rectangle PrimaryScreenClient // 主屏幕的工作区。
-        {
-            get
-            {
-                return Screen.PrimaryScreen.WorkingArea;
-            }
-        }
-
         internal static Rectangle PrimaryScreenBounds // 主屏幕的边界。
         {
             get
             {
                 return Screen.PrimaryScreen.Bounds;
+            }
+        }
+
+        internal static Rectangle PrimaryScreenClient // 主屏幕的工作区。
+        {
+            get
+            {
+                return Screen.PrimaryScreen.WorkingArea;
             }
         }
 
@@ -1500,6 +1508,10 @@ namespace Com.WinForm
 
                 //
 
+                _Client.Owner = _Owner._Client;
+
+                //
+
                 _Opacity = _Owner._Opacity;
                 _CaptionFont = _Owner._CaptionFont;
                 _CaptionAlign = _Owner._CaptionAlign;
@@ -1877,19 +1889,6 @@ namespace Com.WinForm
         #region 属性
 
         /// <summary>
-        /// 获取表示此窗口是否为主窗口的布尔值。
-        /// </summary>
-        public bool IsMainForm
-        {
-            get
-            {
-                return _IsMainForm;
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取拥有此窗口的窗口的窗口管理器。
         /// </summary>
         public FormManager Owner
@@ -1901,13 +1900,13 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 获取表示此窗口拥有的所有窗口的窗口管理器列表。
+        /// 获取表示此窗口拥有的所有窗口的窗口管理器数组。
         /// </summary>
-        public List<FormManager> Owned
+        public FormManager[] Owned
         {
             get
             {
-                return _Owned;
+                return _Owned.ToArray();
             }
         }
 
