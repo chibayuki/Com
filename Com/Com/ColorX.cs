@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.ColorX
-Version 18.5.28.0000
+Version 18.6.3.0000
 
 This file is part of Com
 
@@ -1979,6 +1979,20 @@ namespace Com
         /// <summary>
         /// 返回将颜色在 RGB 色彩空间中的各分量转换为 ColorX 结构的新实例。
         /// </summary>
+        /// <param name="alpha">颜色在 RGB 色彩空间中的 Alpha 通道（A）的值。</param>
+        /// <param name="rgb">表示颜色在 RGB 色彩空间中的各分量的 PointD3D 结构。</param>
+        public static ColorX FromRGB(double alpha, PointD3D rgb)
+        {
+            ColorX color = default(ColorX);
+
+            color._CtorRGB(alpha, rgb.X, rgb.Y, rgb.Z);
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将颜色在 RGB 色彩空间中的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
         /// <param name="rgb">表示颜色在 RGB 色彩空间中的各分量的 PointD3D 结构。</param>
         public static ColorX FromRGB(PointD3D rgb)
         {
@@ -2035,6 +2049,20 @@ namespace Com
         /// 返回将颜色在 HSV 色彩空间中的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="hsv">表示颜色在 HSV 色彩空间中的各分量的 PointD3D 结构。</param>
+        /// <param name="opacity">颜色的不透明度。</param>
+        public static ColorX FromHSV(PointD3D hsv, double opacity)
+        {
+            ColorX color = default(ColorX);
+
+            color._CtorHSV(hsv.X, hsv.Y, hsv.Z, opacity);
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将颜色在 HSV 色彩空间中的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="hsv">表示颜色在 HSV 色彩空间中的各分量的 PointD3D 结构。</param>
         public static ColorX FromHSV(PointD3D hsv)
         {
             ColorX color = default(ColorX);
@@ -2073,6 +2101,20 @@ namespace Com
             ColorX color = default(ColorX);
 
             color._CtorHSL(hue, saturation, lightness, _MaxOpacity);
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将颜色在 HSL 色彩空间中的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="hsl">表示颜色在 HSL 色彩空间中的各分量的 PointD3D 结构。</param>
+        /// <param name="opacity">颜色的不透明度。</param>
+        public static ColorX FromHSL(PointD3D hsl, double opacity)
+        {
+            ColorX color = default(ColorX);
+
+            color._CtorHSL(hsl.X, hsl.Y, hsl.Z, opacity);
 
             return color;
         }
@@ -2129,6 +2171,20 @@ namespace Com
         /// 返回将颜色在 CMYK 色彩空间中的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="cmyk">表示颜色在 CMYK 色彩空间中的各分量的 PointD4D 结构。</param>
+        /// <param name="opacity">颜色的不透明度。</param>
+        public static ColorX FromCMYK(PointD4D cmyk, double opacity)
+        {
+            ColorX color = default(ColorX);
+
+            color._CtorCMYK(cmyk.X, cmyk.Y, cmyk.Z, cmyk.U, opacity);
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将颜色在 CMYK 色彩空间中的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="cmyk">表示颜色在 CMYK 色彩空间中的各分量的 PointD4D 结构。</param>
         public static ColorX FromCMYK(PointD4D cmyk)
         {
             ColorX color = default(ColorX);
@@ -2167,6 +2223,20 @@ namespace Com
             ColorX color = default(ColorX);
 
             color._CtorLAB(lightness, greenRed, blueYellow, _MaxOpacity);
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将颜色在 LAB 色彩空间中的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="lab">表示颜色在 LAB 色彩空间中的各分量的 PointD3D 结构。</param>
+        /// <param name="opacity">颜色的不透明度。</param>
+        public static ColorX FromLAB(PointD3D lab, double opacity)
+        {
+            ColorX color = default(ColorX);
+
+            color._CtorLAB(lab.X, lab.Y, lab.Z, opacity);
 
             return color;
         }
