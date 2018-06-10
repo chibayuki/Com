@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.ControlSubstitution
-Version 18.5.25.0000
+Version 18.6.10.0000
 
 This file is part of Com
 
@@ -50,9 +50,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "BackColorChanged":
                             {
@@ -66,9 +65,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "BackgroundImageChanged":
                             {
@@ -82,9 +80,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "BackgroundImageLayoutChanged":
                             {
@@ -98,9 +95,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "BindingContextChanged":
                             {
@@ -114,9 +110,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "CausesValidationChanged":
                             {
@@ -130,9 +125,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ChangeUICues":
                             {
@@ -146,9 +140,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Click":
                             {
@@ -162,9 +155,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ClientSizeChanged":
                             {
@@ -178,9 +170,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ContextMenuChanged":
                             {
@@ -194,9 +185,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ContextMenuStripChanged":
                             {
@@ -210,9 +200,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ControlAdded":
                             {
@@ -226,9 +215,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ControlRemoved":
                             {
@@ -242,9 +230,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "CursorChanged":
                             {
@@ -258,9 +245,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "DockChanged":
                             {
@@ -274,9 +260,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "DoubleClick":
                             {
@@ -290,9 +275,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "DpiChangedAfterParent":
                             {
@@ -306,9 +290,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "DpiChangedBeforeParent":
                             {
@@ -322,9 +305,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "DragDrop":
                             {
@@ -338,9 +320,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "DragEnter":
                             {
@@ -354,9 +335,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "DragLeave":
                             {
@@ -370,9 +350,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "DragOver":
                             {
@@ -386,9 +365,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "EnabledChanged":
                             {
@@ -402,9 +380,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Enter":
                             {
@@ -418,9 +395,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "FontChanged":
                             {
@@ -434,9 +410,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ForeColorChanged":
                             {
@@ -450,9 +425,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "GiveFeedback":
                             {
@@ -466,9 +440,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "GotFocus":
                             {
@@ -482,9 +455,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "HandleCreated":
                             {
@@ -498,9 +470,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "HandleDestroyed":
                             {
@@ -514,9 +485,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "HelpRequested":
                             {
@@ -530,9 +500,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ImeModeChanged":
                             {
@@ -546,9 +515,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Invalidated":
                             {
@@ -562,9 +530,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "KeyDown":
                             {
@@ -578,9 +545,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "KeyPress":
                             {
@@ -594,9 +560,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "KeyUp":
                             {
@@ -610,9 +575,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Layout":
                             {
@@ -626,9 +590,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Leave":
                             {
@@ -642,9 +605,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "LocationChanged":
                             {
@@ -658,9 +620,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "LostFocus":
                             {
@@ -674,9 +635,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MarginChanged":
                             {
@@ -690,9 +650,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseCaptureChanged":
                             {
@@ -706,9 +665,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseClick":
                             {
@@ -722,9 +680,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseDoubleClick":
                             {
@@ -738,9 +695,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseDown":
                             {
@@ -754,9 +710,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseEnter":
                             {
@@ -770,9 +725,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseHover":
                             {
@@ -786,9 +740,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseLeave":
                             {
@@ -802,9 +755,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseMove":
                             {
@@ -818,9 +770,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseUp":
                             {
@@ -834,9 +785,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "MouseWheel":
                             {
@@ -850,9 +800,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Move":
                             {
@@ -866,9 +815,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "PaddingChanged":
                             {
@@ -882,9 +830,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Paint":
                             {
@@ -898,9 +845,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "ParentChanged":
                             {
@@ -914,9 +860,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "PreviewKeyDown":
                             {
@@ -930,9 +875,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "QueryAccessibilityHelp":
                             {
@@ -946,9 +890,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "QueryContinueDrag":
                             {
@@ -962,9 +905,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "RegionChanged":
                             {
@@ -978,9 +920,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Resize":
                             {
@@ -994,9 +935,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "RightToLeftChanged":
                             {
@@ -1010,9 +950,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "SizeChanged":
                             {
@@ -1026,9 +965,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "StyleChanged":
                             {
@@ -1042,9 +980,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "SystemColorsChanged":
                             {
@@ -1058,9 +995,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "TabIndexChanged":
                             {
@@ -1074,9 +1010,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "TabStopChanged":
                             {
@@ -1090,9 +1025,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "TextChanged":
                             {
@@ -1106,9 +1040,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Validated":
                             {
@@ -1122,9 +1055,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "Validating":
                             {
@@ -1138,9 +1070,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         case "VisibleChanged":
                             {
@@ -1154,9 +1085,8 @@ namespace Com.WinForm
                                 {
                                     return;
                                 }
-
-                                break;
                             }
+                            break;
 
                         default:
                             return;
@@ -1207,9 +1137,8 @@ namespace Com.WinForm
                                             {
                                                 control.AutoSizeChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "BackColorChanged":
                                         {
@@ -1219,9 +1148,8 @@ namespace Com.WinForm
                                             {
                                                 control.BackColorChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "BackgroundImageChanged":
                                         {
@@ -1231,9 +1159,8 @@ namespace Com.WinForm
                                             {
                                                 control.BackgroundImageChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "BackgroundImageLayoutChanged":
                                         {
@@ -1243,9 +1170,8 @@ namespace Com.WinForm
                                             {
                                                 control.BackgroundImageLayoutChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "BindingContextChanged":
                                         {
@@ -1255,9 +1181,8 @@ namespace Com.WinForm
                                             {
                                                 control.BindingContextChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "CausesValidationChanged":
                                         {
@@ -1267,9 +1192,8 @@ namespace Com.WinForm
                                             {
                                                 control.CausesValidationChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ChangeUICues":
                                         {
@@ -1279,9 +1203,8 @@ namespace Com.WinForm
                                             {
                                                 control.ChangeUICues -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Click":
                                         {
@@ -1291,9 +1214,8 @@ namespace Com.WinForm
                                             {
                                                 control.Click -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ClientSizeChanged":
                                         {
@@ -1303,9 +1225,8 @@ namespace Com.WinForm
                                             {
                                                 control.ClientSizeChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ContextMenuChanged":
                                         {
@@ -1315,9 +1236,8 @@ namespace Com.WinForm
                                             {
                                                 control.ContextMenuChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ContextMenuStripChanged":
                                         {
@@ -1327,9 +1247,8 @@ namespace Com.WinForm
                                             {
                                                 control.ContextMenuStripChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ControlAdded":
                                         {
@@ -1339,9 +1258,8 @@ namespace Com.WinForm
                                             {
                                                 control.ControlAdded -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ControlRemoved":
                                         {
@@ -1351,9 +1269,8 @@ namespace Com.WinForm
                                             {
                                                 control.ControlRemoved -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "CursorChanged":
                                         {
@@ -1363,9 +1280,8 @@ namespace Com.WinForm
                                             {
                                                 control.CursorChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "DockChanged":
                                         {
@@ -1375,9 +1291,8 @@ namespace Com.WinForm
                                             {
                                                 control.DockChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "DoubleClick":
                                         {
@@ -1387,9 +1302,8 @@ namespace Com.WinForm
                                             {
                                                 control.DoubleClick -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "DpiChangedAfterParent":
                                         {
@@ -1399,9 +1313,8 @@ namespace Com.WinForm
                                             {
                                                 control.DpiChangedAfterParent -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "DpiChangedBeforeParent":
                                         {
@@ -1411,9 +1324,8 @@ namespace Com.WinForm
                                             {
                                                 control.DpiChangedBeforeParent -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "DragDrop":
                                         {
@@ -1423,9 +1335,8 @@ namespace Com.WinForm
                                             {
                                                 control.DragDrop -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "DragEnter":
                                         {
@@ -1435,9 +1346,8 @@ namespace Com.WinForm
                                             {
                                                 control.DragEnter -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "DragLeave":
                                         {
@@ -1447,9 +1357,8 @@ namespace Com.WinForm
                                             {
                                                 control.DragLeave -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "DragOver":
                                         {
@@ -1459,9 +1368,8 @@ namespace Com.WinForm
                                             {
                                                 control.DragOver -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "EnabledChanged":
                                         {
@@ -1471,9 +1379,8 @@ namespace Com.WinForm
                                             {
                                                 control.EnabledChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Enter":
                                         {
@@ -1483,9 +1390,8 @@ namespace Com.WinForm
                                             {
                                                 control.Enter -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "FontChanged":
                                         {
@@ -1495,9 +1401,8 @@ namespace Com.WinForm
                                             {
                                                 control.FontChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ForeColorChanged":
                                         {
@@ -1507,9 +1412,8 @@ namespace Com.WinForm
                                             {
                                                 control.ForeColorChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "GiveFeedback":
                                         {
@@ -1519,9 +1423,8 @@ namespace Com.WinForm
                                             {
                                                 control.GiveFeedback -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "GotFocus":
                                         {
@@ -1531,9 +1434,8 @@ namespace Com.WinForm
                                             {
                                                 control.GotFocus -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "HandleCreated":
                                         {
@@ -1543,9 +1445,8 @@ namespace Com.WinForm
                                             {
                                                 control.HandleCreated -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "HandleDestroyed":
                                         {
@@ -1555,9 +1456,8 @@ namespace Com.WinForm
                                             {
                                                 control.HandleDestroyed -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "HelpRequested":
                                         {
@@ -1567,9 +1467,8 @@ namespace Com.WinForm
                                             {
                                                 control.HelpRequested -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ImeModeChanged":
                                         {
@@ -1579,9 +1478,8 @@ namespace Com.WinForm
                                             {
                                                 control.ImeModeChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Invalidated":
                                         {
@@ -1591,9 +1489,8 @@ namespace Com.WinForm
                                             {
                                                 control.Invalidated -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "KeyDown":
                                         {
@@ -1603,9 +1500,8 @@ namespace Com.WinForm
                                             {
                                                 control.KeyDown -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "KeyPress":
                                         {
@@ -1615,9 +1511,8 @@ namespace Com.WinForm
                                             {
                                                 control.KeyPress -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "KeyUp":
                                         {
@@ -1627,9 +1522,8 @@ namespace Com.WinForm
                                             {
                                                 control.KeyUp -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Layout":
                                         {
@@ -1639,9 +1533,8 @@ namespace Com.WinForm
                                             {
                                                 control.Layout -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Leave":
                                         {
@@ -1651,9 +1544,8 @@ namespace Com.WinForm
                                             {
                                                 control.Leave -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "LocationChanged":
                                         {
@@ -1663,9 +1555,8 @@ namespace Com.WinForm
                                             {
                                                 control.LocationChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "LostFocus":
                                         {
@@ -1675,9 +1566,8 @@ namespace Com.WinForm
                                             {
                                                 control.LostFocus -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MarginChanged":
                                         {
@@ -1687,9 +1577,8 @@ namespace Com.WinForm
                                             {
                                                 control.MarginChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseCaptureChanged":
                                         {
@@ -1699,9 +1588,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseCaptureChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseClick":
                                         {
@@ -1711,9 +1599,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseClick -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseDoubleClick":
                                         {
@@ -1723,9 +1610,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseDoubleClick -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseDown":
                                         {
@@ -1735,9 +1621,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseDown -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseEnter":
                                         {
@@ -1747,9 +1632,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseEnter -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseHover":
                                         {
@@ -1759,9 +1643,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseHover -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseLeave":
                                         {
@@ -1771,9 +1654,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseLeave -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseMove":
                                         {
@@ -1783,9 +1665,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseMove -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseUp":
                                         {
@@ -1795,9 +1676,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseUp -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "MouseWheel":
                                         {
@@ -1807,9 +1687,8 @@ namespace Com.WinForm
                                             {
                                                 control.MouseWheel -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Move":
                                         {
@@ -1819,9 +1698,8 @@ namespace Com.WinForm
                                             {
                                                 control.Move -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "PaddingChanged":
                                         {
@@ -1831,9 +1709,8 @@ namespace Com.WinForm
                                             {
                                                 control.PaddingChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Paint":
                                         {
@@ -1843,9 +1720,8 @@ namespace Com.WinForm
                                             {
                                                 control.Paint -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "ParentChanged":
                                         {
@@ -1855,9 +1731,8 @@ namespace Com.WinForm
                                             {
                                                 control.ParentChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "PreviewKeyDown":
                                         {
@@ -1867,9 +1742,8 @@ namespace Com.WinForm
                                             {
                                                 control.PreviewKeyDown -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "QueryAccessibilityHelp":
                                         {
@@ -1879,9 +1753,8 @@ namespace Com.WinForm
                                             {
                                                 control.QueryAccessibilityHelp -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "QueryContinueDrag":
                                         {
@@ -1891,9 +1764,8 @@ namespace Com.WinForm
                                             {
                                                 control.QueryContinueDrag -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "RegionChanged":
                                         {
@@ -1903,9 +1775,8 @@ namespace Com.WinForm
                                             {
                                                 control.RegionChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Resize":
                                         {
@@ -1915,9 +1786,8 @@ namespace Com.WinForm
                                             {
                                                 control.Resize -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "RightToLeftChanged":
                                         {
@@ -1927,9 +1797,8 @@ namespace Com.WinForm
                                             {
                                                 control.RightToLeftChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "SizeChanged":
                                         {
@@ -1939,9 +1808,8 @@ namespace Com.WinForm
                                             {
                                                 control.SizeChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "StyleChanged":
                                         {
@@ -1951,9 +1819,8 @@ namespace Com.WinForm
                                             {
                                                 control.StyleChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "SystemColorsChanged":
                                         {
@@ -1963,9 +1830,8 @@ namespace Com.WinForm
                                             {
                                                 control.SystemColorsChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "TabIndexChanged":
                                         {
@@ -1975,9 +1841,8 @@ namespace Com.WinForm
                                             {
                                                 control.TabIndexChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "TabStopChanged":
                                         {
@@ -1987,9 +1852,8 @@ namespace Com.WinForm
                                             {
                                                 control.TabStopChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "TextChanged":
                                         {
@@ -1999,9 +1863,8 @@ namespace Com.WinForm
                                             {
                                                 control.TextChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Validated":
                                         {
@@ -2011,9 +1874,8 @@ namespace Com.WinForm
                                             {
                                                 control.Validated -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "Validating":
                                         {
@@ -2023,9 +1885,8 @@ namespace Com.WinForm
                                             {
                                                 control.Validating -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
 
                                     case "VisibleChanged":
                                         {
@@ -2035,9 +1896,8 @@ namespace Com.WinForm
                                             {
                                                 control.VisibleChanged -= _EH;
                                             }
-
-                                            break;
                                         }
+                                        break;
                                 }
                             }
 
