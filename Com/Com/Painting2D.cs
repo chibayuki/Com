@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Painting2D
-Version 18.5.29.0000
+Version 18.6.10.0000
 
 This file is part of Com
 
@@ -37,10 +37,6 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// 此函数依赖下列函数：
-        /// bool LineIsVisibleInRectangle(PointD, PointD, RectangleF)
-        /// PointD GetFootPoint(PointD, PointD, PointD)
-        /// double GetAngleOfTwoPoints(PointD, PointD)
         public static bool PaintLine(Bitmap bmp, PointD pt1, PointD pt2, Color color, float width, bool antiAlias)
         {
             try
@@ -244,13 +240,6 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// 此函数依赖下列函数：
-        /// double AngleMapping(double)
-        /// bool CircumferenceIsVisibleInRectangle(PointD, double, RectangleF)
-        /// bool PointIsVisibleInCircle(PointD, PointD, double)
-        /// double GetAngleOfTwoPoints(PointD, PointD)
-        /// PointD GetFootPoint(PointD, PointD, PointD)
-        /// bool CircleInnerIsVisibleInRectangle(PointD, double, RectangleF)
         public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias)
         {
             // 【注意】下面的常量将直接影响绘图的质量与速度。
@@ -662,15 +651,6 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// 此函数依赖下列函数：
-        /// double AngleMapping(double)
-        /// bool PointIsVisibleInRhombus(PointD, PointD, double, double, double)
-        /// PointD RotatePoint(PointD, double)
-        /// bool PointIsVisibleInCircle(PointD, PointD, double)
-        /// double GetAngleOfTwoPoints(PointD, PointD)
-        /// double EllipseCentralAngleToPhase(double, double)
-        /// PointD GetFootPoint(PointD, PointD, PointD)
-        /// bool PointIsVisibleInEllipse(PointD, PointD, double, double, double)
         public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias)
         {
             // 【注意】下面的常量将直接影响绘图的质量与速度。

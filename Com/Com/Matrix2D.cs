@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Matrix2D
-Version 18.5.25.0000
+Version 18.6.10.0000
 
 This file is part of Com
 
@@ -91,10 +91,6 @@ namespace Com
         /// 获取矩阵的秩。
         /// </summary>
         /// <param name="matrix">矩阵。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
-        /// bool SubMatrix(double[,], int, int, int, int, out double[,])
-        /// bool Determinant(double[,], out double)
         public static int GetRank(double[,] matrix)
         {
             try
@@ -162,8 +158,6 @@ namespace Com
         /// </summary>
         /// <param name="matrixLeft">左矩阵。</param>
         /// <param name="matrixRight">右矩阵。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Equals(double[,] matrixLeft, double[,] matrixRight)
         {
             try
@@ -207,8 +201,6 @@ namespace Com
         /// </summary>
         /// <param name="matrix">矩阵。</param>
         /// <param name="result">计算结果，表示矩阵的副本。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Copy(double[,] matrix, out double[,] result)
         {
             result = null;
@@ -244,8 +236,6 @@ namespace Com
         /// 将矩阵的所有元素设为 0，并返回表示此操作是否成功的布尔值。
         /// </summary>
         /// <param name="matrix">矩阵。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Clear(ref double[,] matrix)
         {
             try
@@ -453,7 +443,7 @@ namespace Com
 
                 int width = array.Length;
 
-                result = new double[width, 0];
+                result = new double[width, 1];
 
                 for (int i = 0; i < width; i++)
                 {
@@ -479,8 +469,6 @@ namespace Com
         /// <param name="width">子矩阵的宽度（列数）。</param>
         /// <param name="height">子矩阵的高度（行数）。</param>
         /// <param name="result">计算结果，表示子矩阵。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool SubMatrix(double[,] matrix, int x, int y, int width, int height, out double[,] result)
         {
             result = null;
@@ -523,8 +511,6 @@ namespace Com
         /// <param name="matrixLeft">左矩阵。</param>
         /// <param name="matrixRight">右矩阵。</param>
         /// <param name="result">计算结果，表示增广矩阵。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool AugmentedMatrix(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
         {
             result = null;
@@ -572,8 +558,6 @@ namespace Com
         /// <param name="matrix">矩阵，表示被加数。</param>
         /// <param name="n">标量，表示加数。</param>
         /// <param name="result">计算结果，表示矩阵与标量相加的和。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Add(double[,] matrix, double n, out double[,] result)
         {
             result = null;
@@ -611,8 +595,6 @@ namespace Com
         /// <param name="n">标量，表示被加数。</param>
         /// <param name="matrix">矩阵，表示加数。</param>
         /// <param name="result">计算结果，表示标量与矩阵相加的和。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Add(double n, double[,] matrix, out double[,] result)
         {
             result = null;
@@ -650,8 +632,6 @@ namespace Com
         /// <param name="matrixLeft">左矩阵，表示被加数。</param>
         /// <param name="matrixRight">右矩阵，表示加数。</param>
         /// <param name="result">计算结果，表示矩阵与矩阵相加的和。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Add(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
         {
             result = null;
@@ -697,8 +677,6 @@ namespace Com
         /// <param name="matrix">矩阵，表示被减数。</param>
         /// <param name="n">标量，表示减数。</param>
         /// <param name="result">计算结果，表示矩阵与标量相减的差。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Subtract(double[,] matrix, double n, out double[,] result)
         {
             result = null;
@@ -736,8 +714,6 @@ namespace Com
         /// <param name="n">标量，表示被减数。</param>
         /// <param name="matrix">矩阵，表示减数。</param>
         /// <param name="result">计算结果，表示标量与矩阵相减的差。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Subtract(double n, double[,] matrix, out double[,] result)
         {
             result = null;
@@ -775,8 +751,6 @@ namespace Com
         /// <param name="matrixLeft">左矩阵，表示被减数。</param>
         /// <param name="matrixRight">右矩阵，表示减数。</param>
         /// <param name="result">计算结果，表示矩阵与矩阵相减的差。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Subtract(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
         {
             result = null;
@@ -822,8 +796,6 @@ namespace Com
         /// <param name="matrix">矩阵，表示被乘数。</param>
         /// <param name="n">标量，表示乘数。</param>
         /// <param name="result">计算结果，表示矩阵与标量相乘的积。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Multiply(double[,] matrix, double n, out double[,] result)
         {
             result = null;
@@ -861,8 +833,6 @@ namespace Com
         /// <param name="n">标量，表示被乘数。</param>
         /// <param name="matrix">矩阵，表示乘数。</param>
         /// <param name="result">计算结果，表示标量与矩阵相乘的积。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Multiply(double n, double[,] matrix, out double[,] result)
         {
             result = null;
@@ -900,8 +870,6 @@ namespace Com
         /// <param name="matrixLeft">左矩阵，表示被乘数。</param>
         /// <param name="matrixRight">右矩阵，表示乘数。</param>
         /// <param name="result">计算结果，表示矩阵与矩阵相乘的积。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Multiply(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
         {
             result = null;
@@ -951,8 +919,6 @@ namespace Com
         /// </summary>
         /// <param name="matrixLeftList">左矩阵列表。</param>
         /// <param name="result">计算结果，表示将列表中所有矩阵依次左乘的积。</param>
-        /// 此函数依赖下列函数：
-        /// bool Multiply(double[,], double[,], out double[,])
         public static bool MultiplyLeft(List<double[,]> matrixLeftList, out double[,] result)
         {
             result = null;
@@ -1012,8 +978,6 @@ namespace Com
         /// </summary>
         /// <param name="matrixRightList">右矩阵列表。</param>
         /// <param name="result">计算结果，表示将列表中所有矩阵依次右乘的积。</param>
-        /// 此函数依赖下列函数：
-        /// bool Multiply(double[,], double[,], out double[,])
         public static bool MultiplyRight(List<double[,]> matrixRightList, out double[,] result)
         {
             result = null;
@@ -1074,8 +1038,6 @@ namespace Com
         /// <param name="matrix">矩阵，表示被除数。</param>
         /// <param name="n">标量，表示除数。</param>
         /// <param name="result">计算结果，表示矩阵与标量相除的商。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Divide(double[,] matrix, double n, out double[,] result)
         {
             result = null;
@@ -1113,8 +1075,6 @@ namespace Com
         /// <param name="n">标量，表示被除数。</param>
         /// <param name="matrix">矩阵，表示除数。</param>
         /// <param name="result">计算结果，表示标量与矩阵相除的商。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Divide(double n, double[,] matrix, out double[,] result)
         {
             result = null;
@@ -1152,10 +1112,6 @@ namespace Com
         /// <param name="matrixLeft">左矩阵，表示被除数。</param>
         /// <param name="matrixRight">右矩阵，表示除数。</param>
         /// <param name="result">计算结果，表示矩阵与矩阵左除的商。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
-        /// bool Invert(double[,], out double[,])
-        /// bool Multiply(double[,], double[,], out double[,])
         public static bool DivideLeft(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
         {
             result = null;
@@ -1201,10 +1157,6 @@ namespace Com
         /// <param name="matrixLeft">左矩阵，表示被除数。</param>
         /// <param name="matrixRight">右矩阵，表示除数。</param>
         /// <param name="result">计算结果，表示矩阵与矩阵右除的商。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
-        /// bool Invert(double[,], out double[,])
-        /// bool Multiply(double[,], double[,], out double[,])
         public static bool DivideRight(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
         {
             result = null;
@@ -1251,8 +1203,6 @@ namespace Com
         /// </summary>
         /// <param name="matrix">矩阵。</param>
         /// <param name="result">计算结果，表示转置矩阵。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Transport(double[,] matrix, out double[,] result)
         {
             result = null;
@@ -1289,8 +1239,6 @@ namespace Com
         /// </summary>
         /// <param name="matrix">矩阵。</param>
         /// <param name="result">计算结果，表示矩阵的行列式值。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
         public static bool Determinant(double[,] matrix, out double result)
         {
             result = double.NaN;
@@ -1372,9 +1320,6 @@ namespace Com
         /// </summary>
         /// <param name="matrix">矩阵。</param>
         /// <param name="result">计算结果，表示伴随矩阵。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
-        /// bool Determinant(double[,], out double)
         public static bool Adjoint(double[,] matrix, out double[,] result)
         {
             result = null;
@@ -1435,10 +1380,6 @@ namespace Com
         /// </summary>
         /// <param name="matrix">矩阵。</param>
         /// <param name="result">计算结果，表示逆矩阵。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
-        /// bool Adjoint(double[,], out double[,])
-        /// bool Determinant(double[,], out double)
         public static bool Invert(double[,] matrix, out double[,] result)
         {
             result = null;
@@ -1500,10 +1441,6 @@ namespace Com
         /// <param name="matrix">系数矩阵。</param>
         /// <param name="array">常数项。</param>
         /// <param name="result">计算结果，表示解向量。</param>
-        /// 此函数依赖下列函数：
-        /// Size GetSize(double[,])
-        /// bool VectorColumn(double[], out double[,])
-        /// bool DivideLeft(double[,], double[,], out double[,])
         public static bool SolveLinearEquation(double[,] matrix, double[] array, out double[] result)
         {
             result = null;

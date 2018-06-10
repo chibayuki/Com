@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Painting3D
-Version 18.5.25.0000
+Version 18.6.10.0000
 
 This file is part of Com
 
@@ -39,8 +39,6 @@ namespace Com
         /// <param name="illuminationDirectionIsAfterAffineTransform">光照方向是否基于仿射变换之后的坐标系。</param>
         /// <param name="exposure">曝光，取值范围为 [-100, 100]。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// 此函数依赖下列函数：
-        /// bool PointIsVisibleInRectangle(PointD, RectangleF)
         public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<double[,]> affineMatrixList, double trueLenDist, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
         {
             try
@@ -515,8 +513,6 @@ namespace Com
         /// <param name="illuminationDirectionIsAfterAffineTransform">光照方向是否基于仿射变换之后的坐标系。</param>
         /// <param name="exposure">曝光，取值范围为 [-100, 100]。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// 此函数依赖下列函数：
-        /// bool PaintCuboid(Bitmap, PointD3D, PointD3D, Color, float, List, double,  PointD3D, double, bool)
         public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, double[,] affineMatrix, double trueLenDist, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
         {
             try
@@ -547,8 +543,6 @@ namespace Com
         /// <param name="affineMatrixList">仿射矩阵（左矩阵）列表。</param>
         /// <param name="trueLenDist">真实尺寸距离。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// 此函数依赖下列函数：
-        /// bool PaintCuboid(Bitmap, PointD3D, PointD3D, Color, float, List, double,  PointD3D, double, bool)
         public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<double[,]> affineMatrixList, double trueLenDist, bool antiAlias)
         {
             try
@@ -577,8 +571,6 @@ namespace Com
         /// <param name="affineMatrix">仿射矩阵（左矩阵）。</param>
         /// <param name="trueLenDist">真实尺寸距离。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// 此函数依赖下列函数：
-        /// bool PaintCuboid(Bitmap, PointD3D, PointD3D, Color, float, List, double,  PointD3D, double, bool)
         public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, double[,] affineMatrix, double trueLenDist, bool antiAlias)
         {
             try

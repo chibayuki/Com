@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Geometry
-Version 18.5.25.0000
+Version 18.6.10.0000
 
 This file is part of Com
 
@@ -445,8 +445,6 @@ namespace Com
         /// <param name="pt2">直线段的第二个端点。</param>
         /// <param name="offset">圆心。</param>
         /// <param name="radius">半径。</param>
-        /// 此函数依赖下列函数：
-        /// PointD GetFootPoint(PointD, PointD, PointD)
         public static bool LineIsVisibleInCircle(PointD pt1, PointD pt2, PointD offset, double radius)
         {
             try
