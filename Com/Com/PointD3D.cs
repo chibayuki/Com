@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.PointD3D
-Version 18.5.28.0000
+Version 18.6.15.0000
 
 This file is part of Com
 
@@ -491,8 +491,19 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 X 轴旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateX(double angle)
         {
-            double[,] matrixLeft = new double[4, 4] { { 1, 0, 0, 0 }, { 0, Math.Cos(angle), Math.Sin(angle), 0 }, { 0, -Math.Sin(angle), Math.Cos(angle), 0 }, { 0, 0, 0, 1 } };
-            double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+            double[,] matrixLeft = new double[4, 4]
+            {
+                { 1, 0, 0, 0 },
+                { 0, Math.Cos(angle), Math.Sin(angle), 0 },
+                { 0, -Math.Sin(angle), Math.Cos(angle), 0 },
+                { 0, 0, 0, 1 }
+            };
+
+            double[,] matrixRight = new double[1, 4]
+            {
+                { _X, _Y, _Z, 1 }
+            };
+
             double[,] result;
 
             if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -509,8 +520,19 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 Y 轴旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public void RotateY(double angle)
         {
-            double[,] matrixLeft = new double[4, 4] { { Math.Cos(angle), 0, -Math.Sin(angle), 0 }, { 0, 1, 0, 0 }, { Math.Sin(angle), 0, Math.Cos(angle), 0 }, { 0, 0, 0, 1 } };
-            double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+            double[,] matrixLeft = new double[4, 4]
+            {
+                { Math.Cos(angle), 0, -Math.Sin(angle), 0 },
+                { 0, 1, 0, 0 },
+                { Math.Sin(angle), 0, Math.Cos(angle), 0 },
+                { 0, 0, 0, 1 }
+            };
+
+            double[,] matrixRight = new double[1, 4]
+            {
+                { _X, _Y, _Z, 1 }
+            };
+
             double[,] result;
 
             if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -527,8 +549,19 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 Z 轴旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void RotateZ(double angle)
         {
-            double[,] matrixLeft = new double[4, 4] { { Math.Cos(angle), Math.Sin(angle), 0, 0 }, { -Math.Sin(angle), Math.Cos(angle), 0, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 1 } };
-            double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+            double[,] matrixLeft = new double[4, 4]
+            {
+                { Math.Cos(angle), Math.Sin(angle), 0, 0 },
+                { -Math.Sin(angle), Math.Cos(angle), 0, 0 },
+                { 0, 0, 1, 0 },
+                { 0, 0, 0, 1 }
+            };
+
+            double[,] matrixRight = new double[1, 4]
+            {
+                { _X, _Y, _Z, 1 }
+            };
+
             double[,] result;
 
             if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -545,8 +578,19 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 X 轴旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD3D RotateXCopy(double angle)
         {
-            double[,] matrixLeft = new double[4, 4] { { 1, 0, 0, 0 }, { 0, Math.Cos(angle), Math.Sin(angle), 0 }, { 0, -Math.Sin(angle), Math.Cos(angle), 0 }, { 0, 0, 0, 1 } };
-            double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+            double[,] matrixLeft = new double[4, 4]
+            {
+                { 1, 0, 0, 0 },
+                { 0, Math.Cos(angle), Math.Sin(angle), 0 },
+                { 0, -Math.Sin(angle), Math.Cos(angle), 0 },
+                { 0, 0, 0, 1 }
+            };
+
+            double[,] matrixRight = new double[1, 4]
+            {
+                { _X, _Y, _Z, 1 }
+            };
+
             double[,] result;
 
             if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -563,8 +607,19 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 Y 轴旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public PointD3D RotateYCopy(double angle)
         {
-            double[,] matrixLeft = new double[4, 4] { { Math.Cos(angle), 0, -Math.Sin(angle), 0 }, { 0, 1, 0, 0 }, { Math.Sin(angle), 0, Math.Cos(angle), 0 }, { 0, 0, 0, 1 } };
-            double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+            double[,] matrixLeft = new double[4, 4]
+            {
+                { Math.Cos(angle), 0, -Math.Sin(angle), 0 },
+                { 0, 1, 0, 0 },
+                { Math.Sin(angle), 0, Math.Cos(angle), 0 },
+                { 0, 0, 0, 1 }
+            };
+
+            double[,] matrixRight = new double[1, 4]
+            {
+                { _X, _Y, _Z, 1 }
+            };
+
             double[,] result;
 
             if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -581,8 +636,19 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 Z 轴旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD3D RotateZCopy(double angle)
         {
-            double[,] matrixLeft = new double[4, 4] { { Math.Cos(angle), Math.Sin(angle), 0, 0 }, { -Math.Sin(angle), Math.Cos(angle), 0, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 1 } };
-            double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+            double[,] matrixLeft = new double[4, 4]
+            {
+                { Math.Cos(angle), Math.Sin(angle), 0, 0 },
+                { -Math.Sin(angle), Math.Cos(angle), 0, 0 },
+                { 0, 0, 1, 0 },
+                { 0, 0, 0, 1 }
+            };
+
+            double[,] matrixRight = new double[1, 4]
+            {
+                { _X, _Y, _Z, 1 }
+            };
+
             double[,] result;
 
             if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -606,8 +672,19 @@ namespace Com
         {
             if (ex != null && ey != null && ez != null && offset != null)
             {
-                double[,] matrixLeft = new double[4, 4] { { ex.X, ex.Y, ex.Z, 0 }, { ey.X, ey.Y, ey.Z, 0 }, { ez.X, ez.Y, ez.Z, 0 }, { offset.X, offset.Y, offset.Z, 1 } };
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixLeft = new double[4, 4]
+                {
+                    { ex.X, ex.Y, ex.Z, 0 },
+                    { ey.X, ey.Y, ey.Z, 0 },
+                    { ez.X, ez.Y, ez.Z, 0 },
+                    { offset.X, offset.Y, offset.Z, 1 }
+                };
+
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -627,7 +704,11 @@ namespace Com
         {
             if (matrixLeft != null && Matrix2D.GetSize(matrixLeft) == new Size(4, 4))
             {
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -647,7 +728,11 @@ namespace Com
         {
             if (matrixLeftList.Count > 0)
             {
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result = null;
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
@@ -689,8 +774,19 @@ namespace Com
         {
             if (ex != null && ey != null && ez != null && offset != null)
             {
-                double[,] matrixLeft = new double[4, 4] { { ex.X, ex.Y, ex.Z, 0 }, { ey.X, ey.Y, ey.Z, 0 }, { ez.X, ez.Y, ez.Z, 0 }, { offset.X, offset.Y, offset.Z, 1 } };
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixLeft = new double[4, 4]
+                {
+                    { ex.X, ex.Y, ex.Z, 0 },
+                    { ey.X, ey.Y, ey.Z, 0 },
+                    { ez.X, ez.Y, ez.Z, 0 },
+                    { offset.X, offset.Y, offset.Z, 1 }
+                };
+
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -710,7 +806,11 @@ namespace Com
         {
             if (matrixLeft != null && Matrix2D.GetSize(matrixLeft) == new Size(4, 4))
             {
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -730,7 +830,11 @@ namespace Com
         {
             if (matrixLeftList.Count > 0)
             {
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result = null;
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
@@ -772,8 +876,19 @@ namespace Com
         {
             if (ex != null && ey != null && ez != null && offset != null)
             {
-                double[,] matrixLeft = new double[4, 4] { { ex.X, ex.Y, ex.Z, 0 }, { ey.X, ey.Y, ey.Z, 0 }, { ez.X, ez.Y, ez.Z, 0 }, { offset.X, offset.Y, offset.Z, 1 } };
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixLeft = new double[4, 4]
+                {
+                    { ex.X, ex.Y, ex.Z, 0 },
+                    { ey.X, ey.Y, ey.Z, 0 },
+                    { ez.X, ez.Y, ez.Z, 0 },
+                    { offset.X, offset.Y, offset.Z, 1 }
+                };
+
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.DivideLeft(matrixLeft, matrixRight, out result))
@@ -793,7 +908,11 @@ namespace Com
         {
             if (matrixLeft != null && Matrix2D.GetSize(matrixLeft) == new Size(4, 4))
             {
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.DivideLeft(matrixLeft, matrixRight, out result))
@@ -813,7 +932,11 @@ namespace Com
         {
             if (matrixLeftList.Count > 0)
             {
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result = null;
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
@@ -855,8 +978,19 @@ namespace Com
         {
             if (ex != null && ey != null && ez != null && offset != null)
             {
-                double[,] matrixLeft = new double[4, 4] { { ex.X, ex.Y, ex.Z, 0 }, { ey.X, ey.Y, ey.Z, 0 }, { ez.X, ez.Y, ez.Z, 0 }, { offset.X, offset.Y, offset.Z, 1 } };
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixLeft = new double[4, 4]
+                {
+                    { ex.X, ex.Y, ex.Z, 0 },
+                    { ey.X, ey.Y, ey.Z, 0 },
+                    { ez.X, ez.Y, ez.Z, 0 },
+                    { offset.X, offset.Y, offset.Z, 1 }
+                };
+
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.DivideLeft(matrixLeft, matrixRight, out result))
@@ -876,7 +1010,11 @@ namespace Com
         {
             if (matrixLeft != null && Matrix2D.GetSize(matrixLeft) == new Size(4, 4))
             {
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.DivideLeft(matrixLeft, matrixRight, out result))
@@ -896,7 +1034,11 @@ namespace Com
         {
             if (matrixLeftList.Count > 0)
             {
-                double[,] matrixRight = new double[1, 4] { { _X, _Y, _Z, 1 } };
+                double[,] matrixRight = new double[1, 4]
+                {
+                    { _X, _Y, _Z, 1 }
+                };
+
                 double[,] result = null;
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
@@ -1089,7 +1231,10 @@ namespace Com
         /// </summary>
         public double[,] ToVectorColumn()
         {
-            return new double[1, 3] { { _X, _Y, _Z } };
+            return new double[1, 3]
+            {
+                { _X, _Y, _Z }
+            };
         }
 
         /// <summary>
@@ -1097,7 +1242,12 @@ namespace Com
         /// </summary>
         public double[,] ToVectorRow()
         {
-            return new double[3, 1] { { _X }, { _Y }, { _Z } };
+            return new double[3, 1]
+            {
+                { _X },
+                { _Y },
+                { _Z }
+            };
         }
 
         #endregion
@@ -1110,7 +1260,13 @@ namespace Com
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
         public static double[,] OffsetMatrix(double d)
         {
-            return new double[4, 4] { { 1, 0, 0, 0 }, { 0, 1, 0, 0 }, { 0, 0, 1, 0 }, { d, d, d, 1 } };
+            return new double[4, 4]
+            {
+                { 1, 0, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 0, 1, 0 },
+                { d, d, d, 1 }
+            };
         }
 
         /// <summary>
@@ -1121,7 +1277,13 @@ namespace Com
         /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
         public static double[,] OffsetMatrix(double dx, double dy, double dz)
         {
-            return new double[4, 4] { { 1, 0, 0, 0 }, { 0, 1, 0, 0 }, { 0, 0, 1, 0 }, { dx, dy, dz, 1 } };
+            return new double[4, 4]
+            {
+                { 1, 0, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 0, 1, 0 },
+                { dx, dy, dz, 1 }
+            };
         }
 
         /// <summary>
@@ -1132,7 +1294,13 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[4, 4] { { 1, 0, 0, 0 }, { 0, 1, 0, 0 }, { 0, 0, 1, 0 }, { pt.X, pt.Y, pt.Z, 1 } };
+                return new double[4, 4]
+                {
+                    { 1, 0, 0, 0 },
+                    { 0, 1, 0, 0 },
+                    { 0, 0, 1, 0 },
+                    { pt.X, pt.Y, pt.Z, 1 }
+                };
             }
 
             return null;
@@ -1146,7 +1314,13 @@ namespace Com
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
         public static double[,] ScaleMatrix(double s)
         {
-            return new double[4, 4] { { s, 0, 0, 0 }, { 0, s, 0, 0 }, { 0, 0, s, 0 }, { 0, 0, 0, 1 } };
+            return new double[4, 4]
+            {
+                { s, 0, 0, 0 },
+                { 0, s, 0, 0 },
+                { 0, 0, s, 0 },
+                { 0, 0, 0, 1 }
+            };
         }
 
         /// <summary>
@@ -1157,7 +1331,13 @@ namespace Com
         /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
         public static double[,] ScaleMatrix(double sx, double sy, double sz)
         {
-            return new double[4, 4] { { sx, 0, 0, 0 }, { 0, sy, 0, 0 }, { 0, 0, sz, 0 }, { 0, 0, 0, 1 } };
+            return new double[4, 4]
+            {
+                { sx, 0, 0, 0 },
+                { 0, sy, 0, 0 },
+                { 0, 0, sz, 0 },
+                { 0, 0, 0, 1 }
+            };
         }
 
         /// <summary>
@@ -1168,7 +1348,13 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[4, 4] { { pt.X, 0, 0, 0 }, { 0, pt.Y, 0, 0 }, { 0, 0, pt.Z, 0 }, { 0, 0, 0, 1 } };
+                return new double[4, 4]
+                {
+                    { pt.X, 0, 0, 0 },
+                    { 0, pt.Y, 0, 0 },
+                    { 0, 0, pt.Z, 0 },
+                    { 0, 0, 0, 1 }
+                };
             }
 
             return null;
@@ -1182,7 +1368,13 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 X 轴旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public static double[,] RotateXMatrix(double angle)
         {
-            return new double[4, 4] { { 1, 0, 0, 0 }, { 0, Math.Cos(angle), Math.Sin(angle), 0 }, { 0, -Math.Sin(angle), Math.Cos(angle), 0 }, { 0, 0, 0, 1 } };
+            return new double[4, 4]
+            {
+                { 1, 0, 0, 0 },
+                { 0, Math.Cos(angle), Math.Sin(angle), 0 },
+                { 0, -Math.Sin(angle), Math.Cos(angle), 0 },
+                { 0, 0, 0, 1 }
+            };
         }
 
         /// <summary>
@@ -1191,7 +1383,13 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 Y 轴旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public static double[,] RotateYMatrix(double angle)
         {
-            return new double[4, 4] { { Math.Cos(angle), 0, -Math.Sin(angle), 0 }, { 0, 1, 0, 0 }, { Math.Sin(angle), 0, Math.Cos(angle), 0 }, { 0, 0, 0, 1 } };
+            return new double[4, 4]
+            {
+                { Math.Cos(angle), 0, -Math.Sin(angle), 0 },
+                { 0, 1, 0, 0 },
+                { Math.Sin(angle), 0, Math.Cos(angle), 0 },
+                { 0, 0, 0, 1 }
+            };
         }
 
         /// <summary>
@@ -1200,7 +1398,13 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 Z 轴旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static double[,] RotateZMatrix(double angle)
         {
-            return new double[4, 4] { { Math.Cos(angle), Math.Sin(angle), 0, 0 }, { -Math.Sin(angle), Math.Cos(angle), 0, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 1 } };
+            return new double[4, 4]
+            {
+                { Math.Cos(angle), Math.Sin(angle), 0, 0 },
+                { -Math.Sin(angle), Math.Cos(angle), 0, 0 },
+                { 0, 0, 1, 0 },
+                { 0, 0, 0, 1 }
+            };
         }
 
         //

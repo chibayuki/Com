@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.IO
-Version 18.5.25.0000
+Version 18.6.15.0000
 
 This file is part of Com
 
@@ -44,42 +44,22 @@ namespace Com
 
                     FileInfo[] ChildFiles = new DirectoryInfo(sourceFolder).GetFiles();
 
-                    for (int i = 0; i < ChildFiles.Length; i++)
+                    foreach (FileInfo V in ChildFiles)
                     {
-                        File.Copy(sourceFolder + "\\" + ChildFiles[i].Name, destFolder + "\\" + ChildFiles[i].Name, true);
+                        File.Copy(sourceFolder + "\\" + V.Name, destFolder + "\\" + V.Name, true);
                     }
 
                     //
 
                     DirectoryInfo[] ChildFolders = new DirectoryInfo(sourceFolder).GetDirectories();
 
-                    for (int i = 0; i < ChildFolders.Length; i++)
+                    foreach (DirectoryInfo V in ChildFolders)
                     {
-                        CopyFolder(sourceFolder + "\\" + ChildFolders[i].Name, destFolder + "\\" + ChildFolders[i].Name);
+                        if (!CopyFolder(sourceFolder + "\\" + V.Name, destFolder + "\\" + V.Name))
+                        {
+                            return false;
+                        }
                     }
-
-                    return true;
-                }
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 删除源文件夹以及源文件夹中的所有文件与文件夹，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="sourceFolder">源文件夹。</param>
-        public static bool DeleteFolder(string sourceFolder)
-        {
-            try
-            {
-                if (Directory.Exists(sourceFolder))
-                {
-                    Directory.Delete(sourceFolder, true);
 
                     return true;
                 }

@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.PointD
-Version 18.5.28.0000
+Version 18.6.15.0000
 
 This file is part of Com
 
@@ -814,8 +814,18 @@ namespace Com
         {
             if (ex != null && ey != null && offset != null)
             {
-                double[,] matrixLeft = new double[3, 3] { { ex.X, ex.Y, 0 }, { ey.X, ey.Y, 0 }, { offset.X, offset.Y, 1 } };
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixLeft = new double[3, 3]
+                {
+                    { ex.X, ex.Y, 0 },
+                    { ey.X, ey.Y, 0 },
+                    { offset.X, offset.Y, 1 }
+                };
+
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -834,7 +844,11 @@ namespace Com
         {
             if (matrixLeft != null && Matrix2D.GetSize(matrixLeft) == new Size(3, 3))
             {
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -853,7 +867,11 @@ namespace Com
         {
             if (matrixLeftList.Count > 0)
             {
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result = null;
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
@@ -893,8 +911,18 @@ namespace Com
         {
             if (ex != null && ey != null && offset != null)
             {
-                double[,] matrixLeft = new double[3, 3] { { ex.X, ex.Y, 0 }, { ey.X, ey.Y, 0 }, { offset.X, offset.Y, 1 } };
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixLeft = new double[3, 3]
+                {
+                    { ex.X, ex.Y, 0 },
+                    { ey.X, ey.Y, 0 },
+                    { offset.X, offset.Y, 1 }
+                };
+
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -914,7 +942,11 @@ namespace Com
         {
             if (matrixLeft != null && Matrix2D.GetSize(matrixLeft) == new Size(3, 3))
             {
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
@@ -934,7 +966,11 @@ namespace Com
         {
             if (matrixLeftList.Count > 0)
             {
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result = null;
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
@@ -975,8 +1011,18 @@ namespace Com
         {
             if (ex != null && ey != null && offset != null)
             {
-                double[,] matrixLeft = new double[3, 3] { { ex.X, ex.Y, 0 }, { ey.X, ey.Y, 0 }, { offset.X, offset.Y, 1 } };
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixLeft = new double[3, 3]
+                {
+                    { ex.X, ex.Y, 0 },
+                    { ey.X, ey.Y, 0 },
+                    { offset.X, offset.Y, 1 }
+                };
+
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.DivideLeft(matrixLeft, matrixRight, out result))
@@ -995,7 +1041,11 @@ namespace Com
         {
             if (matrixLeft != null && Matrix2D.GetSize(matrixLeft) == new Size(3, 3))
             {
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.DivideLeft(matrixLeft, matrixRight, out result))
@@ -1014,7 +1064,11 @@ namespace Com
         {
             if (matrixLeftList.Count > 0)
             {
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result = null;
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
@@ -1054,8 +1108,18 @@ namespace Com
         {
             if (ex != null && ey != null && offset != null)
             {
-                double[,] matrixLeft = new double[3, 3] { { ex.X, ex.Y, 0 }, { ey.X, ey.Y, 0 }, { offset.X, offset.Y, 1 } };
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixLeft = new double[3, 3]
+                {
+                    { ex.X, ex.Y, 0 },
+                    { ey.X, ey.Y, 0 },
+                    { offset.X, offset.Y, 1 }
+                };
+
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.DivideLeft(matrixLeft, matrixRight, out result))
@@ -1075,7 +1139,11 @@ namespace Com
         {
             if (matrixLeft != null && Matrix2D.GetSize(matrixLeft) == new Size(3, 3))
             {
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result;
 
                 if (Matrix2D.DivideLeft(matrixLeft, matrixRight, out result))
@@ -1095,7 +1163,11 @@ namespace Com
         {
             if (matrixLeftList.Count > 0)
             {
-                double[,] matrixRight = new double[1, 3] { { _X, _Y, 1 } };
+                double[,] matrixRight = new double[1, 3]
+                {
+                    { _X, _Y, 1 }
+                };
+
                 double[,] result = null;
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
@@ -1196,7 +1268,10 @@ namespace Com
         /// </summary>
         public double[,] ToVectorColumn()
         {
-            return new double[1, 2] { { _X, _Y } };
+            return new double[1, 2]
+            {
+                { _X, _Y }
+            };
         }
 
         /// <summary>
@@ -1204,7 +1279,11 @@ namespace Com
         /// </summary>
         public double[,] ToVectorRow()
         {
-            return new double[2, 1] { { _X }, { _Y } };
+            return new double[2, 1]
+            {
+                { _X },
+                { _Y }
+            };
         }
 
         #endregion
@@ -1289,7 +1368,12 @@ namespace Com
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
         public static double[,] OffsetMatrix(double d)
         {
-            return new double[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { d, d, 1 } };
+            return new double[3, 3]
+            {
+                { 1, 0, 0 },
+                { 0, 1, 0 },
+                { d, d, 1 }
+            };
         }
 
         /// <summary>
@@ -1299,7 +1383,12 @@ namespace Com
         /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
         public static double[,] OffsetMatrix(double dx, double dy)
         {
-            return new double[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { dx, dy, 1 } };
+            return new double[3, 3]
+            {
+                { 1, 0, 0 },
+                { 0, 1, 0 },
+                { dx, dy, 1 }
+            };
         }
 
         /// <summary>
@@ -1310,7 +1399,12 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { pt.X, pt.Y, 1 } };
+                return new double[3, 3]
+                {
+                    { 1, 0, 0 },
+                    { 0, 1, 0 },
+                    { pt.X, pt.Y, 1 }
+                };
             }
 
             return null;
@@ -1324,7 +1418,12 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { pt.X, pt.Y, 1 } };
+                return new double[3, 3]
+                {
+                    { 1, 0, 0 },
+                    { 0, 1, 0 },
+                    { pt.X, pt.Y, 1 }
+                };
             }
 
             return null;
@@ -1338,7 +1437,12 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { pt.X, pt.Y, 1 } };
+                return new double[3, 3]
+                {
+                    { 1, 0, 0 },
+                    { 0, 1, 0 },
+                    { pt.X, pt.Y, 1 }
+                };
             }
 
             return null;
@@ -1352,7 +1456,12 @@ namespace Com
         {
             if (sz != null)
             {
-                return new double[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { sz.Width, sz.Height, 1 } };
+                return new double[3, 3]
+                {
+                    { 1, 0, 0 },
+                    { 0, 1, 0 },
+                    { sz.Width, sz.Height, 1 }
+                };
             }
 
             return null;
@@ -1366,7 +1475,12 @@ namespace Com
         {
             if (sz != null)
             {
-                return new double[3, 3] { { 1, 0, 0 }, { 0, 1, 0 }, { sz.Width, sz.Height, 1 } };
+                return new double[3, 3]
+                {
+                    { 1, 0, 0 },
+                    { 0, 1, 0 },
+                    { sz.Width, sz.Height, 1 }
+                };
             }
 
             return null;
@@ -1380,7 +1494,12 @@ namespace Com
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
         public static double[,] ScaleMatrix(double s)
         {
-            return new double[3, 3] { { s, 0, 0 }, { 0, s, 0 }, { 0, 0, 1 } };
+            return new double[3, 3]
+            {
+                { s, 0, 0 },
+                { 0, s, 0 },
+                { 0, 0, 1 }
+            };
         }
 
         /// <summary>
@@ -1390,7 +1509,12 @@ namespace Com
         /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
         public static double[,] ScaleMatrix(double sx, double sy)
         {
-            return new double[3, 3] { { sx, 0, 0 }, { 0, sy, 0 }, { 0, 0, 1 } };
+            return new double[3, 3]
+            {
+                { sx, 0, 0 },
+                { 0, sy, 0 },
+                { 0, 0, 1 }
+            };
         }
 
         /// <summary>
@@ -1401,7 +1525,12 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[3, 3] { { pt.X, 0, 0 }, { 0, pt.Y, 0 }, { 0, 0, 1 } };
+                return new double[3, 3]
+                {
+                    { pt.X, 0, 0 },
+                    { 0, pt.Y, 0 },
+                    { 0, 0, 1 }
+                };
             }
 
             return null;
@@ -1415,7 +1544,12 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[3, 3] { { pt.X, 0, 0 }, { 0, pt.Y, 0 }, { 0, 0, 1 } };
+                return new double[3, 3]
+                {
+                    { pt.X, 0, 0 },
+                    { 0, pt.Y, 0 },
+                    { 0, 0, 1 }
+                };
             }
 
             return null;
@@ -1429,7 +1563,12 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[3, 3] { { pt.X, 0, 0 }, { 0, pt.Y, 0 }, { 0, 0, 1 } };
+                return new double[3, 3]
+                {
+                    { pt.X, 0, 0 },
+                    { 0, pt.Y, 0 },
+                    { 0, 0, 1 }
+                };
             }
 
             return null;
@@ -1443,7 +1582,12 @@ namespace Com
         {
             if (sz != null)
             {
-                return new double[3, 3] { { sz.Width, 0, 0 }, { 0, sz.Height, 0 }, { 0, 0, 1 } };
+                return new double[3, 3]
+                {
+                    { sz.Width, 0, 0 },
+                    { 0, sz.Height, 0 },
+                    { 0, 0, 1 }
+                };
             }
 
             return null;
@@ -1457,7 +1601,12 @@ namespace Com
         {
             if (sz != null)
             {
-                return new double[3, 3] { { sz.Width, 0, 0 }, { 0, sz.Height, 0 }, { 0, 0, 1 } };
+                return new double[3, 3]
+                {
+                    { sz.Width, 0, 0 },
+                    { 0, sz.Height, 0 },
+                    { 0, 0, 1 }
+                };
             }
 
             return null;
@@ -1471,7 +1620,12 @@ namespace Com
         /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕原点旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static double[,] RotateMatrix(double angle)
         {
-            return new double[3, 3] { { Math.Cos(angle), Math.Sin(angle), 0 }, { -Math.Sin(angle), Math.Cos(angle), 0 }, { 0, 0, 1 } };
+            return new double[3, 3]
+            {
+                { Math.Cos(angle), Math.Sin(angle), 0 },
+                { -Math.Sin(angle), Math.Cos(angle), 0 },
+                { 0, 0, 1 }
+            };
         }
 
         /// <summary>
@@ -1483,7 +1637,12 @@ namespace Com
         {
             if (pt != null)
             {
-                return new double[3, 3] { { Math.Cos(angle), Math.Sin(angle), 0 }, { -Math.Sin(angle), Math.Cos(angle), 0 }, { -pt.X * Math.Cos(angle) + pt.Y * Math.Sin(angle) + pt.X, -pt.X * Math.Sin(angle) - pt.Y * Math.Cos(angle) + pt.Y, 1 } };
+                return new double[3, 3]
+                {
+                    { Math.Cos(angle), Math.Sin(angle), 0 },
+                    { -Math.Sin(angle), Math.Cos(angle), 0 },
+                    { -pt.X * Math.Cos(angle) + pt.Y * Math.Sin(angle) + pt.X, -pt.X * Math.Sin(angle) - pt.Y * Math.Cos(angle) + pt.Y, 1 }
+                };
             }
 
             return null;
