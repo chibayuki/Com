@@ -29,15 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CaptionBar));
-            this.ImageList_ControlBox_LightImage = new System.Windows.Forms.ImageList(this.components);
             this.ContextMenuStrip_Main = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_Return = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Minimize = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Maximize = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator_Main = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.ImageList_ControlBox_DarkImage = new System.Windows.Forms.ImageList(this.components);
             this.Panel_CaptionBar = new System.Windows.Forms.Panel();
             this.Panel_FormIcon = new System.Windows.Forms.Panel();
             this.PictureBox_FormIcon = new System.Windows.Forms.PictureBox();
@@ -48,6 +45,7 @@
             this.PictureBox_Exit = new System.Windows.Forms.PictureBox();
             this.ToolTip_ControlBox = new System.Windows.Forms.ToolTip(this.components);
             this.BackgroundWorker_UpdateLayoutDelay = new System.ComponentModel.BackgroundWorker();
+            this.Timer_FullScreenMonitor = new System.Windows.Forms.Timer(this.components);
             this.ContextMenuStrip_Main.SuspendLayout();
             this.Panel_CaptionBar.SuspendLayout();
             this.Panel_FormIcon.SuspendLayout();
@@ -58,18 +56,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Maximize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox_Exit)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ImageList_ControlBox_LightImage
-            // 
-            this.ImageList_ControlBox_LightImage.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList_ControlBox_LightImage.ImageStream")));
-            this.ImageList_ControlBox_LightImage.TransparentColor = System.Drawing.Color.Transparent;
-            this.ImageList_ControlBox_LightImage.Images.SetKeyName(0, "ControlBox_LightImage_Minimize_16.png");
-            this.ImageList_ControlBox_LightImage.Images.SetKeyName(1, "ControlBox_LightImage_Maximize_16.png");
-            this.ImageList_ControlBox_LightImage.Images.SetKeyName(2, "ControlBox_LightImage_Return_16.png");
-            this.ImageList_ControlBox_LightImage.Images.SetKeyName(3, "ControlBox_LightImage_Exit_Normal_16.png");
-            this.ImageList_ControlBox_LightImage.Images.SetKeyName(4, "ControlBox_LightImage_Exit_MouseOver_16.png");
-            this.ImageList_ControlBox_LightImage.Images.SetKeyName(5, "ControlBox_LightImage_EnterFullScreen_16.png");
-            this.ImageList_ControlBox_LightImage.Images.SetKeyName(6, "ControlBox_LightImage_ExitFullScreen_16.png");
             // 
             // ContextMenuStrip_Main
             // 
@@ -136,18 +122,6 @@
             this.ToolStripMenuItem_Exit.Size = new System.Drawing.Size(183, 22);
             this.ToolStripMenuItem_Exit.Text = "关闭(&C)";
             this.ToolStripMenuItem_Exit.Click += new System.EventHandler(this.ToolStripMenuItem_Exit_Click);
-            // 
-            // ImageList_ControlBox_DarkImage
-            // 
-            this.ImageList_ControlBox_DarkImage.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImageList_ControlBox_DarkImage.ImageStream")));
-            this.ImageList_ControlBox_DarkImage.TransparentColor = System.Drawing.Color.Transparent;
-            this.ImageList_ControlBox_DarkImage.Images.SetKeyName(0, "ControlBox_DarkImage_Minimize_16.png");
-            this.ImageList_ControlBox_DarkImage.Images.SetKeyName(1, "ControlBox_DarkImage_Maximize_16.png");
-            this.ImageList_ControlBox_DarkImage.Images.SetKeyName(2, "ControlBox_DarkImage_Return_16.png");
-            this.ImageList_ControlBox_DarkImage.Images.SetKeyName(3, "ControlBox_DarkImage_Exit_Normal_16.png");
-            this.ImageList_ControlBox_DarkImage.Images.SetKeyName(4, "ControlBox_DarkImage_Exit_MouseOver_16.png");
-            this.ImageList_ControlBox_DarkImage.Images.SetKeyName(5, "ControlBox_DarkImage_EnterFullScreen_16.png");
-            this.ImageList_ControlBox_DarkImage.Images.SetKeyName(6, "ControlBox_DarkImage_ExitFullScreen_16.png");
             // 
             // Panel_CaptionBar
             // 
@@ -287,6 +261,11 @@
             this.BackgroundWorker_UpdateLayoutDelay.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker_UpdateLayoutDelay_DoWork);
             this.BackgroundWorker_UpdateLayoutDelay.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted);
             // 
+            // Timer_FullScreenMonitor
+            // 
+            this.Timer_FullScreenMonitor.Interval = 200;
+            this.Timer_FullScreenMonitor.Tick += new System.EventHandler(this.Timer_FullScreenMonitor_Tick);
+            // 
             // CaptionBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -315,14 +294,12 @@
         }
 
         #endregion
-        private System.Windows.Forms.ImageList ImageList_ControlBox_LightImage;
         private System.Windows.Forms.ContextMenuStrip ContextMenuStrip_Main;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Return;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Minimize;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Maximize;
         private System.Windows.Forms.ToolStripSeparator ToolStripSeparator_Main;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Exit;
-        private System.Windows.Forms.ImageList ImageList_ControlBox_DarkImage;
         private System.Windows.Forms.Panel Panel_CaptionBar;
         private System.Windows.Forms.Panel Panel_ControlBox;
         private System.Windows.Forms.Panel Panel_FormIcon;
@@ -333,5 +310,6 @@
         private System.Windows.Forms.PictureBox PictureBox_Minimize;
         private System.Windows.Forms.PictureBox PictureBox_Exit;
         private System.Windows.Forms.PictureBox PictureBox_Maximize;
+        private System.Windows.Forms.Timer Timer_FullScreenMonitor;
     }
 }

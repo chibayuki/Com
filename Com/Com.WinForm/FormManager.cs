@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.6.2.0000
+Version 18.6.17.0000
 
 This file is part of Com
 
@@ -189,6 +189,16 @@ namespace Com.WinForm
             get
             {
                 return _ResizerSize;
+            }
+        }
+
+        //
+
+        internal double CaptionBarOpacityRatio // 获取标题栏不透明度系数。
+        {
+            get
+            {
+                return (_EnableCaptionBarTransparent ? 0.9 : 1);
             }
         }
 
@@ -1388,7 +1398,7 @@ namespace Com.WinForm
                         _Opacity = Opa * (1 - Pct_F);
 
                         _SplashScreen.Opacity = _Opacity;
-                        _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+                        _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                         _Resizer.OnOpacityChanged();
 
                         Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
@@ -1691,7 +1701,7 @@ namespace Com.WinForm
                 _Opacity = Opa * Pct_F;
 
                 _Client.Opacity = _SplashScreen.Opacity = _Opacity;
-                _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+                _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                 _Resizer.OnOpacityChanged();
 
                 Bounds_Current_Y = CurrY - (int)(16 * (1 - Pct_F));
@@ -1824,7 +1834,7 @@ namespace Com.WinForm
                     _Opacity = Opa * (1 - Pct_F);
 
                     _SplashScreen.Opacity = _Opacity;
-                    _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+                    _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                     _Resizer.OnOpacityChanged();
 
                     Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
@@ -2270,7 +2280,11 @@ namespace Com.WinForm
                         Action InvokeMethod = () =>
                         {
                             _Client.Opacity = _SplashScreen.Opacity = _Opacity;
-                            _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+
+                            if (_FormState != FormState.FullScreen)
+                            {
+                                _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                            }
 
                             _Resizer.OnOpacityChanged();
 
@@ -2600,7 +2614,7 @@ namespace Com.WinForm
                     {
                         Action InvokeMethod = () =>
                         {
-                            _CaptionBar.Opacity = (_EnableCaptionBarTransparent ? _Opacity * 0.9 : _Opacity);
+                            _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                         };
 
                         _Client.Invoke(InvokeMethod);

@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.6.1.0000
+Version 18.6.17.0000
 
 This file is part of Com
 
@@ -339,12 +339,13 @@ namespace Com.WinForm
 
             //
 
-            Panel_CaptionBar.Size = new Size(Me.Width, Me.CaptionBarHeight);
-
             if (Me.FormState == FormState.FullScreen)
             {
-                this.Size = Panel_CaptionBar.Size = Panel_ControlBox.Size;
-                this.Location = new Point(Me.Right - Panel_ControlBox.Width, Me.Y);
+                Panel_CaptionBar.Size = Panel_ControlBox.Size;
+            }
+            else
+            {
+                Panel_CaptionBar.Size = new Size(Me.Width, Me.CaptionBarHeight);
             }
 
             Panel_FormIcon.Size = new Size(Math.Min(Panel_CaptionBar.Height, Panel_ControlBox.Height), Math.Min(Panel_CaptionBar.Height, Panel_ControlBox.Height));
@@ -825,6 +826,61 @@ namespace Com.WinForm
             _LastUpdateLayout = DateTime.Now;
         }
 
+        //
+
+        private void Timer_FullScreenMonitor_Tick(object sender, EventArgs e) // Timer_FullScreenMonitor 的 Tick 事件的回调函数。
+        {
+            if (Me.FormState == FormState.FullScreen)
+            {
+                double _Opacity = Me.Opacity * Me.CaptionBarOpacityRatio;
+
+                Animation.Frame FrameShow = (frameId, frameCount, msPerFrame) =>
+                {
+                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+
+                    this.Opacity = _Opacity * Pct_F;
+                    this.Height = (Int32)(Panel_ControlBox.Height * Pct_F);
+
+                    Panel_CaptionBar.Top = this.Height - Panel_CaptionBar.Height;
+                };
+
+                Animation.Frame FrameHide = (frameId, frameCount, msPerFrame) =>
+                {
+                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+
+                    this.Opacity = _Opacity * (1 - Pct_F);
+                    this.Height = (Int32)(Panel_ControlBox.Height * (1 - Pct_F));
+
+                    Panel_CaptionBar.Top = this.Height - Panel_CaptionBar.Height;
+                };
+
+                if (Me.Enabled)
+                {
+                    if (this.Height == Panel_ControlBox.Height)
+                    {
+                        if (FormManager.CursorPosition.Y > Me.Y + Panel_CaptionBar.Height * 2)
+                        {
+                            Animation.Show(FrameHide, 9, 15);
+                        }
+                    }
+                    else
+                    {
+                        if (FormManager.CursorPosition.Y <= Me.Y + _ExtendDist && FormManager.CursorPosition.X >= Me.Right - Panel_CaptionBar.Width && FormManager.CursorPosition.X <= Me.Right)
+                        {
+                            Animation.Show(FrameShow, 9, 15);
+                        }
+                    }
+                }
+                else
+                {
+                    if (this.Height == Panel_ControlBox.Height)
+                    {
+                        Animation.Show(FrameHide, 9, 15);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region 构造函数
@@ -873,7 +929,32 @@ namespace Com.WinForm
 
             //
 
+            if (Me.FormState == FormState.FullScreen)
+            {
+                this.Size = Panel_ControlBox.Size;
+                this.Location = new Point(Me.Right - Panel_ControlBox.Width, Me.Y);
+            }
+            else
+            {
+                this.Opacity = Me.Opacity * Me.CaptionBarOpacityRatio;
+
+                Panel_CaptionBar.Top = 0;
+            }
+
+            //
+
             CaptionBar_SizeChanged(this, EventArgs.Empty);
+
+            //
+
+            if (Me.FormState == FormState.FullScreen)
+            {
+                Timer_FullScreenMonitor.Enabled = true;
+            }
+            else
+            {
+                Timer_FullScreenMonitor.Enabled = false;
+            }
         }
 
         public void OnCaptionChanged() // 在 CaptionChanged 事件发生时发生。
