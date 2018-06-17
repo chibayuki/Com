@@ -29,10 +29,10 @@ namespace Com
         /// </summary>
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
-        /// <param name="recursion">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
+        /// <param name="recursive">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         /// <param name="merge">如果存在同名文件夹，是否合并文件夹内容。</param>
         /// <param name="overwrite">如果存在同名文件，是否覆盖目标文件。</param>
-        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursion, bool merge, bool overwrite)
+        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive, bool merge, bool overwrite)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace Com
 
                     //
 
-                    if (recursion)
+                    if (recursive)
                     {
                         DirectoryInfo[] ChildFolders = new DirectoryInfo(sourceFolder).GetDirectories();
 
@@ -94,13 +94,13 @@ namespace Com
         /// </summary>
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
-        /// <param name="recursion">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
+        /// <param name="recursive">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         /// <param name="merge">如果存在同名文件夹，是否合并文件夹内容。</param>
-        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursion, bool merge)
+        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive, bool merge)
         {
             try
             {
-                return CopyFolder(sourceFolder, destFolder, recursion, merge, false);
+                return CopyFolder(sourceFolder, destFolder, recursive, merge, false);
             }
             catch
             {
@@ -113,12 +113,12 @@ namespace Com
         /// </summary>
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
-        /// <param name="recursion">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
-        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursion)
+        /// <param name="recursive">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
+        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive)
         {
             try
             {
-                return CopyFolder(sourceFolder, destFolder, recursion, false, false);
+                return CopyFolder(sourceFolder, destFolder, recursive, false, false);
             }
             catch
             {
