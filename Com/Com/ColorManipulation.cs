@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.ColorManipulation
-Version 18.6.3.0000
+Version 18.6.18.0000
 
 This file is part of Com
 
@@ -31,9 +31,9 @@ namespace Com
             {
                 PropertyInfo[] PInfo = typeof(Color).GetProperties();
 
-                foreach (PropertyInfo V in PInfo)
+                foreach (PropertyInfo PropInfo in PInfo)
                 {
-                    string Name = V.Name;
+                    string Name = PropInfo.Name;
                     Color Cr = Color.FromName(Name);
                     KnownColor KC = Cr.ToKnownColor();
 

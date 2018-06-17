@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.IO
-Version 18.6.17.0000
+Version 18.6.18.0000
 
 This file is part of Com
 
@@ -56,9 +56,9 @@ namespace Com
 
                     FileInfo[] ChildFiles = new DirectoryInfo(sourceFolder).GetFiles();
 
-                    foreach (FileInfo V in ChildFiles)
+                    foreach (FileInfo FInfo in ChildFiles)
                     {
-                        File.Copy(Path.Combine(sourceFolder, V.Name), Path.Combine(destFolder, V.Name), overwrite);
+                        File.Copy(Path.Combine(sourceFolder, FInfo.Name), Path.Combine(destFolder, FInfo.Name), overwrite);
                     }
 
                     //
@@ -67,9 +67,9 @@ namespace Com
                     {
                         DirectoryInfo[] ChildFolders = new DirectoryInfo(sourceFolder).GetDirectories();
 
-                        foreach (DirectoryInfo V in ChildFolders)
+                        foreach (DirectoryInfo DirInfo in ChildFolders)
                         {
-                            if (!CopyFolder(Path.Combine(sourceFolder, V.Name), Path.Combine(destFolder, V.Name), true, merge, overwrite))
+                            if (!CopyFolder(Path.Combine(sourceFolder, DirInfo.Name), Path.Combine(destFolder, DirInfo.Name), true, merge, overwrite))
                             {
                                 return false;
                             }

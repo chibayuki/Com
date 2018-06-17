@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Geometry
-Version 18.6.10.0000
+Version 18.6.18.0000
 
 This file is part of Com
 
@@ -251,12 +251,12 @@ namespace Com
                 {
                     int L = int.MaxValue, R = int.MinValue, T = int.MaxValue, B = int.MinValue;
 
-                    foreach (Control V in ctrls)
+                    foreach (Control Ctrl in ctrls)
                     {
-                        L = Math.Min(L, V.Left);
-                        T = Math.Min(T, V.Top);
-                        R = Math.Max(R, V.Right);
-                        B = Math.Max(B, V.Bottom);
+                        L = Math.Min(L, Ctrl.Left);
+                        T = Math.Min(T, Ctrl.Top);
+                        R = Math.Max(R, Ctrl.Right);
+                        B = Math.Max(B, Ctrl.Bottom);
                     }
 
                     edgeDist = Math.Max(0, edgeDist);

@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Painting3D
-Version 18.6.10.0000
+Version 18.6.18.0000
 
 This file is part of Com
 
@@ -168,9 +168,9 @@ namespace Com
                     {
                         bool EVisible = false;
 
-                        foreach (PointF V in Element2D[i])
+                        foreach (PointF P in Element2D[i])
                         {
-                            PointD P2D = new PointD(V);
+                            PointD P2D = new PointD(P);
 
                             if (P2D.IsNaNOrInfinity)
                             {
@@ -284,9 +284,9 @@ namespace Com
                                 {
                                     bool Flag = true;
 
-                                    foreach (PointD3D V in Element3D[i])
+                                    foreach (PointD3D P in Element3D[i])
                                     {
-                                        if (!Element3D[j].Contains(V))
+                                        if (!Element3D[j].Contains(P))
                                         {
                                             Flag = false;
 
@@ -352,9 +352,9 @@ namespace Com
 
                             double ZAvg = 0;
 
-                            foreach (PointD3D V in Element)
+                            foreach (PointD3D P in Element)
                             {
-                                ZAvg += V.Z;
+                                ZAvg += P.Z;
                             }
 
                             ZAvg /= Element.Length;
