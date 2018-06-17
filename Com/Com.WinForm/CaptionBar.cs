@@ -918,6 +918,14 @@ namespace Com.WinForm
 
             //
 
+            if (Me.FormState == FormState.FullScreen)
+            {
+                this.Width = Panel_ControlBox.Width;
+                this.Left = Me.Right - Panel_ControlBox.Width;
+            }
+
+            //
+
             CaptionBar_SizeChanged(this, EventArgs.Empty);
         }
 
@@ -964,7 +972,7 @@ namespace Com.WinForm
 
         public void OnThemeColorChanged() // 在 ThemeColorChanged 事件发生时发生。
         {
-            Panel_CaptionBar.BackColor = Me.RecommendColors.CaptionBar.ToColor();
+            this.BackColor = Panel_CaptionBar.BackColor = Me.RecommendColors.CaptionBar.ToColor();
 
             //
 
