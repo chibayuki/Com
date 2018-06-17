@@ -1154,6 +1154,8 @@ namespace Com.WinForm
 
             _Client.WindowState = _SplashScreen.WindowState = FormWindowState.Maximized;
 
+            _Client.TopMost = true;
+
             if (updateLayoutEventType != UpdateLayoutEventType.None)
             {
                 _OnFormStateChanged();
@@ -1189,6 +1191,8 @@ namespace Com.WinForm
             {
                 _SetBoundsAndUpdateLayout(NewBounds, updateLayoutBehavior, updateLayoutEventType);
             }
+
+            _Client.TopMost = _TopMost;
 
             if (updateLayoutEventType != UpdateLayoutEventType.None)
             {
