@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.IO
-Version 18.6.16.0000
+Version 18.6.17.0000
 
 This file is part of Com
 
@@ -29,7 +29,7 @@ namespace Com
         /// </summary>
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
-        /// <param name="recursion">如果存在子文件夹，是否递归复制子文件夹内的所有内容。</param>
+        /// <param name="recursion">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         /// <param name="merge">如果存在同名文件夹，是否合并文件夹内容。</param>
         /// <param name="overwrite">如果存在同名文件，是否覆盖目标文件。</param>
         public static bool CopyFolder(string sourceFolder, string destFolder, bool recursion, bool merge, bool overwrite)
@@ -94,7 +94,7 @@ namespace Com
         /// </summary>
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
-        /// <param name="recursion">如果存在子文件夹，是否递归复制子文件夹内的所有内容。</param>
+        /// <param name="recursion">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         /// <param name="merge">如果存在同名文件夹，是否合并文件夹内容。</param>
         public static bool CopyFolder(string sourceFolder, string destFolder, bool recursion, bool merge)
         {
@@ -113,7 +113,7 @@ namespace Com
         /// </summary>
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
-        /// <param name="recursion">如果存在子文件夹，是否递归复制子文件夹内的所有内容。</param>
+        /// <param name="recursion">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         public static bool CopyFolder(string sourceFolder, string destFolder, bool recursion)
         {
             try
