@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.6.17.0000
+Version 18.6.19.0000
 
 This file is part of Com
 
@@ -1110,7 +1110,10 @@ namespace Com.WinForm
 
         private void _Minimize() // 使窗口最小化至任务栏。
         {
-            _Client.WindowState = FormWindowState.Minimized;
+            if (_Client.WindowState != FormWindowState.Minimized)
+            {
+                _Client.WindowState = FormWindowState.Minimized;
+            }
         }
 
         private void _Maximize(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口最大化。
@@ -2657,71 +2660,59 @@ namespace Com.WinForm
 
             set
             {
-                Action InvokeMethod = () =>
+                if (_Initialized)
                 {
-                    if (_Client.WindowState == FormWindowState.Minimized)
+                    Action InvokeMethod = () =>
                     {
-                        if (value == FormState.Normal || value == _FormState)
+                        if (_Client.WindowState != FormWindowState.Minimized && value == FormState.Minimized)
                         {
-                            if (_Initialized)
-                            {
-                                Return();
-                            }
+                            Minimize();
                         }
-                    }
-                    else
-                    {
-                        if (_FormState == FormState.FullScreen && (value == FormState.Normal || value == _FormState_BeforeFullScreen))
+                        else if (_Client.WindowState == FormWindowState.Minimized && (value == FormState.Normal || value == _FormState))
                         {
-                            if (_Initialized)
-                            {
-                                ExitFullScreen();
-                            }
+                            Return();
                         }
                         else if (_FormState != FormState.Normal && value == FormState.Normal)
                         {
-                            if (_Initialized)
-                            {
-                                Return();
-                            }
-                            else
-                            {
-                                _FormState = FormState.Normal;
-                            }
-                        }
-                        else if (value == FormState.Minimized)
-                        {
-                            if (_Initialized)
-                            {
-                                Minimize();
-                            }
+                            Return();
                         }
                         else if (_FormState != FormState.Maximized && value == FormState.Maximized)
                         {
-                            if (_Initialized)
-                            {
-                                Maximize();
-                            }
-                            else if (_FormStyle == FormStyle.Sizable)
-                            {
-                                _FormState = FormState.Maximized;
-                            }
+                            Maximize();
                         }
                         else if (_FormState != FormState.FullScreen && value == FormState.FullScreen)
                         {
-                            if (_Initialized)
-                            {
-                                EnterFullScreen();
-                            }
-                            else if (_EnableFullScreen)
-                            {
-                                _FormState = FormState.FullScreen;
-                            }
+                            EnterFullScreen();
+                        }
+                        else if (_FormState == FormState.FullScreen && (value == FormState.Normal || value == _FormState_BeforeFullScreen))
+                        {
+                            ExitFullScreen();
+                        }
+                    };
+
+                    _Client.Invoke(InvokeMethod);
+                }
+                else
+                {
+                    if (_FormState != FormState.Normal && value == FormState.Normal)
+                    {
+                        _FormState = FormState.Normal;
+                    }
+                    else if (_FormState != FormState.Maximized && value == FormState.Maximized)
+                    {
+                        if (_FormStyle == FormStyle.Sizable)
+                        {
+                            _FormState = FormState.Maximized;
                         }
                     }
-                };
-
-                _Client.Invoke(InvokeMethod);
+                    else if (_FormState != FormState.FullScreen && value == FormState.FullScreen)
+                    {
+                        if (_EnableFullScreen)
+                        {
+                            _FormState = FormState.FullScreen;
+                        }
+                    }
+                }
             }
         }
 
