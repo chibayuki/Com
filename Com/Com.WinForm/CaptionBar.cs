@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.6.17.0000
+Version 18.6.22.0000
 
 This file is part of Com
 
@@ -300,6 +300,10 @@ namespace Com.WinForm
 
         private void CaptionBar_Load(object sender, EventArgs e) // CaptionBar 的 Load 事件的回调函数。
         {
+            Panel_CaptionBar.BackColor = Color.Transparent;
+
+            //
+
             PictureBox_FormIcon.Image = Me.Client.Icon.ToBitmap();
 
             //
@@ -947,11 +951,9 @@ namespace Com.WinForm
                 this.Opacity = Me.Opacity * Me.CaptionBarOpacityRatio;
 
                 Panel_CaptionBar.Top = 0;
+
+                CaptionBar_SizeChanged(this, EventArgs.Empty);
             }
-
-            //
-
-            CaptionBar_SizeChanged(this, EventArgs.Empty);
 
             //
 
@@ -972,7 +974,7 @@ namespace Com.WinForm
 
         public void OnThemeColorChanged() // 在 ThemeColorChanged 事件发生时发生。
         {
-            this.BackColor = Panel_CaptionBar.BackColor = Me.RecommendColors.CaptionBar.ToColor();
+            this.BackColor = Me.RecommendColors.CaptionBar.ToColor();
 
             //
 

@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.6.19.0000
+Version 18.6.22.0000
 
 This file is part of Com
 
@@ -353,8 +353,8 @@ namespace Com.WinForm
 
         private int _Bounds_Current_X = int.MinValue; // 当前状态窗口在桌面的左边距。
         private int _Bounds_Current_Y = int.MinValue; // 当前状态窗口在桌面的上边距。
-        private int _Bounds_Current_Width = 300; // 当前状态窗口的宽度。
-        private int _Bounds_Current_Height = 300; // 当前状态窗口的高度。
+        private int _Bounds_Current_Width = int.MinValue; // 当前状态窗口的宽度。
+        private int _Bounds_Current_Height = int.MinValue; // 当前状态窗口的高度。
 
         internal int Bounds_Current_X // 获取或设置当前状态窗口在桌面的左边距。
         {
@@ -470,8 +470,8 @@ namespace Com.WinForm
 
         private int _Bounds_Normal_X = int.MinValue; // 普通状态窗口在桌面的左边距。
         private int _Bounds_Normal_Y = int.MinValue; // 普通状态窗口在桌面的上边距。
-        private int _Bounds_Normal_Width = 300; // 普通状态窗口的宽度。
-        private int _Bounds_Normal_Height = 300; // 普通状态窗口的高度。
+        private int _Bounds_Normal_Width = int.MinValue; // 普通状态窗口的宽度。
+        private int _Bounds_Normal_Height = int.MinValue; // 普通状态窗口的高度。
 
         internal int Bounds_Normal_X // 获取或设置普通状态窗口在桌面的左边距。
         {
@@ -1405,7 +1405,12 @@ namespace Com.WinForm
                         _Opacity = Opa * (1 - Pct_F);
 
                         _SplashScreen.Opacity = _Opacity;
-                        _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+
+                        if (_FormState != FormState.FullScreen)
+                        {
+                            _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                        }
+
                         _Resizer.OnOpacityChanged();
 
                         Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
@@ -1543,7 +1548,6 @@ namespace Com.WinForm
             //
 
             _Client.FormBorderStyle = FormBorderStyle.None;
-            _Client.StartPosition = FormStartPosition.Manual;
             _Client.WindowState = FormWindowState.Normal;
 
             //
@@ -1602,27 +1606,58 @@ namespace Com.WinForm
 
             //
 
-            Size = Bounds_Current_Size;
-
-            if (X == int.MinValue || Y == int.MinValue)
+            if (Width == int.MinValue || Height == int.MinValue)
             {
-                Rectangle Rect = (_Owner != null ? _Owner.Bounds : PrimaryScreenClient);
-
-                if (X == int.MinValue && Y == int.MinValue)
+                if (Width == int.MinValue && Height == int.MinValue)
                 {
-                    Location = new Point(Rect.X + (Rect.Width - Width) / 2, Rect.Y + (Rect.Height - Height) / 2);
+                    ClientSize = _Client.Size;
                 }
-                else if (X == int.MinValue)
+                else if (Width == int.MinValue)
                 {
-                    X = Rect.X + (Rect.Width - Width) / 2;
+                    ClientSize = new Size(_Client.Width, Height);
                 }
-                else if (Y == int.MinValue)
+                else if (Height == int.MinValue)
                 {
-                    Y = Rect.Y + (Rect.Height - Height) / 2;
+                    ClientSize = new Size(Width, _Client.Height);
                 }
             }
 
-            Location = Bounds_Current_Location;
+            Rectangle Bounds_Screen = PrimaryScreenClient;
+            Rectangle Bounds_Parent = (_Owner != null ? _Owner.Bounds : PrimaryScreenClient);
+
+            switch (_Client.StartPosition)
+            {
+                case FormStartPosition.Manual:
+                    if (X == int.MinValue || Y == int.MinValue)
+                    {
+                        if (X == int.MinValue && Y == int.MinValue)
+                        {
+                            Location = _Client.Location;
+                        }
+                        else if (X == int.MinValue)
+                        {
+                            X = _Client.Left;
+                        }
+                        else if (Y == int.MinValue)
+                        {
+                            Y = _Client.Top;
+                        }
+                    }
+                    break;
+
+                case FormStartPosition.CenterScreen:
+                    Location = new Point(Bounds_Screen.X + (Bounds_Screen.Width - Width) / 2, Bounds_Screen.Y + (Bounds_Screen.Height - Height) / 2);
+                    break;
+
+                case FormStartPosition.WindowsDefaultLocation:
+                case FormStartPosition.WindowsDefaultBounds:
+                    Location = new Point(Statistics.RandomInteger(Bounds_Screen.X, Bounds_Screen.Right - Width), Statistics.RandomInteger(Bounds_Screen.Y, Bounds_Screen.Bottom - Height));
+                    break;
+
+                case FormStartPosition.CenterParent:
+                    Location = new Point(Bounds_Parent.X + (Bounds_Parent.Width - Width) / 2, Bounds_Parent.Y + (Bounds_Parent.Height - Height) / 2);
+                    break;
+            }
 
             _UpdateLayout(UpdateLayoutEventType.None);
 
@@ -1637,6 +1672,10 @@ namespace Com.WinForm
                 else if (_IsMainForm)
                 {
                     _Caption = Application.ProductName;
+                }
+                else
+                {
+                    _Caption = string.Empty;
                 }
             }
 
@@ -1684,6 +1723,8 @@ namespace Com.WinForm
             }
             else if (_EnableFullScreen && _FormState == FormState.FullScreen)
             {
+                _FormState = FormState.Normal;
+
                 _EnterFullScreen(UpdateLayoutBehavior.Static, UpdateLayoutEventType.None);
             }
             else if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.FullScreen))
@@ -1698,25 +1739,38 @@ namespace Com.WinForm
 
             //
 
-            double Opa = _Opacity;
-            int CurrY = Bounds_Current_Y;
-
-            Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+            if (_FormState == FormState.FullScreen)
             {
-                double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
-
-                _Opacity = Opa * Pct_F;
-
                 _Client.Opacity = _SplashScreen.Opacity = _Opacity;
-                _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                 _Resizer.OnOpacityChanged();
+            }
+            else
+            {
+                double Opa = _Opacity;
+                int CurrY = Bounds_Current_Y;
 
-                Bounds_Current_Y = CurrY - (int)(16 * (1 - Pct_F));
+                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                {
+                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                _UpdateLayout(UpdateLayoutEventType.None);
-            };
+                    _Opacity = Opa * Pct_F;
 
-            Animation.Show(Frame, 9, 15);
+                    _Client.Opacity = _SplashScreen.Opacity = _Opacity;
+
+                    if (_FormState != FormState.FullScreen)
+                    {
+                        _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                    }
+
+                    _Resizer.OnOpacityChanged();
+
+                    Bounds_Current_Y = CurrY - (int)(16 * (1 - Pct_F));
+
+                    _UpdateLayout(UpdateLayoutEventType.None);
+                };
+
+                Animation.Show(Frame, 9, 15);
+            }
 
             //
 
@@ -1841,7 +1895,12 @@ namespace Com.WinForm
                     _Opacity = Opa * (1 - Pct_F);
 
                     _SplashScreen.Opacity = _Opacity;
-                    _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+
+                    if (_FormState != FormState.FullScreen)
+                    {
+                        _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                    }
+
                     _Resizer.OnOpacityChanged();
 
                     Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
@@ -2619,12 +2678,15 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        if (_FormState != FormState.FullScreen)
                         {
-                            _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
-                        };
+                            Action InvokeMethod = () =>
+                            {
+                                _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                            };
 
-                        _Client.Invoke(InvokeMethod);
+                            _Client.Invoke(InvokeMethod);
+                        }
                     }
                 }
             }
@@ -2732,29 +2794,33 @@ namespace Com.WinForm
             {
                 int _X = Math.Max(PrimaryScreenBounds.X - Width + 1, Math.Min(value, PrimaryScreenBounds.Right - 1));
 
-                switch (_FormState)
-                {
-                    case FormState.Normal:
-                        Bounds_Current_X = Bounds_Normal_X = _X;
-                        break;
-
-                    case FormState.QuarterScreen:
-                        Bounds_Current_X = Bounds_QuarterScreen_X = _X;
-                        break;
-
-                    case FormState.HighAsScreen:
-                        Bounds_Current_X = Bounds_Normal_X = _X;
-                        break;
-                }
-
                 if (_Initialized)
                 {
+                    switch (_FormState)
+                    {
+                        case FormState.Normal:
+                            Bounds_Current_X = Bounds_Normal_X = _X;
+                            break;
+
+                        case FormState.QuarterScreen:
+                            Bounds_Current_X = Bounds_QuarterScreen_X = _X;
+                            break;
+
+                        case FormState.HighAsScreen:
+                            Bounds_Current_X = Bounds_Normal_X = _X;
+                            break;
+                    }
+
                     Action InvokeMethod = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
+                }
+                else
+                {
+                    Bounds_Current_X = Bounds_Normal_X = _X;
                 }
             }
         }
@@ -2773,25 +2839,29 @@ namespace Com.WinForm
             {
                 int _Y = Math.Max(PrimaryScreenBounds.Y - Height + 1, Math.Min(value, PrimaryScreenBounds.Bottom - 1));
 
-                switch (_FormState)
-                {
-                    case FormState.Normal:
-                        Bounds_Current_Y = Bounds_Normal_Y = _Y;
-                        break;
-
-                    case FormState.QuarterScreen:
-                        Bounds_Current_Y = Bounds_QuarterScreen_Y = _Y;
-                        break;
-                }
-
                 if (_Initialized)
                 {
+                    switch (_FormState)
+                    {
+                        case FormState.Normal:
+                            Bounds_Current_Y = Bounds_Normal_Y = _Y;
+                            break;
+
+                        case FormState.QuarterScreen:
+                            Bounds_Current_Y = Bounds_QuarterScreen_Y = _Y;
+                            break;
+                    }
+
                     Action InvokeMethod = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
+                }
+                else
+                {
+                    Bounds_Current_Y = Bounds_Normal_Y = _Y;
                 }
             }
         }
@@ -2864,29 +2934,33 @@ namespace Com.WinForm
             {
                 Point _Location = new Point(Math.Max(PrimaryScreenBounds.X - Width + 1, Math.Min(value.X, PrimaryScreenBounds.Right - 1)), Math.Max(PrimaryScreenBounds.Y - Height + 1, Math.Min(value.Y, PrimaryScreenBounds.Bottom - 1)));
 
-                switch (_FormState)
-                {
-                    case FormState.Normal:
-                        Bounds_Current_Location = Bounds_Normal_Location = _Location;
-                        break;
-
-                    case FormState.QuarterScreen:
-                        Bounds_Current_Location = Bounds_QuarterScreen_Location = _Location;
-                        break;
-
-                    case FormState.HighAsScreen:
-                        Bounds_Current_X = Bounds_Normal_X = _Location.X;
-                        break;
-                }
-
                 if (_Initialized)
                 {
+                    switch (_FormState)
+                    {
+                        case FormState.Normal:
+                            Bounds_Current_Location = Bounds_Normal_Location = _Location;
+                            break;
+
+                        case FormState.QuarterScreen:
+                            Bounds_Current_Location = Bounds_QuarterScreen_Location = _Location;
+                            break;
+
+                        case FormState.HighAsScreen:
+                            Bounds_Current_X = Bounds_Normal_X = _Location.X;
+                            break;
+                    }
+
                     Action InvokeMethod = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
+                }
+                else
+                {
+                    Bounds_Current_Location = Bounds_Normal_Location = _Location;
                 }
             }
         }
@@ -2903,29 +2977,33 @@ namespace Com.WinForm
 
             set
             {
-                switch (_FormState)
-                {
-                    case FormState.Normal:
-                        Bounds_Current_Width = Bounds_Normal_Width = value;
-                        break;
-
-                    case FormState.QuarterScreen:
-                        Bounds_Current_Width = Bounds_QuarterScreen_Width = value;
-                        break;
-
-                    case FormState.HighAsScreen:
-                        Bounds_Current_Width = Bounds_Normal_Width = value;
-                        break;
-                }
-
                 if (_Initialized)
                 {
+                    switch (_FormState)
+                    {
+                        case FormState.Normal:
+                            Bounds_Current_Width = Bounds_Normal_Width = value;
+                            break;
+
+                        case FormState.QuarterScreen:
+                            Bounds_Current_Width = Bounds_QuarterScreen_Width = value;
+                            break;
+
+                        case FormState.HighAsScreen:
+                            Bounds_Current_Width = Bounds_Normal_Width = value;
+                            break;
+                    }
+
                     Action InvokeMethod = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
+                }
+                else
+                {
+                    Bounds_Current_Width = Bounds_Normal_Width = value;
                 }
             }
         }
@@ -2942,25 +3020,29 @@ namespace Com.WinForm
 
             set
             {
-                switch (_FormState)
-                {
-                    case FormState.Normal:
-                        Bounds_Current_Height = Bounds_Normal_Height = value;
-                        break;
-
-                    case FormState.QuarterScreen:
-                        Bounds_Current_Height = Bounds_QuarterScreen_Height = value;
-                        break;
-                }
-
                 if (_Initialized)
                 {
+                    switch (_FormState)
+                    {
+                        case FormState.Normal:
+                            Bounds_Current_Height = Bounds_Normal_Height = value;
+                            break;
+
+                        case FormState.QuarterScreen:
+                            Bounds_Current_Height = Bounds_QuarterScreen_Height = value;
+                            break;
+                    }
+
                     Action InvokeMethod = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
+                }
+                else
+                {
+                    Bounds_Current_Height = Bounds_Normal_Height = value;
                 }
             }
         }
@@ -2977,29 +3059,33 @@ namespace Com.WinForm
 
             set
             {
-                switch (_FormState)
-                {
-                    case FormState.Normal:
-                        Bounds_Current_Size = Bounds_Normal_Size = value;
-                        break;
-
-                    case FormState.QuarterScreen:
-                        Bounds_Current_Size = Bounds_QuarterScreen_Size = value;
-                        break;
-
-                    case FormState.HighAsScreen:
-                        Bounds_Current_Width = Bounds_Normal_Width = value.Width;
-                        break;
-                }
-
                 if (_Initialized)
                 {
+                    switch (_FormState)
+                    {
+                        case FormState.Normal:
+                            Bounds_Current_Size = Bounds_Normal_Size = value;
+                            break;
+
+                        case FormState.QuarterScreen:
+                            Bounds_Current_Size = Bounds_QuarterScreen_Size = value;
+                            break;
+
+                        case FormState.HighAsScreen:
+                            Bounds_Current_Width = Bounds_Normal_Width = value.Width;
+                            break;
+                    }
+
                     Action InvokeMethod = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
                     _Client.Invoke(InvokeMethod);
+                }
+                else
+                {
+                    Bounds_Current_Size = Bounds_Normal_Size = value;
                 }
             }
         }
@@ -3020,30 +3106,34 @@ namespace Com.WinForm
                 _Bounds.Size = new Size(Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth)), Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight)));
                 _Bounds.Location = new Point(Math.Max(PrimaryScreenBounds.X - _Bounds.Width + 1, Math.Min(value.X, PrimaryScreenBounds.Right - 1)), Math.Max(PrimaryScreenBounds.Y - _Bounds.Height + 1, Math.Min(value.Y, PrimaryScreenBounds.Bottom - 1)));
 
-                switch (_FormState)
-                {
-                    case FormState.Normal:
-                        Bounds_Current = Bounds_Normal = _Bounds;
-                        break;
-
-                    case FormState.QuarterScreen:
-                        Bounds_Current = Bounds_QuarterScreen = _Bounds;
-                        break;
-
-                    case FormState.HighAsScreen:
-                        Bounds_Current_X = Bounds_Normal_X = _Bounds.X;
-                        Bounds_Current_Width = Bounds_Normal_Width = _Bounds.Width;
-                        break;
-                }
-
                 if (_Initialized)
                 {
+                    switch (_FormState)
+                    {
+                        case FormState.Normal:
+                            Bounds_Current = Bounds_Normal = _Bounds;
+                            break;
+
+                        case FormState.QuarterScreen:
+                            Bounds_Current = Bounds_QuarterScreen = _Bounds;
+                            break;
+
+                        case FormState.HighAsScreen:
+                            Bounds_Current_X = Bounds_Normal_X = _Bounds.X;
+                            Bounds_Current_Width = Bounds_Normal_Width = _Bounds.Width;
+                            break;
+                    }
+
                     Action InvokeMethod = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.Result);
                     };
 
                     _Client.Invoke(InvokeMethod);
+                }
+                else
+                {
+                    Bounds_Current = Bounds_Normal = _Bounds;
                 }
             }
         }
