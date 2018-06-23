@@ -127,7 +127,7 @@ namespace Com.WinForm
 
         //
 
-        internal static Point CursorPosition // 鼠标指针在桌面的位置。
+        internal static Point CursorPosition // 获取鼠标指针在桌面的位置。
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Com.WinForm
             }
         }
 
-        internal static Rectangle PrimaryScreenBounds // 主屏幕的边界。
+        internal static Rectangle PrimaryScreenBounds // 获取主屏幕的边界。
         {
             get
             {
@@ -143,13 +143,19 @@ namespace Com.WinForm
             }
         }
 
-        internal static Rectangle PrimaryScreenClient // 主屏幕的工作区。
+        internal static Rectangle PrimaryScreenClient // 获取主屏幕的工作区。
         {
             get
             {
                 return Screen.PrimaryScreen.WorkingArea;
             }
         }
+
+        //
+
+        private Timer _ResolutionMonitor = null; // 用于监控主屏幕分辨率变更的 Timer。
+
+        private Rectangle _LastPrimaryScreenClient = PrimaryScreenClient; // Screen.PrimaryScreen.WorkingArea 的最终值。
 
         //
 
@@ -189,16 +195,6 @@ namespace Com.WinForm
             get
             {
                 return _ResizerSize;
-            }
-        }
-
-        //
-
-        internal double CaptionBarOpacityRatio // 获取标题栏不透明度系数。
-        {
-            get
-            {
-                return (_EnableCaptionBarTransparent ? 0.9 : 1);
             }
         }
 
@@ -339,6 +335,16 @@ namespace Com.WinForm
         private bool _ShowCaptionBarColor = true; // 表示是否在标题栏上显示主题色的布尔值。
         private bool _EnableCaptionBarTransparent = true; // 表示是否允许以半透明方式显示标题栏的布尔值。
         private RecommendColors _RecommendColors = null; // 当前主题建议的颜色。
+
+        //
+
+        internal double CaptionBarOpacityRatio // 获取标题栏的不透明度系数。
+        {
+            get
+            {
+                return (_EnableCaptionBarTransparent ? 0.9 : 1);
+            }
+        }
 
         //
 
@@ -1200,7 +1206,7 @@ namespace Com.WinForm
             _FormState = FormState.HighAsScreen;
 
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = new Size(Math.Max(MinimumBoundsWidth, Math.Min(MaximumBoundsWidth, PrimaryScreenClient.Width / 2)), Math.Max(MinimumBoundsHeight, Math.Min(MaximumBoundsHeight, PrimaryScreenClient.Height)));
+            Bounds_Current_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height);
             Bounds_Current_Location = PrimaryScreenClient.Location;
 
             _CaptionBar.OnFormStateChanged();
@@ -1222,7 +1228,7 @@ namespace Com.WinForm
             _FormState = FormState.HighAsScreen;
 
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = new Size(Math.Max(MinimumBoundsWidth, Math.Min(MaximumBoundsWidth, PrimaryScreenClient.Width / 2)), Math.Max(MinimumBoundsHeight, Math.Min(MaximumBoundsHeight, PrimaryScreenClient.Height)));
+            Bounds_Current_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height);
             Bounds_Current_Location = new Point(PrimaryScreenClient.Right - Bounds_Current_Width, PrimaryScreenClient.Y);
 
             _CaptionBar.OnFormStateChanged();
@@ -1244,7 +1250,7 @@ namespace Com.WinForm
             _FormState = FormState.HighAsScreen;
 
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Height = Math.Max(MinimumBoundsHeight, Math.Min(MaximumBoundsHeight, PrimaryScreenClient.Height));
+            Bounds_Current_Height = PrimaryScreenClient.Height;
             Bounds_Current_Y = PrimaryScreenClient.Y;
 
             _CaptionBar.OnFormStateChanged();
@@ -1266,7 +1272,7 @@ namespace Com.WinForm
             _FormState = FormState.QuarterScreen;
 
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(Math.Max(MinimumBoundsWidth, Math.Min(MaximumBoundsWidth, PrimaryScreenClient.Width / 2)), Math.Max(MinimumBoundsHeight, Math.Min(MaximumBoundsHeight, PrimaryScreenClient.Height / 2)));
+            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height / 2);
             Bounds_Current_Location = Bounds_QuarterScreen_Location = PrimaryScreenClient.Location;
 
             _CaptionBar.OnFormStateChanged();
@@ -1288,7 +1294,7 @@ namespace Com.WinForm
             _FormState = FormState.QuarterScreen;
 
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(Math.Max(MinimumBoundsWidth, Math.Min(MaximumBoundsWidth, PrimaryScreenClient.Width / 2)), Math.Max(MinimumBoundsHeight, Math.Min(MaximumBoundsHeight, PrimaryScreenClient.Height / 2)));
+            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height / 2);
             Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(PrimaryScreenClient.Right - Bounds_Current_Width, PrimaryScreenClient.Y);
 
             _CaptionBar.OnFormStateChanged();
@@ -1310,7 +1316,7 @@ namespace Com.WinForm
             _FormState = FormState.QuarterScreen;
 
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(Math.Max(MinimumBoundsWidth, Math.Min(MaximumBoundsWidth, PrimaryScreenClient.Width / 2)), Math.Max(MinimumBoundsHeight, Math.Min(MaximumBoundsHeight, PrimaryScreenClient.Height / 2)));
+            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height / 2);
             Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(PrimaryScreenClient.X, PrimaryScreenClient.Bottom - Bounds_Current_Height);
 
             _CaptionBar.OnFormStateChanged();
@@ -1332,7 +1338,7 @@ namespace Com.WinForm
             _FormState = FormState.QuarterScreen;
 
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(Math.Max(MinimumBoundsWidth, Math.Min(MaximumBoundsWidth, PrimaryScreenClient.Width / 2)), Math.Max(MinimumBoundsHeight, Math.Min(MaximumBoundsHeight, PrimaryScreenClient.Height / 2)));
+            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height / 2);
             Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(PrimaryScreenClient.Right - Bounds_Current_Width, PrimaryScreenClient.Bottom - Bounds_Current_Height);
 
             _CaptionBar.OnFormStateChanged();
@@ -1781,6 +1787,13 @@ namespace Com.WinForm
 
             //
 
+            _ResolutionMonitor = new Timer();
+            _ResolutionMonitor.Interval = 200;
+            _ResolutionMonitor.Tick += ResolutionMonitor_Tick;
+            _ResolutionMonitor.Enabled = true;
+
+            //
+
             _FormLoadingAsyncWorker.RunWorkerAsync();
         }
 
@@ -1940,6 +1953,133 @@ namespace Com.WinForm
             //
 
             _Client.Close();
+        }
+
+        //
+
+        private void ResolutionMonitor_Tick(object sender, EventArgs e) // ResolutionMonitor 的 Tick 事件的回调函数。
+        {
+            if (_LastPrimaryScreenClient != PrimaryScreenClient)
+            {
+                UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None;
+
+                if (!_LoadingNow && !_ClosingNow)
+                {
+                    _UpdateLayoutEventType = UpdateLayoutEventType.Result;
+                }
+
+                switch (_FormState)
+                {
+                    case FormState.FullScreen:
+                        {
+                            Rectangle OldBounds = Bounds_Current;
+                            Bounds_Current = PrimaryScreenBounds;
+
+                            _CaptionBar.OnFormStateChanged();
+
+                            Rectangle NewBounds = Bounds_Current;
+                            Bounds_Current = OldBounds;
+
+                            _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.Static, _UpdateLayoutEventType);
+
+                            //
+
+                            switch (_FormState_BeforeFullScreen)
+                            {
+                                case FormState.Maximized:
+                                    {
+                                        Bounds_BeforeFullScreen = PrimaryScreenClient;
+                                    }
+                                    break;
+
+                                case FormState.HighAsScreen:
+                                    {
+                                        Bounds_BeforeFullScreen_Width = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Width);
+                                        Bounds_BeforeFullScreen_Height = PrimaryScreenClient.Height;
+                                        Bounds_BeforeFullScreen_Y = PrimaryScreenClient.Y;
+                                    }
+                                    break;
+
+                                case FormState.QuarterScreen:
+                                    {
+                                        Bounds_BeforeFullScreen_Width = Bounds_QuarterScreen_Width = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Width);
+                                        Bounds_BeforeFullScreen_Height = Bounds_QuarterScreen_Height = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Height);
+                                    }
+                                    break;
+
+                                case FormState.Normal:
+                                    {
+                                        Bounds_BeforeFullScreen_Width = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Width);
+                                        Bounds_BeforeFullScreen_Height = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Height);
+                                    }
+                                    break;
+                            }
+
+                            Bounds_BeforeFullScreen_Y = Math.Max(PrimaryScreenClient.Y, Bounds_BeforeFullScreen_Y);
+                        }
+                        break;
+
+                    case FormState.Maximized:
+                        {
+                            Rectangle OldBounds = Bounds_Current;
+                            Bounds_Current = PrimaryScreenClient;
+
+                            Rectangle NewBounds = Bounds_Current;
+                            Bounds_Current = OldBounds;
+
+                            _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.Static, _UpdateLayoutEventType);
+                        }
+                        break;
+
+                    case FormState.HighAsScreen:
+                        {
+                            Rectangle OldBounds = Bounds_Current;
+                            Bounds_Current_Width = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Width);
+                            Bounds_Current_Height = PrimaryScreenClient.Height;
+                            Bounds_Current_Y = PrimaryScreenClient.Y;
+
+                            Rectangle NewBounds = Bounds_Current;
+                            Bounds_Current = OldBounds;
+
+                            _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.Static, _UpdateLayoutEventType);
+                        }
+                        break;
+
+                    case FormState.QuarterScreen:
+                        {
+                            Rectangle OldBounds = Bounds_Current;
+                            Bounds_Current_Width = Bounds_QuarterScreen_Width = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Width);
+                            Bounds_Current_Height = Bounds_QuarterScreen_Height = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Height);
+                            Bounds_Current_Y = Bounds_QuarterScreen_Y = Math.Max(PrimaryScreenClient.Y, Bounds_Current_Y);
+
+                            Rectangle NewBounds = Bounds_Current;
+                            Bounds_Current = OldBounds;
+
+                            _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.Static, _UpdateLayoutEventType);
+                        }
+                        break;
+
+                    case FormState.Normal:
+                        {
+                            Rectangle OldBounds = Bounds_Current;
+                            Bounds_Current_Width = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Width);
+                            Bounds_Current_Height = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Height);
+                            Bounds_Current_Y = Math.Max(PrimaryScreenClient.Y, Bounds_Current_Y);
+
+                            Rectangle NewBounds = Bounds_Current;
+                            Bounds_Current = OldBounds;
+
+                            _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.Static, _UpdateLayoutEventType);
+                        }
+                        break;
+                }
+
+                Bounds_Normal_Width = Math.Min(PrimaryScreenClient.Width, Bounds_Normal_Width);
+                Bounds_Normal_Height = Math.Min(PrimaryScreenClient.Width, Bounds_Normal_Height);
+                Bounds_Normal_Y = Math.Max(PrimaryScreenClient.Y, Bounds_Normal_Y);
+
+                _LastPrimaryScreenClient = PrimaryScreenClient;
+            }
         }
 
         #endregion
