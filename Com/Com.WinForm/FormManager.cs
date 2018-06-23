@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.6.22.0000
+Version 18.6.23.0000
 
 This file is part of Com
 
@@ -587,8 +587,8 @@ namespace Com.WinForm
 
         private int _Bounds_QuarterScreen_X = 0; // 占据桌面四分之一状态窗口在桌面的左边距。
         private int _Bounds_QuarterScreen_Y = 0; // 占据桌面四分之一状态窗口在桌面的上边距。
-        private int _Bounds_QuarterScreen_Width = 1; // 占据桌面四分之一状态窗口的宽度。
-        private int _Bounds_QuarterScreen_Height = 1; // 占据桌面四分之一状态窗口的高度。
+        private int _Bounds_QuarterScreen_Width = 0; // 占据桌面四分之一状态窗口的宽度。
+        private int _Bounds_QuarterScreen_Height = 0; // 占据桌面四分之一状态窗口的高度。
 
         internal int Bounds_QuarterScreen_X // 获取或设置占据桌面四分之一状态窗口在桌面的左边距。
         {
@@ -704,8 +704,8 @@ namespace Com.WinForm
 
         private int _Bounds_BeforeFullScreen_X = 0; // 进入全屏幕状态前窗口在桌面的左边距。
         private int _Bounds_BeforeFullScreen_Y = 0; // 进入全屏幕状态前窗口在桌面的上边距。
-        private int _Bounds_BeforeFullScreen_Width = 1; // 进入全屏幕状态前窗口的宽度。
-        private int _Bounds_BeforeFullScreen_Height = 1; // 进入全屏幕状态前窗口的高度。
+        private int _Bounds_BeforeFullScreen_Width = 0; // 进入全屏幕状态前窗口的宽度。
+        private int _Bounds_BeforeFullScreen_Height = 0; // 进入全屏幕状态前窗口的高度。
 
         internal int Bounds_BeforeFullScreen_X // 获取或设置进入全屏幕状态前窗口在桌面的左边距。
         {
@@ -823,10 +823,13 @@ namespace Com.WinForm
 
         private void _UpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 更新窗口布局。
         {
-            _Client.Bounds = _SplashScreen.Bounds = new Rectangle(new Point(Bounds_Current_X, Bounds_Current_Y + _CaptionBarHeight), new Size(Bounds_Current_Width, Bounds_Current_Height - _CaptionBarHeight));
-
-            if (_FormState != FormState.FullScreen)
+            if (_FormState == FormState.FullScreen)
             {
+                _Client.Bounds = _SplashScreen.Bounds = new Rectangle(new Point(Bounds_Current_X, Bounds_Current_Y), new Size(Bounds_Current_Width, Bounds_Current_Height));
+            }
+            else
+            {
+                _Client.Bounds = _SplashScreen.Bounds = new Rectangle(new Point(Bounds_Current_X, Bounds_Current_Y + _CaptionBarHeight), new Size(Bounds_Current_Width, Bounds_Current_Height - _CaptionBarHeight));
                 _CaptionBar.Bounds = new Rectangle(Bounds_Current_Location, new Size(Bounds_Current_Width, _CaptionBarHeight));
             }
 
@@ -1144,6 +1147,8 @@ namespace Com.WinForm
 
             _FormState = FormState.FullScreen;
 
+            _Client.TopMost = true;
+
             Rectangle OldBounds = Bounds_Current;
             Bounds_Current = PrimaryScreenBounds;
 
@@ -1154,10 +1159,6 @@ namespace Com.WinForm
             Bounds_Current = OldBounds;
 
             _SetBoundsAndUpdateLayout(NewBounds, updateLayoutBehavior, updateLayoutEventType);
-
-            _Client.WindowState = _SplashScreen.WindowState = FormWindowState.Maximized;
-
-            _Client.TopMost = true;
 
             if (updateLayoutEventType != UpdateLayoutEventType.None)
             {
@@ -1175,7 +1176,7 @@ namespace Com.WinForm
 
             _FormState = _FormState_BeforeFullScreen;
 
-            _Client.WindowState = _SplashScreen.WindowState = FormWindowState.Normal;
+            _Client.TopMost = _TopMost;
 
             Rectangle OldBounds = Bounds_Current;
             Bounds_Current = Bounds_BeforeFullScreen;
@@ -1186,16 +1187,7 @@ namespace Com.WinForm
             Rectangle NewBounds = Bounds_Current;
             Bounds_Current = OldBounds;
 
-            if (_Client.WindowState == FormWindowState.Maximized)
-            {
-                _Client.WindowState = FormWindowState.Minimized;
-            }
-            else
-            {
-                _SetBoundsAndUpdateLayout(NewBounds, updateLayoutBehavior, updateLayoutEventType);
-            }
-
-            _Client.TopMost = _TopMost;
+            _SetBoundsAndUpdateLayout(NewBounds, updateLayoutBehavior, updateLayoutEventType);
 
             if (updateLayoutEventType != UpdateLayoutEventType.None)
             {
@@ -1710,6 +1702,16 @@ namespace Com.WinForm
 
             //
 
+            _CaptionBar.OnLoading();
+            _SplashScreen.OnLoading();
+
+            //
+
+            _Resizer.Opacity = 1;
+            _Resizer.OnOpacityChanged();
+
+            //
+
             _CaptionBar.BringToFront();
             _Client.BringToFront();
             _SplashScreen.BringToFront();
@@ -1734,15 +1736,21 @@ namespace Com.WinForm
 
             //
 
-            _Resizer.Opacity = 1;
-            _Resizer.OnOpacityChanged();
-
-            //
-
             if (_FormState == FormState.FullScreen)
             {
-                _Client.Opacity = _SplashScreen.Opacity = _Opacity;
-                _Resizer.OnOpacityChanged();
+                double Opa = _Opacity;
+
+                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                {
+                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+
+                    _Opacity = Opa * Pct_F;
+
+                    _Client.Opacity = _SplashScreen.Opacity = _Opacity;
+                    _Resizer.OnOpacityChanged();
+                };
+
+                Animation.Show(Frame, 9, 15);
             }
             else
             {
@@ -1756,12 +1764,7 @@ namespace Com.WinForm
                     _Opacity = Opa * Pct_F;
 
                     _Client.Opacity = _SplashScreen.Opacity = _Opacity;
-
-                    if (_FormState != FormState.FullScreen)
-                    {
-                        _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
-                    }
-
+                    _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                     _Resizer.OnOpacityChanged();
 
                     Bounds_Current_Y = CurrY - (int)(16 * (1 - Pct_F));
@@ -1771,11 +1774,6 @@ namespace Com.WinForm
 
                 Animation.Show(Frame, 9, 15);
             }
-
-            //
-
-            _CaptionBar.OnLoading();
-            _SplashScreen.OnLoading();
 
             //
 
@@ -1793,20 +1791,9 @@ namespace Com.WinForm
 
         private void Client_SizeChanged(object sender, EventArgs e) // Client 的 SizeChanged 事件的回调函数。
         {
-            if (_FormStyle == FormStyle.Dialog && _Client.WindowState == FormWindowState.Minimized)
+            if (_Client.WindowState == FormWindowState.Maximized || (_FormStyle == FormStyle.Dialog && _Client.WindowState == FormWindowState.Minimized))
             {
                 _Client.WindowState = FormWindowState.Normal;
-            }
-
-            //
-
-            if (_FormState != FormState.FullScreen && _Client.WindowState == FormWindowState.Maximized)
-            {
-                _Client.WindowState = FormWindowState.Normal;
-            }
-            else if (_FormState == FormState.FullScreen && _Client.WindowState == FormWindowState.Normal)
-            {
-                _Client.WindowState = FormWindowState.Maximized;
             }
 
             //
@@ -1885,36 +1872,54 @@ namespace Com.WinForm
 
             if (_Visible)
             {
-                double Opa = _Opacity;
-                int CurrY = Bounds_Current_Y;
-
-                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                if (_FormState == FormState.FullScreen)
                 {
-                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Opa = _Opacity;
 
-                    _Opacity = Opa * (1 - Pct_F);
-
-                    _SplashScreen.Opacity = _Opacity;
-
-                    if (_FormState != FormState.FullScreen)
+                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                     {
+                        double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+
+                        _Opacity = Opa * (1 - Pct_F);
+
+                        _SplashScreen.Opacity = _Opacity;
+                        _Resizer.OnOpacityChanged();
+                    };
+
+                    Animation.Show(Frame, 9, 15);
+
+                    //
+
+                    _Opacity = Opa;
+                }
+                else
+                {
+                    double Opa = _Opacity;
+                    int CurrY = Bounds_Current_Y;
+
+                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                    {
+                        double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+
+                        _Opacity = Opa * (1 - Pct_F);
+
+                        _SplashScreen.Opacity = _Opacity;
                         _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
-                    }
+                        _Resizer.OnOpacityChanged();
 
-                    _Resizer.OnOpacityChanged();
+                        Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
 
-                    Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
+                        _UpdateLayout(UpdateLayoutEventType.None);
+                    };
 
-                    _UpdateLayout(UpdateLayoutEventType.None);
-                };
+                    Animation.Show(Frame, 9, 15);
 
-                Animation.Show(Frame, 9, 15);
+                    //
 
-                //
+                    _Opacity = Opa;
 
-                _Opacity = Opa;
-
-                Bounds_Current_Y = CurrY;
+                    Bounds_Current_Y = CurrY;
+                }
             }
 
             //
@@ -2055,14 +2060,7 @@ namespace Com.WinForm
 
                             if (_FormStyle == FormStyle.Dialog && _Client.WindowState == FormWindowState.Minimized)
                             {
-                                if (_FormState == FormState.FullScreen)
-                                {
-                                    _Client.WindowState = FormWindowState.Maximized;
-                                }
-                                else
-                                {
-                                    _Client.WindowState = FormWindowState.Normal;
-                                }
+                                _Client.WindowState = FormWindowState.Normal;
                             }
                             else if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.FullScreen))
                             {
@@ -3614,14 +3612,7 @@ namespace Com.WinForm
             {
                 if (_Client.WindowState == FormWindowState.Minimized)
                 {
-                    if (_FormState == FormState.FullScreen)
-                    {
-                        _Client.WindowState = FormWindowState.Maximized;
-                    }
-                    else
-                    {
-                        _Client.WindowState = FormWindowState.Normal;
-                    }
+                    _Client.WindowState = FormWindowState.Normal;
 
                     return true;
                 }

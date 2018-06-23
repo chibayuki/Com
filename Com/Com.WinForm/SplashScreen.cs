@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.SplashScreen
-Version 18.6.1.0000
+Version 18.6.23.0000
 
 This file is part of Com
 
@@ -33,6 +33,31 @@ namespace Com.WinForm
 
         private void _UpdateSplashBitmap() // 更新启动屏幕绘图。
         {
+            Size SplashSize = new Size(Panel_SplashScreen.Width, Math.Max(24, Math.Min(Panel_SplashScreen.Height, 64)));
+
+            RectangleF AppNameRect = new RectangleF();
+            AppNameRect.Size = new SizeF(Math.Max(SplashSize.Height * 1.4F, Panel_SplashScreen.Width - SplashSize.Height * 1.4F), SplashSize.Height * 0.7F);
+
+            string AppName = Application.ProductName;
+
+            Font AppNameFont = Com.Text.GetSuitableFont(AppName, new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134), AppNameRect.Size);
+
+            AppNameRect.Size = TextRenderer.MeasureText(AppName, AppNameFont);
+
+            int AppLogoSize = Math.Max(24, (int)(AppNameRect.Height / 0.7F));
+
+            AppNameRect.Location = new PointF(AppLogoSize * 1.4F, (SplashSize.Height - AppNameRect.Height) / 2);
+
+            SplashSize.Width = (Int32)AppNameRect.Right;
+
+            Panel_Splash.Size = SplashSize;
+            Panel_Splash.Location = new Point((Panel_SplashScreen.Width - Panel_Splash.Width) / 2, (Panel_SplashScreen.Height - Panel_Splash.Height) / 2);
+
+            PictureBox_AppLogo.Size = new Size(AppLogoSize, AppLogoSize);
+            PictureBox_AppLogo.Location = new Point(0, (Panel_Splash.Height - PictureBox_AppLogo.Height) / 2);
+
+            //
+
             if (_FormSplashBitmap != null)
             {
                 _FormSplashBitmap.Dispose();
@@ -43,31 +68,6 @@ namespace Com.WinForm
             using (Graphics CreateSplashBmp = Graphics.FromImage(_FormSplashBitmap))
             {
                 CreateSplashBmp.Clear(Me.RecommendColors.CaptionBar.ToColor());
-
-                //
-
-                Size SplashSize = new Size(Panel_SplashScreen.Width, Math.Max(24, Math.Min(Panel_SplashScreen.Height, 64)));
-
-                RectangleF AppNameRect = new RectangleF();
-                AppNameRect.Size = new SizeF(Math.Max(SplashSize.Height * 1.4F, Panel_SplashScreen.Width - SplashSize.Height * 1.4F), SplashSize.Height * 0.7F);
-
-                string AppName = Application.ProductName;
-
-                Font AppNameFont = Com.Text.GetSuitableFont(AppName, new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134), AppNameRect.Size);
-
-                AppNameRect.Size = TextRenderer.MeasureText(AppName, AppNameFont);
-
-                int AppLogoSize = Math.Max(24, (int)(AppNameRect.Height / 0.7F));
-
-                AppNameRect.Location = new PointF(AppLogoSize * 1.4F, (SplashSize.Height - AppNameRect.Height) / 2);
-
-                SplashSize.Width = (Int32)AppNameRect.Right;
-
-                Panel_Splash.Size = SplashSize;
-                Panel_Splash.Location = new Point((Panel_SplashScreen.Width - Panel_Splash.Width) / 2, (Panel_SplashScreen.Height - Panel_Splash.Height) / 2);
-
-                PictureBox_AppLogo.Size = new Size(AppLogoSize, AppLogoSize);
-                PictureBox_AppLogo.Location = new Point(0, (Panel_Splash.Height - PictureBox_AppLogo.Height) / 2);
 
                 CreateSplashBmp.DrawString(AppName, AppNameFont, new SolidBrush(Me.RecommendColors.Caption.ToColor()), AppNameRect.Location);
             }
