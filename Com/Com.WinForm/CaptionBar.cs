@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.6.22.0000
+Version 18.6.24.0000
 
 This file is part of Com
 
@@ -871,6 +871,8 @@ namespace Com.WinForm
                     {
                         if (FormManager.CursorPosition.Y <= Me.Y + _ExtendDist && FormManager.CursorPosition.X >= Me.Right - Panel_CaptionBar.Width && FormManager.CursorPosition.X <= Me.Right)
                         {
+                            this.BringToFront();
+
                             Animation.Show(FrameShow, 9, 15);
                         }
                     }
