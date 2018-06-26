@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.6.24.0000
+Version 18.6.27.2100
 
 This file is part of Com
 
@@ -950,9 +950,12 @@ namespace Com.WinForm
             }
             else
             {
-                this.Opacity = Me.Opacity * Me.CaptionBarOpacityRatio;
+                if (Me.PreviousFormState == FormState.FullScreen)
+                {
+                    this.Opacity = Me.Opacity * Me.CaptionBarOpacityRatio;
 
-                Panel_CaptionBar.Top = 0;
+                    Panel_CaptionBar.Top = 0;
+                }
 
                 CaptionBar_SizeChanged(this, EventArgs.Empty);
             }

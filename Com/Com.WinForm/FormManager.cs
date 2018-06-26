@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.6.23.0000
+Version 18.6.27.2100
 
 This file is part of Com
 
@@ -155,7 +155,7 @@ namespace Com.WinForm
 
         private Timer _ResolutionMonitor = null; // 用于监控主屏幕分辨率变更的 Timer。
 
-        private Rectangle _LastPrimaryScreenClient = PrimaryScreenClient; // Screen.PrimaryScreen.WorkingArea 的最终值。
+        private Rectangle _PreviousPrimaryScreenClient = PrimaryScreenClient; // Screen.PrimaryScreen.WorkingArea 的此前值。
 
         //
 
@@ -348,12 +348,22 @@ namespace Com.WinForm
 
         //
 
-        private FormWindowState _LastFormWindowState = FormWindowState.Normal; // _Client.WindowState 的最终值。
+        private FormWindowState _PreviousFormWindowState = FormWindowState.Normal; // _Client.WindowState 的此前值。
 
         //
 
         private FormState _FormState = FormState.Normal; // 窗口的状态。
         private FormState _FormState_BeforeFullScreen = FormState.Normal; // 进入全屏幕状态之前窗口的状态。
+
+        private FormState _PreviousFormState = FormState.Normal; // FormState 的此前值。
+
+        internal FormState PreviousFormState // 获取 FormState 的此前值。
+        {
+            get
+            {
+                return _PreviousFormState;
+            }
+        }
 
         //
 
@@ -1061,6 +1071,7 @@ namespace Com.WinForm
 
         private void _Return(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口还原至普通大小。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.Normal;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1082,6 +1093,7 @@ namespace Com.WinForm
 
         internal void ReturnByMoveForm() // 通过移动最大化、与桌面高度相同或占据桌面四分之一的窗口，使窗口还原至普通大小。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.Normal;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1100,6 +1112,7 @@ namespace Com.WinForm
 
         internal void ReturnFromHighAsScreen() // 使窗口由与桌面高度相同状态还原至普通大小。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.Normal;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1127,6 +1140,7 @@ namespace Com.WinForm
 
         private void _Maximize(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口最大化。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.Maximized;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1151,6 +1165,7 @@ namespace Com.WinForm
             _FormState_BeforeFullScreen = _FormState;
             Bounds_BeforeFullScreen = Bounds_Current;
 
+            _PreviousFormState = _FormState;
             _FormState = FormState.FullScreen;
 
             _Client.TopMost = true;
@@ -1180,6 +1195,7 @@ namespace Com.WinForm
                 Bounds_BeforeFullScreen = Bounds_Normal;
             }
 
+            _PreviousFormState = _FormState;
             _FormState = _FormState_BeforeFullScreen;
 
             _Client.TopMost = _TopMost;
@@ -1203,6 +1219,7 @@ namespace Com.WinForm
 
         private void _LeftHalfScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的左半区域。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1225,6 +1242,7 @@ namespace Com.WinForm
 
         private void _RightHalfScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的右半区域。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1247,6 +1265,7 @@ namespace Com.WinForm
 
         private void _HighAsScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口与桌面的高度相同。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1269,6 +1288,7 @@ namespace Com.WinForm
 
         private void _TopLeftQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的左上四分之一区域。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1291,6 +1311,7 @@ namespace Com.WinForm
 
         private void _TopRightQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的右上四分之一区域。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1313,6 +1334,7 @@ namespace Com.WinForm
 
         private void _BottomLeftQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的左下四分之一区域。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1335,6 +1357,7 @@ namespace Com.WinForm
 
         private void _BottomRightQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的右下四分之一区域。
         {
+            _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
 
             Rectangle OldBounds = Bounds_Current;
@@ -1694,8 +1717,7 @@ namespace Com.WinForm
 
             //
 
-            _Client.TopMost = _CaptionBar.TopMost = _Resizer.TopMost = _SplashScreen.TopMost = _TopMost;
-
+            _Client.TopMost = _TopMost;
             _Client.ShowInTaskbar = _ShowInTaskbar;
 
             //
@@ -1811,16 +1833,16 @@ namespace Com.WinForm
 
             //
 
-            if (_LastFormWindowState != _Client.WindowState)
+            if (_PreviousFormWindowState != _Client.WindowState)
             {
                 FormWindowState _FormWindowState = _Client.WindowState;
 
-                if ((_LastFormWindowState != FormWindowState.Minimized && _FormWindowState == FormWindowState.Minimized) || (_LastFormWindowState == FormWindowState.Minimized && _FormWindowState != FormWindowState.Minimized))
+                if ((_PreviousFormWindowState != FormWindowState.Minimized && _FormWindowState == FormWindowState.Minimized) || (_PreviousFormWindowState == FormWindowState.Minimized && _FormWindowState != FormWindowState.Minimized))
                 {
                     _OnFormStateChanged();
                 }
 
-                _LastFormWindowState = _FormWindowState;
+                _PreviousFormWindowState = _FormWindowState;
             }
         }
 
@@ -1959,7 +1981,7 @@ namespace Com.WinForm
 
         private void ResolutionMonitor_Tick(object sender, EventArgs e) // ResolutionMonitor 的 Tick 事件的回调函数。
         {
-            if (_LastPrimaryScreenClient != PrimaryScreenClient)
+            if (_PreviousPrimaryScreenClient != PrimaryScreenClient)
             {
                 UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None;
 
@@ -2078,7 +2100,7 @@ namespace Com.WinForm
                 Bounds_Normal_Height = Math.Min(PrimaryScreenClient.Width, Bounds_Normal_Height);
                 Bounds_Normal_Y = Math.Max(PrimaryScreenClient.Y, Bounds_Normal_Y);
 
-                _LastPrimaryScreenClient = PrimaryScreenClient;
+                _PreviousPrimaryScreenClient = PrimaryScreenClient;
             }
         }
 
@@ -2896,12 +2918,14 @@ namespace Com.WinForm
                 {
                     if (_FormState != FormState.Normal && value == FormState.Normal)
                     {
+                        _PreviousFormState = _FormState;
                         _FormState = FormState.Normal;
                     }
                     else if (_FormState != FormState.Maximized && value == FormState.Maximized)
                     {
                         if (_FormStyle == FormStyle.Sizable)
                         {
+                            _PreviousFormState = _FormState;
                             _FormState = FormState.Maximized;
                         }
                     }
@@ -2909,6 +2933,7 @@ namespace Com.WinForm
                     {
                         if (_EnableFullScreen)
                         {
+                            _PreviousFormState = _FormState;
                             _FormState = FormState.FullScreen;
                         }
                     }
