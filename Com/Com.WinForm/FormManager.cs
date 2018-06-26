@@ -342,7 +342,7 @@ namespace Com.WinForm
         {
             get
             {
-                return (_EnableCaptionBarTransparent ? 0.9 : 1);
+                return (_EnableCaptionBarTransparent ? 0.9 : 1.0);
             }
         }
 
@@ -1610,7 +1610,7 @@ namespace Com.WinForm
 
         #region 回调函数
 
-        private void Client_Load(object sender, EventArgs e) // Client 的 Load 事件的回调函数。
+        private void Client_Load(object sender, EventArgs e) // _Client 的 Load 事件的回调函数。
         {
             _Client.Visible = false;
 
@@ -1819,12 +1819,12 @@ namespace Com.WinForm
             _FormLoadingAsyncWorker.RunWorkerAsync();
         }
 
-        private void Client_Closed(object sender, EventArgs e) // Client 的 Closed 事件的回调函数。
+        private void Client_Closed(object sender, EventArgs e) // _Client 的 Closed 事件的回调函数。
         {
             _AltF4(sender, e);
         }
 
-        private void Client_SizeChanged(object sender, EventArgs e) // Client 的 SizeChanged 事件的回调函数。
+        private void Client_SizeChanged(object sender, EventArgs e) // _Client 的 SizeChanged 事件的回调函数。
         {
             if (_Client.WindowState == FormWindowState.Maximized || (_FormStyle == FormStyle.Dialog && _Client.WindowState == FormWindowState.Minimized))
             {
@@ -1846,29 +1846,29 @@ namespace Com.WinForm
             }
         }
 
-        private void CaptionBar_Closed(object sender, EventArgs e) // CaptionBar 的 Closed 事件的回调函数。
+        private void CaptionBar_Closed(object sender, EventArgs e) // _CaptionBar 的 Closed 事件的回调函数。
         {
             _AltF4(sender, e);
         }
 
-        private void Resizer_Closed(object sender, EventArgs e) // Resizer 的 Closed 事件的回调函数。
+        private void Resizer_Closed(object sender, EventArgs e) // _Resizer 的 Closed 事件的回调函数。
         {
             _AltF4(sender, e);
         }
 
-        private void SplashScreen_Closed(object sender, EventArgs e) // SplashScreen 的 Closed 事件的回调函数。
+        private void SplashScreen_Closed(object sender, EventArgs e) // _SplashScreen 的 Closed 事件的回调函数。
         {
             _AltF4(sender, e);
         }
 
         //
 
-        private void FormLoadingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) // FormLoadingAsyncWorker 的 DoWork 事件的回调函数。
+        private void FormLoadingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) // _FormLoadingAsyncWorker 的 DoWork 事件的回调函数。
         {
             _OnLoading();
         }
 
-        private void FormLoadingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // FormLoadingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
+        private void FormLoadingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // _FormLoadingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
         {
             _Client.Visible = _Visible;
             _SplashScreen.Visible = false;
@@ -1882,7 +1882,7 @@ namespace Com.WinForm
             _LoadingNow = false;
         }
 
-        private void FormClosingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) // FormClosingAsyncWorker 的 DoWork 事件的回调函数。
+        private void FormClosingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) // _FormClosingAsyncWorker 的 DoWork 事件的回调函数。
         {
             if (!_FormLoadingAsyncWorker.IsBusy)
             {
@@ -1890,7 +1890,7 @@ namespace Com.WinForm
             }
         }
 
-        private void FormClosingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // FormClosingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
+        private void FormClosingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // _FormClosingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
         {
             _SplashScreen.OnClosing();
 
@@ -1979,7 +1979,7 @@ namespace Com.WinForm
 
         //
 
-        private void ResolutionMonitor_Tick(object sender, EventArgs e) // ResolutionMonitor 的 Tick 事件的回调函数。
+        private void ResolutionMonitor_Tick(object sender, EventArgs e) // _ResolutionMonitor 的 Tick 事件的回调函数。
         {
             if (_PreviousPrimaryScreenClient != PrimaryScreenClient)
             {
