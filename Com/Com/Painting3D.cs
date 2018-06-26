@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.Painting3D
-Version 18.6.18.0000
+Version 18.6.27.2100
 
 This file is part of Com
 
@@ -373,7 +373,7 @@ namespace Com
                         {
                             for (int j = i + 1; j < ElementZAvg.Count; j++)
                             {
-                                if (ElementZAvg[ElementIndex[i]] < ElementZAvg[ElementIndex[j]] || (ElementZAvg[ElementIndex[i]] <= ElementZAvg[ElementIndex[j]] + edgeWidth && Element2D[ElementIndex[i]].Count() < Element2D[ElementIndex[j]].Count()))
+                                if (ElementZAvg[ElementIndex[i]] < ElementZAvg[ElementIndex[j]] || (ElementZAvg[ElementIndex[i]] <= ElementZAvg[ElementIndex[j]] + edgeWidth && Element2D[ElementIndex[i]].Length < Element2D[ElementIndex[j]].Length))
                                 {
                                     int Temp = ElementIndex[i];
                                     ElementIndex[i] = ElementIndex[j];
