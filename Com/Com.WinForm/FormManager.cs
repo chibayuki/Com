@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 18.6.27.2100
+Version 18.6.28.2100
 
 This file is part of Com
 
@@ -1717,6 +1717,10 @@ namespace Com.WinForm
 
             //
 
+            _CaptionBar.OnLoading();
+
+            //
+
             _Client.TopMost = _TopMost;
             _Client.ShowInTaskbar = _ShowInTaskbar;
 
@@ -1727,11 +1731,6 @@ namespace Com.WinForm
             //
 
             _Client.BackColor = RecommendColors.FormBackground.ToColor();
-
-            //
-
-            _CaptionBar.OnLoading();
-            _SplashScreen.OnLoading();
 
             //
 
@@ -1802,6 +1801,10 @@ namespace Com.WinForm
 
                 Animation.Show(Frame, 9, 15);
             }
+
+            //
+
+            _SplashScreen.OnLoading();
 
             //
 
