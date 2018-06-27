@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.ControlSubstitution
-Version 18.6.10.0000
+Version 18.6.28.2100
 
 This file is part of Com
 
@@ -27,7 +27,7 @@ namespace Com.WinForm
     /// </summary>
     public static class ControlSubstitution
     {
-        private static Hashtable _EventKeyHashtable = new Hashtable(); // 用于存储控件事件键值的哈希表。
+        private static Hashtable _EventKeyHashtable = new Hashtable(); // 用于存储事件键值的哈希表。
         private static EventHandlerList _Events = new EventHandlerList(); // 用于存储事件委托的列表。
 
         private static void _AddEventHandler(Control control, string eventName, Delegate eventHandler) // 向控件的指定事件添加一个委托。
