@@ -47,11 +47,11 @@
   <ItemGroup>
     <Compile Include="Com.WinForm\ControlSubstitution.cs" />
     <Compile Include="Com.WinForm\EventKey.cs" />
-    <Compile Include="Com.WinForm\FormBorder.cs">
+    <Compile Include="Com.WinForm\Resizer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Com.WinForm\FormBorder.Designer.cs">
-      <DependentUpon>FormBorder.cs</DependentUpon>
+    <Compile Include="Com.WinForm\Resizer.Designer.cs">
+      <DependentUpon>Resizer.cs</DependentUpon>
     </Compile>
     <Compile Include="Com.WinForm\FormManager.cs" />
     <Compile Include="Com.WinForm\FormState.cs" />
@@ -62,11 +62,11 @@
     <Compile Include="Com.WinForm\SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Com.WinForm\FormTitleBar.cs">
+    <Compile Include="Com.WinForm\CaptionBar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Com.WinForm\FormTitleBar.Designer.cs">
-      <DependentUpon>FormTitleBar.cs</DependentUpon>
+    <Compile Include="Com.WinForm\CaptionBar.Designer.cs">
+      <DependentUpon>CaptionBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Com.WinForm\UpdateLayoutBehavior.cs" />
     <Compile Include="Com.WinForm\UpdateLayoutEventType.cs" />
@@ -99,14 +99,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Com.WinForm\FormBorder.resx">
-      <DependentUpon>FormBorder.cs</DependentUpon>
+    <EmbeddedResource Include="Com.WinForm\Resizer.resx">
+      <DependentUpon>Resizer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Com.WinForm\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Com.WinForm\FormTitleBar.resx">
-      <DependentUpon>FormTitleBar.cs</DependentUpon>
+    <EmbeddedResource Include="Com.WinForm\CaptionBar.resx">
+      <DependentUpon>CaptionBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

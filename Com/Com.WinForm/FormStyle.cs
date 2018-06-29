@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.FormStyle
-Version 18.5.25.0000
+Version 18.6.29.2100
 
 This file is part of Com
 

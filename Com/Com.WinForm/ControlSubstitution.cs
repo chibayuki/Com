@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.WinForm.ControlSubstitution
-Version 18.6.28.2100
+Version 18.6.29.2100
 
 This file is part of Com
 

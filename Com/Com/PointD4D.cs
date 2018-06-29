@@ -2,7 +2,7 @@
 Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com.PointD4D
-Version 18.6.15.0000
+Version 18.6.29.2100
 
 This file is part of Com
 

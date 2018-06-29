@@ -1,6 +1,6 @@
-Copyright © 2013-2018 chibayuki@foxmail.com
+﻿Copyright © 2013-2018 chibayuki@foxmail.com
 
 Com
-Version 18.6.3.0000
+Version 18.6.29.2100
 
 Com is released under the GPLv3 license, see GPLv3.txt for more information.
