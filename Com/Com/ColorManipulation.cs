@@ -1,8 +1,8 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2013-2018 chibayuki@foxmail.com
+Copyright © 2018 chibayuki@foxmail.com
 
 Com.ColorManipulation
-Version 18.6.29.2100
+Version 18.7.6.2250
 
 This file is part of Com
 
