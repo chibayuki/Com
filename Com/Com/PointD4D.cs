@@ -48,6 +48,11 @@ namespace Com
         //
 
         /// <summary>
+        /// 表示零向量的 PointD4D 结构的实例。
+        /// </summary>
+        public static readonly PointD4D Zero = new PointD4D(0, 0, 0, 0);
+
+        /// <summary>
         /// 表示 X 基向量的 PointD4D 结构的实例。
         /// </summary>
         public static readonly PointD4D Ex = new PointD4D(1, 0, 0, 0);
@@ -66,6 +71,20 @@ namespace Com
         /// 表示 U 基向量的 PointD4D 结构的实例。
         /// </summary>
         public static readonly PointD4D Eu = new PointD4D(0, 0, 0, 1);
+
+        //
+
+        /// <summary>
+        /// 单位矩阵，表示不对 PointD4D 结构进行仿射变换的仿射矩阵（左矩阵）。
+        /// </summary>
+        public static readonly double[,] IdentityMatrix = new double[5, 5]
+        {
+            { 1, 0, 0, 0, 0 },
+            { 0, 1, 0, 0, 0 },
+            { 0, 0, 1, 0, 0 },
+            { 0, 0, 0, 1, 0 },
+            { 0, 0, 0, 0, 1 }
+        };
 
         #endregion
 
@@ -341,6 +360,96 @@ namespace Com
                 _U = value.X;
                 _X = value.Y;
                 _Y = value.Z;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 X 轴之间的夹角（弧度）。
+        /// </summary>
+        public double AngleX
+        {
+            get
+            {
+                return AngleFrom(_X >= 0 ? new PointD4D(1, 0, 0, 0) : new PointD4D(-1, 0, 0, 0));
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 Y 轴之间的夹角（弧度）。
+        /// </summary>
+        public double AngleY
+        {
+            get
+            {
+                return AngleFrom(_Y >= 0 ? new PointD4D(0, 1, 0, 0) : new PointD4D(0, -1, 0, 0));
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 Z 轴之间的夹角（弧度）。
+        /// </summary>
+        public double AngleZ
+        {
+            get
+            {
+                return AngleFrom(_Z >= 0 ? new PointD4D(0, 0, 1, 0) : new PointD4D(0, 0, -1, 0));
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 U 轴之间的夹角（弧度）。
+        /// </summary>
+        public double AngleU
+        {
+            get
+            {
+                return AngleFrom(_U >= 0 ? new PointD4D(0, 0, 0, 1) : new PointD4D(0, 0, 0, -1));
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 XYZ 平面之间的夹角（弧度）。
+        /// </summary>
+        public double AngleXYZ
+        {
+            get
+            {
+                return (Math.PI / 2 - AngleU);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 YZU 平面之间的夹角（弧度）。
+        /// </summary>
+        public double AngleYZU
+        {
+            get
+            {
+                return (Math.PI / 2 - AngleX);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 ZUX 平面之间的夹角（弧度）。
+        /// </summary>
+        public double AngleZUX
+        {
+            get
+            {
+                return (Math.PI / 2 - AngleY);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 UXY 平面之间的夹角（弧度）。
+        /// </summary>
+        public double AngleUXY
+        {
+            get
+            {
+                return (Math.PI / 2 - AngleZ);
             }
         }
 

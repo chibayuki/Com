@@ -47,6 +47,11 @@ namespace Com
         //
 
         /// <summary>
+        /// 表示零向量的 PointD3D 结构的实例。
+        /// </summary>
+        public static readonly PointD3D Zero = new PointD3D(0, 0, 0);
+
+        /// <summary>
         /// 表示 X 基向量的 PointD3D 结构的实例。
         /// </summary>
         public static readonly PointD3D Ex = new PointD3D(1, 0, 0);
@@ -60,6 +65,19 @@ namespace Com
         /// 表示 Z 基向量的 PointD3D 结构的实例。
         /// </summary>
         public static readonly PointD3D Ez = new PointD3D(0, 0, 1);
+
+        //
+
+        /// <summary>
+        /// 单位矩阵，表示不对 PointD3D 结构进行仿射变换的仿射矩阵（左矩阵）。
+        /// </summary>
+        public static readonly double[,] IdentityMatrix = new double[4, 4]
+        {
+            { 1, 0, 0, 0 },
+            { 0, 1, 0, 0 },
+            { 0, 0, 1, 0 },
+            { 0, 0, 0, 1 }
+        };
 
         #endregion
 
@@ -226,6 +244,74 @@ namespace Com
             {
                 _Z = value.X;
                 _X = value.Y;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量与 X 轴之间的夹角（弧度）。
+        /// </summary>
+        public double AngleX
+        {
+            get
+            {
+                return AngleFrom(_X >= 0 ? new PointD3D(1, 0, 0) : new PointD3D(-1, 0, 0));
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量与 Y 轴之间的夹角（弧度）。
+        /// </summary>
+        public double AngleY
+        {
+            get
+            {
+                return AngleFrom(_Y >= 0 ? new PointD3D(0, 1, 0) : new PointD3D(0, -1, 0));
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量与 Z 轴之间的夹角（弧度）。
+        /// </summary>
+        public double AngleZ
+        {
+            get
+            {
+                return AngleFrom(_Z >= 0 ? new PointD3D(0, 0, 1) : new PointD3D(0, 0, -1));
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量与 XY 平面之间的夹角（弧度）。
+        /// </summary>
+        public double AngleXY
+        {
+            get
+            {
+                return (Math.PI / 2 - AngleZ);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量与 YZ 平面之间的夹角（弧度）。
+        /// </summary>
+        public double AngleYZ
+        {
+            get
+            {
+                return (Math.PI / 2 - AngleX);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量与 ZX 平面之间的夹角（弧度）。
+        /// </summary>
+        public double AngleZX
+        {
+            get
+            {
+                return (Math.PI / 2 - AngleY);
             }
         }
 
