@@ -224,9 +224,9 @@ namespace Com.WinForm
                 }
             }
 
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
-
             _MeIsResizing = false;
+
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_Top_MouseMove(object sender, MouseEventArgs e) // Label_Top 的 MouseMove 事件的回调函数。
@@ -351,9 +351,9 @@ namespace Com.WinForm
                 }
             }
 
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
-
             _MeIsResizing = false;
+
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_Bottom_MouseMove(object sender, MouseEventArgs e) // Label_Bottom 的 MouseMove 事件的回调函数。
@@ -446,9 +446,9 @@ namespace Com.WinForm
                 }
             }
 
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
-
             _MeIsResizing = false;
+
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_Left_MouseMove(object sender, MouseEventArgs e) // Label_Left 的 MouseMove 事件的回调函数。
@@ -548,9 +548,9 @@ namespace Com.WinForm
                 }
             }
 
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
-
             _MeIsResizing = false;
+
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_Right_MouseMove(object sender, MouseEventArgs e) // Label_Right 的 MouseMove 事件的回调函数。
@@ -647,9 +647,9 @@ namespace Com.WinForm
                 }
             }
 
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
-
             _MeIsResizing = false;
+
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_TopLeft_MouseMove(object sender, MouseEventArgs e) // Label_TopLeft 的 MouseMove 事件的回调函数。
@@ -805,9 +805,9 @@ namespace Com.WinForm
                 }
             }
 
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
-
             _MeIsResizing = false;
+
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_TopRight_MouseMove(object sender, MouseEventArgs e) // Label_TopRight 的 MouseMove 事件的回调函数。
@@ -947,9 +947,9 @@ namespace Com.WinForm
                 }
             }
 
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
-
             _MeIsResizing = false;
+
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_BottomLeft_MouseMove(object sender, MouseEventArgs e) // Label_BottomLeft 的 MouseMove 事件的回调函数。
@@ -1091,9 +1091,9 @@ namespace Com.WinForm
                 }
             }
 
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
-
             _MeIsResizing = false;
+
+            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_BottomRight_MouseMove(object sender, MouseEventArgs e) // Label_BottomRight 的 MouseMove 事件的回调函数。
