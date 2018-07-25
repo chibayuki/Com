@@ -464,6 +464,95 @@ namespace Com
         }
 
         /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，远离 +X 轴的方向为正方向）。
+        /// </summary>
+        public double VectorAngleX
+        {
+            get
+            {
+                double _YZU = Math.Sqrt(_Y * _Y + _Z * _Z + _U * _U);
+
+                if (_X == 0 && _YZU == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double Angle = Math.Atan(_YZU / _X);
+
+                    if (_X < 0)
+                    {
+                        return (Angle + Math.PI);
+                    }
+                    else
+                    {
+                        return Angle;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量与 +Y 轴之间的夹角（弧度）（以 +Y 轴为 0 弧度，远离 +Y 轴的方向为正方向）。
+        /// </summary>
+        public double VectorAngleY
+        {
+            get
+            {
+                double _ZU = Math.Sqrt(_Z * _Z + _U * _U);
+
+                if (_Y == 0 && _ZU == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double Angle = Math.Atan(_ZU / _Y);
+
+                    if (_Y < 0)
+                    {
+                        return (Angle + Math.PI);
+                    }
+                    else
+                    {
+                        return Angle;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量在 ZU 平面内的投影与 +Z 轴之间的夹角（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。
+        /// </summary>
+        public double VectorAngleZU
+        {
+            get
+            {
+                if (_Z == 0 && _U == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double Angle = Math.Atan(_U / _Z);
+
+                    if (_Z < 0)
+                    {
+                        return (Angle + Math.PI);
+                    }
+                    else if (_U < 0)
+                    {
+                        return (Angle + 2 * Math.PI);
+                    }
+                    else
+                    {
+                        return Angle;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// 获取此 PointD4D 结构表示的向量的相反向量。
         /// </summary>
         public PointD4D VectorNegate
@@ -1489,6 +1578,24 @@ namespace Com
             }
 
             return double.NaN;
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将此 PointD4D 结构表示的直角坐标系坐标转换为超球坐标系坐标的新实例。
+        /// </summary>
+        public PointD4D ToSpherical()
+        {
+            return new PointD4D(VectorModule, VectorAngleX, VectorAngleY, VectorAngleZU);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD4D 结构表示的超球坐标系坐标转换为直角坐标系坐标的新实例。
+        /// </summary>
+        public PointD4D ToCartesian()
+        {
+            return new PointD4D(_X * Math.Cos(_Y), _X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Cos(_U), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U));
         }
 
         //

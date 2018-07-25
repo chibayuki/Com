@@ -327,7 +327,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 PointD3D 结构表示的向量与 +Z 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。
+        /// 获取此 PointD3D 结构表示的向量与 +Z 轴之间的夹角（弧度）（以 +Z 轴为 0 弧度，远离 +Z 轴的方向为正方向）。
         /// </summary>
         public double VectorAngleZ
         {
