@@ -72,20 +72,6 @@ namespace Com
         /// </summary>
         public static readonly PointD4D Eu = new PointD4D(0, 0, 0, 1);
 
-        //
-
-        /// <summary>
-        /// 单位矩阵，表示不对 PointD4D 结构进行仿射变换的仿射矩阵（左矩阵）。
-        /// </summary>
-        public static readonly double[,] IdentityMatrix = new double[5, 5]
-        {
-            { 1, 0, 0, 0, 0 },
-            { 0, 1, 0, 0, 0 },
-            { 0, 0, 1, 0, 0 },
-            { 0, 0, 0, 1, 0 },
-            { 0, 0, 0, 0, 1 }
-        };
-
         #endregion
 
         #region 构造函数
@@ -1535,6 +1521,23 @@ namespace Com
         #endregion
 
         #region 静态方法
+
+        /// <summary>
+        /// 返回单位矩阵，表示不对 PointD4D 结构进行仿射变换的仿射矩阵（左矩阵）。
+        /// </summary>
+        public static double[,] IdentityMatrix()
+        {
+            return new double[5, 5]
+            {
+                { 1, 0, 0, 0, 0 },
+                { 0, 1, 0, 0, 0 },
+                { 0, 0, 1, 0, 0 },
+                { 0, 0, 0, 1, 0 },
+                { 0, 0, 0, 0, 1 }
+            };
+        }
+
+        //
 
         /// <summary>
         /// 返回按双精度浮点数表示的所有坐标偏移量将 PointD4D 结构平移指定的量的仿射矩阵（左矩阵）。

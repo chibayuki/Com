@@ -60,18 +60,6 @@ namespace Com
         /// </summary>
         public static readonly PointD Ey = new PointD(0, 1);
 
-        //
-
-        /// <summary>
-        /// 单位矩阵，表示不对 PointD 结构进行仿射变换的仿射矩阵（左矩阵）。
-        /// </summary>
-        public static readonly double[,] IdentityMatrix = new double[3, 3]
-        {
-            { 1, 0, 0 },
-            { 0, 1, 0 },
-            { 0, 0, 1 }
-        };
-
         #endregion
 
         #region 构造函数
@@ -1399,6 +1387,21 @@ namespace Com
             }
 
             return NaN;
+        }
+
+        //
+
+        /// <summary>
+        /// 返回单位矩阵，表示不对 PointD 结构进行仿射变换的仿射矩阵（左矩阵）。
+        /// </summary>
+        public static double[,] IdentityMatrix()
+        {
+            return new double[3, 3]
+            {
+                { 1, 0, 0 },
+                { 0, 1, 0 },
+                { 0, 0, 1 }
+            };
         }
 
         //
