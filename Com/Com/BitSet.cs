@@ -226,10 +226,7 @@ namespace Com
 
                             int LenMin = Math.Min(Len, _GetUintNumOfBitNum(SizeOld));
 
-                            for (int i = 0; i < LenMin; i++)
-                            {
-                                NewUintArray[i] = _UintArray[i];
-                            }
+                            Array.Copy(_UintArray, NewUintArray, LenMin);
 
                             _UintArray = NewUintArray;
                         }
@@ -314,10 +311,7 @@ namespace Com
             {
                 int Len = _GetUintNumOfBitNum(_Size);
 
-                for (int i = 0; i < Len; i++)
-                {
-                    Result._UintArray[i] = _UintArray[i];
-                }
+                Array.Copy(_UintArray, Result._UintArray, Len);
             }
 
             return Result;
@@ -340,10 +334,7 @@ namespace Com
 
                     int Len = _GetUintNumOfBitNum(_Size);
 
-                    for (int i = 0; i < Len; i++)
-                    {
-                        NewUintArray[i] = _UintArray[i];
-                    }
+                    Array.Copy(_UintArray, NewUintArray, Len);
 
                     _UintArray = NewUintArray;
                 }
@@ -358,12 +349,9 @@ namespace Com
         /// <param name="index">索引。</param>
         public bool Get(int index)
         {
-            if (_Size > 0)
+            if (_Size > 0 && (index >= 0 && index < _Size))
             {
-                if (index >= 0 && index < _Size)
-                {
-                    return ((_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0);
-                }
+                return ((_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0);
             }
 
             return false;
@@ -376,18 +364,15 @@ namespace Com
         /// <param name="bitValue">位值。</param>
         public void Set(int index, bool bitValue)
         {
-            if (_Size > 0)
+            if (_Size > 0 && (index >= 0 && index < _Size))
             {
-                if (index >= 0 && index < _Size)
+                if (bitValue)
                 {
-                    if (bitValue)
-                    {
-                        _UintArray[index / _BitsPerUint] |= (((uint)1) << (index % _BitsPerUint));
-                    }
-                    else
-                    {
-                        _UintArray[index / _BitsPerUint] &= (~(((uint)1) << (index % _BitsPerUint)));
-                    }
+                    _UintArray[index / _BitsPerUint] |= (((uint)1) << (index % _BitsPerUint));
+                }
+                else
+                {
+                    _UintArray[index / _BitsPerUint] &= (~(((uint)1) << (index % _BitsPerUint)));
                 }
             }
         }
@@ -425,12 +410,9 @@ namespace Com
         /// <param name="index">索引。</param>
         public void TrueForBit(int index)
         {
-            if (_Size > 0)
+            if (_Size > 0 && (index >= 0 && index < _Size))
             {
-                if (index >= 0 && index < _Size)
-                {
-                    Set(index, true);
-                }
+                Set(index, true);
             }
         }
 
@@ -440,12 +422,9 @@ namespace Com
         /// <param name="index">索引。</param>
         public void FalseForBit(int index)
         {
-            if (_Size > 0)
+            if (_Size > 0 && (index >= 0 && index < _Size))
             {
-                if (index >= 0 && index < _Size)
-                {
-                    Set(index, false);
-                }
+                Set(index, false);
             }
         }
 
@@ -455,12 +434,9 @@ namespace Com
         /// <param name="index">索引。</param>
         public void InverseBit(int index)
         {
-            if (_Size > 0)
+            if (_Size > 0 && (index >= 0 && index < _Size))
             {
-                if (index >= 0 && index < _Size)
-                {
-                    _UintArray[index / _BitsPerUint] ^= (((uint)1) << (index % _BitsPerUint));
-                }
+                _UintArray[index / _BitsPerUint] ^= (((uint)1) << (index % _BitsPerUint));
             }
         }
 
@@ -816,12 +792,7 @@ namespace Com
         /// <param name="bitSet">用于比较的 BitSet 对象。</param>
         public bool Equals(BitSet bitSet)
         {
-            if (bitSet == null)
-            {
-                return false;
-            }
-
-            if (_Size != bitSet._Size || _UintArray == null || bitSet._UintArray == null || _UintArray.Length != bitSet._UintArray.Length)
+            if (_UintArray == null || _Size == 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size || _UintArray.Length != bitSet._UintArray.Length)
             {
                 return false;
             }

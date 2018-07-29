@@ -208,76 +208,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取或设置此 PointD4D 结构在 XY 平面的分量。
-        /// </summary>
-        public PointD XY
-        {
-            get
-            {
-                return new PointD(_X, _Y);
-            }
-
-            set
-            {
-                _X = value.X;
-                _Y = value.Y;
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置此 PointD4D 结构在 YZ 平面的分量。
-        /// </summary>
-        public PointD YZ
-        {
-            get
-            {
-                return new PointD(_Y, _Z);
-            }
-
-            set
-            {
-                _Y = value.X;
-                _Z = value.Y;
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置此 PointD4D 结构在 ZU 平面的分量。
-        /// </summary>
-        public PointD ZU
-        {
-            get
-            {
-                return new PointD(_Z, _U);
-            }
-
-            set
-            {
-                _Z = value.X;
-                _U = value.Y;
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置此 PointD4D 结构在 UX 平面的分量。
-        /// </summary>
-        public PointD UX
-        {
-            get
-            {
-                return new PointD(_U, _X);
-            }
-
-            set
-            {
-                _U = value.X;
-                _X = value.Y;
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取或设置此 PointD4D 结构在 XYZ 空间的分量。
         /// </summary>
         public PointD3D XYZ
@@ -396,7 +326,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 PointD4D 结构表示的向量与 XYZ 平面之间的夹角（弧度）。
+        /// 获取此 PointD4D 结构表示的向量与 XYZ 空间之间的夹角（弧度）。
         /// </summary>
         public double AngleXYZ
         {
@@ -407,7 +337,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 PointD4D 结构表示的向量与 YZU 平面之间的夹角（弧度）。
+        /// 获取此 PointD4D 结构表示的向量与 YZU 空间之间的夹角（弧度）。
         /// </summary>
         public double AngleYZU
         {
@@ -418,7 +348,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 PointD4D 结构表示的向量与 ZUX 平面之间的夹角（弧度）。
+        /// 获取此 PointD4D 结构表示的向量与 ZUX 空间之间的夹角（弧度）。
         /// </summary>
         public double AngleZUX
         {
@@ -429,7 +359,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 PointD4D 结构表示的向量与 UXY 平面之间的夹角（弧度）。
+        /// 获取此 PointD4D 结构表示的向量与 UXY 空间之间的夹角（弧度）。
         /// </summary>
         public double AngleUXY
         {
@@ -746,19 +676,12 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 XY 平面旋转指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 XY 平面的法向空间旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 XY 平面旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void RotateXY(double angle)
         {
-            double[,] matrixLeft = new double[5, 5]
-            {
-                { 1, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0 },
-                { 0, 0, Math.Cos(angle), Math.Sin(angle), 0 },
-                { 0, 0, -Math.Sin(angle), Math.Cos(angle), 0 },
-                { 0, 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateXYMatrix(angle);
 
             double[,] matrixRight = new double[1, 5]
             {
@@ -777,19 +700,60 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 YZ 平面旋转指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 XZ 平面的法向空间旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 YZ 平面旋转的角度（以 +U 轴为 0 弧度，从 +U 轴指向 +X 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
+        public void RotateXZ(double angle)
+        {
+            double[,] matrixLeft = RotateXZMatrix(angle);
+
+            double[,] matrixRight = new double[1, 5]
+            {
+                { _X, _Y, _Z, _U, 1 }
+            };
+
+            double[,] result;
+
+            if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
+            {
+                _X = result[0, 0];
+                _Y = result[0, 1];
+                _Z = result[0, 2];
+                _U = result[0, 3];
+            }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 XU 平面的法向空间旋转指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
+        public void RotateXU(double angle)
+        {
+            double[,] matrixLeft = RotateXUMatrix(angle);
+
+            double[,] matrixRight = new double[1, 5]
+            {
+                { _X, _Y, _Z, _U, 1 }
+            };
+
+            double[,] result;
+
+            if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
+            {
+                _X = result[0, 0];
+                _Y = result[0, 1];
+                _Z = result[0, 2];
+                _U = result[0, 3];
+            }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 YZ 平面的法向空间旋转指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateYZ(double angle)
         {
-            double[,] matrixLeft = new double[5, 5]
-            {
-                { Math.Cos(angle), 0, 0, -Math.Sin(angle), 0 },
-                { 0, 1, 0, 0, 0 },
-                { 0, 0, 1, 0, 0 },
-                { Math.Sin(angle), 0, 0, Math.Cos(angle), 0 },
-                { 0, 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateYZMatrix(angle);
 
             double[,] matrixRight = new double[1, 5]
             {
@@ -808,19 +772,36 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 ZU 平面旋转指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 YU 平面的法向空间旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 ZU 平面旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
+        public void RotateYU(double angle)
+        {
+            double[,] matrixLeft = RotateYUMatrix(angle);
+
+            double[,] matrixRight = new double[1, 5]
+            {
+                { _X, _Y, _Z, _U, 1 }
+            };
+
+            double[,] result;
+
+            if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
+            {
+                _X = result[0, 0];
+                _Y = result[0, 1];
+                _Z = result[0, 2];
+                _U = result[0, 3];
+            }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 ZU 平面的法向空间旋转指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateZU(double angle)
         {
-            double[,] matrixLeft = new double[5, 5]
-            {
-                { Math.Cos(angle), Math.Sin(angle), 0, 0, 0 },
-                { -Math.Sin(angle), Math.Cos(angle), 0, 0, 0 },
-                { 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateZUMatrix(angle);
 
             double[,] matrixRight = new double[1, 5]
             {
@@ -839,50 +820,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 UX 平面旋转指定的角度。
+        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 XY 平面的法向空间旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 UX 平面旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
-        public void RotateUX(double angle)
-        {
-            double[,] matrixLeft = new double[5, 5]
-            {
-                { 1, 0, 0, 0, 0 },
-                { 0, Math.Cos(angle), Math.Sin(angle), 0, 0 },
-                { 0, -Math.Sin(angle), Math.Cos(angle), 0, 0 },
-                { 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 1 }
-            };
-
-            double[,] matrixRight = new double[1, 5]
-            {
-                { _X, _Y, _Z, _U, 1 }
-            };
-
-            double[,] result;
-
-            if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
-            {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-            }
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 XY 平面旋转指定的角度的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 XY 平面旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD4D RotateXYCopy(double angle)
         {
-            double[,] matrixLeft = new double[5, 5]
-            {
-                { 1, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0 },
-                { 0, 0, Math.Cos(angle), Math.Sin(angle), 0 },
-                { 0, 0, -Math.Sin(angle), Math.Cos(angle), 0 },
-                { 0, 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateXYMatrix(angle);
 
             double[,] matrixRight = new double[1, 5]
             {
@@ -900,19 +843,58 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 YZ 平面旋转指定的角度的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 XZ 平面的法向空间旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 YZ 平面旋转的角度（以 +U 轴为 0 弧度，从 +U 轴指向 +X 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
+        public PointD4D RotateXZCopy(double angle)
+        {
+            double[,] matrixLeft = RotateXZMatrix(angle);
+
+            double[,] matrixRight = new double[1, 5]
+            {
+                { _X, _Y, _Z, _U, 1 }
+            };
+
+            double[,] result;
+
+            if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
+            {
+                return new PointD4D(result[0, 0], result[0, 1], result[0, 2], result[0, 3]);
+            }
+
+            return NaN;
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 XU 平面的法向空间旋转指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
+        public PointD4D RotateXUCopy(double angle)
+        {
+            double[,] matrixLeft = RotateXUMatrix(angle);
+
+            double[,] matrixRight = new double[1, 5]
+            {
+                { _X, _Y, _Z, _U, 1 }
+            };
+
+            double[,] result;
+
+            if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
+            {
+                return new PointD4D(result[0, 0], result[0, 1], result[0, 2], result[0, 3]);
+            }
+
+            return NaN;
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 YZ 平面的法向空间旋转指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD4D RotateYZCopy(double angle)
         {
-            double[,] matrixLeft = new double[5, 5]
-            {
-                { Math.Cos(angle), 0, 0, -Math.Sin(angle), 0 },
-                { 0, 1, 0, 0, 0 },
-                { 0, 0, 1, 0, 0 },
-                { Math.Sin(angle), 0, 0, Math.Cos(angle), 0 },
-                { 0, 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateYZMatrix(angle);
 
             double[,] matrixRight = new double[1, 5]
             {
@@ -930,49 +912,35 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 ZU 平面旋转指定的角度的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 YU 平面的法向空间旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 ZU 平面旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
+        public PointD4D RotateYUCopy(double angle)
+        {
+            double[,] matrixLeft = RotateYUMatrix(angle);
+
+            double[,] matrixRight = new double[1, 5]
+            {
+                { _X, _Y, _Z, _U, 1 }
+            };
+
+            double[,] result;
+
+            if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
+            {
+                return new PointD4D(result[0, 0], result[0, 1], result[0, 2], result[0, 3]);
+            }
+
+            return NaN;
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 ZU 平面的法向空间旋转指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD4D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public PointD4D RotateZUCopy(double angle)
         {
-            double[,] matrixLeft = new double[5, 5]
-            {
-                { Math.Cos(angle), Math.Sin(angle), 0, 0, 0 },
-                { -Math.Sin(angle), Math.Cos(angle), 0, 0, 0 },
-                { 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 1 }
-            };
-
-            double[,] matrixRight = new double[1, 5]
-            {
-                { _X, _Y, _Z, _U, 1 }
-            };
-
-            double[,] result;
-
-            if (Matrix2D.Multiply(matrixLeft, matrixRight, out result))
-            {
-                return new PointD4D(result[0, 0], result[0, 1], result[0, 2], result[0, 3]);
-            }
-
-            return NaN;
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 UX 平面旋转指定的角度的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 UX 平面旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
-        public PointD4D RotateUXCopy(double angle)
-        {
-            double[,] matrixLeft = new double[5, 5]
-            {
-                { 1, 0, 0, 0, 0 },
-                { 0, Math.Cos(angle), Math.Sin(angle), 0, 0 },
-                { 0, -Math.Sin(angle), Math.Cos(angle), 0, 0 },
-                { 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateZUMatrix(angle);
 
             double[,] matrixRight = new double[1, 5]
             {
@@ -1763,42 +1731,10 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 XY 平面旋转指定的角度的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 XY 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 XY 平面旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD4D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static double[,] RotateXYMatrix(double angle)
-        {
-            return new double[5, 5]
-            {
-                { 1, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0 },
-                { 0, 0, Math.Cos(angle), Math.Sin(angle), 0 },
-                { 0, 0, -Math.Sin(angle), Math.Cos(angle), 0 },
-                { 0, 0, 0, 0, 1 }
-            };
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 YZ 平面旋转指定的角度的仿射矩阵（左矩阵）。
-        /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 YZ 平面旋转的角度（以 +U 轴为 0 弧度，从 +U 轴指向 +X 轴的方向为正方向）。</param>
-        public static double[,] RotateYZMatrix(double angle)
-        {
-            return new double[5, 5]
-            {
-                { Math.Cos(angle), 0, 0, -Math.Sin(angle), 0 },
-                { 0, 1, 0, 0, 0 },
-                { 0, 0, 1, 0, 0 },
-                { Math.Sin(angle), 0, 0, Math.Cos(angle), 0 },
-                { 0, 0, 0, 0, 1 }
-            };
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 ZU 平面旋转指定的角度的仿射矩阵（左矩阵）。
-        /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 ZU 平面旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
-        public static double[,] RotateZUMatrix(double angle)
         {
             return new double[5, 5]
             {
@@ -1811,10 +1747,42 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 UX 平面旋转指定的角度的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 XZ 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 UX 平面旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
-        public static double[,] RotateUXMatrix(double angle)
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD4D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
+        public static double[,] RotateXZMatrix(double angle)
+        {
+            return new double[5, 5]
+            {
+                { Math.Cos(angle), 0, Math.Sin(angle), 0, 0 },
+                { 0, 1, 0, 0, 0 },
+                { -Math.Sin(angle), 0, Math.Cos(angle), 0, 0 },
+                { 0, 0, 0, 1, 0 },
+                { 0, 0, 0, 0, 1 }
+            };
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 XU 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD4D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
+        public static double[,] RotateXUMatrix(double angle)
+        {
+            return new double[5, 5]
+            {
+                { Math.Cos(angle), 0, 0, Math.Sin(angle), 0 },
+                { 0, 1, 0, 0, 0 },
+                { 0, 0, 1, 0, 0 },
+                { -Math.Sin(angle), 0, 0, Math.Cos(angle), 0 },
+                { 0, 0, 0, 0, 1 }
+            };
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 YZ 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD4D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
+        public static double[,] RotateYZMatrix(double angle)
         {
             return new double[5, 5]
             {
@@ -1822,6 +1790,38 @@ namespace Com
                 { 0, Math.Cos(angle), Math.Sin(angle), 0, 0 },
                 { 0, -Math.Sin(angle), Math.Cos(angle), 0, 0 },
                 { 0, 0, 0, 1, 0 },
+                { 0, 0, 0, 0, 1 }
+            };
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 YU 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD4D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
+        public static double[,] RotateYUMatrix(double angle)
+        {
+            return new double[5, 5]
+            {
+                { 1, 0, 0, 0, 0 },
+                { 0, Math.Cos(angle), 0, Math.Sin(angle), 0 },
+                { 0, 0, 1, 0, 0 },
+                { 0, -Math.Sin(angle), 0, Math.Cos(angle), 0 },
+                { 0, 0, 0, 0, 1 }
+            };
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 ZU 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
+        /// </summary>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD4D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
+        public static double[,] RotateZUMatrix(double angle)
+        {
+            return new double[5, 5]
+            {
+                { 1, 0, 0, 0, 0 },
+                { 0, 1, 0, 0, 0 },
+                { 0, 0, Math.Cos(angle), Math.Sin(angle), 0 },
+                { 0, 0, -Math.Sin(angle), Math.Cos(angle), 0 },
                 { 0, 0, 0, 0, 1 }
             };
         }
@@ -1846,7 +1846,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回此 PointD4D 结构表示的两个向量之间的夹角（弧度）。
+        /// 返回 PointD4D 结构表示的两个向量之间的夹角（弧度）。
         /// </summary>
         /// <param name="left">PointD4D 结构，表示第一个向量。</param>
         /// <param name="right">PointD4D 结构，表示第二个向量。</param>
@@ -1895,14 +1895,14 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD4D 结构，表示左向量。</param>
         /// <param name="right">PointD4D 结构，表示右向量。</param>
-        public static double[] CrossProduct(PointD4D left, PointD4D right)
+        public static Vector CrossProduct(PointD4D left, PointD4D right)
         {
             if (left != null && right != null)
             {
-                return new double[6] { left.X * right.Y - left.Y * right.X, left.X * right.Z - left.Z * right.X, left.X * right.U - left.U * right.X, left.Y * right.Z - left.Z * right.Y, left.Y * right.U - left.U * right.Y, left.Z * right.U - left.U * right.Z };
+                return new Vector(left.X * right.Y - left.Y * right.X, left.X * right.Z - left.Z * right.X, left.X * right.U - left.U * right.X, left.Y * right.Z - left.Z * right.Y, left.Y * right.U - left.U * right.Y, left.Z * right.U - left.U * right.Z);
             }
 
-            return null;
+            return Vector.NonVector;
         }
 
         //

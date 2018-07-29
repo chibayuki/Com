@@ -772,7 +772,7 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 PointD 结构绕原点旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕原点旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void Rotate(double angle)
         {
             double __X = _X, __Y = _Y;
@@ -784,7 +784,7 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 PointD 结构绕指定的 PointD 结构旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕指定的 PointD 结构旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public void Rotate(double angle, PointD pt)
         {
@@ -800,7 +800,7 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD 结构的副本绕原点旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕原点旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD RotateCopy(double angle)
         {
             PointD result = new PointD();
@@ -814,7 +814,7 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD 结构的副本绕指定的 PointD 结构旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕指定的 PointD 结构旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public PointD RotateCopy(double angle, PointD pt)
         {
@@ -1661,7 +1661,7 @@ namespace Com
         /// <summary>
         /// 返回表示按双精度浮点数表示的弧度将 PointD 结构绕原点旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕原点旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static double[,] RotateMatrix(double angle)
         {
             return new double[3, 3]
@@ -1675,7 +1675,7 @@ namespace Com
         /// <summary>
         /// 返回表示按双精度浮点数表示的弧度将 PointD 结构绕指定的 PointD 结构旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕指定的 PointD 结构旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public static double[,] RotateMatrix(double angle, PointD pt)
         {
@@ -1761,14 +1761,14 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示左向量。</param>
         /// <param name="right">PointD 结构，表示右向量。</param>
-        public static double CrossProduct(PointD left, PointD right)
+        public static Vector CrossProduct(PointD left, PointD right)
         {
             if (left != null && right != null)
             {
-                return (left.X * right.Y - left.Y * right.X);
+                return new Vector(left.X * right.Y - left.Y * right.X);
             }
 
-            return double.NaN;
+            return Vector.NonVector;
         }
 
         //

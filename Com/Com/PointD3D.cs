@@ -561,16 +561,10 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 PointD3D 结构绕 X 轴旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 X 轴旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateX(double angle)
         {
-            double[,] matrixLeft = new double[4, 4]
-            {
-                { 1, 0, 0, 0 },
-                { 0, Math.Cos(angle), Math.Sin(angle), 0 },
-                { 0, -Math.Sin(angle), Math.Cos(angle), 0 },
-                { 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateXMatrix(angle);
 
             double[,] matrixRight = new double[1, 4]
             {
@@ -590,16 +584,10 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 PointD3D 结构绕 Y 轴旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 Y 轴旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public void RotateY(double angle)
         {
-            double[,] matrixLeft = new double[4, 4]
-            {
-                { Math.Cos(angle), 0, -Math.Sin(angle), 0 },
-                { 0, 1, 0, 0 },
-                { Math.Sin(angle), 0, Math.Cos(angle), 0 },
-                { 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateYMatrix(angle);
 
             double[,] matrixRight = new double[1, 4]
             {
@@ -619,16 +607,10 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 PointD3D 结构绕 Z 轴旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 Z 轴旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void RotateZ(double angle)
         {
-            double[,] matrixLeft = new double[4, 4]
-            {
-                { Math.Cos(angle), Math.Sin(angle), 0, 0 },
-                { -Math.Sin(angle), Math.Cos(angle), 0, 0 },
-                { 0, 0, 1, 0 },
-                { 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateZMatrix(angle);
 
             double[,] matrixRight = new double[1, 4]
             {
@@ -648,16 +630,10 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本绕 X 轴旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 X 轴旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD3D RotateXCopy(double angle)
         {
-            double[,] matrixLeft = new double[4, 4]
-            {
-                { 1, 0, 0, 0 },
-                { 0, Math.Cos(angle), Math.Sin(angle), 0 },
-                { 0, -Math.Sin(angle), Math.Cos(angle), 0 },
-                { 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateXMatrix(angle);
 
             double[,] matrixRight = new double[1, 4]
             {
@@ -677,16 +653,10 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本绕 Y 轴旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 Y 轴旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public PointD3D RotateYCopy(double angle)
         {
-            double[,] matrixLeft = new double[4, 4]
-            {
-                { Math.Cos(angle), 0, -Math.Sin(angle), 0 },
-                { 0, 1, 0, 0 },
-                { Math.Sin(angle), 0, Math.Cos(angle), 0 },
-                { 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateYMatrix(angle);
 
             double[,] matrixRight = new double[1, 4]
             {
@@ -706,16 +676,10 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本绕 Z 轴旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕 Z 轴旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD3D RotateZCopy(double angle)
         {
-            double[,] matrixLeft = new double[4, 4]
-            {
-                { Math.Cos(angle), Math.Sin(angle), 0, 0 },
-                { -Math.Sin(angle), Math.Cos(angle), 0, 0 },
-                { 0, 0, 1, 0 },
-                { 0, 0, 0, 1 }
-            };
+            double[,] matrixLeft = RotateZMatrix(angle);
 
             double[,] matrixRight = new double[1, 4]
             {
@@ -1454,7 +1418,7 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 X 轴旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 X 轴旋转的角度（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public static double[,] RotateXMatrix(double angle)
         {
             return new double[4, 4]
@@ -1469,7 +1433,7 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 Y 轴旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 Y 轴旋转的角度（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public static double[,] RotateYMatrix(double angle)
         {
             return new double[4, 4]
@@ -1484,7 +1448,7 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 Z 轴旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕 Z 轴旋转的角度（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static double[,] RotateZMatrix(double angle)
         {
             return new double[4, 4]
@@ -1516,7 +1480,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回此 PointD3D 结构表示的两个向量之间的夹角（弧度）。
+        /// 返回 PointD3D 结构表示的两个向量之间的夹角（弧度）。
         /// </summary>
         /// <param name="left">PointD3D 结构，表示第一个向量。</param>
         /// <param name="right">PointD3D 结构，表示第二个向量。</param>
