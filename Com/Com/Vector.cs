@@ -24,7 +24,7 @@ namespace Com
     {
         #region 私有与内部成员
 
-        private double[] _XArray; // 用于存储向量在各基向量方向的分量系数的数组。
+        private double[] _XArray = null; // 用于存储向量在各基向量方向的分量系数的数组。
 
         #endregion
 
@@ -101,12 +101,9 @@ namespace Com
 
             set
             {
-                if (_XArray != null)
+                if (_XArray != null && (index >= 0 && index < _XArray.Length))
                 {
-                    if (index >= 0 && index < _XArray.Length)
-                    {
-                        _XArray[index] = value;
-                    }
+                    _XArray[index] = value;
                 }
             }
         }
@@ -256,7 +253,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于平移此 Vector。</param>
         public void Offset(Vector vector)
         {
-            if (_XArray != null && IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
+            if (_XArray != null && !IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
             {
                 for (int i = 0; i < _XArray.Length; i++)
                 {
@@ -292,7 +289,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于平移此 Vector。</param>
         public Vector OffsetCopy(Vector vector)
         {
-            if (_XArray != null && IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
+            if (_XArray != null && !IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
             {
                 Vector Result = Copy();
 
@@ -330,7 +327,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于缩放此 Vector。</param>
         public void Scale(Vector vector)
         {
-            if (_XArray != null && IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
+            if (_XArray != null && !IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
             {
                 for (int i = 0; i < _XArray.Length; i++)
                 {
@@ -366,7 +363,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于缩放此 Vector。</param>
         public Vector ScaleCopy(Vector vector)
         {
-            if (_XArray != null && IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
+            if (_XArray != null && !IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
             {
                 Vector Result = Copy();
 
@@ -389,7 +386,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示起始点。</param>
         public double DistanceFrom(Vector vector)
         {
-            if (_XArray != null && IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
+            if (_XArray != null && !IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
             {
                 double SqrSum = 0;
 
@@ -410,7 +407,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示起始向量。</param>
         public double AngleFrom(Vector vector)
         {
-            if (_XArray != null && IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
+            if (_XArray != null && !IsNullOrNonVector(vector) && _XArray.Length == vector._XArray.Length)
             {
                 bool Flag1 = true;
 
@@ -553,7 +550,7 @@ namespace Com
                             }
                         };
 
-                        for (int i = 1; i < _XArray.Length - 1; i++)
+                        for (int i = 0; i < _XArray.Length - 2; i++)
                         {
                             double SqrY = 0;
 
@@ -562,7 +559,7 @@ namespace Com
                                 SqrY += _XArray[j] * _XArray[j];
                             }
 
-                            Result._XArray[i] = VectorAnglePI(_XArray[i], Math.Sqrt(SqrY));
+                            Result._XArray[i + 1] = VectorAnglePI(_XArray[i], Math.Sqrt(SqrY));
                         }
                     }
                 }
@@ -588,7 +585,7 @@ namespace Com
                 {
                     Result._XArray[0] = _XArray[0];
                 }
-                else if (_XArray.Length == 2)
+                else
                 {
                     Result._XArray[0] = _XArray[0] * Math.Cos(_XArray[1]);
 
@@ -609,7 +606,7 @@ namespace Com
                         {
                             Result._XArray[i] = _XArray[0] * Math.Cos(_XArray[i + 1]);
 
-                            for (int j = 1; i < _XArray.Length - 1; i++)
+                            for (int j = 1; j < i + 1; j++)
                             {
                                 Result._XArray[i] *= Math.Sin(_XArray[j]);
                             }
@@ -678,7 +675,7 @@ namespace Com
         {
             string Str = string.Empty;
 
-            if (_XArray.Length > 0)
+            if (_XArray != null && _XArray.Length > 0)
             {
                 Str = string.Concat("Dimension=", _XArray.Length);
             }
@@ -700,7 +697,7 @@ namespace Com
         /// <param name="vector">用于判断的 Vector 对象。</param>
         public static bool IsNullOrNonVector(Vector vector)
         {
-            return (vector == null || vector._XArray.Length == 0);
+            return ((object)vector == null || vector._XArray == null || vector._XArray.Length == 0);
         }
 
         //

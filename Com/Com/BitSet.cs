@@ -34,7 +34,7 @@ namespace Com
 
         private int _Size; // 此 BitSet 包含的元素数量。
 
-        private uint[] _UintArray; // 用于存储位值的 32 位无符号整数数组。
+        private uint[] _UintArray = null; // 用于存储位值的 32 位无符号整数数组。
 
         //
 
