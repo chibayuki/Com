@@ -440,7 +440,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于平移此 PointD3D 结构。</param>
         public void Offset(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X += pt.X;
                 _Y += pt.Y;
@@ -474,7 +474,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于平移此 PointD3D 结构。</param>
         public PointD3D OffsetCopy(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(_X + pt.X, _Y + pt.Y, _Z + pt.Z);
             }
@@ -514,7 +514,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于缩放此 PointD3D 结构。</param>
         public void Scale(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X *= pt.X;
                 _Y *= pt.Y;
@@ -548,7 +548,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于缩放此 PointD3D 结构。</param>
         public PointD3D ScaleCopy(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(_X * pt.X, _Y * pt.Y, _Z * pt.Z);
             }
@@ -707,7 +707,7 @@ namespace Com
         /// <param name="offset">PointD3D 结构表示的偏移向量。</param>
         public void AffineTransform(PointD3D ex, PointD3D ey, PointD3D ez, PointD3D offset)
         {
-            if (ex != null && ey != null && ez != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)ez != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[4, 4]
                 {
@@ -809,7 +809,7 @@ namespace Com
         /// <param name="offset">PointD3D 结构表示的偏移向量。</param>
         public PointD3D AffineTransformCopy(PointD3D ex, PointD3D ey, PointD3D ez, PointD3D offset)
         {
-            if (ex != null && ey != null && ez != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)ez != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[4, 4]
                 {
@@ -911,7 +911,7 @@ namespace Com
         /// <param name="offset">PointD3D 结构表示的偏移向量。</param>
         public void InverseAffineTransform(PointD3D ex, PointD3D ey, PointD3D ez, PointD3D offset)
         {
-            if (ex != null && ey != null && ez != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)ez != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[4, 4]
                 {
@@ -1013,7 +1013,7 @@ namespace Com
         /// <param name="offset">PointD3D 结构表示的偏移向量。</param>
         public PointD3D InverseAffineTransformCopy(PointD3D ex, PointD3D ey, PointD3D ez, PointD3D offset)
         {
-            if (ex != null && ey != null && ez != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)ez != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[4, 4]
                 {
@@ -1115,7 +1115,7 @@ namespace Com
         /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维度量其真实尺度与投影尺度的比值等于其到投影面的距离与此距离的比值。</param>
         public PointD ProjectToXY(PointD3D prjCenter, double trueLenDist)
         {
-            if (prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
+            if ((object)prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
             {
                 if (trueLenDist == 0)
                 {
@@ -1145,7 +1145,7 @@ namespace Com
         /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维度量其真实尺度与投影尺度的比值等于其到投影面的距离与此距离的比值。</param>
         public PointD ProjectToYZ(PointD3D prjCenter, double trueLenDist)
         {
-            if (prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
+            if ((object)prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
             {
                 if (trueLenDist == 0)
                 {
@@ -1175,7 +1175,7 @@ namespace Com
         /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维度量其真实尺度与投影尺度的比值等于其到投影面的距离与此距离的比值。</param>
         public PointD ProjectToZX(PointD3D prjCenter, double trueLenDist)
         {
-            if (prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
+            if ((object)prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
             {
                 if (trueLenDist == 0)
                 {
@@ -1206,7 +1206,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，表示起始点。</param>
         public double DistanceFrom(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 double dx = _X - pt.X, dy = _Y - pt.Y, dz = _Z - pt.Z;
 
@@ -1222,7 +1222,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，表示起始向量。</param>
         public double AngleFrom(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 if (_X == 0 && _Y == 0 && _Z == 0)
                 {
@@ -1345,7 +1345,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于平移 PointD3D 结构。</param>
         public static double[,] OffsetMatrix(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[4, 4]
                 {
@@ -1399,7 +1399,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于缩放 PointD3D 结构。</param>
         public static double[,] ScaleMatrix(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[4, 4]
                 {
@@ -1469,7 +1469,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，表示第二个点。</param>
         public static double DistanceBetween(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 double dx = left.X - right.X, dy = left.Y - right.Y, dz = left.Z - right.Z;
 
@@ -1486,7 +1486,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，表示第二个向量。</param>
         public static double AngleBetween(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 if (left.X == 0 && left.Y == 0 && left.Z == 0)
                 {
@@ -1516,7 +1516,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，表示第二个向量。</param>
         public static double DotProduct(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return (left.X * right.X + left.Y * right.Y + left.Z * right.Z);
             }
@@ -1531,7 +1531,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，表示右向量。</param>
         public static PointD3D CrossProduct(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD3D(left.Y * right.Z - left.Z * right.Y, left.Z * right.X - left.X * right.Z, left.X * right.Y - left.Y * right.X);
             }
@@ -1547,7 +1547,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于转换的结构。</param>
         public static PointD3D Abs(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(Math.Abs(pt.X), Math.Abs(pt.Y), Math.Abs(pt.Z));
             }
@@ -1561,7 +1561,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于转换的结构。</param>
         public static PointD3D Sign(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(Math.Sign(pt.X), Math.Sign(pt.Y), Math.Sign(pt.Z));
             }
@@ -1575,7 +1575,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于转换的结构。</param>
         public static PointD3D Ceiling(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(Math.Ceiling(pt.X), Math.Ceiling(pt.Y), Math.Ceiling(pt.Z));
             }
@@ -1589,7 +1589,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于转换的结构。</param>
         public static PointD3D Floor(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(Math.Floor(pt.X), Math.Floor(pt.Y), Math.Floor(pt.Z));
             }
@@ -1603,7 +1603,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于转换的结构。</param>
         public static PointD3D Round(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(Math.Round(pt.X), Math.Round(pt.Y), Math.Round(pt.Z));
             }
@@ -1617,7 +1617,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于转换的结构。</param>
         public static PointD3D Truncate(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(Math.Truncate(pt.X), Math.Truncate(pt.Y), Math.Truncate(pt.Z));
             }
@@ -1632,7 +1632,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，用于比较的第二个结构。</param>
         public static PointD3D Max(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD3D(Math.Max(left.X, right.X), Math.Max(left.Y, right.Y), Math.Max(left.Z, right.Z));
             }
@@ -1647,7 +1647,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，用于比较的第二个结构。</param>
         public static PointD3D Min(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD3D(Math.Min(left.X, right.X), Math.Min(left.Y, right.Y), Math.Min(left.Z, right.Z));
             }
@@ -1679,7 +1679,7 @@ namespace Com
         /// <param name="pointD3D">用于比较的 PointD3D 结构。</param>
         public bool Equals(PointD3D pointD3D)
         {
-            if (pointD3D == null)
+            if ((object)pointD3D == null)
             {
                 return false;
             }
@@ -1713,7 +1713,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于转换的结构。</param>
         public static PointD3D operator +(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(+pt.X, +pt.Y, +pt.Z);
             }
@@ -1727,7 +1727,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，用于转换的结构。</param>
         public static PointD3D operator -(PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(-pt.X, -pt.Y, -pt.Z);
             }
@@ -1744,7 +1744,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示加数。</param>
         public static PointD3D operator +(PointD3D pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(pt.X + n, pt.Y + n, pt.Z + n);
             }
@@ -1759,7 +1759,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，表示加数。</param>
         public static PointD3D operator +(double n, PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(n + pt.X, n + pt.Y, n + pt.Z);
             }
@@ -1774,7 +1774,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，表示加数。</param>
         public static PointD3D operator +(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD3D(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
             }
@@ -1791,7 +1791,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示减数。</param>
         public static PointD3D operator -(PointD3D pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(pt.X - n, pt.Y - n, pt.Z - n);
             }
@@ -1806,7 +1806,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，表示减数。</param>
         public static PointD3D operator -(double n, PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(n - pt.X, n - pt.Y, n - pt.Z);
             }
@@ -1821,7 +1821,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，表示减数。</param>
         public static PointD3D operator -(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD3D(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
             }
@@ -1838,7 +1838,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示乘数。</param>
         public static PointD3D operator *(PointD3D pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(pt.X * n, pt.Y * n, pt.Z * n);
             }
@@ -1853,7 +1853,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，表示乘数。</param>
         public static PointD3D operator *(double n, PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(n * pt.X, n * pt.Y, n * pt.Z);
             }
@@ -1868,7 +1868,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，表示乘数。</param>
         public static PointD3D operator *(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD3D(left.X * right.X, left.Y * right.Y, left.Z * right.Z);
             }
@@ -1885,7 +1885,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示除数。</param>
         public static PointD3D operator /(PointD3D pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(pt.X / n, pt.Y / n, pt.Z / n);
             }
@@ -1900,7 +1900,7 @@ namespace Com
         /// <param name="pt">PointD3D 结构，表示除数。</param>
         public static PointD3D operator /(double n, PointD3D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD3D(n / pt.X, n / pt.Y, n / pt.Z);
             }
@@ -1915,7 +1915,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，表示除数。</param>
         public static PointD3D operator /(PointD3D left, PointD3D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD3D(left.X / right.X, left.Y / right.Y, left.Z / right.Z);
             }
@@ -1932,7 +1932,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
         public static bool operator ==(PointD3D left, PointD3D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -1947,7 +1947,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
         public static bool operator !=(PointD3D left, PointD3D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return true;
             }
@@ -1962,7 +1962,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
         public static bool operator <(PointD3D left, PointD3D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -1977,7 +1977,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
         public static bool operator >(PointD3D left, PointD3D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -1992,7 +1992,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
         public static bool operator <=(PointD3D left, PointD3D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2007,7 +2007,7 @@ namespace Com
         /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
         public static bool operator >=(PointD3D left, PointD3D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }

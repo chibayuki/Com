@@ -94,7 +94,7 @@ namespace Com
         /// <param name="pt">PointD 结构。</param>
         public Complex(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _Real = pt.X;
                 _Image = pt.Y;
@@ -300,7 +300,7 @@ namespace Com
         /// <param name="pt">Point 结构。</param>
         public static Complex FromPointD(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new Complex(pt.X, pt.Y);
             }
@@ -316,7 +316,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示被开方数。</param>
         public static Complex Sqrt(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 double Mod = Math.Sqrt(comp.Module);
                 double Arg = comp.Argument / 2;
@@ -333,7 +333,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示底数。</param>
         public static Complex Exp(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 double Mod = Math.Exp(comp.Real);
                 double Arg = comp.Image;
@@ -351,7 +351,7 @@ namespace Com
         /// <param name="right">Complex 结构，表示指数。</param>
         public static Complex Pow(Complex left, Complex right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 double ModL = left.Module;
 
@@ -387,7 +387,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示幂。</param>
         public static Complex Log(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 double Real = Math.Log(comp.Module);
                 double Image = comp.Argument;
@@ -405,7 +405,7 @@ namespace Com
         /// <param name="right">Complex 结构，表示幂。</param>
         public static Complex Log(Complex left, Complex right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 if (left.Module == 0 && right.IsOne)
                 {
@@ -428,7 +428,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         public static Complex Sin(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 double ExpPIm = Math.Exp(comp.Image);
                 double ExpNIm = Math.Exp(-comp.Image);
@@ -445,7 +445,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         public static Complex Cos(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 double ExpPIm = Math.Exp(comp.Image);
                 double ExpNIm = Math.Exp(-comp.Image);
@@ -462,7 +462,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         public static Complex Tan(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return (Sin(comp) / Cos(comp));
             }
@@ -476,7 +476,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示正弦值的复数。</param>
         public static Complex Asin(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return (-I * Log(I * comp + Sqrt(One - comp * comp)));
             }
@@ -490,7 +490,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示余弦值的复数。</param>
         public static Complex Acos(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return (-I * Log(comp + Sqrt(comp * comp - One)));
             }
@@ -504,7 +504,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示正切值的复数。</param>
         public static Complex Atan(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return (I * Log((One - I * comp) / (One + I * comp)) / new Complex(2));
             }
@@ -518,7 +518,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         public static Complex Sinh(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return (-I * Sin(I * comp));
             }
@@ -532,7 +532,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         public static Complex Cosh(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return Cos(I * comp);
             }
@@ -546,7 +546,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         public static Complex Tanh(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return (-I * Tan(I * comp));
             }
@@ -560,7 +560,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示双曲正弦值的复数。</param>
         public static Complex Asinh(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return Log(comp + Sqrt(comp * comp + One));
             }
@@ -574,7 +574,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示双曲余弦值的复数。</param>
         public static Complex Acosh(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return Log(comp + Sqrt(comp * comp - One));
             }
@@ -588,7 +588,7 @@ namespace Com
         /// <param name="comp">Complex 结构，表示双曲正切值的复数。</param>
         public static Complex Atanh(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return (Log((One + comp) / (One - comp)) / new Complex(2));
             }
@@ -604,7 +604,7 @@ namespace Com
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         public static Complex Abs(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new Complex(Math.Abs(comp.Real), Math.Abs(comp.Image));
             }
@@ -618,7 +618,7 @@ namespace Com
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         public static Complex Sign(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new Complex(Math.Sign(comp.Real), Math.Sign(comp.Image));
             }
@@ -632,7 +632,7 @@ namespace Com
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         public static Complex Ceiling(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new Complex(Math.Ceiling(comp.Real), Math.Ceiling(comp.Image));
             }
@@ -646,7 +646,7 @@ namespace Com
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         public static Complex Floor(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new Complex(Math.Floor(comp.Real), Math.Floor(comp.Image));
             }
@@ -660,7 +660,7 @@ namespace Com
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         public static Complex Round(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new Complex(Math.Round(comp.Real), Math.Round(comp.Image));
             }
@@ -674,7 +674,7 @@ namespace Com
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         public static Complex Truncate(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new Complex(Math.Truncate(comp.Real), Math.Truncate(comp.Image));
             }
@@ -689,7 +689,7 @@ namespace Com
         /// <param name="right">Complex 结构，用于比较的第二个结构。</param>
         public static Complex Max(Complex left, Complex right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new Complex(Math.Max(left.Real, right.Real), Math.Max(left.Image, right.Image));
             }
@@ -704,7 +704,7 @@ namespace Com
         /// <param name="right">Complex 结构，用于比较的第二个结构。</param>
         public static Complex Min(Complex left, Complex right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new Complex(Math.Min(left.Real, right.Real), Math.Min(left.Image, right.Image));
             }
@@ -736,7 +736,7 @@ namespace Com
         /// <param name="complex">用于比较的 Complex 结构。</param>
         public bool Equals(Complex complex)
         {
-            if (complex == null)
+            if ((object)complex == null)
             {
                 return false;
             }
@@ -821,7 +821,7 @@ namespace Com
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         public static Complex operator +(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new Complex(+comp.Real, +comp.Image);
             }
@@ -835,7 +835,7 @@ namespace Com
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         public static Complex operator -(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new Complex(-comp.Real, -comp.Image);
             }
@@ -852,7 +852,7 @@ namespace Com
         /// <param name="right">Complex 结构，表示加数。</param>
         public static Complex operator +(Complex left, Complex right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new Complex(left.Real + right.Real, left.Image + right.Image);
             }
@@ -867,7 +867,7 @@ namespace Com
         /// <param name="right">Complex 结构，表示减数。</param>
         public static Complex operator -(Complex left, Complex right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new Complex(left.Real - right.Real, left.Image - right.Image);
             }
@@ -882,7 +882,7 @@ namespace Com
         /// <param name="right">Complex 结构，表示乘数。</param>
         public static Complex operator *(Complex left, Complex right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new Complex(left.Real * right.Real - left.Image * right.Image, left.Image * right.Real + left.Real * right.Image);
             }
@@ -897,7 +897,7 @@ namespace Com
         /// <param name="right">Complex 结构，表示除数。</param>
         public static Complex operator /(Complex left, Complex right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 double ModSqrR = right.ModuleSquared;
 
@@ -916,7 +916,7 @@ namespace Com
         /// <param name="right">Complex 结构，运算符右侧比较的结构。</param>
         public static bool operator ==(Complex left, Complex right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -931,7 +931,7 @@ namespace Com
         /// <param name="right">Complex 结构，运算符右侧比较的结构。</param>
         public static bool operator !=(Complex left, Complex right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return true;
             }
@@ -946,7 +946,7 @@ namespace Com
         /// <param name="right">Complex 结构，运算符右侧比较的结构。</param>
         public static bool operator <(Complex left, Complex right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -961,7 +961,7 @@ namespace Com
         /// <param name="right">Complex 结构，运算符右侧比较的结构。</param>
         public static bool operator >(Complex left, Complex right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -976,7 +976,7 @@ namespace Com
         /// <param name="right">Complex 结构，运算符右侧比较的结构。</param>
         public static bool operator <=(Complex left, Complex right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -991,7 +991,7 @@ namespace Com
         /// <param name="right">Complex 结构，运算符右侧比较的结构。</param>
         public static bool operator >=(Complex left, Complex right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }

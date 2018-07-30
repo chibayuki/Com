@@ -2005,7 +2005,7 @@ namespace Com
         /// <param name="dateTimeX">用于比较的 DateTimeX 结构。</param>
         public bool Equals(DateTimeX dateTimeX)
         {
-            if (dateTimeX == null)
+            if ((object)dateTimeX == null)
             {
                 return false;
             }
@@ -2062,7 +2062,7 @@ namespace Com
         /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
         public static bool operator ==(DateTimeX left, DateTimeX right)
         {
-            if ((left == null || left.IsEmpty) || (right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
             }
@@ -2077,7 +2077,7 @@ namespace Com
         /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
         public static bool operator !=(DateTimeX left, DateTimeX right)
         {
-            if ((left == null || left.IsEmpty) || (right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return true;
             }
@@ -2092,7 +2092,7 @@ namespace Com
         /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
         public static bool operator <(DateTimeX left, DateTimeX right)
         {
-            if ((left == null || left.IsEmpty) || (right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
             }
@@ -2107,7 +2107,7 @@ namespace Com
         /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
         public static bool operator >(DateTimeX left, DateTimeX right)
         {
-            if ((left == null || left.IsEmpty) || (right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
             }
@@ -2122,7 +2122,7 @@ namespace Com
         /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
         public static bool operator <=(DateTimeX left, DateTimeX right)
         {
-            if ((left == null || left.IsEmpty) || (right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
             }
@@ -2137,7 +2137,7 @@ namespace Com
         /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
         public static bool operator >=(DateTimeX left, DateTimeX right)
         {
-            if ((left == null || left.IsEmpty) || (right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
             }

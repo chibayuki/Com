@@ -81,7 +81,7 @@ namespace Com
         /// <param name="pt">Point 结构。</param>
         public PointD(Point pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X = pt.X;
                 _Y = pt.Y;
@@ -99,7 +99,7 @@ namespace Com
         /// <param name="pt">PointF 结构。</param>
         public PointD(PointF pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X = pt.X;
                 _Y = pt.Y;
@@ -117,7 +117,7 @@ namespace Com
         /// <param name="sz">Size 结构。</param>
         public PointD(Size sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 _X = sz.Width;
                 _Y = sz.Height;
@@ -135,7 +135,7 @@ namespace Com
         /// <param name="sz">SizeF 结构。</param>
         public PointD(SizeF sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 _X = sz.Width;
                 _Y = sz.Height;
@@ -153,7 +153,7 @@ namespace Com
         /// <param name="comp">Complex 结构。</param>
         public PointD(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 _X = comp.Real;
                 _Y = comp.Image;
@@ -442,7 +442,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于平移此 PointD 结构。</param>
         public void Offset(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X += pt.X;
                 _Y += pt.Y;
@@ -455,7 +455,7 @@ namespace Com
         /// <param name="pt">Point 结构，用于平移此 PointD 结构。</param>
         public void Offset(Point pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X += pt.X;
                 _Y += pt.Y;
@@ -468,7 +468,7 @@ namespace Com
         /// <param name="pt">PointF 结构，用于平移此 PointD 结构。</param>
         public void Offset(PointF pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X += pt.X;
                 _Y += pt.Y;
@@ -481,7 +481,7 @@ namespace Com
         /// <param name="sz">Size 结构，用于平移此 PointD 结构。</param>
         public void Offset(Size sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 _X += sz.Width;
                 _Y += sz.Height;
@@ -494,7 +494,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，用于平移此 PointD 结构。</param>
         public void Offset(SizeF sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 _X += sz.Width;
                 _Y += sz.Height;
@@ -526,7 +526,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于平移此 PointD 结构。</param>
         public PointD OffsetCopy(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(_X + pt.X, _Y + pt.Y);
             }
@@ -540,7 +540,7 @@ namespace Com
         /// <param name="pt">Point 结构，用于平移此 PointD 结构。</param>
         public PointD OffsetCopy(Point pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(_X + pt.X, _Y + pt.Y);
             }
@@ -554,7 +554,7 @@ namespace Com
         /// <param name="pt">PointF 结构，用于平移此 PointD 结构。</param>
         public PointD OffsetCopy(PointF pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(_X + pt.X, _Y + pt.Y);
             }
@@ -568,7 +568,7 @@ namespace Com
         /// <param name="sz">Size 结构，用于平移此 PointD 结构。</param>
         public PointD OffsetCopy(Size sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new PointD(_X + sz.Width, _Y + sz.Height);
             }
@@ -582,7 +582,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，用于平移此 PointD 结构。</param>
         public PointD OffsetCopy(SizeF sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new PointD(_X + sz.Width, _Y + sz.Height);
             }
@@ -619,7 +619,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于缩放此 PointD 结构。</param>
         public void Scale(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X *= pt.X;
                 _Y *= pt.Y;
@@ -632,7 +632,7 @@ namespace Com
         /// <param name="pt">Point 结构，用于缩放此 PointD 结构。</param>
         public void Scale(Point pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X *= pt.X;
                 _Y *= pt.Y;
@@ -645,7 +645,7 @@ namespace Com
         /// <param name="pt">PointF 结构，用于缩放此 PointD 结构。</param>
         public void Scale(PointF pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X *= pt.X;
                 _Y *= pt.Y;
@@ -658,7 +658,7 @@ namespace Com
         /// <param name="sz">Size 结构，用于缩放此 PointD 结构。</param>
         public void Scale(Size sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 _X *= sz.Width;
                 _Y *= sz.Height;
@@ -671,7 +671,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，用于缩放此 PointD 结构。</param>
         public void Scale(SizeF sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 _X *= sz.Width;
                 _Y *= sz.Height;
@@ -703,7 +703,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于缩放此 PointD 结构。</param>
         public PointD ScaleCopy(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(_X * pt.X, _Y * pt.Y);
             }
@@ -717,7 +717,7 @@ namespace Com
         /// <param name="pt">Point 结构，用于缩放此 PointD 结构。</param>
         public PointD ScaleCopy(Point pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(_X * pt.X, _Y * pt.Y);
             }
@@ -731,7 +731,7 @@ namespace Com
         /// <param name="pt">PointF 结构，用于缩放此 PointD 结构。</param>
         public PointD ScaleCopy(PointF pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(_X * pt.X, _Y * pt.Y);
             }
@@ -745,7 +745,7 @@ namespace Com
         /// <param name="sz">Size 结构，用于缩放此 PointD 结构。</param>
         public PointD ScaleCopy(Size sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new PointD(_X * sz.Width, _Y * sz.Height);
             }
@@ -759,7 +759,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，用于缩放此 PointD 结构。</param>
         public PointD ScaleCopy(SizeF sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new PointD(_X * sz.Width, _Y * sz.Height);
             }
@@ -788,7 +788,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public void Rotate(double angle, PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 double __X = _X, __Y = _Y;
 
@@ -818,7 +818,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public PointD RotateCopy(double angle, PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 PointD result = new PointD();
 
@@ -841,7 +841,7 @@ namespace Com
         /// <param name="offset">PointD 结构表示的偏移向量。</param>
         public void AffineTransform(PointD ex, PointD ey, PointD offset)
         {
-            if (ex != null && ey != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[3, 3]
                 {
@@ -938,7 +938,7 @@ namespace Com
         /// <param name="offset">PointD 结构表示的偏移向量。</param>
         public PointD AffineTransformCopy(PointD ex, PointD ey, PointD offset)
         {
-            if (ex != null && ey != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[3, 3]
                 {
@@ -1038,7 +1038,7 @@ namespace Com
         /// <param name="offset">PointD 结构表示的偏移向量。</param>
         public void InverseAffineTransform(PointD ex, PointD ey, PointD offset)
         {
-            if (ex != null && ey != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[3, 3]
                 {
@@ -1135,7 +1135,7 @@ namespace Com
         /// <param name="offset">PointD 结构表示的偏移向量。</param>
         public PointD InverseAffineTransformCopy(PointD ex, PointD ey, PointD offset)
         {
-            if (ex != null && ey != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[3, 3]
                 {
@@ -1235,7 +1235,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示另一个点。</param>
         public double DistanceFrom(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 double dx = _X - pt.X, dy = _Y - pt.Y;
 
@@ -1251,7 +1251,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示另一个向量。</param>
         public double AngleFrom(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 if (_X == 0 && _Y == 0)
                 {
@@ -1325,7 +1325,7 @@ namespace Com
         /// <param name="pt">Point 结构。</param>
         public static PointD FromPoint(Point pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(pt.X, pt.Y);
             }
@@ -1339,7 +1339,7 @@ namespace Com
         /// <param name="pt">PointF 结构。</param>
         public static PointD FromPointF(PointF pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(pt.X, pt.Y);
             }
@@ -1353,7 +1353,7 @@ namespace Com
         /// <param name="sz">Size 结构。</param>
         public static PointD FromSize(Size sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new PointD(sz.Width, sz.Height);
             }
@@ -1367,7 +1367,7 @@ namespace Com
         /// <param name="sz">SizeF 结构。</param>
         public static PointD FromSizeF(SizeF sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new PointD(sz.Width, sz.Height);
             }
@@ -1381,7 +1381,7 @@ namespace Com
         /// <param name="comp">Complex 结构。</param>
         public static PointD FromComplex(Complex comp)
         {
-            if (comp != null)
+            if ((object)comp != null)
             {
                 return new PointD(comp.Real, comp.Image);
             }
@@ -1441,7 +1441,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于平移 PointD 结构。</param>
         public static double[,] OffsetMatrix(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[3, 3]
                 {
@@ -1460,7 +1460,7 @@ namespace Com
         /// <param name="pt">Point 结构，用于平移 PointD 结构。</param>
         public static double[,] OffsetMatrix(Point pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[3, 3]
                 {
@@ -1479,7 +1479,7 @@ namespace Com
         /// <param name="pt">PointF 结构，用于平移 PointD 结构。</param>
         public static double[,] OffsetMatrix(PointF pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[3, 3]
                 {
@@ -1498,7 +1498,7 @@ namespace Com
         /// <param name="sz">Size 结构，用于平移 PointD 结构。</param>
         public static double[,] OffsetMatrix(Size sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new double[3, 3]
                 {
@@ -1517,7 +1517,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，用于平移 PointD 结构。</param>
         public static double[,] OffsetMatrix(SizeF sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new double[3, 3]
                 {
@@ -1567,7 +1567,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于缩放 PointD 结构。</param>
         public static double[,] ScaleMatrix(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[3, 3]
                 {
@@ -1586,7 +1586,7 @@ namespace Com
         /// <param name="pt">Point 结构，用于缩放 PointD 结构。</param>
         public static double[,] ScaleMatrix(Point pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[3, 3]
                 {
@@ -1605,7 +1605,7 @@ namespace Com
         /// <param name="pt">PointF 结构，用于缩放 PointD 结构。</param>
         public static double[,] ScaleMatrix(PointF pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[3, 3]
                 {
@@ -1624,7 +1624,7 @@ namespace Com
         /// <param name="sz">Size 结构，用于缩放 PointD 结构。</param>
         public static double[,] ScaleMatrix(Size sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new double[3, 3]
                 {
@@ -1643,7 +1643,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，用于缩放 PointD 结构。</param>
         public static double[,] ScaleMatrix(SizeF sz)
         {
-            if (sz != null)
+            if ((object)sz != null)
             {
                 return new double[3, 3]
                 {
@@ -1679,7 +1679,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public static double[,] RotateMatrix(double angle, PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[3, 3]
                 {
@@ -1701,7 +1701,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示第二个点。</param>
         public static double DistanceBetween(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 double dx = left.X - right.X, dy = left.Y - right.Y;
 
@@ -1718,7 +1718,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示第二个向量。</param>
         public static double AngleBetween(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 if (left.X == 0 && left.Y == 0)
                 {
@@ -1748,7 +1748,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示第二个向量。</param>
         public static double DotProduct(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return (left.X * right.X + left.Y * right.Y);
             }
@@ -1763,7 +1763,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示右向量。</param>
         public static Vector CrossProduct(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new Vector(left.X * right.Y - left.Y * right.X);
             }
@@ -1779,7 +1779,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD Abs(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(Math.Abs(pt.X), Math.Abs(pt.Y));
             }
@@ -1793,7 +1793,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD Sign(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(Math.Sign(pt.X), Math.Sign(pt.Y));
             }
@@ -1807,7 +1807,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD Ceiling(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(Math.Ceiling(pt.X), Math.Ceiling(pt.Y));
             }
@@ -1821,7 +1821,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD Floor(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(Math.Floor(pt.X), Math.Floor(pt.Y));
             }
@@ -1835,7 +1835,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD Round(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(Math.Round(pt.X), Math.Round(pt.Y));
             }
@@ -1849,7 +1849,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD Truncate(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(Math.Truncate(pt.X), Math.Truncate(pt.Y));
             }
@@ -1864,7 +1864,7 @@ namespace Com
         /// <param name="right">PointD 结构，用于比较的第二个结构。</param>
         public static PointD Max(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(Math.Max(left.X, right.X), Math.Max(left.Y, right.Y));
             }
@@ -1879,7 +1879,7 @@ namespace Com
         /// <param name="right">PointD 结构，用于比较的第二个结构。</param>
         public static PointD Min(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(Math.Min(left.X, right.X), Math.Min(left.Y, right.Y));
             }
@@ -1911,7 +1911,7 @@ namespace Com
         /// <param name="pointD">用于比较的 PointD 结构。</param>
         public bool Equals(PointD pointD)
         {
-            if (pointD == null)
+            if ((object)pointD == null)
             {
                 return false;
             }
@@ -1945,7 +1945,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD operator +(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(+pt.X, +pt.Y);
             }
@@ -1959,7 +1959,7 @@ namespace Com
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD operator -(PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(-pt.X, -pt.Y);
             }
@@ -1976,7 +1976,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示加数。</param>
         public static PointD operator +(PointD pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(pt.X + n, pt.Y + n);
             }
@@ -1991,7 +1991,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示加数。</param>
         public static PointD operator +(double n, PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(n + pt.X, n + pt.Y);
             }
@@ -2006,7 +2006,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示加数。</param>
         public static PointD operator +(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X + right.X, left.Y + right.Y);
             }
@@ -2021,7 +2021,7 @@ namespace Com
         /// <param name="right">Point 结构，表示加数。</param>
         public static PointD operator +(PointD left, Point right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X + right.X, left.Y + right.Y);
             }
@@ -2036,7 +2036,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示加数。</param>
         public static PointD operator +(Point left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X + right.X, left.Y + right.Y);
             }
@@ -2051,7 +2051,7 @@ namespace Com
         /// <param name="right">PointF 结构，表示加数。</param>
         public static PointD operator +(PointD left, PointF right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X + right.X, left.Y + right.Y);
             }
@@ -2066,7 +2066,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示加数。</param>
         public static PointD operator +(PointF left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X + right.X, left.Y + right.Y);
             }
@@ -2081,7 +2081,7 @@ namespace Com
         /// <param name="sz">Size 结构，表示加数。</param>
         public static PointD operator +(PointD pt, Size sz)
         {
-            if (pt != null && sz != null)
+            if ((object)pt != null && (object)sz != null)
             {
                 return new PointD(pt.X + sz.Width, pt.Y + sz.Height);
             }
@@ -2096,7 +2096,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示加数。</param>
         public static PointD operator +(Size sz, PointD pt)
         {
-            if (sz != null && pt != null)
+            if ((object)sz != null && (object)pt != null)
             {
                 return new PointD(sz.Width + pt.X, sz.Height + pt.Y);
             }
@@ -2111,7 +2111,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，表示加数。</param>
         public static PointD operator +(PointD pt, SizeF sz)
         {
-            if (pt != null && sz != null)
+            if ((object)pt != null && (object)sz != null)
             {
                 return new PointD(pt.X + sz.Width, pt.Y + sz.Height);
             }
@@ -2126,7 +2126,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示加数。</param>
         public static PointD operator +(SizeF sz, PointD pt)
         {
-            if (sz != null && pt != null)
+            if ((object)sz != null && (object)pt != null)
             {
                 return new PointD(sz.Width + pt.X, sz.Height + pt.Y);
             }
@@ -2143,7 +2143,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示减数。</param>
         public static PointD operator -(PointD pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(pt.X - n, pt.Y - n);
             }
@@ -2158,7 +2158,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示减数。</param>
         public static PointD operator -(double n, PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(n - pt.X, n - pt.Y);
             }
@@ -2173,7 +2173,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示减数。</param>
         public static PointD operator -(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X - right.X, left.Y - right.Y);
             }
@@ -2188,7 +2188,7 @@ namespace Com
         /// <param name="right">Point 结构，表示减数。</param>
         public static PointD operator -(PointD left, Point right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X - right.X, left.Y - right.Y);
             }
@@ -2203,7 +2203,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示减数。</param>
         public static PointD operator -(Point left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X - right.X, left.Y - right.Y);
             }
@@ -2218,7 +2218,7 @@ namespace Com
         /// <param name="right">PointF 结构，表示减数。</param>
         public static PointD operator -(PointD left, PointF right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X - right.X, left.Y - right.Y);
             }
@@ -2233,7 +2233,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示减数。</param>
         public static PointD operator -(PointF left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X - right.X, left.Y - right.Y);
             }
@@ -2248,7 +2248,7 @@ namespace Com
         /// <param name="sz">Size 结构，表示减数。</param>
         public static PointD operator -(PointD pt, Size sz)
         {
-            if (pt != null && sz != null)
+            if ((object)pt != null && (object)sz != null)
             {
                 return new PointD(pt.X - sz.Width, pt.Y - sz.Height);
             }
@@ -2263,7 +2263,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示减数。</param>
         public static PointD operator -(Size sz, PointD pt)
         {
-            if (sz != null && pt != null)
+            if ((object)sz != null && (object)pt != null)
             {
                 return new PointD(sz.Width - pt.X, sz.Height - pt.Y);
             }
@@ -2278,7 +2278,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，表示减数。</param>
         public static PointD operator -(PointD pt, SizeF sz)
         {
-            if (pt != null && sz != null)
+            if ((object)pt != null && (object)sz != null)
             {
                 return new PointD(pt.X - sz.Width, pt.Y - sz.Height);
             }
@@ -2293,7 +2293,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示减数。</param>
         public static PointD operator -(SizeF sz, PointD pt)
         {
-            if (sz != null && pt != null)
+            if ((object)sz != null && (object)pt != null)
             {
                 return new PointD(sz.Width - pt.X, sz.Height - pt.Y);
             }
@@ -2310,7 +2310,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示乘数。</param>
         public static PointD operator *(PointD pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(pt.X * n, pt.Y * n);
             }
@@ -2325,7 +2325,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示乘数。</param>
         public static PointD operator *(double n, PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(n * pt.X, n * pt.Y);
             }
@@ -2340,7 +2340,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示乘数。</param>
         public static PointD operator *(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X * right.X, left.Y * right.Y);
             }
@@ -2355,7 +2355,7 @@ namespace Com
         /// <param name="right">Point 结构，表示乘数。</param>
         public static PointD operator *(PointD left, Point right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X * right.X, left.Y * right.Y);
             }
@@ -2370,7 +2370,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示乘数。</param>
         public static PointD operator *(Point left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X * right.X, left.Y * right.Y);
             }
@@ -2385,7 +2385,7 @@ namespace Com
         /// <param name="right">PointF 结构，表示乘数。</param>
         public static PointD operator *(PointD left, PointF right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X * right.X, left.Y * right.Y);
             }
@@ -2400,7 +2400,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示乘数。</param>
         public static PointD operator *(PointF left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X * right.X, left.Y * right.Y);
             }
@@ -2415,7 +2415,7 @@ namespace Com
         /// <param name="sz">Size 结构，表示乘数。</param>
         public static PointD operator *(PointD pt, Size sz)
         {
-            if (pt != null && sz != null)
+            if ((object)pt != null && (object)sz != null)
             {
                 return new PointD(pt.X * sz.Width, pt.Y * sz.Height);
             }
@@ -2430,7 +2430,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示乘数。</param>
         public static PointD operator *(Size sz, PointD pt)
         {
-            if (sz != null && pt != null)
+            if ((object)sz != null && (object)pt != null)
             {
                 return new PointD(sz.Width * pt.X, sz.Height * pt.Y);
             }
@@ -2445,7 +2445,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，表示乘数。</param>
         public static PointD operator *(PointD pt, SizeF sz)
         {
-            if (pt != null && sz != null)
+            if ((object)pt != null && (object)sz != null)
             {
                 return new PointD(pt.X * sz.Width, pt.Y * sz.Height);
             }
@@ -2460,7 +2460,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示乘数。</param>
         public static PointD operator *(SizeF sz, PointD pt)
         {
-            if (sz != null && pt != null)
+            if ((object)sz != null && (object)pt != null)
             {
                 return new PointD(sz.Width * pt.X, sz.Height * pt.Y);
             }
@@ -2477,7 +2477,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示除数。</param>
         public static PointD operator /(PointD pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(pt.X / n, pt.Y / n);
             }
@@ -2492,7 +2492,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示除数。</param>
         public static PointD operator /(double n, PointD pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD(n / pt.X, n / pt.Y);
             }
@@ -2507,7 +2507,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示除数。</param>
         public static PointD operator /(PointD left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X / right.X, left.Y / right.Y);
             }
@@ -2522,7 +2522,7 @@ namespace Com
         /// <param name="right">Point 结构，表示除数。</param>
         public static PointD operator /(PointD left, Point right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X / right.X, left.Y / right.Y);
             }
@@ -2537,7 +2537,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示除数。</param>
         public static PointD operator /(Point left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X / right.X, left.Y / right.Y);
             }
@@ -2552,7 +2552,7 @@ namespace Com
         /// <param name="right">PointF 结构，表示除数。</param>
         public static PointD operator /(PointD left, PointF right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X / right.X, left.Y / right.Y);
             }
@@ -2567,7 +2567,7 @@ namespace Com
         /// <param name="right">PointD 结构，表示除数。</param>
         public static PointD operator /(PointF left, PointD right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD(left.X / right.X, left.Y / right.Y);
             }
@@ -2582,7 +2582,7 @@ namespace Com
         /// <param name="sz">Size 结构，表示除数。</param>
         public static PointD operator /(PointD pt, Size sz)
         {
-            if (pt != null && sz != null)
+            if ((object)pt != null && (object)sz != null)
             {
                 return new PointD(pt.X / sz.Width, pt.Y / sz.Height);
             }
@@ -2597,7 +2597,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示除数。</param>
         public static PointD operator /(Size sz, PointD pt)
         {
-            if (sz != null && pt != null)
+            if ((object)sz != null && (object)pt != null)
             {
                 return new PointD(sz.Width / pt.X, sz.Height / pt.Y);
             }
@@ -2612,7 +2612,7 @@ namespace Com
         /// <param name="sz">SizeF 结构，表示除数。</param>
         public static PointD operator /(PointD pt, SizeF sz)
         {
-            if (pt != null && sz != null)
+            if ((object)pt != null && (object)sz != null)
             {
                 return new PointD(pt.X / sz.Width, pt.Y / sz.Height);
             }
@@ -2627,7 +2627,7 @@ namespace Com
         /// <param name="pt">PointD 结构，表示除数。</param>
         public static PointD operator /(SizeF sz, PointD pt)
         {
-            if (sz != null && pt != null)
+            if ((object)sz != null && (object)pt != null)
             {
                 return new PointD(sz.Width / pt.X, sz.Height / pt.Y);
             }
@@ -2644,7 +2644,7 @@ namespace Com
         /// <param name="right">PointD 结构，运算符右侧比较的结构。</param>
         public static bool operator ==(PointD left, PointD right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2659,7 +2659,7 @@ namespace Com
         /// <param name="right">PointD 结构，运算符右侧比较的结构。</param>
         public static bool operator !=(PointD left, PointD right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return true;
             }
@@ -2674,7 +2674,7 @@ namespace Com
         /// <param name="right">PointD 结构，运算符右侧比较的结构。</param>
         public static bool operator <(PointD left, PointD right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2689,7 +2689,7 @@ namespace Com
         /// <param name="right">PointD 结构，运算符右侧比较的结构。</param>
         public static bool operator >(PointD left, PointD right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2704,7 +2704,7 @@ namespace Com
         /// <param name="right">PointD 结构，运算符右侧比较的结构。</param>
         public static bool operator <=(PointD left, PointD right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2719,7 +2719,7 @@ namespace Com
         /// <param name="right">PointD 结构，运算符右侧比较的结构。</param>
         public static bool operator >=(PointD left, PointD right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }

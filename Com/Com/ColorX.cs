@@ -2317,7 +2317,7 @@ namespace Com
         /// <param name="colorX">用于比较的 ColorX 结构。</param>
         public bool Equals(ColorX colorX)
         {
-            if (colorX == null)
+            if ((object)colorX == null)
             {
                 return false;
             }
@@ -2363,7 +2363,7 @@ namespace Com
         /// <param name="right">ColorX 结构，运算符右侧比较的结构。</param>
         public static bool operator ==(ColorX left, ColorX right)
         {
-            if ((left == null || left.IsEmpty) || (right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
             }
@@ -2378,7 +2378,7 @@ namespace Com
         /// <param name="right">ColorX 结构，运算符右侧比较的结构。</param>
         public static bool operator !=(ColorX left, ColorX right)
         {
-            if ((left == null || left.IsEmpty) || (right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return true;
             }

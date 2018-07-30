@@ -550,7 +550,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于平移此 PointD4D 结构。</param>
         public void Offset(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X += pt.X;
                 _Y += pt.Y;
@@ -586,7 +586,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于平移此 PointD4D 结构。</param>
         public PointD4D OffsetCopy(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(_X + pt.X, _Y + pt.Y, _Z + pt.Z, _U + pt.U);
             }
@@ -629,7 +629,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于缩放此 PointD4D 结构。</param>
         public void Scale(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 _X *= pt.X;
                 _Y *= pt.Y;
@@ -665,7 +665,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于缩放此 PointD4D 结构。</param>
         public PointD4D ScaleCopy(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(_X * pt.X, _Y * pt.Y, _Z * pt.Z, _U * pt.U);
             }
@@ -969,7 +969,7 @@ namespace Com
         /// <param name="offset">PointD4D 结构表示的偏移向量。</param>
         public void AffineTransform(PointD4D ex, PointD4D ey, PointD4D ez, PointD4D eu, PointD4D offset)
         {
-            if (ex != null && ey != null && ez != null && eu != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[5, 5]
                 {
@@ -1076,7 +1076,7 @@ namespace Com
         /// <param name="offset">PointD4D 结构表示的偏移向量。</param>
         public PointD4D AffineTransformCopy(PointD4D ex, PointD4D ey, PointD4D ez, PointD4D eu, PointD4D offset)
         {
-            if (ex != null && ey != null && ez != null && eu != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[5, 5]
                 {
@@ -1180,7 +1180,7 @@ namespace Com
         /// <param name="offset">PointD4D 结构表示的偏移向量。</param>
         public void InverseAffineTransform(PointD4D ex, PointD4D ey, PointD4D ez, PointD4D eu, PointD4D offset)
         {
-            if (ex != null && ey != null && ez != null && eu != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[5, 5]
                 {
@@ -1287,7 +1287,7 @@ namespace Com
         /// <param name="offset">PointD4D 结构表示的偏移向量。</param>
         public PointD4D InverseAffineTransformCopy(PointD4D ex, PointD4D ey, PointD4D ez, PointD4D eu, PointD4D offset)
         {
-            if (ex != null && ey != null && ez != null && eu != null && offset != null)
+            if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
                 double[,] matrixLeft = new double[5, 5]
                 {
@@ -1390,7 +1390,7 @@ namespace Com
         /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维度量其真实尺度与投影尺度的比值等于其到投影空间的距离与此距离的比值。</param>
         public PointD3D ProjectToXYZ(PointD4D prjCenter, double trueLenDist)
         {
-            if (prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
+            if ((object)prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
             {
                 if (trueLenDist == 0)
                 {
@@ -1420,7 +1420,7 @@ namespace Com
         /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维度量其真实尺度与投影尺度的比值等于其到投影空间的距离与此距离的比值。</param>
         public PointD3D ProjectToYZU(PointD4D prjCenter, double trueLenDist)
         {
-            if (prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
+            if ((object)prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
             {
                 if (trueLenDist == 0)
                 {
@@ -1450,7 +1450,7 @@ namespace Com
         /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维度量其真实尺度与投影尺度的比值等于其到投影空间的距离与此距离的比值。</param>
         public PointD3D ProjectToZUX(PointD4D prjCenter, double trueLenDist)
         {
-            if (prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
+            if ((object)prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
             {
                 if (trueLenDist == 0)
                 {
@@ -1480,7 +1480,7 @@ namespace Com
         /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维度量其真实尺度与投影尺度的比值等于其到投影空间的距离与此距离的比值。</param>
         public PointD3D ProjectToUXY(PointD4D prjCenter, double trueLenDist)
         {
-            if (prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
+            if ((object)prjCenter != null && (!double.IsNaN(trueLenDist) && !double.IsInfinity(trueLenDist)))
             {
                 if (trueLenDist == 0)
                 {
@@ -1511,7 +1511,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，表示起始点。</param>
         public double DistanceFrom(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 double dx = _X - pt.X, dy = _Y - pt.Y, dz = _Z - pt.Z, du = _U - pt.U;
 
@@ -1527,7 +1527,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，表示起始向量。</param>
         public double AngleFrom(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 if (_X == 0 && _Y == 0 && _Z == 0 && _U == 0)
                 {
@@ -1655,7 +1655,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于平移 PointD4D 结构。</param>
         public static double[,] OffsetMatrix(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[5, 5]
                 {
@@ -1713,7 +1713,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于缩放 PointD4D 结构。</param>
         public static double[,] ScaleMatrix(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new double[5, 5]
                 {
@@ -1835,7 +1835,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，表示第二个点。</param>
         public static double DistanceBetween(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 double dx = left.X - right.X, dy = left.Y - right.Y, dz = left.Z - right.Z, du = left.U - right.U;
 
@@ -1852,7 +1852,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，表示第二个向量。</param>
         public static double AngleBetween(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 if (left.X == 0 && left.Y == 0 && left.Z == 0 && left.U == 0)
                 {
@@ -1882,7 +1882,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，表示第二个向量。</param>
         public static double DotProduct(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return (left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.U * right.U);
             }
@@ -1897,7 +1897,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，表示右向量。</param>
         public static Vector CrossProduct(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new Vector(left.X * right.Y - left.Y * right.X, left.X * right.Z - left.Z * right.X, left.X * right.U - left.U * right.X, left.Y * right.Z - left.Z * right.Y, left.Y * right.U - left.U * right.Y, left.Z * right.U - left.U * right.Z);
             }
@@ -1913,7 +1913,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D Abs(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(Math.Abs(pt.X), Math.Abs(pt.Y), Math.Abs(pt.Z), Math.Abs(pt.U));
             }
@@ -1927,7 +1927,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D Sign(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(Math.Sign(pt.X), Math.Sign(pt.Y), Math.Sign(pt.Z), Math.Sign(pt.U));
             }
@@ -1941,7 +1941,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D Ceiling(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(Math.Ceiling(pt.X), Math.Ceiling(pt.Y), Math.Ceiling(pt.Z), Math.Ceiling(pt.U));
             }
@@ -1955,7 +1955,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D Floor(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(Math.Floor(pt.X), Math.Floor(pt.Y), Math.Floor(pt.Z), Math.Floor(pt.U));
             }
@@ -1969,7 +1969,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D Round(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(Math.Round(pt.X), Math.Round(pt.Y), Math.Round(pt.Z), Math.Round(pt.U));
             }
@@ -1983,7 +1983,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D Truncate(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(Math.Truncate(pt.X), Math.Truncate(pt.Y), Math.Truncate(pt.Z), Math.Truncate(pt.U));
             }
@@ -1998,7 +1998,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，用于比较的第二个结构。</param>
         public static PointD4D Max(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD4D(Math.Max(left.X, right.X), Math.Max(left.Y, right.Y), Math.Max(left.Z, right.Z), Math.Max(left.U, right.U));
             }
@@ -2013,7 +2013,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，用于比较的第二个结构。</param>
         public static PointD4D Min(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD4D(Math.Min(left.X, right.X), Math.Min(left.Y, right.Y), Math.Min(left.Z, right.Z), Math.Min(left.U, right.U));
             }
@@ -2045,7 +2045,7 @@ namespace Com
         /// <param name="pointD4D">用于比较的 PointD4D 结构。</param>
         public bool Equals(PointD4D pointD4D)
         {
-            if (pointD4D == null)
+            if ((object)pointD4D == null)
             {
                 return false;
             }
@@ -2079,7 +2079,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D operator +(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(+pt.X, +pt.Y, +pt.Z, +pt.U);
             }
@@ -2093,7 +2093,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D operator -(PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(-pt.X, -pt.Y, -pt.Z, -pt.U);
             }
@@ -2110,7 +2110,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示加数。</param>
         public static PointD4D operator +(PointD4D pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(pt.X + n, pt.Y + n, pt.Z + n, pt.U + n);
             }
@@ -2125,7 +2125,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，表示加数。</param>
         public static PointD4D operator +(double n, PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(n + pt.X, n + pt.Y, n + pt.Z, n + pt.U);
             }
@@ -2140,7 +2140,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，表示加数。</param>
         public static PointD4D operator +(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD4D(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.U + right.U);
             }
@@ -2157,7 +2157,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示减数。</param>
         public static PointD4D operator -(PointD4D pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(pt.X - n, pt.Y - n, pt.Z - n, pt.U - n);
             }
@@ -2172,7 +2172,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，表示减数。</param>
         public static PointD4D operator -(double n, PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(n - pt.X, n - pt.Y, n - pt.Z, n - pt.U);
             }
@@ -2187,7 +2187,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，表示减数。</param>
         public static PointD4D operator -(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD4D(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.U - right.U);
             }
@@ -2204,7 +2204,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示乘数。</param>
         public static PointD4D operator *(PointD4D pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(pt.X * n, pt.Y * n, pt.Z * n, pt.U * n);
             }
@@ -2219,7 +2219,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，表示乘数。</param>
         public static PointD4D operator *(double n, PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(n * pt.X, n * pt.Y, n * pt.Z, n * pt.U);
             }
@@ -2234,7 +2234,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，表示乘数。</param>
         public static PointD4D operator *(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD4D(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.U * right.U);
             }
@@ -2251,7 +2251,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示除数。</param>
         public static PointD4D operator /(PointD4D pt, double n)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(pt.X / n, pt.Y / n, pt.Z / n, pt.U / n);
             }
@@ -2266,7 +2266,7 @@ namespace Com
         /// <param name="pt">PointD4D 结构，表示除数。</param>
         public static PointD4D operator /(double n, PointD4D pt)
         {
-            if (pt != null)
+            if ((object)pt != null)
             {
                 return new PointD4D(n / pt.X, n / pt.Y, n / pt.Z, n / pt.U);
             }
@@ -2281,7 +2281,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，表示除数。</param>
         public static PointD4D operator /(PointD4D left, PointD4D right)
         {
-            if (left != null && right != null)
+            if ((object)left != null && (object)right != null)
             {
                 return new PointD4D(left.X / right.X, left.Y / right.Y, left.Z / right.Z, left.U / right.U);
             }
@@ -2298,7 +2298,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，运算符右侧比较的结构。</param>
         public static bool operator ==(PointD4D left, PointD4D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2313,7 +2313,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，运算符右侧比较的结构。</param>
         public static bool operator !=(PointD4D left, PointD4D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return true;
             }
@@ -2328,7 +2328,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，运算符右侧比较的结构。</param>
         public static bool operator <(PointD4D left, PointD4D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2343,7 +2343,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，运算符右侧比较的结构。</param>
         public static bool operator >(PointD4D left, PointD4D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2358,7 +2358,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，运算符右侧比较的结构。</param>
         public static bool operator <=(PointD4D left, PointD4D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -2373,7 +2373,7 @@ namespace Com
         /// <param name="right">PointD4D 结构，运算符右侧比较的结构。</param>
         public static bool operator >=(PointD4D left, PointD4D right)
         {
-            if (left == null || right == null)
+            if ((object)left == null || (object)right == null)
             {
                 return false;
             }
