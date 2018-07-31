@@ -22,9 +22,17 @@ namespace Com
     /// <summary>
     /// 为以双精度浮点数数组表示的二维矩阵的基本计算提供静态方法。
     /// </summary>
-    public static class Matrix2D
+    public sealed class Matrix2D
     {
-        private static bool IsEmpty(double n) // 判断双精度浮点数是否为非数字或无穷大。
+        #region 私有与内部成员
+
+        private Size _Size; // 此 Matrix2D 存储的矩阵大小。
+
+        private double[,] _MArray = null; // 用于存储矩阵元素的数组。
+
+        //
+
+        private static bool _IsNaNOrInfinity(double n) // 判断双精度浮点数是否为非数字或无穷大。
         {
             try
             {
@@ -36,7 +44,7 @@ namespace Com
             }
         }
 
-        private static bool IsEmpty(double[] array) // 判断数组是否为空。
+        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为空。
         {
             try
             {
@@ -48,23 +56,374 @@ namespace Com
             }
         }
 
+        #endregion
+
+        #region 构造函数
+
         /// <summary>
-        /// 判断矩阵是否为空。
+        /// 使用指定的宽度（列数）与高度（行数）初始化 Matrix2D 的新实例。
         /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        public static bool IsEmpty(double[,] matrix)
+        /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
+        public Matrix2D(Size size)
         {
-            try
+            if (size.Width > 0 && size.Height > 0)
             {
-                return (matrix == null || matrix.Length == 0);
+                _Size = size;
+                _MArray = new double[_Size.Width, _Size.Height];
+
+                for (int x = 0; x < _Size.Width; x++)
+                {
+                    for (int y = 0; y < _Size.Height; y++)
+                    {
+                        _MArray[x, y] = 0;
+                    }
+                }
             }
-            catch
+            else
             {
-                return true;
+                _Size = Size.Empty;
+                _MArray = null;
+            }
+        }
+
+        /// <summary>
+        /// 使用指定的宽度（列数）、高度（行数）与所有元素的值初始化 Matrix2D 的新实例。
+        /// </summary>
+        /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
+        /// <param name="value">矩阵的所有元素的值。</param>
+        public Matrix2D(Size size, double value)
+        {
+            if (size.Width > 0 && size.Height > 0)
+            {
+                _Size = size;
+                _MArray = new double[_Size.Width, _Size.Height];
+
+                for (int x = 0; x < _Size.Width; x++)
+                {
+                    for (int y = 0; y < _Size.Height; y++)
+                    {
+                        _MArray[x, y] = value;
+                    }
+                }
+            }
+            else
+            {
+                _Size = Size.Empty;
+                _MArray = null;
+            }
+        }
+
+        /// <summary>
+        /// 使用指定的宽度（列数）与高度（行数）初始化 Matrix2D 的新实例。
+        /// </summary>
+        /// <param name="width">矩阵的宽度（列数）。</param>
+        /// <param name="height">矩阵的高度（行数）。</param>
+        public Matrix2D(int width, int height)
+        {
+            if (width > 0 && height > 0)
+            {
+                _Size = new Size(width, height);
+                _MArray = new double[_Size.Width, _Size.Height];
+
+                for (int x = 0; x < _Size.Width; x++)
+                {
+                    for (int y = 0; y < _Size.Height; y++)
+                    {
+                        _MArray[x, y] = 0;
+                    }
+                }
+            }
+            else
+            {
+                _Size = Size.Empty;
+                _MArray = null;
+            }
+        }
+
+        /// <summary>
+        /// 使用指定的宽度（列数）、高度（行数）与所有元素的值初始化 Matrix2D 的新实例。
+        /// </summary>
+        /// <param name="width">矩阵的宽度（列数）。</param>
+        /// <param name="height">矩阵的高度（行数）。</param>
+        /// <param name="value">矩阵的所有元素的值。</param>
+        public Matrix2D(int width, int height, double value)
+        {
+            if (width > 0 && height > 0)
+            {
+                _Size = new Size(width, height);
+                _MArray = new double[_Size.Width, _Size.Height];
+
+                for (int x = 0; x < _Size.Width; x++)
+                {
+                    for (int y = 0; y < _Size.Height; y++)
+                    {
+                        _MArray[x, y] = value;
+                    }
+                }
+            }
+            else
+            {
+                _Size = Size.Empty;
+                _MArray = null;
+            }
+        }
+
+        /// <summary>
+        /// 使用二维双精度浮点数数组表示的矩阵元素初始化 Matrix2D 的新实例。
+        /// </summary>
+        /// <param name="array">二维数组表示的矩阵元素。</param>
+        public Matrix2D(double[,] array)
+        {
+            if (!_IsNullOrEmpty(array))
+            {
+                _Size = new Size(array.GetLength(0), array.GetLength(1));
+                _MArray = new double[_Size.Width, _Size.Height];
+
+                for (int x = 0; x < _Size.Width; x++)
+                {
+                    for (int y = 0; y < _Size.Height; y++)
+                    {
+                        _MArray[x, y] = array[x, y];
+                    }
+                }
+            }
+            else
+            {
+                _Size = Size.Empty;
+                _MArray = null;
+            }
+        }
+
+        #endregion
+
+        #region 属性
+
+        /// <summary>
+        /// 获取表示非矩阵的 Matrix2D 的实例。
+        /// </summary>
+        public static Matrix2D NonMatrix
+        {
+            get
+            {
+                return new Matrix2D(null);
             }
         }
 
         //
+
+        /// <summary>
+        /// 获取此 Matrix2D 的宽度（列数）与高度（行数）。
+        /// </summary>
+        public Size Size
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0)
+                {
+                    return _Size;
+                }
+
+                return Size.Empty;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取或设置此 Vector 指定索引的基向量方向的分量系数。
+        /// </summary>
+        /// <param name="x">矩阵的宽度方向（列）的索引。</param>
+        /// <param name="y">矩阵的高度方向（行）的索引。</param>
+        public double this[int x, int y]
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0 && (x >= 0 && x < _Size.Width) && (y >= 0 && y < _Size.Height))
+                {
+                    return _MArray[x, y];
+                }
+
+                return double.NaN;
+            }
+
+            set
+            {
+                if (_Size.Width > 0 && _Size.Height > 0 && (x >= 0 && x < _Size.Width) && (y >= 0 && y < _Size.Height))
+                {
+                    _MArray[x, y] = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置此 Vector 指定索引的基向量方向的分量系数。
+        /// </summary>
+        /// <param name="index">矩阵的宽度方向（列）与高度方向（行）的索引。</param>
+        public double this[Point index]
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0 && (index.X >= 0 && index.X < _Size.Width) && (index.Y >= 0 && index.Y < _Size.Height))
+                {
+                    return _MArray[index.X, index.Y];
+                }
+
+                return double.NaN;
+            }
+
+            set
+            {
+                if (_Size.Width > 0 && _Size.Height > 0 && (index.X >= 0 && index.X < _Size.Width) && (index.Y >= 0 && index.Y < _Size.Height))
+                {
+                    _MArray[index.X, index.Y] = value;
+                }
+            }
+        }
+
+        #endregion
+
+        #region 方法
+
+        #endregion
+
+        #region 基类方法
+
+        /// <summary>
+        /// 判断此 Matrix2D 是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Matrix2D))
+            {
+                return false;
+            }
+
+            return Equals((Matrix2D)obj);
+        }
+
+        /// <summary>
+        /// 判断此 Matrix2D 是否与指定的 Matrix2D 对象相等。
+        /// </summary>
+        /// <param name="matrix2D">用于比较的 Matrix2D 对象。</param>
+        public bool Equals(Matrix2D matrix2D)
+        {
+            if (_Size.Width <= 0 || _Size.Height <= 0 || IsNullOrNonMatrix(matrix2D) || _Size != matrix2D._Size)
+            {
+                return false;
+            }
+
+            for (int x = 0; x < _Size.Width; x++)
+            {
+                for (int y = 0; y < _Size.Height; y++)
+                {
+                    if (_MArray[x, y] != matrix2D._MArray[x, y])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 返回此 Matrix2D 的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 Matrix2D 转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = string.Empty;
+
+            if (_Size.Width > 0 && _Size.Height > 0)
+            {
+                Str = string.Concat("Size=[", _Size.Width, ", ", _Size.Height, "]");
+            }
+            else
+            {
+                Str = "NonMatrix";
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
+        }
+
+        #endregion
+
+        #region 静态方法
+
+        /// <summary>
+        /// 判断指定的 Matrix2D 是否为 null 或表示非矩阵。
+        /// </summary>
+        /// <param name="matrix">用于判断的 Matrix2D 对象。</param>
+        public static bool IsNullOrNonMatrix(Matrix2D matrix)
+        {
+            return ((object)matrix == null || matrix._Size.Width <= 0 || matrix._Size.Height <= 0);
+        }
+
+        #endregion
+
+        #region 运算符
+
+        /// <summary>
+        /// 判断两个 Matrix2D 对象是否相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Matrix2D 对象。</param>
+        /// <param name="right">运算符右侧比较的 Matrix2D 对象。</param>
+        public static bool operator ==(Matrix2D left, Matrix2D right)
+        {
+            if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right) || left._Size != right._Size)
+            {
+                return false;
+            }
+
+            for (int x = 0; x < left._Size.Width; x++)
+            {
+                for (int y = 0; y < left._Size.Height; y++)
+                {
+                    if (left._MArray[x, y] != right._MArray[x, y])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 判断两个 Matrix2D 对象是否不相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Matrix2D 对象。</param>
+        /// <param name="right">运算符右侧比较的 Matrix2D 对象。</param>
+        public static bool operator !=(Matrix2D left, Matrix2D right)
+        {
+            if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right) || left._Size != right._Size)
+            {
+                return true;
+            }
+
+            for (int x = 0; x < left._Size.Width; x++)
+            {
+                for (int y = 0; y < left._Size.Height; y++)
+                {
+                    if (left._MArray[x, y] != right._MArray[x, y])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
 
         /// <summary>
         /// 获取矩阵的宽度（列数）与高度（行数）。
@@ -74,7 +433,7 @@ namespace Com
         {
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return Size.Empty;
                 }
@@ -95,7 +454,7 @@ namespace Com
         {
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return -1;
                 }
@@ -162,7 +521,7 @@ namespace Com
         {
             try
             {
-                if (IsEmpty(matrixLeft) || IsEmpty(matrixRight))
+                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
                 {
                     return false;
                 }
@@ -207,7 +566,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -240,7 +599,7 @@ namespace Com
         {
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -370,7 +729,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(array))
+                if (_IsNullOrEmpty(array))
                 {
                     return false;
                 }
@@ -403,7 +762,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(array))
+                if (_IsNullOrEmpty(array))
                 {
                     return false;
                 }
@@ -436,7 +795,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(array))
+                if (_IsNullOrEmpty(array))
                 {
                     return false;
                 }
@@ -475,7 +834,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -517,7 +876,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrixLeft) || IsEmpty(matrixRight))
+                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
                 {
                     return false;
                 }
@@ -564,7 +923,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix) || IsEmpty(n))
+                if (_IsNullOrEmpty(matrix) || _IsNaNOrInfinity(n))
                 {
                     return false;
                 }
@@ -601,7 +960,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(n) || IsEmpty(matrix))
+                if (_IsNaNOrInfinity(n) || _IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -638,7 +997,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrixLeft) || IsEmpty(matrixRight))
+                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
                 {
                     return false;
                 }
@@ -683,7 +1042,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix) || IsEmpty(n))
+                if (_IsNullOrEmpty(matrix) || _IsNaNOrInfinity(n))
                 {
                     return false;
                 }
@@ -720,7 +1079,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(n) || IsEmpty(matrix))
+                if (_IsNaNOrInfinity(n) || _IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -757,7 +1116,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrixLeft) || IsEmpty(matrixRight))
+                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
                 {
                     return false;
                 }
@@ -802,7 +1161,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix) || IsEmpty(n))
+                if (_IsNullOrEmpty(matrix) || _IsNaNOrInfinity(n))
                 {
                     return false;
                 }
@@ -839,7 +1198,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(n) || IsEmpty(matrix))
+                if (_IsNaNOrInfinity(n) || _IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -876,7 +1235,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrixLeft) || IsEmpty(matrixRight))
+                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
                 {
                     return false;
                 }
@@ -1044,7 +1403,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix) || IsEmpty(n))
+                if (_IsNullOrEmpty(matrix) || _IsNaNOrInfinity(n))
                 {
                     return false;
                 }
@@ -1081,7 +1440,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(n) || IsEmpty(matrix))
+                if (_IsNaNOrInfinity(n) || _IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -1118,7 +1477,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrixLeft) || IsEmpty(matrixRight))
+                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
                 {
                     return false;
                 }
@@ -1163,7 +1522,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrixLeft) || IsEmpty(matrixRight))
+                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
                 {
                     return false;
                 }
@@ -1209,7 +1568,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -1245,7 +1604,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -1326,7 +1685,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -1386,7 +1745,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix))
+                if (_IsNullOrEmpty(matrix))
                 {
                     return false;
                 }
@@ -1416,7 +1775,7 @@ namespace Com
                     {
                         result[x, y] /= det;
 
-                        if (IsEmpty(result[x, y]))
+                        if (_IsNaNOrInfinity(result[x, y]))
                         {
                             result = null;
 
@@ -1447,7 +1806,7 @@ namespace Com
 
             try
             {
-                if (IsEmpty(matrix) || IsEmpty(array))
+                if (_IsNullOrEmpty(matrix) || _IsNullOrEmpty(array))
                 {
                     return false;
                 }

@@ -65,6 +65,20 @@ namespace Com
             return 0;
         }
 
+        //
+
+        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为空。
+        {
+            try
+            {
+                return (array == null || array.Length == 0);
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
         #endregion
 
         #region 构造函数
@@ -127,7 +141,7 @@ namespace Com
         /// <param name="array">表示位值的布尔值数组。</param>
         public BitSet(bool[] array)
         {
-            if (array != null && array.Length > 0)
+            if (!_IsNullOrEmpty(array))
             {
                 _Size = Math.Min(_MaxSize, array.Length);
                 _UintArray = new uint[_GetUintArrayLengthOfBitNum(array.Length)];
@@ -153,7 +167,7 @@ namespace Com
         /// <param name="array">表示位值的 32 位整数数组。</param>
         public BitSet(int[] array)
         {
-            if (array != null && array.Length > 0)
+            if (!_IsNullOrEmpty(array))
             {
                 _Size = Math.Min(_MaxSize, array.Length);
                 _UintArray = new uint[_GetUintArrayLengthOfBitNum(array.Length)];
@@ -792,7 +806,7 @@ namespace Com
         /// <param name="bitSet">用于比较的 BitSet 对象。</param>
         public bool Equals(BitSet bitSet)
         {
-            if (_UintArray == null || _Size == 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size || _UintArray.Length != bitSet._UintArray.Length)
+            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size || _UintArray.Length != bitSet._UintArray.Length)
             {
                 return false;
             }
@@ -845,7 +859,57 @@ namespace Com
         /// <param name="bitSet">用于判断的 BitSet 对象。</param>
         public static bool IsNullOrEmpty(BitSet bitSet)
         {
-            return (bitSet == null || bitSet._Size == 0);
+            return ((object)bitSet == null || bitSet._Size <= 0);
+        }
+
+        #endregion
+
+        #region 运算符
+
+        /// <summary>
+        /// 判断两个 BitSet 对象是否相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
+        public static bool operator ==(BitSet left, BitSet right)
+        {
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < left._Size; i++)
+            {
+                if (left._UintArray[i] != right._UintArray[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 判断两个 BitSet 对象是否不相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
+        public static bool operator !=(BitSet left, BitSet right)
+        {
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < left._Size; i++)
+            {
+                if (left._UintArray[i] != right._UintArray[i])
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
