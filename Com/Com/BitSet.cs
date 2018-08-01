@@ -319,16 +319,16 @@ namespace Com
         /// </summary>
         public BitSet Copy()
         {
-            BitSet Result = new BitSet(_Size);
+            BitSet result = new BitSet(_Size);
 
             if (_Size > 0)
             {
                 int Len = _GetUintNumOfBitNum(_Size);
 
-                Array.Copy(_UintArray, Result._UintArray, Len);
+                Array.Copy(_UintArray, result._UintArray, Len);
             }
 
-            return Result;
+            return result;
         }
 
         //
@@ -630,16 +630,16 @@ namespace Com
         {
             if (!IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
             {
-                BitSet Result = new BitSet(_Size);
+                BitSet result = new BitSet(_Size);
 
                 int Len = _GetUintNumOfBitNum(_Size);
 
                 for (int i = 0; i < Len; i++)
                 {
-                    Result._UintArray[i] = (_UintArray[i] & bitSet._UintArray[i]);
+                    result._UintArray[i] = (_UintArray[i] & bitSet._UintArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return null;
@@ -653,16 +653,16 @@ namespace Com
         {
             if (!IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
             {
-                BitSet Result = new BitSet(_Size);
+                BitSet result = new BitSet(_Size);
 
                 int Len = _GetUintNumOfBitNum(_Size);
 
                 for (int i = 0; i < Len; i++)
                 {
-                    Result._UintArray[i] = (_UintArray[i] | bitSet._UintArray[i]);
+                    result._UintArray[i] = (_UintArray[i] | bitSet._UintArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return null;
@@ -676,16 +676,16 @@ namespace Com
         {
             if (!IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
             {
-                BitSet Result = new BitSet(_Size);
+                BitSet result = new BitSet(_Size);
 
                 int Len = _GetUintNumOfBitNum(_Size);
 
                 for (int i = 0; i < Len; i++)
                 {
-                    Result._UintArray[i] = (_UintArray[i] ^ bitSet._UintArray[i]);
+                    result._UintArray[i] = (_UintArray[i] ^ bitSet._UintArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return null;
@@ -696,13 +696,13 @@ namespace Com
         /// </summary>
         public BitSet Not()
         {
-            BitSet Result = new BitSet(_Size);
+            BitSet result = new BitSet(_Size);
 
             int Len = _GetUintNumOfBitNum(_Size);
 
             for (int i = 0; i < Len; i++)
             {
-                Result._UintArray[i] = (~_UintArray[i]);
+                result._UintArray[i] = (~_UintArray[i]);
             }
 
             if (_Size % _BitsPerUint != 0)
@@ -711,11 +711,11 @@ namespace Com
 
                 for (int i = _Size; i < Size; i++)
                 {
-                    Result.Set(i, false);
+                    result.Set(i, false);
                 }
             }
 
-            return Result;
+            return result;
         }
 
         //

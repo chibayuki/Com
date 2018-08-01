@@ -71,31 +71,13 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取表示非向量的 Vector 的实例。
+        /// 获取表示非向量的 Vector 的新实例。
         /// </summary>
         public static Vector NonVector
         {
             get
             {
                 return new Vector(null);
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取此 Vector 的维度。
-        /// </summary>
-        public double Dimension
-        {
-            get
-            {
-                if (_Size > 0)
-                {
-                    return _Size;
-                }
-
-                return 0;
             }
         }
 
@@ -123,6 +105,40 @@ namespace Com
                 {
                     _XArray[index] = value;
                 }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 Vector 的维度。
+        /// </summary>
+        public int Size
+        {
+            get
+            {
+                if (_Size > 0)
+                {
+                    return _Size;
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Vector 的维度。
+        /// </summary>
+        public int Dimension
+        {
+            get
+            {
+                if (_Size > 0)
+                {
+                    return _Size;
+                }
+
+                return 0;
             }
         }
 
@@ -183,16 +199,16 @@ namespace Com
             {
                 if (_Size > 0)
                 {
-                    Vector Result = NonVector;
+                    Vector result = NonVector;
 
-                    Result._XArray = new double[_Size];
+                    result._XArray = new double[_Size];
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        Result._XArray[i] = -_XArray[i];
+                        result._XArray[i] = -_XArray[i];
                     }
 
-                    return Result;
+                    return result;
                 }
 
                 return NonVector;
@@ -212,16 +228,16 @@ namespace Com
 
                     if (Mod > 0)
                     {
-                        Vector Result = NonVector;
+                        Vector result = NonVector;
 
-                        Result._XArray = new double[_Size];
+                        result._XArray = new double[_Size];
 
                         for (int i = 0; i < _Size; i++)
                         {
-                            Result._XArray[i] = _XArray[i] / Mod;
+                            result._XArray[i] = _XArray[i] / Mod;
                         }
 
-                        return Result;
+                        return result;
                     }
                 }
 
@@ -240,9 +256,9 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector Result = new Vector(_XArray);
+                Vector result = new Vector(_XArray);
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -288,14 +304,14 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector Result = Copy();
+                Vector result = Copy();
 
-                for (int i = 0; i < Result._Size; i++)
+                for (int i = 0; i < result._Size; i++)
                 {
-                    Result._XArray[i] += d;
+                    result._XArray[i] += d;
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -309,14 +325,14 @@ namespace Com
         {
             if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
             {
-                Vector Result = Copy();
+                Vector result = Copy();
 
-                for (int i = 0; i < Result._Size; i++)
+                for (int i = 0; i < result._Size; i++)
                 {
-                    Result._XArray[i] += vector._XArray[i];
+                    result._XArray[i] += vector._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -362,14 +378,14 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector Result = Copy();
+                Vector result = Copy();
 
-                for (int i = 0; i < Result._Size; i++)
+                for (int i = 0; i < result._Size; i++)
                 {
-                    Result._XArray[i] *= s;
+                    result._XArray[i] *= s;
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -383,14 +399,14 @@ namespace Com
         {
             if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
             {
-                Vector Result = Copy();
+                Vector result = Copy();
 
-                for (int i = 0; i < Result._Size; i++)
+                for (int i = 0; i < result._Size; i++)
                 {
-                    Result._XArray[i] *= vector._XArray[i];
+                    result._XArray[i] *= vector._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -510,11 +526,11 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[_Size];
+                result._XArray = new double[_Size];
 
-                Result._XArray[0] = Module;
+                result._XArray[0] = Module;
 
                 if (_Size > 1)
                 {
@@ -543,7 +559,7 @@ namespace Com
                         }
                     };
 
-                    Result._XArray[_Size - 1] = VectorAngle2PI(_XArray[_Size - 2], _XArray[_Size - 1]);
+                    result._XArray[_Size - 1] = VectorAngle2PI(_XArray[_Size - 2], _XArray[_Size - 1]);
 
                     if (_Size > 2)
                     {
@@ -577,12 +593,12 @@ namespace Com
                                 SqrY += _XArray[j] * _XArray[j];
                             }
 
-                            Result._XArray[i + 1] = VectorAnglePI(_XArray[i], Math.Sqrt(SqrY));
+                            result._XArray[i + 1] = VectorAnglePI(_XArray[i], Math.Sqrt(SqrY));
                         }
                     }
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -595,44 +611,44 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[_Size];
+                result._XArray = new double[_Size];
 
                 if (_Size == 1)
                 {
-                    Result._XArray[0] = _XArray[0];
+                    result._XArray[0] = _XArray[0];
                 }
                 else
                 {
-                    Result._XArray[0] = _XArray[0] * Math.Cos(_XArray[1]);
+                    result._XArray[0] = _XArray[0] * Math.Cos(_XArray[1]);
 
                     if (_Size == 2)
                     {
-                        Result._XArray[1] = _XArray[0] * Math.Sin(_XArray[1]);
+                        result._XArray[1] = _XArray[0] * Math.Sin(_XArray[1]);
                     }
                     else
                     {
-                        Result._XArray[_Size - 1] = _XArray[0];
+                        result._XArray[_Size - 1] = _XArray[0];
 
                         for (int i = 1; i < _Size; i++)
                         {
-                            Result._XArray[_Size - 1] *= Math.Sin(_XArray[i]);
+                            result._XArray[_Size - 1] *= Math.Sin(_XArray[i]);
                         }
 
                         for (int i = 1; i < _Size - 1; i++)
                         {
-                            Result._XArray[i] = _XArray[0] * Math.Cos(_XArray[i + 1]);
+                            result._XArray[i] = _XArray[0] * Math.Cos(_XArray[i + 1]);
 
                             for (int j = 1; j < i + 1; j++)
                             {
-                                Result._XArray[i] *= Math.Sin(_XArray[j]);
+                                result._XArray[i] *= Math.Sin(_XArray[j]);
                             }
                         }
                     }
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -721,30 +737,30 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回表示零向量的 Vector 的实例。
+        /// 返回表示零向量的 Vector 的新实例。
         /// </summary>
         /// <param name="dimension">维度。</param>
         public static Vector Zero(int dimension)
         {
             if (dimension > 0)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[dimension];
+                result._XArray = new double[dimension];
 
-                for (int i = 0; i < Result._Size; i++)
+                for (int i = 0; i < result._Size; i++)
                 {
-                    Result._XArray[i] = 0;
+                    result._XArray[i] = 0;
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
         }
 
         /// <summary>
-        /// 返回表示指定索引的基向量的 Vector 的实例。
+        /// 返回表示指定索引的基向量的 Vector 的新实例。
         /// </summary>
         /// <param name="dimension">维度。</param>
         /// <param name="index">索引。</param>
@@ -752,18 +768,18 @@ namespace Com
         {
             if (dimension > 0 && (index >= 0 && index < dimension))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[dimension];
+                result._XArray = new double[dimension];
 
-                for (int i = 0; i < Result._Size; i++)
+                for (int i = 0; i < result._Size; i++)
                 {
-                    Result._XArray[i] = 0;
+                    result._XArray[i] = 0;
                 }
 
-                Result._XArray[index] = 1;
+                result._XArray[index] = 1;
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -886,9 +902,9 @@ namespace Com
             {
                 if (left._Size > 1)
                 {
-                    Vector Result = NonVector;
+                    Vector result = NonVector;
 
-                    Result._XArray = new double[left._Size * (left._Size - 1) / 2];
+                    result._XArray = new double[left._Size * (left._Size - 1) / 2];
 
                     int i = 0;
 
@@ -896,13 +912,13 @@ namespace Com
                     {
                         for (int k = j + 1; k < left._Size; k++)
                         {
-                            Result._XArray[i] = left._XArray[j] * right._XArray[k] - left._XArray[k] * right._XArray[j];
+                            result._XArray[i] = left._XArray[j] * right._XArray[k] - left._XArray[k] * right._XArray[j];
 
                             i++;
                         }
                     }
 
-                    return Result;
+                    return result;
                 }
             }
 
@@ -919,16 +935,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = Math.Abs(vector._XArray[i]);
+                    result._XArray[i] = Math.Abs(vector._XArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -942,16 +958,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = Math.Sign(vector._XArray[i]);
+                    result._XArray[i] = Math.Sign(vector._XArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -965,16 +981,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = Math.Ceiling(vector._XArray[i]);
+                    result._XArray[i] = Math.Ceiling(vector._XArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -988,16 +1004,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = Math.Floor(vector._XArray[i]);
+                    result._XArray[i] = Math.Floor(vector._XArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1011,16 +1027,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = Math.Round(vector._XArray[i]);
+                    result._XArray[i] = Math.Round(vector._XArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1034,16 +1050,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = Math.Truncate(vector._XArray[i]);
+                    result._XArray[i] = Math.Truncate(vector._XArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1058,16 +1074,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[left._Size];
+                result._XArray = new double[left._Size];
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    Result._XArray[i] = Math.Max(left._XArray[i], right._XArray[i]);
+                    result._XArray[i] = Math.Max(left._XArray[i], right._XArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1082,16 +1098,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[left._Size];
+                result._XArray = new double[left._Size];
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    Result._XArray[i] = Math.Min(left._XArray[i], right._XArray[i]);
+                    result._XArray[i] = Math.Min(left._XArray[i], right._XArray[i]);
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1109,16 +1125,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = +vector._XArray[i];
+                    result._XArray[i] = +vector._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1132,16 +1148,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = -vector._XArray[i];
+                    result._XArray[i] = -vector._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1158,16 +1174,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = vector._XArray[i] + n;
+                    result._XArray[i] = vector._XArray[i] + n;
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1182,16 +1198,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = n + vector._XArray[i];
+                    result._XArray[i] = n + vector._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1206,16 +1222,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[left._Size];
+                result._XArray = new double[left._Size];
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    Result._XArray[i] = left._XArray[i] + right._XArray[i];
+                    result._XArray[i] = left._XArray[i] + right._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1232,16 +1248,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = vector._XArray[i] - n;
+                    result._XArray[i] = vector._XArray[i] - n;
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1256,16 +1272,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = n - vector._XArray[i];
+                    result._XArray[i] = n - vector._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1280,16 +1296,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[left._Size];
+                result._XArray = new double[left._Size];
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    Result._XArray[i] = left._XArray[i] - right._XArray[i];
+                    result._XArray[i] = left._XArray[i] - right._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1306,16 +1322,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = vector._XArray[i] * n;
+                    result._XArray[i] = vector._XArray[i] * n;
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1330,16 +1346,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = n * vector._XArray[i];
+                    result._XArray[i] = n * vector._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1354,16 +1370,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[left._Size];
+                result._XArray = new double[left._Size];
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    Result._XArray[i] = left._XArray[i] * right._XArray[i];
+                    result._XArray[i] = left._XArray[i] * right._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1380,16 +1396,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = vector._XArray[i] / n;
+                    result._XArray[i] = vector._XArray[i] / n;
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1404,16 +1420,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[vector._Size];
+                result._XArray = new double[vector._Size];
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    Result._XArray[i] = n / vector._XArray[i];
+                    result._XArray[i] = n / vector._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
@@ -1428,16 +1444,16 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
             {
-                Vector Result = NonVector;
+                Vector result = NonVector;
 
-                Result._XArray = new double[left._Size];
+                result._XArray = new double[left._Size];
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    Result._XArray[i] = left._XArray[i] / right._XArray[i];
+                    result._XArray[i] = left._XArray[i] / right._XArray[i];
                 }
 
-                return Result;
+                return result;
             }
 
             return NonVector;
