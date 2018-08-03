@@ -1654,6 +1654,22 @@ namespace Com
         #region 方法
 
         /// <summary>
+        /// 判断此 ColorX 结构是否与指定的 ColorX 结构相等。
+        /// </summary>
+        /// <param name="color">用于比较的 ColorX 结构。</param>
+        public bool Equals(ColorX color)
+        {
+            if ((object)color == null)
+            {
+                return false;
+            }
+
+            return (_Opacity == color._Opacity && (_Alpha == color._Alpha && _Red == color._Red && _Green == color._Green && _Blue == color._Blue) && (_Hue_HSV == color._Hue_HSV && _Saturation_HSV == color._Saturation_HSV && _Brightness == color._Brightness) && (_Hue_HSL == color._Hue_HSL && _Saturation_HSL == color._Saturation_HSL && _Lightness_HSL == color._Lightness_HSL) && (_Cyan == color._Cyan && _Magenta == color._Magenta && _Yellow == color._Yellow && _Black == color._Black) && (_Lightness_LAB == color._Lightness_LAB && _GreenRed == color._GreenRed && _BlueYellow == color._BlueYellow));
+        }
+
+        //
+
+        /// <summary>
         /// 返回将此 ColorX 结构转换为 Color 结构的新实例。
         /// </summary>
         public Color ToColor()
@@ -2309,20 +2325,6 @@ namespace Com
             }
 
             return Equals((ColorX)obj);
-        }
-
-        /// <summary>
-        /// 判断此 ColorX 结构是否与指定的 ColorX 结构相等。
-        /// </summary>
-        /// <param name="colorX">用于比较的 ColorX 结构。</param>
-        public bool Equals(ColorX colorX)
-        {
-            if ((object)colorX == null)
-            {
-                return false;
-            }
-
-            return (_Opacity == colorX._Opacity && (_Alpha == colorX._Alpha && _Red == colorX._Red && _Green == colorX._Green && _Blue == colorX._Blue) && (_Hue_HSV == colorX._Hue_HSV && _Saturation_HSV == colorX._Saturation_HSV && _Brightness == colorX._Brightness) && (_Hue_HSL == colorX._Hue_HSL && _Saturation_HSL == colorX._Saturation_HSL && _Lightness_HSL == colorX._Lightness_HSL) && (_Cyan == colorX._Cyan && _Magenta == colorX._Magenta && _Yellow == colorX._Yellow && _Black == colorX._Black) && (_Lightness_LAB == colorX._Lightness_LAB && _GreenRed == colorX._GreenRed && _BlueYellow == colorX._BlueYellow));
         }
 
         /// <summary>

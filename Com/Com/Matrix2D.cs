@@ -155,19 +155,19 @@ namespace Com
         /// <summary>
         /// 使用二维双精度浮点数数组表示的矩阵元素初始化 Matrix2D 的新实例。
         /// </summary>
-        /// <param name="array">二维数组表示的矩阵元素。</param>
-        public Matrix2D(double[,] array)
+        /// <param name="values">二维数组表示的矩阵元素。</param>
+        public Matrix2D(double[,] values)
         {
-            if (!_IsNullOrEmpty(array))
+            if (!_IsNullOrEmpty(values))
             {
-                _Size = new Size(array.GetLength(0), array.GetLength(1));
+                _Size = new Size(values.GetLength(0), values.GetLength(1));
                 _MArray = new double[_Size.Width, _Size.Height];
 
                 for (int x = 0; x < _Size.Width; x++)
                 {
                     for (int y = 0; y < _Size.Height; y++)
                     {
-                        _MArray[x, y] = array[x, y];
+                        _MArray[x, y] = values[x, y];
                     }
                 }
             }
@@ -190,6 +190,19 @@ namespace Com
             get
             {
                 return new Matrix2D(null);
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示此 Matrix2D 是否为 NonMatrix 的布尔值。
+        /// </summary>
+        public bool IsNonMatrix
+        {
+            get
+            {
+                return (_Size.Width <= 0 || _Size.Height <= 0);
             }
         }
 
@@ -281,6 +294,22 @@ namespace Com
         }
 
         /// <summary>
+        /// 获取此 Matrix2D 的宽度（列数）。
+        /// </summary>
+        public int Column
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0)
+                {
+                    return _Size.Width;
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
         /// 获取此 Matrix2D 的高度（行数）。
         /// </summary>
         public int Height
@@ -296,9 +325,281 @@ namespace Com
             }
         }
 
+        /// <summary>
+        /// 获取此 Matrix2D 的高度（行数）。
+        /// </summary>
+        public int Row
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0)
+                {
+                    return _Size.Height;
+                }
+
+                return 0;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 Matrix2D 的行列式值。
+        /// </summary>
+        public double Determinant
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0 && _Size.Width == _Size.Height)
+                {
+                    int order = _Size.Width;
+
+                    if (order == 0)
+                    {
+                        return 0;
+                    }
+                    else if (order == 1)
+                    {
+                        return _MArray[0, 0];
+                    }
+                    else if (order == 2)
+                    {
+                        return (_MArray[0, 0] * _MArray[1, 1] - _MArray[1, 0] * _MArray[0, 1]);
+                    }
+                    else
+                    {
+                        double det = 0;
+                        int detSign = 1;
+
+                        for (int i = 0; i < order; i++)
+                        {
+                            Size sizeTemp = new Size(order - 1, order - 1);
+
+                            Matrix2D temp = new Matrix2D(sizeTemp);
+
+                            for (int x = 0; x < sizeTemp.Width; x++)
+                            {
+                                for (int y = 0; y < sizeTemp.Height; y++)
+                                {
+                                    temp._MArray[x, y] = _MArray[x + 1, (y >= i ? y + 1 : y)];
+                                }
+                            }
+
+                            double detTemp = temp.Determinant;
+
+                            if (_IsNaNOrInfinity(detTemp))
+                            {
+                                return double.NaN;
+                            }
+
+                            det += (_MArray[0, i] * detSign * detTemp);
+                            detSign = -detSign;
+                        }
+
+                        return det;
+                    }
+                }
+
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix2D 的秩。
+        /// </summary>
+        public int Rank
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0)
+                {
+                    int order = Math.Min(_Size.Width, _Size.Height);
+
+                    int result = 0;
+
+                    for (int i = 1; i <= order; i++)
+                    {
+                        int r = 0;
+
+                        for (int x = 0; x < _Size.Width - i + 1; x++)
+                        {
+                            for (int y = 0; y < _Size.Height - i + 1; y++)
+                            {
+                                Matrix2D sub = SubMatrix(x, y, i, i);
+
+                                if (IsNullOrNonMatrix(sub))
+                                {
+                                    break;
+                                }
+
+                                double det = sub.Determinant;
+
+                                if (_IsNaNOrInfinity(det))
+                                {
+                                    break;
+                                }
+
+                                if (det != 0)
+                                {
+                                    r++;
+                                }
+                            }
+                        }
+
+                        if (r == 0)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            result++;
+                        }
+                    }
+
+                    return result;
+                }
+
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix2D 的转置矩阵。
+        /// </summary>
+        public Matrix2D Transport
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0)
+                {
+                    Matrix2D result = new Matrix2D(_Size);
+
+                    for (int x = 0; x < _Size.Height; x++)
+                    {
+                        for (int y = 0; y < _Size.Width; y++)
+                        {
+                            result._MArray[x, y] = _MArray[y, x];
+                        }
+                    }
+
+                    return result;
+                }
+
+                return NonMatrix;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix2D 的伴随矩阵。
+        /// </summary>
+        public Matrix2D Adjoint
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0 && _Size.Width == _Size.Height)
+                {
+                    Matrix2D result = new Matrix2D(_Size);
+
+                    for (int x = 0; x < _Size.Width; x++)
+                    {
+                        for (int y = 0; y < _Size.Height; y++)
+                        {
+                            Size sizeTemp = new Size(_Size.Width - 1, _Size.Height - 1);
+
+                            Matrix2D temp = new Matrix2D(sizeTemp);
+
+                            for (int _x = 0; _x < sizeTemp.Width; _x++)
+                            {
+                                for (int _y = 0; _y < sizeTemp.Height; _y++)
+                                {
+                                    temp._MArray[_x, _y] = _MArray[(_x < x ? _x : _x + 1), (_y < y ? _y : _y + 1)];
+                                }
+                            }
+
+                            double det = temp.Determinant;
+
+                            result._MArray[y, x] = ((x + y) % 2 == 0 ? 1 : -1) * det;
+                        }
+                    }
+
+                    return result;
+                }
+
+                return NonMatrix;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix2D 的逆矩阵。
+        /// </summary>
+        public Matrix2D Invert
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0 && _Size.Width == _Size.Height)
+                {
+                    Matrix2D result = Adjoint;
+
+                    if (!IsNullOrNonMatrix(result))
+                    {
+                        double det = Determinant;
+
+                        if (_IsNaNOrInfinity(det))
+                        {
+                            return NonMatrix;
+                        }
+
+                        for (int x = 0; x < _Size.Width; x++)
+                        {
+                            for (int y = 0; y < _Size.Height; y++)
+                            {
+                                result._MArray[x, y] /= det;
+
+                                if (_IsNaNOrInfinity(result._MArray[x, y]))
+                                {
+                                    return NonMatrix;
+                                }
+                            }
+                        }
+
+                        return result;
+                    }
+                }
+
+                return NonMatrix;
+            }
+        }
+
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 判断此 Matrix2D 是否与指定的 Matrix2D 对象相等。
+        /// </summary>
+        /// <param name="matrix">用于比较的 Matrix2D 对象。</param>
+        public bool Equals(Matrix2D matrix)
+        {
+            if (_Size.Width <= 0 || _Size.Height <= 0 || IsNullOrNonMatrix(matrix) || _Size != matrix._Size)
+            {
+                return false;
+            }
+
+            for (int x = 0; x < _Size.Width; x++)
+            {
+                for (int y = 0; y < _Size.Height; y++)
+                {
+                    if (_MArray[x, y] != matrix._MArray[x, y])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        //
 
         /// <summary>
         /// 获取此 Matrix2D 的副本。
@@ -318,7 +619,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 Matrix2D 对象的子矩阵的 Matrix2D 的新实例。
+        /// 获取表示此 Matrix2D 的子矩阵的 Matrix2D 的新实例。
         /// </summary>
         /// <param name="index">子矩阵首列与首行在此 Matrix2D 的宽度方向（列）与高度方向（行）的索引。</param>
         /// <param name="size">子矩阵的宽度（列数）与高度（行数）。</param>
@@ -326,7 +627,7 @@ namespace Com
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (size.Width > 0 && size.Height > 0) && (index.X >= 0 && index.X + size.Width < _Size.Width) && (index.Y >= 0 && index.Y + size.Height < _Size.Height))
             {
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -343,7 +644,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 Matrix2D 对象的子矩阵的 Matrix2D 的新实例。
+        /// 获取表示此 Matrix2D 的子矩阵的 Matrix2D 的新实例。
         /// </summary>
         /// <param name="x">子矩阵首列在此 Matrix2D 的宽度方向（列）的索引。</param>
         /// <param name="y">子矩阵首行在此 Matrix2D 的高度方向（行）的索引。</param>
@@ -369,6 +670,50 @@ namespace Com
             return NonMatrix;
         }
 
+        //
+
+        /// <summary>
+        /// 获取表示此 Matrix2D 的指定列的 Vector 的新实例。
+        /// </summary>
+        /// <param name="x">指定列在此 Matrix2D 的宽度方向（列）的索引。</param>
+        public Vector AtColumn(int x)
+        {
+            if ((_Size.Width > 0 && _Size.Height > 0) && (x >= 0 && x < _Size.Width))
+            {
+                double[] values = new double[_Size.Height];
+
+                for (int i = 0; i < _Size.Height; i++)
+                {
+                    values[i] = _MArray[x, i];
+                }
+
+                return new Vector(Vector.Type.ColumnVector, values);
+            }
+
+            return Vector.NonVector;
+        }
+
+        /// <summary>
+        /// 获取表示此 Matrix2D 的指定行的 Vector 的新实例。
+        /// </summary>
+        /// <param name="y">指定行在此 Matrix2D 的高度方向（行）的索引。</param>
+        public Vector AtRow(int y)
+        {
+            if ((_Size.Width > 0 && _Size.Height > 0) && (y >= 0 && y < _Size.Height))
+            {
+                double[] values = new double[_Size.Width];
+
+                for (int i = 0; i < _Size.Width; i++)
+                {
+                    values[i] = _MArray[i, y];
+                }
+
+                return new Vector(Vector.Type.RowVector, values);
+            }
+
+            return Vector.NonVector;
+        }
+
         #endregion
 
         #region 基类方法
@@ -385,31 +730,6 @@ namespace Com
             }
 
             return Equals((Matrix2D)obj);
-        }
-
-        /// <summary>
-        /// 判断此 Matrix2D 是否与指定的 Matrix2D 对象相等。
-        /// </summary>
-        /// <param name="matrix2D">用于比较的 Matrix2D 对象。</param>
-        public bool Equals(Matrix2D matrix2D)
-        {
-            if (_Size.Width <= 0 || _Size.Height <= 0 || IsNullOrNonMatrix(matrix2D) || _Size != matrix2D._Size)
-            {
-                return false;
-            }
-
-            for (int x = 0; x < _Size.Width; x++)
-            {
-                for (int y = 0; y < _Size.Height; y++)
-                {
-                    if (_MArray[x, y] != matrix2D._MArray[x, y])
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
         }
 
         /// <summary>
@@ -598,7 +918,7 @@ namespace Com
                 {
                     Size size = new Size(sizeLeft.Width + sizeRight.Width, sizeLeft.Height);
 
-                    Matrix2D result = new Matrix2D(size.Width, size.Height);
+                    Matrix2D result = new Matrix2D(size);
 
                     for (int x = 0; x < size.Width; x++)
                     {
@@ -628,7 +948,7 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -655,7 +975,7 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -687,7 +1007,7 @@ namespace Com
                 {
                     Size size = sizeLeft;
 
-                    Matrix2D result = new Matrix2D(size.Width, size.Height);
+                    Matrix2D result = new Matrix2D(size);
 
                     for (int x = 0; x < size.Width; x++)
                     {
@@ -715,7 +1035,7 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -742,7 +1062,7 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -774,7 +1094,7 @@ namespace Com
                 {
                     Size size = sizeLeft;
 
-                    Matrix2D result = new Matrix2D(size.Width, size.Height);
+                    Matrix2D result = new Matrix2D(size);
 
                     for (int x = 0; x < size.Width; x++)
                     {
@@ -802,7 +1122,7 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -829,7 +1149,7 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -857,17 +1177,24 @@ namespace Com
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
 
-                if (sizeLeft == sizeRight)
+                if (sizeLeft.Width == sizeRight.Height)
                 {
-                    Size size = sizeLeft;
+                    int height = sizeLeft.Width;
 
-                    Matrix2D result = new Matrix2D(size.Width, size.Height);
+                    Size size = new Size(sizeRight.Width, sizeLeft.Height);
+
+                    Matrix2D result = new Matrix2D(size);
 
                     for (int x = 0; x < size.Width; x++)
                     {
                         for (int y = 0; y < size.Height; y++)
                         {
-                            result._MArray[x, y] = left._MArray[x, y] * right._MArray[x, y];
+                            result._MArray[x, y] = 0;
+
+                            for (int i = 0; i < height; i++)
+                            {
+                                result._MArray[x, y] += (left._MArray[i, y] * right._MArray[x, i]);
+                            }
                         }
                     }
 
@@ -902,7 +1229,7 @@ namespace Com
                             {
                                 result = Multiply(list[i], result);
 
-                                if (!IsNullOrNonMatrix(result))
+                                if (IsNullOrNonMatrix(result))
                                 {
                                     return NonMatrix;
                                 }
@@ -945,7 +1272,7 @@ namespace Com
                             {
                                 result = Multiply(result, list[i]);
 
-                                if (!IsNullOrNonMatrix(result))
+                                if (IsNullOrNonMatrix(result))
                                 {
                                     return NonMatrix;
                                 }
@@ -975,7 +1302,7 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1002,7 +1329,7 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size.Width, size.Height);
+                Matrix2D result = new Matrix2D(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1016,6 +1343,90 @@ namespace Com
             }
 
             return NonMatrix;
+        }
+
+        /// <summary>
+        /// 返回将 Matrix2D 对象与 Matrix2D 对象左除得到的 Matrix2D 的新实例。
+        /// </summary>
+        /// <param name="left">Matrix2D 对象，表示被除数。</param>
+        /// <param name="right">Matrix2D 对象，表示除数。</param>
+        public static Matrix2D DivideLeft(Matrix2D left, Matrix2D right)
+        {
+            if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
+            {
+                Size sizeLeft = left.Size;
+                Size sizeRight = right.Size;
+
+                if (sizeLeft.Width == sizeLeft.Height && sizeLeft.Width == sizeRight.Height)
+                {
+                    Matrix2D invLeft = left.Invert;
+
+                    if (!IsNullOrNonMatrix(invLeft))
+                    {
+                        return Multiply(invLeft, right);
+                    }
+                }
+            }
+
+            return NonMatrix;
+        }
+
+        /// <summary>
+        /// 返回将 Matrix2D 对象与 Matrix2D 对象右除得到的 Matrix2D 的新实例。
+        /// </summary>
+        /// <param name="left">Matrix2D 对象，表示被除数。</param>
+        /// <param name="right">Matrix2D 对象，表示除数。</param>
+        public static Matrix2D DivideRight(Matrix2D left, Matrix2D right)
+        {
+            if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
+            {
+                Size sizeLeft = left.Size;
+                Size sizeRight = right.Size;
+
+                if (sizeRight.Width == sizeRight.Height && sizeLeft.Width == sizeRight.Height)
+                {
+                    Matrix2D invRight = right.Invert;
+
+                    if (!IsNullOrNonMatrix(invRight))
+                    {
+                        return Multiply(left, invRight);
+                    }
+                }
+            }
+
+            return NonMatrix;
+        }
+
+        //
+
+        /// <summary>
+        /// 返回由 Matrix2D 对象与 Vector 对象指定的非齐次线性方程组的解向量。
+        /// </summary>
+        /// <param name="matrix">Matrix2D 对象，表示系数矩阵。</param>
+        /// <param name="vector">Vector 对象，表示常数项。</param>
+        public static Vector SolveLinearEquation(Matrix2D matrix, Vector vector)
+        {
+            if (!IsNullOrNonMatrix(matrix) && !Vector.IsNullOrNonVector(vector))
+            {
+                Size size = matrix.Size;
+
+                if (size.Width == size.Height)
+                {
+                    int order = vector.Dimension;
+
+                    if (order == size.Height)
+                    {
+                        Matrix2D solution = DivideLeft(matrix, vector.ToMatrix2D());
+
+                        if (!IsNullOrNonMatrix(solution) && solution.Size == new Size(1, order))
+                        {
+                            return solution.AtColumn(0);
+                        }
+                    }
+                }
+            }
+
+            return Vector.NonVector;
         }
 
         #endregion
@@ -1075,1439 +1486,5 @@ namespace Com
         }
 
         #endregion
-
-        /// <summary>
-        /// 获取矩阵的宽度（列数）与高度（行数）。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        public static Size GetSize(double[,] matrix)
-        {
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return Size.Empty;
-                }
-
-                return new Size(matrix.GetLength(0), matrix.GetLength(1));
-            }
-            catch
-            {
-                return Size.Empty;
-            }
-        }
-
-        /// <summary>
-        /// 获取矩阵的秩。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        public static int GetRank(double[,] matrix)
-        {
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return -1;
-                }
-
-                Size size = GetSize(matrix);
-
-                int order = Math.Min(size.Width, size.Height);
-
-                int result = 0;
-
-                for (int i = 1; i <= order; i++)
-                {
-                    int r = 0;
-
-                    for (int x = 0; x < size.Width - i + 1; x++)
-                    {
-                        for (int y = 0; y < size.Height - i + 1; y++)
-                        {
-                            double[,] sub;
-
-                            if (!SubMatrix(matrix, x, y, i, i, out sub))
-                            {
-                                break;
-                            }
-
-                            double det;
-
-                            if (!Determinant(sub, out det))
-                            {
-                                break;
-                            }
-
-                            if (det != 0)
-                            {
-                                r++;
-                            }
-                        }
-                    }
-
-                    if (r == 0)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        result++;
-                    }
-                }
-
-                return result;
-            }
-            catch
-            {
-                return -1;
-            }
-        }
-
-        /// <summary>
-        /// 判断两个矩阵是否相等。
-        /// </summary>
-        /// <param name="matrixLeft">左矩阵。</param>
-        /// <param name="matrixRight">右矩阵。</param>
-        public static bool Equals(double[,] matrixLeft, double[,] matrixRight)
-        {
-            try
-            {
-                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
-                {
-                    return false;
-                }
-
-                Size sizeLeft = GetSize(matrixLeft);
-                Size sizeRight = GetSize(matrixRight);
-
-                if (sizeLeft != sizeRight)
-                {
-                    return false;
-                }
-
-                for (int x = 0; x < sizeLeft.Width; x++)
-                {
-                    for (int y = 0; y < sizeLeft.Height; y++)
-                    {
-                        if (matrixLeft[x, y] != matrixRight[x, y])
-                        {
-                            return false;
-                        }
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 创建矩阵的副本，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        /// <param name="result">计算结果，表示矩阵的副本。</param>
-        public static bool Copy(double[,] matrix, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = matrix[x, y];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 将矩阵的所有元素设为 0，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        public static bool Clear(ref double[,] matrix)
-        {
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        matrix[x, y] = 0;
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 创建一个单位矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="order">矩阵的阶数。</param>
-        /// <param name="result">计算结果，表示单位矩阵。</param>
-        public static bool Identity(int order, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (order <= 0)
-                {
-                    return false;
-                }
-
-                result = new double[order, order];
-
-                for (int i = 0; i < order; i++)
-                {
-                    result[i, i] = 1;
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 创建一个全 0 矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="width">矩阵的宽度（列数）。</param>
-        /// <param name="height">矩阵的高度（行数）。</param>
-        /// <param name="result">计算结果，表示全 0 矩阵。</param>
-        public static bool Zeros(int width, int height, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (width <= 0 || height <= 0)
-                {
-                    return false;
-                }
-
-                result = new double[width, height];
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 创建一个全 1 矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="width">矩阵的宽度（列数）。</param>
-        /// <param name="height">矩阵的高度（行数）。</param>
-        /// <param name="result">计算结果，表示全 1 矩阵。</param>
-        public static bool Ones(int width, int height, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (width <= 0 || height <= 0)
-                {
-                    return false;
-                }
-
-                result = new double[width, height];
-
-                for (int x = 0; x < width; x++)
-                {
-                    for (int y = 0; y < height; y++)
-                    {
-                        result[x, y] = 1;
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 创建一个对角矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="array">包含对角元素的数组。</param>
-        /// <param name="rowsUponMainDiag">对角元素在矩阵中位于主对角线上方的行数。</param>
-        /// <param name="result">计算结果，表示对角矩阵。</param>
-        public static bool Diagonal(double[] array, int rowsUponMainDiag, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(array))
-                {
-                    return false;
-                }
-
-                int order = array.Length + Math.Abs(rowsUponMainDiag);
-
-                result = new double[order, order];
-
-                for (int i = 0; i < array.Length; i++)
-                {
-                    result[(rowsUponMainDiag >= 0 ? i + rowsUponMainDiag : i), (rowsUponMainDiag >= 0 ? i : i - rowsUponMainDiag)] = array[i];
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 创建一个列向量，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="array">包含向量元素的数组。</param>
-        /// <param name="result">计算结果，表示列向量。</param>
-        public static bool VectorColumn(double[] array, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(array))
-                {
-                    return false;
-                }
-
-                int height = array.Length;
-
-                result = new double[1, height];
-
-                for (int i = 0; i < height; i++)
-                {
-                    result[0, i] = array[i];
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 创建一个行向量，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="array">包含向量元素的数组。</param>
-        /// <param name="result">计算结果，表示行向量。</param>
-        public static bool VectorRow(double[] array, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(array))
-                {
-                    return false;
-                }
-
-                int width = array.Length;
-
-                result = new double[width, 1];
-
-                for (int i = 0; i < width; i++)
-                {
-                    result[i, 0] = array[i];
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 创建矩阵的子矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        /// <param name="x">子矩阵首列位于原矩阵的 X 索引。</param>
-        /// <param name="y">子矩阵首行位于原矩阵的 Y 索引。</param>
-        /// <param name="width">子矩阵的宽度（列数）。</param>
-        /// <param name="height">子矩阵的高度（行数）。</param>
-        /// <param name="result">计算结果，表示子矩阵。</param>
-        public static bool SubMatrix(double[,] matrix, int x, int y, int width, int height, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                if (x + width > size.Width || y + height > size.Height)
-                {
-                    return false;
-                }
-
-                result = new double[width, height];
-
-                for (int _x = 0; _x < width; _x++)
-                {
-                    for (int _y = 0; _y < height; _y++)
-                    {
-                        result[_x, _y] = matrix[x + _x, y + _y];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 创建增广矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrixLeft">左矩阵。</param>
-        /// <param name="matrixRight">右矩阵。</param>
-        /// <param name="result">计算结果，表示增广矩阵。</param>
-        public static bool AugmentedMatrix(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
-                {
-                    return false;
-                }
-
-                Size sizeLeft = GetSize(matrixLeft);
-                Size sizeRight = GetSize(matrixRight);
-
-                if (sizeLeft.Height != sizeRight.Height)
-                {
-                    return false;
-                }
-
-                Size size = new Size(sizeLeft.Width + sizeRight.Width, sizeLeft.Height);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = (x < sizeLeft.Width ? matrixLeft[x, y] : matrixRight[x - sizeLeft.Width, y]);
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 计算矩阵与标量相加得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵，表示被加数。</param>
-        /// <param name="n">标量，表示加数。</param>
-        /// <param name="result">计算结果，表示矩阵与标量相加的和。</param>
-        public static bool Add(double[,] matrix, double n, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix) || _IsNaNOrInfinity(n))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = matrix[x, y] + n;
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算标量与矩阵相加得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="n">标量，表示被加数。</param>
-        /// <param name="matrix">矩阵，表示加数。</param>
-        /// <param name="result">计算结果，表示标量与矩阵相加的和。</param>
-        public static bool Add(double n, double[,] matrix, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNaNOrInfinity(n) || _IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = n + matrix[x, y];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵与矩阵相加得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrixLeft">左矩阵，表示被加数。</param>
-        /// <param name="matrixRight">右矩阵，表示加数。</param>
-        /// <param name="result">计算结果，表示矩阵与矩阵相加的和。</param>
-        public static bool Add(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
-                {
-                    return false;
-                }
-
-                Size sizeLeft = GetSize(matrixLeft);
-                Size sizeRight = GetSize(matrixRight);
-
-                if (sizeLeft != sizeRight)
-                {
-                    return false;
-                }
-
-                Size size = sizeLeft;
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = matrixLeft[x, y] + matrixRight[x, y];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵与标量相减得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵，表示被减数。</param>
-        /// <param name="n">标量，表示减数。</param>
-        /// <param name="result">计算结果，表示矩阵与标量相减的差。</param>
-        public static bool Subtract(double[,] matrix, double n, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix) || _IsNaNOrInfinity(n))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = matrix[x, y] - n;
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算标量与矩阵相减得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="n">标量，表示被减数。</param>
-        /// <param name="matrix">矩阵，表示减数。</param>
-        /// <param name="result">计算结果，表示标量与矩阵相减的差。</param>
-        public static bool Subtract(double n, double[,] matrix, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNaNOrInfinity(n) || _IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = n - matrix[x, y];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵与矩阵相减得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrixLeft">左矩阵，表示被减数。</param>
-        /// <param name="matrixRight">右矩阵，表示减数。</param>
-        /// <param name="result">计算结果，表示矩阵与矩阵相减的差。</param>
-        public static bool Subtract(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
-                {
-                    return false;
-                }
-
-                Size sizeLeft = GetSize(matrixLeft);
-                Size sizeRight = GetSize(matrixRight);
-
-                if (sizeLeft != sizeRight)
-                {
-                    return false;
-                }
-
-                Size size = sizeLeft;
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = matrixLeft[x, y] - matrixRight[x, y];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵与标量相乘得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵，表示被乘数。</param>
-        /// <param name="n">标量，表示乘数。</param>
-        /// <param name="result">计算结果，表示矩阵与标量相乘的积。</param>
-        public static bool Multiply(double[,] matrix, double n, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix) || _IsNaNOrInfinity(n))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = matrix[x, y] * n;
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算标量与矩阵相乘得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="n">标量，表示被乘数。</param>
-        /// <param name="matrix">矩阵，表示乘数。</param>
-        /// <param name="result">计算结果，表示标量与矩阵相乘的积。</param>
-        public static bool Multiply(double n, double[,] matrix, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNaNOrInfinity(n) || _IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = n * matrix[x, y];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵与矩阵相乘得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrixLeft">左矩阵，表示被乘数。</param>
-        /// <param name="matrixRight">右矩阵，表示乘数。</param>
-        /// <param name="result">计算结果，表示矩阵与矩阵相乘的积。</param>
-        public static bool Multiply(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
-                {
-                    return false;
-                }
-
-                Size sizeLeft = GetSize(matrixLeft);
-                Size sizeRight = GetSize(matrixRight);
-
-                if (sizeLeft.Width != sizeRight.Height)
-                {
-                    return false;
-                }
-
-                int height = sizeLeft.Width;
-
-                result = new double[sizeRight.Width, sizeLeft.Height];
-
-                for (int x = 0; x < sizeRight.Width; x++)
-                {
-                    for (int y = 0; y < sizeLeft.Height; y++)
-                    {
-                        result[x, y] = 0;
-
-                        for (int i = 0; i < height; i++)
-                        {
-                            result[x, y] += (matrixLeft[i, y] * matrixRight[x, i]);
-                        }
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算将列表中所有矩阵依次左乘得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrixLeftList">左矩阵列表。</param>
-        /// <param name="result">计算结果，表示将列表中所有矩阵依次左乘的积。</param>
-        public static bool MultiplyLeft(List<double[,]> matrixLeftList, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (matrixLeftList.Count > 0)
-                {
-                    if (matrixLeftList.Count == 1)
-                    {
-                        if (Copy(matrixLeftList[0], out result))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        double[,] matrixRight;
-
-                        if (Copy(matrixLeftList[0], out matrixRight))
-                        {
-                            for (int i = 1; i < matrixLeftList.Count; i++)
-                            {
-                                bool flag = true;
-
-                                if (flag)
-                                {
-                                    flag = Multiply(matrixLeftList[i], matrixRight, out result);
-                                }
-
-                                if (flag)
-                                {
-                                    flag = Copy(result, out matrixRight);
-                                }
-
-                                if (!flag)
-                                {
-                                    return false;
-                                }
-                            }
-
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算将列表中所有矩阵依次右乘得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrixRightList">右矩阵列表。</param>
-        /// <param name="result">计算结果，表示将列表中所有矩阵依次右乘的积。</param>
-        public static bool MultiplyRight(List<double[,]> matrixRightList, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (matrixRightList.Count > 0)
-                {
-                    if (matrixRightList.Count == 1)
-                    {
-                        if (Copy(matrixRightList[0], out result))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        double[,] matrixLeft;
-
-                        if (Copy(matrixRightList[0], out matrixLeft))
-                        {
-                            for (int i = 1; i < matrixRightList.Count; i++)
-                            {
-                                bool flag = true;
-
-                                if (flag)
-                                {
-                                    flag = Multiply(matrixLeft, matrixRightList[i], out result);
-                                }
-
-                                if (flag)
-                                {
-                                    flag = Copy(result, out matrixLeft);
-                                }
-
-                                if (!flag)
-                                {
-                                    return false;
-                                }
-                            }
-
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵与标量相除得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵，表示被除数。</param>
-        /// <param name="n">标量，表示除数。</param>
-        /// <param name="result">计算结果，表示矩阵与标量相除的商。</param>
-        public static bool Divide(double[,] matrix, double n, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix) || _IsNaNOrInfinity(n))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = matrix[x, y] / n;
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算标量与矩阵相除得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="n">标量，表示被除数。</param>
-        /// <param name="matrix">矩阵，表示除数。</param>
-        /// <param name="result">计算结果，表示标量与矩阵相除的商。</param>
-        public static bool Divide(double n, double[,] matrix, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNaNOrInfinity(n) || _IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] = n / matrix[x, y];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵与矩阵左除得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrixLeft">左矩阵，表示被除数。</param>
-        /// <param name="matrixRight">右矩阵，表示除数。</param>
-        /// <param name="result">计算结果，表示矩阵与矩阵左除的商。</param>
-        public static bool DivideLeft(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
-                {
-                    return false;
-                }
-
-                Size sizeLeft = GetSize(matrixLeft);
-                Size sizeRight = GetSize(matrixRight);
-
-                if (sizeLeft.Width != sizeLeft.Height || sizeLeft.Width != sizeRight.Height)
-                {
-                    return false;
-                }
-
-                double[,] invLeft;
-
-                if (!Invert(matrixLeft, out invLeft))
-                {
-                    return false;
-                }
-
-                if (!Multiply(invLeft, matrixRight, out result))
-                {
-                    return false;
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵与矩阵右除得到的矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrixLeft">左矩阵，表示被除数。</param>
-        /// <param name="matrixRight">右矩阵，表示除数。</param>
-        /// <param name="result">计算结果，表示矩阵与矩阵右除的商。</param>
-        public static bool DivideRight(double[,] matrixLeft, double[,] matrixRight, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrixLeft) || _IsNullOrEmpty(matrixRight))
-                {
-                    return false;
-                }
-
-                Size sizeLeft = GetSize(matrixLeft);
-                Size sizeRight = GetSize(matrixRight);
-
-                if (sizeRight.Width != sizeRight.Height || sizeLeft.Width != sizeRight.Height)
-                {
-                    return false;
-                }
-
-                double[,] invRight;
-
-                if (!Invert(matrixRight, out invRight))
-                {
-                    return false;
-                }
-
-                if (!Multiply(matrixLeft, invRight, out result))
-                {
-                    return false;
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 计算矩阵的转置，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        /// <param name="result">计算结果，表示转置矩阵。</param>
-        public static bool Transport(double[,] matrix, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                result = new double[size.Height, size.Width];
-
-                for (int x = 0; x < size.Height; x++)
-                {
-                    for (int y = 0; y < size.Width; y++)
-                    {
-                        result[x, y] = matrix[y, x];
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算矩阵的行列式值，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        /// <param name="result">计算结果，表示矩阵的行列式值。</param>
-        public static bool Determinant(double[,] matrix, out double result)
-        {
-            result = double.NaN;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                if (size.Width != size.Height)
-                {
-                    return false;
-                }
-
-                int order = size.Width;
-
-                if (order == 0)
-                {
-                    result = 0;
-
-                    return true;
-                }
-                else if (order == 1)
-                {
-                    result = matrix[0, 0];
-
-                    return true;
-                }
-                else if (order == 2)
-                {
-                    result = (matrix[0, 0] * matrix[1, 1] - matrix[1, 0] * matrix[0, 1]);
-
-                    return true;
-                }
-
-                double det = 0, detSign = 1;
-
-                for (int i = 0; i < order; i++)
-                {
-                    Size sizeTemp = new Size(order - 1, order - 1);
-
-                    double[,] temp = new double[sizeTemp.Width, sizeTemp.Height];
-
-                    for (int x = 0; x < sizeTemp.Width; x++)
-                    {
-                        for (int y = 0; y < sizeTemp.Height; y++)
-                        {
-                            temp[x, y] = matrix[x + 1, (y >= i ? y + 1 : y)];
-                        }
-                    }
-
-                    double detTemp;
-
-                    if (!Determinant(temp, out detTemp))
-                    {
-                        return false;
-                    }
-
-                    det += (matrix[0, i] * detSign * detTemp);
-                    detSign = detSign * -1;
-                }
-
-                result = det;
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算伴随矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        /// <param name="result">计算结果，表示伴随矩阵。</param>
-        public static bool Adjoint(double[,] matrix, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                if (size.Width != size.Height)
-                {
-                    return false;
-                }
-
-                result = new double[size.Width, size.Height];
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        double[,] temp = new double[size.Width - 1, size.Height - 1];
-
-                        for (int _x = 0; _x < size.Width - 1; _x++)
-                        {
-                            for (int _y = 0; _y < size.Height - 1; _y++)
-                            {
-                                temp[_x, _y] = matrix[(_x < x ? _x : _x + 1), (_y < y ? _y : _y + 1)];
-                            }
-                        }
-
-                        double det;
-
-                        if (!Determinant(temp, out det))
-                        {
-                            result = null;
-
-                            return false;
-                        }
-
-                        result[y, x] = ((x + y) % 2 == 0 ? 1 : -1) * det;
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 计算逆矩阵，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">矩阵。</param>
-        /// <param name="result">计算结果，表示逆矩阵。</param>
-        public static bool Invert(double[,] matrix, out double[,] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                if (size.Width != size.Height)
-                {
-                    return false;
-                }
-
-                if (!Adjoint(matrix, out result))
-                {
-                    return false;
-                }
-
-                double det;
-
-                if (!Determinant(matrix, out det))
-                {
-                    return false;
-                }
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result[x, y] /= det;
-
-                        if (_IsNaNOrInfinity(result[x, y]))
-                        {
-                            result = null;
-
-                            return false;
-                        }
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 计算非齐次线性方程组的解向量，并返回表示此操作是否成功的布尔值。
-        /// </summary>
-        /// <param name="matrix">系数矩阵。</param>
-        /// <param name="array">常数项。</param>
-        /// <param name="result">计算结果，表示解向量。</param>
-        public static bool SolveLinearEquation(double[,] matrix, double[] array, out double[] result)
-        {
-            result = null;
-
-            try
-            {
-                if (_IsNullOrEmpty(matrix) || _IsNullOrEmpty(array))
-                {
-                    return false;
-                }
-
-                Size size = GetSize(matrix);
-
-                if (size.Width != size.Height)
-                {
-                    return false;
-                }
-
-                int order = array.Length;
-
-                if (order != size.Height)
-                {
-                    return false;
-                }
-
-                double[,] vectorColumn;
-
-                if (!VectorColumn(array, out vectorColumn))
-                {
-                    return false;
-                }
-
-                double[,] solution;
-
-                if (!DivideLeft(matrix, vectorColumn, out solution))
-                {
-                    return false;
-                }
-
-                if (GetSize(solution) != new Size(1, order))
-                {
-                    return false;
-                }
-
-                result = new double[order];
-
-                for (int i = 0; i < order; i++)
-                {
-                    result[i] = solution[0, i];
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
     }
 }

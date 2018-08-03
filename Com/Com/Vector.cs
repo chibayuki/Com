@@ -24,9 +24,28 @@ namespace Com
     {
         #region 私有与内部成员
 
+        private Type _Type; // 此 Vector 的向量类型。
+
         private int _Size; // 此 Vector 存储的向量维度。
 
-        private double[] _XArray = null; // 用于存储向量在各基向量方向的分量系数的数组。
+        private double[] _VArray = null; // 用于存储向量在各基向量方向的分量系数的数组。
+
+        //
+
+        private static Vector _GetEmptyVector(Type type, int dimension) // 获取指定向量类型与维度的 Vector 的新实例。
+        {
+            if (type != Type.NonVector)
+            {
+                Vector result = NonVector;
+
+                result._Type = type;
+                result._VArray = new double[dimension];
+
+                return result;
+            }
+
+            return NonVector;
+        }
 
         //
 
@@ -49,20 +68,45 @@ namespace Com
         /// <summary>
         /// 使用双精度浮点数表示的各基向量方向的分量系数初始化 Vector 的新实例。
         /// </summary>
-        /// <param name="x">各基向量方向的分量系数。</param>
-        public Vector(params double[] x)
+        /// <param name="type">向量类型。</param>
+        /// <param name="values">各基向量方向的分量系数。</param>
+        public Vector(Type type, params double[] values)
         {
-            if (!_IsNullOrEmpty(x))
+            if (type != Type.NonVector && !_IsNullOrEmpty(values))
             {
-                _Size = x.Length;
-                _XArray = new double[x.Length];
+                _Type = type;
+                _Size = values.Length;
+                _VArray = new double[values.Length];
 
-                Array.Copy(x, _XArray, x.Length);
+                Array.Copy(values, _VArray, values.Length);
             }
             else
             {
+                _Type = Type.NonVector;
                 _Size = 0;
-                _XArray = null;
+                _VArray = null;
+            }
+        }
+
+        /// <summary>
+        /// 使用双精度浮点数表示的各基向量方向的分量系数初始化 Vector 的新实例。
+        /// </summary>
+        /// <param name="values">各基向量方向的分量系数。</param>
+        public Vector(params double[] values)
+        {
+            if (!_IsNullOrEmpty(values))
+            {
+                _Type = Type.ColumnVector;
+                _Size = values.Length;
+                _VArray = new double[values.Length];
+
+                Array.Copy(values, _VArray, values.Length);
+            }
+            else
+            {
+                _Type = Type.NonVector;
+                _Size = 0;
+                _VArray = null;
             }
         }
 
@@ -77,7 +121,42 @@ namespace Com
         {
             get
             {
-                return new Vector(null);
+                return new Vector(Type.NonVector, null);
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为 NonVector 的布尔值。
+        /// </summary>
+        public bool IsNonVector
+        {
+            get
+            {
+                return (_Size <= 0);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为 ColumnVector 的布尔值。
+        /// </summary>
+        public bool IsColumnVector
+        {
+            get
+            {
+                return (_Size > 0 && _Type == Type.ColumnVector);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为 RowVector 的布尔值。
+        /// </summary>
+        public bool IsRowVector
+        {
+            get
+            {
+                return (_Size > 0 && _Type == Type.RowVector);
             }
         }
 
@@ -93,7 +172,7 @@ namespace Com
             {
                 if (_Size > 0 && (index >= 0 && index < _Size))
                 {
-                    return _XArray[index];
+                    return _VArray[index];
                 }
 
                 return double.NaN;
@@ -103,7 +182,7 @@ namespace Com
             {
                 if (_Size > 0 && (index >= 0 && index < _Size))
                 {
-                    _XArray[index] = value;
+                    _VArray[index] = value;
                 }
             }
         }
@@ -157,7 +236,7 @@ namespace Com
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        SqrSum += _XArray[i] * _XArray[i];
+                        SqrSum += _VArray[i] * _VArray[i];
                     }
 
                     return Math.Sqrt(SqrSum);
@@ -180,13 +259,29 @@ namespace Com
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        SqrSum += _XArray[i] * _XArray[i];
+                        SqrSum += _VArray[i] * _VArray[i];
                     }
 
                     return SqrSum;
                 }
 
                 return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Vector 的转置向量。
+        /// </summary>
+        public Vector Transport
+        {
+            get
+            {
+                if (_Size > 0)
+                {
+                    return new Vector((_Type == Type.ColumnVector ? Type.RowVector : Type.ColumnVector), _VArray);
+                }
+
+                return NonVector;
             }
         }
 
@@ -199,13 +294,11 @@ namespace Com
             {
                 if (_Size > 0)
                 {
-                    Vector result = NonVector;
-
-                    result._XArray = new double[_Size];
+                    Vector result = _GetEmptyVector(_Type, _Size);
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        result._XArray[i] = -_XArray[i];
+                        result._VArray[i] = -_VArray[i];
                     }
 
                     return result;
@@ -228,13 +321,11 @@ namespace Com
 
                     if (Mod > 0)
                     {
-                        Vector result = NonVector;
-
-                        result._XArray = new double[_Size];
+                        Vector result = _GetEmptyVector(_Type, _Size);
 
                         for (int i = 0; i < _Size; i++)
                         {
-                            result._XArray[i] = _XArray[i] / Mod;
+                            result._VArray[i] = _VArray[i] / Mod;
                         }
 
                         return result;
@@ -250,13 +341,37 @@ namespace Com
         #region 方法
 
         /// <summary>
+        /// 判断此 Vector 是否与指定的 Vector 对象相等。
+        /// </summary>
+        /// <param name="vector">用于比较的 Vector 对象。</param>
+        public bool Equals(Vector vector)
+        {
+            if (_Size <= 0 || IsNullOrNonVector(vector) || _Type != vector._Type || _Size != vector._Size)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < _Size; i++)
+            {
+                if (_VArray[i] != vector._VArray[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        //
+
+        /// <summary>
         /// 获取此 Vector 的副本。
         /// </summary>
         public Vector Copy()
         {
             if (_Size > 0)
             {
-                Vector result = new Vector(_XArray);
+                Vector result = new Vector(_Type, _VArray);
 
                 return result;
             }
@@ -276,7 +391,7 @@ namespace Com
             {
                 for (int i = 0; i < _Size; i++)
                 {
-                    _XArray[i] += d;
+                    _VArray[i] += d;
                 }
             }
         }
@@ -291,7 +406,7 @@ namespace Com
             {
                 for (int i = 0; i < _Size; i++)
                 {
-                    _XArray[i] += vector._XArray[i];
+                    _VArray[i] += vector._VArray[i];
                 }
             }
         }
@@ -308,7 +423,7 @@ namespace Com
 
                 for (int i = 0; i < result._Size; i++)
                 {
-                    result._XArray[i] += d;
+                    result._VArray[i] += d;
                 }
 
                 return result;
@@ -329,7 +444,7 @@ namespace Com
 
                 for (int i = 0; i < result._Size; i++)
                 {
-                    result._XArray[i] += vector._XArray[i];
+                    result._VArray[i] += vector._VArray[i];
                 }
 
                 return result;
@@ -350,7 +465,7 @@ namespace Com
             {
                 for (int i = 0; i < _Size; i++)
                 {
-                    _XArray[i] *= s;
+                    _VArray[i] *= s;
                 }
             }
         }
@@ -365,7 +480,7 @@ namespace Com
             {
                 for (int i = 0; i < _Size; i++)
                 {
-                    _XArray[i] *= vector._XArray[i];
+                    _VArray[i] *= vector._VArray[i];
                 }
             }
         }
@@ -382,7 +497,7 @@ namespace Com
 
                 for (int i = 0; i < result._Size; i++)
                 {
-                    result._XArray[i] *= s;
+                    result._VArray[i] *= s;
                 }
 
                 return result;
@@ -403,7 +518,7 @@ namespace Com
 
                 for (int i = 0; i < result._Size; i++)
                 {
-                    result._XArray[i] *= vector._XArray[i];
+                    result._VArray[i] *= vector._VArray[i];
                 }
 
                 return result;
@@ -426,7 +541,7 @@ namespace Com
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    SqrSum += (_XArray[i] - vector._XArray[i]) * (_XArray[i] - vector._XArray[i]);
+                    SqrSum += (_VArray[i] - vector._VArray[i]) * (_VArray[i] - vector._VArray[i]);
                 }
 
                 return Math.Sqrt(SqrSum);
@@ -447,7 +562,7 @@ namespace Com
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    if (_XArray[i] != 0)
+                    if (_VArray[i] != 0)
                     {
                         Flag1 = false;
 
@@ -457,14 +572,14 @@ namespace Com
 
                 if (Flag1)
                 {
-                    _XArray[0] = 1;
+                    _VArray[0] = 1;
                 }
 
                 bool Flag2 = true;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    if (vector._XArray[i] != 0)
+                    if (vector._VArray[i] != 0)
                     {
                         Flag2 = false;
 
@@ -474,14 +589,14 @@ namespace Com
 
                 if (Flag2)
                 {
-                    vector._XArray[0] = 1;
+                    vector._VArray[0] = 1;
                 }
 
                 double DotProduct = 0;
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    DotProduct += _XArray[i] * vector._XArray[i];
+                    DotProduct += _VArray[i] * vector._VArray[i];
                 }
 
                 double ModProduct = Module * vector.Module;
@@ -502,7 +617,7 @@ namespace Com
         {
             if (_Size > 0 && (index >= 0 && index < _Size))
             {
-                return AngleFrom(_XArray[index] >= 0 ? Basis(_Size, index) : Basis(_Size, index).Negate);
+                return AngleFrom(_VArray[index] >= 0 ? Basis(_Size, index) : Basis(_Size, index).Negate);
             }
 
             return double.NaN;
@@ -526,11 +641,9 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector result = NonVector;
+                Vector result = _GetEmptyVector(_Type, _Size);
 
-                result._XArray = new double[_Size];
-
-                result._XArray[0] = Module;
+                result._VArray[0] = Module;
 
                 if (_Size > 1)
                 {
@@ -559,7 +672,7 @@ namespace Com
                         }
                     };
 
-                    result._XArray[_Size - 1] = VectorAngle2PI(_XArray[_Size - 2], _XArray[_Size - 1]);
+                    result._VArray[_Size - 1] = VectorAngle2PI(_VArray[_Size - 2], _VArray[_Size - 1]);
 
                     if (_Size > 2)
                     {
@@ -590,10 +703,10 @@ namespace Com
 
                             for (int j = i + 1; j < _Size; j++)
                             {
-                                SqrY += _XArray[j] * _XArray[j];
+                                SqrY += _VArray[j] * _VArray[j];
                             }
 
-                            result._XArray[i + 1] = VectorAnglePI(_XArray[i], Math.Sqrt(SqrY));
+                            result._VArray[i + 1] = VectorAnglePI(_VArray[i], Math.Sqrt(SqrY));
                         }
                     }
                 }
@@ -611,38 +724,36 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[_Size];
+                Vector result = _GetEmptyVector(_Type, _Size);
 
                 if (_Size == 1)
                 {
-                    result._XArray[0] = _XArray[0];
+                    result._VArray[0] = _VArray[0];
                 }
                 else
                 {
-                    result._XArray[0] = _XArray[0] * Math.Cos(_XArray[1]);
+                    result._VArray[0] = _VArray[0] * Math.Cos(_VArray[1]);
 
                     if (_Size == 2)
                     {
-                        result._XArray[1] = _XArray[0] * Math.Sin(_XArray[1]);
+                        result._VArray[1] = _VArray[0] * Math.Sin(_VArray[1]);
                     }
                     else
                     {
-                        result._XArray[_Size - 1] = _XArray[0];
+                        result._VArray[_Size - 1] = _VArray[0];
 
                         for (int i = 1; i < _Size; i++)
                         {
-                            result._XArray[_Size - 1] *= Math.Sin(_XArray[i]);
+                            result._VArray[_Size - 1] *= Math.Sin(_VArray[i]);
                         }
 
                         for (int i = 1; i < _Size - 1; i++)
                         {
-                            result._XArray[i] = _XArray[0] * Math.Cos(_XArray[i + 1]);
+                            result._VArray[i] = _VArray[0] * Math.Cos(_VArray[i + 1]);
 
                             for (int j = 1; j < i + 1; j++)
                             {
-                                result._XArray[i] *= Math.Sin(_XArray[j]);
+                                result._VArray[i] *= Math.Sin(_VArray[j]);
                             }
                         }
                     }
@@ -652,6 +763,42 @@ namespace Com
             }
 
             return NonVector;
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将此 Vector 转换为矩阵的 Matrix2D 的新实例。
+        /// </summary>
+        public Matrix2D ToMatrix2D()
+        {
+            if (_Size > 0)
+            {
+                if (_Type == Type.ColumnVector)
+                {
+                    double[,] values = new double[1, _Size];
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        values[0, i] = _VArray[i];
+                    }
+
+                    return new Matrix2D(values);
+                }
+                else
+                {
+                    double[,] values = new double[_Size, 1];
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        values[i, 0] = _VArray[i];
+                    }
+
+                    return new Matrix2D(values);
+                }
+            }
+
+            return Matrix2D.NonMatrix;
         }
 
         #endregion
@@ -670,28 +817,6 @@ namespace Com
             }
 
             return Equals((Vector)obj);
-        }
-
-        /// <summary>
-        /// 判断此 Vector 是否与指定的 Vector 对象相等。
-        /// </summary>
-        /// <param name="vector">用于比较的 Vector 对象。</param>
-        public bool Equals(Vector vector)
-        {
-            if (_Size <= 0 || IsNullOrNonVector(vector) || _Size != vector._Size)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < _Size; i++)
-            {
-                if (_XArray[i] != vector._XArray[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         /// <summary>
@@ -739,19 +864,45 @@ namespace Com
         /// <summary>
         /// 返回表示零向量的 Vector 的新实例。
         /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">维度。</param>
+        public static Vector Zero(Type type, int dimension)
+        {
+            if (type != Type.NonVector && dimension > 0)
+            {
+                return _GetEmptyVector(type, dimension);
+            }
+
+            return NonVector;
+        }
+
+        /// <summary>
+        /// 返回表示零向量的 Vector 的新实例。
+        /// </summary>
         /// <param name="dimension">维度。</param>
         public static Vector Zero(int dimension)
         {
             if (dimension > 0)
             {
-                Vector result = NonVector;
+                return _GetEmptyVector(Type.ColumnVector, dimension);
+            }
 
-                result._XArray = new double[dimension];
+            return NonVector;
+        }
 
-                for (int i = 0; i < result._Size; i++)
-                {
-                    result._XArray[i] = 0;
-                }
+        /// <summary>
+        /// 返回表示指定索引的基向量的 Vector 的新实例。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">维度。</param>
+        /// <param name="index">索引。</param>
+        public static Vector Basis(Type type, int dimension, int index)
+        {
+            if (type != Type.NonVector && dimension > 0 && (index >= 0 && index < dimension))
+            {
+                Vector result = _GetEmptyVector(type, dimension);
+
+                result._VArray[index] = 1;
 
                 return result;
             }
@@ -768,16 +919,9 @@ namespace Com
         {
             if (dimension > 0 && (index >= 0 && index < dimension))
             {
-                Vector result = NonVector;
+                Vector result = _GetEmptyVector(Type.ColumnVector, dimension);
 
-                result._XArray = new double[dimension];
-
-                for (int i = 0; i < result._Size; i++)
-                {
-                    result._XArray[i] = 0;
-                }
-
-                result._XArray[index] = 1;
+                result._VArray[index] = 1;
 
                 return result;
             }
@@ -794,13 +938,13 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double DistanceBetween(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 double SqrSum = 0;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    SqrSum += (left._XArray[i] - right._XArray[i]) * (left._XArray[i] - right._XArray[i]);
+                    SqrSum += (left._VArray[i] - right._VArray[i]) * (left._VArray[i] - right._VArray[i]);
                 }
 
                 return Math.Sqrt(SqrSum);
@@ -816,13 +960,13 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double AngleBetween(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 bool Flag1 = true;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    if (left._XArray[i] != 0)
+                    if (left._VArray[i] != 0)
                     {
                         Flag1 = false;
 
@@ -832,14 +976,14 @@ namespace Com
 
                 if (Flag1)
                 {
-                    left._XArray[0] = 1;
+                    left._VArray[0] = 1;
                 }
 
                 bool Flag2 = true;
 
                 for (int i = 0; i < right._Size; i++)
                 {
-                    if (right._XArray[i] != 0)
+                    if (right._VArray[i] != 0)
                     {
                         Flag2 = false;
 
@@ -849,14 +993,14 @@ namespace Com
 
                 if (Flag2)
                 {
-                    right._XArray[0] = 1;
+                    right._VArray[0] = 1;
                 }
 
                 double DotProduct = 0;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    DotProduct += left._XArray[i] * right._XArray[i];
+                    DotProduct += left._VArray[i] * right._VArray[i];
                 }
 
                 double ModProduct = left.Module * right.Module;
@@ -876,13 +1020,13 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double DotProduct(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 double SqrSum = 0;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    SqrSum += left._XArray[i] * right._XArray[i];
+                    SqrSum += left._VArray[i] * right._VArray[i];
                 }
 
                 return SqrSum;
@@ -898,13 +1042,11 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static Vector CrossProduct(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 if (left._Size > 1)
                 {
-                    Vector result = NonVector;
-
-                    result._XArray = new double[left._Size * (left._Size - 1) / 2];
+                    Vector result = _GetEmptyVector(left._Type, left._Size * (left._Size - 1) / 2);
 
                     int i = 0;
 
@@ -912,7 +1054,7 @@ namespace Com
                     {
                         for (int k = j + 1; k < left._Size; k++)
                         {
-                            result._XArray[i] = left._XArray[j] * right._XArray[k] - left._XArray[k] * right._XArray[j];
+                            result._VArray[i] = left._VArray[j] * right._VArray[k] - left._VArray[k] * right._VArray[j];
 
                             i++;
                         }
@@ -935,13 +1077,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = Math.Abs(vector._XArray[i]);
+                    result._VArray[i] = Math.Abs(vector._VArray[i]);
                 }
 
                 return result;
@@ -958,13 +1098,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = Math.Sign(vector._XArray[i]);
+                    result._VArray[i] = Math.Sign(vector._VArray[i]);
                 }
 
                 return result;
@@ -981,13 +1119,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = Math.Ceiling(vector._XArray[i]);
+                    result._VArray[i] = Math.Ceiling(vector._VArray[i]);
                 }
 
                 return result;
@@ -1004,13 +1140,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = Math.Floor(vector._XArray[i]);
+                    result._VArray[i] = Math.Floor(vector._VArray[i]);
                 }
 
                 return result;
@@ -1027,13 +1161,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = Math.Round(vector._XArray[i]);
+                    result._VArray[i] = Math.Round(vector._VArray[i]);
                 }
 
                 return result;
@@ -1050,13 +1182,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = Math.Truncate(vector._XArray[i]);
+                    result._VArray[i] = Math.Truncate(vector._VArray[i]);
                 }
 
                 return result;
@@ -1072,15 +1202,13 @@ namespace Com
         /// <param name="right">用于比较的第二个 Vector 对象。</param>
         public static Vector Max(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[left._Size];
+                Vector result = _GetEmptyVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._XArray[i] = Math.Max(left._XArray[i], right._XArray[i]);
+                    result._VArray[i] = Math.Max(left._VArray[i], right._VArray[i]);
                 }
 
                 return result;
@@ -1096,15 +1224,13 @@ namespace Com
         /// <param name="right">用于比较的第二个 Vector 对象。</param>
         public static Vector Min(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[left._Size];
+                Vector result = _GetEmptyVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._XArray[i] = Math.Min(left._XArray[i], right._XArray[i]);
+                    result._VArray[i] = Math.Min(left._VArray[i], right._VArray[i]);
                 }
 
                 return result;
@@ -1125,13 +1251,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = +vector._XArray[i];
+                    result._VArray[i] = +vector._VArray[i];
                 }
 
                 return result;
@@ -1148,13 +1272,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = -vector._XArray[i];
+                    result._VArray[i] = -vector._VArray[i];
                 }
 
                 return result;
@@ -1174,13 +1296,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = vector._XArray[i] + n;
+                    result._VArray[i] = vector._VArray[i] + n;
                 }
 
                 return result;
@@ -1198,13 +1318,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = n + vector._XArray[i];
+                    result._VArray[i] = n + vector._VArray[i];
                 }
 
                 return result;
@@ -1220,15 +1338,13 @@ namespace Com
         /// <param name="right">Vector 对象，表示加数。</param>
         public static Vector operator +(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[left._Size];
+                Vector result = _GetEmptyVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._XArray[i] = left._XArray[i] + right._XArray[i];
+                    result._VArray[i] = left._VArray[i] + right._VArray[i];
                 }
 
                 return result;
@@ -1248,13 +1364,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = vector._XArray[i] - n;
+                    result._VArray[i] = vector._VArray[i] - n;
                 }
 
                 return result;
@@ -1272,13 +1386,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = n - vector._XArray[i];
+                    result._VArray[i] = n - vector._VArray[i];
                 }
 
                 return result;
@@ -1294,15 +1406,13 @@ namespace Com
         /// <param name="right">Vector 对象，表示减数。</param>
         public static Vector operator -(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[left._Size];
+                Vector result = _GetEmptyVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._XArray[i] = left._XArray[i] - right._XArray[i];
+                    result._VArray[i] = left._VArray[i] - right._VArray[i];
                 }
 
                 return result;
@@ -1322,13 +1432,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = vector._XArray[i] * n;
+                    result._VArray[i] = vector._VArray[i] * n;
                 }
 
                 return result;
@@ -1346,13 +1454,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = n * vector._XArray[i];
+                    result._VArray[i] = n * vector._VArray[i];
                 }
 
                 return result;
@@ -1368,15 +1474,13 @@ namespace Com
         /// <param name="right">Vector 对象，表示乘数。</param>
         public static Vector operator *(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[left._Size];
+                Vector result = _GetEmptyVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._XArray[i] = left._XArray[i] * right._XArray[i];
+                    result._VArray[i] = left._VArray[i] * right._VArray[i];
                 }
 
                 return result;
@@ -1396,13 +1500,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = vector._XArray[i] / n;
+                    result._VArray[i] = vector._VArray[i] / n;
                 }
 
                 return result;
@@ -1420,13 +1522,11 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[vector._Size];
+                Vector result = _GetEmptyVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._XArray[i] = n / vector._XArray[i];
+                    result._VArray[i] = n / vector._VArray[i];
                 }
 
                 return result;
@@ -1442,15 +1542,13 @@ namespace Com
         /// <param name="right">Vector 对象，表示除数。</param>
         public static Vector operator /(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Size == right._Size)
+            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = NonVector;
-
-                result._XArray = new double[left._Size];
+                Vector result = _GetEmptyVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._XArray[i] = left._XArray[i] / right._XArray[i];
+                    result._VArray[i] = left._VArray[i] / right._VArray[i];
                 }
 
                 return result;
@@ -1468,14 +1566,14 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator ==(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Size != right._Size)
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
 
             for (int i = 0; i < left._Size; i++)
             {
-                if (left._XArray[i] != right._XArray[i])
+                if (left._VArray[i] != right._VArray[i])
                 {
                     return false;
                 }
@@ -1491,14 +1589,14 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator !=(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Size != right._Size)
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return true;
             }
 
             for (int i = 0; i < left._Size; i++)
             {
-                if (left._XArray[i] != right._XArray[i])
+                if (left._VArray[i] != right._VArray[i])
                 {
                     return true;
                 }
@@ -1514,7 +1612,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Size != right._Size)
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -1529,7 +1627,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Size != right._Size)
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -1544,7 +1642,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <=(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Size != right._Size)
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -1559,7 +1657,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >=(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Size != right._Size)
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -1568,5 +1666,26 @@ namespace Com
         }
 
         #endregion
+
+        /// <summary>
+        /// 向量类型枚举。
+        /// </summary>
+        public enum Type
+        {
+            /// <summary>
+            /// 非向量。
+            /// </summary>
+            NonVector = 0,
+
+            /// <summary>
+            /// 列向量。
+            /// </summary>
+            ColumnVector,
+
+            /// <summary>
+            /// 行向量。
+            /// </summary>
+            RowVector
+        }
     }
 }

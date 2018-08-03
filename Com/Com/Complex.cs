@@ -283,6 +283,22 @@ namespace Com
         #region 方法
 
         /// <summary>
+        /// 判断此 Complex 结构是否与指定的 Complex 结构相等。
+        /// </summary>
+        /// <param name="comp">用于比较的 Complex 结构。</param>
+        public bool Equals(Complex comp)
+        {
+            if ((object)comp == null)
+            {
+                return false;
+            }
+
+            return (_Real == comp._Real && _Image == comp._Image);
+        }
+
+        //
+
+        /// <summary>
         /// 返回将此 Complex 结构转换为 PointD 结构的新实例。
         /// </summary>
         public PointD ToPointD()
@@ -728,20 +744,6 @@ namespace Com
             }
 
             return Equals((Complex)obj);
-        }
-
-        /// <summary>
-        /// 判断此 Complex 结构是否与指定的 Complex 结构相等。
-        /// </summary>
-        /// <param name="complex">用于比较的 Complex 结构。</param>
-        public bool Equals(Complex complex)
-        {
-            if ((object)complex == null)
-            {
-                return false;
-            }
-
-            return (_Real == complex._Real && _Image == complex._Image);
         }
 
         /// <summary>

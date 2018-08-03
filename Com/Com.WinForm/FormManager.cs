@@ -3772,6 +3772,22 @@ namespace Com.WinForm
         #region 方法
 
         /// <summary>
+        /// 判断此 FormManager 对象是否与指定的 FormManager 对象相等。
+        /// </summary>
+        /// <param name="formManager">用于比较的 FormManager 对象。</param>
+        public bool Equals(FormManager formManager)
+        {
+            if ((object)formManager == null)
+            {
+                return false;
+            }
+
+            return base.Equals(formManager);
+        }
+
+        //
+
+        /// <summary>
         /// 使窗口还原至普通大小。
         /// </summary>
         public bool Return()
@@ -4275,20 +4291,6 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 判断此 FormManager 对象是否与指定的 FormManager 对象相等。
-        /// </summary>
-        /// <param name="formManager">用于比较的 FormManager 对象。</param>
-        public bool Equals(FormManager formManager)
-        {
-            if (formManager == null)
-            {
-                return false;
-            }
-
-            return base.Equals(formManager);
-        }
-
-        /// <summary>
         /// 返回此 FormManager 对象的哈希代码。
         /// </summary>
         public override int GetHashCode()
@@ -4309,6 +4311,40 @@ namespace Com.WinForm
             }
 
             return Str;
+        }
+
+        #endregion
+
+        #region 运算符
+
+        /// <summary>
+        /// 判断两个 FormManager 对象是否相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 FormManager 对象。</param>
+        /// <param name="right">运算符右侧比较的 FormManager 对象。</param>
+        public static bool operator ==(FormManager left, FormManager right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// 判断两个 FormManager 对象是否不相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 FormManager 对象。</param>
+        /// <param name="right">运算符右侧比较的 FormManager 对象。</param>
+        public static bool operator !=(FormManager left, FormManager right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return true;
+            }
+
+            return !left.Equals(right);
         }
 
         #endregion

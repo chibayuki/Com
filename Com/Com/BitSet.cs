@@ -211,13 +211,31 @@ namespace Com
         //
 
         /// <summary>
+        /// 获取表示此 BitSet 是否包含的元素数量为 0 的布尔值。
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return (_Size <= 0);
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 获取或设置此 BitSet 包含的元素数量。
         /// </summary>
         public int Size
         {
             get
             {
-                return _Size;
+                if (_Size > 0)
+                {
+                    return _Size;
+                }
+
+                return 0;
             }
 
             set
@@ -279,7 +297,12 @@ namespace Com
         {
             get
             {
-                return _Size;
+                if (_Size > 0)
+                {
+                    return _Size;
+                }
+
+                return 0;
             }
         }
 
@@ -290,7 +313,12 @@ namespace Com
         {
             get
             {
-                return _Size;
+                if (_Size > 0)
+                {
+                    return _Size;
+                }
+
+                return 0;
             }
         }
 
@@ -313,6 +341,30 @@ namespace Com
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 判断此 BitSet 是否与指定的 BitSet 对象相等。
+        /// </summary>
+        /// <param name="bitSet">用于比较的 BitSet 对象。</param>
+        public bool Equals(BitSet bitSet)
+        {
+            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size || _UintArray.Length != bitSet._UintArray.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < _UintArray.Length; i++)
+            {
+                if (_UintArray[i] != bitSet._UintArray[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        //
 
         /// <summary>
         /// 获取此 BitSet 的副本。
@@ -798,28 +850,6 @@ namespace Com
             }
 
             return Equals((BitSet)obj);
-        }
-
-        /// <summary>
-        /// 判断此 BitSet 是否与指定的 BitSet 对象相等。
-        /// </summary>
-        /// <param name="bitSet">用于比较的 BitSet 对象。</param>
-        public bool Equals(BitSet bitSet)
-        {
-            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size || _UintArray.Length != bitSet._UintArray.Length)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < _UintArray.Length; i++)
-            {
-                if (_UintArray[i] != bitSet._UintArray[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         /// <summary>

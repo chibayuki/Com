@@ -1512,6 +1512,22 @@ namespace Com
         #region 方法
 
         /// <summary>
+        /// 判断此 DateTimeX 结构是否与指定的 DateTimeX 结构相等。
+        /// </summary>
+        /// <param name="dateTime">用于比较的 DateTimeX 结构。</param>
+        public bool Equals(DateTimeX dateTime)
+        {
+            if ((object)dateTime == null)
+            {
+                return false;
+            }
+
+            return (_UtcOffset == dateTime._UtcOffset && _TotalMilliseconds == dateTime._TotalMilliseconds && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond);
+        }
+
+        //
+
+        /// <summary>
         /// 返回将此 DateTimeX 结构与 TimeSpan 结构相加得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="timeSpan">TimeSpan 结构，用于相加到此 DateTimeX 结构。</param>
@@ -1997,20 +2013,6 @@ namespace Com
             }
 
             return Equals((DateTimeX)obj);
-        }
-
-        /// <summary>
-        /// 判断此 DateTimeX 结构是否与指定的 DateTimeX 结构相等。
-        /// </summary>
-        /// <param name="dateTimeX">用于比较的 DateTimeX 结构。</param>
-        public bool Equals(DateTimeX dateTimeX)
-        {
-            if ((object)dateTimeX == null)
-            {
-                return false;
-            }
-
-            return (_UtcOffset == dateTimeX._UtcOffset && _TotalMilliseconds == dateTimeX._TotalMilliseconds && _Year == dateTimeX._Year && _Month == dateTimeX._Month && _Day == dateTimeX._Day && _Hour == dateTimeX._Hour && _Minute == dateTimeX._Minute && _Second == dateTimeX._Second && _Millisecond == dateTimeX._Millisecond);
         }
 
         /// <summary>
