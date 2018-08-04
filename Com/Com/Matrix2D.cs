@@ -44,7 +44,7 @@ namespace Com
             }
         }
 
-        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为空。
+        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为 null 或为空。
         {
             try
             {
@@ -196,20 +196,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 Matrix2D 是否为 NonMatrix 的布尔值。
-        /// </summary>
-        public bool IsNonMatrix
-        {
-            get
-            {
-                return (_Size.Width <= 0 || _Size.Height <= 0);
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取或设置此 Vector 指定索引的基向量方向的分量系数。
+        /// 获取或设置此 Matrix2D 的指定索引的元素。
         /// </summary>
         /// <param name="x">矩阵的宽度方向（列）的索引。</param>
         /// <param name="y">矩阵的高度方向（行）的索引。</param>
@@ -235,7 +222,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取或设置此 Vector 指定索引的基向量方向的分量系数。
+        /// 获取或设置此 Matrix2D 的指定索引的元素。
         /// </summary>
         /// <param name="index">矩阵的宽度方向（列）与高度方向（行）的索引。</param>
         public double this[Point index]
@@ -256,6 +243,19 @@ namespace Com
                 {
                     _MArray[index.X, index.Y] = value;
                 }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示此 Matrix2D 是否为非矩阵的布尔值。
+        /// </summary>
+        public bool IsNonMatrix
+        {
+            get
+            {
+                return (_Size.Width <= 0 || _Size.Height <= 0);
             }
         }
 
@@ -335,6 +335,38 @@ namespace Com
                 if (_Size.Width > 0 && _Size.Height > 0)
                 {
                     return _Size.Height;
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix2D 包含的元素数量。
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0)
+                {
+                    return (_Size.Width * _Size.Height);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix2D 包含的元素数量。
+        /// </summary>
+        public int Length
+        {
+            get
+            {
+                if (_Size.Width > 0 && _Size.Height > 0)
+                {
+                    return (_Size.Width * _Size.Height);
                 }
 
                 return 0;
@@ -796,7 +828,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示全 0 矩阵的 Matrix2D 的新实例。
+        /// 返回表示零矩阵的 Matrix2D 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         public static Matrix2D Zeros(Size size)
@@ -810,7 +842,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示全 0 矩阵的 Matrix2D 的新实例。
+        /// 返回表示零矩阵的 Matrix2D 的新实例。
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
@@ -825,7 +857,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示全 1 矩阵的 Matrix2D 的新实例。
+        /// 返回表示一矩阵的 Matrix2D 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         public static Matrix2D Ones(Size size)
@@ -839,7 +871,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示全 1 矩阵的 Matrix2D 的新实例。
+        /// 返回表示一矩阵的 Matrix2D 的新实例。
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
@@ -1406,7 +1438,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示常数项。</param>
         public static Vector SolveLinearEquation(Matrix2D matrix, Vector vector)
         {
-            if (!IsNullOrNonMatrix(matrix) && !Vector.IsNullOrNonVector(vector))
+            if (!IsNullOrNonMatrix(matrix) && !Vector.IsNullOrNonVector(vector) && vector.IsColumnVector)
             {
                 Size size = matrix.Size;
 

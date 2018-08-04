@@ -170,6 +170,34 @@ namespace Com
         #region 属性
 
         /// <summary>
+        /// 获取或设置此 PointD 结构在指定索引的坐标轴的分量。
+        /// </summary>
+        /// <param name="index">索引。</param>
+        public double this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0: return _X;
+                    case 1: return _Y;
+                    default: return double.NaN;
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0: _X = value; break;
+                    case 1: _Y = value; break;
+                }
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 获取表示此 PointD 结构是否为 Empty 的布尔值。
         /// </summary>
         public bool IsEmpty
@@ -1440,7 +1468,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         /// <summary>
@@ -1459,7 +1487,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         /// <summary>
@@ -1478,7 +1506,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         /// <summary>
@@ -1497,7 +1525,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         /// <summary>
@@ -1516,7 +1544,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         //
@@ -1566,7 +1594,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         /// <summary>
@@ -1585,7 +1613,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         /// <summary>
@@ -1604,7 +1632,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         /// <summary>
@@ -1623,7 +1651,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         /// <summary>
@@ -1642,7 +1670,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         //
@@ -1678,7 +1706,7 @@ namespace Com
                 });
             }
 
-            return null;
+            return Matrix2D.NonMatrix;
         }
 
         //

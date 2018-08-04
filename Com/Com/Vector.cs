@@ -28,13 +28,13 @@ namespace Com
 
         private int _Size; // 此 Vector 存储的向量维度。
 
-        private double[] _VArray = null; // 用于存储向量在各基向量方向的分量系数的数组。
+        private double[] _VArray = null; // 用于存储向量在各基向量方向的分量的数组。
 
         //
 
-        private static Vector _GetEmptyVector(Type type, int dimension) // 获取指定向量类型与维度的 Vector 的新实例。
+        private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的 Vector 的新实例。
         {
-            if (type != Type.NonVector)
+            if (type != Type.NonVector && dimension > 0)
             {
                 Vector result = NonVector;
 
@@ -49,7 +49,7 @@ namespace Com
 
         //
 
-        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为空。
+        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为 null 或为空。
         {
             try
             {
@@ -66,10 +66,10 @@ namespace Com
         #region 构造函数
 
         /// <summary>
-        /// 使用双精度浮点数表示的各基向量方向的分量系数初始化 Vector 的新实例。
+        /// 使用双精度浮点数表示的各基向量方向的分量初始化 Vector 的新实例。
         /// </summary>
         /// <param name="type">向量类型。</param>
-        /// <param name="values">各基向量方向的分量系数。</param>
+        /// <param name="values">各基向量方向的分量。</param>
         public Vector(Type type, params double[] values)
         {
             if (type != Type.NonVector && !_IsNullOrEmpty(values))
@@ -89,9 +89,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用双精度浮点数表示的各基向量方向的分量系数初始化 Vector 的新实例。
+        /// 使用双精度浮点数表示的各基向量方向的分量初始化 Vector 的新实例。
         /// </summary>
-        /// <param name="values">各基向量方向的分量系数。</param>
+        /// <param name="values">各基向量方向的分量。</param>
         public Vector(params double[] values)
         {
             if (!_IsNullOrEmpty(values))
@@ -128,42 +128,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 Vector 是否为 NonVector 的布尔值。
-        /// </summary>
-        public bool IsNonVector
-        {
-            get
-            {
-                return (_Size <= 0);
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 Vector 是否为 ColumnVector 的布尔值。
-        /// </summary>
-        public bool IsColumnVector
-        {
-            get
-            {
-                return (_Size > 0 && _Type == Type.ColumnVector);
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 Vector 是否为 RowVector 的布尔值。
-        /// </summary>
-        public bool IsRowVector
-        {
-            get
-            {
-                return (_Size > 0 && _Type == Type.RowVector);
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取或设置此 Vector 指定索引的基向量方向的分量系数。
+        /// 获取或设置此 Vector 指定索引的基向量方向的分量。
         /// </summary>
         /// <param name="index">索引。</param>
         public double this[int index]
@@ -184,6 +149,41 @@ namespace Com
                 {
                     _VArray[index] = value;
                 }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为非向量的布尔值。
+        /// </summary>
+        public bool IsNonVector
+        {
+            get
+            {
+                return (_Size <= 0);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为列向量的布尔值。
+        /// </summary>
+        public bool IsColumnVector
+        {
+            get
+            {
+                return (_Size > 0 && _Type == Type.ColumnVector);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为行向量的布尔值。
+        /// </summary>
+        public bool IsRowVector
+        {
+            get
+            {
+                return (_Size > 0 && _Type == Type.RowVector);
             }
         }
 
@@ -294,7 +294,7 @@ namespace Com
             {
                 if (_Size > 0)
                 {
-                    Vector result = _GetEmptyVector(_Type, _Size);
+                    Vector result = _GetZeroVector(_Type, _Size);
 
                     for (int i = 0; i < _Size; i++)
                     {
@@ -321,7 +321,7 @@ namespace Com
 
                     if (Mod > 0)
                     {
-                        Vector result = _GetEmptyVector(_Type, _Size);
+                        Vector result = _GetZeroVector(_Type, _Size);
 
                         for (int i = 0; i < _Size; i++)
                         {
@@ -641,7 +641,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector result = _GetEmptyVector(_Type, _Size);
+                Vector result = _GetZeroVector(_Type, _Size);
 
                 result._VArray[0] = Module;
 
@@ -724,7 +724,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                Vector result = _GetEmptyVector(_Type, _Size);
+                Vector result = _GetZeroVector(_Type, _Size);
 
                 if (_Size == 1)
                 {
@@ -870,7 +870,7 @@ namespace Com
         {
             if (type != Type.NonVector && dimension > 0)
             {
-                return _GetEmptyVector(type, dimension);
+                return _GetZeroVector(type, dimension);
             }
 
             return NonVector;
@@ -884,7 +884,7 @@ namespace Com
         {
             if (dimension > 0)
             {
-                return _GetEmptyVector(Type.ColumnVector, dimension);
+                return _GetZeroVector(Type.ColumnVector, dimension);
             }
 
             return NonVector;
@@ -900,7 +900,7 @@ namespace Com
         {
             if (type != Type.NonVector && dimension > 0 && (index >= 0 && index < dimension))
             {
-                Vector result = _GetEmptyVector(type, dimension);
+                Vector result = _GetZeroVector(type, dimension);
 
                 result._VArray[index] = 1;
 
@@ -919,7 +919,7 @@ namespace Com
         {
             if (dimension > 0 && (index >= 0 && index < dimension))
             {
-                Vector result = _GetEmptyVector(Type.ColumnVector, dimension);
+                Vector result = _GetZeroVector(Type.ColumnVector, dimension);
 
                 result._VArray[index] = 1;
 
@@ -1046,7 +1046,7 @@ namespace Com
             {
                 if (left._Size > 1)
                 {
-                    Vector result = _GetEmptyVector(left._Type, left._Size * (left._Size - 1) / 2);
+                    Vector result = _GetZeroVector(left._Type, left._Size * (left._Size - 1) / 2);
 
                     int i = 0;
 
@@ -1077,7 +1077,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1098,7 +1098,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1119,7 +1119,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1140,7 +1140,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1161,7 +1161,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1182,7 +1182,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1204,7 +1204,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = _GetEmptyVector(left._Type, left._Size);
+                Vector result = _GetZeroVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
@@ -1226,7 +1226,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = _GetEmptyVector(left._Type, left._Size);
+                Vector result = _GetZeroVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
@@ -1251,7 +1251,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1272,7 +1272,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1296,7 +1296,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1318,7 +1318,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1340,7 +1340,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = _GetEmptyVector(left._Type, left._Size);
+                Vector result = _GetZeroVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
@@ -1364,7 +1364,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1386,7 +1386,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1408,7 +1408,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = _GetEmptyVector(left._Type, left._Size);
+                Vector result = _GetZeroVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
@@ -1432,7 +1432,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1454,7 +1454,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1476,7 +1476,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = _GetEmptyVector(left._Type, left._Size);
+                Vector result = _GetZeroVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {
@@ -1500,7 +1500,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1522,7 +1522,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(vector))
             {
-                Vector result = _GetEmptyVector(vector._Type, vector._Size);
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
 
                 for (int i = 0; i < vector._Size; i++)
                 {
@@ -1544,7 +1544,7 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                Vector result = _GetEmptyVector(left._Type, left._Size);
+                Vector result = _GetZeroVector(left._Type, left._Size);
 
                 for (int i = 0; i < left._Size; i++)
                 {

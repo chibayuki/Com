@@ -67,7 +67,7 @@ namespace Com
 
         //
 
-        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为空。
+        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为 null 或为空。
         {
             try
             {
@@ -192,6 +192,19 @@ namespace Com
         #region 属性
 
         /// <summary>
+        /// 获取表示不包含任何元素的 BitSet 的新实例。
+        /// </summary>
+        public static BitSet Empty
+        {
+            get
+            {
+                return new BitSet(0);
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 获取或设置此 BitSet 指定索引位置的位值。
         /// </summary>
         /// <param name="index">索引。</param>
@@ -211,7 +224,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 BitSet 是否包含的元素数量为 0 的布尔值。
+        /// 获取表示此 BitSet 是否不包含任何元素的布尔值。
         /// </summary>
         public bool IsEmpty
         {
@@ -632,7 +645,7 @@ namespace Com
                 return Ary.ToArray();
             }
 
-            return null;
+            return new int[0];
         }
 
         /// <summary>
@@ -669,7 +682,7 @@ namespace Com
                 return Ary.ToArray();
             }
 
-            return null;
+            return new int[0];
         }
 
         //
@@ -680,7 +693,7 @@ namespace Com
         /// <param name="bitSet">运算符右侧的 BitSet。</param>
         public BitSet And(BitSet bitSet)
         {
-            if (!IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
+            if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
             {
                 BitSet result = new BitSet(_Size);
 
@@ -694,7 +707,7 @@ namespace Com
                 return result;
             }
 
-            return null;
+            return Empty;
         }
 
         /// <summary>
@@ -703,7 +716,7 @@ namespace Com
         /// <param name="bitSet">运算符右侧的 BitSet。</param>
         public BitSet Or(BitSet bitSet)
         {
-            if (!IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
+            if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
             {
                 BitSet result = new BitSet(_Size);
 
@@ -717,7 +730,7 @@ namespace Com
                 return result;
             }
 
-            return null;
+            return Empty;
         }
 
         /// <summary>
@@ -726,7 +739,7 @@ namespace Com
         /// <param name="bitSet">运算符右侧的 BitSet。</param>
         public BitSet Xor(BitSet bitSet)
         {
-            if (!IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
+            if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
             {
                 BitSet result = new BitSet(_Size);
 
@@ -740,7 +753,7 @@ namespace Com
                 return result;
             }
 
-            return null;
+            return Empty;
         }
 
         /// <summary>
@@ -748,26 +761,31 @@ namespace Com
         /// </summary>
         public BitSet Not()
         {
-            BitSet result = new BitSet(_Size);
-
-            int Len = _GetUintNumOfBitNum(_Size);
-
-            for (int i = 0; i < Len; i++)
+            if (_Size > 0)
             {
-                result._UintArray[i] = (~_UintArray[i]);
-            }
+                BitSet result = new BitSet(_Size);
 
-            if (_Size % _BitsPerUint != 0)
-            {
-                int Size = Len * _BitsPerUint;
+                int Len = _GetUintNumOfBitNum(_Size);
 
-                for (int i = _Size; i < Size; i++)
+                for (int i = 0; i < Len; i++)
                 {
-                    result.Set(i, false);
+                    result._UintArray[i] = (~_UintArray[i]);
                 }
+
+                if (_Size % _BitsPerUint != 0)
+                {
+                    int Size = Len * _BitsPerUint;
+
+                    for (int i = _Size; i < Size; i++)
+                    {
+                        result.Set(i, false);
+                    }
+                }
+
+                return result;
             }
 
-            return result;
+            return Empty;
         }
 
         //
@@ -789,7 +807,7 @@ namespace Com
                 return Result;
             }
 
-            return null;
+            return new bool[0];
         }
 
         /// <summary>
@@ -809,7 +827,7 @@ namespace Com
                 return Result;
             }
 
-            return null;
+            return new int[0];
         }
 
         //
@@ -884,7 +902,7 @@ namespace Com
         #region 静态方法
 
         /// <summary>
-        /// 判断指定的 BitSet 是否为 null 或包含的元素数量为 0。
+        /// 判断指定的 BitSet 是否为 null 或不包含任何元素。
         /// </summary>
         /// <param name="bitSet">用于判断的 BitSet 对象。</param>
         public static bool IsNullOrEmpty(BitSet bitSet)
