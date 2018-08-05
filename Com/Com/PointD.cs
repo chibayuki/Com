@@ -777,8 +777,11 @@ namespace Com
         {
             double __X = _X, __Y = _Y;
 
-            _X = __X * Math.Cos(angle) - __Y * Math.Sin(angle);
-            _Y = __X * Math.Sin(angle) + __Y * Math.Cos(angle);
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
+            _X = __X * CosA - __Y * SinA;
+            _Y = __X * SinA + __Y * CosA;
         }
 
         /// <summary>
@@ -792,8 +795,11 @@ namespace Com
             {
                 double __X = _X, __Y = _Y;
 
-                _X = (__X - pt.X) * Math.Cos(angle) - (__Y - pt.Y) * Math.Sin(angle) + pt.X;
-                _Y = (__X - pt.X) * Math.Sin(angle) + (__Y - pt.Y) * Math.Cos(angle) + pt.Y;
+                double CosA = Math.Cos(angle);
+                double SinA = Math.Sin(angle);
+
+                _X = (__X - pt.X) * CosA - (__Y - pt.Y) * SinA + pt.X;
+                _Y = (__X - pt.X) * SinA + (__Y - pt.Y) * CosA + pt.Y;
             }
         }
 
@@ -805,8 +811,11 @@ namespace Com
         {
             PointD result = new PointD();
 
-            result.X = _X * Math.Cos(angle) - _Y * Math.Sin(angle);
-            result.Y = _X * Math.Sin(angle) + _Y * Math.Cos(angle);
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
+            result.X = _X * CosA - _Y * SinA;
+            result.Y = _X * SinA + _Y * CosA;
 
             return result;
         }
@@ -822,8 +831,11 @@ namespace Com
             {
                 PointD result = new PointD();
 
-                result.X = (_X - pt.X) * Math.Cos(angle) - (_Y - pt.Y) * Math.Sin(angle) + pt.X;
-                result.Y = (_X - pt.X) * Math.Sin(angle) + (_Y - pt.Y) * Math.Cos(angle) + pt.Y;
+                double CosA = Math.Cos(angle);
+                double SinA = Math.Sin(angle);
+
+                result.X = (_X - pt.X) * CosA - (_Y - pt.Y) * SinA + pt.X;
+                result.Y = (_X - pt.X) * SinA + (_Y - pt.Y) * CosA + pt.Y;
 
                 return result;
             }
