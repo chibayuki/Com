@@ -30,32 +30,6 @@ namespace Com
 
         private double[,] _MArray = null; // 用于存储矩阵元素的数组。
 
-        //
-
-        private static bool _IsNaNOrInfinity(double n) // 判断双精度浮点数是否为非数字或无穷大。
-        {
-            try
-            {
-                return (double.IsNaN(n) || double.IsInfinity(n));
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
-        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为 null 或为空。
-        {
-            try
-            {
-                return (array == null || array.Length == 0);
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
         #endregion
 
         #region 构造函数
@@ -158,7 +132,7 @@ namespace Com
         /// <param name="values">二维数组表示的矩阵元素。</param>
         public Matrix2D(double[,] values)
         {
-            if (!_IsNullOrEmpty(values))
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = new Size(values.GetLength(0), values.GetLength(1));
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -419,7 +393,7 @@ namespace Com
 
                             double detTemp = temp.Determinant;
 
-                            if (_IsNaNOrInfinity(detTemp))
+                            if (InternalMethod.IsNaNOrInfinity(detTemp))
                             {
                                 return double.NaN;
                             }
@@ -466,7 +440,7 @@ namespace Com
 
                                 double det = sub.Determinant;
 
-                                if (_IsNaNOrInfinity(det))
+                                if (InternalMethod.IsNaNOrInfinity(det))
                                 {
                                     break;
                                 }
@@ -576,7 +550,7 @@ namespace Com
                     {
                         double det = Determinant;
 
-                        if (_IsNaNOrInfinity(det))
+                        if (InternalMethod.IsNaNOrInfinity(det))
                         {
                             return NonMatrix;
                         }
@@ -587,7 +561,7 @@ namespace Com
                             {
                                 result._MArray[x, y] /= det;
 
-                                if (_IsNaNOrInfinity(result._MArray[x, y]))
+                                if (InternalMethod.IsNaNOrInfinity(result._MArray[x, y]))
                                 {
                                     return NonMatrix;
                                 }
@@ -621,7 +595,7 @@ namespace Com
             {
                 for (int y = 0; y < _Size.Height; y++)
                 {
-                    if (_MArray[x, y] != matrix._MArray[x, y])
+                    if (!_MArray[x, y].Equals(matrix._MArray[x, y]))
                     {
                         return false;
                     }
@@ -708,7 +682,7 @@ namespace Com
         /// 获取表示此 Matrix2D 的指定列的 Vector 的新实例。
         /// </summary>
         /// <param name="x">指定列在此 Matrix2D 的宽度方向（列）的索引。</param>
-        public Vector AtColumn(int x)
+        public Vector GetColumn(int x)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (x >= 0 && x < _Size.Width))
             {
@@ -729,7 +703,7 @@ namespace Com
         /// 获取表示此 Matrix2D 的指定行的 Vector 的新实例。
         /// </summary>
         /// <param name="y">指定行在此 Matrix2D 的高度方向（行）的索引。</param>
-        public Vector AtRow(int y)
+        public Vector GetRow(int y)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (y >= 0 && y < _Size.Height))
             {
@@ -744,6 +718,31 @@ namespace Com
             }
 
             return Vector.NonVector;
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 Matrix2D 转换为双精度浮点数二维数组。
+        /// </summary>
+        public double[,] ToArray()
+        {
+            if (_Size.Width > 0 && _Size.Height > 0)
+            {
+                double[,] result = new double[_Size.Width, _Size.Height];
+
+                for (int x = 0; x < _Size.Height; x++)
+                {
+                    for (int y = 0; y < _Size.Width; y++)
+                    {
+                        result[x, y] = _MArray[x, y];
+                    }
+                }
+
+                return result;
+            }
+
+            return new double[0, 0];
         }
 
         #endregion
@@ -802,6 +801,31 @@ namespace Com
         public static bool IsNullOrNonMatrix(Matrix2D matrix)
         {
             return ((object)matrix == null || matrix._Size.Width <= 0 || matrix._Size.Height <= 0);
+        }
+
+        //
+
+        /// <summary>
+        /// 判断两个 Matrix2D 对象是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 Matrix2D 对象。</param>
+        /// <param name="right">用于比较的第二个 Matrix2D 对象。</param>
+        public static bool Equals(Matrix2D left, Matrix2D right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right))
+            {
+                return false;
+            }
+
+            return left.Equals(right);
         }
 
         //
@@ -892,7 +916,7 @@ namespace Com
         /// <param name="rowsUponMainDiag">对角元素在矩阵中位于主对角线上方的行数。</param>
         public static Matrix2D Diagonal(double[] array, int rowsUponMainDiag)
         {
-            if (!_IsNullOrEmpty(array))
+            if (!InternalMethod.IsNullOrEmpty(array))
             {
                 int order = array.Length + Math.Abs(rowsUponMainDiag);
 
@@ -915,7 +939,7 @@ namespace Com
         /// <param name="array">包含对角元素的数组。</param>
         public static Matrix2D Diagonal(double[] array)
         {
-            if (!_IsNullOrEmpty(array))
+            if (!InternalMethod.IsNullOrEmpty(array))
             {
                 int order = array.Length;
 
@@ -1452,7 +1476,7 @@ namespace Com
 
                         if (!IsNullOrNonMatrix(solution) && solution.Size == new Size(1, order))
                         {
-                            return solution.AtColumn(0);
+                            return solution.GetColumn(0);
                         }
                     }
                 }
@@ -1473,6 +1497,10 @@ namespace Com
         public static bool operator ==(Matrix2D left, Matrix2D right)
         {
             if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
@@ -1503,6 +1531,10 @@ namespace Com
         public static bool operator !=(Matrix2D left, Matrix2D right)
         {
             if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }

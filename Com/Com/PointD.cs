@@ -29,6 +29,16 @@ namespace Com
         private double _X; // X 坐标。
         private double _Y; // Y 坐标。
 
+        //
+
+        private Matrix2D _ToMatrixForAffineTransform() // 获取此 PointD 结构用于仿射变换的矩阵。
+        {
+            return new Matrix2D(new double[1, 3]
+            {
+                { _X, _Y,  1 }
+            });
+        }
+
         #endregion
 
         #region 常量与只读成员
@@ -400,61 +410,7 @@ namespace Com
                 return false;
             }
 
-            return (_X == pt._X && _Y == pt._Y);
-        }
-
-        //
-
-        /// <summary>
-        /// 返回将此 PointD 结构转换为 Point 结构的新实例。
-        /// </summary>
-        public Point ToPoint()
-        {
-            int x = (_X.Equals(double.NaN) ? 0 : (_X < int.MinValue ? int.MinValue : (_X > int.MaxValue ? int.MaxValue : (int)_X)));
-            int y = (_Y.Equals(double.NaN) ? 0 : (_Y < int.MinValue ? int.MinValue : (_Y > int.MaxValue ? int.MaxValue : (int)_Y)));
-
-            return new Point(x, y);
-        }
-
-        /// <summary>
-        /// 返回将此 PointD 结构转换为 PointF 结构的新实例。
-        /// </summary>
-        public PointF ToPointF()
-        {
-            float x = (_X.Equals(double.NaN) ? float.NaN : (_X < float.MinValue ? float.NegativeInfinity : (_X > float.MaxValue ? float.PositiveInfinity : (float)_X)));
-            float y = (_Y.Equals(double.NaN) ? float.NaN : (_Y < float.MinValue ? float.NegativeInfinity : (_Y > float.MaxValue ? float.PositiveInfinity : (float)_Y)));
-
-            return new PointF(x, y);
-        }
-
-        /// <summary>
-        /// 返回将此 PointD 结构转换为 Size 结构的新实例。
-        /// </summary>
-        public Size ToSize()
-        {
-            int width = (_X.Equals(double.NaN) ? 0 : (_X < int.MinValue ? int.MinValue : (_X > int.MaxValue ? int.MaxValue : (int)_X)));
-            int height = (_Y.Equals(double.NaN) ? 0 : (_Y < int.MinValue ? int.MinValue : (_Y > int.MaxValue ? int.MaxValue : (int)_Y)));
-
-            return new Size(width, height);
-        }
-
-        /// <summary>
-        /// 返回将此 PointD 结构转换为 SizeF 结构的新实例。
-        /// </summary>
-        public SizeF ToSizeF()
-        {
-            float width = (_X.Equals(double.NaN) ? float.NaN : (_X < float.MinValue ? float.NegativeInfinity : (_X > float.MaxValue ? float.PositiveInfinity : (float)_X)));
-            float height = (_Y.Equals(double.NaN) ? float.NaN : (_Y < float.MinValue ? float.NegativeInfinity : (_Y > float.MaxValue ? float.PositiveInfinity : (float)_Y)));
-
-            return new SizeF(width, height);
-        }
-
-        /// <summary>
-        /// 返回将此 PointD 结构转换为 Complex 结构的新实例。
-        /// </summary>
-        public Complex ToComplex()
-        {
-            return new Complex(_X, _Y);
+            return (_X.Equals(pt._X) && _Y.Equals(pt._Y));
         }
 
         //
@@ -816,7 +772,7 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 PointD 结构绕原点旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void Rotate(double angle)
         {
             double __X = _X, __Y = _Y;
@@ -828,7 +784,7 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 PointD 结构绕指定的 PointD 结构旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public void Rotate(double angle, PointD pt)
         {
@@ -844,7 +800,7 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD 结构的副本绕原点旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD RotateCopy(double angle)
         {
             PointD result = new PointD();
@@ -858,7 +814,7 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD 结构的副本绕指定的 PointD 结构旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示此 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public PointD RotateCopy(double angle, PointD pt)
         {
@@ -893,11 +849,7 @@ namespace Com
                     { ey.X, ey.Y, 0 },
                     { offset.X, offset.Y, 1 }
                 });
-
-                Matrix2D matrixRight = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
@@ -917,10 +869,7 @@ namespace Com
         {
             if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
             {
-                Matrix2D matrixRight = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
@@ -938,12 +887,9 @@ namespace Com
         /// <param name="matrixLeftList">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表。</param>
         public void AffineTransform(List<Matrix2D> matrixLeftList)
         {
-            if (matrixLeftList.Count > 0)
+            if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D result = _ToMatrixForAffineTransform();
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
                 {
@@ -964,8 +910,11 @@ namespace Com
                     }
                 }
 
-                _X = result[0, 0];
-                _Y = result[0, 1];
+                if (!Matrix2D.IsNullOrNonMatrix(result))
+                {
+                    _X = result[0, 0];
+                    _Y = result[0, 1];
+                }
             }
         }
 
@@ -985,11 +934,7 @@ namespace Com
                     { ey.X, ey.Y, 0 },
                     { offset.X, offset.Y, 1 }
                 });
-
-                Matrix2D matrixRight = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
@@ -1010,10 +955,7 @@ namespace Com
         {
             if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
             {
-                Matrix2D matrixRight = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
@@ -1032,12 +974,9 @@ namespace Com
         /// <param name="matrixLeftList">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表。</param>
         public PointD AffineTransformCopy(List<Matrix2D> matrixLeftList)
         {
-            if (matrixLeftList.Count > 0)
+            if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D result = _ToMatrixForAffineTransform();
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
                 {
@@ -1058,7 +997,10 @@ namespace Com
                     }
                 }
 
-                return new PointD(result[0, 0], result[0, 1]);
+                if (!Matrix2D.IsNullOrNonMatrix(result))
+                {
+                    return new PointD(result[0, 0], result[0, 1]);
+                }
             }
 
             return NaN;
@@ -1080,11 +1022,7 @@ namespace Com
                     { ey.X, ey.Y, 0 },
                     { offset.X, offset.Y, 1 }
                 });
-
-                Matrix2D matrixRight = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
@@ -1104,10 +1042,7 @@ namespace Com
         {
             if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
             {
-                Matrix2D matrixRight = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
@@ -1125,12 +1060,9 @@ namespace Com
         /// <param name="matrixLeftList">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表。</param>
         public void InverseAffineTransform(List<Matrix2D> matrixLeftList)
         {
-            if (matrixLeftList.Count > 0)
+            if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D result = _ToMatrixForAffineTransform();
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
                 {
@@ -1151,8 +1083,11 @@ namespace Com
                     }
                 }
 
-                _X = result[0, 0];
-                _Y = result[0, 1];
+                if (!Matrix2D.IsNullOrNonMatrix(result))
+                {
+                    _X = result[0, 0];
+                    _Y = result[0, 1];
+                }
             }
         }
 
@@ -1172,11 +1107,7 @@ namespace Com
                     { ey.X, ey.Y, 0 },
                     { offset.X, offset.Y, 1 }
                 });
-
-                Matrix2D matrixRight = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
@@ -1197,10 +1128,7 @@ namespace Com
         {
             if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
             {
-                Matrix2D matrixRight = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
@@ -1219,12 +1147,9 @@ namespace Com
         /// <param name="matrixLeftList">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表。</param>
         public PointD InverseAffineTransformCopy(List<Matrix2D> matrixLeftList)
         {
-            if (matrixLeftList.Count > 0)
+            if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = new Matrix2D(new double[1, 3]
-                {
-                    { _X, _Y, 1 }
-                });
+                Matrix2D result = _ToMatrixForAffineTransform();
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
                 {
@@ -1245,7 +1170,10 @@ namespace Com
                     }
                 }
 
-                return new PointD(result[0, 0], result[0, 1]);
+                if (!Matrix2D.IsNullOrNonMatrix(result))
+                {
+                    return new PointD(result[0, 0], result[0, 1]);
+                }
             }
 
             return NaN;
@@ -1332,9 +1260,98 @@ namespace Com
             return new Vector(Vector.Type.RowVector, _X, _Y);
         }
 
+        //
+
+        /// <summary>
+        /// 返回将此 PointD 结构转换为 Point 结构的新实例。
+        /// </summary>
+        public Point ToPoint()
+        {
+            int x = (_X.Equals(double.NaN) ? 0 : (_X < int.MinValue ? int.MinValue : (_X > int.MaxValue ? int.MaxValue : (int)_X)));
+            int y = (_Y.Equals(double.NaN) ? 0 : (_Y < int.MinValue ? int.MinValue : (_Y > int.MaxValue ? int.MaxValue : (int)_Y)));
+
+            return new Point(x, y);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD 结构转换为 PointF 结构的新实例。
+        /// </summary>
+        public PointF ToPointF()
+        {
+            float x = (_X.Equals(double.NaN) ? float.NaN : (_X < float.MinValue ? float.NegativeInfinity : (_X > float.MaxValue ? float.PositiveInfinity : (float)_X)));
+            float y = (_Y.Equals(double.NaN) ? float.NaN : (_Y < float.MinValue ? float.NegativeInfinity : (_Y > float.MaxValue ? float.PositiveInfinity : (float)_Y)));
+
+            return new PointF(x, y);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD 结构转换为 Size 结构的新实例。
+        /// </summary>
+        public Size ToSize()
+        {
+            int width = (_X.Equals(double.NaN) ? 0 : (_X < int.MinValue ? int.MinValue : (_X > int.MaxValue ? int.MaxValue : (int)_X)));
+            int height = (_Y.Equals(double.NaN) ? 0 : (_Y < int.MinValue ? int.MinValue : (_Y > int.MaxValue ? int.MaxValue : (int)_Y)));
+
+            return new Size(width, height);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD 结构转换为 SizeF 结构的新实例。
+        /// </summary>
+        public SizeF ToSizeF()
+        {
+            float width = (_X.Equals(double.NaN) ? float.NaN : (_X < float.MinValue ? float.NegativeInfinity : (_X > float.MaxValue ? float.PositiveInfinity : (float)_X)));
+            float height = (_Y.Equals(double.NaN) ? float.NaN : (_Y < float.MinValue ? float.NegativeInfinity : (_Y > float.MaxValue ? float.PositiveInfinity : (float)_Y)));
+
+            return new SizeF(width, height);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD 结构转换为 Complex 结构的新实例。
+        /// </summary>
+        public Complex ToComplex()
+        {
+            return new Complex(_X, _Y);
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 PointD 结构转换为双精度浮点数数组。
+        /// </summary>
+        public double[] ToArray()
+        {
+            return new double[2] { _X, _Y };
+        }
+
         #endregion
 
         #region 静态方法
+
+        /// <summary>
+        /// 判断两个 PointD 结构是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 PointD 结构。</param>
+        /// <param name="right">用于比较的第二个 PointD 结构。</param>
+        public static bool Equals(PointD left, PointD right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        //
 
         /// <summary>
         /// 返回将 Point 结构转换为 PointD 结构的新实例。
@@ -1678,13 +1695,16 @@ namespace Com
         /// <summary>
         /// 返回表示按双精度浮点数表示的弧度将 PointD 结构绕原点旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static Matrix2D RotateMatrix(double angle)
         {
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
             return new Matrix2D(new double[3, 3]
             {
-                { Math.Cos(angle), Math.Sin(angle), 0 },
-                { -Math.Sin(angle), Math.Cos(angle), 0 },
+                { CosA, SinA, 0 },
+                { -SinA, CosA, 0 },
                 { 0, 0, 1 }
             });
         }
@@ -1692,17 +1712,20 @@ namespace Com
         /// <summary>
         /// 返回表示按双精度浮点数表示的弧度将 PointD 结构绕指定的 PointD 结构旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
-        /// <param name="angle">双精度浮点数表示的弧度，表示 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
         public static Matrix2D RotateMatrix(double angle, PointD pt)
         {
             if ((object)pt != null)
             {
+                double CosA = Math.Cos(angle);
+                double SinA = Math.Sin(angle);
+
                 return new Matrix2D(new double[3, 3]
                 {
-                    { Math.Cos(angle), Math.Sin(angle), 0 },
-                    { -Math.Sin(angle), Math.Cos(angle), 0 },
-                    { -pt.X * Math.Cos(angle) + pt.Y * Math.Sin(angle) + pt.X, -pt.X * Math.Sin(angle) - pt.Y * Math.Cos(angle) + pt.Y, 1 }
+                    { CosA, SinA, 0 },
+                    { -SinA, CosA, 0 },
+                    { -pt.X * CosA + pt.Y * SinA + pt.X, -pt.X * SinA - pt.Y * CosA + pt.Y, 1 }
                 });
             }
 
@@ -1941,6 +1964,114 @@ namespace Com
         #endregion
 
         #region 运算符
+
+        /// <summary>
+        /// 判断两个 PointD 结构是否相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
+        public static bool operator ==(PointD left, PointD right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.X == right.X && left.Y == right.Y);
+        }
+
+        /// <summary>
+        /// 判断两个 PointD 结构是否不相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
+        public static bool operator !=(PointD left, PointD right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return true;
+            }
+
+            return (left.X != right.X || left.Y != right.Y);
+        }
+
+        /// <summary>
+        /// 判断两个 PointD 结构表示的向量的模平方是否前者小于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
+        public static bool operator <(PointD left, PointD right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.VectorModuleSquared < right.VectorModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 PointD 结构表示的向量的模平方是否前者大于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
+        public static bool operator >(PointD left, PointD right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.VectorModuleSquared > right.VectorModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 PointD 结构表示的向量的模平方是否前者小于或等于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
+        public static bool operator <=(PointD left, PointD right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.VectorModuleSquared <= right.VectorModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 PointD 结构表示的向量的模平方是否前者大于或等于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
+        public static bool operator >=(PointD left, PointD right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.VectorModuleSquared >= right.VectorModuleSquared);
+        }
+
+        //
 
         /// <summary>
         /// 返回在 PointD 结构的所有分量前添加正号得到的 PointD 结构的新实例。
@@ -2636,106 +2767,6 @@ namespace Com
             }
 
             return NaN;
-        }
-
-        //
-
-        /// <summary>
-        /// 判断两个 PointD 结构是否相等。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
-        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        public static bool operator ==(PointD left, PointD right)
-        {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.X == right.X && left.Y == right.Y);
-        }
-
-        /// <summary>
-        /// 判断两个 PointD 结构是否不相等。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
-        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        public static bool operator !=(PointD left, PointD right)
-        {
-            if ((object)left == null && (object)right == null)
-            {
-                return false;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return true;
-            }
-
-            return (left.X != right.X || left.Y != right.Y);
-        }
-
-        /// <summary>
-        /// 判断两个 PointD 结构表示的向量的模平方是否前者小于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
-        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        public static bool operator <(PointD left, PointD right)
-        {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.VectorModuleSquared < right.VectorModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 PointD 结构表示的向量的模平方是否前者大于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
-        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        public static bool operator >(PointD left, PointD right)
-        {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.VectorModuleSquared > right.VectorModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 PointD 结构表示的向量的模平方是否前者小于或等于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
-        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        public static bool operator <=(PointD left, PointD right)
-        {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.VectorModuleSquared <= right.VectorModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 PointD 结构表示的向量的模平方是否前者大于或等于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 PointD 结构。</param>
-        /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        public static bool operator >=(PointD left, PointD right)
-        {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.VectorModuleSquared >= right.VectorModuleSquared);
         }
 
         #endregion

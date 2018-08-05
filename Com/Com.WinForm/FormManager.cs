@@ -2486,7 +2486,7 @@ namespace Com.WinForm
             {
                 double Opa = 1;
 
-                if (double.IsNaN(value) || double.IsInfinity(value))
+                if (InternalMethod.IsNaNOrInfinity(value))
                 {
                     Opa = 1;
                 }
@@ -2688,7 +2688,7 @@ namespace Com.WinForm
             {
                 double Opa = 0.1;
 
-                if (double.IsNaN(value) || double.IsInfinity(value))
+                if (InternalMethod.IsNaNOrInfinity(value))
                 {
                     Opa = 0.1;
                 }
@@ -4274,6 +4274,33 @@ namespace Com.WinForm
 
         #endregion
 
+        #region 静态方法
+
+        /// <summary>
+        /// 判断两个 FormManager 对象是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 FormManager 对象。</param>
+        /// <param name="right">用于比较的第二个 FormManager 对象。</param>
+        public static bool Equals(FormManager left, FormManager right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        #endregion
+
         #region 基类方法
 
         /// <summary>
@@ -4328,6 +4355,10 @@ namespace Com.WinForm
             {
                 return true;
             }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
@@ -4344,6 +4375,10 @@ namespace Com.WinForm
         public static bool operator !=(FormManager left, FormManager right)
         {
             if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }

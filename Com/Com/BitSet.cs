@@ -38,7 +38,7 @@ namespace Com
 
         //
 
-        private int _GetUintNumOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数的数量。
+        private static int _GetUintNumOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数的数量。
         {
             if (bitNum > 0)
             {
@@ -48,7 +48,7 @@ namespace Com
             return 0;
         }
 
-        private int _GetUintArrayLengthOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数数组的长度。
+        private static int _GetUintArrayLengthOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数数组的长度。
         {
             if (bitNum > 0)
             {
@@ -63,20 +63,6 @@ namespace Com
             }
 
             return 0;
-        }
-
-        //
-
-        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为 null 或为空。
-        {
-            try
-            {
-                return (array == null || array.Length == 0);
-            }
-            catch
-            {
-                return true;
-            }
         }
 
         #endregion
@@ -141,7 +127,7 @@ namespace Com
         /// <param name="array">表示位值的布尔值数组。</param>
         public BitSet(bool[] array)
         {
-            if (!_IsNullOrEmpty(array))
+            if (!InternalMethod.IsNullOrEmpty(array))
             {
                 _Size = Math.Min(_MaxSize, array.Length);
                 _UintArray = new uint[_GetUintArrayLengthOfBitNum(array.Length)];
@@ -167,7 +153,7 @@ namespace Com
         /// <param name="array">表示位值的 32 位整数数组。</param>
         public BitSet(int[] array)
         {
-            if (!_IsNullOrEmpty(array))
+            if (!InternalMethod.IsNullOrEmpty(array))
             {
                 _Size = Math.Min(_MaxSize, array.Length);
                 _UintArray = new uint[_GetUintArrayLengthOfBitNum(array.Length)];
@@ -791,7 +777,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将此 BitSet 转换为布尔值的数组。
+        /// 将此 BitSet 转换为布尔值数组。
         /// </summary>
         public bool[] ToBoolArray()
         {
@@ -811,7 +797,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将此 BitSet 转换为 32 位整数的数组。
+        /// 将此 BitSet 转换为 32 位整数数组。
         /// </summary>
         public int[] ToIntArray()
         {
@@ -910,6 +896,31 @@ namespace Com
             return ((object)bitSet == null || bitSet._Size <= 0);
         }
 
+        //
+
+        /// <summary>
+        /// 判断两个 BitSet 对象是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 BitSet 对象。</param>
+        /// <param name="right">用于比较的第二个 BitSet 对象。</param>
+        public static bool Equals(BitSet left, BitSet right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
         #endregion
 
         #region 运算符
@@ -925,12 +936,18 @@ namespace Com
             {
                 return true;
             }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return false;
             }
 
-            for (int i = 0; i < left._Size; i++)
+            int Len = _GetUintNumOfBitNum(left._Size);
+
+            for (int i = 0; i < Len; i++)
             {
                 if (left._UintArray[i] != right._UintArray[i])
                 {
@@ -952,12 +969,18 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return true;
             }
 
-            for (int i = 0; i < left._Size; i++)
+            int Len = _GetUintNumOfBitNum(left._Size);
+
+            for (int i = 0; i < Len; i++)
             {
                 if (left._UintArray[i] != right._UintArray[i])
                 {

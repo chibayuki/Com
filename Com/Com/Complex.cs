@@ -293,7 +293,7 @@ namespace Com
                 return false;
             }
 
-            return (_Real == comp._Real && _Image == comp._Image);
+            return (_Real.Equals(comp._Real) && _Image.Equals(comp._Image));
         }
 
         //
@@ -311,6 +311,31 @@ namespace Com
         #region 静态方法
 
         /// <summary>
+        /// 判断两个 Complex 结构是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 Complex 结构。</param>
+        /// <param name="right">用于比较的第二个 Complex 结构。</param>
+        public static bool Equals(Complex left, Complex right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        //
+
+        /// <summary>
         /// 返回将 PointD 结构转换为 Complex 结构的新实例。
         /// </summary>
         /// <param name="pt">Point 结构。</param>
@@ -325,6 +350,20 @@ namespace Com
         }
 
         //
+
+        /// <summary>
+        /// 返回对 Complex 结构的计算平方得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="comp">Complex 结构，表示底数。</param>
+        public static Complex Sqr(Complex comp)
+        {
+            if ((object)comp != null)
+            {
+                return new Complex(comp.Real * comp.Real - comp.Image * comp.Image, 2 * comp.Real * comp.Image);
+            }
+
+            return NaN;
+        }
 
         /// <summary>
         /// 返回对 Complex 结构的计算平方根得到的 Complex 结构的新实例。
@@ -818,6 +857,114 @@ namespace Com
         #region 运算符
 
         /// <summary>
+        /// 判断两个 Complex 结构是否相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
+        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        public static bool operator ==(Complex left, Complex right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.Real == right.Real && left.Image == right.Image);
+        }
+
+        /// <summary>
+        /// 判断两个 Complex 结构是否不相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
+        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        public static bool operator !=(Complex left, Complex right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return true;
+            }
+
+            return (left.Real != right.Real || left.Image != right.Image);
+        }
+
+        /// <summary>
+        /// 判断两个 Complex 结构的模平方是否前者小于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
+        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        public static bool operator <(Complex left, Complex right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.ModuleSquared < right.ModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 Complex 结构的模平方是否前者大于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
+        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        public static bool operator >(Complex left, Complex right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.ModuleSquared > right.ModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 Complex 结构的模平方是否前者小于或等于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
+        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        public static bool operator <=(Complex left, Complex right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.ModuleSquared <= right.ModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 Complex 结构的模平方是否前者大于或等于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
+        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        public static bool operator >=(Complex left, Complex right)
+        {
+            if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left.ModuleSquared >= right.ModuleSquared);
+        }
+
+        //
+
+        /// <summary>
         /// 返回在 Complex 结构的所有分量前添加正号得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
@@ -907,106 +1054,6 @@ namespace Com
             }
 
             return NaN;
-        }
-
-        //
-
-        /// <summary>
-        /// 判断两个 Complex 结构是否相等。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
-        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        public static bool operator ==(Complex left, Complex right)
-        {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.Real == right.Real && left.Image == right.Image);
-        }
-
-        /// <summary>
-        /// 判断两个 Complex 结构是否不相等。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
-        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        public static bool operator !=(Complex left, Complex right)
-        {
-            if ((object)left == null && (object)right == null)
-            {
-                return false;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return true;
-            }
-
-            return (left.Real != right.Real || left.Image != right.Image);
-        }
-
-        /// <summary>
-        /// 判断两个 Complex 结构的模平方是否前者小于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
-        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        public static bool operator <(Complex left, Complex right)
-        {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.ModuleSquared < right.ModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 Complex 结构的模平方是否前者大于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
-        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        public static bool operator >(Complex left, Complex right)
-        {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.ModuleSquared > right.ModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 Complex 结构的模平方是否前者小于或等于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
-        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        public static bool operator <=(Complex left, Complex right)
-        {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.ModuleSquared <= right.ModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 Complex 结构的模平方是否前者大于或等于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Complex 结构。</param>
-        /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        public static bool operator >=(Complex left, Complex right)
-        {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
-            return (left.ModuleSquared >= right.ModuleSquared);
         }
 
         #endregion

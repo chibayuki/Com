@@ -185,7 +185,7 @@ namespace Com
 
         private static double _CheckProportion(double proportion) // 对双精度浮点数表示的比例的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(proportion) || double.IsInfinity(proportion))
+            if (InternalMethod.IsNaNOrInfinity(proportion))
             {
                 proportion = 1;
             }
@@ -396,7 +396,7 @@ namespace Com
 
         private static double _CheckLevel(double level) // 对双精度浮点数表示的调整程度的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(level) || double.IsInfinity(level))
+            if (InternalMethod.IsNaNOrInfinity(level))
             {
                 level = 0;
             }

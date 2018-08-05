@@ -742,5 +742,134 @@ namespace Com.WinForm
         }
 
         #endregion
+
+        #region 方法
+
+        /// <summary>
+        /// 判断此 RecommendColors 对象是否与指定的 RecommendColors 对象相等。
+        /// </summary>
+        /// <param name="recommendColors">用于比较的 RecommendColors 对象。</param>
+        public bool Equals(RecommendColors recommendColors)
+        {
+            if ((object)recommendColors == null)
+            {
+                return false;
+            }
+
+            return (_FormBackground.Equals(recommendColors._FormBackground) && _CaptionBar.Equals(recommendColors._CaptionBar) && _Caption.Equals(recommendColors._Caption) && _ControlButton.Equals(recommendColors._ControlButton) && _ControlButton_DEC.Equals(recommendColors._ControlButton_DEC) && _ControlButton_INC.Equals(recommendColors._ControlButton_INC) && _ExitButton.Equals(recommendColors._ExitButton) && _ExitButton_DEC.Equals(recommendColors._ExitButton_DEC) && _ExitButton_INC.Equals(recommendColors._ExitButton_INC) && _MenuItemBackground.Equals(recommendColors._MenuItemBackground) && _MenuItemText.Equals(recommendColors._MenuItemText) && _Main.Equals(recommendColors._Main) && _Main_DEC.Equals(recommendColors._Main_DEC) && _Main_INC.Equals(recommendColors._Main_INC) && _Text.Equals(recommendColors._Text) && _Text_DEC.Equals(recommendColors._Text_DEC) && _Text_INC.Equals(recommendColors._Text_INC) && _Background.Equals(recommendColors._Background) && _Background_DEC.Equals(recommendColors._Background_DEC) && _Background_INC.Equals(recommendColors._Background_INC) && _Border.Equals(recommendColors._Border) && _Border_DEC.Equals(recommendColors._Border_DEC) && _Border_INC.Equals(recommendColors._Border_INC) && _Button.Equals(recommendColors._Button) && _Button_DEC.Equals(recommendColors._Button_DEC) && _Button_INC.Equals(recommendColors._Button_INC) && _Slider.Equals(recommendColors._Slider) && _Slider_DEC.Equals(recommendColors._Slider_DEC) && _Slider_INC.Equals(recommendColors._Slider_INC) && _ScrollBar.Equals(recommendColors._ScrollBar) && _ScrollBar_DEC.Equals(recommendColors._ScrollBar_DEC) && _ScrollBar_INC.Equals(recommendColors._ScrollBar_INC));
+        }
+
+        #endregion
+
+        #region 静态方法
+
+        /// <summary>
+        /// 判断两个 RecommendColors 对象是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 RecommendColors 对象。</param>
+        /// <param name="right">用于比较的第二个 RecommendColors 对象。</param>
+        public static bool Equals(RecommendColors left, RecommendColors right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        #endregion
+
+        #region 基类方法
+
+        /// <summary>
+        /// 判断此 RecommendColors 对象是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is RecommendColors))
+            {
+                return false;
+            }
+
+            return Equals((RecommendColors)obj);
+        }
+
+        /// <summary>
+        /// 返回此 RecommendColors 对象的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 RecommendColors 对象转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            return base.GetType().Name;
+        }
+
+        #endregion
+
+        #region 运算符
+
+        /// <summary>
+        /// 判断两个 RecommendColors 对象是否相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 RecommendColors 对象。</param>
+        /// <param name="right">运算符右侧比较的 RecommendColors 对象。</param>
+        public static bool operator ==(RecommendColors left, RecommendColors right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return (left._FormBackground == right._FormBackground && left._CaptionBar == right._CaptionBar && left._Caption == right._Caption && left._ControlButton == right._ControlButton && left._ControlButton_DEC == right._ControlButton_DEC && left._ControlButton_INC == right._ControlButton_INC && left._ExitButton == right._ExitButton && left._ExitButton_DEC == right._ExitButton_DEC && left._ExitButton_INC == right._ExitButton_INC && left._MenuItemBackground == right._MenuItemBackground && left._MenuItemText == right._MenuItemText && left._Main == right._Main && left._Main_DEC == right._Main_DEC && left._Main_INC == right._Main_INC && left._Text == right._Text && left._Text_DEC == right._Text_DEC && left._Text_INC == right._Text_INC && left._Background == right._Background && left._Background_DEC == right._Background_DEC && left._Background_INC == right._Background_INC && left._Border == right._Border && left._Border_DEC == right._Border_DEC && left._Border_INC == right._Border_INC && left._Button == right._Button && left._Button_DEC == right._Button_DEC && left._Button_INC == right._Button_INC && left._Slider == right._Slider && left._Slider_DEC == right._Slider_DEC && left._Slider_INC == right._Slider_INC && left._ScrollBar == right._ScrollBar && left._ScrollBar_DEC == right._ScrollBar_DEC && left._ScrollBar_INC == right._ScrollBar_INC);
+        }
+
+        /// <summary>
+        /// 判断两个 RecommendColors 对象是否不相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 RecommendColors 对象。</param>
+        /// <param name="right">运算符右侧比较的 RecommendColors 对象。</param>
+        public static bool operator !=(RecommendColors left, RecommendColors right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return true;
+            }
+
+            return (left._FormBackground != right._FormBackground || left._CaptionBar != right._CaptionBar || left._Caption != right._Caption || left._ControlButton != right._ControlButton || left._ControlButton_DEC != right._ControlButton_DEC || left._ControlButton_INC != right._ControlButton_INC || left._ExitButton != right._ExitButton || left._ExitButton_DEC != right._ExitButton_DEC || left._ExitButton_INC != right._ExitButton_INC || left._MenuItemBackground != right._MenuItemBackground || left._MenuItemText != right._MenuItemText || left._Main != right._Main || left._Main_DEC != right._Main_DEC || left._Main_INC != right._Main_INC || left._Text != right._Text || left._Text_DEC != right._Text_DEC || left._Text_INC != right._Text_INC || left._Background != right._Background || left._Background_DEC != right._Background_DEC || left._Background_INC != right._Background_INC || left._Border != right._Border || left._Border_DEC != right._Border_DEC || left._Border_INC != right._Border_INC || left._Button != right._Button || left._Button_DEC != right._Button_DEC || left._Button_INC != right._Button_INC || left._Slider != right._Slider || left._Slider_DEC != right._Slider_DEC || left._Slider_INC != right._Slider_INC || left._ScrollBar != right._ScrollBar || left._ScrollBar_DEC != right._ScrollBar_DEC || left._ScrollBar_INC != right._ScrollBar_INC);
+        }
+
+        #endregion
     }
 }

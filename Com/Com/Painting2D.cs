@@ -41,7 +41,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !pt1.IsNaNOrInfinity && !pt2.IsNaNOrInfinity && (!color.IsEmpty && color.A > 0) && (!float.IsNaN(width) && !float.IsInfinity(width) && width > 0))
+                if (bmp != null && !pt1.IsNaNOrInfinity && !pt2.IsNaNOrInfinity && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width > 0))
                 {
                     if (Geometry.LineIsVisibleInRectangle(pt1, pt2, new RectangleF(new Point(0, 0), bmp.Size)))
                     {
@@ -114,7 +114,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!double.IsNaN(radius) && !double.IsInfinity(radius) && radius > 0) && (!double.IsNaN(deltaRadius) && !double.IsInfinity(deltaRadius) && deltaRadius > 0) && normalIncreasePeriod > 0 && (!color.IsEmpty && color.A > 0))
+                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && (!InternalMethod.IsNaNOrInfinity(deltaRadius) && deltaRadius > 0) && normalIncreasePeriod > 0 && (!color.IsEmpty && color.A > 0))
                 {
                     if (Geometry.CircleInnerIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
                     {
@@ -180,7 +180,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!double.IsNaN(radius) && !double.IsInfinity(radius) && radius > 0) && (!color.IsEmpty && color.A > 0) && (!float.IsNaN(width) && !float.IsInfinity(width) && width >= 0))
+                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
                 {
                     if (width > 0)
                     {
@@ -250,7 +250,7 @@ namespace Com
 
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!double.IsNaN(radius) && !double.IsInfinity(radius) && radius > 0) && (!double.IsNaN(refPhase) && !double.IsInfinity(refPhase)) && (!color.IsEmpty && color.A > 0) && (!float.IsNaN(width) && !float.IsInfinity(width) && width >= 0))
+                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
                 {
                     PointD RectCenter = new PointD(bmp.Width / 2, bmp.Height / 2);
 
@@ -661,7 +661,7 @@ namespace Com
 
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!double.IsNaN(semiMajorAxis) && !double.IsInfinity(semiMajorAxis) && semiMajorAxis > 0) && (!double.IsNaN(eccentricity) && !double.IsInfinity(eccentricity) && eccentricity >= 0) && (!double.IsNaN(rotateAngle) && !double.IsInfinity(rotateAngle)) && (!double.IsNaN(refPhase) && !double.IsInfinity(refPhase)) && (!color.IsEmpty && color.A > 0) && (!float.IsNaN(width) && !float.IsInfinity(width) && width >= 0))
+                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(semiMajorAxis) && semiMajorAxis > 0) && (!InternalMethod.IsNaNOrInfinity(eccentricity) && eccentricity >= 0) && !InternalMethod.IsNaNOrInfinity(rotateAngle) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
                 {
                     PointD RectCenter = new PointD(bmp.Width / 2, bmp.Height / 2);
 
@@ -1134,7 +1134,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !string.IsNullOrWhiteSpace(text) && font != null && (!frontColor.IsEmpty && frontColor.A > 0) && !new PointD(pt).IsNaNOrInfinity && (!float.IsNaN(offset) && !float.IsInfinity(offset) && offset >= 0))
+                if (bmp != null && !string.IsNullOrWhiteSpace(text) && font != null && (!frontColor.IsEmpty && frontColor.A > 0) && !new PointD(pt).IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(offset) && offset >= 0))
                 {
                     using (Graphics Grph = Graphics.FromImage(bmp))
                     {
@@ -1190,7 +1190,7 @@ namespace Com
         {
             try
             {
-                if (form != null && bmp != null && (!double.IsNaN(opacity) && !double.IsInfinity(opacity) && opacity > 0))
+                if (form != null && bmp != null && (!InternalMethod.IsNaNOrInfinity(opacity) && opacity > 0))
                 {
                     opacity = Math.Max(0, Math.Min(opacity, 100));
 

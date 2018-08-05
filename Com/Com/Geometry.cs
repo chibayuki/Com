@@ -114,7 +114,7 @@ namespace Com
         {
             try
             {
-                if (double.IsNaN(angle) || double.IsInfinity(angle))
+                if (InternalMethod.IsNaNOrInfinity(angle))
                 {
                     return double.NaN;
                 }
@@ -243,7 +243,7 @@ namespace Com
         {
             try
             {
-                if (ctrls == null || ctrls.Length == 0)
+                if (InternalMethod.IsNullOrEmpty(ctrls))
                 {
                     return Rectangle.Empty;
                 }
@@ -306,7 +306,7 @@ namespace Com
         {
             try
             {
-                if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (double.IsNaN(radius) || double.IsInfinity(radius) || radius <= 0))
+                if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0))
                 {
                     return false;
                 }
@@ -331,7 +331,7 @@ namespace Com
         {
             try
             {
-                if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (double.IsNaN(semiMajorAxis) || double.IsInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (double.IsNaN(eccentricity) || double.IsInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || (double.IsNaN(rotateAngle) || double.IsInfinity(rotateAngle)))
+                if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || InternalMethod.IsNaNOrInfinity(rotateAngle))
                 {
                     return false;
                 }
@@ -362,7 +362,7 @@ namespace Com
         {
             try
             {
-                if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (double.IsNaN(semiMajorAxis) || double.IsInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (double.IsNaN(semiMinorAxis) || double.IsInfinity(semiMinorAxis) || semiMinorAxis <= 0) || (double.IsNaN(rotateAngle) || double.IsInfinity(rotateAngle)))
+                if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(semiMinorAxis) || semiMinorAxis <= 0) || InternalMethod.IsNaNOrInfinity(rotateAngle))
                 {
                     return false;
                 }
@@ -449,7 +449,7 @@ namespace Com
         {
             try
             {
-                if (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity || offset.IsNaNOrInfinity || (double.IsNaN(radius) || double.IsInfinity(radius) || radius <= 0))
+                if (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0))
                 {
                     return false;
                 }
@@ -504,7 +504,7 @@ namespace Com
         {
             try
             {
-                if (offset.IsNaNOrInfinity || (double.IsNaN(radius) || double.IsInfinity(radius) || radius <= 0) || rect.Size.IsEmpty)
+                if (offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || rect.Size.IsEmpty)
                 {
                     return false;
                 }
@@ -570,7 +570,7 @@ namespace Com
         {
             try
             {
-                if (offset.IsNaNOrInfinity || (double.IsNaN(radius) || double.IsInfinity(radius) || radius <= 0) || rect.Size.IsEmpty)
+                if (offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || rect.Size.IsEmpty)
                 {
                     return false;
                 }
@@ -655,7 +655,7 @@ namespace Com
         {
             try
             {
-                if ((double.IsNaN(semiMajorAxis) || double.IsInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (double.IsNaN(eccentricity) || double.IsInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || (double.IsNaN(phase) || double.IsInfinity(phase)))
+                if ((InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || InternalMethod.IsNaNOrInfinity(phase))
                 {
                     return double.NaN;
                 }
@@ -680,7 +680,7 @@ namespace Com
         {
             try
             {
-                if ((double.IsNaN(semiMajorAxis) || double.IsInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (double.IsNaN(eccentricity) || double.IsInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || (double.IsNaN(phase) || double.IsInfinity(phase)))
+                if ((InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || InternalMethod.IsNaNOrInfinity(phase))
                 {
                     return double.NaN;
                 }
@@ -704,7 +704,7 @@ namespace Com
         {
             try
             {
-                if ((double.IsNaN(centralAngle) || double.IsInfinity(centralAngle)) || (double.IsNaN(eccentricity) || double.IsInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1))
+                if (InternalMethod.IsNaNOrInfinity(centralAngle) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1))
                 {
                     return double.NaN;
                 }
@@ -733,7 +733,7 @@ namespace Com
         {
             try
             {
-                if (bmp == null || (double.IsNaN(rotateAngle) || double.IsInfinity(rotateAngle)))
+                if (bmp == null || InternalMethod.IsNaNOrInfinity(rotateAngle))
                 {
                     return null;
                 }

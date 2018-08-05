@@ -55,7 +55,7 @@ namespace Com
 
         private static double _CheckOpacity(double opacity) // 对颜色的不透明度的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(opacity) || double.IsInfinity(opacity))
+            if (InternalMethod.IsNaNOrInfinity(opacity))
             {
                 return _MinOpacity;
             }
@@ -74,7 +74,7 @@ namespace Com
 
         private static double _CheckAlpha(double alpha) // 对颜色在 RGB 色彩空间中的 Alpha 通道（A）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(alpha) || double.IsInfinity(alpha))
+            if (InternalMethod.IsNaNOrInfinity(alpha))
             {
                 return _MinAlpha;
             }
@@ -93,7 +93,7 @@ namespace Com
 
         private static double _CheckRed(double red) // 对颜色在 RGB 色彩空间中的红色通道（R）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(red) || double.IsInfinity(red))
+            if (InternalMethod.IsNaNOrInfinity(red))
             {
                 return _MinRed;
             }
@@ -112,7 +112,7 @@ namespace Com
 
         private static double _CheckGreen(double green) // 对颜色在 RGB 色彩空间中的绿色通道（G）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(green) || double.IsInfinity(green))
+            if (InternalMethod.IsNaNOrInfinity(green))
             {
                 return _MinGreen;
             }
@@ -131,7 +131,7 @@ namespace Com
 
         private static double _CheckBlue(double blue) // 对颜色在 RGB 色彩空间中的蓝色通道（B）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(blue) || double.IsInfinity(blue))
+            if (InternalMethod.IsNaNOrInfinity(blue))
             {
                 return _MinBlue;
             }
@@ -150,7 +150,7 @@ namespace Com
 
         private static double _CheckHue_HSV(double hue) // 对颜色在 HSV 色彩空间中的色相（H）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(hue) || double.IsInfinity(hue))
+            if (InternalMethod.IsNaNOrInfinity(hue))
             {
                 return _MinHue_HSV;
             }
@@ -169,7 +169,7 @@ namespace Com
 
         private static double _CheckSaturation_HSV(double saturation) // 对颜色在 HSV 色彩空间中的饱和度（S）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(saturation) || double.IsInfinity(saturation))
+            if (InternalMethod.IsNaNOrInfinity(saturation))
             {
                 return _MinSaturation_HSV;
             }
@@ -188,7 +188,7 @@ namespace Com
 
         private static double _CheckBrightness(double brightness) // 对颜色在 HSV 色彩空间中的明度（V）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(brightness) || double.IsInfinity(brightness))
+            if (InternalMethod.IsNaNOrInfinity(brightness))
             {
                 return _MinBrightness;
             }
@@ -207,7 +207,7 @@ namespace Com
 
         private static double _CheckHue_HSL(double hue) // 对颜色在 HSL 色彩空间中的色相（H）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(hue) || double.IsInfinity(hue))
+            if (InternalMethod.IsNaNOrInfinity(hue))
             {
                 return _MinHue_HSL;
             }
@@ -226,7 +226,7 @@ namespace Com
 
         private static double _CheckSaturation_HSL(double saturation) // 对颜色在 HSL 色彩空间中的饱和度（S）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(saturation) || double.IsInfinity(saturation))
+            if (InternalMethod.IsNaNOrInfinity(saturation))
             {
                 return _MinSaturation_HSL;
             }
@@ -245,7 +245,7 @@ namespace Com
 
         private static double _CheckLightness_HSL(double lightness) // 对颜色在 HSL 色彩空间中的明度（L）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(lightness) || double.IsInfinity(lightness))
+            if (InternalMethod.IsNaNOrInfinity(lightness))
             {
                 return _MinLightness_HSL;
             }
@@ -264,7 +264,7 @@ namespace Com
 
         private static double _CheckCyan(double cyan) // 对颜色在 CMYK 色彩空间中的青色通道（C）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(cyan) || double.IsInfinity(cyan))
+            if (InternalMethod.IsNaNOrInfinity(cyan))
             {
                 return _MinCyan;
             }
@@ -283,7 +283,7 @@ namespace Com
 
         private static double _CheckMagenta(double magenta) // 对颜色在 CMYK 色彩空间中的洋红色通道（M）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(magenta) || double.IsInfinity(magenta))
+            if (InternalMethod.IsNaNOrInfinity(magenta))
             {
                 return _MinMagenta;
             }
@@ -302,7 +302,7 @@ namespace Com
 
         private static double _CheckYellow(double yellow) // 对颜色在 CMYK 色彩空间中的黄色通道（Y）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(yellow) || double.IsInfinity(yellow))
+            if (InternalMethod.IsNaNOrInfinity(yellow))
             {
                 return _MinYellow;
             }
@@ -321,7 +321,7 @@ namespace Com
 
         private static double _CheckBlack(double black) // 对颜色在 CMYK 色彩空间中的黑色通道（K）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(black) || double.IsInfinity(black))
+            if (InternalMethod.IsNaNOrInfinity(black))
             {
                 return _MaxBlack;
             }
@@ -340,7 +340,7 @@ namespace Com
 
         private static double _CheckLightness_LAB(double lightness) // 对颜色在 LAB 色彩空间中的明度（L）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(lightness) || double.IsInfinity(lightness))
+            if (InternalMethod.IsNaNOrInfinity(lightness))
             {
                 return _MinLightness_LAB;
             }
@@ -359,7 +359,7 @@ namespace Com
 
         private static double _CheckGreenRed(double greenRed) // 对颜色在 LAB 色彩空间中的绿色-红色通道（A）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(greenRed) || double.IsInfinity(greenRed))
+            if (InternalMethod.IsNaNOrInfinity(greenRed))
             {
                 return 0;
             }
@@ -378,7 +378,7 @@ namespace Com
 
         private static double _CheckBlueYellow(double blueYellow) // 对颜色在 LAB 色彩空间中的蓝色-黄色通道（B）的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(blueYellow) || double.IsInfinity(blueYellow))
+            if (InternalMethod.IsNaNOrInfinity(blueYellow))
             {
                 return 0;
             }
@@ -1664,7 +1664,7 @@ namespace Com
                 return false;
             }
 
-            return (_Opacity == color._Opacity && (_Alpha == color._Alpha && _Red == color._Red && _Green == color._Green && _Blue == color._Blue) && (_Hue_HSV == color._Hue_HSV && _Saturation_HSV == color._Saturation_HSV && _Brightness == color._Brightness) && (_Hue_HSL == color._Hue_HSL && _Saturation_HSL == color._Saturation_HSL && _Lightness_HSL == color._Lightness_HSL) && (_Cyan == color._Cyan && _Magenta == color._Magenta && _Yellow == color._Yellow && _Black == color._Black) && (_Lightness_LAB == color._Lightness_LAB && _GreenRed == color._GreenRed && _BlueYellow == color._BlueYellow));
+            return (_Opacity.Equals(color._Opacity) && (_Alpha.Equals(color._Alpha) && _Red.Equals(color._Red) && _Green.Equals(color._Green) && _Blue.Equals(color._Blue)) && (_Hue_HSV.Equals(color._Hue_HSV) && _Saturation_HSV.Equals(color._Saturation_HSV) && _Brightness.Equals(color._Brightness)) && (_Hue_HSL.Equals(color._Hue_HSL) && _Saturation_HSL.Equals(color._Saturation_HSL) && _Lightness_HSL.Equals(color._Lightness_HSL)) && (_Cyan.Equals(color._Cyan) && _Magenta.Equals(color._Magenta) && _Yellow.Equals(color._Yellow) && _Black.Equals(color._Black)) && (_Lightness_LAB.Equals(color._Lightness_LAB) && _GreenRed.Equals(color._GreenRed) && _BlueYellow.Equals(color._BlueYellow)));
         }
 
         //
@@ -1939,6 +1939,31 @@ namespace Com
         #endregion
 
         #region 静态方法
+
+        /// <summary>
+        /// 判断两个 ColorX 结构是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 ColorX 结构。</param>
+        /// <param name="right">用于比较的第二个 ColorX 结构。</param>
+        public static bool Equals(ColorX left, ColorX right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        //
 
         /// <summary>
         /// 返回将 Color 结构转换为 ColorX 结构的新实例。
@@ -2369,6 +2394,10 @@ namespace Com
             {
                 return true;
             }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
             else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
@@ -2385,6 +2414,10 @@ namespace Com
         public static bool operator !=(ColorX left, ColorX right)
         {
             if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }

@@ -15,6 +15,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Drawing;
+
 namespace Com
 {
     /// <summary>
@@ -32,7 +34,44 @@ namespace Com
 
         //
 
-        private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的 Vector 的新实例。
+        private Matrix2D _ToMatrixForAffineTransform() // 获取此 Vector 用于仿射变换的矩阵。
+        {
+            if (_Size > 0)
+            {
+                if (_Type == Type.RowVector)
+                {
+                    double[,] values = new double[_Size + 1, 1];
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        values[i, 0] = _VArray[i];
+                    }
+
+                    values[_Size, 0] = 1;
+
+                    return new Matrix2D(values);
+                }
+                else
+                {
+                    double[,] values = new double[1, _Size + 1];
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        values[0, i] = _VArray[i];
+                    }
+
+                    values[0, _Size] = 1;
+
+                    return new Matrix2D(values);
+                }
+            }
+
+            return Matrix2D.NonMatrix;
+        }
+
+        //
+
+        private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的零向量。
         {
             if (type != Type.NonVector && dimension > 0)
             {
@@ -47,20 +86,6 @@ namespace Com
             return NonVector;
         }
 
-        //
-
-        private static bool _IsNullOrEmpty(Array array) // 判断数组是否为 null 或为空。
-        {
-            try
-            {
-                return (array == null || array.Length == 0);
-            }
-            catch
-            {
-                return true;
-            }
-        }
-
         #endregion
 
         #region 构造函数
@@ -72,7 +97,7 @@ namespace Com
         /// <param name="values">各基向量方向的分量。</param>
         public Vector(Type type, params double[] values)
         {
-            if (type != Type.NonVector && !_IsNullOrEmpty(values))
+            if (type != Type.NonVector && !InternalMethod.IsNullOrEmpty(values))
             {
                 _Type = type;
                 _Size = values.Length;
@@ -94,7 +119,7 @@ namespace Com
         /// <param name="values">各基向量方向的分量。</param>
         public Vector(params double[] values)
         {
-            if (!_IsNullOrEmpty(values))
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
                 _Type = Type.ColumnVector;
                 _Size = values.Length;
@@ -172,7 +197,7 @@ namespace Com
         {
             get
             {
-                return (_Size > 0 && _Type == Type.ColumnVector);
+                return (_Size > 0 && _Type != Type.RowVector);
             }
         }
 
@@ -278,7 +303,7 @@ namespace Com
             {
                 if (_Size > 0)
                 {
-                    return new Vector((_Type == Type.ColumnVector ? Type.RowVector : Type.ColumnVector), _VArray);
+                    return new Vector((_Type == Type.RowVector ? Type.ColumnVector : Type.RowVector), _VArray);
                 }
 
                 return NonVector;
@@ -353,7 +378,7 @@ namespace Com
 
             for (int i = 0; i < _Size; i++)
             {
-                if (_VArray[i] != vector._VArray[i])
+                if (!_VArray[i].Equals(vector._VArray[i]))
                 {
                     return false;
                 }
@@ -522,6 +547,512 @@ namespace Com
                 }
 
                 return result;
+            }
+
+            return NonVector;
+        }
+
+        //
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 Vector 旋转指定的角度。
+        /// </summary>
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public void Rotate(int index1, int index2, double angle)
+        {
+            if (_Size > 0 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
+            {
+                Matrix2D matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
+                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    Matrix2D result = Matrix2D.Multiply(matrixVector, matrixRotate);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    Matrix2D result = Matrix2D.Multiply(matrixRotate, matrixVector);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 Vector 的副本旋转指定的角度的新实例。
+        /// </summary>
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public Vector RotateCopy(int index1, int index2, double angle)
+        {
+            if (_Size > 0 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
+            {
+                Matrix2D matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
+                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    Matrix2D result = Matrix2D.Multiply(matrixVector, matrixRotate);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+
+                        return vector;
+                    }
+                }
+                else
+                {
+                    Matrix2D result = Matrix2D.Multiply(matrixRotate, matrixVector);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
+
+                        return vector;
+                    }
+                }
+            }
+
+            return NonVector;
+        }
+
+        //
+
+        /// <summary>
+        /// 按仿射矩阵将此 Vector 进行仿射变换。
+        /// </summary>
+        /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        public void AffineTransform(Matrix2D matrix)
+        {
+            if (_Size > 0 && !Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            {
+                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    Matrix2D result = Matrix2D.Multiply(matrixVector, matrix);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    Matrix2D result = Matrix2D.Multiply(matrix, matrixVector);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 按仿射矩阵列表将此 Vector 进行仿射变换。
+        /// </summary>
+        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public void AffineTransform(List<Matrix2D> matrixList)
+        {
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                Matrix2D result = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    for (int i = 0; i < matrixList.Count; i++)
+                    {
+                        Matrix2D matrix = matrixList[i];
+
+                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix2D.Multiply(result, matrix);
+
+                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        }
+
+                        if (!flag)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < matrixList.Count; i++)
+                    {
+                        Matrix2D matrix = matrixList[i];
+
+                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix2D.Multiply(matrix, result);
+
+                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        }
+
+                        if (!flag)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回按仿射矩阵将此 Vector 的副本进行仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        public Vector AffineTransformCopy(Matrix2D matrix)
+        {
+            if (_Size > 0 && !Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            {
+                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    Matrix2D result = Matrix2D.Multiply(matrixVector, matrix);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+
+                        return vector;
+                    }
+                }
+                else
+                {
+                    Matrix2D result = Matrix2D.Multiply(matrix, matrixVector);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+
+                        return vector;
+                    }
+                }
+            }
+
+            return NonVector;
+        }
+
+        /// <summary>
+        /// 返回按仿射矩阵列表将此 Vector 的副本进行仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public Vector AffineTransformCopy(List<Matrix2D> matrixList)
+        {
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                Matrix2D result = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    for (int i = 0; i < matrixList.Count; i++)
+                    {
+                        Matrix2D matrix = matrixList[i];
+
+                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix2D.Multiply(result, matrix);
+
+                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        }
+
+                        if (!flag)
+                        {
+                            return NonVector;
+                        }
+                    }
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+
+                        return vector;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < matrixList.Count; i++)
+                    {
+                        Matrix2D matrix = matrixList[i];
+
+                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix2D.Multiply(matrix, result);
+
+                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        }
+
+                        if (!flag)
+                        {
+                            return NonVector;
+                        }
+                    }
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+
+                        return vector;
+                    }
+                }
+            }
+
+            return NonVector;
+        }
+
+        /// <summary>
+        /// 按仿射矩阵将此 Vector 进行逆仿射变换。
+        /// </summary>
+        /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        public void InverseAffineTransform(Matrix2D matrix)
+        {
+            if (_Size > 0 && !Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            {
+                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    Matrix2D result = Matrix2D.DivideRight(matrixVector, matrix);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    Matrix2D result = Matrix2D.DivideLeft(matrix, matrixVector);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 按仿射矩阵列表将此 Vector 进行逆仿射变换。
+        /// </summary>
+        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public void InverseAffineTransform(List<Matrix2D> matrixList)
+        {
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                Matrix2D result = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    {
+                        Matrix2D matrix = matrixList[i];
+
+                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix2D.DivideRight(result, matrix);
+
+                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        }
+
+                        if (!flag)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    {
+                        Matrix2D matrix = matrixList[i];
+
+                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix2D.DivideLeft(matrix, result);
+
+                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        }
+
+                        if (!flag)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回按仿射矩阵将此 Vector 的副本进行逆仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        public Vector InverseAffineTransformCopy(Matrix2D matrix)
+        {
+            if (_Size > 0 && !Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            {
+                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    Matrix2D result = Matrix2D.DivideRight(matrixVector, matrix);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+
+                        return vector;
+                    }
+                }
+                else
+                {
+                    Matrix2D result = Matrix2D.DivideLeft(matrix, matrixVector);
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+
+                        return vector;
+                    }
+                }
+            }
+
+            return NonVector;
+        }
+
+        /// <summary>
+        /// 返回按仿射矩阵列表将此 Vector 的副本进行逆仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public Vector InverseAffineTransformCopy(List<Matrix2D> matrixList)
+        {
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                Matrix2D result = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.RowVector)
+                {
+                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    {
+                        Matrix2D matrix = matrixList[i];
+
+                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix2D.DivideRight(result, matrix);
+
+                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        }
+
+                        if (!flag)
+                        {
+                            return NonVector;
+                        }
+                    }
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+
+                        return vector;
+                    }
+                }
+                else
+                {
+                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    {
+                        Matrix2D matrix = matrixList[i];
+
+                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix2D.DivideLeft(matrix, result);
+
+                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        }
+
+                        if (!flag)
+                        {
+                            return NonVector;
+                        }
+                    }
+
+                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+
+                        return vector;
+                    }
+                }
             }
 
             return NonVector;
@@ -774,18 +1305,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                if (_Type == Type.ColumnVector)
-                {
-                    double[,] values = new double[1, _Size];
-
-                    for (int i = 0; i < _Size; i++)
-                    {
-                        values[0, i] = _VArray[i];
-                    }
-
-                    return new Matrix2D(values);
-                }
-                else
+                if (_Type == Type.RowVector)
                 {
                     double[,] values = new double[_Size, 1];
 
@@ -796,9 +1316,39 @@ namespace Com
 
                     return new Matrix2D(values);
                 }
+                else
+                {
+                    double[,] values = new double[1, _Size];
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        values[0, i] = _VArray[i];
+                    }
+
+                    return new Matrix2D(values);
+                }
             }
 
             return Matrix2D.NonMatrix;
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 Vector 转换为双精度浮点数数组。
+        /// </summary>
+        public double[] ToArray()
+        {
+            if (_Size > 0)
+            {
+                double[] result = new double[_Size];
+
+                Array.Copy(_VArray, result, _Size);
+
+                return result;
+            }
+
+            return new double[0];
         }
 
         #endregion
@@ -836,7 +1386,7 @@ namespace Com
 
             if (_Size > 0)
             {
-                Str = string.Concat("Dimension=", _Size);
+                Str = string.Concat("Type=", (_Type == Type.RowVector ? "RowVector" : "ColumnVector"), ", Dimension=", _Size);
             }
             else
             {
@@ -862,10 +1412,35 @@ namespace Com
         //
 
         /// <summary>
+        /// 判断两个 Vector 对象是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 Vector 对象。</param>
+        /// <param name="right">用于比较的第二个 Vector 对象。</param>
+        public static bool Equals(Vector left, Vector right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right))
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        //
+
+        /// <summary>
         /// 返回表示零向量的 Vector 的新实例。
         /// </summary>
         /// <param name="type">向量类型。</param>
-        /// <param name="dimension">维度。</param>
+        /// <param name="dimension">向量维度。</param>
         public static Vector Zero(Type type, int dimension)
         {
             if (type != Type.NonVector && dimension > 0)
@@ -879,7 +1454,7 @@ namespace Com
         /// <summary>
         /// 返回表示零向量的 Vector 的新实例。
         /// </summary>
-        /// <param name="dimension">维度。</param>
+        /// <param name="dimension">向量维度。</param>
         public static Vector Zero(int dimension)
         {
             if (dimension > 0)
@@ -894,7 +1469,7 @@ namespace Com
         /// 返回表示指定索引的基向量的 Vector 的新实例。
         /// </summary>
         /// <param name="type">向量类型。</param>
-        /// <param name="dimension">维度。</param>
+        /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引。</param>
         public static Vector Basis(Type type, int dimension, int index)
         {
@@ -913,7 +1488,7 @@ namespace Com
         /// <summary>
         /// 返回表示指定索引的基向量的 Vector 的新实例。
         /// </summary>
-        /// <param name="dimension">维度。</param>
+        /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引。</param>
         public static Vector Basis(int dimension, int index)
         {
@@ -927,6 +1502,157 @@ namespace Com
             }
 
             return NonVector;
+        }
+
+        //
+
+        /// <summary>
+        /// 返回用于平移 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
+        /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
+        public static Matrix2D OffsetMatrix(Type type, int dimension, double d)
+        {
+            if (type != Type.NonVector && dimension > 0)
+            {
+                Matrix2D result = Matrix2D.Identity(dimension + 1);
+
+                if (type == Type.RowVector)
+                {
+                    for (int i = 0; i < dimension; i++)
+                    {
+                        result[i, dimension] = d;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < dimension; i++)
+                    {
+                        result[dimension, i] = d;
+                    }
+                }
+
+                return result;
+            }
+
+            return Matrix2D.NonMatrix;
+        }
+
+        /// <summary>
+        /// 返回用于平移 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
+        /// <param name="vector">Vector 对象，用于平移 Vector 对象。</param>
+        public static Matrix2D OffsetMatrix(Type type, int dimension, Vector vector)
+        {
+            if (type != Type.NonVector && dimension > 0 && (!IsNullOrNonVector(vector) && vector._Size == dimension))
+            {
+                Matrix2D result = Matrix2D.Identity(dimension + 1);
+
+                if (type == Type.RowVector)
+                {
+                    for (int i = 0; i < dimension; i++)
+                    {
+                        result[i, dimension] = vector._VArray[i];
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < dimension; i++)
+                    {
+                        result[dimension, i] = vector._VArray[i];
+                    }
+                }
+
+                return result;
+            }
+
+            return Matrix2D.NonMatrix;
+        }
+
+        /// <summary>
+        /// 返回用于缩放 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
+        /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
+        public static Matrix2D ScaleMatrix(Type type, int dimension, double s)
+        {
+            if (type != Type.NonVector && dimension > 0)
+            {
+                Matrix2D result = Matrix2D.Identity(dimension + 1);
+
+                for (int i = 0; i < dimension; i++)
+                {
+                    result[i, i] = s;
+                }
+
+                return result;
+            }
+
+            return Matrix2D.NonMatrix;
+        }
+
+        /// <summary>
+        /// 返回用于缩放 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
+        /// <param name="vector">Vector 对象，用于缩放 Vector 对象。</param>
+        public static Matrix2D ScaleMatrix(Type type, int dimension, Vector vector)
+        {
+            if (type != Type.NonVector && dimension > 0 && (!IsNullOrNonVector(vector) && vector._Size == dimension))
+            {
+                Matrix2D result = Matrix2D.Identity(dimension + 1);
+
+                for (int i = 0; i < dimension; i++)
+                {
+                    result[i, i] = vector._VArray[i];
+                }
+
+                return result;
+            }
+
+            return Matrix2D.NonMatrix;
+        }
+
+        /// <summary>
+        /// 返回用于旋转 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public static Matrix2D RotateMatrix(Type type, int dimension, int index1, int index2, double angle)
+        {
+            if (type != Type.NonVector && dimension > 0 && (index1 >= 0 && index1 < dimension) && (index2 >= 0 && index2 < dimension) && index1 != index2)
+            {
+                Matrix2D result = Matrix2D.Identity(dimension + 1);
+
+                double CosA = Math.Cos(angle);
+                double SinA = Math.Sin(angle);
+
+                result[index1, index1] = CosA;
+                result[index2, index2] = CosA;
+
+                if (type == Type.RowVector)
+                {
+                    result[index1, index2] = SinA;
+                    result[index2, index1] = -SinA;
+                }
+                else
+                {
+                    result[index2, index1] = SinA;
+                    result[index1, index2] = -SinA;
+                }
+
+                return result;
+            }
+
+            return Matrix2D.NonMatrix;
         }
 
         //
@@ -1244,6 +1970,130 @@ namespace Com
         #region 运算符
 
         /// <summary>
+        /// 判断两个 Vector 对象是否相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
+        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        public static bool operator ==(Vector left, Vector right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < left._Size; i++)
+            {
+                if (left._VArray[i] != right._VArray[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 判断两个 Vector 对象是否不相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
+        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        public static bool operator !=(Vector left, Vector right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < left._Size; i++)
+            {
+                if (left._VArray[i] != right._VArray[i])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 判断两个 Vector 对象的模平方是否前者小于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
+        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        public static bool operator <(Vector left, Vector right)
+        {
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            {
+                return false;
+            }
+
+            return (left.ModuleSquared < right.ModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 Vector 对象的模平方是否前者大于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
+        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        public static bool operator >(Vector left, Vector right)
+        {
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            {
+                return false;
+            }
+
+            return (left.ModuleSquared > right.ModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 Vector 对象的模平方是否前者小于或等于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
+        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        public static bool operator <=(Vector left, Vector right)
+        {
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            {
+                return false;
+            }
+
+            return (left.ModuleSquared <= right.ModuleSquared);
+        }
+
+        /// <summary>
+        /// 判断两个 Vector 对象的模平方是否前者大于或等于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
+        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        public static bool operator >=(Vector left, Vector right)
+        {
+            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            {
+                return false;
+            }
+
+            return (left.ModuleSquared >= right.ModuleSquared);
+        }
+
+        //
+
+        /// <summary>
         /// 返回在 Vector 对象的所有分量前添加正号得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">用于转换的 Vector 对象。</param>
@@ -1555,122 +2405,6 @@ namespace Com
             }
 
             return NonVector;
-        }
-
-        //
-
-        /// <summary>
-        /// 判断两个 Vector 对象是否相等。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
-        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        public static bool operator ==(Vector left, Vector right)
-        {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < left._Size; i++)
-            {
-                if (left._VArray[i] != right._VArray[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// 判断两个 Vector 对象是否不相等。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
-        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        public static bool operator !=(Vector left, Vector right)
-        {
-            if ((object)left == null && (object)right == null)
-            {
-                return false;
-            }
-            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
-            {
-                return true;
-            }
-
-            for (int i = 0; i < left._Size; i++)
-            {
-                if (left._VArray[i] != right._VArray[i])
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 判断两个 Vector 对象的模平方是否前者小于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
-        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        public static bool operator <(Vector left, Vector right)
-        {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
-            {
-                return false;
-            }
-
-            return (left.ModuleSquared < right.ModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 Vector 对象的模平方是否前者大于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
-        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        public static bool operator >(Vector left, Vector right)
-        {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
-            {
-                return false;
-            }
-
-            return (left.ModuleSquared > right.ModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 Vector 对象的模平方是否前者小于或等于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
-        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        public static bool operator <=(Vector left, Vector right)
-        {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
-            {
-                return false;
-            }
-
-            return (left.ModuleSquared <= right.ModuleSquared);
-        }
-
-        /// <summary>
-        /// 判断两个 Vector 对象的模平方是否前者大于或等于后者。
-        /// </summary>
-        /// <param name="left">运算符左侧比较的 Vector 对象。</param>
-        /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        public static bool operator >=(Vector left, Vector right)
-        {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
-            {
-                return false;
-            }
-
-            return (left.ModuleSquared >= right.ModuleSquared);
         }
 
         #endregion

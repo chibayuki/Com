@@ -65,7 +65,7 @@ namespace Com
 
         private static double _CheckUtcOffset(double utcOffset) // 对所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的值进行合法性检查，返回合法的值。
         {
-            if (double.IsNaN(utcOffset) || double.IsInfinity(utcOffset))
+            if (InternalMethod.IsNaNOrInfinity(utcOffset))
             {
                 return _LocalUtcOffset;
             }
@@ -758,6 +758,52 @@ namespace Com
         #endregion
 
         #region 属性
+
+        /// <summary>
+        /// 获取以本地时区表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
+        /// </summary>
+        public static DateTimeX Now
+        {
+            get
+            {
+                return new DateTimeX(DateTime.Now, _LocalUtcOffset);
+            }
+        }
+
+        /// <summary>
+        /// 获取以协调世界时（UTC）表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
+        /// </summary>
+        public static DateTimeX UtcNow
+        {
+            get
+            {
+                return new DateTimeX(DateTime.Now, _Utc);
+            }
+        }
+
+        /// <summary>
+        /// 获取以本地时区表示的此计算机上的当前日期的 DateTimeX 结构的实例。
+        /// </summary>
+        public static DateTimeX Today
+        {
+            get
+            {
+                return new DateTimeX(DateTime.Now.Date, _LocalUtcOffset);
+            }
+        }
+
+        /// <summary>
+        /// 获取以协调世界时（UTC）表示的此计算机上的当前日期的 DateTimeX 结构的实例。
+        /// </summary>
+        public static DateTimeX UtcToday
+        {
+            get
+            {
+                return new DateTimeX(DateTime.Now.Date, _Utc);
+            }
+        }
+
+        //
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构是否为 Empty 的布尔值。
@@ -1461,54 +1507,6 @@ namespace Com
 
         #endregion
 
-        #region 静态属性
-
-        /// <summary>
-        /// 获取以本地时区表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
-        /// </summary>
-        public static DateTimeX Now
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now, _LocalUtcOffset);
-            }
-        }
-
-        /// <summary>
-        /// 获取以协调世界时（UTC）表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
-        /// </summary>
-        public static DateTimeX UtcNow
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now, _Utc);
-            }
-        }
-
-        /// <summary>
-        /// 获取以本地时区表示的此计算机上的当前日期的 DateTimeX 结构的实例。
-        /// </summary>
-        public static DateTimeX Today
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now.Date, _LocalUtcOffset);
-            }
-        }
-
-        /// <summary>
-        /// 获取以协调世界时（UTC）表示的此计算机上的当前日期的 DateTimeX 结构的实例。
-        /// </summary>
-        public static DateTimeX UtcToday
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now.Date, _Utc);
-            }
-        }
-
-        #endregion
-
         #region 方法
 
         /// <summary>
@@ -1522,7 +1520,7 @@ namespace Com
                 return false;
             }
 
-            return (_UtcOffset == dateTime._UtcOffset && _TotalMilliseconds == dateTime._TotalMilliseconds && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond);
+            return (_UtcOffset.Equals(dateTime._UtcOffset) && _TotalMilliseconds == dateTime._TotalMilliseconds && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond);
         }
 
         //
@@ -1648,7 +1646,7 @@ namespace Com
         /// <param name="weeks">双精度浮点数表示的周，用于相加到此 DateTimeX 结构。</param>
         public DateTimeX AddWeeks(double weeks)
         {
-            if (double.IsNaN(weeks) || double.IsInfinity(weeks))
+            if (InternalMethod.IsNaNOrInfinity(weeks))
             {
                 return this;
             }
@@ -1684,7 +1682,7 @@ namespace Com
         /// <param name="days">双精度浮点数表示的天，用于相加到此 DateTimeX 结构。</param>
         public DateTimeX AddDays(double days)
         {
-            if (double.IsNaN(days) || double.IsInfinity(days))
+            if (InternalMethod.IsNaNOrInfinity(days))
             {
                 return this;
             }
@@ -1720,7 +1718,7 @@ namespace Com
         /// <param name="hours">双精度浮点数表示的小时，用于相加到此 DateTimeX 结构。</param>
         public DateTimeX AddHours(double hours)
         {
-            if (double.IsNaN(hours) || double.IsInfinity(hours))
+            if (InternalMethod.IsNaNOrInfinity(hours))
             {
                 return this;
             }
@@ -1756,7 +1754,7 @@ namespace Com
         /// <param name="minutes">双精度浮点数表示的分钟，用于相加到此 DateTimeX 结构。</param>
         public DateTimeX AddMinutes(double minutes)
         {
-            if (double.IsNaN(minutes) || double.IsInfinity(minutes))
+            if (InternalMethod.IsNaNOrInfinity(minutes))
             {
                 return this;
             }
@@ -1792,7 +1790,7 @@ namespace Com
         /// <param name="seconds">双精度浮点数表示的秒，用于相加到此 DateTimeX 结构。</param>
         public DateTimeX AddSeconds(double seconds)
         {
-            if (double.IsNaN(seconds) || double.IsInfinity(seconds))
+            if (InternalMethod.IsNaNOrInfinity(seconds))
             {
                 return this;
             }
@@ -1859,7 +1857,7 @@ namespace Com
         /// <param name="milliseconds">双精度浮点数表示的毫秒，用于相加到此 DateTimeX 结构。</param>
         public DateTimeX AddMilliseconds(double milliseconds)
         {
-            if (double.IsNaN(milliseconds) || double.IsInfinity(milliseconds))
+            if (InternalMethod.IsNaNOrInfinity(milliseconds))
             {
                 return this;
             }
@@ -1944,6 +1942,31 @@ namespace Com
         #endregion
 
         #region 静态方法
+
+        /// <summary>
+        /// 判断两个 DateTimeX 结构是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 DateTimeX 结构。</param>
+        /// <param name="right">用于比较的第二个 DateTimeX 结构。</param>
+        public static bool Equals(DateTimeX left, DateTimeX right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        //
 
         /// <summary>
         /// 返回表示指定年是否为闰年的布尔值。
@@ -2036,28 +2059,6 @@ namespace Com
         #region 运算符
 
         /// <summary>
-        /// 返回将 DateTimeX 结构与 TimeSpan 结构相加得到的 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="dateTime">DateTimeX 结构，表示被加数。</param>
-        /// <param name="timeSpan">TimeSpan 结构，表示加数。</param>
-        public static DateTimeX operator +(DateTimeX dateTime, TimeSpan timeSpan)
-        {
-            return dateTime.AddMilliseconds(timeSpan.TotalMilliseconds);
-        }
-
-        /// <summary>
-        /// 返回将 DateTimeX 结构与 TimeSpan 结构相减得到的 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="dateTime">DateTimeX 结构，表示被减数。</param>
-        /// <param name="timeSpan">TimeSpan 结构，表示减数。</param>
-        public static DateTimeX operator -(DateTimeX dateTime, TimeSpan timeSpan)
-        {
-            return dateTime.AddMilliseconds(-(timeSpan.TotalMilliseconds));
-        }
-
-        //
-
-        /// <summary>
         /// 判断两个 DateTimeX 结构是否表示相同的时刻。
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
@@ -2065,6 +2066,10 @@ namespace Com
         public static bool operator ==(DateTimeX left, DateTimeX right)
         {
             if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
@@ -2084,6 +2089,10 @@ namespace Com
         public static bool operator !=(DateTimeX left, DateTimeX right)
         {
             if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2153,6 +2162,28 @@ namespace Com
             }
 
             return (left.TotalMilliseconds >= right.TotalMilliseconds);
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将 DateTimeX 结构与 TimeSpan 结构相加得到的 DateTimeX 结构的新实例。
+        /// </summary>
+        /// <param name="dateTime">DateTimeX 结构，表示被加数。</param>
+        /// <param name="timeSpan">TimeSpan 结构，表示加数。</param>
+        public static DateTimeX operator +(DateTimeX dateTime, TimeSpan timeSpan)
+        {
+            return dateTime.AddMilliseconds(timeSpan.TotalMilliseconds);
+        }
+
+        /// <summary>
+        /// 返回将 DateTimeX 结构与 TimeSpan 结构相减得到的 DateTimeX 结构的新实例。
+        /// </summary>
+        /// <param name="dateTime">DateTimeX 结构，表示被减数。</param>
+        /// <param name="timeSpan">TimeSpan 结构，表示减数。</param>
+        public static DateTimeX operator -(DateTimeX dateTime, TimeSpan timeSpan)
+        {
+            return dateTime.AddMilliseconds(-(timeSpan.TotalMilliseconds));
         }
 
         #endregion
