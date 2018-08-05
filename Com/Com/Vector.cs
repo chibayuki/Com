@@ -1566,7 +1566,11 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator ==(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -1589,7 +1593,11 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator !=(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return true;
             }

@@ -1472,7 +1472,11 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Matrix2D 对象。</param>
         public static bool operator ==(Matrix2D left, Matrix2D right)
         {
-            if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right) || left._Size != right._Size)
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right) || left._Size != right._Size)
             {
                 return false;
             }
@@ -1498,7 +1502,11 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Matrix2D 对象。</param>
         public static bool operator !=(Matrix2D left, Matrix2D right)
         {
-            if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right) || left._Size != right._Size)
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right) || left._Size != right._Size)
             {
                 return true;
             }

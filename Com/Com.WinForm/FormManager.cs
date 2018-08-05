@@ -4324,7 +4324,11 @@ namespace Com.WinForm
         /// <param name="right">运算符右侧比较的 FormManager 对象。</param>
         public static bool operator ==(FormManager left, FormManager right)
         {
-            if ((object)left == null || (object)right == null)
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -4339,7 +4343,11 @@ namespace Com.WinForm
         /// <param name="right">运算符右侧比较的 FormManager 对象。</param>
         public static bool operator !=(FormManager left, FormManager right)
         {
-            if ((object)left == null || (object)right == null)
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if ((object)left == null || (object)right == null)
             {
                 return true;
             }

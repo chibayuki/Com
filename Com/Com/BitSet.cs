@@ -921,7 +921,11 @@ namespace Com
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
         public static bool operator ==(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return false;
             }
@@ -944,7 +948,11 @@ namespace Com
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
         public static bool operator !=(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return true;
             }

@@ -2359,13 +2359,17 @@ namespace Com
         #region 运算符
 
         /// <summary>
-        /// 判断 ColorX 结构的两个实例是否表示相同的颜色。
+        /// 判断两个 ColorX 结构是否表示相同的颜色。
         /// </summary>
-        /// <param name="left">ColorX 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">ColorX 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 ColorX 结构。</param>
+        /// <param name="right">运算符右侧比较的 ColorX 结构。</param>
         public static bool operator ==(ColorX left, ColorX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
             }
@@ -2374,13 +2378,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 ColorX 结构的两个实例是否表示不同的颜色。
+        /// 判断两个 ColorX 结构是否表示不同的颜色。
         /// </summary>
-        /// <param name="left">ColorX 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">ColorX 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 ColorX 结构。</param>
+        /// <param name="right">运算符右侧比较的 ColorX 结构。</param>
         public static bool operator !=(ColorX left, ColorX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return true;
             }

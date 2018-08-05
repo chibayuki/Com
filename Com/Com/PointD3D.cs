@@ -1930,13 +1930,17 @@ namespace Com
         //
 
         /// <summary>
-        /// 判断 PointD3D 结构的两个实例是否相等。
+        /// 判断两个 PointD3D 结构是否相等。
         /// </summary>
-        /// <param name="left">PointD3D 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 PointD3D 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD3D 结构。</param>
         public static bool operator ==(PointD3D left, PointD3D right)
         {
-            if ((object)left == null || (object)right == null)
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if ((object)left == null || (object)right == null)
             {
                 return false;
             }
@@ -1945,13 +1949,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 PointD3D 结构的两个实例是否不相等。
+        /// 判断两个 PointD3D 结构是否不相等。
         /// </summary>
-        /// <param name="left">PointD3D 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 PointD3D 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD3D 结构。</param>
         public static bool operator !=(PointD3D left, PointD3D right)
         {
-            if ((object)left == null || (object)right == null)
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if ((object)left == null || (object)right == null)
             {
                 return true;
             }
@@ -1960,10 +1968,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 PointD3D 结构的两个实例表示的向量的模平方是否前者小于后者。
+        /// 判断两个 PointD3D 结构表示的向量的模平方是否前者小于后者。
         /// </summary>
-        /// <param name="left">PointD3D 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 PointD3D 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD3D 结构。</param>
         public static bool operator <(PointD3D left, PointD3D right)
         {
             if ((object)left == null || (object)right == null)
@@ -1975,10 +1983,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 PointD3D 结构的两个实例表示的向量的模平方是否前者大于后者。
+        /// 判断两个 PointD3D 结构表示的向量的模平方是否前者大于后者。
         /// </summary>
-        /// <param name="left">PointD3D 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 PointD3D 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD3D 结构。</param>
         public static bool operator >(PointD3D left, PointD3D right)
         {
             if ((object)left == null || (object)right == null)
@@ -1990,10 +1998,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 PointD3D 结构的两个实例表示的向量的模平方是否前者小于或等于后者。
+        /// 判断两个 PointD3D 结构表示的向量的模平方是否前者小于或等于后者。
         /// </summary>
-        /// <param name="left">PointD3D 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 PointD3D 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD3D 结构。</param>
         public static bool operator <=(PointD3D left, PointD3D right)
         {
             if ((object)left == null || (object)right == null)
@@ -2005,10 +2013,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 PointD3D 结构的两个实例表示的向量的模平方是否前者大于或等于后者。
+        /// 判断两个 PointD3D 结构表示的向量的模平方是否前者大于或等于后者。
         /// </summary>
-        /// <param name="left">PointD3D 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">PointD3D 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 PointD3D 结构。</param>
+        /// <param name="right">运算符右侧比较的 PointD3D 结构。</param>
         public static bool operator >=(PointD3D left, PointD3D right)
         {
             if ((object)left == null || (object)right == null)

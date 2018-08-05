@@ -2058,13 +2058,17 @@ namespace Com
         //
 
         /// <summary>
-        /// 判断 DateTimeX 结构的两个实例是否表示相同的时刻。
+        /// 判断两个 DateTimeX 结构是否表示相同的时刻。
         /// </summary>
-        /// <param name="left">DateTimeX 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
+        /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
         public static bool operator ==(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
             }
@@ -2073,13 +2077,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 DateTimeX 结构的两个实例是否表示不同的时刻。
+        /// 判断两个 DateTimeX 结构是否表示不同的时刻。
         /// </summary>
-        /// <param name="left">DateTimeX 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
+        /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
         public static bool operator !=(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if ((object)left == null && (object)right == null)
+            {
+                return false;
+            }
+            else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return true;
             }
@@ -2088,10 +2096,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 DateTimeX 结构的两个实例是否前者早于后者。
+        /// 判断两个 DateTimeX 结构是否前者早于后者。
         /// </summary>
-        /// <param name="left">DateTimeX 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
+        /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
         public static bool operator <(DateTimeX left, DateTimeX right)
         {
             if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
@@ -2103,10 +2111,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 DateTimeX 结构的两个实例是否前者晚于后者。
+        /// 判断两个 DateTimeX 结构是否前者晚于后者。
         /// </summary>
-        /// <param name="left">DateTimeX 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
+        /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
         public static bool operator >(DateTimeX left, DateTimeX right)
         {
             if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
@@ -2118,10 +2126,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 DateTimeX 结构的两个实例是否前者早于或等于后者。
+        /// 判断两个 DateTimeX 结构是否前者早于或等于后者。
         /// </summary>
-        /// <param name="left">DateTimeX 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
+        /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
         public static bool operator <=(DateTimeX left, DateTimeX right)
         {
             if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
@@ -2133,10 +2141,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断 DateTimeX 结构的两个实例是否前者晚于或等于后者。
+        /// 判断两个 DateTimeX 结构是否前者晚于或等于后者。
         /// </summary>
-        /// <param name="left">DateTimeX 结构，运算符左侧比较的结构。</param>
-        /// <param name="right">DateTimeX 结构，运算符右侧比较的结构。</param>
+        /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
+        /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
         public static bool operator >=(DateTimeX left, DateTimeX right)
         {
             if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
