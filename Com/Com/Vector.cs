@@ -78,6 +78,7 @@ namespace Com
                 Vector result = NonVector;
 
                 result._Type = type;
+                result._Size = dimension;
                 result._VArray = new double[dimension];
 
                 return result;
@@ -748,7 +749,7 @@ namespace Com
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
 
                         return vector;
                     }
@@ -761,7 +762,7 @@ namespace Com
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
 
                         return vector;
                     }
@@ -806,7 +807,7 @@ namespace Com
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
 
                         return vector;
                     }
@@ -836,7 +837,7 @@ namespace Com
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
 
                         return vector;
                     }
@@ -960,7 +961,7 @@ namespace Com
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
 
                         return vector;
                     }
@@ -973,7 +974,7 @@ namespace Com
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
 
                         return vector;
                     }
@@ -1018,7 +1019,7 @@ namespace Com
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
 
                         return vector;
                     }
@@ -1048,7 +1049,7 @@ namespace Com
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
 
                         return vector;
                     }
@@ -1640,13 +1641,13 @@ namespace Com
 
                 if (type == Type.RowVector)
                 {
-                    result[index1, index2] = SinA;
-                    result[index2, index1] = -SinA;
+                    result[index2, index1] = SinA;
+                    result[index1, index2] = -SinA;
                 }
                 else
                 {
-                    result[index2, index1] = SinA;
-                    result[index1, index2] = -SinA;
+                    result[index1, index2] = SinA;
+                    result[index2, index1] = -SinA;
                 }
 
                 return result;

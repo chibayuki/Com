@@ -478,7 +478,7 @@ namespace Com
             {
                 if (_Size.Width > 0 && _Size.Height > 0)
                 {
-                    Matrix2D result = new Matrix2D(_Size);
+                    Matrix2D result = new Matrix2D(_Size.Height, _Size.Width);
 
                     for (int x = 0; x < _Size.Height; x++)
                     {
