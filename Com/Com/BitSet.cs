@@ -873,7 +873,7 @@ namespace Com
 
             if (_Size > 0)
             {
-                Str = string.Concat("Size=", _Size);
+                Str = string.Concat("Count=", _Size);
             }
             else
             {

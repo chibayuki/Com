@@ -780,7 +780,7 @@ namespace Com
 
             if (_Size.Width > 0 && _Size.Height > 0)
             {
-                Str = string.Concat("Size=[", _Size.Width, ", ", _Size.Height, "]");
+                Str = string.Concat("Column=", _Size.Width, ", Row=", _Size.Height);
             }
             else
             {
