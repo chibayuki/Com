@@ -625,7 +625,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -644,7 +644,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -663,7 +663,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -682,7 +682,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
             {
                 return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
             }
@@ -701,7 +701,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
             {
                 return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
             }
@@ -720,7 +720,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
             {
                 return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
             }
@@ -752,7 +752,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -773,7 +773,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -802,7 +802,7 @@ namespace Com
                     {
                         result = Matrix2D.Multiply(matrixLeft, result);
 
-                        flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4));
                     }
 
                     if (!flag)
@@ -811,7 +811,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -842,7 +842,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
                 }
@@ -863,7 +863,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
                 }
@@ -892,7 +892,7 @@ namespace Com
                     {
                         result = Matrix2D.Multiply(matrixLeft, result);
 
-                        flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4));
                     }
 
                     if (!flag)
@@ -901,7 +901,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
                 }
@@ -932,7 +932,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -953,7 +953,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -982,7 +982,7 @@ namespace Com
                     {
                         result = Matrix2D.DivideLeft(matrixLeft, result);
 
-                        flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4));
                     }
 
                     if (!flag)
@@ -991,7 +991,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1022,7 +1022,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
                 }
@@ -1043,7 +1043,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
                 }
@@ -1072,7 +1072,7 @@ namespace Com
                     {
                         result = Matrix2D.DivideLeft(matrixLeft, result);
 
-                        flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4));
                     }
 
                     if (!flag)
@@ -1081,7 +1081,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
                 {
                     return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
                 }

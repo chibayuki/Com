@@ -854,7 +854,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -875,7 +875,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -896,7 +896,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -917,7 +917,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -938,7 +938,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -959,7 +959,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -980,7 +980,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -1001,7 +1001,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -1022,7 +1022,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -1043,7 +1043,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -1064,7 +1064,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1083,7 +1083,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1102,7 +1102,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1121,7 +1121,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1140,7 +1140,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1159,7 +1159,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1178,7 +1178,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1197,7 +1197,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1216,7 +1216,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1235,7 +1235,7 @@ namespace Com
 
             Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result))
+            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1271,7 +1271,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1288,13 +1288,13 @@ namespace Com
         /// <param name="matrixLeft">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）。</param>
         public void AffineTransform(Matrix2D matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(5, 5))
+            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1319,13 +1319,13 @@ namespace Com
                 {
                     Matrix2D matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(5, 5));
+                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
 
                     if (flag)
                     {
                         result = Matrix2D.Multiply(matrixLeft, result);
 
-                        flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
                     }
 
                     if (!flag)
@@ -1334,7 +1334,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1371,7 +1371,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1386,13 +1386,13 @@ namespace Com
         /// <param name="matrixLeft">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）。</param>
         public PointD5D AffineTransformCopy(Matrix2D matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(5, 5))
+            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1415,13 +1415,13 @@ namespace Com
                 {
                     Matrix2D matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(5, 5));
+                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
 
                     if (flag)
                     {
                         result = Matrix2D.Multiply(matrixLeft, result);
 
-                        flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
                     }
 
                     if (!flag)
@@ -1430,7 +1430,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1465,7 +1465,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1482,13 +1482,13 @@ namespace Com
         /// <param name="matrixLeft">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix2D matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(5, 5))
+            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1513,13 +1513,13 @@ namespace Com
                 {
                     Matrix2D matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(5, 5));
+                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
 
                     if (flag)
                     {
                         result = Matrix2D.DivideLeft(matrixLeft, result);
 
-                        flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
                     }
 
                     if (!flag)
@@ -1528,7 +1528,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1565,7 +1565,7 @@ namespace Com
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1580,13 +1580,13 @@ namespace Com
         /// <param name="matrixLeft">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）。</param>
         public PointD5D InverseAffineTransformCopy(Matrix2D matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(5, 5))
+            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
                 Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1609,13 +1609,13 @@ namespace Com
                 {
                     Matrix2D matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(5, 5));
+                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
 
                     if (flag)
                     {
                         result = Matrix2D.DivideLeft(matrixLeft, result);
 
-                        flag = !Matrix2D.IsNullOrNonMatrix(result);
+                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
                     }
 
                     if (!flag)
@@ -1624,7 +1624,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result))
+                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
