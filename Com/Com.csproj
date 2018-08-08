@@ -73,6 +73,8 @@
     <Compile Include="Com\BitSet.cs" />
     <Compile Include="Com\ColorManipulation.cs" />
     <Compile Include="Com\InternalMethod.cs" />
+    <Compile Include="Com\PointD5D.cs" />
+    <Compile Include="Com\PointD6D.cs" />
     <Compile Include="Com\Vector.cs" />
     <Compile Include="WindowsAPI\Gdi32.cs" />
     <Compile Include="Com.WinForm\RecommendColors.cs" />
