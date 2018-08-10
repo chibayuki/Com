@@ -610,10 +610,10 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                _X += pt.X;
-                _Y += pt.Y;
-                _Z += pt.Z;
-                _U += pt.U;
+                _X += pt._X;
+                _Y += pt._Y;
+                _Z += pt._Z;
+                _U += pt._U;
             }
         }
 
@@ -646,7 +646,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(_X + pt.X, _Y + pt.Y, _Z + pt.Z, _U + pt.U);
+                return new PointD4D(_X + pt._X, _Y + pt._Y, _Z + pt._Z, _U + pt._U);
             }
 
             return NaN;
@@ -689,10 +689,10 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                _X *= pt.X;
-                _Y *= pt.Y;
-                _Z *= pt.Z;
-                _U *= pt.U;
+                _X *= pt._X;
+                _Y *= pt._Y;
+                _Z *= pt._Z;
+                _U *= pt._U;
             }
         }
 
@@ -725,7 +725,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(_X * pt.X, _Y * pt.Y, _Z * pt.Z, _U * pt.U);
+                return new PointD4D(_X * pt._X, _Y * pt._Y, _Z * pt._Z, _U * pt._U);
             }
 
             return NaN;
@@ -983,11 +983,11 @@ namespace Com
             {
                 Matrix2D matrixLeft = new Matrix2D(new double[5, 5]
                 {
-                    { ex.X, ex.Y, ex.Z, ex.U, 0 },
-                    { ey.X, ey.Y, ey.Z, ey.U, 0 },
-                    { ez.X, ez.Y, ez.Z, ez.U, 0 },
-                    { eu.X, eu.Y, eu.Z, eu.U, 0 },
-                    { offset.X, offset.Y, offset.Z, offset.U, 1 }
+                    { ex._X, ex._Y, ex._Z, ex._U, 0 },
+                    { ey._X, ey._Y, ey._Z, ey._U, 0 },
+                    { ez._X, ez._Y, ez._Z, ez._U, 0 },
+                    { eu._X, eu._Y, eu._Z, eu._U, 0 },
+                    { offset._X, offset._Y, offset._Z, offset._U, 1 }
                 });
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
@@ -1078,11 +1078,11 @@ namespace Com
             {
                 Matrix2D matrixLeft = new Matrix2D(new double[5, 5]
                 {
-                    { ex.X, ex.Y, ex.Z, ex.U, 0 },
-                    { ey.X, ey.Y, ey.Z, ey.U, 0 },
-                    { ez.X, ez.Y, ez.Z, ez.U, 0 },
-                    { eu.X, eu.Y, eu.Z, eu.U, 0 },
-                    { offset.X, offset.Y, offset.Z, offset.U, 1 }
+                    { ex._X, ex._Y, ex._Z, ex._U, 0 },
+                    { ey._X, ey._Y, ey._Z, ey._U, 0 },
+                    { ez._X, ez._Y, ez._Z, ez._U, 0 },
+                    { eu._X, eu._Y, eu._Z, eu._U, 0 },
+                    { offset._X, offset._Y, offset._Z, offset._U, 1 }
                 });
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
@@ -1170,11 +1170,11 @@ namespace Com
             {
                 Matrix2D matrixLeft = new Matrix2D(new double[5, 5]
                 {
-                    { ex.X, ex.Y, ex.Z, ex.U, 0 },
-                    { ey.X, ey.Y, ey.Z, ey.U, 0 },
-                    { ez.X, ez.Y, ez.Z, ez.U, 0 },
-                    { eu.X, eu.Y, eu.Z, eu.U, 0 },
-                    { offset.X, offset.Y, offset.Z, offset.U, 1 }
+                    { ex._X, ex._Y, ex._Z, ex._U, 0 },
+                    { ey._X, ey._Y, ey._Z, ey._U, 0 },
+                    { ez._X, ez._Y, ez._Z, ez._U, 0 },
+                    { eu._X, eu._Y, eu._Z, eu._U, 0 },
+                    { offset._X, offset._Y, offset._Z, offset._U, 1 }
                 });
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
@@ -1265,11 +1265,11 @@ namespace Com
             {
                 Matrix2D matrixLeft = new Matrix2D(new double[5, 5]
                 {
-                    { ex.X, ex.Y, ex.Z, ex.U, 0 },
-                    { ey.X, ey.Y, ey.Z, ey.U, 0 },
-                    { ez.X, ez.Y, ez.Z, ez.U, 0 },
-                    { eu.X, eu.Y, eu.Z, eu.U, 0 },
-                    { offset.X, offset.Y, offset.Z, offset.U, 1 }
+                    { ex._X, ex._Y, ex._Z, ex._U, 0 },
+                    { ey._X, ey._Y, ey._Z, ey._U, 0 },
+                    { ez._X, ez._Y, ez._Z, ez._U, 0 },
+                    { eu._X, eu._Y, eu._Z, eu._U, 0 },
+                    { offset._X, offset._Y, offset._Z, offset._U, 1 }
                 });
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
@@ -1360,9 +1360,9 @@ namespace Com
                 }
                 else
                 {
-                    if (_U != prjCenter.U)
+                    if (_U != prjCenter._U)
                     {
-                        double Scale = trueLenDist / (_U - prjCenter.U);
+                        double Scale = trueLenDist / (_U - prjCenter._U);
 
                         if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
                         {
@@ -1390,9 +1390,9 @@ namespace Com
                 }
                 else
                 {
-                    if (_X != prjCenter.X)
+                    if (_X != prjCenter._X)
                     {
-                        double Scale = trueLenDist / (_X - prjCenter.X);
+                        double Scale = trueLenDist / (_X - prjCenter._X);
 
                         if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
                         {
@@ -1420,9 +1420,9 @@ namespace Com
                 }
                 else
                 {
-                    if (_Y != prjCenter.Y)
+                    if (_Y != prjCenter._Y)
                     {
-                        double Scale = trueLenDist / (_Y - prjCenter.Y);
+                        double Scale = trueLenDist / (_Y - prjCenter._Y);
 
                         if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
                         {
@@ -1450,9 +1450,9 @@ namespace Com
                 }
                 else
                 {
-                    if (_Z != prjCenter.Z)
+                    if (_Z != prjCenter._Z)
                     {
-                        double Scale = trueLenDist / (_Z - prjCenter.Z);
+                        double Scale = trueLenDist / (_Z - prjCenter._Z);
 
                         if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
                         {
@@ -1475,7 +1475,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                double dx = _X - pt.X, dy = _Y - pt.Y, dz = _Z - pt.Z, du = _U - pt.U;
+                double dx = _X - pt._X, dy = _Y - pt._Y, dz = _Z - pt._Z, du = _U - pt._U;
 
                 return Math.Sqrt(dx * dx + dy * dy + dz * dz + du * du);
             }
@@ -1496,12 +1496,12 @@ namespace Com
                     _X = 1;
                 }
 
-                if (pt.X == 0 && pt.Y == 0 && pt.Z == 0 && pt.U == 0)
+                if (pt._X == 0 && pt._Y == 0 && pt._Z == 0 && pt._U == 0)
                 {
-                    pt.X = 1;
+                    pt._X = 1;
                 }
 
-                double DotProduct = _X * pt.X + _Y * pt.Y + _Z * pt.Z + _U * pt.U;
+                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z + _U * pt._U;
                 double ModProduct = VectorModule * pt.VectorModule;
 
                 return Math.Acos(DotProduct / ModProduct);
@@ -1531,7 +1531,15 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将此 PointD4D 结构转换为表示列向量的 Vector 的新实例。
+        /// 返回将此 PointD4D 结构转换为向量的 Vector 的新实例。
+        /// </summary>
+        public Vector ToVector()
+        {
+            return new Vector(_X, _Y, _Z, _U);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD4D 结构转换为列向量的 Vector 的新实例。
         /// </summary>
         public Vector ToVectorColumn()
         {
@@ -1539,7 +1547,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将此 PointD4D 结构转换为表示行向量的 Vector 的新实例。
+        /// 返回将此 PointD4D 结构转换为行向量的 Vector 的新实例。
         /// </summary>
         public Vector ToVectorRow()
         {
@@ -1651,7 +1659,7 @@ namespace Com
                     { 0, 1, 0, 0, 0 },
                     { 0, 0, 1, 0, 0 },
                     { 0, 0, 0, 1, 0 },
-                    { pt.X, pt.Y, pt.Z, pt.U, 1 }
+                    { pt._X, pt._Y, pt._Z, pt._U, 1 }
                 });
             }
 
@@ -1705,10 +1713,10 @@ namespace Com
             {
                 return new Matrix2D(new double[5, 5]
                 {
-                    { pt.X, 0, 0, 0, 0 },
-                    { 0, pt.Y, 0, 0, 0 },
-                    { 0, 0, pt.Z, 0, 0 },
-                    { 0, 0, 0, pt.U, 0 },
+                    { pt._X, 0, 0, 0, 0 },
+                    { 0, pt._Y, 0, 0, 0 },
+                    { 0, 0, pt._Z, 0, 0 },
+                    { 0, 0, 0, pt._U, 0 },
                     { 0, 0, 0, 0, 1 }
                 });
             }
@@ -1843,7 +1851,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                double dx = left.X - right.X, dy = left.Y - right.Y, dz = left.Z - right.Z, du = left.U - right.U;
+                double dx = left._X - right._X, dy = left._Y - right._Y, dz = left._Z - right._Z, du = left._U - right._U;
 
                 return Math.Sqrt(dx * dx + dy * dy + dz * dz + du * du);
             }
@@ -1860,17 +1868,17 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                if (left.X == 0 && left.Y == 0 && left.Z == 0 && left.U == 0)
+                if (left._X == 0 && left._Y == 0 && left._Z == 0 && left._U == 0)
                 {
-                    left.X = 1;
+                    left._X = 1;
                 }
 
-                if (right.X == 0 && right.Y == 0 && right.Z == 0 && right.U == 0)
+                if (right._X == 0 && right._Y == 0 && right._Z == 0 && right._U == 0)
                 {
-                    right.X = 1;
+                    right._X = 1;
                 }
 
-                double DotProduct = left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.U * right.U;
+                double DotProduct = left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U;
                 double ModProduct = left.VectorModule * right.VectorModule;
 
                 return Math.Acos(DotProduct / ModProduct);
@@ -1890,7 +1898,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return (left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.U * right.U);
+                return (left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U);
             }
 
             return double.NaN;
@@ -1905,7 +1913,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Vector(Vector.Type.ColumnVector, left.X * right.Y - left.Y * right.X, left.X * right.Z - left.Z * right.X, left.X * right.U - left.U * right.X, left.Y * right.Z - left.Z * right.Y, left.Y * right.U - left.U * right.Y, left.Z * right.U - left.U * right.Z);
+                return new Vector(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X, left._X * right._Z - left._Z * right._X, left._X * right._U - left._U * right._X, left._Y * right._Z - left._Z * right._Y, left._Y * right._U - left._U * right._Y, left._Z * right._U - left._U * right._Z);
             }
 
             return Vector.NonVector;
@@ -1921,7 +1929,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(Math.Abs(pt.X), Math.Abs(pt.Y), Math.Abs(pt.Z), Math.Abs(pt.U));
+                return new PointD4D(Math.Abs(pt._X), Math.Abs(pt._Y), Math.Abs(pt._Z), Math.Abs(pt._U));
             }
 
             return NaN;
@@ -1935,7 +1943,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(Math.Sign(pt.X), Math.Sign(pt.Y), Math.Sign(pt.Z), Math.Sign(pt.U));
+                return new PointD4D(Math.Sign(pt._X), Math.Sign(pt._Y), Math.Sign(pt._Z), Math.Sign(pt._U));
             }
 
             return NaN;
@@ -1949,7 +1957,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(Math.Ceiling(pt.X), Math.Ceiling(pt.Y), Math.Ceiling(pt.Z), Math.Ceiling(pt.U));
+                return new PointD4D(Math.Ceiling(pt._X), Math.Ceiling(pt._Y), Math.Ceiling(pt._Z), Math.Ceiling(pt._U));
             }
 
             return NaN;
@@ -1963,7 +1971,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(Math.Floor(pt.X), Math.Floor(pt.Y), Math.Floor(pt.Z), Math.Floor(pt.U));
+                return new PointD4D(Math.Floor(pt._X), Math.Floor(pt._Y), Math.Floor(pt._Z), Math.Floor(pt._U));
             }
 
             return NaN;
@@ -1977,7 +1985,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(Math.Round(pt.X), Math.Round(pt.Y), Math.Round(pt.Z), Math.Round(pt.U));
+                return new PointD4D(Math.Round(pt._X), Math.Round(pt._Y), Math.Round(pt._Z), Math.Round(pt._U));
             }
 
             return NaN;
@@ -1991,7 +1999,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(Math.Truncate(pt.X), Math.Truncate(pt.Y), Math.Truncate(pt.Z), Math.Truncate(pt.U));
+                return new PointD4D(Math.Truncate(pt._X), Math.Truncate(pt._Y), Math.Truncate(pt._Z), Math.Truncate(pt._U));
             }
 
             return NaN;
@@ -2006,7 +2014,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD4D(Math.Max(left.X, right.X), Math.Max(left.Y, right.Y), Math.Max(left.Z, right.Z), Math.Max(left.U, right.U));
+                return new PointD4D(Math.Max(left._X, right._X), Math.Max(left._Y, right._Y), Math.Max(left._Z, right._Z), Math.Max(left._U, right._U));
             }
 
             return NaN;
@@ -2021,7 +2029,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD4D(Math.Min(left.X, right.X), Math.Min(left.Y, right.Y), Math.Min(left.Z, right.Z), Math.Min(left.U, right.U));
+                return new PointD4D(Math.Min(left._X, right._X), Math.Min(left._Y, right._Y), Math.Min(left._Z, right._Z), Math.Min(left._U, right._U));
             }
 
             return NaN;
@@ -2085,7 +2093,7 @@ namespace Com
                 return false;
             }
 
-            return (left.X == right.X && left.Y == right.Y && left.Z == right.Z && left.U == right.U);
+            return (left._X == right._X && left._Y == right._Y && left._Z == right._Z && left._U == right._U);
         }
 
         /// <summary>
@@ -2108,7 +2116,7 @@ namespace Com
                 return true;
             }
 
-            return (left.X != right.X || left.Y != right.Y || left.Z != right.Z || left.U != right.U);
+            return (left._X != right._X || left._Y != right._Y || left._Z != right._Z || left._U != right._U);
         }
 
         /// <summary>
@@ -2181,7 +2189,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(+pt.X, +pt.Y, +pt.Z, +pt.U);
+                return new PointD4D(+pt._X, +pt._Y, +pt._Z, +pt._U);
             }
 
             return NaN;
@@ -2195,7 +2203,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(-pt.X, -pt.Y, -pt.Z, -pt.U);
+                return new PointD4D(-pt._X, -pt._Y, -pt._Z, -pt._U);
             }
 
             return NaN;
@@ -2212,7 +2220,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(pt.X + n, pt.Y + n, pt.Z + n, pt.U + n);
+                return new PointD4D(pt._X + n, pt._Y + n, pt._Z + n, pt._U + n);
             }
 
             return NaN;
@@ -2227,7 +2235,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(n + pt.X, n + pt.Y, n + pt.Z, n + pt.U);
+                return new PointD4D(n + pt._X, n + pt._Y, n + pt._Z, n + pt._U);
             }
 
             return NaN;
@@ -2242,7 +2250,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD4D(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.U + right.U);
+                return new PointD4D(left._X + right._X, left._Y + right._Y, left._Z + right._Z, left._U + right._U);
             }
 
             return NaN;
@@ -2259,7 +2267,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(pt.X - n, pt.Y - n, pt.Z - n, pt.U - n);
+                return new PointD4D(pt._X - n, pt._Y - n, pt._Z - n, pt._U - n);
             }
 
             return NaN;
@@ -2274,7 +2282,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(n - pt.X, n - pt.Y, n - pt.Z, n - pt.U);
+                return new PointD4D(n - pt._X, n - pt._Y, n - pt._Z, n - pt._U);
             }
 
             return NaN;
@@ -2289,7 +2297,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD4D(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.U - right.U);
+                return new PointD4D(left._X - right._X, left._Y - right._Y, left._Z - right._Z, left._U - right._U);
             }
 
             return NaN;
@@ -2306,7 +2314,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(pt.X * n, pt.Y * n, pt.Z * n, pt.U * n);
+                return new PointD4D(pt._X * n, pt._Y * n, pt._Z * n, pt._U * n);
             }
 
             return NaN;
@@ -2321,7 +2329,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(n * pt.X, n * pt.Y, n * pt.Z, n * pt.U);
+                return new PointD4D(n * pt._X, n * pt._Y, n * pt._Z, n * pt._U);
             }
 
             return NaN;
@@ -2336,7 +2344,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD4D(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.U * right.U);
+                return new PointD4D(left._X * right._X, left._Y * right._Y, left._Z * right._Z, left._U * right._U);
             }
 
             return NaN;
@@ -2353,7 +2361,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(pt.X / n, pt.Y / n, pt.Z / n, pt.U / n);
+                return new PointD4D(pt._X / n, pt._Y / n, pt._Z / n, pt._U / n);
             }
 
             return NaN;
@@ -2368,7 +2376,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD4D(n / pt.X, n / pt.Y, n / pt.Z, n / pt.U);
+                return new PointD4D(n / pt._X, n / pt._Y, n / pt._Z, n / pt._U);
             }
 
             return NaN;
@@ -2383,7 +2391,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD4D(left.X / right.X, left.Y / right.Y, left.Z / right.Z, left.U / right.U);
+                return new PointD4D(left._X / right._X, left._Y / right._Y, left._Z / right._Z, left._U / right._U);
             }
 
             return NaN;

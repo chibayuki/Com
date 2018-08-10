@@ -444,8 +444,8 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                _X += pt.X;
-                _Y += pt.Y;
+                _X += pt._X;
+                _Y += pt._Y;
             }
         }
 
@@ -528,7 +528,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(_X + pt.X, _Y + pt.Y);
+                return new PointD(_X + pt._X, _Y + pt._Y);
             }
 
             return NaN;
@@ -621,8 +621,8 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                _X *= pt.X;
-                _Y *= pt.Y;
+                _X *= pt._X;
+                _Y *= pt._Y;
             }
         }
 
@@ -705,7 +705,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(_X * pt.X, _Y * pt.Y);
+                return new PointD(_X * pt._X, _Y * pt._Y);
             }
 
             return NaN;
@@ -798,8 +798,8 @@ namespace Com
                 double CosA = Math.Cos(angle);
                 double SinA = Math.Sin(angle);
 
-                _X = (__X - pt.X) * CosA - (__Y - pt.Y) * SinA + pt.X;
-                _Y = (__X - pt.X) * SinA + (__Y - pt.Y) * CosA + pt.Y;
+                _X = (__X - pt._X) * CosA - (__Y - pt._Y) * SinA + pt._X;
+                _Y = (__X - pt._X) * SinA + (__Y - pt._Y) * CosA + pt._Y;
             }
         }
 
@@ -814,8 +814,8 @@ namespace Com
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            result.X = _X * CosA - _Y * SinA;
-            result.Y = _X * SinA + _Y * CosA;
+            result._X = _X * CosA - _Y * SinA;
+            result._Y = _X * SinA + _Y * CosA;
 
             return result;
         }
@@ -834,8 +834,8 @@ namespace Com
                 double CosA = Math.Cos(angle);
                 double SinA = Math.Sin(angle);
 
-                result.X = (_X - pt.X) * CosA - (_Y - pt.Y) * SinA + pt.X;
-                result.Y = (_X - pt.X) * SinA + (_Y - pt.Y) * CosA + pt.Y;
+                result._X = (_X - pt._X) * CosA - (_Y - pt._Y) * SinA + pt._X;
+                result._Y = (_X - pt._X) * SinA + (_Y - pt._Y) * CosA + pt._Y;
 
                 return result;
             }
@@ -857,9 +857,9 @@ namespace Com
             {
                 Matrix2D matrixLeft = new Matrix2D(new double[3, 3]
                 {
-                    { ex.X, ex.Y, 0 },
-                    { ey.X, ey.Y, 0 },
-                    { offset.X, offset.Y, 1 }
+                    { ex._X, ex._Y, 0 },
+                    { ey._X, ey._Y, 0 },
+                    { offset._X, offset._Y, 1 }
                 });
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
@@ -942,9 +942,9 @@ namespace Com
             {
                 Matrix2D matrixLeft = new Matrix2D(new double[3, 3]
                 {
-                    { ex.X, ex.Y, 0 },
-                    { ey.X, ey.Y, 0 },
-                    { offset.X, offset.Y, 1 }
+                    { ex._X, ex._Y, 0 },
+                    { ey._X, ey._Y, 0 },
+                    { offset._X, offset._Y, 1 }
                 });
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
@@ -1030,9 +1030,9 @@ namespace Com
             {
                 Matrix2D matrixLeft = new Matrix2D(new double[3, 3]
                 {
-                    { ex.X, ex.Y, 0 },
-                    { ey.X, ey.Y, 0 },
-                    { offset.X, offset.Y, 1 }
+                    { ex._X, ex._Y, 0 },
+                    { ey._X, ey._Y, 0 },
+                    { offset._X, offset._Y, 1 }
                 });
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
@@ -1115,9 +1115,9 @@ namespace Com
             {
                 Matrix2D matrixLeft = new Matrix2D(new double[3, 3]
                 {
-                    { ex.X, ex.Y, 0 },
-                    { ey.X, ey.Y, 0 },
-                    { offset.X, offset.Y, 1 }
+                    { ex._X, ex._Y, 0 },
+                    { ey._X, ey._Y, 0 },
+                    { offset._X, offset._Y, 1 }
                 });
                 Matrix2D matrixRight = _ToMatrixForAffineTransform();
 
@@ -1201,7 +1201,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                double dx = _X - pt.X, dy = _Y - pt.Y;
+                double dx = _X - pt._X, dy = _Y - pt._Y;
 
                 return Math.Sqrt(dx * dx + dy * dy);
             }
@@ -1222,12 +1222,12 @@ namespace Com
                     _X = 1;
                 }
 
-                if (pt.X == 0 && pt.Y == 0)
+                if (pt._X == 0 && pt._Y == 0)
                 {
-                    pt.X = 1;
+                    pt._X = 1;
                 }
 
-                double DotProduct = _X * pt.X + _Y * pt.Y;
+                double DotProduct = _X * pt._X + _Y * pt._Y;
                 double ModProduct = VectorModule * pt.VectorModule;
 
                 return Math.Acos(DotProduct / ModProduct);
@@ -1257,7 +1257,15 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将此 PointD 结构转换为表示列向量的 Vector 的新实例。
+        /// 返回将此 PointD 结构转换为向量的 Vector 的新实例。
+        /// </summary>
+        public Vector ToVector()
+        {
+            return new Vector(_X, _Y);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD 结构转换为列向量的 Vector 的新实例。
         /// </summary>
         public Vector ToVectorColumn()
         {
@@ -1265,7 +1273,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将此 PointD 结构转换为表示行向量的 Vector 的新实例。
+        /// 返回将此 PointD 结构转换为行向量的 Vector 的新实例。
         /// </summary>
         public Vector ToVectorRow()
         {
@@ -1493,7 +1501,7 @@ namespace Com
                 {
                     { 1, 0, 0 },
                     { 0, 1, 0 },
-                    { pt.X, pt.Y, 1 }
+                    { pt._X, pt._Y, 1 }
                 });
             }
 
@@ -1617,8 +1625,8 @@ namespace Com
             {
                 return new Matrix2D(new double[3, 3]
                 {
-                    { pt.X, 0, 0 },
-                    { 0, pt.Y, 0 },
+                    { pt._X, 0, 0 },
+                    { 0, pt._Y, 0 },
                     { 0, 0, 1 }
                 });
             }
@@ -1737,7 +1745,7 @@ namespace Com
                 {
                     { CosA, SinA, 0 },
                     { -SinA, CosA, 0 },
-                    { -pt.X * CosA + pt.Y * SinA + pt.X, -pt.X * SinA - pt.Y * CosA + pt.Y, 1 }
+                    { -pt._X * CosA + pt._Y * SinA + pt._X, -pt._X * SinA - pt._Y * CosA + pt._Y, 1 }
                 });
             }
 
@@ -1755,7 +1763,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                double dx = left.X - right.X, dy = left.Y - right.Y;
+                double dx = left._X - right._X, dy = left._Y - right._Y;
 
                 return Math.Sqrt(dx * dx + dy * dy);
             }
@@ -1772,17 +1780,17 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                if (left.X == 0 && left.Y == 0)
+                if (left._X == 0 && left._Y == 0)
                 {
-                    left.X = 1;
+                    left._X = 1;
                 }
 
-                if (right.X == 0 && right.Y == 0)
+                if (right._X == 0 && right._Y == 0)
                 {
-                    right.X = 1;
+                    right._X = 1;
                 }
 
-                double DotProduct = left.X * right.X + left.Y * right.Y;
+                double DotProduct = left._X * right._X + left._Y * right._Y;
                 double ModProduct = left.VectorModule * right.VectorModule;
 
                 return Math.Acos(DotProduct / ModProduct);
@@ -1802,7 +1810,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return (left.X * right.X + left.Y * right.Y);
+                return (left._X * right._X + left._Y * right._Y);
             }
 
             return double.NaN;
@@ -1817,7 +1825,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Vector(Vector.Type.ColumnVector, left.X * right.Y - left.Y * right.X);
+                return new Vector(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X);
             }
 
             return Vector.NonVector;
@@ -1833,7 +1841,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(Math.Abs(pt.X), Math.Abs(pt.Y));
+                return new PointD(Math.Abs(pt._X), Math.Abs(pt._Y));
             }
 
             return NaN;
@@ -1847,7 +1855,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(Math.Sign(pt.X), Math.Sign(pt.Y));
+                return new PointD(Math.Sign(pt._X), Math.Sign(pt._Y));
             }
 
             return NaN;
@@ -1861,7 +1869,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(Math.Ceiling(pt.X), Math.Ceiling(pt.Y));
+                return new PointD(Math.Ceiling(pt._X), Math.Ceiling(pt._Y));
             }
 
             return NaN;
@@ -1875,7 +1883,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(Math.Floor(pt.X), Math.Floor(pt.Y));
+                return new PointD(Math.Floor(pt._X), Math.Floor(pt._Y));
             }
 
             return NaN;
@@ -1889,7 +1897,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(Math.Round(pt.X), Math.Round(pt.Y));
+                return new PointD(Math.Round(pt._X), Math.Round(pt._Y));
             }
 
             return NaN;
@@ -1903,7 +1911,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(Math.Truncate(pt.X), Math.Truncate(pt.Y));
+                return new PointD(Math.Truncate(pt._X), Math.Truncate(pt._Y));
             }
 
             return NaN;
@@ -1918,7 +1926,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(Math.Max(left.X, right.X), Math.Max(left.Y, right.Y));
+                return new PointD(Math.Max(left._X, right._X), Math.Max(left._Y, right._Y));
             }
 
             return NaN;
@@ -1933,7 +1941,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(Math.Min(left.X, right.X), Math.Min(left.Y, right.Y));
+                return new PointD(Math.Min(left._X, right._X), Math.Min(left._Y, right._Y));
             }
 
             return NaN;
@@ -1997,7 +2005,7 @@ namespace Com
                 return false;
             }
 
-            return (left.X == right.X && left.Y == right.Y);
+            return (left._X == right._X && left._Y == right._Y);
         }
 
         /// <summary>
@@ -2020,7 +2028,7 @@ namespace Com
                 return true;
             }
 
-            return (left.X != right.X || left.Y != right.Y);
+            return (left._X != right._X || left._Y != right._Y);
         }
 
         /// <summary>
@@ -2093,7 +2101,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(+pt.X, +pt.Y);
+                return new PointD(+pt._X, +pt._Y);
             }
 
             return NaN;
@@ -2107,7 +2115,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(-pt.X, -pt.Y);
+                return new PointD(-pt._X, -pt._Y);
             }
 
             return NaN;
@@ -2124,7 +2132,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(pt.X + n, pt.Y + n);
+                return new PointD(pt._X + n, pt._Y + n);
             }
 
             return NaN;
@@ -2139,7 +2147,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(n + pt.X, n + pt.Y);
+                return new PointD(n + pt._X, n + pt._Y);
             }
 
             return NaN;
@@ -2154,7 +2162,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X + right.X, left.Y + right.Y);
+                return new PointD(left._X + right._X, left._Y + right._Y);
             }
 
             return NaN;
@@ -2169,7 +2177,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X + right.X, left.Y + right.Y);
+                return new PointD(left._X + right.X, left._Y + right.Y);
             }
 
             return NaN;
@@ -2184,7 +2192,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X + right.X, left.Y + right.Y);
+                return new PointD(left.X + right._X, left.Y + right._Y);
             }
 
             return NaN;
@@ -2199,7 +2207,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X + right.X, left.Y + right.Y);
+                return new PointD(left._X + right.X, left._Y + right.Y);
             }
 
             return NaN;
@@ -2214,7 +2222,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X + right.X, left.Y + right.Y);
+                return new PointD(left.X + right._X, left.Y + right._Y);
             }
 
             return NaN;
@@ -2229,7 +2237,7 @@ namespace Com
         {
             if ((object)pt != null && (object)sz != null)
             {
-                return new PointD(pt.X + sz.Width, pt.Y + sz.Height);
+                return new PointD(pt._X + sz.Width, pt._Y + sz.Height);
             }
 
             return NaN;
@@ -2244,7 +2252,7 @@ namespace Com
         {
             if ((object)sz != null && (object)pt != null)
             {
-                return new PointD(sz.Width + pt.X, sz.Height + pt.Y);
+                return new PointD(sz.Width + pt._X, sz.Height + pt._Y);
             }
 
             return NaN;
@@ -2259,7 +2267,7 @@ namespace Com
         {
             if ((object)pt != null && (object)sz != null)
             {
-                return new PointD(pt.X + sz.Width, pt.Y + sz.Height);
+                return new PointD(pt._X + sz.Width, pt._Y + sz.Height);
             }
 
             return NaN;
@@ -2274,7 +2282,7 @@ namespace Com
         {
             if ((object)sz != null && (object)pt != null)
             {
-                return new PointD(sz.Width + pt.X, sz.Height + pt.Y);
+                return new PointD(sz.Width + pt._X, sz.Height + pt._Y);
             }
 
             return NaN;
@@ -2291,7 +2299,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(pt.X - n, pt.Y - n);
+                return new PointD(pt._X - n, pt._Y - n);
             }
 
             return NaN;
@@ -2306,7 +2314,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(n - pt.X, n - pt.Y);
+                return new PointD(n - pt._X, n - pt._Y);
             }
 
             return NaN;
@@ -2321,7 +2329,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X - right.X, left.Y - right.Y);
+                return new PointD(left._X - right._X, left._Y - right._Y);
             }
 
             return NaN;
@@ -2336,7 +2344,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X - right.X, left.Y - right.Y);
+                return new PointD(left._X - right.X, left._Y - right.Y);
             }
 
             return NaN;
@@ -2351,7 +2359,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X - right.X, left.Y - right.Y);
+                return new PointD(left.X - right._X, left.Y - right._Y);
             }
 
             return NaN;
@@ -2366,7 +2374,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X - right.X, left.Y - right.Y);
+                return new PointD(left._X - right.X, left._Y - right.Y);
             }
 
             return NaN;
@@ -2381,7 +2389,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X - right.X, left.Y - right.Y);
+                return new PointD(left.X - right._X, left.Y - right._Y);
             }
 
             return NaN;
@@ -2396,7 +2404,7 @@ namespace Com
         {
             if ((object)pt != null && (object)sz != null)
             {
-                return new PointD(pt.X - sz.Width, pt.Y - sz.Height);
+                return new PointD(pt._X - sz.Width, pt._Y - sz.Height);
             }
 
             return NaN;
@@ -2411,7 +2419,7 @@ namespace Com
         {
             if ((object)sz != null && (object)pt != null)
             {
-                return new PointD(sz.Width - pt.X, sz.Height - pt.Y);
+                return new PointD(sz.Width - pt._X, sz.Height - pt._Y);
             }
 
             return NaN;
@@ -2426,7 +2434,7 @@ namespace Com
         {
             if ((object)pt != null && (object)sz != null)
             {
-                return new PointD(pt.X - sz.Width, pt.Y - sz.Height);
+                return new PointD(pt._X - sz.Width, pt._Y - sz.Height);
             }
 
             return NaN;
@@ -2441,7 +2449,7 @@ namespace Com
         {
             if ((object)sz != null && (object)pt != null)
             {
-                return new PointD(sz.Width - pt.X, sz.Height - pt.Y);
+                return new PointD(sz.Width - pt._X, sz.Height - pt._Y);
             }
 
             return NaN;
@@ -2458,7 +2466,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(pt.X * n, pt.Y * n);
+                return new PointD(pt._X * n, pt._Y * n);
             }
 
             return NaN;
@@ -2473,7 +2481,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(n * pt.X, n * pt.Y);
+                return new PointD(n * pt._X, n * pt._Y);
             }
 
             return NaN;
@@ -2488,7 +2496,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X * right.X, left.Y * right.Y);
+                return new PointD(left._X * right._X, left._Y * right._Y);
             }
 
             return NaN;
@@ -2503,7 +2511,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X * right.X, left.Y * right.Y);
+                return new PointD(left._X * right.X, left._Y * right.Y);
             }
 
             return NaN;
@@ -2518,7 +2526,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X * right.X, left.Y * right.Y);
+                return new PointD(left.X * right._X, left.Y * right._Y);
             }
 
             return NaN;
@@ -2533,7 +2541,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X * right.X, left.Y * right.Y);
+                return new PointD(left._X * right.X, left._Y * right.Y);
             }
 
             return NaN;
@@ -2548,7 +2556,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X * right.X, left.Y * right.Y);
+                return new PointD(left.X * right._X, left.Y * right._Y);
             }
 
             return NaN;
@@ -2563,7 +2571,7 @@ namespace Com
         {
             if ((object)pt != null && (object)sz != null)
             {
-                return new PointD(pt.X * sz.Width, pt.Y * sz.Height);
+                return new PointD(pt._X * sz.Width, pt._Y * sz.Height);
             }
 
             return NaN;
@@ -2578,7 +2586,7 @@ namespace Com
         {
             if ((object)sz != null && (object)pt != null)
             {
-                return new PointD(sz.Width * pt.X, sz.Height * pt.Y);
+                return new PointD(sz.Width * pt._X, sz.Height * pt._Y);
             }
 
             return NaN;
@@ -2593,7 +2601,7 @@ namespace Com
         {
             if ((object)pt != null && (object)sz != null)
             {
-                return new PointD(pt.X * sz.Width, pt.Y * sz.Height);
+                return new PointD(pt._X * sz.Width, pt._Y * sz.Height);
             }
 
             return NaN;
@@ -2608,7 +2616,7 @@ namespace Com
         {
             if ((object)sz != null && (object)pt != null)
             {
-                return new PointD(sz.Width * pt.X, sz.Height * pt.Y);
+                return new PointD(sz.Width * pt._X, sz.Height * pt._Y);
             }
 
             return NaN;
@@ -2625,7 +2633,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(pt.X / n, pt.Y / n);
+                return new PointD(pt._X / n, pt._Y / n);
             }
 
             return NaN;
@@ -2640,7 +2648,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new PointD(n / pt.X, n / pt.Y);
+                return new PointD(n / pt._X, n / pt._Y);
             }
 
             return NaN;
@@ -2655,7 +2663,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X / right.X, left.Y / right.Y);
+                return new PointD(left._X / right._X, left._Y / right._Y);
             }
 
             return NaN;
@@ -2670,7 +2678,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X / right.X, left.Y / right.Y);
+                return new PointD(left._X / right.X, left._Y / right.Y);
             }
 
             return NaN;
@@ -2685,7 +2693,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X / right.X, left.Y / right.Y);
+                return new PointD(left.X / right._X, left.Y / right._Y);
             }
 
             return NaN;
@@ -2700,7 +2708,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X / right.X, left.Y / right.Y);
+                return new PointD(left._X / right.X, left._Y / right.Y);
             }
 
             return NaN;
@@ -2715,7 +2723,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new PointD(left.X / right.X, left.Y / right.Y);
+                return new PointD(left.X / right._X, left.Y / right._Y);
             }
 
             return NaN;
@@ -2730,7 +2738,7 @@ namespace Com
         {
             if ((object)pt != null && (object)sz != null)
             {
-                return new PointD(pt.X / sz.Width, pt.Y / sz.Height);
+                return new PointD(pt._X / sz.Width, pt._Y / sz.Height);
             }
 
             return NaN;
@@ -2745,7 +2753,7 @@ namespace Com
         {
             if ((object)sz != null && (object)pt != null)
             {
-                return new PointD(sz.Width / pt.X, sz.Height / pt.Y);
+                return new PointD(sz.Width / pt._X, sz.Height / pt._Y);
             }
 
             return NaN;
@@ -2760,7 +2768,7 @@ namespace Com
         {
             if ((object)pt != null && (object)sz != null)
             {
-                return new PointD(pt.X / sz.Width, pt.Y / sz.Height);
+                return new PointD(pt._X / sz.Width, pt._Y / sz.Height);
             }
 
             return NaN;
@@ -2775,7 +2783,7 @@ namespace Com
         {
             if ((object)sz != null && (object)pt != null)
             {
-                return new PointD(sz.Width / pt.X, sz.Height / pt.Y);
+                return new PointD(sz.Width / pt._X, sz.Height / pt._Y);
             }
 
             return NaN;

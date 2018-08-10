@@ -359,7 +359,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(comp.Real * comp.Real - comp.Image * comp.Image, 2 * comp.Real * comp.Image);
+                return new Complex(comp._Real * comp._Real - comp._Image * comp._Image, 2 * comp._Real * comp._Image);
             }
 
             return NaN;
@@ -390,8 +390,8 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                double Mod = Math.Exp(comp.Real);
-                double Arg = comp.Image;
+                double Mod = Math.Exp(comp._Real);
+                double Arg = comp._Image;
 
                 return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
             }
@@ -426,8 +426,8 @@ namespace Com
                     double LnModL = Math.Log(ModL);
                     double ArgL = left.Argument;
 
-                    double Mod = Math.Exp(LnModL * right.Real - ArgL * right.Image);
-                    double Arg = ArgL * right.Real + LnModL * right.Image;
+                    double Mod = Math.Exp(LnModL * right._Real - ArgL * right._Image);
+                    double Arg = ArgL * right._Real + LnModL * right._Image;
 
                     return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
                 }
@@ -485,10 +485,10 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                double ExpPIm = Math.Exp(comp.Image);
-                double ExpNIm = Math.Exp(-comp.Image);
+                double ExpPIm = Math.Exp(comp._Image);
+                double ExpNIm = Math.Exp(-comp._Image);
 
-                return new Complex((ExpPIm + ExpNIm) * Math.Sin(comp.Real) / 2, (ExpPIm - ExpNIm) * Math.Cos(comp.Real) / 2);
+                return new Complex((ExpPIm + ExpNIm) * Math.Sin(comp._Real) / 2, (ExpPIm - ExpNIm) * Math.Cos(comp._Real) / 2);
             }
 
             return NaN;
@@ -502,10 +502,10 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                double ExpPIm = Math.Exp(comp.Image);
-                double ExpNIm = Math.Exp(-comp.Image);
+                double ExpPIm = Math.Exp(comp._Image);
+                double ExpNIm = Math.Exp(-comp._Image);
 
-                return new Complex((ExpPIm + ExpNIm) * Math.Cos(comp.Real) / 2, -(ExpPIm - ExpNIm) * Math.Sin(comp.Real) / 2);
+                return new Complex((ExpPIm + ExpNIm) * Math.Cos(comp._Real) / 2, -(ExpPIm - ExpNIm) * Math.Sin(comp._Real) / 2);
             }
 
             return NaN;
@@ -661,7 +661,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(Math.Abs(comp.Real), Math.Abs(comp.Image));
+                return new Complex(Math.Abs(comp._Real), Math.Abs(comp._Image));
             }
 
             return NaN;
@@ -675,7 +675,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(Math.Sign(comp.Real), Math.Sign(comp.Image));
+                return new Complex(Math.Sign(comp._Real), Math.Sign(comp._Image));
             }
 
             return NaN;
@@ -689,7 +689,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(Math.Ceiling(comp.Real), Math.Ceiling(comp.Image));
+                return new Complex(Math.Ceiling(comp._Real), Math.Ceiling(comp._Image));
             }
 
             return NaN;
@@ -703,7 +703,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(Math.Floor(comp.Real), Math.Floor(comp.Image));
+                return new Complex(Math.Floor(comp._Real), Math.Floor(comp._Image));
             }
 
             return NaN;
@@ -717,7 +717,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(Math.Round(comp.Real), Math.Round(comp.Image));
+                return new Complex(Math.Round(comp._Real), Math.Round(comp._Image));
             }
 
             return NaN;
@@ -731,7 +731,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(Math.Truncate(comp.Real), Math.Truncate(comp.Image));
+                return new Complex(Math.Truncate(comp._Real), Math.Truncate(comp._Image));
             }
 
             return NaN;
@@ -746,7 +746,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Complex(Math.Max(left.Real, right.Real), Math.Max(left.Image, right.Image));
+                return new Complex(Math.Max(left._Real, right._Real), Math.Max(left._Image, right._Image));
             }
 
             return NaN;
@@ -761,7 +761,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Complex(Math.Min(left.Real, right.Real), Math.Min(left.Image, right.Image));
+                return new Complex(Math.Min(left._Real, right._Real), Math.Min(left._Image, right._Image));
             }
 
             return NaN;
@@ -876,7 +876,7 @@ namespace Com
                 return false;
             }
 
-            return (left.Real == right.Real && left.Image == right.Image);
+            return (left._Real == right._Real && left._Image == right._Image);
         }
 
         /// <summary>
@@ -899,7 +899,7 @@ namespace Com
                 return true;
             }
 
-            return (left.Real != right.Real || left.Image != right.Image);
+            return (left._Real != right._Real || left._Image != right._Image);
         }
 
         /// <summary>
@@ -972,7 +972,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(+comp.Real, +comp.Image);
+                return new Complex(+comp._Real, +comp._Image);
             }
 
             return NaN;
@@ -986,7 +986,7 @@ namespace Com
         {
             if ((object)comp != null)
             {
-                return new Complex(-comp.Real, -comp.Image);
+                return new Complex(-comp._Real, -comp._Image);
             }
 
             return NaN;
@@ -1003,7 +1003,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Complex(left.Real + right.Real, left.Image + right.Image);
+                return new Complex(left._Real + right._Real, left._Image + right._Image);
             }
 
             return NaN;
@@ -1018,7 +1018,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Complex(left.Real - right.Real, left.Image - right.Image);
+                return new Complex(left._Real - right._Real, left._Image - right._Image);
             }
 
             return NaN;
@@ -1033,7 +1033,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Complex(left.Real * right.Real - left.Image * right.Image, left.Image * right.Real + left.Real * right.Image);
+                return new Complex(left._Real * right._Real - left._Image * right._Image, left._Image * right._Real + left._Real * right._Image);
             }
 
             return NaN;
@@ -1050,7 +1050,7 @@ namespace Com
             {
                 double ModSqrR = right.ModuleSquared;
 
-                return new Complex((left.Real * right.Real + left.Image * right.Image) / ModSqrR, (left.Image * right.Real - left.Real * right.Image) / ModSqrR);
+                return new Complex((left._Real * right._Real + left._Image * right._Image) / ModSqrR, (left._Image * right._Real - left._Real * right._Image) / ModSqrR);
             }
 
             return NaN;

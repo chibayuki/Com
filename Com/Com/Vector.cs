@@ -572,7 +572,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.Multiply(matrixVector, matrixRotate);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -581,7 +581,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.Multiply(matrixRotate, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -606,7 +606,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.Multiply(matrixVector, matrixRotate);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -619,7 +619,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.Multiply(matrixRotate, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -649,7 +649,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.Multiply(matrixVector, matrix);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -658,7 +658,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.Multiply(matrix, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -688,7 +688,7 @@ namespace Com
                         {
                             result = Matrix2D.Multiply(result, matrix);
 
-                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -697,7 +697,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -714,7 +714,7 @@ namespace Com
                         {
                             result = Matrix2D.Multiply(matrix, result);
 
-                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -723,7 +723,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -745,7 +745,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.Multiply(matrixVector, matrix);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -758,7 +758,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.Multiply(matrix, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -794,7 +794,7 @@ namespace Com
                         {
                             result = Matrix2D.Multiply(result, matrix);
 
-                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -803,7 +803,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -824,7 +824,7 @@ namespace Com
                         {
                             result = Matrix2D.Multiply(matrix, result);
 
-                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -833,7 +833,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -861,7 +861,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.DivideRight(matrixVector, matrix);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -870,7 +870,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.DivideLeft(matrix, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -900,7 +900,7 @@ namespace Com
                         {
                             result = Matrix2D.DivideRight(result, matrix);
 
-                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -909,7 +909,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -926,7 +926,7 @@ namespace Com
                         {
                             result = Matrix2D.DivideLeft(matrix, result);
 
-                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -935,7 +935,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -957,7 +957,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.DivideRight(matrixVector, matrix);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -970,7 +970,7 @@ namespace Com
                 {
                     Matrix2D result = Matrix2D.DivideLeft(matrix, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1006,7 +1006,7 @@ namespace Com
                         {
                             result = Matrix2D.DivideRight(result, matrix);
 
-                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -1015,7 +1015,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1036,7 +1036,7 @@ namespace Com
                         {
                             result = Matrix2D.DivideLeft(matrix, result);
 
-                            flag = !Matrix2D.IsNullOrNonMatrix(result);
+                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -1045,7 +1045,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result))
+                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
