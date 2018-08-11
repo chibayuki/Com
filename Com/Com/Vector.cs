@@ -141,19 +141,6 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取表示非向量的 Vector 的新实例。
-        /// </summary>
-        public static Vector NonVector
-        {
-            get
-            {
-                return new Vector(Type.NonVector, null);
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取或设置此 Vector 指定索引的基向量方向的分量。
         /// </summary>
         /// <param name="index">索引。</param>
@@ -359,6 +346,21 @@ namespace Com
                 }
 
                 return NonVector;
+            }
+        }
+
+        #endregion
+
+        #region 静态属性
+
+        /// <summary>
+        /// 获取表示非向量的 Vector 的新实例。
+        /// </summary>
+        public static Vector NonVector
+        {
+            get
+            {
+                return new Vector(Type.NonVector, null);
             }
         }
 
@@ -1354,51 +1356,6 @@ namespace Com
 
         #endregion
 
-        #region 基类方法
-
-        /// <summary>
-        /// 判断此 Vector 是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is Vector))
-            {
-                return false;
-            }
-
-            return Equals((Vector)obj);
-        }
-
-        /// <summary>
-        /// 返回此 Vector 的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 Vector 转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            string Str = string.Empty;
-
-            if (_Size > 0)
-            {
-                Str = string.Concat("Type=", (_Type == Type.RowVector ? "RowVector" : "ColumnVector"), ", Dimension=", _Size);
-            }
-            else
-            {
-                Str = "NonVector";
-            }
-
-            return string.Concat(base.GetType().Name, " [", Str, "]");
-        }
-
-        #endregion
-
         #region 静态方法
 
         /// <summary>
@@ -1964,6 +1921,51 @@ namespace Com
             }
 
             return NonVector;
+        }
+
+        #endregion
+
+        #region 基类方法
+
+        /// <summary>
+        /// 判断此 Vector 是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Vector))
+            {
+                return false;
+            }
+
+            return Equals((Vector)obj);
+        }
+
+        /// <summary>
+        /// 返回此 Vector 的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 Vector 转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = string.Empty;
+
+            if (_Size > 0)
+            {
+                Str = string.Concat("Type=", (_Type == Type.RowVector ? "RowVector" : "ColumnVector"), ", Dimension=", _Size);
+            }
+            else
+            {
+                Str = "NonVector";
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
         }
 
         #endregion

@@ -157,19 +157,6 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取表示非矩阵的 Matrix2D 的新实例。
-        /// </summary>
-        public static Matrix2D NonMatrix
-        {
-            get
-            {
-                return new Matrix2D(null);
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取或设置此 Matrix2D 的指定索引的元素。
         /// </summary>
         /// <param name="x">矩阵的宽度方向（列）的索引。</param>
@@ -578,6 +565,21 @@ namespace Com
 
         #endregion
 
+        #region 静态属性
+
+        /// <summary>
+        /// 获取表示非矩阵的 Matrix2D 的新实例。
+        /// </summary>
+        public static Matrix2D NonMatrix
+        {
+            get
+            {
+                return new Matrix2D(null);
+            }
+        }
+
+        #endregion
+
         #region 方法
 
         /// <summary>
@@ -743,51 +745,6 @@ namespace Com
             }
 
             return new double[0, 0];
-        }
-
-        #endregion
-
-        #region 基类方法
-
-        /// <summary>
-        /// 判断此 Matrix2D 是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is Matrix2D))
-            {
-                return false;
-            }
-
-            return Equals((Matrix2D)obj);
-        }
-
-        /// <summary>
-        /// 返回此 Matrix2D 的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 Matrix2D 转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            string Str = string.Empty;
-
-            if (_Size.Width > 0 && _Size.Height > 0)
-            {
-                Str = string.Concat("Column=", _Size.Width, ", Row=", _Size.Height);
-            }
-            else
-            {
-                Str = "NonMatrix";
-            }
-
-            return string.Concat(base.GetType().Name, " [", Str, "]");
         }
 
         #endregion
@@ -1483,6 +1440,51 @@ namespace Com
             }
 
             return Vector.NonVector;
+        }
+
+        #endregion
+
+        #region 基类方法
+
+        /// <summary>
+        /// 判断此 Matrix2D 是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Matrix2D))
+            {
+                return false;
+            }
+
+            return Equals((Matrix2D)obj);
+        }
+
+        /// <summary>
+        /// 返回此 Matrix2D 的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 Matrix2D 转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = string.Empty;
+
+            if (_Size.Width > 0 && _Size.Height > 0)
+            {
+                Str = string.Concat("Column=", _Size.Width, ", Row=", _Size.Height);
+            }
+            else
+            {
+                Str = "NonMatrix";
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
         }
 
         #endregion

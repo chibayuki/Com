@@ -178,19 +178,6 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取表示不包含任何元素的 BitSet 的新实例。
-        /// </summary>
-        public static BitSet Empty
-        {
-            get
-            {
-                return new BitSet(0);
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取或设置此 BitSet 指定索引位置的位值。
         /// </summary>
         /// <param name="index">索引。</param>
@@ -339,6 +326,21 @@ namespace Com
 
         #endregion
 
+        #region 静态属性
+
+        /// <summary>
+        /// 获取表示不包含任何元素的 BitSet 的新实例。
+        /// </summary>
+        public static BitSet Empty
+        {
+            get
+            {
+                return new BitSet(0);
+            }
+        }
+
+        #endregion
+
         #region 方法
 
         /// <summary>
@@ -370,16 +372,18 @@ namespace Com
         /// </summary>
         public BitSet Copy()
         {
-            BitSet result = new BitSet(_Size);
-
             if (_Size > 0)
             {
+                BitSet result = new BitSet(_Size);
+
                 int Len = _GetUintNumOfBitNum(_Size);
 
                 Array.Copy(_UintArray, result._UintArray, Len);
+
+                return result;
             }
 
-            return result;
+            return Empty;
         }
 
         //
@@ -840,6 +844,44 @@ namespace Com
 
         #endregion
 
+        #region 静态方法
+
+        /// <summary>
+        /// 判断指定的 BitSet 是否为 null 或不包含任何元素。
+        /// </summary>
+        /// <param name="bitSet">用于判断的 BitSet 对象。</param>
+        public static bool IsNullOrEmpty(BitSet bitSet)
+        {
+            return ((object)bitSet == null || bitSet._Size <= 0);
+        }
+
+        //
+
+        /// <summary>
+        /// 判断两个 BitSet 对象是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 BitSet 对象。</param>
+        /// <param name="right">用于比较的第二个 BitSet 对象。</param>
+        public static bool Equals(BitSet left, BitSet right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        #endregion
+
         #region 基类方法
 
         /// <summary>
@@ -881,44 +923,6 @@ namespace Com
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");
-        }
-
-        #endregion
-
-        #region 静态方法
-
-        /// <summary>
-        /// 判断指定的 BitSet 是否为 null 或不包含任何元素。
-        /// </summary>
-        /// <param name="bitSet">用于判断的 BitSet 对象。</param>
-        public static bool IsNullOrEmpty(BitSet bitSet)
-        {
-            return ((object)bitSet == null || bitSet._Size <= 0);
-        }
-
-        //
-
-        /// <summary>
-        /// 判断两个 BitSet 对象是否相等。
-        /// </summary>
-        /// <param name="left">用于比较的第一个 BitSet 对象。</param>
-        /// <param name="right">用于比较的第二个 BitSet 对象。</param>
-        public static bool Equals(BitSet left, BitSet right)
-        {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
-            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
-            {
-                return false;
-            }
-
-            return left.Equals(right);
         }
 
         #endregion

@@ -760,52 +760,6 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取以本地时区表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
-        /// </summary>
-        public static DateTimeX Now
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now, _LocalUtcOffset);
-            }
-        }
-
-        /// <summary>
-        /// 获取以协调世界时（UTC）表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
-        /// </summary>
-        public static DateTimeX UtcNow
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now, _Utc);
-            }
-        }
-
-        /// <summary>
-        /// 获取以本地时区表示的此计算机上的当前日期的 DateTimeX 结构的实例。
-        /// </summary>
-        public static DateTimeX Today
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now.Date, _LocalUtcOffset);
-            }
-        }
-
-        /// <summary>
-        /// 获取以协调世界时（UTC）表示的此计算机上的当前日期的 DateTimeX 结构的实例。
-        /// </summary>
-        public static DateTimeX UtcToday
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now.Date, _Utc);
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取表示此 DateTimeX 结构是否为 Empty 的布尔值。
         /// </summary>
         public bool IsEmpty
@@ -1502,6 +1456,54 @@ namespace Com
             get
             {
                 return string.Concat(Hour, ":", Minute.ToString("D2"));
+            }
+        }
+
+        #endregion
+
+        #region 静态属性
+
+        /// <summary>
+        /// 获取以本地时区表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
+        /// </summary>
+        public static DateTimeX Now
+        {
+            get
+            {
+                return new DateTimeX(DateTime.Now, _LocalUtcOffset);
+            }
+        }
+
+        /// <summary>
+        /// 获取以协调世界时（UTC）表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
+        /// </summary>
+        public static DateTimeX UtcNow
+        {
+            get
+            {
+                return new DateTimeX(DateTime.Now, _Utc);
+            }
+        }
+
+        /// <summary>
+        /// 获取以本地时区表示的此计算机上的当前日期的 DateTimeX 结构的实例。
+        /// </summary>
+        public static DateTimeX Today
+        {
+            get
+            {
+                return new DateTimeX(DateTime.Now.Date, _LocalUtcOffset);
+            }
+        }
+
+        /// <summary>
+        /// 获取以协调世界时（UTC）表示的此计算机上的当前日期的 DateTimeX 结构的实例。
+        /// </summary>
+        public static DateTimeX UtcToday
+        {
+            get
+            {
+                return new DateTimeX(DateTime.Now.Date, _Utc);
             }
         }
 

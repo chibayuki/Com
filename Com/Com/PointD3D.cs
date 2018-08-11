@@ -1113,7 +1113,7 @@ namespace Com
 
                         if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
                         {
-                            return (Scale * (XY - prjCenter.XY) + prjCenter.XY);
+                            return (Scale * XY + (1 - Scale) * prjCenter.XY);
                         }
                     }
                 }
@@ -1143,7 +1143,7 @@ namespace Com
 
                         if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
                         {
-                            return (Scale * (YZ - prjCenter.YZ) + prjCenter.YZ);
+                            return (Scale * YZ + (1 - Scale) * prjCenter.YZ);
                         }
                     }
                 }
@@ -1173,7 +1173,7 @@ namespace Com
 
                         if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
                         {
-                            return (Scale * (ZX - prjCenter.ZX) + prjCenter.ZX);
+                            return (Scale * ZX + (1 - Scale) * prjCenter.ZX);
                         }
                     }
                 }
