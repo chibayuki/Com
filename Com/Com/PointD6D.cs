@@ -1613,9 +1613,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）将此 PointD6D 结构进行仿射变换。
+        /// 按双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）将此 PointD6D 结构进行仿射变换。
         /// </summary>
-        /// <param name="matrixLeft">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）。</param>
+        /// <param name="matrixLeft">双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）。</param>
         public void AffineTransform(Matrix2D matrixLeft)
         {
             if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(7, 7))
@@ -1637,9 +1637,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行仿射变换。
+        /// 按双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行仿射变换。
         /// </summary>
-        /// <param name="matrixLeftList">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matrixLeftList">双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）列表。</param>
         public void AffineTransform(List<Matrix2D> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
@@ -1715,9 +1715,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）将此 PointD6D 结构的副本进行仿射变换的新实例。
+        /// 返回按双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）将此 PointD6D 结构的副本进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixLeft">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）。</param>
+        /// <param name="matrixLeft">双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）。</param>
         public PointD6D AffineTransformCopy(Matrix2D matrixLeft)
         {
             if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(7, 7))
@@ -1736,9 +1736,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD6D 结构的副本进行仿射变换的新实例。
+        /// 返回按双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构的副本进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixLeftList">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matrixLeftList">双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）列表。</param>
         public PointD6D AffineTransformCopy(List<Matrix2D> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
@@ -1814,9 +1814,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）将此 PointD6D 结构进行逆仿射变换。
+        /// 按双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）将此 PointD6D 结构进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixLeft">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）。</param>
+        /// <param name="matrixLeft">双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix2D matrixLeft)
         {
             if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(7, 7))
@@ -1838,9 +1838,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行逆仿射变换。
+        /// 按双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixLeftList">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matrixLeftList">双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）列表。</param>
         public void InverseAffineTransform(List<Matrix2D> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
@@ -1916,9 +1916,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）将此 PointD6D 结构的副本进行逆仿射变换的新实例。
+        /// 返回按双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）将此 PointD6D 结构的副本进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixLeft">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）。</param>
+        /// <param name="matrixLeft">双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）。</param>
         public PointD6D InverseAffineTransformCopy(Matrix2D matrixLeft)
         {
             if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(7, 7))
@@ -1937,9 +1937,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD6D 结构的副本进行逆仿射变换的新实例。
+        /// 返回按双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构的副本进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixLeftList">双精度浮点数数组表示的 5x5 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matrixLeftList">双精度浮点数数组表示的 7x7 仿射矩阵（左矩阵）列表。</param>
         public PointD6D InverseAffineTransformCopy(List<Matrix2D> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
