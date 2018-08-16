@@ -57,8 +57,8 @@ namespace Com.WinForm
 
                     //
 
-                    Color ShadowColor = Me.ShadowColor.ToColor();
-                    int ShadowOpacity = (int)(255 * Me.ShadowOpacity);
+                    Color ShadowColor = Me.RecommendColors.Shadow.ToColor();
+                    int ShadowOpacity = (int)(255 * Me.ShadowOpacityRatio);
 
                     for (int i = 0; i < Me.ResizerSize; i++)
                     {
@@ -1217,7 +1217,7 @@ namespace Com.WinForm
             }
         }
 
-        public void OnOpacityChanged() // 在 OpacityChanged 事件发生时发生。
+        public void OnThemeChanged() // 在 ThemeChanged 事件发生时发生。
         {
             _RepaintResizerBitmap();
         }

@@ -318,7 +318,7 @@ namespace Com.WinForm
 
             //
 
-            OnThemeColorChanged();
+            OnThemeChanged();
 
             //
 
@@ -977,7 +977,7 @@ namespace Com.WinForm
             _RepaintCaptionBarBitmap();
         }
 
-        public void OnThemeColorChanged() // 在 ThemeColorChanged 事件发生时发生。
+        public void OnThemeChanged() // 在 ThemeChanged 事件发生时发生。
         {
             this.BackColor = Me.RecommendColors.CaptionBar.ToColor();
 

@@ -45,9 +45,9 @@ namespace Com.WinForm
             }
         }
 
-        private CaptionBar _CaptionBar = null; // 表示标题栏的 CaptionBar 对象。
+        private CaptionBar _CaptionBar = null; // 表示窗口标题栏的 CaptionBar 对象。
 
-        internal CaptionBar CaptionBar // 获取表示标题栏的 CaptionBar 对象。
+        internal CaptionBar CaptionBar // 获取表示窗口标题栏的 CaptionBar 对象。
         {
             get
             {
@@ -311,13 +311,13 @@ namespace Com.WinForm
         private FormStyle _FormStyle = FormStyle.Sizable; // 窗口的样式。
 
         private bool _EnableFullScreen = true; // 表示是否允许窗口以全屏幕模式运行的布尔值。
-        private bool _ShowIconOnCaptionBar = true; // 表示是否在标题栏上显示图标的布尔值。
+        private bool _ShowIconOnCaptionBar = true; // 表示是否在窗口标题栏上显示图标的布尔值。
         private bool _TopMost = false; // 表示是否允许窗口置于顶层的布尔值。
         private bool _ShowInTaskbar = true; // 表示窗口是否在任务栏显示的布尔值。
 
         //
 
-        private int _CaptionBarHeight = _ControlBoxButtonHeight; // 标题栏的高度。
+        private int _CaptionBarHeight = _ControlBoxButtonHeight; // 窗口标题栏的高度。
 
         //
 
@@ -328,21 +328,28 @@ namespace Com.WinForm
         private Font _CaptionFont = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134); // 窗口标题的字体。
         private ContentAlignment _CaptionAlign = ContentAlignment.TopCenter; // 窗口标题的文本对齐方式。
         private Bitmap _CaptionBarBackgroundImage = null; // 窗口标题栏的背景图像。
-        private ColorX _ShadowColor = new ColorX(Color.Black); // 窗口投影的颜色。
-        private double _ShadowOpacity = 0.1; // 窗口投影的不透明度。
         private Theme _Theme = Theme.Colorful; // 窗口的主题。
         private ColorX _ThemeColor = ColorX.FromRGB(128, 128, 128); // 窗口的主题色。
-        private bool _ShowCaptionBarColor = true; // 表示是否在标题栏上显示主题色的布尔值。
-        private bool _EnableCaptionBarTransparent = true; // 表示是否允许以半透明方式显示标题栏的布尔值。
+        private bool _ShowCaptionBarColor = true; // 表示是否在窗口标题栏上显示主题色的布尔值。
+        private bool _EnableCaptionBarTransparent = true; // 表示是否允许以半透明方式显示窗口标题栏的布尔值。
+        private bool _ShowShadowColor = true; // 表示是否在窗口阴影显示主题色的布尔值。
         private RecommendColors _RecommendColors = null; // 当前主题建议的颜色。
 
         //
 
-        internal double CaptionBarOpacityRatio // 获取标题栏的不透明度系数。
+        internal double CaptionBarOpacityRatio // 获取窗口标题栏的不透明度系数。
         {
             get
             {
                 return (_EnableCaptionBarTransparent ? 0.9 : 1.0);
+            }
+        }
+
+        internal double ShadowOpacityRatio // 获取窗口阴影的不透明度系数。
+        {
+            get
+            {
+                return 0.1;
             }
         }
 
@@ -1432,7 +1439,7 @@ namespace Com.WinForm
                             _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                         }
 
-                        _Resizer.OnOpacityChanged();
+                        _Resizer.OnThemeChanged();
 
                         Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
 
@@ -1558,11 +1565,10 @@ namespace Com.WinForm
                 _Opacity = _Owner._Opacity;
                 _CaptionFont = _Owner._CaptionFont;
                 _CaptionAlign = _Owner._CaptionAlign;
-                _ShadowColor = _Owner._ShadowColor;
-                _ShadowOpacity = _Owner._ShadowOpacity;
                 _Theme = _Owner._Theme;
                 _ThemeColor = _Owner._ThemeColor;
                 _ShowCaptionBarColor = _Owner._ShowCaptionBarColor;
+                _ShowShadowColor = _Owner._ShowShadowColor;
                 _EnableCaptionBarTransparent = _Owner._EnableCaptionBarTransparent;
             }
 
@@ -1577,7 +1583,7 @@ namespace Com.WinForm
 
             //
 
-            _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
+            _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
 
             //
 
@@ -1711,9 +1717,9 @@ namespace Com.WinForm
             _Resizer.OnFormStyleChanged();
 
             _CaptionBar.OnCaptionChanged();
-            _CaptionBar.OnThemeColorChanged();
+            _CaptionBar.OnThemeChanged();
 
-            _SplashScreen.OnThemeColorChanged();
+            _SplashScreen.OnThemeChanged();
 
             //
 
@@ -1735,7 +1741,7 @@ namespace Com.WinForm
             //
 
             _Resizer.Opacity = 1;
-            _Resizer.OnOpacityChanged();
+            _Resizer.OnThemeChanged();
 
             //
 
@@ -1774,7 +1780,7 @@ namespace Com.WinForm
                     _Opacity = Opa * Pct_F;
 
                     _Client.Opacity = _SplashScreen.Opacity = _Opacity;
-                    _Resizer.OnOpacityChanged();
+                    _Resizer.OnThemeChanged();
                 };
 
                 Animation.Show(Frame, 9, 15);
@@ -1792,7 +1798,7 @@ namespace Com.WinForm
 
                     _Client.Opacity = _SplashScreen.Opacity = _Opacity;
                     _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
-                    _Resizer.OnOpacityChanged();
+                    _Resizer.OnThemeChanged();
 
                     Bounds_Current_Y = CurrY - (int)(16 * (1 - Pct_F));
 
@@ -1921,7 +1927,7 @@ namespace Com.WinForm
                         _Opacity = Opa * (1 - Pct_F);
 
                         _SplashScreen.Opacity = _Opacity;
-                        _Resizer.OnOpacityChanged();
+                        _Resizer.OnThemeChanged();
                     };
 
                     Animation.Show(Frame, 9, 15);
@@ -1943,7 +1949,7 @@ namespace Com.WinForm
 
                         _SplashScreen.Opacity = _Opacity;
                         _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
-                        _Resizer.OnOpacityChanged();
+                        _Resizer.OnThemeChanged();
 
                         Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
 
@@ -2278,7 +2284,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 获取或设置表示是否在标题栏上显示图标的布尔值。
+        /// 获取或设置表示是否在窗口标题栏上显示图标的布尔值。
         /// </summary>
         public bool ShowIconOnCaptionBar
         {
@@ -2376,7 +2382,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 获取或设置标题栏的高度。
+        /// 获取或设置窗口标题栏的高度。
         /// </summary>
         public int CaptionBarHeight
         {
@@ -2515,7 +2521,7 @@ namespace Com.WinForm
                                 _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                             }
 
-                            _Resizer.OnOpacityChanged();
+                            _Resizer.OnThemeChanged();
 
                             _OnOpacityChanged();
                         };
@@ -2646,80 +2652,6 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 获取或设置窗口投影的颜色。
-        /// </summary>
-        public ColorX ShadowColor
-        {
-            get
-            {
-                return _ShadowColor;
-            }
-
-            set
-            {
-                if (!value.IsEmpty && !value.IsTransparent && !_ShadowColor.Equals(value))
-                {
-                    _ShadowColor = value;
-
-                    if (_Initialized)
-                    {
-                        Action InvokeMethod = () =>
-                        {
-                            _Resizer.OnOpacityChanged();
-                        };
-
-                        _Client.Invoke(InvokeMethod);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置窗口投影的不透明度，取值范围为 [0, 1] 或 (1, 100]。
-        /// </summary>
-        public double ShadowOpacity
-        {
-            get
-            {
-                return _ShadowOpacity;
-            }
-
-            set
-            {
-                double Opa = 0.1;
-
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    Opa = 0.1;
-                }
-                else
-                {
-                    Opa = Math.Max(0, Math.Min(value, 100));
-
-                    if (Opa > 1)
-                    {
-                        Opa /= 100;
-                    }
-                }
-
-                if (_ShadowOpacity != Opa)
-                {
-                    _ShadowOpacity = Opa;
-
-                    if (_Initialized)
-                    {
-                        Action InvokeMethod = () =>
-                        {
-                            _Resizer.OnOpacityChanged();
-                        };
-
-                        _Client.Invoke(InvokeMethod);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// 获取或设置窗口的主题。
         /// </summary>
         public Theme Theme
@@ -2735,7 +2667,7 @@ namespace Com.WinForm
                 {
                     _Theme = value;
 
-                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
 
                     if (_Initialized)
                     {
@@ -2743,8 +2675,9 @@ namespace Com.WinForm
                         {
                             _Client.BackColor = RecommendColors.FormBackground.ToColor();
 
-                            _CaptionBar.OnThemeColorChanged();
-                            _SplashScreen.OnThemeColorChanged();
+                            _CaptionBar.OnThemeChanged();
+                            _Resizer.OnThemeChanged();
+                            _SplashScreen.OnThemeChanged();
 
                             _OnThemeChanged();
                         };
@@ -2771,7 +2704,7 @@ namespace Com.WinForm
                 {
                     _ThemeColor = value;
 
-                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
 
                     if (_Initialized)
                     {
@@ -2779,8 +2712,9 @@ namespace Com.WinForm
                         {
                             _Client.BackColor = RecommendColors.FormBackground.ToColor();
 
-                            _CaptionBar.OnThemeColorChanged();
-                            _SplashScreen.OnThemeColorChanged();
+                            _CaptionBar.OnThemeChanged();
+                            _Resizer.OnThemeChanged();
+                            _SplashScreen.OnThemeChanged();
 
                             _OnThemeColorChanged();
                         };
@@ -2792,7 +2726,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 获取或设置表示是否在标题栏上显示主题色的布尔值。
+        /// 获取或设置表示是否在窗口标题栏上显示主题色的布尔值。
         /// </summary>
         public bool ShowCaptionBarColor
         {
@@ -2807,14 +2741,15 @@ namespace Com.WinForm
                 {
                     _ShowCaptionBarColor = value;
 
-                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor);
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
 
                     if (_Initialized)
                     {
                         Action InvokeMethod = () =>
                         {
-                            _CaptionBar.OnThemeColorChanged();
-                            _SplashScreen.OnThemeColorChanged();
+                            _CaptionBar.OnThemeChanged();
+                            _Resizer.OnThemeChanged();
+                            _SplashScreen.OnThemeChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -2824,7 +2759,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 获取或设置表示是否允许以半透明方式显示标题栏的布尔值。
+        /// 获取或设置表示是否允许以半透明方式显示窗口标题栏的布尔值。
         /// </summary>
         public bool EnableCaptionBarTransparent
         {
@@ -2850,6 +2785,39 @@ namespace Com.WinForm
 
                             _Client.Invoke(InvokeMethod);
                         }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示是否在窗口阴影显示主题色的布尔值。
+        /// </summary>
+        public bool ShowShadowColor
+        {
+            get
+            {
+                return _ShowShadowColor;
+            }
+
+            set
+            {
+                if (_ShowShadowColor != value)
+                {
+                    _ShowShadowColor = value;
+
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnThemeChanged();
+                            _Resizer.OnThemeChanged();
+                            _SplashScreen.OnThemeChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
                     }
                 }
             }

@@ -27,8 +27,9 @@ namespace Com.WinForm
         #region 私有与内部成员
 
         private ColorX _FormBackground = new ColorX(); // 窗口背景颜色。
-        private ColorX _CaptionBar = new ColorX(); // 标题栏颜色。
+        private ColorX _CaptionBar = new ColorX(); // 窗口标题栏颜色。
         private ColorX _Caption = new ColorX(); // 窗口标题颜色。
+        private ColorX _Shadow = new ColorX(); // 窗口阴影颜色。
 
         private ColorX _ControlButton = new ColorX(); // 控制按钮颜色。
         private ColorX _ControlButton_DEC = new ColorX(); // 控制按钮颜色，降低对比度。
@@ -135,7 +136,7 @@ namespace Com.WinForm
 
         //
 
-        private void _Ctor(Theme theme, ColorX themeColor, bool showCaptionBarColor) // 为以主题、主题色与表示是否在标题栏上显示主题色的布尔值为参数的构造函数提供实现。
+        private void _Ctor(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor) // 为以主题、主题色与表示是否在窗口标题栏上显示主题色的布尔值为参数的构造函数提供实现。
         {
             switch (theme)
             {
@@ -157,6 +158,15 @@ namespace Com.WinForm
                         {
                             _CaptionBar = _FormBackground;
                             _Caption = themeColor.AtLightness_HSL(24);
+                        }
+
+                        if (showShadowColor)
+                        {
+                            _Shadow = _Main;
+                        }
+                        else
+                        {
+                            _Shadow = new ColorX(Color.Black);
                         }
 
                         _ControlButton = ColorX.Transparent;
@@ -216,6 +226,15 @@ namespace Com.WinForm
                             _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
                         }
 
+                        if (showShadowColor)
+                        {
+                            _Shadow = _Main;
+                        }
+                        else
+                        {
+                            _Shadow = new ColorX(Color.Black);
+                        }
+
                         _ControlButton = ColorX.Transparent;
                         _ControlButton_INC = (!BackColorFitLightText(_CaptionBar) ? ColorManipulation.ShiftLightnessByHSL(_CaptionBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_CaptionBar, 0.3)).AtOpacity(70);
                         _ControlButton_DEC = _ControlButton_INC.AtOpacity(50);
@@ -271,6 +290,15 @@ namespace Com.WinForm
                         {
                             _CaptionBar = _FormBackground;
                             _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                        }
+
+                        if (showShadowColor)
+                        {
+                            _Shadow = _Main;
+                        }
+                        else
+                        {
+                            _Shadow = new ColorX(Color.Black);
                         }
 
                         _ControlButton = ColorX.Transparent;
@@ -330,6 +358,15 @@ namespace Com.WinForm
                             _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
                         }
 
+                        if (showShadowColor)
+                        {
+                            _Shadow = _Main;
+                        }
+                        else
+                        {
+                            _Shadow = new ColorX(Color.Black);
+                        }
+
                         _ControlButton = ColorX.Transparent;
                         _ControlButton_INC = (!BackColorFitLightText(_CaptionBar) ? ColorManipulation.ShiftLightnessByHSL(_CaptionBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_CaptionBar, 0.3)).AtOpacity(70);
                         _ControlButton_DEC = _ControlButton_INC.AtOpacity(50);
@@ -387,6 +424,15 @@ namespace Com.WinForm
                             _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
                         }
 
+                        if (showShadowColor)
+                        {
+                            _Shadow = _Main;
+                        }
+                        else
+                        {
+                            _Shadow = new ColorX(Color.Black);
+                        }
+
                         _ControlButton = ColorX.Transparent;
                         _ControlButton_INC = (!BackColorFitLightText(_CaptionBar) ? ColorManipulation.ShiftLightnessByHSL(_CaptionBar, -0.2) : ColorManipulation.ShiftLightnessByHSL(_CaptionBar, 0.3)).AtOpacity(70);
                         _ControlButton_DEC = _ControlButton_INC.AtOpacity(50);
@@ -430,9 +476,9 @@ namespace Com.WinForm
 
         #region 构造函数
 
-        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor) // 使用主题、主题色与表示是否在标题栏上显示主题色的布尔值初始化 RecommendColors 的新实例。
+        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor) // 使用主题、主题色与表示是否在窗口标题栏上显示主题色的布尔值初始化 RecommendColors 的新实例。
         {
-            _Ctor(theme, themeColor, showCaptionBarColor);
+            _Ctor(theme, themeColor, showCaptionBarColor, showShadowColor);
         }
 
         #endregion
@@ -451,7 +497,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 标题栏颜色。
+        /// 窗口标题栏颜色。
         /// </summary>
         public ColorX CaptionBar
         {
@@ -469,6 +515,17 @@ namespace Com.WinForm
             get
             {
                 return _Caption;
+            }
+        }
+
+        /// <summary>
+        /// 窗口阴影颜色。
+        /// </summary>
+        public ColorX Shadow
+        {
+            get
+            {
+                return _Shadow;
             }
         }
 
