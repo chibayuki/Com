@@ -294,7 +294,7 @@ namespace Com
         {
             get
             {
-                return AngleFrom(_X >= 0 ? new PointD(1, 0) : new PointD(-1, 0));
+                return AngleFrom(_X >= 0 ? Ex : -Ex);
             }
         }
 
@@ -305,7 +305,7 @@ namespace Com
         {
             get
             {
-                return AngleFrom(_Y >= 0 ? new PointD(0, 1) : new PointD(0, -1));
+                return AngleFrom(_Y >= 0 ? Ey : -Ey);
             }
         }
 
@@ -1450,12 +1450,7 @@ namespace Com
         /// </summary>
         public static Matrix2D IdentityMatrix()
         {
-            return new Matrix2D(new double[3, 3]
-            {
-                { 1, 0, 0 },
-                { 0, 1, 0 },
-                { 0, 0, 1 }
-            });
+            return Matrix2D.Identity(3);
         }
 
         //

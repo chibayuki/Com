@@ -430,7 +430,7 @@ namespace Com
         {
             get
             {
-                return AngleFrom(_X >= 0 ? new PointD6D(1, 0, 0, 0, 0, 0) : new PointD6D(-1, 0, 0, 0, 0, 0));
+                return AngleFrom(_X >= 0 ? Ex : -Ex);
             }
         }
 
@@ -441,7 +441,7 @@ namespace Com
         {
             get
             {
-                return AngleFrom(_Y >= 0 ? new PointD6D(0, 1, 0, 0, 0, 0) : new PointD6D(0, -1, 0, 0, 0, 0));
+                return AngleFrom(_Y >= 0 ? Ey : -Ey);
             }
         }
 
@@ -452,7 +452,7 @@ namespace Com
         {
             get
             {
-                return AngleFrom(_Z >= 0 ? new PointD6D(0, 0, 1, 0, 0, 0) : new PointD6D(0, 0, -1, 0, 0, 0));
+                return AngleFrom(_Z >= 0 ? Ez : -Ez);
             }
         }
 
@@ -463,7 +463,7 @@ namespace Com
         {
             get
             {
-                return AngleFrom(_U >= 0 ? new PointD6D(0, 0, 0, 1, 0, 0) : new PointD6D(0, 0, 0, -1, 0, 0));
+                return AngleFrom(_U >= 0 ? Eu : -Eu);
             }
         }
 
@@ -474,7 +474,7 @@ namespace Com
         {
             get
             {
-                return AngleFrom(_V >= 0 ? new PointD6D(0, 0, 0, 0, 1, 0) : new PointD6D(0, 0, 0, 0, -1, 0));
+                return AngleFrom(_V >= 0 ? Ev : -Ev);
             }
         }
 
@@ -485,7 +485,7 @@ namespace Com
         {
             get
             {
-                return AngleFrom(_W >= 0 ? new PointD6D(0, 0, 0, 0, 0, 1) : new PointD6D(0, 0, 0, 0, 0, -1));
+                return AngleFrom(_W >= 0 ? Ew : -Ew);
             }
         }
 
@@ -2289,16 +2289,7 @@ namespace Com
         /// </summary>
         public static Matrix2D IdentityMatrix()
         {
-            return new Matrix2D(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Matrix2D.Identity(7);
         }
 
         //
