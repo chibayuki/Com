@@ -1498,6 +1498,11 @@ namespace Com.WinForm
 
         private void _AltF4(object sender, EventArgs e) // 通过 Alt + F4 或其他非正常方式关闭窗口。
         {
+            _ResolutionMonitor.Enabled = false;
+            _ActivationMonitor.Enabled = false;
+
+            //
+
             _Client.Closed -= Client_Closed;
             _CaptionBar.Closed -= CaptionBar_Closed;
             _Resizer.Closed -= Resizer_Closed;
@@ -1929,11 +1934,11 @@ namespace Com.WinForm
 
             //
 
-            _OnLoaded();
+            _LoadingNow = false;
 
             //
 
-            _LoadingNow = false;
+            _OnLoaded();
         }
 
         private void FormClosingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) // _FormClosingAsyncWorker 的 DoWork 事件的回调函数。
@@ -1946,6 +1951,11 @@ namespace Com.WinForm
 
         private void FormClosingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // _FormClosingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
         {
+            _ResolutionMonitor.Enabled = false;
+            _ActivationMonitor.Enabled = false;
+
+            //
+
             _SplashScreen.OnClosing();
 
             //
