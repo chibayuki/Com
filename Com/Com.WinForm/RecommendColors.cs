@@ -134,9 +134,11 @@ namespace Com.WinForm
             return (color.Lightness_LAB > 30);
         }
 
-        //
+        #endregion
 
-        private void _Ctor(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor) // 为以主题、主题色与表示是否在窗口标题栏上显示主题色的布尔值为参数的构造函数提供实现。
+        #region 构造函数
+
+        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor, bool isActive) // 使用主题、主题色、表示是否在窗口标题栏上显示主题色的布尔值、表示表示是否在窗口阴影显示主题色的布尔值与表示窗口是否处于活动状态的布尔值初始化 RecommendColors 的新实例。
         {
             switch (theme)
             {
@@ -149,20 +151,28 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(98);
 
-                        if (showCaptionBarColor)
+                        if (isActive)
                         {
-                            _CaptionBar = _Main;
-                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            if (showCaptionBarColor)
+                            {
+                                _CaptionBar = _Main;
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            }
+                            else
+                            {
+                                _CaptionBar = _FormBackground;
+                                _Caption = themeColor.AtLightness_HSL(24);
+                            }
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground;
-                            _Caption = themeColor.AtLightness_HSL(24);
+                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(40).GrayscaleColor;
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = _Main;
+                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
                         }
                         else
                         {
@@ -215,20 +225,28 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
 
-                        if (showCaptionBarColor)
+                        if (isActive)
                         {
-                            _CaptionBar = _Main;
-                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            if (showCaptionBarColor)
+                            {
+                                _CaptionBar = _Main;
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            }
+                            else
+                            {
+                                _CaptionBar = _FormBackground;
+                                _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                            }
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground;
-                            _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(40).GrayscaleColor;
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = _Main;
+                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
                         }
                         else
                         {
@@ -281,20 +299,28 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
 
-                        if (showCaptionBarColor)
+                        if (isActive)
                         {
-                            _CaptionBar = _Main;
-                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            if (showCaptionBarColor)
+                            {
+                                _CaptionBar = _Main;
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            }
+                            else
+                            {
+                                _CaptionBar = _FormBackground;
+                                _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                            }
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground;
-                            _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(40).GrayscaleColor;
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = _Main;
+                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
                         }
                         else
                         {
@@ -347,20 +373,28 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(2).GrayscaleColor;
 
-                        if (showCaptionBarColor)
+                        if (isActive)
                         {
-                            _CaptionBar = _Main;
-                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            if (showCaptionBarColor)
+                            {
+                                _CaptionBar = _Main;
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            }
+                            else
+                            {
+                                _CaptionBar = _FormBackground;
+                                _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                            }
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground;
-                            _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(60).GrayscaleColor;
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = _Main;
+                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
                         }
                         else
                         {
@@ -413,20 +447,28 @@ namespace Com.WinForm
 
                         _FormBackground = themeColor.AtLightness_HSL(2).GrayscaleColor;
 
-                        if (showCaptionBarColor)
+                        if (isActive)
                         {
-                            _CaptionBar = _Main;
-                            _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            if (showCaptionBarColor)
+                            {
+                                _CaptionBar = _Main;
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                            }
+                            else
+                            {
+                                _CaptionBar = _FormBackground;
+                                _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                            }
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground;
-                            _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(60).GrayscaleColor;
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = _Main;
+                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
                         }
                         else
                         {
@@ -470,15 +512,6 @@ namespace Com.WinForm
                     }
                     break;
             }
-        }
-
-        #endregion
-
-        #region 构造函数
-
-        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor) // 使用主题、主题色与表示是否在窗口标题栏上显示主题色的布尔值初始化 RecommendColors 的新实例。
-        {
-            _Ctor(theme, themeColor, showCaptionBarColor, showShadowColor);
         }
 
         #endregion

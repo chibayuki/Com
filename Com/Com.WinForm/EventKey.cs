@@ -27,6 +27,10 @@ namespace Com.WinForm
 
         public static readonly object Closed = new object(); // Closed 事件键值。
 
+        public static readonly object Activated = new object(); // Activated 事件键值。
+
+        public static readonly object Deactivate = new object(); // Deactivate 事件键值。
+
         public static readonly object Move = new object(); // Move 事件键值。
 
         public static readonly object LocationChanged = new object(); // LocationChanged 事件键值。

@@ -142,15 +142,15 @@ namespace Com.WinForm
                         Color Cr_Caption_Fr = Me.RecommendColors.Caption.ToColor();
                         Color Cr_Caption_Bk_Outer, Cr_Caption_Bk_Inner;
 
-                        if (!RecommendColors.BackColorFitLightText(Me.RecommendColors.Caption))
-                        {
-                            Cr_Caption_Bk_Outer = Color.FromArgb(32, Color.Black);
-                            Cr_Caption_Bk_Inner = Color.FromArgb(64, Color.Black);
-                        }
-                        else
+                        if (!RecommendColors.BackColorFitLightText(Me.RecommendColors.CaptionBar))
                         {
                             Cr_Caption_Bk_Outer = Color.FromArgb(48, Color.White);
                             Cr_Caption_Bk_Inner = Color.FromArgb(96, Color.White);
+                        }
+                        else
+                        {
+                            Cr_Caption_Bk_Outer = Color.FromArgb(32, Color.Black);
+                            Cr_Caption_Bk_Inner = Color.FromArgb(64, Color.Black);
                         }
 
                         CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Outer), new PointF(CaptionLocF.X - 2, CaptionLocF.Y - 2));

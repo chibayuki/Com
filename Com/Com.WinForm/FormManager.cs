@@ -153,9 +153,20 @@ namespace Com.WinForm
 
         //
 
-        private Timer _ResolutionMonitor = null; // 用于监控主屏幕分辨率变更的 Timer。
+        private Timer _ResolutionMonitor = null; // 用于监听主屏幕分辨率变更的 Timer。
 
         private Rectangle _PreviousPrimaryScreenClient = PrimaryScreenClient; // Screen.PrimaryScreen.WorkingArea 的此前值。
+
+        //
+
+        private bool _ClientIsActive = false; // 表示 _Client 是否处于激活状态的布尔值。
+        private bool _CaptionBarIsActive = false; // 表示 _CaptionBar 是否处于激活状态的布尔值。
+        private bool _ResizerIsActive = false; // 表示 _Resizer 是否处于激活状态的布尔值。
+        private bool _SplashScreenIsActive = false; // 表示 _SplashScreen 是否处于激活状态的布尔值。
+
+        private Timer _ActivationMonitor = null; // 用于监听窗口激活状态变更的 Timer。
+
+        private bool _IsActive = true; // 表示窗口是否处于激活状态的布尔值。
 
         //
 
@@ -349,7 +360,7 @@ namespace Com.WinForm
         {
             get
             {
-                return 0.1;
+                return (_ShowShadowColor ? (_IsActive ? 0.15 : 0.09) : (_IsActive ? 0.1 : 0.06));
             }
         }
 
@@ -1010,6 +1021,16 @@ namespace Com.WinForm
             _TrigEvent(EventKey.Closed);
         }
 
+        private void _OnActivated() // 引发 Activated 事件。
+        {
+            _TrigEvent(EventKey.Activated);
+        }
+
+        private void _OnDeactivate() // 引发 Deactivate 事件。
+        {
+            _TrigEvent(EventKey.Deactivate);
+        }
+
         private void _OnMove() // 引发 Move 事件。
         {
             _TrigEvent(EventKey.Move);
@@ -1583,7 +1604,7 @@ namespace Com.WinForm
 
             //
 
-            _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
+            _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor, _IsActive);
 
             //
 
@@ -1600,12 +1621,20 @@ namespace Com.WinForm
             _Client.Load += Client_Load;
             _Client.Closed += Client_Closed;
             _Client.SizeChanged += Client_SizeChanged;
+            _Client.Activated += Client_Activated;
+            _Client.Deactivate += Client_Deactivate;
 
             _CaptionBar.Closed += CaptionBar_Closed;
+            _CaptionBar.Activated += CaptionBar_Activated;
+            _CaptionBar.Deactivate += CaptionBar_Deactivate;
 
             _Resizer.Closed += Resizer_Closed;
+            _Resizer.Activated += Resizer_Activated;
+            _Resizer.Deactivate += Resizer_Deactivate;
 
             _SplashScreen.Closed += SplashScreen_Closed;
+            _SplashScreen.Activated += SplashScreen_Activated;
+            _SplashScreen.Deactivate += SplashScreen_Deactivate;
 
             //
 
@@ -1822,6 +1851,13 @@ namespace Com.WinForm
             _ResolutionMonitor.Interval = 200;
             _ResolutionMonitor.Tick += ResolutionMonitor_Tick;
             _ResolutionMonitor.Enabled = true;
+
+            //
+
+            _ActivationMonitor = new Timer();
+            _ActivationMonitor.Interval = 200;
+            _ActivationMonitor.Tick += ActivationMonitor_Tick;
+            _ActivationMonitor.Enabled = true;
 
             //
 
@@ -2110,6 +2146,75 @@ namespace Com.WinForm
                 Bounds_Normal_Y = Math.Max(PrimaryScreenClient.Y, Bounds_Normal_Y);
 
                 _PreviousPrimaryScreenClient = PrimaryScreenClient;
+            }
+        }
+
+        //
+
+        private void Client_Activated(object sender, EventArgs e) // _Client 的 Activated 事件的回调函数。
+        {
+            _ClientIsActive = true;
+        }
+
+        private void Client_Deactivate(object sender, EventArgs e) // _Client 的 Deactivate 事件的回调函数。
+        {
+            _ClientIsActive = false;
+        }
+
+        private void CaptionBar_Activated(object sender, EventArgs e) // _CaptionBar 的 Activated 事件的回调函数。
+        {
+            _CaptionBarIsActive = true;
+        }
+
+        private void CaptionBar_Deactivate(object sender, EventArgs e) // _CaptionBar 的 Deactivate 事件的回调函数。
+        {
+            _CaptionBarIsActive = false;
+        }
+
+        private void Resizer_Activated(object sender, EventArgs e) // _Resizer 的 Activated 事件的回调函数。
+        {
+            _ResizerIsActive = true;
+        }
+
+        private void Resizer_Deactivate(object sender, EventArgs e) // _Resizer 的 Deactivate 事件的回调函数。
+        {
+            _ResizerIsActive = false;
+        }
+
+        private void SplashScreen_Activated(object sender, EventArgs e) // _SplashScreen 的 Activated 事件的回调函数。
+        {
+            _SplashScreenIsActive = true;
+        }
+
+        private void SplashScreen_Deactivate(object sender, EventArgs e) // _SplashScreen 的 Deactivate 事件的回调函数。
+        {
+            _SplashScreenIsActive = false;
+        }
+
+        private void ActivationMonitor_Tick(object sender, EventArgs e) // _ActivationMonitor 的 Tick 事件的回调函数。
+        {
+            bool Active = (_ClientIsActive || _CaptionBarIsActive || _ResizerIsActive || _SplashScreenIsActive);
+
+            if (_IsActive != Active)
+            {
+                _IsActive = Active;
+
+                _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor, _IsActive);
+
+                _CaptionBar.OnThemeChanged();
+                _Resizer.OnThemeChanged();
+
+                if (_Initialized)
+                {
+                    if (_IsActive)
+                    {
+                        _OnActivated();
+                    }
+                    else
+                    {
+                        _OnDeactivate();
+                    }
+                }
             }
         }
 
@@ -2667,7 +2772,7 @@ namespace Com.WinForm
                 {
                     _Theme = value;
 
-                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor, _IsActive);
 
                     if (_Initialized)
                     {
@@ -2704,7 +2809,7 @@ namespace Com.WinForm
                 {
                     _ThemeColor = value;
 
-                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor, _IsActive);
 
                     if (_Initialized)
                     {
@@ -2741,15 +2846,13 @@ namespace Com.WinForm
                 {
                     _ShowCaptionBarColor = value;
 
-                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor, _IsActive);
 
                     if (_Initialized)
                     {
                         Action InvokeMethod = () =>
                         {
                             _CaptionBar.OnThemeChanged();
-                            _Resizer.OnThemeChanged();
-                            _SplashScreen.OnThemeChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -2806,15 +2909,13 @@ namespace Com.WinForm
                 {
                     _ShowShadowColor = value;
 
-                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor);
+                    _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor, _IsActive);
 
                     if (_Initialized)
                     {
                         Action InvokeMethod = () =>
                         {
-                            _CaptionBar.OnThemeChanged();
                             _Resizer.OnThemeChanged();
-                            _SplashScreen.OnThemeChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -2909,6 +3010,19 @@ namespace Com.WinForm
                         }
                     }
                 }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示窗口是否处于激活状态的布尔值。
+        /// </summary>
+        public bool IsActive
+        {
+            get
+            {
+                return _IsActive;
             }
         }
 
@@ -3467,6 +3581,50 @@ namespace Com.WinForm
                 if (value != null)
                 {
                     _Events.RemoveHandler(EventKey.Closed, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 在窗口变为激活状态时发生。
+        /// </summary>
+        public event EventHandler Activated
+        {
+            add
+            {
+                if (value != null)
+                {
+                    _Events.AddHandler(EventKey.Activated, value);
+                }
+            }
+
+            remove
+            {
+                if (value != null)
+                {
+                    _Events.RemoveHandler(EventKey.Activated, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 在窗口变为非激活状态时发生。
+        /// </summary>
+        public event EventHandler Deactivate
+        {
+            add
+            {
+                if (value != null)
+                {
+                    _Events.AddHandler(EventKey.Deactivate, value);
+                }
+            }
+
+            remove
+            {
+                if (value != null)
+                {
+                    _Events.RemoveHandler(EventKey.Deactivate, value);
                 }
             }
         }
