@@ -1934,11 +1934,11 @@ namespace Com.WinForm
 
             //
 
-            _LoadingNow = false;
+            _OnLoaded();
 
             //
 
-            _OnLoaded();
+            _LoadingNow = false;
         }
 
         private void FormClosingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) // _FormClosingAsyncWorker 的 DoWork 事件的回调函数。
