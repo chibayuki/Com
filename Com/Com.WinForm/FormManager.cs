@@ -164,6 +164,15 @@ namespace Com.WinForm
         private bool _ResizerIsActive = false; // 表示 _Resizer 是否处于激活状态的布尔值。
         private bool _SplashScreenIsActive = false; // 表示 _SplashScreen 是否处于激活状态的布尔值。
 
+        private bool _MainMenuIsActive = false; // 表示主菜单是否处于激活状态的布尔值。
+        internal bool MainMenuIsActive // 设置主菜单是否处于激活状态的布尔值。
+        {
+            set
+            {
+                _MainMenuIsActive = value;
+            }
+        }
+
         private Timer _ActivationMonitor = null; // 用于监听窗口激活状态变更的 Timer。
 
         private bool _IsActive = true; // 表示窗口是否处于激活状态的布尔值。
@@ -2193,7 +2202,7 @@ namespace Com.WinForm
 
         private void ActivationMonitor_Tick(object sender, EventArgs e) // _ActivationMonitor 的 Tick 事件的回调函数。
         {
-            bool Active = (_ClientIsActive || _CaptionBarIsActive || _ResizerIsActive || _SplashScreenIsActive);
+            bool Active = (_ClientIsActive || _CaptionBarIsActive || _ResizerIsActive || _SplashScreenIsActive || _MainMenuIsActive);
 
             if (_IsActive != Active)
             {
@@ -2264,6 +2273,19 @@ namespace Com.WinForm
             get
             {
                 return _Owned.ToArray();
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示窗口是否处于激活状态的布尔值。
+        /// </summary>
+        public bool IsActive
+        {
+            get
+            {
+                return _IsActive;
             }
         }
 
@@ -3010,19 +3032,6 @@ namespace Com.WinForm
                         }
                     }
                 }
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取表示窗口是否处于激活状态的布尔值。
-        /// </summary>
-        public bool IsActive
-        {
-            get
-            {
-                return _IsActive;
             }
         }
 

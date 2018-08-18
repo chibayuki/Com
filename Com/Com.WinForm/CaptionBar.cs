@@ -785,12 +785,14 @@ namespace Com.WinForm
 
         //
 
-        private void ContextMenuStrip_Main_VisibleChanged(object sender, EventArgs e) // ContextMenuStrip_Main 的 VisibleChanged 事件的回调函数。
+        private void ContextMenuStrip_Main_Enter(object sender, EventArgs e) // ContextMenuStrip_Main 的 Enter 事件的回调函数。
         {
-            if (!ContextMenuStrip_Main.Visible)
-            {
-                Me.Client.Focus();
-            }
+            Me.MainMenuIsActive = true;
+        }
+
+        private void ContextMenuStrip_Main_Leave(object sender, EventArgs e) // ContextMenuStrip_Main 的 Leave 事件的回调函数。
+        {
+            Me.MainMenuIsActive = false;
         }
 
         private void ToolStripMenuItem_Return_Click(object sender, EventArgs e) // ToolStripMenuItem_Return 的 Click 事件的回调函数。

@@ -67,7 +67,8 @@
             this.ToolStripMenuItem_Exit});
             this.ContextMenuStrip_Main.Name = "ContextMenuStrip_Main";
             this.ContextMenuStrip_Main.Size = new System.Drawing.Size(184, 108);
-            this.ContextMenuStrip_Main.VisibleChanged += new System.EventHandler(this.ContextMenuStrip_Main_VisibleChanged);
+            this.ContextMenuStrip_Main.Enter += new System.EventHandler(this.ContextMenuStrip_Main_Enter);
+            this.ContextMenuStrip_Main.Leave += new System.EventHandler(this.ContextMenuStrip_Main_Leave);
             // 
             // ToolStripMenuItem_Return
             // 
