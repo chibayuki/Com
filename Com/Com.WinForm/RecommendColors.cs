@@ -167,7 +167,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(40).GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(56).GrayscaleColor;
                         }
 
                         if (showShadowColor)
@@ -241,7 +241,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(40).GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(56).GrayscaleColor;
                         }
 
                         if (showShadowColor)
@@ -315,7 +315,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(40).GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(56).GrayscaleColor;
                         }
 
                         if (showShadowColor)
@@ -389,7 +389,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(60).GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(44).GrayscaleColor;
                         }
 
                         if (showShadowColor)
@@ -463,7 +463,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(60).GrayscaleColor;
+                            _Caption = themeColor.AtLightness_HSL(44).GrayscaleColor;
                         }
 
                         if (showShadowColor)
