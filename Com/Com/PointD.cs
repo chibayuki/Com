@@ -31,9 +31,9 @@ namespace Com
 
         //
 
-        private Matrix2D _ToMatrixForAffineTransform() // 获取此 PointD 结构用于仿射变换的矩阵。
+        private Matrix _ToMatrixForAffineTransform() // 获取此 PointD 结构用于仿射变换的矩阵。
         {
-            return new Matrix2D(new double[1, 3]
+            return new Matrix(new double[1, 3]
             {
                 { _X, _Y,  1 }
             });
@@ -855,17 +855,17 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
-                Matrix2D matrixLeft = new Matrix2D(new double[3, 3]
+                Matrix matrixLeft = new Matrix(new double[3, 3]
                 {
                     { ex._X, ex._Y, 0 },
                     { ey._X, ey._Y, 0 },
                     { offset._X, offset._Y, 1 }
                 });
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -877,15 +877,15 @@ namespace Com
         /// 按双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行仿射变换。
         /// </summary>
         /// <param name="matrixLeft">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）。</param>
-        public void AffineTransform(Matrix2D matrixLeft)
+        public void AffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
+            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
             {
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -897,23 +897,23 @@ namespace Com
         /// 按双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表将此 PointD 结构进行仿射变换。
         /// </summary>
         /// <param name="matrixLeftList">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表。</param>
-        public void AffineTransform(List<Matrix2D> matrixLeftList)
+        public void AffineTransform(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
                 {
-                    Matrix2D matrixLeft = matrixLeftList[i];
+                    Matrix matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3));
+                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3));
 
                     if (flag)
                     {
-                        result = Matrix2D.Multiply(matrixLeft, result);
+                        result = Matrix.Multiply(matrixLeft, result);
 
-                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3));
+                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3));
                     }
 
                     if (!flag)
@@ -922,7 +922,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -940,17 +940,17 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
-                Matrix2D matrixLeft = new Matrix2D(new double[3, 3]
+                Matrix matrixLeft = new Matrix(new double[3, 3]
                 {
                     { ex._X, ex._Y, 0 },
                     { ey._X, ey._Y, 0 },
                     { offset._X, offset._Y, 1 }
                 });
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     return new PointD(result[0, 0], result[0, 1]);
                 }
@@ -963,15 +963,15 @@ namespace Com
         /// 返回按双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构的副本进行仿射变换的新实例。
         /// </summary>
         /// <param name="matrixLeft">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）。</param>
-        public PointD AffineTransformCopy(Matrix2D matrixLeft)
+        public PointD AffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
+            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
             {
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     return new PointD(result[0, 0], result[0, 1]);
                 }
@@ -984,23 +984,23 @@ namespace Com
         /// 返回按双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表将此 PointD 结构的副本进行仿射变换的新实例。
         /// </summary>
         /// <param name="matrixLeftList">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表。</param>
-        public PointD AffineTransformCopy(List<Matrix2D> matrixLeftList)
+        public PointD AffineTransformCopy(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
                 {
-                    Matrix2D matrixLeft = matrixLeftList[i];
+                    Matrix matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3));
+                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3));
 
                     if (flag)
                     {
-                        result = Matrix2D.Multiply(matrixLeft, result);
+                        result = Matrix.Multiply(matrixLeft, result);
 
-                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3));
+                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3));
                     }
 
                     if (!flag)
@@ -1009,7 +1009,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     return new PointD(result[0, 0], result[0, 1]);
                 }
@@ -1028,17 +1028,17 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
-                Matrix2D matrixLeft = new Matrix2D(new double[3, 3]
+                Matrix matrixLeft = new Matrix(new double[3, 3]
                 {
                     { ex._X, ex._Y, 0 },
                     { ey._X, ey._Y, 0 },
                     { offset._X, offset._Y, 1 }
                 });
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
+                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1050,15 +1050,15 @@ namespace Com
         /// 按双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matrixLeft">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）。</param>
-        public void InverseAffineTransform(Matrix2D matrixLeft)
+        public void InverseAffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
+            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
             {
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
+                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1070,23 +1070,23 @@ namespace Com
         /// 按双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表将此 PointD 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matrixLeftList">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表。</param>
-        public void InverseAffineTransform(List<Matrix2D> matrixLeftList)
+        public void InverseAffineTransform(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
                 {
-                    Matrix2D matrixLeft = matrixLeftList[i];
+                    Matrix matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3));
+                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3));
 
                     if (flag)
                     {
-                        result = Matrix2D.DivideLeft(matrixLeft, result);
+                        result = Matrix.DivideLeft(matrixLeft, result);
 
-                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3));
+                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3));
                     }
 
                     if (!flag)
@@ -1095,7 +1095,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1113,17 +1113,17 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
-                Matrix2D matrixLeft = new Matrix2D(new double[3, 3]
+                Matrix matrixLeft = new Matrix(new double[3, 3]
                 {
                     { ex._X, ex._Y, 0 },
                     { ey._X, ey._Y, 0 },
                     { offset._X, offset._Y, 1 }
                 });
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
+                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     return new PointD(result[0, 0], result[0, 1]);
                 }
@@ -1136,15 +1136,15 @@ namespace Com
         /// 返回按双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构的副本进行逆仿射变换的新实例。
         /// </summary>
         /// <param name="matrixLeft">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）。</param>
-        public PointD InverseAffineTransformCopy(Matrix2D matrixLeft)
+        public PointD InverseAffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
+            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3))
             {
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
+                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     return new PointD(result[0, 0], result[0, 1]);
                 }
@@ -1157,23 +1157,23 @@ namespace Com
         /// 返回按双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表将此 PointD 结构的副本进行逆仿射变换的新实例。
         /// </summary>
         /// <param name="matrixLeftList">双精度浮点数数组表示的 3x3 仿射矩阵（左矩阵）列表。</param>
-        public PointD InverseAffineTransformCopy(List<Matrix2D> matrixLeftList)
+        public PointD InverseAffineTransformCopy(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
                 {
-                    Matrix2D matrixLeft = matrixLeftList[i];
+                    Matrix matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3));
+                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(3, 3));
 
                     if (flag)
                     {
-                        result = Matrix2D.DivideLeft(matrixLeft, result);
+                        result = Matrix.DivideLeft(matrixLeft, result);
 
-                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3));
+                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3));
                     }
 
                     if (!flag)
@@ -1182,7 +1182,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 3))
                 {
                     return new PointD(result[0, 0], result[0, 1]);
                 }
@@ -1448,9 +1448,9 @@ namespace Com
         /// <summary>
         /// 返回单位矩阵，表示不对 PointD 结构进行仿射变换的仿射矩阵（左矩阵）。
         /// </summary>
-        public static Matrix2D IdentityMatrix()
+        public static Matrix IdentityMatrix()
         {
-            return Matrix2D.Identity(3);
+            return Matrix.Identity(3);
         }
 
         //
@@ -1459,9 +1459,9 @@ namespace Com
         /// 返回表示按双精度浮点数表示的所有坐标偏移量将 PointD 结构平移指定的量的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
-        public static Matrix2D OffsetMatrix(double d)
+        public static Matrix OffsetMatrix(double d)
         {
-            return new Matrix2D(new double[3, 3]
+            return new Matrix(new double[3, 3]
             {
                 { 1, 0, 0 },
                 { 0, 1, 0 },
@@ -1474,9 +1474,9 @@ namespace Com
         /// </summary>
         /// <param name="dx">双精度浮点数表示的 X 坐标偏移量。</param>
         /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
-        public static Matrix2D OffsetMatrix(double dx, double dy)
+        public static Matrix OffsetMatrix(double dx, double dy)
         {
-            return new Matrix2D(new double[3, 3]
+            return new Matrix(new double[3, 3]
             {
                 { 1, 0, 0 },
                 { 0, 1, 0 },
@@ -1488,11 +1488,11 @@ namespace Com
         /// 返回表示按 PointD 结构将 PointD 结构平移指定的量的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="pt">PointD 结构，用于平移 PointD 结构。</param>
-        public static Matrix2D OffsetMatrix(PointD pt)
+        public static Matrix OffsetMatrix(PointD pt)
         {
             if ((object)pt != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { 1, 0, 0 },
                     { 0, 1, 0 },
@@ -1500,18 +1500,18 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
         /// 返回表示按 Point 结构将 PointD 结构平移指定的量的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="pt">Point 结构，用于平移 PointD 结构。</param>
-        public static Matrix2D OffsetMatrix(Point pt)
+        public static Matrix OffsetMatrix(Point pt)
         {
             if ((object)pt != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { 1, 0, 0 },
                     { 0, 1, 0 },
@@ -1519,18 +1519,18 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
         /// 返回表示按 PointF 结构将 PointD 结构平移指定的量的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="pt">PointF 结构，用于平移 PointD 结构。</param>
-        public static Matrix2D OffsetMatrix(PointF pt)
+        public static Matrix OffsetMatrix(PointF pt)
         {
             if ((object)pt != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { 1, 0, 0 },
                     { 0, 1, 0 },
@@ -1538,18 +1538,18 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
         /// 返回表示按 Size 结构将 PointD 结构平移指定的量的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="sz">Size 结构，用于平移 PointD 结构。</param>
-        public static Matrix2D OffsetMatrix(Size sz)
+        public static Matrix OffsetMatrix(Size sz)
         {
             if ((object)sz != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { 1, 0, 0 },
                     { 0, 1, 0 },
@@ -1557,18 +1557,18 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
         /// 返回表示按 SizeF 结构将 PointD 结构平移指定的量的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="sz">SizeF 结构，用于平移 PointD 结构。</param>
-        public static Matrix2D OffsetMatrix(SizeF sz)
+        public static Matrix OffsetMatrix(SizeF sz)
         {
             if ((object)sz != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { 1, 0, 0 },
                     { 0, 1, 0 },
@@ -1576,7 +1576,7 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         //
@@ -1585,9 +1585,9 @@ namespace Com
         /// 返回表示按双精度浮点数表示的所有坐标缩放因子将 PointD 结构缩放指定的倍数的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
-        public static Matrix2D ScaleMatrix(double s)
+        public static Matrix ScaleMatrix(double s)
         {
-            return new Matrix2D(new double[3, 3]
+            return new Matrix(new double[3, 3]
             {
                 { s, 0, 0 },
                 { 0, s, 0 },
@@ -1600,9 +1600,9 @@ namespace Com
         /// </summary>
         /// <param name="sx">双精度浮点数表示的 X 坐标缩放因子。</param>
         /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
-        public static Matrix2D ScaleMatrix(double sx, double sy)
+        public static Matrix ScaleMatrix(double sx, double sy)
         {
-            return new Matrix2D(new double[3, 3]
+            return new Matrix(new double[3, 3]
             {
                 { sx, 0, 0 },
                 { 0, sy, 0 },
@@ -1614,11 +1614,11 @@ namespace Com
         /// 返回表示按 PointD 结构将 PointD 结构缩放指定的倍数的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="pt">PointD 结构，用于缩放 PointD 结构。</param>
-        public static Matrix2D ScaleMatrix(PointD pt)
+        public static Matrix ScaleMatrix(PointD pt)
         {
             if ((object)pt != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { pt._X, 0, 0 },
                     { 0, pt._Y, 0 },
@@ -1626,18 +1626,18 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
         /// 返回表示按 Point 结构将 PointD 结构缩放指定的倍数的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="pt">Point 结构，用于缩放 PointD 结构。</param>
-        public static Matrix2D ScaleMatrix(Point pt)
+        public static Matrix ScaleMatrix(Point pt)
         {
             if ((object)pt != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { pt.X, 0, 0 },
                     { 0, pt.Y, 0 },
@@ -1645,18 +1645,18 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
         /// 返回表示按 PointF 结构将 PointD 结构缩放指定的倍数的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="pt">PointF 结构，用于缩放 PointD 结构。</param>
-        public static Matrix2D ScaleMatrix(PointF pt)
+        public static Matrix ScaleMatrix(PointF pt)
         {
             if ((object)pt != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { pt.X, 0, 0 },
                     { 0, pt.Y, 0 },
@@ -1664,18 +1664,18 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
         /// 返回表示按 Size 结构将 PointD 结构缩放指定的倍数的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="sz">Size 结构，用于缩放 PointD 结构。</param>
-        public static Matrix2D ScaleMatrix(Size sz)
+        public static Matrix ScaleMatrix(Size sz)
         {
             if ((object)sz != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { sz.Width, 0, 0 },
                     { 0, sz.Height, 0 },
@@ -1683,18 +1683,18 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
         /// 返回表示按 SizeF 结构将 PointD 结构缩放指定的倍数的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="sz">SizeF 结构，用于缩放 PointD 结构。</param>
-        public static Matrix2D ScaleMatrix(SizeF sz)
+        public static Matrix ScaleMatrix(SizeF sz)
         {
             if ((object)sz != null)
             {
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { sz.Width, 0, 0 },
                     { 0, sz.Height, 0 },
@@ -1702,7 +1702,7 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         //
@@ -1711,12 +1711,12 @@ namespace Com
         /// 返回表示按双精度浮点数表示的弧度将 PointD 结构绕原点旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
-        public static Matrix2D RotateMatrix(double angle)
+        public static Matrix RotateMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[3, 3]
+            return new Matrix(new double[3, 3]
             {
                 { CosA, SinA, 0 },
                 { -SinA, CosA, 0 },
@@ -1729,14 +1729,14 @@ namespace Com
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD 结构绕指定的 PointD 结构旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="pt">PointD 结构，表示旋转中心。</param>
-        public static Matrix2D RotateMatrix(double angle, PointD pt)
+        public static Matrix RotateMatrix(double angle, PointD pt)
         {
             if ((object)pt != null)
             {
                 double CosA = Math.Cos(angle);
                 double SinA = Math.Sin(angle);
 
-                return new Matrix2D(new double[3, 3]
+                return new Matrix(new double[3, 3]
                 {
                     { CosA, SinA, 0 },
                     { -SinA, CosA, 0 },
@@ -1744,7 +1744,7 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         //

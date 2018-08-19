@@ -34,9 +34,9 @@ namespace Com
 
         //
 
-        private Matrix2D _ToMatrixForAffineTransform() // 获取此 PointD5D 结构用于仿射变换的矩阵。
+        private Matrix _ToMatrixForAffineTransform() // 获取此 PointD5D 结构用于仿射变换的矩阵。
         {
-            return new Matrix2D(new double[1, 6]
+            return new Matrix(new double[1, 6]
             {
                 { _X, _Y, _Z, _U, _V, 1 }
             });
@@ -849,12 +849,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void RotateXY(double angle)
         {
-            Matrix2D matrixLeft = RotateXYMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateXYMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -870,12 +870,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateXZ(double angle)
         {
-            Matrix2D matrixLeft = RotateXZMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateXZMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -891,12 +891,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateXU(double angle)
         {
-            Matrix2D matrixLeft = RotateXUMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateXUMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -912,12 +912,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XV 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateXV(double angle)
         {
-            Matrix2D matrixLeft = RotateXVMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateXVMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -933,12 +933,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateYZ(double angle)
         {
-            Matrix2D matrixLeft = RotateYZMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateYZMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -954,12 +954,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateYU(double angle)
         {
-            Matrix2D matrixLeft = RotateYUMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateYUMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -975,12 +975,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YV 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateYV(double angle)
         {
-            Matrix2D matrixLeft = RotateYVMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateYVMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -996,12 +996,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateZU(double angle)
         {
-            Matrix2D matrixLeft = RotateZUMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateZUMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -1017,12 +1017,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 ZV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateZV(double angle)
         {
-            Matrix2D matrixLeft = RotateZVMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateZVMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -1038,12 +1038,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 UV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateUV(double angle)
         {
-            Matrix2D matrixLeft = RotateUVMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateUVMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 _X = result[0, 0];
                 _Y = result[0, 1];
@@ -1059,12 +1059,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD5D RotateXYCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateXYMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateXYMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1078,12 +1078,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD5D RotateXZCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateXZMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateXZMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1097,12 +1097,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateXUCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateXUMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateXUMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1116,12 +1116,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XV 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateXVCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateXVMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateXVMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1135,12 +1135,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD5D RotateYZCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateYZMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateYZMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1154,12 +1154,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateYUCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateYUMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateYUMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1173,12 +1173,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YV 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateYVCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateYVMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateYVMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1192,12 +1192,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateZUCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateZUMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateZUMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1211,12 +1211,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 ZV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateZVCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateZVMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateZVMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1230,12 +1230,12 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 UV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateUVCopy(double angle)
         {
-            Matrix2D matrixLeft = RotateUVMatrix(angle);
-            Matrix2D matrixRight = _ToMatrixForAffineTransform();
+            Matrix matrixLeft = RotateUVMatrix(angle);
+            Matrix matrixRight = _ToMatrixForAffineTransform();
 
-            Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-            if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
             {
                 return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
             }
@@ -1258,7 +1258,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
-                Matrix2D matrixLeft = new Matrix2D(new double[6, 6]
+                Matrix matrixLeft = new Matrix(new double[6, 6]
                 {
                     { ex._X, ex._Y, ex._Z, ex._U, ex._V, 0 },
                     { ey._X, ey._Y, ey._Z, ey._U, ey._V, 0 },
@@ -1267,11 +1267,11 @@ namespace Com
                     { ev._X, ev._Y, ev._Z, ev._U, ev._V, 0 },
                     { offset._X, offset._Y, offset._Z, offset._U, offset._V, 1 }
                 });
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1286,15 +1286,15 @@ namespace Com
         /// 按双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行仿射变换。
         /// </summary>
         /// <param name="matrixLeft">双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）。</param>
-        public void AffineTransform(Matrix2D matrixLeft)
+        public void AffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
+            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1309,23 +1309,23 @@ namespace Com
         /// 按双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）列表将此 PointD5D 结构进行仿射变换。
         /// </summary>
         /// <param name="matrixLeftList">双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）列表。</param>
-        public void AffineTransform(List<Matrix2D> matrixLeftList)
+        public void AffineTransform(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
                 {
-                    Matrix2D matrixLeft = matrixLeftList[i];
+                    Matrix matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
+                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
 
                     if (flag)
                     {
-                        result = Matrix2D.Multiply(matrixLeft, result);
+                        result = Matrix.Multiply(matrixLeft, result);
 
-                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
+                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
                     }
 
                     if (!flag)
@@ -1334,7 +1334,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1358,7 +1358,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
-                Matrix2D matrixLeft = new Matrix2D(new double[6, 6]
+                Matrix matrixLeft = new Matrix(new double[6, 6]
                 {
                     { ex._X, ex._Y, ex._Z, ex._U, ex._V, 0 },
                     { ey._X, ey._Y, ey._Z, ey._U, ey._V, 0 },
@@ -1367,11 +1367,11 @@ namespace Com
                     { ev._X, ev._Y, ev._Z, ev._U, ev._V, 0 },
                     { offset._X, offset._Y, offset._Z, offset._U, offset._V, 1 }
                 });
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1384,15 +1384,15 @@ namespace Com
         /// 返回按双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构的副本进行仿射变换的新实例。
         /// </summary>
         /// <param name="matrixLeft">双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）。</param>
-        public PointD5D AffineTransformCopy(Matrix2D matrixLeft)
+        public PointD5D AffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
+            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.Multiply(matrixLeft, matrixRight);
+                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1405,23 +1405,23 @@ namespace Com
         /// 返回按双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）列表将此 PointD5D 结构的副本进行仿射变换的新实例。
         /// </summary>
         /// <param name="matrixLeftList">双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）列表。</param>
-        public PointD5D AffineTransformCopy(List<Matrix2D> matrixLeftList)
+        public PointD5D AffineTransformCopy(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 for (int i = 0; i < matrixLeftList.Count; i++)
                 {
-                    Matrix2D matrixLeft = matrixLeftList[i];
+                    Matrix matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
+                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
 
                     if (flag)
                     {
-                        result = Matrix2D.Multiply(matrixLeft, result);
+                        result = Matrix.Multiply(matrixLeft, result);
 
-                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
+                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
                     }
 
                     if (!flag)
@@ -1430,7 +1430,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1452,7 +1452,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
-                Matrix2D matrixLeft = new Matrix2D(new double[6, 6]
+                Matrix matrixLeft = new Matrix(new double[6, 6]
                 {
                     { ex._X, ex._Y, ex._Z, ex._U, ex._V, 0 },
                     { ey._X, ey._Y, ey._Z, ey._U, ey._V, 0 },
@@ -1461,11 +1461,11 @@ namespace Com
                     { ev._X, ev._Y, ev._Z, ev._U, ev._V, 0 },
                     { offset._X, offset._Y, offset._Z, offset._U, offset._V, 1 }
                 });
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
+                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1480,15 +1480,15 @@ namespace Com
         /// 按双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matrixLeft">双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）。</param>
-        public void InverseAffineTransform(Matrix2D matrixLeft)
+        public void InverseAffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
+            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
+                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1503,23 +1503,23 @@ namespace Com
         /// 按双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）列表将此 PointD5D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matrixLeftList">双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）列表。</param>
-        public void InverseAffineTransform(List<Matrix2D> matrixLeftList)
+        public void InverseAffineTransform(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
                 {
-                    Matrix2D matrixLeft = matrixLeftList[i];
+                    Matrix matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
+                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
 
                     if (flag)
                     {
-                        result = Matrix2D.DivideLeft(matrixLeft, result);
+                        result = Matrix.DivideLeft(matrixLeft, result);
 
-                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
+                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
                     }
 
                     if (!flag)
@@ -1528,7 +1528,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     _X = result[0, 0];
                     _Y = result[0, 1];
@@ -1552,7 +1552,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
-                Matrix2D matrixLeft = new Matrix2D(new double[6, 6]
+                Matrix matrixLeft = new Matrix(new double[6, 6]
                 {
                     { ex._X, ex._Y, ex._Z, ex._U, ex._V, 0 },
                     { ey._X, ey._Y, ey._Z, ey._U, ey._V, 0 },
@@ -1561,11 +1561,11 @@ namespace Com
                     { ev._X, ev._Y, ev._Z, ev._U, ev._V, 0 },
                     { offset._X, offset._Y, offset._Z, offset._U, offset._V, 1 }
                 });
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
+                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1578,15 +1578,15 @@ namespace Com
         /// 返回按双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构的副本进行逆仿射变换的新实例。
         /// </summary>
         /// <param name="matrixLeft">双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）。</param>
-        public PointD5D InverseAffineTransformCopy(Matrix2D matrixLeft)
+        public PointD5D InverseAffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
+            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
-                Matrix2D matrixRight = _ToMatrixForAffineTransform();
+                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix2D result = Matrix2D.DivideLeft(matrixLeft, matrixRight);
+                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1599,23 +1599,23 @@ namespace Com
         /// 返回按双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）列表将此 PointD5D 结构的副本进行逆仿射变换的新实例。
         /// </summary>
         /// <param name="matrixLeftList">双精度浮点数数组表示的 6x6 仿射矩阵（左矩阵）列表。</param>
-        public PointD5D InverseAffineTransformCopy(List<Matrix2D> matrixLeftList)
+        public PointD5D InverseAffineTransformCopy(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 for (int i = matrixLeftList.Count - 1; i >= 0; i--)
                 {
-                    Matrix2D matrixLeft = matrixLeftList[i];
+                    Matrix matrixLeft = matrixLeftList[i];
 
-                    bool flag = (!Matrix2D.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
+                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
 
                     if (flag)
                     {
-                        result = Matrix2D.DivideLeft(matrixLeft, result);
+                        result = Matrix.DivideLeft(matrixLeft, result);
 
-                        flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
+                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
                     }
 
                     if (!flag)
@@ -1624,7 +1624,7 @@ namespace Com
                     }
                 }
 
-                if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
                 {
                     return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
                 }
@@ -1916,9 +1916,9 @@ namespace Com
         /// <summary>
         /// 返回单位矩阵，表示不对 PointD5D 结构进行仿射变换的仿射矩阵（左矩阵）。
         /// </summary>
-        public static Matrix2D IdentityMatrix()
+        public static Matrix IdentityMatrix()
         {
-            return Matrix2D.Identity(6);
+            return Matrix.Identity(6);
         }
 
         //
@@ -1927,9 +1927,9 @@ namespace Com
         /// 返回按双精度浮点数表示的所有坐标偏移量将 PointD5D 结构平移指定的量的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
-        public static Matrix2D OffsetMatrix(double d)
+        public static Matrix OffsetMatrix(double d)
         {
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { 1, 0, 0, 0, 0, 0 },
                 { 0, 1, 0, 0, 0, 0 },
@@ -1948,9 +1948,9 @@ namespace Com
         /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
         /// <param name="du">双精度浮点数表示的 U 坐标偏移量。</param>
         /// <param name="dv">双精度浮点数表示的 V 坐标偏移量。</param>
-        public static Matrix2D OffsetMatrix(double dx, double dy, double dz, double du, double dv)
+        public static Matrix OffsetMatrix(double dx, double dy, double dz, double du, double dv)
         {
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { 1, 0, 0, 0, 0, 0 },
                 { 0, 1, 0, 0, 0, 0 },
@@ -1965,11 +1965,11 @@ namespace Com
         /// 返回按 PointD5D 结构将 PointD5D 结构平移指定的量的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="pt">PointD5D 结构，用于平移 PointD5D 结构。</param>
-        public static Matrix2D OffsetMatrix(PointD5D pt)
+        public static Matrix OffsetMatrix(PointD5D pt)
         {
             if ((object)pt != null)
             {
-                return new Matrix2D(new double[6, 6]
+                return new Matrix(new double[6, 6]
                 {
                     { 1, 0, 0, 0, 0, 0 },
                     { 0, 1, 0, 0, 0, 0 },
@@ -1980,7 +1980,7 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         //
@@ -1989,9 +1989,9 @@ namespace Com
         /// 返回按双精度浮点数表示的所有坐标缩放因子将 PointD5D 结构缩放指定的倍数的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
-        public static Matrix2D ScaleMatrix(double s)
+        public static Matrix ScaleMatrix(double s)
         {
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { s, 0, 0, 0, 0, 0 },
                 { 0, s, 0, 0, 0, 0 },
@@ -2010,9 +2010,9 @@ namespace Com
         /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
         /// <param name="su">双精度浮点数表示的 U 坐标缩放因子。</param>
         /// <param name="sv">双精度浮点数表示的 V 坐标缩放因子。</param>
-        public static Matrix2D ScaleMatrix(double sx, double sy, double sz, double su, double sv)
+        public static Matrix ScaleMatrix(double sx, double sy, double sz, double su, double sv)
         {
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { sx, 0, 0, 0, 0, 0 },
                 { 0, sy, 0, 0, 0, 0 },
@@ -2027,11 +2027,11 @@ namespace Com
         /// 返回按 PointD5D 结构将 PointD5D 结构缩放指定的倍数的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="pt">PointD5D 结构，用于缩放 PointD5D 结构。</param>
-        public static Matrix2D ScaleMatrix(PointD5D pt)
+        public static Matrix ScaleMatrix(PointD5D pt)
         {
             if ((object)pt != null)
             {
-                return new Matrix2D(new double[6, 6]
+                return new Matrix(new double[6, 6]
                 {
                     { pt._X, 0, 0, 0, 0, 0 },
                     { 0, pt._Y, 0, 0, 0, 0 },
@@ -2042,7 +2042,7 @@ namespace Com
                 });
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         //
@@ -2051,12 +2051,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 XY 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
-        public static Matrix2D RotateXYMatrix(double angle)
+        public static Matrix RotateXYMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { CosA, SinA, 0, 0, 0, 0 },
                 { -SinA, CosA, 0, 0, 0, 0 },
@@ -2071,12 +2071,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 XZ 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
-        public static Matrix2D RotateXZMatrix(double angle)
+        public static Matrix RotateXZMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { CosA, 0, SinA, 0, 0, 0 },
                 { 0, 1, 0, 0, 0, 0 },
@@ -2091,12 +2091,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 XU 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
-        public static Matrix2D RotateXUMatrix(double angle)
+        public static Matrix RotateXUMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { CosA, 0, 0, SinA, 0, 0 },
                 { 0, 1, 0, 0, 0, 0 },
@@ -2111,12 +2111,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 XV 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 XV 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +V 轴的方向为正方向）。</param>
-        public static Matrix2D RotateXVMatrix(double angle)
+        public static Matrix RotateXVMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { CosA, 0, 0, 0, SinA, 0 },
                 { 0, 1, 0, 0, 0, 0 },
@@ -2131,12 +2131,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 YZ 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
-        public static Matrix2D RotateYZMatrix(double angle)
+        public static Matrix RotateYZMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { 1, 0, 0, 0, 0, 0 },
                 { 0, CosA, SinA, 0, 0, 0 },
@@ -2151,12 +2151,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 YU 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
-        public static Matrix2D RotateYUMatrix(double angle)
+        public static Matrix RotateYUMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { 1, 0, 0, 0, 0, 0 },
                 { 0, CosA, 0, SinA, 0, 0 },
@@ -2171,12 +2171,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 YV 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 YV 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +V 轴的方向为正方向）。</param>
-        public static Matrix2D RotateYVMatrix(double angle)
+        public static Matrix RotateYVMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { 1, 0, 0, 0, 0, 0 },
                 { 0, CosA, 0, 0, SinA, 0 },
@@ -2191,12 +2191,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 ZU 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
-        public static Matrix2D RotateZUMatrix(double angle)
+        public static Matrix RotateZUMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { 1, 0, 0, 0, 0, 0 },
                 { 0, 1, 0, 0, 0, 0 },
@@ -2211,12 +2211,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 ZV 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 ZV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +V 轴的方向为正方向）。</param>
-        public static Matrix2D RotateZVMatrix(double angle)
+        public static Matrix RotateZVMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { 1, 0, 0, 0, 0, 0 },
                 { 0, 1, 0, 0, 0, 0 },
@@ -2231,12 +2231,12 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将 PointD5D 结构绕 UV 平面的法向空间旋转指定的角度的仿射矩阵（左矩阵）。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD5D 结构绕 UV 平面的法向空间旋转的角度（弧度）（以 +U 轴为 0 弧度，从 +U 轴指向 +V 轴的方向为正方向）。</param>
-        public static Matrix2D RotateUVMatrix(double angle)
+        public static Matrix RotateUVMatrix(double angle)
         {
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return new Matrix2D(new double[6, 6]
+            return new Matrix(new double[6, 6]
             {
                 { 1, 0, 0, 0, 0, 0 },
                 { 0, 1, 0, 0, 0, 0 },

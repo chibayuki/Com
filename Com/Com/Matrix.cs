@@ -1,7 +1,7 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Copyright © 2018 chibayuki@foxmail.com
 
-Com.Matrix2D
+Com.Matrix
 Version 18.7.6.2250
 
 This file is part of Com
@@ -22,11 +22,11 @@ namespace Com
     /// <summary>
     /// 为以双精度浮点数数组表示的二维矩阵的基本计算提供静态方法。
     /// </summary>
-    public sealed class Matrix2D
+    public sealed class Matrix
     {
         #region 私有与内部成员
 
-        private Size _Size; // 此 Matrix2D 存储的矩阵大小。
+        private Size _Size; // 此 Matrix 存储的矩阵大小。
 
         private double[,] _MArray = null; // 用于存储矩阵元素的数组。
 
@@ -35,10 +35,10 @@ namespace Com
         #region 构造函数
 
         /// <summary>
-        /// 使用指定的宽度（列数）与高度（行数）初始化 Matrix2D 的新实例。
+        /// 使用指定的宽度（列数）与高度（行数）初始化 Matrix 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
-        public Matrix2D(Size size)
+        public Matrix(Size size)
         {
             if (size.Width > 0 && size.Height > 0)
             {
@@ -53,11 +53,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用指定的宽度（列数）、高度（行数）与所有元素的值初始化 Matrix2D 的新实例。
+        /// 使用指定的宽度（列数）、高度（行数）与所有元素的值初始化 Matrix 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         /// <param name="value">矩阵的所有元素的值。</param>
-        public Matrix2D(Size size, double value)
+        public Matrix(Size size, double value)
         {
             if (size.Width > 0 && size.Height > 0)
             {
@@ -80,11 +80,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用指定的宽度（列数）与高度（行数）初始化 Matrix2D 的新实例。
+        /// 使用指定的宽度（列数）与高度（行数）初始化 Matrix 的新实例。
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
-        public Matrix2D(int width, int height)
+        public Matrix(int width, int height)
         {
             if (width > 0 && height > 0)
             {
@@ -99,12 +99,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用指定的宽度（列数）、高度（行数）与所有元素的值初始化 Matrix2D 的新实例。
+        /// 使用指定的宽度（列数）、高度（行数）与所有元素的值初始化 Matrix 的新实例。
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
         /// <param name="value">矩阵的所有元素的值。</param>
-        public Matrix2D(int width, int height, double value)
+        public Matrix(int width, int height, double value)
         {
             if (width > 0 && height > 0)
             {
@@ -127,10 +127,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用二维双精度浮点数数组表示的矩阵元素初始化 Matrix2D 的新实例。
+        /// 使用二维双精度浮点数数组表示的矩阵元素初始化 Matrix 的新实例。
         /// </summary>
         /// <param name="values">二维数组表示的矩阵元素。</param>
-        public Matrix2D(double[,] values)
+        public Matrix(double[,] values)
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
@@ -157,7 +157,7 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取或设置此 Matrix2D 的指定索引的元素。
+        /// 获取或设置此 Matrix 的指定索引的元素。
         /// </summary>
         /// <param name="x">矩阵的宽度方向（列）的索引。</param>
         /// <param name="y">矩阵的高度方向（行）的索引。</param>
@@ -183,7 +183,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取或设置此 Matrix2D 的指定索引的元素。
+        /// 获取或设置此 Matrix 的指定索引的元素。
         /// </summary>
         /// <param name="index">矩阵的宽度方向（列）与高度方向（行）的索引。</param>
         public double this[Point index]
@@ -210,7 +210,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 Matrix2D 是否为非矩阵的布尔值。
+        /// 获取表示此 Matrix 是否为非矩阵的布尔值。
         /// </summary>
         public bool IsNonMatrix
         {
@@ -223,7 +223,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 Matrix2D 的宽度（列数）与高度（行数）。
+        /// 获取此 Matrix 的宽度（列数）与高度（行数）。
         /// </summary>
         public Size Size
         {
@@ -239,7 +239,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 的宽度（列数）。
+        /// 获取此 Matrix 的宽度（列数）。
         /// </summary>
         public int Width
         {
@@ -255,7 +255,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 的宽度（列数）。
+        /// 获取此 Matrix 的宽度（列数）。
         /// </summary>
         public int Column
         {
@@ -271,7 +271,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 的高度（行数）。
+        /// 获取此 Matrix 的高度（行数）。
         /// </summary>
         public int Height
         {
@@ -287,7 +287,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 的高度（行数）。
+        /// 获取此 Matrix 的高度（行数）。
         /// </summary>
         public int Row
         {
@@ -303,7 +303,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 包含的元素数量。
+        /// 获取此 Matrix 包含的元素数量。
         /// </summary>
         public int Count
         {
@@ -319,7 +319,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 包含的元素数量。
+        /// 获取此 Matrix 包含的元素数量。
         /// </summary>
         public int Length
         {
@@ -337,7 +337,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 Matrix2D 的行列式值。
+        /// 获取此 Matrix 的行列式值。
         /// </summary>
         public double Determinant
         {
@@ -368,7 +368,7 @@ namespace Com
                         {
                             Size sizeTemp = new Size(order - 1, order - 1);
 
-                            Matrix2D temp = new Matrix2D(sizeTemp);
+                            Matrix temp = new Matrix(sizeTemp);
 
                             for (int x = 0; x < sizeTemp.Width; x++)
                             {
@@ -398,7 +398,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 的秩。
+        /// 获取此 Matrix 的秩。
         /// </summary>
         public int Rank
         {
@@ -418,7 +418,7 @@ namespace Com
                         {
                             for (int y = 0; y < _Size.Height - i + 1; y++)
                             {
-                                Matrix2D sub = SubMatrix(x, y, i, i);
+                                Matrix sub = SubMatrix(x, y, i, i);
 
                                 if (IsNullOrNonMatrix(sub))
                                 {
@@ -457,15 +457,15 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 的转置矩阵。
+        /// 获取此 Matrix 的转置矩阵。
         /// </summary>
-        public Matrix2D Transport
+        public Matrix Transport
         {
             get
             {
                 if (_Size.Width > 0 && _Size.Height > 0)
                 {
-                    Matrix2D result = new Matrix2D(_Size.Height, _Size.Width);
+                    Matrix result = new Matrix(_Size.Height, _Size.Width);
 
                     for (int x = 0; x < _Size.Height; x++)
                     {
@@ -483,15 +483,15 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 的伴随矩阵。
+        /// 获取此 Matrix 的伴随矩阵。
         /// </summary>
-        public Matrix2D Adjoint
+        public Matrix Adjoint
         {
             get
             {
                 if (_Size.Width > 0 && _Size.Height > 0 && _Size.Width == _Size.Height)
                 {
-                    Matrix2D result = new Matrix2D(_Size);
+                    Matrix result = new Matrix(_Size);
 
                     for (int x = 0; x < _Size.Width; x++)
                     {
@@ -499,7 +499,7 @@ namespace Com
                         {
                             Size sizeTemp = new Size(_Size.Width - 1, _Size.Height - 1);
 
-                            Matrix2D temp = new Matrix2D(sizeTemp);
+                            Matrix temp = new Matrix(sizeTemp);
 
                             for (int _x = 0; _x < sizeTemp.Width; _x++)
                             {
@@ -523,15 +523,15 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix2D 的逆矩阵。
+        /// 获取此 Matrix 的逆矩阵。
         /// </summary>
-        public Matrix2D Invert
+        public Matrix Invert
         {
             get
             {
                 if (_Size.Width > 0 && _Size.Height > 0 && _Size.Width == _Size.Height)
                 {
-                    Matrix2D result = Adjoint;
+                    Matrix result = Adjoint;
 
                     if (!IsNullOrNonMatrix(result))
                     {
@@ -568,13 +568,13 @@ namespace Com
         #region 静态属性
 
         /// <summary>
-        /// 获取表示非矩阵的 Matrix2D 的新实例。
+        /// 获取表示非矩阵的 Matrix 的新实例。
         /// </summary>
-        public static Matrix2D NonMatrix
+        public static Matrix NonMatrix
         {
             get
             {
-                return new Matrix2D(null);
+                return new Matrix(null);
             }
         }
 
@@ -583,10 +583,10 @@ namespace Com
         #region 方法
 
         /// <summary>
-        /// 判断此 Matrix2D 是否与指定的 Matrix2D 对象相等。
+        /// 判断此 Matrix 是否与指定的 Matrix 对象相等。
         /// </summary>
-        /// <param name="matrix">用于比较的 Matrix2D 对象。</param>
-        public bool Equals(Matrix2D matrix)
+        /// <param name="matrix">用于比较的 Matrix 对象。</param>
+        public bool Equals(Matrix matrix)
         {
             if (_Size.Width <= 0 || _Size.Height <= 0 || IsNullOrNonMatrix(matrix) || _Size != matrix._Size)
             {
@@ -610,13 +610,13 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 Matrix2D 的副本。
+        /// 获取此 Matrix 的副本。
         /// </summary>
-        public Matrix2D Copy()
+        public Matrix Copy()
         {
             if (_Size.Width > 0 && _Size.Height > 0)
             {
-                Matrix2D result = new Matrix2D(_MArray);
+                Matrix result = new Matrix(_MArray);
 
                 return result;
             }
@@ -627,15 +627,15 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 Matrix2D 的子矩阵的 Matrix2D 的新实例。
+        /// 获取表示此 Matrix 的子矩阵的 Matrix 的新实例。
         /// </summary>
-        /// <param name="index">子矩阵首列与首行在此 Matrix2D 的宽度方向（列）与高度方向（行）的索引。</param>
+        /// <param name="index">子矩阵首列与首行在此 Matrix 的宽度方向（列）与高度方向（行）的索引。</param>
         /// <param name="size">子矩阵的宽度（列数）与高度（行数）。</param>
-        public Matrix2D SubMatrix(Point index, Size size)
+        public Matrix SubMatrix(Point index, Size size)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (size.Width > 0 && size.Height > 0) && (index.X >= 0 && index.X + size.Width < _Size.Width) && (index.Y >= 0 && index.Y + size.Height < _Size.Height))
             {
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -652,17 +652,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 Matrix2D 的子矩阵的 Matrix2D 的新实例。
+        /// 获取表示此 Matrix 的子矩阵的 Matrix 的新实例。
         /// </summary>
-        /// <param name="x">子矩阵首列在此 Matrix2D 的宽度方向（列）的索引。</param>
-        /// <param name="y">子矩阵首行在此 Matrix2D 的高度方向（行）的索引。</param>
+        /// <param name="x">子矩阵首列在此 Matrix 的宽度方向（列）的索引。</param>
+        /// <param name="y">子矩阵首行在此 Matrix 的高度方向（行）的索引。</param>
         /// <param name="width">子矩阵的宽度（列数）。</param>
         /// <param name="height">子矩阵的高度（行数）。</param>
-        public Matrix2D SubMatrix(int x, int y, int width, int height)
+        public Matrix SubMatrix(int x, int y, int width, int height)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (width > 0 && height > 0) && (x >= 0 && x + width < _Size.Width) && (y >= 0 && y + height < _Size.Height))
             {
-                Matrix2D result = new Matrix2D(width, height);
+                Matrix result = new Matrix(width, height);
 
                 for (int _x = 0; _x < width; _x++)
                 {
@@ -681,9 +681,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 Matrix2D 的指定列的 Vector 的新实例。
+        /// 获取表示此 Matrix 的指定列的 Vector 的新实例。
         /// </summary>
-        /// <param name="x">指定列在此 Matrix2D 的宽度方向（列）的索引。</param>
+        /// <param name="x">指定列在此 Matrix 的宽度方向（列）的索引。</param>
         public Vector GetColumn(int x)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (x >= 0 && x < _Size.Width))
@@ -702,9 +702,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 Matrix2D 的指定行的 Vector 的新实例。
+        /// 获取表示此 Matrix 的指定行的 Vector 的新实例。
         /// </summary>
-        /// <param name="y">指定行在此 Matrix2D 的高度方向（行）的索引。</param>
+        /// <param name="y">指定行在此 Matrix 的高度方向（行）的索引。</param>
         public Vector GetRow(int y)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (y >= 0 && y < _Size.Height))
@@ -725,7 +725,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 将此 Matrix2D 转换为双精度浮点数二维数组。
+        /// 将此 Matrix 转换为双精度浮点数二维数组。
         /// </summary>
         public double[,] ToArray()
         {
@@ -752,10 +752,10 @@ namespace Com
         #region 静态方法
 
         /// <summary>
-        /// 判断指定的 Matrix2D 是否为 null 或表示非矩阵。
+        /// 判断指定的 Matrix 是否为 null 或表示非矩阵。
         /// </summary>
-        /// <param name="matrix">用于判断的 Matrix2D 对象。</param>
-        public static bool IsNullOrNonMatrix(Matrix2D matrix)
+        /// <param name="matrix">用于判断的 Matrix 对象。</param>
+        public static bool IsNullOrNonMatrix(Matrix matrix)
         {
             return ((object)matrix == null || matrix._Size.Width <= 0 || matrix._Size.Height <= 0);
         }
@@ -763,11 +763,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 判断两个 Matrix2D 对象是否相等。
+        /// 判断两个 Matrix 对象是否相等。
         /// </summary>
-        /// <param name="left">用于比较的第一个 Matrix2D 对象。</param>
-        /// <param name="right">用于比较的第二个 Matrix2D 对象。</param>
-        public static bool Equals(Matrix2D left, Matrix2D right)
+        /// <param name="left">用于比较的第一个 Matrix 对象。</param>
+        /// <param name="right">用于比较的第二个 Matrix 对象。</param>
+        public static bool Equals(Matrix left, Matrix right)
         {
             if ((object)left == null && (object)right == null)
             {
@@ -788,14 +788,14 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回表示单位矩阵的 Matrix2D 的新实例。
+        /// 返回表示单位矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="order">矩阵的阶数。</param>
-        public static Matrix2D Identity(int order)
+        public static Matrix Identity(int order)
         {
             if (order > 0)
             {
-                Matrix2D result = new Matrix2D(order, order);
+                Matrix result = new Matrix(order, order);
 
                 for (int i = 0; i < order; i++)
                 {
@@ -809,75 +809,75 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示零矩阵的 Matrix2D 的新实例。
+        /// 返回表示零矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
-        public static Matrix2D Zeros(Size size)
+        public static Matrix Zeros(Size size)
         {
             if (size.Width > 0 && size.Height > 0)
             {
-                return new Matrix2D(size);
+                return new Matrix(size);
             }
 
             return NonMatrix;
         }
 
         /// <summary>
-        /// 返回表示零矩阵的 Matrix2D 的新实例。
+        /// 返回表示零矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
-        public static Matrix2D Zeros(int width, int height)
+        public static Matrix Zeros(int width, int height)
         {
             if (width > 0 && height > 0)
             {
-                return new Matrix2D(width, height);
+                return new Matrix(width, height);
             }
 
             return NonMatrix;
         }
 
         /// <summary>
-        /// 返回表示一矩阵的 Matrix2D 的新实例。
+        /// 返回表示一矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
-        public static Matrix2D Ones(Size size)
+        public static Matrix Ones(Size size)
         {
             if (size.Width > 0 && size.Height > 0)
             {
-                return new Matrix2D(size, 1);
+                return new Matrix(size, 1);
             }
 
             return NonMatrix;
         }
 
         /// <summary>
-        /// 返回表示一矩阵的 Matrix2D 的新实例。
+        /// 返回表示一矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
-        public static Matrix2D Ones(int width, int height)
+        public static Matrix Ones(int width, int height)
         {
             if (width > 0 && height > 0)
             {
-                return new Matrix2D(width, height, 1);
+                return new Matrix(width, height, 1);
             }
 
             return NonMatrix;
         }
 
         /// <summary>
-        /// 返回表示对角矩阵的 Matrix2D 的新实例。
+        /// 返回表示对角矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="array">包含对角元素的数组。</param>
         /// <param name="rowsUponMainDiag">对角元素在矩阵中位于主对角线上方的行数。</param>
-        public static Matrix2D Diagonal(double[] array, int rowsUponMainDiag)
+        public static Matrix Diagonal(double[] array, int rowsUponMainDiag)
         {
             if (!InternalMethod.IsNullOrEmpty(array))
             {
                 int order = array.Length + Math.Abs(rowsUponMainDiag);
 
-                Matrix2D result = new Matrix2D(order, order);
+                Matrix result = new Matrix(order, order);
 
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -891,16 +891,16 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示对角矩阵的 Matrix2D 的新实例。
+        /// 返回表示对角矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="array">包含对角元素的数组。</param>
-        public static Matrix2D Diagonal(double[] array)
+        public static Matrix Diagonal(double[] array)
         {
             if (!InternalMethod.IsNullOrEmpty(array))
             {
                 int order = array.Length;
 
-                Matrix2D result = new Matrix2D(order, order);
+                Matrix result = new Matrix(order, order);
 
                 for (int i = 0; i < array.Length; i++)
                 {
@@ -916,11 +916,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回表示由 2 个 Matrix2D 对象组成的增广矩阵的 Matrix2D 的新实例。
+        /// 返回表示由 2 个 Matrix 对象组成的增广矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="left">左矩阵。</param>
         /// <param name="right">右矩阵。</param>
-        public static Matrix2D Augment(Matrix2D left, Matrix2D right)
+        public static Matrix Augment(Matrix left, Matrix right)
         {
             if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
             {
@@ -931,7 +931,7 @@ namespace Com
                 {
                     Size size = new Size(sizeLeft.Width + sizeRight.Width, sizeLeft.Height);
 
-                    Matrix2D result = new Matrix2D(size);
+                    Matrix result = new Matrix(size);
 
                     for (int x = 0; x < size.Width; x++)
                     {
@@ -951,17 +951,17 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与双精度浮点数相加得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与双精度浮点数相加得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="matrix">Matrix2D 对象，表示被加数。</param>
+        /// <param name="matrix">Matrix 对象，表示被加数。</param>
         /// <param name="n">双精度浮点数，表示加数。</param>
-        public static Matrix2D Add(Matrix2D matrix, double n)
+        public static Matrix Add(Matrix matrix, double n)
         {
             if (!IsNullOrNonMatrix(matrix))
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -978,17 +978,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将双精度浮点数与 Matrix2D 对象相加得到的 Matrix2D 的新实例。
+        /// 返回将双精度浮点数与 Matrix 对象相加得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="n">双精度浮点数，表示被加数。</param>
-        /// <param name="matrix">Matrix2D 对象，表示加数。</param>
-        public static Matrix2D Add(double n, Matrix2D matrix)
+        /// <param name="matrix">Matrix 对象，表示加数。</param>
+        public static Matrix Add(double n, Matrix matrix)
         {
             if (!IsNullOrNonMatrix(matrix))
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1005,11 +1005,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与 Matrix2D 对象相加得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与 Matrix 对象相加得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="left">Matrix2D 对象，表示被加数。</param>
-        /// <param name="right">Matrix2D 对象，表示加数。</param>
-        public static Matrix2D Add(Matrix2D left, Matrix2D right)
+        /// <param name="left">Matrix 对象，表示被加数。</param>
+        /// <param name="right">Matrix 对象，表示加数。</param>
+        public static Matrix Add(Matrix left, Matrix right)
         {
             if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
             {
@@ -1020,7 +1020,7 @@ namespace Com
                 {
                     Size size = sizeLeft;
 
-                    Matrix2D result = new Matrix2D(size);
+                    Matrix result = new Matrix(size);
 
                     for (int x = 0; x < size.Width; x++)
                     {
@@ -1038,17 +1038,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与双精度浮点数相减得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与双精度浮点数相减得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="matrix">Matrix2D 对象，表示被减数。</param>
+        /// <param name="matrix">Matrix 对象，表示被减数。</param>
         /// <param name="n">双精度浮点数，表示减数。</param>
-        public static Matrix2D Subtract(Matrix2D matrix, double n)
+        public static Matrix Subtract(Matrix matrix, double n)
         {
             if (!IsNullOrNonMatrix(matrix))
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1065,17 +1065,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将双精度浮点数与 Matrix2D 对象相减得到的 Matrix2D 的新实例。
+        /// 返回将双精度浮点数与 Matrix 对象相减得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="n">双精度浮点数，表示被减数。</param>
-        /// <param name="matrix">Matrix2D 对象，表示减数。</param>
-        public static Matrix2D Subtract(double n, Matrix2D matrix)
+        /// <param name="matrix">Matrix 对象，表示减数。</param>
+        public static Matrix Subtract(double n, Matrix matrix)
         {
             if (!IsNullOrNonMatrix(matrix))
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1092,11 +1092,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与 Matrix2D 对象相减得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与 Matrix 对象相减得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="left">Matrix2D 对象，表示被减数。</param>
-        /// <param name="right">Matrix2D 对象，表示减数。</param>
-        public static Matrix2D Subtract(Matrix2D left, Matrix2D right)
+        /// <param name="left">Matrix 对象，表示被减数。</param>
+        /// <param name="right">Matrix 对象，表示减数。</param>
+        public static Matrix Subtract(Matrix left, Matrix right)
         {
             if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
             {
@@ -1107,7 +1107,7 @@ namespace Com
                 {
                     Size size = sizeLeft;
 
-                    Matrix2D result = new Matrix2D(size);
+                    Matrix result = new Matrix(size);
 
                     for (int x = 0; x < size.Width; x++)
                     {
@@ -1125,17 +1125,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与双精度浮点数相乘得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与双精度浮点数相乘得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="matrix">Matrix2D 对象，表示被乘数。</param>
+        /// <param name="matrix">Matrix 对象，表示被乘数。</param>
         /// <param name="n">双精度浮点数，表示乘数。</param>
-        public static Matrix2D Multiply(Matrix2D matrix, double n)
+        public static Matrix Multiply(Matrix matrix, double n)
         {
             if (!IsNullOrNonMatrix(matrix))
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1152,17 +1152,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将双精度浮点数与 Matrix2D 对象相乘得到的 Matrix2D 的新实例。
+        /// 返回将双精度浮点数与 Matrix 对象相乘得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="n">双精度浮点数，表示被乘数。</param>
-        /// <param name="matrix">Matrix2D 对象，表示乘数。</param>
-        public static Matrix2D Multiply(double n, Matrix2D matrix)
+        /// <param name="matrix">Matrix 对象，表示乘数。</param>
+        public static Matrix Multiply(double n, Matrix matrix)
         {
             if (!IsNullOrNonMatrix(matrix))
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1179,11 +1179,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与 Matrix2D 对象相乘得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与 Matrix 对象相乘得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="left">Matrix2D 对象，表示被乘数。</param>
-        /// <param name="right">Matrix2D 对象，表示乘数。</param>
-        public static Matrix2D Multiply(Matrix2D left, Matrix2D right)
+        /// <param name="left">Matrix 对象，表示被乘数。</param>
+        /// <param name="right">Matrix 对象，表示乘数。</param>
+        public static Matrix Multiply(Matrix left, Matrix right)
         {
             if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
             {
@@ -1196,7 +1196,7 @@ namespace Com
 
                     Size size = new Size(sizeRight.Width, sizeLeft.Height);
 
-                    Matrix2D result = new Matrix2D(size);
+                    Matrix result = new Matrix(size);
 
                     for (int x = 0; x < size.Width; x++)
                     {
@@ -1219,16 +1219,16 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将列表中所有 Matrix2D 对象依次左乘得到的 Matrix2D 的新实例。
+        /// 返回将列表中所有 Matrix 对象依次左乘得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="list">左矩阵列表。</param>
-        public static Matrix2D MultiplyLeft(List<Matrix2D> list)
+        public static Matrix MultiplyLeft(List<Matrix> list)
         {
             if (list.Count > 0)
             {
                 if (!IsNullOrNonMatrix(list[0]))
                 {
-                    Matrix2D result = list[0].Copy();
+                    Matrix result = list[0].Copy();
 
                     if (list.Count == 1)
                     {
@@ -1262,16 +1262,16 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将列表中所有 Matrix2D 对象依次右乘得到的 Matrix2D 的新实例。
+        /// 返回将列表中所有 Matrix 对象依次右乘得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="list">右矩阵列表。</param>
-        public static Matrix2D MultiplyRight(List<Matrix2D> list)
+        public static Matrix MultiplyRight(List<Matrix> list)
         {
             if (list.Count > 0)
             {
                 if (!IsNullOrNonMatrix(list[0]))
                 {
-                    Matrix2D result = list[0].Copy();
+                    Matrix result = list[0].Copy();
 
                     if (list.Count == 1)
                     {
@@ -1305,17 +1305,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与双精度浮点数相除得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与双精度浮点数相除得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="matrix">Matrix2D 对象，表示被除数。</param>
+        /// <param name="matrix">Matrix 对象，表示被除数。</param>
         /// <param name="n">双精度浮点数，表示除数。</param>
-        public static Matrix2D Divide(Matrix2D matrix, double n)
+        public static Matrix Divide(Matrix matrix, double n)
         {
             if (!IsNullOrNonMatrix(matrix))
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1332,17 +1332,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将双精度浮点数与 Matrix2D 对象相除得到的 Matrix2D 的新实例。
+        /// 返回将双精度浮点数与 Matrix 对象相除得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="n">双精度浮点数，表示被除数。</param>
-        /// <param name="matrix">Matrix2D 对象，表示除数。</param>
-        public static Matrix2D Divide(double n, Matrix2D matrix)
+        /// <param name="matrix">Matrix 对象，表示除数。</param>
+        public static Matrix Divide(double n, Matrix matrix)
         {
             if (!IsNullOrNonMatrix(matrix))
             {
                 Size size = matrix.Size;
 
-                Matrix2D result = new Matrix2D(size);
+                Matrix result = new Matrix(size);
 
                 for (int x = 0; x < size.Width; x++)
                 {
@@ -1359,11 +1359,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与 Matrix2D 对象左除得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与 Matrix 对象左除得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="left">Matrix2D 对象，表示被除数。</param>
-        /// <param name="right">Matrix2D 对象，表示除数。</param>
-        public static Matrix2D DivideLeft(Matrix2D left, Matrix2D right)
+        /// <param name="left">Matrix 对象，表示被除数。</param>
+        /// <param name="right">Matrix 对象，表示除数。</param>
+        public static Matrix DivideLeft(Matrix left, Matrix right)
         {
             if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
             {
@@ -1372,7 +1372,7 @@ namespace Com
 
                 if (sizeLeft.Width == sizeLeft.Height && sizeLeft.Width == sizeRight.Height)
                 {
-                    Matrix2D invLeft = left.Invert;
+                    Matrix invLeft = left.Invert;
 
                     if (!IsNullOrNonMatrix(invLeft))
                     {
@@ -1385,11 +1385,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Matrix2D 对象与 Matrix2D 对象右除得到的 Matrix2D 的新实例。
+        /// 返回将 Matrix 对象与 Matrix 对象右除得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="left">Matrix2D 对象，表示被除数。</param>
-        /// <param name="right">Matrix2D 对象，表示除数。</param>
-        public static Matrix2D DivideRight(Matrix2D left, Matrix2D right)
+        /// <param name="left">Matrix 对象，表示被除数。</param>
+        /// <param name="right">Matrix 对象，表示除数。</param>
+        public static Matrix DivideRight(Matrix left, Matrix right)
         {
             if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
             {
@@ -1398,7 +1398,7 @@ namespace Com
 
                 if (sizeRight.Width == sizeRight.Height && sizeLeft.Width == sizeRight.Height)
                 {
-                    Matrix2D invRight = right.Invert;
+                    Matrix invRight = right.Invert;
 
                     if (!IsNullOrNonMatrix(invRight))
                     {
@@ -1413,11 +1413,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回由 Matrix2D 对象与 Vector 对象指定的非齐次线性方程组的解向量。
+        /// 返回由 Matrix 对象与 Vector 对象指定的非齐次线性方程组的解向量。
         /// </summary>
-        /// <param name="matrix">Matrix2D 对象，表示系数矩阵。</param>
+        /// <param name="matrix">Matrix 对象，表示系数矩阵。</param>
         /// <param name="vector">Vector 对象，表示常数项。</param>
-        public static Vector SolveLinearEquation(Matrix2D matrix, Vector vector)
+        public static Vector SolveLinearEquation(Matrix matrix, Vector vector)
         {
             if (!IsNullOrNonMatrix(matrix) && !Vector.IsNullOrNonVector(vector) && vector.IsColumnVector)
             {
@@ -1429,7 +1429,7 @@ namespace Com
 
                     if (order == size.Height)
                     {
-                        Matrix2D solution = DivideLeft(matrix, vector.ToMatrix2D());
+                        Matrix solution = DivideLeft(matrix, vector.ToMatrix());
 
                         if (!IsNullOrNonMatrix(solution) && solution.Size == new Size(1, order))
                         {
@@ -1447,21 +1447,21 @@ namespace Com
         #region 基类方法
 
         /// <summary>
-        /// 判断此 Matrix2D 是否与指定的对象相等。
+        /// 判断此 Matrix 是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is Matrix2D))
+            if (obj == null || !(obj is Matrix))
             {
                 return false;
             }
 
-            return Equals((Matrix2D)obj);
+            return Equals((Matrix)obj);
         }
 
         /// <summary>
-        /// 返回此 Matrix2D 的哈希代码。
+        /// 返回此 Matrix 的哈希代码。
         /// </summary>
         public override int GetHashCode()
         {
@@ -1469,7 +1469,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 将此 Matrix2D 转换为字符串。
+        /// 将此 Matrix 转换为字符串。
         /// </summary>
         public override string ToString()
         {
@@ -1492,11 +1492,11 @@ namespace Com
         #region 运算符
 
         /// <summary>
-        /// 判断两个 Matrix2D 对象是否相等。
+        /// 判断两个 Matrix 对象是否相等。
         /// </summary>
-        /// <param name="left">运算符左侧比较的 Matrix2D 对象。</param>
-        /// <param name="right">运算符右侧比较的 Matrix2D 对象。</param>
-        public static bool operator ==(Matrix2D left, Matrix2D right)
+        /// <param name="left">运算符左侧比较的 Matrix 对象。</param>
+        /// <param name="right">运算符右侧比较的 Matrix 对象。</param>
+        public static bool operator ==(Matrix left, Matrix right)
         {
             if ((object)left == null && (object)right == null)
             {
@@ -1526,11 +1526,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 Matrix2D 对象是否不相等。
+        /// 判断两个 Matrix 对象是否不相等。
         /// </summary>
-        /// <param name="left">运算符左侧比较的 Matrix2D 对象。</param>
-        /// <param name="right">运算符右侧比较的 Matrix2D 对象。</param>
-        public static bool operator !=(Matrix2D left, Matrix2D right)
+        /// <param name="left">运算符左侧比较的 Matrix 对象。</param>
+        /// <param name="right">运算符右侧比较的 Matrix 对象。</param>
+        public static bool operator !=(Matrix left, Matrix right)
         {
             if ((object)left == null && (object)right == null)
             {

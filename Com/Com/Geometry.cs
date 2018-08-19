@@ -762,7 +762,7 @@ namespace Com
                         {
                             Path.AddRectangle(new RectangleF(0, 0, W, H));
 
-                            Matrix Mtrx = new Matrix();
+                            System.Drawing.Drawing2D.Matrix Mtrx = new System.Drawing.Drawing2D.Matrix();
                             Mtrx.Rotate((float)(rotateAngle * 180 / Math.PI));
 
                             Rect = Path.GetBounds(Mtrx);

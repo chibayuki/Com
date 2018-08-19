@@ -34,7 +34,7 @@ namespace Com
 
         //
 
-        private Matrix2D _ToMatrixForAffineTransform() // 获取此 Vector 用于仿射变换的矩阵。
+        private Matrix _ToMatrixForAffineTransform() // 获取此 Vector 用于仿射变换的矩阵。
         {
             if (_Size > 0)
             {
@@ -49,7 +49,7 @@ namespace Com
 
                     values[_Size, 0] = 1;
 
-                    return new Matrix2D(values);
+                    return new Matrix(values);
                 }
                 else
                 {
@@ -62,11 +62,11 @@ namespace Com
 
                     values[0, _Size] = 1;
 
-                    return new Matrix2D(values);
+                    return new Matrix(values);
                 }
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         //
@@ -567,23 +567,23 @@ namespace Com
         {
             if (_Size > 0 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
             {
-                Matrix2D matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
-                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+                Matrix matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
+                Matrix matrixVector = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
-                    Matrix2D result = Matrix2D.Multiply(matrixVector, matrixRotate);
+                    Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
                 else
                 {
-                    Matrix2D result = Matrix2D.Multiply(matrixRotate, matrixVector);
+                    Matrix result = Matrix.Multiply(matrixRotate, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -601,14 +601,14 @@ namespace Com
         {
             if (_Size > 0 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
             {
-                Matrix2D matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
-                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+                Matrix matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
+                Matrix matrixVector = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
-                    Matrix2D result = Matrix2D.Multiply(matrixVector, matrixRotate);
+                    Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -619,9 +619,9 @@ namespace Com
                 }
                 else
                 {
-                    Matrix2D result = Matrix2D.Multiply(matrixRotate, matrixVector);
+                    Matrix result = Matrix.Multiply(matrixRotate, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -641,26 +641,26 @@ namespace Com
         /// 按仿射矩阵将此 Vector 进行仿射变换。
         /// </summary>
         /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        public void AffineTransform(Matrix2D matrix)
+        public void AffineTransform(Matrix matrix)
         {
-            if (_Size > 0 && !Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
             {
-                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+                Matrix matrixVector = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
-                    Matrix2D result = Matrix2D.Multiply(matrixVector, matrix);
+                    Matrix result = Matrix.Multiply(matrixVector, matrix);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
                 else
                 {
-                    Matrix2D result = Matrix2D.Multiply(matrix, matrixVector);
+                    Matrix result = Matrix.Multiply(matrix, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -672,25 +672,25 @@ namespace Com
         /// 按仿射矩阵列表将此 Vector 进行仿射变换。
         /// </summary>
         /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public void AffineTransform(List<Matrix2D> matrixList)
+        public void AffineTransform(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
                     for (int i = 0; i < matrixList.Count; i++)
                     {
-                        Matrix2D matrix = matrixList[i];
+                        Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
-                            result = Matrix2D.Multiply(result, matrix);
+                            result = Matrix.Multiply(result, matrix);
 
-                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
+                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -699,7 +699,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -708,15 +708,15 @@ namespace Com
                 {
                     for (int i = 0; i < matrixList.Count; i++)
                     {
-                        Matrix2D matrix = matrixList[i];
+                        Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
-                            result = Matrix2D.Multiply(matrix, result);
+                            result = Matrix.Multiply(matrix, result);
 
-                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
+                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -725,7 +725,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -737,17 +737,17 @@ namespace Com
         /// 返回按仿射矩阵将此 Vector 的副本进行仿射变换的新实例。
         /// </summary>
         /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        public Vector AffineTransformCopy(Matrix2D matrix)
+        public Vector AffineTransformCopy(Matrix matrix)
         {
-            if (_Size > 0 && !Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
             {
-                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+                Matrix matrixVector = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
-                    Matrix2D result = Matrix2D.Multiply(matrixVector, matrix);
+                    Matrix result = Matrix.Multiply(matrixVector, matrix);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -758,9 +758,9 @@ namespace Com
                 }
                 else
                 {
-                    Matrix2D result = Matrix2D.Multiply(matrix, matrixVector);
+                    Matrix result = Matrix.Multiply(matrix, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -778,25 +778,25 @@ namespace Com
         /// 返回按仿射矩阵列表将此 Vector 的副本进行仿射变换的新实例。
         /// </summary>
         /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public Vector AffineTransformCopy(List<Matrix2D> matrixList)
+        public Vector AffineTransformCopy(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
                     for (int i = 0; i < matrixList.Count; i++)
                     {
-                        Matrix2D matrix = matrixList[i];
+                        Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
-                            result = Matrix2D.Multiply(result, matrix);
+                            result = Matrix.Multiply(result, matrix);
 
-                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
+                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -805,7 +805,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -818,15 +818,15 @@ namespace Com
                 {
                     for (int i = 0; i < matrixList.Count; i++)
                     {
-                        Matrix2D matrix = matrixList[i];
+                        Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
-                            result = Matrix2D.Multiply(matrix, result);
+                            result = Matrix.Multiply(matrix, result);
 
-                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
+                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -835,7 +835,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -853,26 +853,26 @@ namespace Com
         /// 按仿射矩阵将此 Vector 进行逆仿射变换。
         /// </summary>
         /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        public void InverseAffineTransform(Matrix2D matrix)
+        public void InverseAffineTransform(Matrix matrix)
         {
-            if (_Size > 0 && !Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
             {
-                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+                Matrix matrixVector = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
-                    Matrix2D result = Matrix2D.DivideRight(matrixVector, matrix);
+                    Matrix result = Matrix.DivideRight(matrixVector, matrix);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
                 else
                 {
-                    Matrix2D result = Matrix2D.DivideLeft(matrix, matrixVector);
+                    Matrix result = Matrix.DivideLeft(matrix, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -884,25 +884,25 @@ namespace Com
         /// 按仿射矩阵列表将此 Vector 进行逆仿射变换。
         /// </summary>
         /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public void InverseAffineTransform(List<Matrix2D> matrixList)
+        public void InverseAffineTransform(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
                     for (int i = matrixList.Count - 1; i >= 0; i--)
                     {
-                        Matrix2D matrix = matrixList[i];
+                        Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
-                            result = Matrix2D.DivideRight(result, matrix);
+                            result = Matrix.DivideRight(result, matrix);
 
-                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
+                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -911,7 +911,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -920,15 +920,15 @@ namespace Com
                 {
                     for (int i = matrixList.Count - 1; i >= 0; i--)
                     {
-                        Matrix2D matrix = matrixList[i];
+                        Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
-                            result = Matrix2D.DivideLeft(matrix, result);
+                            result = Matrix.DivideLeft(matrix, result);
 
-                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
+                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -937,7 +937,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -949,17 +949,17 @@ namespace Com
         /// 返回按仿射矩阵将此 Vector 的副本进行逆仿射变换的新实例。
         /// </summary>
         /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        public Vector InverseAffineTransformCopy(Matrix2D matrix)
+        public Vector InverseAffineTransformCopy(Matrix matrix)
         {
-            if (_Size > 0 && !Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
             {
-                Matrix2D matrixVector = _ToMatrixForAffineTransform();
+                Matrix matrixVector = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
-                    Matrix2D result = Matrix2D.DivideRight(matrixVector, matrix);
+                    Matrix result = Matrix.DivideRight(matrixVector, matrix);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -970,9 +970,9 @@ namespace Com
                 }
                 else
                 {
-                    Matrix2D result = Matrix2D.DivideLeft(matrix, matrixVector);
+                    Matrix result = Matrix.DivideLeft(matrix, matrixVector);
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -990,25 +990,25 @@ namespace Com
         /// 返回按仿射矩阵列表将此 Vector 的副本进行逆仿射变换的新实例。
         /// </summary>
         /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public Vector InverseAffineTransformCopy(List<Matrix2D> matrixList)
+        public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
             {
-                Matrix2D result = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.RowVector)
                 {
                     for (int i = matrixList.Count - 1; i >= 0; i--)
                     {
-                        Matrix2D matrix = matrixList[i];
+                        Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
-                            result = Matrix2D.DivideRight(result, matrix);
+                            result = Matrix.DivideRight(result, matrix);
 
-                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
+                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -1017,7 +1017,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1030,15 +1030,15 @@ namespace Com
                 {
                     for (int i = matrixList.Count - 1; i >= 0; i--)
                     {
-                        Matrix2D matrix = matrixList[i];
+                        Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix2D.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
-                            result = Matrix2D.DivideLeft(matrix, result);
+                            result = Matrix.DivideLeft(matrix, result);
 
-                            flag = (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
+                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -1047,7 +1047,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix2D.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1302,9 +1302,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将此 Vector 转换为矩阵的 Matrix2D 的新实例。
+        /// 返回将此 Vector 转换为矩阵的 Matrix 的新实例。
         /// </summary>
-        public Matrix2D ToMatrix2D()
+        public Matrix ToMatrix()
         {
             if (_Size > 0)
             {
@@ -1317,7 +1317,7 @@ namespace Com
                         values[i, 0] = _VArray[i];
                     }
 
-                    return new Matrix2D(values);
+                    return new Matrix(values);
                 }
                 else
                 {
@@ -1328,11 +1328,11 @@ namespace Com
                         values[0, i] = _VArray[i];
                     }
 
-                    return new Matrix2D(values);
+                    return new Matrix(values);
                 }
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         //
@@ -1470,11 +1470,11 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
-        public static Matrix2D OffsetMatrix(Type type, int dimension, double d)
+        public static Matrix OffsetMatrix(Type type, int dimension, double d)
         {
             if (type != Type.NonVector && dimension > 0)
             {
-                Matrix2D result = Matrix2D.Identity(dimension + 1);
+                Matrix result = Matrix.Identity(dimension + 1);
 
                 if (type == Type.RowVector)
                 {
@@ -1494,7 +1494,7 @@ namespace Com
                 return result;
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
@@ -1503,11 +1503,11 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="vector">Vector 对象，用于平移 Vector 对象。</param>
-        public static Matrix2D OffsetMatrix(Type type, int dimension, Vector vector)
+        public static Matrix OffsetMatrix(Type type, int dimension, Vector vector)
         {
             if (type != Type.NonVector && dimension > 0 && (!IsNullOrNonVector(vector) && vector._Size == dimension))
             {
-                Matrix2D result = Matrix2D.Identity(dimension + 1);
+                Matrix result = Matrix.Identity(dimension + 1);
 
                 if (type == Type.RowVector)
                 {
@@ -1527,7 +1527,7 @@ namespace Com
                 return result;
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
@@ -1536,11 +1536,11 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
-        public static Matrix2D ScaleMatrix(Type type, int dimension, double s)
+        public static Matrix ScaleMatrix(Type type, int dimension, double s)
         {
             if (type != Type.NonVector && dimension > 0)
             {
-                Matrix2D result = Matrix2D.Identity(dimension + 1);
+                Matrix result = Matrix.Identity(dimension + 1);
 
                 for (int i = 0; i < dimension; i++)
                 {
@@ -1550,7 +1550,7 @@ namespace Com
                 return result;
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
@@ -1559,11 +1559,11 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="vector">Vector 对象，用于缩放 Vector 对象。</param>
-        public static Matrix2D ScaleMatrix(Type type, int dimension, Vector vector)
+        public static Matrix ScaleMatrix(Type type, int dimension, Vector vector)
         {
             if (type != Type.NonVector && dimension > 0 && (!IsNullOrNonVector(vector) && vector._Size == dimension))
             {
-                Matrix2D result = Matrix2D.Identity(dimension + 1);
+                Matrix result = Matrix.Identity(dimension + 1);
 
                 for (int i = 0; i < dimension; i++)
                 {
@@ -1573,7 +1573,7 @@ namespace Com
                 return result;
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         /// <summary>
@@ -1584,11 +1584,11 @@ namespace Com
         /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
         /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
         /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
-        public static Matrix2D RotateMatrix(Type type, int dimension, int index1, int index2, double angle)
+        public static Matrix RotateMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
             if (type != Type.NonVector && dimension > 0 && (index1 >= 0 && index1 < dimension) && (index2 >= 0 && index2 < dimension) && index1 != index2)
             {
-                Matrix2D result = Matrix2D.Identity(dimension + 1);
+                Matrix result = Matrix.Identity(dimension + 1);
 
                 double CosA = Math.Cos(angle);
                 double SinA = Math.Sin(angle);
@@ -1610,7 +1610,7 @@ namespace Com
                 return result;
             }
 
-            return Matrix2D.NonMatrix;
+            return Matrix.NonMatrix;
         }
 
         //
