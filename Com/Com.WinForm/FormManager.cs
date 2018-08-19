@@ -1454,7 +1454,6 @@ namespace Com.WinForm
                 if (_Visible)
                 {
                     double Opa = _Opacity;
-                    int CurrY = Bounds_Current_Y;
 
                     Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                     {
@@ -1470,10 +1469,6 @@ namespace Com.WinForm
                         }
 
                         _Resizer.OnThemeChanged();
-
-                        Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
-
-                        _UpdateLayout(UpdateLayoutEventType.None);
                     };
 
                     Animation.Show(Frame, 9, 15);
@@ -1812,7 +1807,7 @@ namespace Com.WinForm
 
             //
 
-            if (_FormState == FormState.FullScreen)
+            if (_Visible)
             {
                 double Opa = _Opacity;
 
@@ -1823,6 +1818,12 @@ namespace Com.WinForm
                     _Opacity = Opa * Pct_F;
 
                     _Client.Opacity = _SplashScreen.Opacity = _Opacity;
+
+                    if (_FormState != FormState.FullScreen)
+                    {
+                        _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                    }
+
                     _Resizer.OnThemeChanged();
                 };
 
@@ -1830,25 +1831,14 @@ namespace Com.WinForm
             }
             else
             {
-                double Opa = _Opacity;
-                int CurrY = Bounds_Current_Y;
+                _Client.Opacity = _SplashScreen.Opacity = _Opacity;
 
-                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                if (_FormState != FormState.FullScreen)
                 {
-                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
-
-                    _Opacity = Opa * Pct_F;
-
-                    _Client.Opacity = _SplashScreen.Opacity = _Opacity;
                     _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
-                    _Resizer.OnThemeChanged();
+                }
 
-                    Bounds_Current_Y = CurrY - (int)(16 * (1 - Pct_F));
-
-                    _UpdateLayout(UpdateLayoutEventType.None);
-                };
-
-                Animation.Show(Frame, 9, 15);
+                _Resizer.OnThemeChanged();
             }
 
             //
@@ -1971,54 +1961,29 @@ namespace Com.WinForm
 
             if (_Visible)
             {
-                if (_FormState == FormState.FullScreen)
+                double Opa = _Opacity;
+
+                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Opa = _Opacity;
+                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                    _Opacity = Opa * (1 - Pct_F);
+
+                    _SplashScreen.Opacity = _Opacity;
+
+                    if (_FormState != FormState.FullScreen)
                     {
-                        double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
-
-                        _Opacity = Opa * (1 - Pct_F);
-
-                        _SplashScreen.Opacity = _Opacity;
-                        _Resizer.OnThemeChanged();
-                    };
-
-                    Animation.Show(Frame, 9, 15);
-
-                    //
-
-                    _Opacity = Opa;
-                }
-                else
-                {
-                    double Opa = _Opacity;
-                    int CurrY = Bounds_Current_Y;
-
-                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
-                    {
-                        double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
-
-                        _Opacity = Opa * (1 - Pct_F);
-
-                        _SplashScreen.Opacity = _Opacity;
                         _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
-                        _Resizer.OnThemeChanged();
+                    }
 
-                        Bounds_Current_Y = CurrY - (int)(16 * Pct_F);
+                    _Resizer.OnThemeChanged();
+                };
 
-                        _UpdateLayout(UpdateLayoutEventType.None);
-                    };
+                Animation.Show(Frame, 9, 15);
 
-                    Animation.Show(Frame, 9, 15);
+                //
 
-                    //
-
-                    _Opacity = Opa;
-
-                    Bounds_Current_Y = CurrY;
-                }
+                _Opacity = Opa;
             }
 
             //

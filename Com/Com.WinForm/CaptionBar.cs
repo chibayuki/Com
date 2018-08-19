@@ -896,7 +896,7 @@ namespace Com.WinForm
                     double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
                     this.Opacity = _Opacity * Pct_F;
-                    this.Height = (Int32)(Panel_ControlBox.Height * Pct_F);
+                    this.Height = (int)(Panel_ControlBox.Height * Pct_F);
 
                     Panel_CaptionBar.Top = this.Height - Panel_CaptionBar.Height;
                 };
@@ -906,7 +906,7 @@ namespace Com.WinForm
                     double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
                     this.Opacity = _Opacity * (1 - Pct_F);
-                    this.Height = (Int32)(Panel_ControlBox.Height * (1 - Pct_F));
+                    this.Height = (int)(Panel_ControlBox.Height * (1 - Pct_F));
 
                     Panel_CaptionBar.Top = this.Height - Panel_CaptionBar.Height;
                 };

@@ -48,7 +48,7 @@ namespace Com.WinForm
 
             AppNameRect.Location = new PointF(AppLogoSize * 1.4F, (SplashSize.Height - AppNameRect.Height) / 2);
 
-            SplashSize.Width = (Int32)AppNameRect.Right;
+            SplashSize.Width = (int)AppNameRect.Right;
 
             Panel_Splash.Size = SplashSize;
             Panel_Splash.Location = new Point((Panel_SplashScreen.Width - Panel_Splash.Width) / 2, (Panel_SplashScreen.Height - Panel_Splash.Height) / 2);
