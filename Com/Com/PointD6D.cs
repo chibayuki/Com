@@ -2300,16 +2300,7 @@ namespace Com
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
         public static Matrix OffsetMatrix(double d)
         {
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { d, d, d, d, d, d, 1 }
-            });
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 6, d);
         }
 
         /// <summary>
@@ -2323,16 +2314,7 @@ namespace Com
         /// <param name="dw">双精度浮点数表示的 W 坐标偏移量。</param>
         public static Matrix OffsetMatrix(double dx, double dy, double dz, double du, double dv, double dw)
         {
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { dx, dy, dz, du, dv, dw, 1 }
-            });
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 6, new Vector(dx, dy, dz, du, dv, dw));
         }
 
         /// <summary>
@@ -2343,16 +2325,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[7, 7]
-                {
-                    { 1, 0, 0, 0, 0, 0, 0 },
-                    { 0, 1, 0, 0, 0, 0, 0 },
-                    { 0, 0, 1, 0, 0, 0, 0 },
-                    { 0, 0, 0, 1, 0, 0, 0 },
-                    { 0, 0, 0, 0, 1, 0, 0 },
-                    { 0, 0, 0, 0, 0, 1, 0 },
-                    { pt._X, pt._Y, pt._Z, pt._U, pt._V, pt._W, 1 }
-                });
+                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 6, pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -2366,16 +2339,7 @@ namespace Com
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double s)
         {
-            return new Matrix(new double[7, 7]
-            {
-                { s, 0, 0, 0, 0, 0, 0 },
-                { 0, s, 0, 0, 0, 0, 0 },
-                { 0, 0, s, 0, 0, 0, 0 },
-                { 0, 0, 0, s, 0, 0, 0 },
-                { 0, 0, 0, 0, s, 0, 0 },
-                { 0, 0, 0, 0, 0, s, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 6, s);
         }
 
         /// <summary>
@@ -2389,16 +2353,7 @@ namespace Com
         /// <param name="sw">双精度浮点数表示的 W 坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double sx, double sy, double sz, double su, double sv, double sw)
         {
-            return new Matrix(new double[7, 7]
-            {
-                { sx, 0, 0, 0, 0, 0, 0 },
-                { 0, sy, 0, 0, 0, 0, 0 },
-                { 0, 0, sz, 0, 0, 0, 0 },
-                { 0, 0, 0, su, 0, 0, 0 },
-                { 0, 0, 0, 0, sv, 0, 0 },
-                { 0, 0, 0, 0, 0, sw, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 6, new Vector(sx, sy, sz, su, sv, sw));
         }
 
         /// <summary>
@@ -2409,16 +2364,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[7, 7]
-                {
-                    { pt._X, 0, 0, 0, 0, 0, 0 },
-                    { 0, pt._Y, 0, 0, 0, 0, 0 },
-                    { 0, 0, pt._Z, 0, 0, 0, 0 },
-                    { 0, 0, 0, pt._U, 0, 0, 0 },
-                    { 0, 0, 0, 0, pt._V, 0, 0 },
-                    { 0, 0, 0, 0, 0, pt._W, 0 },
-                    { 0, 0, 0, 0, 0, 0, 1 }
-                });
+                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 6, pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -2432,19 +2378,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static Matrix RotateXYMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { CosA, SinA, 0, 0, 0, 0, 0 },
-                { -SinA, CosA, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 0, 1, angle);
         }
 
         /// <summary>
@@ -2453,19 +2387,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
         public static Matrix RotateXZMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { CosA, 0, SinA, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { -SinA, 0, CosA, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 0, 2, angle);
         }
 
         /// <summary>
@@ -2474,19 +2396,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public static Matrix RotateXUMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { CosA, 0, 0, SinA, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { -SinA, 0, 0, CosA, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 0, 3, angle);
         }
 
         /// <summary>
@@ -2495,19 +2405,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 XV 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +V 轴的方向为正方向）。</param>
         public static Matrix RotateXVMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { CosA, 0, 0, 0, SinA, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { -SinA, 0, 0, 0, CosA, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 0, 4, angle);
         }
 
         /// <summary>
@@ -2516,19 +2414,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 XW 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +W 轴的方向为正方向）。</param>
         public static Matrix RotateXWMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { CosA, 0, 0, 0, 0, SinA, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { -SinA, 0, 0, 0, 0, CosA, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 0, 5, angle);
         }
 
         /// <summary>
@@ -2537,19 +2423,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public static Matrix RotateYZMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, CosA, SinA, 0, 0, 0, 0 },
-                { 0, -SinA, CosA, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 1, 2, angle);
         }
 
         /// <summary>
@@ -2558,19 +2432,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public static Matrix RotateYUMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, CosA, 0, SinA, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, -SinA, 0, CosA, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 1, 3, angle);
         }
 
         /// <summary>
@@ -2579,19 +2441,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 YV 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +V 轴的方向为正方向）。</param>
         public static Matrix RotateYVMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, CosA, 0, 0, SinA, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, -SinA, 0, 0, CosA, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 1, 4, angle);
         }
 
         /// <summary>
@@ -2600,19 +2450,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 YW 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +W 轴的方向为正方向）。</param>
         public static Matrix RotateYWMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, CosA, 0, 0, 0, SinA, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, -SinA, 0, 0, 0, CosA, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 1, 5, angle);
         }
 
         /// <summary>
@@ -2621,19 +2459,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public static Matrix RotateZUMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, CosA, SinA, 0, 0, 0 },
-                { 0, 0, -SinA, CosA, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 2, 3, angle);
         }
 
         /// <summary>
@@ -2642,19 +2468,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 ZV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +V 轴的方向为正方向）。</param>
         public static Matrix RotateZVMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, CosA, 0, SinA, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, -SinA, 0, CosA, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 2, 4, angle);
         }
 
         /// <summary>
@@ -2663,19 +2477,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 ZW 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +W 轴的方向为正方向）。</param>
         public static Matrix RotateZWMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, CosA, 0, 0, SinA, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, -SinA, 0, 0, CosA, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 2, 5, angle);
         }
 
         /// <summary>
@@ -2684,19 +2486,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 UV 平面的法向空间旋转的角度（弧度）（以 +U 轴为 0 弧度，从 +U 轴指向 +V 轴的方向为正方向）。</param>
         public static Matrix RotateUVMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, CosA, SinA, 0, 0 },
-                { 0, 0, 0, -SinA, CosA, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 3, 4, angle);
         }
 
         /// <summary>
@@ -2705,19 +2495,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 UW 平面的法向空间旋转的角度（弧度）（以 +U 轴为 0 弧度，从 +U 轴指向 +W 轴的方向为正方向）。</param>
         public static Matrix RotateUWMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, CosA, 0, SinA, 0 },
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 0, -SinA, 0, CosA, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 3, 5, angle);
         }
 
         /// <summary>
@@ -2726,19 +2504,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD6D 结构绕 VW 平面的法向空间旋转的角度（弧度）（以 +V 轴为 0 弧度，从 +V 轴指向 +W 轴的方向为正方向）。</param>
         public static Matrix RotateVWMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[7, 7]
-            {
-                { 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, CosA, SinA, 0 },
-                { 0, 0, 0, 0, -SinA, CosA, 0 },
-                { 0, 0, 0, 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 6, 4, 5, angle);
         }
 
         //

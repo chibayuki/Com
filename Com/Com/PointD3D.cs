@@ -1326,13 +1326,7 @@ namespace Com
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
         public static Matrix OffsetMatrix(double d)
         {
-            return new Matrix(new double[4, 4]
-            {
-                { 1, 0, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 0, 1, 0 },
-                { d, d, d, 1 }
-            });
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 3, d);
         }
 
         /// <summary>
@@ -1343,13 +1337,7 @@ namespace Com
         /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
         public static Matrix OffsetMatrix(double dx, double dy, double dz)
         {
-            return new Matrix(new double[4, 4]
-            {
-                { 1, 0, 0, 0 },
-                { 0, 1, 0, 0 },
-                { 0, 0, 1, 0 },
-                { dx, dy, dz, 1 }
-            });
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 3, new Vector(dx, dy, dz));
         }
 
         /// <summary>
@@ -1360,13 +1348,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[4, 4]
-                {
-                    { 1, 0, 0, 0 },
-                    { 0, 1, 0, 0 },
-                    { 0, 0, 1, 0 },
-                    { pt._X, pt._Y, pt._Z, 1 }
-                });
+                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 3, pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -1380,13 +1362,7 @@ namespace Com
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double s)
         {
-            return new Matrix(new double[4, 4]
-            {
-                { s, 0, 0, 0 },
-                { 0, s, 0, 0 },
-                { 0, 0, s, 0 },
-                { 0, 0, 0, 1 }
-            });
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 3, s);
         }
 
         /// <summary>
@@ -1397,13 +1373,7 @@ namespace Com
         /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double sx, double sy, double sz)
         {
-            return new Matrix(new double[4, 4]
-            {
-                { sx, 0, 0, 0 },
-                { 0, sy, 0, 0 },
-                { 0, 0, sz, 0 },
-                { 0, 0, 0, 1 }
-            });
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 3, new Vector(sx, sy, sz));
         }
 
         /// <summary>
@@ -1414,13 +1384,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[4, 4]
-                {
-                    { pt._X, 0, 0, 0 },
-                    { 0, pt._Y, 0, 0 },
-                    { 0, 0, pt._Z, 0 },
-                    { 0, 0, 0, 1 }
-                });
+                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 3, pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -1434,16 +1398,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public static Matrix RotateXMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[4, 4]
-            {
-                { 1, 0, 0, 0 },
-                { 0, CosA, SinA, 0 },
-                { 0, -SinA, CosA, 0 },
-                { 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 3, 1, 2, angle);
         }
 
         /// <summary>
@@ -1452,16 +1407,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public static Matrix RotateYMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[4, 4]
-            {
-                { CosA, 0, -SinA, 0 },
-                { 0, 1, 0, 0 },
-                { SinA, 0, CosA, 0 },
-                { 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 3, 2, 0, angle);
         }
 
         /// <summary>
@@ -1470,16 +1416,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static Matrix RotateZMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[4, 4]
-            {
-                { CosA, SinA, 0, 0 },
-                { -SinA, CosA, 0, 0 },
-                { 0, 0, 1, 0 },
-                { 0, 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 3, 0, 1, angle);
         }
 
         //

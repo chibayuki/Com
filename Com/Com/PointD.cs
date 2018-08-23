@@ -1461,12 +1461,7 @@ namespace Com
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
         public static Matrix OffsetMatrix(double d)
         {
-            return new Matrix(new double[3, 3]
-            {
-                { 1, 0, 0 },
-                { 0, 1, 0 },
-                { d, d, 1 }
-            });
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, d);
         }
 
         /// <summary>
@@ -1476,12 +1471,7 @@ namespace Com
         /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
         public static Matrix OffsetMatrix(double dx, double dy)
         {
-            return new Matrix(new double[3, 3]
-            {
-                { 1, 0, 0 },
-                { 0, 1, 0 },
-                { dx, dy, 1 }
-            });
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(dx, dy));
         }
 
         /// <summary>
@@ -1492,12 +1482,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { 1, 0, 0 },
-                    { 0, 1, 0 },
-                    { pt._X, pt._Y, 1 }
-                });
+                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -1511,12 +1496,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { 1, 0, 0 },
-                    { 0, 1, 0 },
-                    { pt.X, pt.Y, 1 }
-                });
+                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(pt.X, pt.Y));
             }
 
             return Matrix.NonMatrix;
@@ -1530,12 +1510,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { 1, 0, 0 },
-                    { 0, 1, 0 },
-                    { pt.X, pt.Y, 1 }
-                });
+                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(pt.X, pt.Y));
             }
 
             return Matrix.NonMatrix;
@@ -1549,12 +1524,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { 1, 0, 0 },
-                    { 0, 1, 0 },
-                    { sz.Width, sz.Height, 1 }
-                });
+                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(sz.Width, sz.Height));
             }
 
             return Matrix.NonMatrix;
@@ -1568,12 +1538,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { 1, 0, 0 },
-                    { 0, 1, 0 },
-                    { sz.Width, sz.Height, 1 }
-                });
+                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(sz.Width, sz.Height));
             }
 
             return Matrix.NonMatrix;
@@ -1587,12 +1552,7 @@ namespace Com
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double s)
         {
-            return new Matrix(new double[3, 3]
-            {
-                { s, 0, 0 },
-                { 0, s, 0 },
-                { 0, 0, 1 }
-            });
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, s);
         }
 
         /// <summary>
@@ -1602,12 +1562,7 @@ namespace Com
         /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double sx, double sy)
         {
-            return new Matrix(new double[3, 3]
-            {
-                { sx, 0, 0 },
-                { 0, sy, 0 },
-                { 0, 0, 1 }
-            });
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(sx, sy));
         }
 
         /// <summary>
@@ -1618,12 +1573,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { pt._X, 0, 0 },
-                    { 0, pt._Y, 0 },
-                    { 0, 0, 1 }
-                });
+                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -1637,12 +1587,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { pt.X, 0, 0 },
-                    { 0, pt.Y, 0 },
-                    { 0, 0, 1 }
-                });
+                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(pt.X, pt.Y));
             }
 
             return Matrix.NonMatrix;
@@ -1656,12 +1601,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { pt.X, 0, 0 },
-                    { 0, pt.Y, 0 },
-                    { 0, 0, 1 }
-                });
+                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(pt.X, pt.Y));
             }
 
             return Matrix.NonMatrix;
@@ -1675,12 +1615,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { sz.Width, 0, 0 },
-                    { 0, sz.Height, 0 },
-                    { 0, 0, 1 }
-                });
+                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(sz.Width, sz.Height));
             }
 
             return Matrix.NonMatrix;
@@ -1694,12 +1629,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return new Matrix(new double[3, 3]
-                {
-                    { sz.Width, 0, 0 },
-                    { 0, sz.Height, 0 },
-                    { 0, 0, 1 }
-                });
+                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(sz.Width, sz.Height));
             }
 
             return Matrix.NonMatrix;
@@ -1713,15 +1643,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static Matrix RotateMatrix(double angle)
         {
-            double CosA = Math.Cos(angle);
-            double SinA = Math.Sin(angle);
-
-            return new Matrix(new double[3, 3]
-            {
-                { CosA, SinA, 0 },
-                { -SinA, CosA, 0 },
-                { 0, 0, 1 }
-            });
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 2, 0, 1, angle);
         }
 
         /// <summary>
