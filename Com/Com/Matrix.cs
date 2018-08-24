@@ -255,7 +255,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix 的宽度（列数）。
+        /// 获取此 Matrix 的列数（宽度）。
         /// </summary>
         public int Column
         {
@@ -287,7 +287,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Matrix 的高度（行数）。
+        /// 获取此 Matrix 的行数（高度）。
         /// </summary>
         public int Row
         {
@@ -306,22 +306,6 @@ namespace Com
         /// 获取此 Matrix 包含的元素数量。
         /// </summary>
         public int Count
-        {
-            get
-            {
-                if (_Size.Width > 0 && _Size.Height > 0)
-                {
-                    return (_Size.Width * _Size.Height);
-                }
-
-                return 0;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 Matrix 包含的元素数量。
-        /// </summary>
-        public int Length
         {
             get
             {

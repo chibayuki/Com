@@ -30,16 +30,6 @@ namespace Com
         private double _Y; // Y 坐标。
         private double _Z; // Z 坐标。
 
-        //
-
-        private Matrix _ToMatrixForAffineTransform() // 获取此 PointD3D 结构用于仿射变换的矩阵。
-        {
-            return new Matrix(new double[1, 4]
-            {
-                { _X, _Y, _Z, 1 }
-            });
-        }
-
         #endregion
 
         #region 常量与只读成员
@@ -620,16 +610,13 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateX(double angle)
         {
-            Matrix matrixLeft = RotateXMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
             }
         }
 
@@ -639,16 +626,13 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public void RotateY(double angle)
         {
-            Matrix matrixLeft = RotateYMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(2, 0, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
             }
         }
 
@@ -658,16 +642,13 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void RotateZ(double angle)
         {
-            Matrix matrixLeft = RotateZMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
             }
         }
 
@@ -677,14 +658,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD3D RotateXCopy(double angle)
         {
-            Matrix matrixLeft = RotateXMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
             {
-                return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                return new PointD3D(result[0], result[1], result[2]);
             }
 
             return NaN;
@@ -696,14 +674,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public PointD3D RotateYCopy(double angle)
         {
-            Matrix matrixLeft = RotateYMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(2, 0, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
             {
-                return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                return new PointD3D(result[0], result[1], result[2]);
             }
 
             return NaN;
@@ -715,14 +690,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD3D RotateZCopy(double angle)
         {
-            Matrix matrixLeft = RotateZMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
             {
-                return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                return new PointD3D(result[0], result[1], result[2]);
             }
 
             return NaN;
@@ -748,15 +720,14 @@ namespace Com
                     { ez._X, ez._Y, ez._Z, 0 },
                     { offset._X, offset._Y, offset._Z, 1 }
                 });
-                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
                 }
             }
         }
@@ -769,15 +740,13 @@ namespace Com
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
-                Matrix matrixRight = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
                 }
             }
         }
@@ -790,32 +759,13 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
 
-                for (int i = 0; i < matrixLeftList.Count; i++)
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    Matrix matrixLeft = matrixLeftList[i];
-
-                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4));
-
-                    if (flag)
-                    {
-                        result = Matrix.Multiply(matrixLeft, result);
-
-                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4));
-                    }
-
-                    if (!flag)
-                    {
-                        return;
-                    }
-                }
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
-                {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
                 }
             }
         }
@@ -838,13 +788,12 @@ namespace Com
                     { ez._X, ez._Y, ez._Z, 0 },
                     { offset._X, offset._Y, offset._Z, 1 }
                 });
-                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                    return new PointD3D(result[0], result[1], result[2]);
                 }
             }
 
@@ -859,13 +808,11 @@ namespace Com
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
-                Matrix matrixRight = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                    return new PointD3D(result[0], result[1], result[2]);
                 }
             }
 
@@ -880,30 +827,11 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
 
-                for (int i = 0; i < matrixLeftList.Count; i++)
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    Matrix matrixLeft = matrixLeftList[i];
-
-                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4));
-
-                    if (flag)
-                    {
-                        result = Matrix.Multiply(matrixLeft, result);
-
-                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4));
-                    }
-
-                    if (!flag)
-                    {
-                        return NaN;
-                    }
-                }
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
-                {
-                    return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                    return new PointD3D(result[0], result[1], result[2]);
                 }
             }
 
@@ -928,15 +856,14 @@ namespace Com
                     { ez._X, ez._Y, ez._Z, 0 },
                     { offset._X, offset._Y, offset._Z, 1 }
                 });
-                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
                 }
             }
         }
@@ -949,15 +876,13 @@ namespace Com
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
-                Matrix matrixRight = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
                 }
             }
         }
@@ -970,32 +895,13 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
 
-                for (int i = matrixLeftList.Count - 1; i >= 0; i--)
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    Matrix matrixLeft = matrixLeftList[i];
-
-                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4));
-
-                    if (flag)
-                    {
-                        result = Matrix.DivideLeft(matrixLeft, result);
-
-                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4));
-                    }
-
-                    if (!flag)
-                    {
-                        return;
-                    }
-                }
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
-                {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
                 }
             }
         }
@@ -1018,13 +924,12 @@ namespace Com
                     { ez._X, ez._Y, ez._Z, 0 },
                     { offset._X, offset._Y, offset._Z, 1 }
                 });
-                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                    return new PointD3D(result[0], result[1], result[2]);
                 }
             }
 
@@ -1039,13 +944,11 @@ namespace Com
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
-                Matrix matrixRight = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                    return new PointD3D(result[0], result[1], result[2]);
                 }
             }
 
@@ -1060,30 +963,11 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
 
-                for (int i = matrixLeftList.Count - 1; i >= 0; i--)
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
                 {
-                    Matrix matrixLeft = matrixLeftList[i];
-
-                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4));
-
-                    if (flag)
-                    {
-                        result = Matrix.DivideLeft(matrixLeft, result);
-
-                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4));
-                    }
-
-                    if (!flag)
-                    {
-                        return NaN;
-                    }
-                }
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 4))
-                {
-                    return new PointD3D(result[0, 0], result[0, 1], result[0, 2]);
+                    return new PointD3D(result[0], result[1], result[2]);
                 }
             }
 

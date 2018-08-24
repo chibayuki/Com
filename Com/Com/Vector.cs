@@ -205,22 +205,6 @@ namespace Com
         /// <summary>
         /// 获取此 Vector 的维度。
         /// </summary>
-        public int Size
-        {
-            get
-            {
-                if (_Size > 0)
-                {
-                    return _Size;
-                }
-
-                return 0;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 Vector 的维度。
-        /// </summary>
         public int Dimension
         {
             get

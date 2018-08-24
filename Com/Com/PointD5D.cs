@@ -32,16 +32,6 @@ namespace Com
         private double _U; // U 坐标。
         private double _V; // V 坐标。
 
-        //
-
-        private Matrix _ToMatrixForAffineTransform() // 获取此 PointD5D 结构用于仿射变换的矩阵。
-        {
-            return new Matrix(new double[1, 6]
-            {
-                { _X, _Y, _Z, _U, _V, 1 }
-            });
-        }
-
         #endregion
 
         #region 常量与只读成员
@@ -849,18 +839,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void RotateXY(double angle)
         {
-            Matrix matrixLeft = RotateXYMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -870,18 +857,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateXZ(double angle)
         {
-            Matrix matrixLeft = RotateXZMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 2, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -891,18 +875,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateXU(double angle)
         {
-            Matrix matrixLeft = RotateXUMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 3, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -912,18 +893,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XV 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateXV(double angle)
         {
-            Matrix matrixLeft = RotateXVMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 4, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -933,18 +911,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateYZ(double angle)
         {
-            Matrix matrixLeft = RotateYZMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -954,18 +929,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateYU(double angle)
         {
-            Matrix matrixLeft = RotateYUMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(1, 3, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -975,18 +947,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YV 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateYV(double angle)
         {
-            Matrix matrixLeft = RotateYVMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(1, 4, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -996,18 +965,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateZU(double angle)
         {
-            Matrix matrixLeft = RotateZUMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(2, 3, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -1017,18 +983,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 ZV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateZV(double angle)
         {
-            Matrix matrixLeft = RotateZVMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(2, 4, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -1038,18 +1001,15 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 UV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public void RotateUV(double angle)
         {
-            Matrix matrixLeft = RotateUVMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(3, 4, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                _X = result[0, 0];
-                _Y = result[0, 1];
-                _Z = result[0, 2];
-                _U = result[0, 3];
-                _V = result[0, 4];
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
+                _V = result[4];
             }
         }
 
@@ -1059,14 +1019,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XY 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD5D RotateXYCopy(double angle)
         {
-            Matrix matrixLeft = RotateXYMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1078,14 +1035,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XZ 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD5D RotateXZCopy(double angle)
         {
-            Matrix matrixLeft = RotateXZMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 2, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1097,14 +1051,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XU 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateXUCopy(double angle)
         {
-            Matrix matrixLeft = RotateXUMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 3, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1116,14 +1067,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 XV 平面的法向空间旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateXVCopy(double angle)
         {
-            Matrix matrixLeft = RotateXVMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(0, 4, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1135,14 +1083,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YZ 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD5D RotateYZCopy(double angle)
         {
-            Matrix matrixLeft = RotateYZMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1154,14 +1099,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YU 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateYUCopy(double angle)
         {
-            Matrix matrixLeft = RotateYUMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(1, 3, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1173,14 +1115,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 YV 平面的法向空间旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateYVCopy(double angle)
         {
-            Matrix matrixLeft = RotateYVMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(1, 4, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1192,14 +1131,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 ZU 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateZUCopy(double angle)
         {
-            Matrix matrixLeft = RotateZUMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(2, 3, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1211,14 +1147,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 ZV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateZVCopy(double angle)
         {
-            Matrix matrixLeft = RotateZVMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(2, 4, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1230,14 +1163,11 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD5D 结构绕 UV 平面的法向空间旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
         public PointD5D RotateUVCopy(double angle)
         {
-            Matrix matrixLeft = RotateUVMatrix(angle);
-            Matrix matrixRight = _ToMatrixForAffineTransform();
+            Vector result = ToVectorColumn().RotateCopy(3, 4, angle);
 
-            Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-            if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
             {
-                return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
             }
 
             return NaN;
@@ -1267,17 +1197,16 @@ namespace Com
                     { ev._X, ev._Y, ev._Z, ev._U, ev._V, 0 },
                     { offset._X, offset._Y, offset._Z, offset._U, offset._V, 1 }
                 });
-                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
-                    _U = result[0, 3];
-                    _V = result[0, 4];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
+                    _U = result[3];
+                    _V = result[4];
                 }
             }
         }
@@ -1290,17 +1219,15 @@ namespace Com
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
-                Matrix matrixRight = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
-                    _U = result[0, 3];
-                    _V = result[0, 4];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
+                    _U = result[3];
+                    _V = result[4];
                 }
             }
         }
@@ -1313,34 +1240,15 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
 
-                for (int i = 0; i < matrixLeftList.Count; i++)
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    Matrix matrixLeft = matrixLeftList[i];
-
-                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
-
-                    if (flag)
-                    {
-                        result = Matrix.Multiply(matrixLeft, result);
-
-                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
-                    }
-
-                    if (!flag)
-                    {
-                        return;
-                    }
-                }
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
-                {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
-                    _U = result[0, 3];
-                    _V = result[0, 4];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
+                    _U = result[3];
+                    _V = result[4];
                 }
             }
         }
@@ -1367,13 +1275,12 @@ namespace Com
                     { ev._X, ev._Y, ev._Z, ev._U, ev._V, 0 },
                     { offset._X, offset._Y, offset._Z, offset._U, offset._V, 1 }
                 });
-                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                    return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
                 }
             }
 
@@ -1388,13 +1295,11 @@ namespace Com
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
-                Matrix matrixRight = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                Matrix result = Matrix.Multiply(matrixLeft, matrixRight);
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                    return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
                 }
             }
 
@@ -1409,30 +1314,11 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
 
-                for (int i = 0; i < matrixLeftList.Count; i++)
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    Matrix matrixLeft = matrixLeftList[i];
-
-                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
-
-                    if (flag)
-                    {
-                        result = Matrix.Multiply(matrixLeft, result);
-
-                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
-                    }
-
-                    if (!flag)
-                    {
-                        return NaN;
-                    }
-                }
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
-                {
-                    return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                    return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
                 }
             }
 
@@ -1461,17 +1347,16 @@ namespace Com
                     { ev._X, ev._Y, ev._Z, ev._U, ev._V, 0 },
                     { offset._X, offset._Y, offset._Z, offset._U, offset._V, 1 }
                 });
-                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
-                    _U = result[0, 3];
-                    _V = result[0, 4];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
+                    _U = result[3];
+                    _V = result[4];
                 }
             }
         }
@@ -1484,17 +1369,15 @@ namespace Com
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
-                Matrix matrixRight = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
-                    _U = result[0, 3];
-                    _V = result[0, 4];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
+                    _U = result[3];
+                    _V = result[4];
                 }
             }
         }
@@ -1507,34 +1390,15 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
 
-                for (int i = matrixLeftList.Count - 1; i >= 0; i--)
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    Matrix matrixLeft = matrixLeftList[i];
-
-                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
-
-                    if (flag)
-                    {
-                        result = Matrix.DivideLeft(matrixLeft, result);
-
-                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
-                    }
-
-                    if (!flag)
-                    {
-                        return;
-                    }
-                }
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
-                {
-                    _X = result[0, 0];
-                    _Y = result[0, 1];
-                    _Z = result[0, 2];
-                    _U = result[0, 3];
-                    _V = result[0, 4];
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
+                    _U = result[3];
+                    _V = result[4];
                 }
             }
         }
@@ -1561,13 +1425,12 @@ namespace Com
                     { ev._X, ev._Y, ev._Z, ev._U, ev._V, 0 },
                     { offset._X, offset._Y, offset._Z, offset._U, offset._V, 1 }
                 });
-                Matrix matrixRight = _ToMatrixForAffineTransform();
 
-                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                    return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
                 }
             }
 
@@ -1582,13 +1445,11 @@ namespace Com
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6))
             {
-                Matrix matrixRight = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                Matrix result = Matrix.DivideLeft(matrixLeft, matrixRight);
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                    return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
                 }
             }
 
@@ -1603,30 +1464,11 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
 
-                for (int i = matrixLeftList.Count - 1; i >= 0; i--)
+                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 5)
                 {
-                    Matrix matrixLeft = matrixLeftList[i];
-
-                    bool flag = (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(6, 6));
-
-                    if (flag)
-                    {
-                        result = Matrix.DivideLeft(matrixLeft, result);
-
-                        flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6));
-                    }
-
-                    if (!flag)
-                    {
-                        return NaN;
-                    }
-                }
-
-                if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, 6))
-                {
-                    return new PointD5D(result[0, 0], result[0, 1], result[0, 2], result[0, 3], result[0, 4]);
+                    return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
                 }
             }
 
