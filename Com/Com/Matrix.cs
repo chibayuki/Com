@@ -396,7 +396,7 @@ namespace Com
 
                     for (int i = 1; i <= order; i++)
                     {
-                        int r = 0;
+                        bool Flag = false;
 
                         for (int x = 0; x < _Size.Width - i + 1; x++)
                         {
@@ -418,18 +418,25 @@ namespace Com
 
                                 if (det != 0)
                                 {
-                                    r++;
+                                    Flag = true;
+
+                                    break;
                                 }
+                            }
+
+                            if (Flag)
+                            {
+                                break;
                             }
                         }
 
-                        if (r == 0)
+                        if (Flag)
                         {
-                            break;
+                            result++;
                         }
                         else
                         {
-                            result++;
+                            break;
                         }
                     }
 
@@ -617,7 +624,7 @@ namespace Com
         /// <param name="size">子矩阵的宽度（列数）与高度（行数）。</param>
         public Matrix SubMatrix(Point index, Size size)
         {
-            if ((_Size.Width > 0 && _Size.Height > 0) && (size.Width > 0 && size.Height > 0) && (index.X >= 0 && index.X + size.Width < _Size.Width) && (index.Y >= 0 && index.Y + size.Height < _Size.Height))
+            if ((_Size.Width > 0 && _Size.Height > 0) && (size.Width > 0 && size.Height > 0) && (index.X >= 0 && index.X + size.Width <= _Size.Width) && (index.Y >= 0 && index.Y + size.Height <= _Size.Height))
             {
                 Matrix result = new Matrix(size);
 
@@ -644,7 +651,7 @@ namespace Com
         /// <param name="height">子矩阵的高度（行数）。</param>
         public Matrix SubMatrix(int x, int y, int width, int height)
         {
-            if ((_Size.Width > 0 && _Size.Height > 0) && (width > 0 && height > 0) && (x >= 0 && x + width < _Size.Width) && (y >= 0 && y + height < _Size.Height))
+            if ((_Size.Width > 0 && _Size.Height > 0) && (width > 0 && height > 0) && (x >= 0 && x + width <= _Size.Width) && (y >= 0 && y + height <= _Size.Height))
             {
                 Matrix result = new Matrix(width, height);
 
