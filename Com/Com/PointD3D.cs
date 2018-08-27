@@ -733,9 +733,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行仿射变换。
+        /// 按 Matrix 对象表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行仿射变换。
         /// </summary>
-        /// <param name="matrixLeft">双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）。</param>
+        /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
         public void AffineTransform(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
@@ -752,9 +752,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构进行仿射变换。
+        /// 按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构进行仿射变换。
         /// </summary>
-        /// <param name="matrixLeftList">双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matrixLeftList">Matrix 对象列表，表示 4x4 仿射矩阵（左矩阵）列表。</param>
         public void AffineTransform(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
@@ -801,9 +801,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构的副本进行仿射变换的新实例。
+        /// 返回按 Matrix 对象表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构的副本进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixLeft">双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）。</param>
+        /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
         public PointD3D AffineTransformCopy(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
@@ -820,9 +820,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构的副本进行仿射变换的新实例。
+        /// 返回按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构的副本进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixLeftList">双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matrixLeftList">Matrix 对象列表，表示 4x4 仿射矩阵（左矩阵）列表。</param>
         public PointD3D AffineTransformCopy(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
@@ -869,9 +869,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行逆仿射变换。
+        /// 按 Matrix 对象表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixLeft">双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）。</param>
+        /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
@@ -888,9 +888,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构进行逆仿射变换。
+        /// 按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixLeftList">双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matrixLeftList">Matrix 对象列表，表示 4x4 仿射矩阵（左矩阵）列表。</param>
         public void InverseAffineTransform(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
@@ -937,9 +937,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构的副本进行逆仿射变换的新实例。
+        /// 返回按 Matrix 对象表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构的副本进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixLeft">双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）。</param>
+        /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
         public PointD3D InverseAffineTransformCopy(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
@@ -956,9 +956,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构的副本进行逆仿射变换的新实例。
+        /// 返回按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构的副本进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixLeftList">双精度浮点数数组表示的 4x4 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matrixLeftList">Matrix 对象列表，表示 4x4 仿射矩阵（左矩阵）列表。</param>
         public PointD3D InverseAffineTransformCopy(List<Matrix> matrixLeftList)
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
@@ -1132,7 +1132,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将此 PointD3D 结构转换为向量的 Vector 的新实例。
+        /// 返回将此 PointD3D 结构转换为向量（列向量）的 Vector 的新实例。
         /// </summary>
         public Vector ToVector()
         {
@@ -1195,7 +1195,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回单位矩阵，表示不对 PointD3D 结构进行仿射变换的仿射矩阵（左矩阵）。
+        /// 返回单位矩阵，表示不对 PointD3D 结构进行仿射变换的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         public static Matrix IdentityMatrix()
         {
@@ -1205,7 +1205,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标偏移量将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的所有坐标偏移量将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
         public static Matrix OffsetMatrix(double d)
@@ -1214,7 +1214,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标偏移量、Y 坐标偏移量与 Z 坐标偏移量将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的 X 坐标偏移量、Y 坐标偏移量与 Z 坐标偏移量将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="dx">双精度浮点数表示的 X 坐标偏移量。</param>
         /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
@@ -1225,7 +1225,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 PointD3D 结构将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）。
+        /// 返回按 PointD3D 结构将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="pt">PointD3D 结构，用于平移 PointD3D 结构。</param>
         public static Matrix OffsetMatrix(PointD3D pt)
@@ -1241,7 +1241,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标缩放因子将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的所有坐标缩放因子将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double s)
@@ -1250,7 +1250,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标缩放因子、Y 坐标缩放因子与 Z 坐标缩放因子将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的 X 坐标缩放因子、Y 坐标缩放因子与 Z 坐标缩放因子将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="sx">双精度浮点数表示的 X 坐标缩放因子。</param>
         /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
@@ -1261,7 +1261,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 PointD3D 结构将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）。
+        /// 返回按 PointD3D 结构将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="pt">PointD3D 结构，用于缩放 PointD3D 结构。</param>
         public static Matrix ScaleMatrix(PointD3D pt)
@@ -1277,7 +1277,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 X 轴旋转指定的角度的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 X 轴旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public static Matrix RotateXMatrix(double angle)
@@ -1286,7 +1286,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 Y 轴旋转指定的角度的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 Y 轴旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public static Matrix RotateYMatrix(double angle)
@@ -1295,7 +1295,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 Z 轴旋转指定的角度的仿射矩阵（左矩阵）。
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 Z 轴旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static Matrix RotateZMatrix(double angle)

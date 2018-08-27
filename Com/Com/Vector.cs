@@ -622,9 +622,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 按仿射矩阵将此 Vector 进行仿射变换。
+        /// 按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换。
         /// </summary>
-        /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public void AffineTransform(Matrix matrix)
         {
             if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
@@ -653,9 +653,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按仿射矩阵列表将此 Vector 进行仿射变换。
+        /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换。
         /// </summary>
-        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public void AffineTransform(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
@@ -718,9 +718,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按仿射矩阵将此 Vector 的副本进行仿射变换的新实例。
+        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 的副本进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public Vector AffineTransformCopy(Matrix matrix)
         {
             if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
@@ -759,9 +759,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按仿射矩阵列表将此 Vector 的副本进行仿射变换的新实例。
+        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 的副本进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public Vector AffineTransformCopy(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
@@ -834,9 +834,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按仿射矩阵将此 Vector 进行逆仿射变换。
+        /// 按 Matrix 对象表示的仿射矩阵将此 Vector 进行逆仿射变换。
         /// </summary>
-        /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public void InverseAffineTransform(Matrix matrix)
         {
             if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
@@ -865,9 +865,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按仿射矩阵列表将此 Vector 进行逆仿射变换。
+        /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public void InverseAffineTransform(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
@@ -930,9 +930,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按仿射矩阵将此 Vector 的副本进行逆仿射变换的新实例。
+        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 的副本进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public Vector InverseAffineTransformCopy(Matrix matrix)
         {
             if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
@@ -971,9 +971,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按仿射矩阵列表将此 Vector 的副本进行逆仿射变换的新实例。
+        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 的副本进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
@@ -1449,7 +1449,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回用于平移 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示用于平移 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
@@ -1482,7 +1482,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回用于平移 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示用于平移 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
@@ -1515,7 +1515,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回用于缩放 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示用于缩放 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
@@ -1538,7 +1538,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回用于缩放 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示用于缩放 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
@@ -1561,7 +1561,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回用于旋转 Vector 对象的仿射矩阵，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示用于旋转 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
