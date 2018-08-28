@@ -580,6 +580,8 @@ namespace Com.WinForm
 
         private void PictureBox_FormIcon_MouseDown(object sender, MouseEventArgs e) // PictureBox_FormIcon 的 MouseDown 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 ContextMenuStrip_Main.Show(Panel_CaptionBar, new Point(0, Panel_FormIcon.Height));
@@ -610,8 +612,6 @@ namespace Com.WinForm
 
         private void PictureBox_FullScreen_MouseClick(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseClick 事件的回调函数。
         {
-            Me.Client.Focus();
-
             if (e.Button == MouseButtons.Left)
             {
                 if (Me.FormState == FormState.FullScreen)
@@ -641,6 +641,8 @@ namespace Com.WinForm
 
         private void PictureBox_FullScreen_MouseDown(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseDown 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 _FullScreenButtonIsPressed = true;
@@ -651,6 +653,8 @@ namespace Com.WinForm
 
         private void PictureBox_FullScreen_MouseUp(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseUp 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 _FullScreenButtonIsPressed = false;
@@ -670,8 +674,6 @@ namespace Com.WinForm
 
         private void PictureBox_Minimize_MouseClick(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseClick 事件的回调函数。
         {
-            Me.Client.Focus();
-
             if (e.Button == MouseButtons.Left)
             {
                 Me.Minimize();
@@ -694,6 +696,8 @@ namespace Com.WinForm
 
         private void PictureBox_Minimize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseDown 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 _MinimizeButtonIsPressed = true;
@@ -704,6 +708,8 @@ namespace Com.WinForm
 
         private void PictureBox_Minimize_MouseUp(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseUp 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 _MinimizeButtonIsPressed = false;
@@ -723,8 +729,6 @@ namespace Com.WinForm
 
         private void PictureBox_Maximize_MouseClick(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseClick 事件的回调函数。
         {
-            Me.Client.Focus();
-
             if (e.Button == MouseButtons.Left)
             {
                 if (Me.FormState != FormState.Maximized)
@@ -754,6 +758,8 @@ namespace Com.WinForm
 
         private void PictureBox_Maximize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseDown 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 _MaximizeButtonIsPressed = true;
@@ -764,6 +770,8 @@ namespace Com.WinForm
 
         private void PictureBox_Maximize_MouseUp(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseUp 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 _MaximizeButtonIsPressed = false;
@@ -783,8 +791,6 @@ namespace Com.WinForm
 
         private void PictureBox_Exit_MouseClick(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseClick 事件的回调函数。
         {
-            Me.Client.Focus();
-
             if (e.Button == MouseButtons.Left)
             {
                 Me.Close();
@@ -807,6 +813,8 @@ namespace Com.WinForm
 
         private void PictureBox_Exit_MouseDown(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseDown 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 _ExitButtonIsPressed = true;
@@ -817,6 +825,8 @@ namespace Com.WinForm
 
         private void PictureBox_Exit_MouseUp(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseUp 事件的回调函数。
         {
+            Me.Client.Focus();
+
             if (e.Button == MouseButtons.Left)
             {
                 _ExitButtonIsPressed = false;

@@ -162,15 +162,18 @@ namespace Com.WinForm
 
         private void Label_Top_MouseDoubleClick(object sender, MouseEventArgs e) // Label_Top 的 MouseDoubleClick 事件的回调函数。
         {
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.HighAsScreen)
+                if (e.Button == MouseButtons.Left)
                 {
-                    Me.Return();
-                }
-                else
-                {
-                    Me.HighAsScreen();
+                    if (Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Return();
+                    }
+                    else
+                    {
+                        Me.HighAsScreen();
+                    }
                 }
             }
         }
@@ -181,13 +184,16 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
+                if (e.Button == MouseButtons.Left)
+                {
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
 
-                _MeIsResizing = true;
+                    _MeIsResizing = true;
 
-                Cursor.Clip = FormManager.PrimaryScreenClient;
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
+                }
             }
         }
 
@@ -197,36 +203,39 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.Normal)
+                if (_MeIsResizing && e.Button == MouseButtons.Left)
                 {
-                    if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
+                    if (Me.FormState == FormState.Normal)
                     {
-                        if (!Me.HighAsScreen())
+                        if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
                         {
+                            if (!Me.HighAsScreen())
+                            {
+                                Me.UpdateLayout(UpdateLayoutEventType.Result);
+                            }
+                        }
+                        else
+                        {
+                            Me.Bounds_Normal = Me.Bounds_Current;
+
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
-                    else
+                    else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        Me.Bounds_Normal = Me.Bounds_Current;
+                        Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
+                        Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
-                else if (Me.FormState == FormState.QuarterScreen)
-                {
-                    Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
-                    Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
-                }
+                _MeIsResizing = false;
+
+                Cursor.Clip = FormManager.PrimaryScreenBounds;
             }
-
-            _MeIsResizing = false;
-
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_Top_MouseMove(object sender, MouseEventArgs e) // Label_Top 的 MouseMove 事件的回调函数。
@@ -289,15 +298,18 @@ namespace Com.WinForm
 
         private void Label_Bottom_MouseDoubleClick(object sender, MouseEventArgs e) // Label_Bottom 的 MouseDoubleClick 事件的回调函数。
         {
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.HighAsScreen)
+                if (e.Button == MouseButtons.Left)
                 {
-                    Me.Return();
-                }
-                else
-                {
-                    Me.HighAsScreen();
+                    if (Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Return();
+                    }
+                    else
+                    {
+                        Me.HighAsScreen();
+                    }
                 }
             }
         }
@@ -308,13 +320,16 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
+                if (e.Button == MouseButtons.Left)
+                {
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
 
-                _MeIsResizing = true;
+                    _MeIsResizing = true;
 
-                Cursor.Clip = FormManager.PrimaryScreenClient;
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
+                }
             }
         }
 
@@ -324,36 +339,39 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.Normal)
+                if (_MeIsResizing && e.Button == MouseButtons.Left)
                 {
-                    if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
+                    if (Me.FormState == FormState.Normal)
                     {
-                        if (!Me.HighAsScreen())
+                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
+                            if (!Me.HighAsScreen())
+                            {
+                                Me.UpdateLayout(UpdateLayoutEventType.Result);
+                            }
+                        }
+                        else
+                        {
+                            Me.Bounds_Normal = Me.Bounds_Current;
+
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
-                    else
+                    else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        Me.Bounds_Normal = Me.Bounds_Current;
+                        Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
+                        Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
-                else if (Me.FormState == FormState.QuarterScreen)
-                {
-                    Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
-                    Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
-                }
+                _MeIsResizing = false;
+
+                Cursor.Clip = FormManager.PrimaryScreenBounds;
             }
-
-            _MeIsResizing = false;
-
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_Bottom_MouseMove(object sender, MouseEventArgs e) // Label_Bottom 的 MouseMove 事件的回调函数。
@@ -406,19 +424,22 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
-
-                if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                if (e.Button == MouseButtons.Left)
                 {
-                    Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                    Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
+
+                    if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    }
+
+                    _MeIsResizing = true;
+
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
                 }
-
-                _MeIsResizing = true;
-
-                Cursor.Clip = FormManager.PrimaryScreenClient;
             }
         }
 
@@ -428,27 +449,30 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                if (_MeIsResizing && e.Button == MouseButtons.Left)
                 {
-                    Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                    Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
-                }
-                else if (Me.FormState == FormState.QuarterScreen)
-                {
-                    Me.Bounds_QuarterScreen_X = Me.Bounds_Current_X;
-                    Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
+                    }
+                    else if (Me.FormState == FormState.QuarterScreen)
+                    {
+                        Me.Bounds_QuarterScreen_X = Me.Bounds_Current_X;
+                        Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
+                    }
                 }
+
+                _MeIsResizing = false;
+
+                Cursor.Clip = FormManager.PrimaryScreenBounds;
             }
-
-            _MeIsResizing = false;
-
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_Left_MouseMove(object sender, MouseEventArgs e) // Label_Left 的 MouseMove 事件的回调函数。
@@ -510,19 +534,22 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
-
-                if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                if (e.Button == MouseButtons.Left)
                 {
-                    Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                    Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
+
+                    if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    }
+
+                    _MeIsResizing = true;
+
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
                 }
-
-                _MeIsResizing = true;
-
-                Cursor.Clip = FormManager.PrimaryScreenClient;
             }
         }
 
@@ -532,25 +559,28 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                if (_MeIsResizing && e.Button == MouseButtons.Left)
                 {
-                    Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
-                }
-                else if (Me.FormState == FormState.QuarterScreen)
-                {
-                    Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
+                    }
+                    else if (Me.FormState == FormState.QuarterScreen)
+                    {
+                        Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
+                        Me.UpdateLayout(UpdateLayoutEventType.Result);
+                    }
                 }
+
+                _MeIsResizing = false;
+
+                Cursor.Clip = FormManager.PrimaryScreenBounds;
             }
-
-            _MeIsResizing = false;
-
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_Right_MouseMove(object sender, MouseEventArgs e) // Label_Right 的 MouseMove 事件的回调函数。
@@ -596,19 +626,22 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
-
-                if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                if (e.Button == MouseButtons.Left)
                 {
-                    Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                    Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
+
+                    if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    }
+
+                    _MeIsResizing = true;
+
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
                 }
-
-                _MeIsResizing = true;
-
-                Cursor.Clip = FormManager.PrimaryScreenClient;
             }
         }
 
@@ -618,38 +651,41 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.Normal)
+                if (_MeIsResizing && e.Button == MouseButtons.Left)
                 {
-                    if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
+                    if (Me.FormState == FormState.Normal)
                     {
-                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
-
-                        if (!Me.HighAsScreen())
+                        if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
                         {
+                            Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                            Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+
+                            if (!Me.HighAsScreen())
+                            {
+                                Me.UpdateLayout(UpdateLayoutEventType.Result);
+                            }
+                        }
+                        else
+                        {
+                            Me.Bounds_Normal = Me.Bounds_Current;
+
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
-                    else
+                    else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        Me.Bounds_Normal = Me.Bounds_Current;
+                        Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
-                else if (Me.FormState == FormState.QuarterScreen)
-                {
-                    Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
-                }
+                _MeIsResizing = false;
+
+                Cursor.Clip = FormManager.PrimaryScreenBounds;
             }
-
-            _MeIsResizing = false;
-
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_TopLeft_MouseMove(object sender, MouseEventArgs e) // Label_TopLeft 的 MouseMove 事件的回调函数。
@@ -754,19 +790,22 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
-
-                if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                if (e.Button == MouseButtons.Left)
                 {
-                    Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                    Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
+
+                    if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    }
+
+                    _MeIsResizing = true;
+
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
                 }
-
-                _MeIsResizing = true;
-
-                Cursor.Clip = FormManager.PrimaryScreenClient;
             }
         }
 
@@ -776,38 +815,41 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.Normal)
+                if (_MeIsResizing && e.Button == MouseButtons.Left)
                 {
-                    if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
+                    if (Me.FormState == FormState.Normal)
                     {
-                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
-
-                        if (!Me.HighAsScreen())
+                        if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
                         {
+                            Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                            Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+
+                            if (!Me.HighAsScreen())
+                            {
+                                Me.UpdateLayout(UpdateLayoutEventType.Result);
+                            }
+                        }
+                        else
+                        {
+                            Me.Bounds_Normal = Me.Bounds_Current;
+
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
-                    else
+                    else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        Me.Bounds_Normal = Me.Bounds_Current;
+                        Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
-                else if (Me.FormState == FormState.QuarterScreen)
-                {
-                    Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
-                }
+                _MeIsResizing = false;
+
+                Cursor.Clip = FormManager.PrimaryScreenBounds;
             }
-
-            _MeIsResizing = false;
-
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_TopRight_MouseMove(object sender, MouseEventArgs e) // Label_TopRight 的 MouseMove 事件的回调函数。
@@ -896,19 +938,22 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
-
-                if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                if (e.Button == MouseButtons.Left)
                 {
-                    Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                    Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
+
+                    if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    }
+
+                    _MeIsResizing = true;
+
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
                 }
-
-                _MeIsResizing = true;
-
-                Cursor.Clip = FormManager.PrimaryScreenClient;
             }
         }
 
@@ -918,38 +963,41 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.Normal)
+                if (_MeIsResizing && e.Button == MouseButtons.Left)
                 {
-                    if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
+                    if (Me.FormState == FormState.Normal)
                     {
-                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
-
-                        if (!Me.HighAsScreen())
+                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
+                            Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                            Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+
+                            if (!Me.HighAsScreen())
+                            {
+                                Me.UpdateLayout(UpdateLayoutEventType.Result);
+                            }
+                        }
+                        else
+                        {
+                            Me.Bounds_Normal = Me.Bounds_Current;
+
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
-                    else
+                    else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        Me.Bounds_Normal = Me.Bounds_Current;
+                        Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
-                else if (Me.FormState == FormState.QuarterScreen)
-                {
-                    Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
-                }
+                _MeIsResizing = false;
+
+                Cursor.Clip = FormManager.PrimaryScreenBounds;
             }
-
-            _MeIsResizing = false;
-
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_BottomLeft_MouseMove(object sender, MouseEventArgs e) // Label_BottomLeft 的 MouseMove 事件的回调函数。
@@ -1040,19 +1088,22 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
-
-                if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                if (e.Button == MouseButtons.Left)
                 {
-                    Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                    Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    _CursorPositionOfMe = Geometry.GetCursorPositionOfControl(Panel_FormBounds);
+
+                    if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
+                    {
+                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+                    }
+
+                    _MeIsResizing = true;
+
+                    Cursor.Clip = FormManager.PrimaryScreenClient;
                 }
-
-                _MeIsResizing = true;
-
-                Cursor.Clip = FormManager.PrimaryScreenClient;
             }
         }
 
@@ -1062,38 +1113,41 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (e.Button == MouseButtons.Left)
+            if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (Me.FormState == FormState.Normal)
+                if (_MeIsResizing && e.Button == MouseButtons.Left)
                 {
-                    if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
+                    if (Me.FormState == FormState.Normal)
                     {
-                        Me.Bounds_Normal_X = Me.Bounds_Current_X;
-                        Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
-
-                        if (!Me.HighAsScreen())
+                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
+                            Me.Bounds_Normal_X = Me.Bounds_Current_X;
+                            Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
+
+                            if (!Me.HighAsScreen())
+                            {
+                                Me.UpdateLayout(UpdateLayoutEventType.Result);
+                            }
+                        }
+                        else
+                        {
+                            Me.Bounds_Normal = Me.Bounds_Current;
+
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
                     }
-                    else
+                    else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        Me.Bounds_Normal = Me.Bounds_Current;
+                        Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
                     }
                 }
-                else if (Me.FormState == FormState.QuarterScreen)
-                {
-                    Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                    Me.UpdateLayout(UpdateLayoutEventType.Result);
-                }
+                _MeIsResizing = false;
+
+                Cursor.Clip = FormManager.PrimaryScreenBounds;
             }
-
-            _MeIsResizing = false;
-
-            Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
         private void Label_BottomRight_MouseMove(object sender, MouseEventArgs e) // Label_BottomRight 的 MouseMove 事件的回调函数。
@@ -1198,15 +1252,21 @@ namespace Com.WinForm
 
         public void OnFormStyleChanged() // 在 FormStyleChanged 事件发生时发生。
         {
-            Label_Top.Enabled = Label_Bottom.Enabled = Label_Left.Enabled = Label_Right.Enabled = Label_TopLeft.Enabled = Label_TopRight.Enabled = Label_BottomLeft.Enabled = Label_BottomRight.Enabled = (Me.FormStyle == FormStyle.Sizable && (Me.FormState != FormState.Maximized && Me.FormState != FormState.FullScreen));
+            if (Me.FormStyle == FormStyle.Sizable)
+            {
+                Label_Top.Cursor = Label_Bottom.Cursor = Cursors.SizeNS;
+                Label_Left.Cursor = Label_Right.Cursor = Cursors.SizeWE;
+                Label_TopLeft.Cursor = Label_BottomRight.Cursor = Cursors.SizeNWSE;
+                Label_TopRight.Cursor = Label_BottomLeft.Cursor = Cursors.SizeNESW;
+            }
+            else
+            {
+                Label_Top.Cursor = Label_Bottom.Cursor = Label_Left.Cursor = Label_Right.Cursor = Label_TopLeft.Cursor = Label_TopRight.Cursor = Label_BottomLeft.Cursor = Label_BottomRight.Cursor = Cursors.Default;
+            }
         }
 
         public void OnFormStateChanged() // 在 FormStateChanged 事件发生时发生。
         {
-            Label_Top.Enabled = Label_Bottom.Enabled = Label_Left.Enabled = Label_Right.Enabled = Label_TopLeft.Enabled = Label_TopRight.Enabled = Label_BottomLeft.Enabled = Label_BottomRight.Enabled = (Me.FormStyle == FormStyle.Sizable && (Me.FormState != FormState.Maximized && Me.FormState != FormState.FullScreen));
-
-            //
-
             this.Visible = (Me.FormState != FormState.Maximized && Me.FormState != FormState.FullScreen);
 
             if (this.Visible)
