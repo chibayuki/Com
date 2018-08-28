@@ -1373,7 +1373,7 @@ namespace Com
         /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
         public static Matrix OffsetMatrix(double dx, double dy)
         {
-            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(dx, dy));
+            return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, dx, dy));
         }
 
         /// <summary>
@@ -1384,7 +1384,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, pt.ToVectorColumn());
+                return Vector.OffsetMatrix(pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -1398,7 +1398,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(pt.X, pt.Y));
+                return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, pt.X, pt.Y));
             }
 
             return Matrix.NonMatrix;
@@ -1412,7 +1412,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(pt.X, pt.Y));
+                return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, pt.X, pt.Y));
             }
 
             return Matrix.NonMatrix;
@@ -1426,7 +1426,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(sz.Width, sz.Height));
+                return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, sz.Width, sz.Height));
             }
 
             return Matrix.NonMatrix;
@@ -1440,7 +1440,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, new Vector(sz.Width, sz.Height));
+                return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, sz.Width, sz.Height));
             }
 
             return Matrix.NonMatrix;
@@ -1464,7 +1464,7 @@ namespace Com
         /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double sx, double sy)
         {
-            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(sx, sy));
+            return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sx, sy));
         }
 
         /// <summary>
@@ -1475,7 +1475,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, pt.ToVectorColumn());
+                return Vector.ScaleMatrix(pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -1489,7 +1489,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(pt.X, pt.Y));
+                return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, pt.X, pt.Y));
             }
 
             return Matrix.NonMatrix;
@@ -1503,7 +1503,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(pt.X, pt.Y));
+                return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, pt.X, pt.Y));
             }
 
             return Matrix.NonMatrix;
@@ -1517,7 +1517,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(sz.Width, sz.Height));
+                return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sz.Width, sz.Height));
             }
 
             return Matrix.NonMatrix;
@@ -1531,7 +1531,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, new Vector(sz.Width, sz.Height));
+                return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sz.Width, sz.Height));
             }
 
             return Matrix.NonMatrix;

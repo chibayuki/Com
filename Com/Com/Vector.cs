@@ -1484,16 +1484,16 @@ namespace Com
         /// <summary>
         /// 返回表示用于平移 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
-        /// <param name="type">向量类型。</param>
-        /// <param name="dimension">向量维度。</param>
         /// <param name="vector">Vector 对象，用于平移 Vector 对象。</param>
-        public static Matrix OffsetMatrix(Type type, int dimension, Vector vector)
+        public static Matrix OffsetMatrix(Vector vector)
         {
-            if (type != Type.NonVector && dimension > 0 && (!IsNullOrNonVector(vector) && vector._Size == dimension))
+            if (!IsNullOrNonVector(vector))
             {
+                int dimension = vector._Size;
+
                 Matrix result = Matrix.Identity(dimension + 1);
 
-                if (type == Type.RowVector)
+                if (vector._Type == Type.RowVector)
                 {
                     for (int i = 0; i < dimension; i++)
                     {
@@ -1540,13 +1540,13 @@ namespace Com
         /// <summary>
         /// 返回表示用于缩放 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
-        /// <param name="type">向量类型。</param>
-        /// <param name="dimension">向量维度。</param>
         /// <param name="vector">Vector 对象，用于缩放 Vector 对象。</param>
-        public static Matrix ScaleMatrix(Type type, int dimension, Vector vector)
+        public static Matrix ScaleMatrix(Vector vector)
         {
-            if (type != Type.NonVector && dimension > 0 && (!IsNullOrNonVector(vector) && vector._Size == dimension))
+            if (!IsNullOrNonVector(vector))
             {
+                int dimension = vector._Size;
+
                 Matrix result = Matrix.Identity(dimension + 1);
 
                 for (int i = 0; i < dimension; i++)

@@ -1221,7 +1221,7 @@ namespace Com
         /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
         public static Matrix OffsetMatrix(double dx, double dy, double dz)
         {
-            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 3, new Vector(dx, dy, dz));
+            return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, dx, dy, dz));
         }
 
         /// <summary>
@@ -1232,7 +1232,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 3, pt.ToVectorColumn());
+                return Vector.OffsetMatrix(pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -1257,7 +1257,7 @@ namespace Com
         /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double sx, double sy, double sz)
         {
-            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 3, new Vector(sx, sy, sz));
+            return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sx, sy, sz));
         }
 
         /// <summary>
@@ -1268,7 +1268,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 3, pt.ToVectorColumn());
+                return Vector.ScaleMatrix(pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;

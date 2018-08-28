@@ -1784,7 +1784,7 @@ namespace Com
         /// <param name="dv">双精度浮点数表示的 V 坐标偏移量。</param>
         public static Matrix OffsetMatrix(double dx, double dy, double dz, double du, double dv)
         {
-            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 5, new Vector(dx, dy, dz, du, dv));
+            return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, dx, dy, dz, du, dv));
         }
 
         /// <summary>
@@ -1795,7 +1795,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(Vector.Type.ColumnVector, 5, pt.ToVectorColumn());
+                return Vector.OffsetMatrix(pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
@@ -1822,7 +1822,7 @@ namespace Com
         /// <param name="sv">双精度浮点数表示的 V 坐标缩放因子。</param>
         public static Matrix ScaleMatrix(double sx, double sy, double sz, double su, double sv)
         {
-            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 5, new Vector(sx, sy, sz, su, sv));
+            return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sx, sy, sz, su, sv));
         }
 
         /// <summary>
@@ -1833,7 +1833,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(Vector.Type.ColumnVector, 5, pt.ToVectorColumn());
+                return Vector.ScaleMatrix(pt.ToVectorColumn());
             }
 
             return Matrix.NonMatrix;
