@@ -87,7 +87,7 @@
     <Compile Include="Com\Geometry.cs" />
     <Compile Include="Com\DateTimeX.cs" />
     <Compile Include="Com\IO.cs" />
-    <Compile Include="Com\Matrix2D.cs" />
+    <Compile Include="Com\Matrix.cs" />
     <Compile Include="Com\Painting2D.cs" />
     <Compile Include="Com\Painting3D.cs" />
     <Compile Include="Com\PointD.cs" />
