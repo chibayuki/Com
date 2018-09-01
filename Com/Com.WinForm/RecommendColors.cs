@@ -129,9 +129,19 @@ namespace Com.WinForm
             return (color.Lightness_LAB < 70);
         }
 
+        internal static bool BackColorFitLightText(Color color) // 返回表示指定的背景色是否与浅色文本相符的布尔值。
+        {
+            return (new ColorX(color).Lightness_LAB < 70);
+        }
+
         internal static bool BackColorFitDarkText(ColorX color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
         {
             return (color.Lightness_LAB > 30);
+        }
+
+        internal static bool BackColorFitDarkText(Color color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
+        {
+            return (new ColorX(color).Lightness_LAB > 30);
         }
 
         #endregion

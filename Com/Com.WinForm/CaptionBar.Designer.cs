@@ -181,7 +181,7 @@
             // 
             this.PictureBox_FullScreen.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox_FullScreen.ErrorImage = null;
-            this.PictureBox_FullScreen.Image = global::Com.Properties.Resources.ControlBox_LightImage_EnterFullScreen_16;
+            this.PictureBox_FullScreen.Image = global::Com.Properties.Resources.ControlBox_Active_LightImage_EnterFullScreen_16;
             this.PictureBox_FullScreen.InitialImage = null;
             this.PictureBox_FullScreen.Location = new System.Drawing.Point(0, 0);
             this.PictureBox_FullScreen.Name = "PictureBox_FullScreen";
@@ -200,7 +200,7 @@
             // 
             this.PictureBox_Minimize.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox_Minimize.ErrorImage = null;
-            this.PictureBox_Minimize.Image = global::Com.Properties.Resources.ControlBox_LightImage_Minimize_16;
+            this.PictureBox_Minimize.Image = global::Com.Properties.Resources.ControlBox_Active_LightImage_Minimize_16;
             this.PictureBox_Minimize.InitialImage = null;
             this.PictureBox_Minimize.Location = new System.Drawing.Point(46, 0);
             this.PictureBox_Minimize.Name = "PictureBox_Minimize";
@@ -219,7 +219,7 @@
             // 
             this.PictureBox_Maximize.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox_Maximize.ErrorImage = null;
-            this.PictureBox_Maximize.Image = global::Com.Properties.Resources.ControlBox_LightImage_Maximize_16;
+            this.PictureBox_Maximize.Image = global::Com.Properties.Resources.ControlBox_Active_LightImage_Maximize_16;
             this.PictureBox_Maximize.InitialImage = null;
             this.PictureBox_Maximize.Location = new System.Drawing.Point(92, 0);
             this.PictureBox_Maximize.Name = "PictureBox_Maximize";
@@ -238,7 +238,7 @@
             // 
             this.PictureBox_Exit.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox_Exit.ErrorImage = null;
-            this.PictureBox_Exit.Image = global::Com.Properties.Resources.ControlBox_LightImage_Exit_Normal_16;
+            this.PictureBox_Exit.Image = global::Com.Properties.Resources.ControlBox_Active_LightImage_Exit_16;
             this.PictureBox_Exit.InitialImage = null;
             this.PictureBox_Exit.Location = new System.Drawing.Point(138, 0);
             this.PictureBox_Exit.Name = "PictureBox_Exit";

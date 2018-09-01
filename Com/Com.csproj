@@ -76,6 +76,11 @@
     <Compile Include="Com\PointD5D.cs" />
     <Compile Include="Com\PointD6D.cs" />
     <Compile Include="Com\Vector.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="WindowsAPI\Gdi32.cs" />
     <Compile Include="Com.WinForm\RecommendColors.cs" />
     <Compile Include="Com.WinForm\Theme.cs" />
@@ -96,11 +101,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Com\Statistics.cs" />
     <Compile Include="Com\Text.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Com.WinForm\Resizer.resx">
@@ -118,46 +118,40 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_DarkImage_EnterFullScreen_16.png" />
+    <None Include="Resources\ControlBox_Active_DarkImage_EnterFullScreen_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_DarkImage_Exit_MouseOver_16.png" />
+    <None Include="Resources\ControlBox_Active_DarkImage_Exit_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_DarkImage_Exit_Normal_16.png" />
+    <None Include="Resources\ControlBox_Active_DarkImage_ExitFullScreen_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_DarkImage_ExitFullScreen_16.png" />
+    <None Include="Resources\ControlBox_Active_DarkImage_Maximize_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_DarkImage_Maximize_16.png" />
+    <None Include="Resources\ControlBox_Active_DarkImage_Minimize_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_DarkImage_Minimize_16.png" />
+    <None Include="Resources\ControlBox_Active_DarkImage_Return_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_DarkImage_Return_16.png" />
+    <None Include="Resources\ControlBox_Active_LightImage_EnterFullScreen_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_LightImage_EnterFullScreen_16.png" />
+    <None Include="Resources\ControlBox_Active_LightImage_Exit_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_LightImage_Exit_MouseOver_16.png" />
+    <None Include="Resources\ControlBox_Active_LightImage_ExitFullScreen_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_LightImage_Exit_Normal_16.png" />
+    <None Include="Resources\ControlBox_Active_LightImage_Maximize_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_LightImage_ExitFullScreen_16.png" />
+    <None Include="Resources\ControlBox_Active_LightImage_Minimize_16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ControlBox_LightImage_Maximize_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ControlBox_LightImage_Minimize_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ControlBox_LightImage_Return_16.png" />
+    <None Include="Resources\ControlBox_Active_LightImage_Return_16.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MenuItem_Exit_16.png" />
@@ -174,6 +168,18 @@
   <ItemGroup>
     <Content Include="LicenseInfo\GPLv3.txt" />
     <Content Include="LicenseInfo\License.txt" />
+    <None Include="Resources\ControlBox_Inactive_LightImage_Return_16.png" />
+    <None Include="Resources\ControlBox_Inactive_LightImage_Minimize_16.png" />
+    <None Include="Resources\ControlBox_Inactive_LightImage_Maximize_16.png" />
+    <None Include="Resources\ControlBox_Inactive_LightImage_ExitFullScreen_16.png" />
+    <None Include="Resources\ControlBox_Inactive_LightImage_Exit_16.png" />
+    <None Include="Resources\ControlBox_Inactive_LightImage_EnterFullScreen_16.png" />
+    <None Include="Resources\ControlBox_Inactive_DarkImage_Return_16.png" />
+    <None Include="Resources\ControlBox_Inactive_DarkImage_Minimize_16.png" />
+    <None Include="Resources\ControlBox_Inactive_DarkImage_Maximize_16.png" />
+    <None Include="Resources\ControlBox_Inactive_DarkImage_ExitFullScreen_16.png" />
+    <None Include="Resources\ControlBox_Inactive_DarkImage_Exit_16.png" />
+    <None Include="Resources\ControlBox_Inactive_DarkImage_EnterFullScreen_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

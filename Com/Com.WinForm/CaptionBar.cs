@@ -285,12 +285,10 @@ namespace Com.WinForm
 
         private void _UpdateControlBoxImage() // 更新控制按钮的图像。
         {
-            bool Flag = !RecommendColors.BackColorFitLightText(Me.RecommendColors.CaptionBar);
-
-            PictureBox_FullScreen.Image = (Flag ? (Me.FormState == FormState.FullScreen ? Properties.Resources.ControlBox_DarkImage_ExitFullScreen_16 : Properties.Resources.ControlBox_DarkImage_EnterFullScreen_16) : (Me.FormState == FormState.FullScreen ? Properties.Resources.ControlBox_LightImage_ExitFullScreen_16 : Properties.Resources.ControlBox_LightImage_EnterFullScreen_16));
-            PictureBox_Minimize.Image = (Flag ? Properties.Resources.ControlBox_DarkImage_Minimize_16 : Properties.Resources.ControlBox_LightImage_Minimize_16);
-            PictureBox_Maximize.Image = (Flag ? (Me.FormState == FormState.Maximized ? Properties.Resources.ControlBox_DarkImage_Return_16 : Properties.Resources.ControlBox_DarkImage_Maximize_16) : (Me.FormState == FormState.Maximized ? Properties.Resources.ControlBox_LightImage_Return_16 : Properties.Resources.ControlBox_LightImage_Maximize_16));
-            PictureBox_Exit.Image = (Flag ? Properties.Resources.ControlBox_DarkImage_Exit_Normal_16 : Properties.Resources.ControlBox_LightImage_Exit_Normal_16);
+            PictureBox_FullScreen.Image = (!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? PictureBox_FullScreen.BackColor : this.BackColor) ? (Me.FormState == FormState.FullScreen ? (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_ExitFullScreen_16 : Properties.Resources.ControlBox_Inactive_DarkImage_ExitFullScreen_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_EnterFullScreen_16 : Properties.Resources.ControlBox_Inactive_DarkImage_EnterFullScreen_16)) : (Me.FormState == FormState.FullScreen ? (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_ExitFullScreen_16 : Properties.Resources.ControlBox_Inactive_LightImage_ExitFullScreen_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_EnterFullScreen_16 : Properties.Resources.ControlBox_Inactive_LightImage_EnterFullScreen_16)));
+            PictureBox_Minimize.Image = (!RecommendColors.BackColorFitLightText(_MinimizeButtonIsPointed || _MinimizeButtonIsPressed ? PictureBox_Minimize.BackColor : this.BackColor) ? (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_Minimize_16 : Properties.Resources.ControlBox_Inactive_DarkImage_Minimize_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_Minimize_16 : Properties.Resources.ControlBox_Inactive_LightImage_Minimize_16));
+            PictureBox_Maximize.Image = (!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? PictureBox_Maximize.BackColor : this.BackColor) ? (Me.FormState == FormState.Maximized ? (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_Return_16 : Properties.Resources.ControlBox_Inactive_DarkImage_Return_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_Maximize_16 : Properties.Resources.ControlBox_Inactive_DarkImage_Maximize_16)) : (Me.FormState == FormState.Maximized ? (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_Return_16 : Properties.Resources.ControlBox_Inactive_LightImage_Return_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_Maximize_16 : Properties.Resources.ControlBox_Inactive_LightImage_Maximize_16)));
+            PictureBox_Exit.Image = (!RecommendColors.BackColorFitLightText(_ExitButtonIsPointed || _ExitButtonIsPressed ? PictureBox_Exit.BackColor : this.BackColor) ? (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_Exit_16 : Properties.Resources.ControlBox_Inactive_DarkImage_Exit_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_Exit_16 : Properties.Resources.ControlBox_Inactive_LightImage_Exit_16));
         }
 
         //
@@ -630,6 +628,8 @@ namespace Com.WinForm
             _FullScreenButtonIsPointed = true;
 
             PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+
+            _UpdateControlBoxImage();
         }
 
         private void PictureBox_FullScreen_MouseLeave(object sender, EventArgs e) // PictureBox_FullScreen 的 MouseLeave 事件的回调函数。
@@ -637,6 +637,8 @@ namespace Com.WinForm
             _FullScreenButtonIsPointed = false;
 
             PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton.ToColor();
+
+            _UpdateControlBoxImage();
         }
 
         private void PictureBox_FullScreen_MouseDown(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseDown 事件的回调函数。
@@ -648,6 +650,8 @@ namespace Com.WinForm
                 _FullScreenButtonIsPressed = true;
 
                 PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
+
+                _UpdateControlBoxImage();
             }
         }
 
@@ -664,6 +668,8 @@ namespace Com.WinForm
                     _FullScreenButtonIsPointed = true;
 
                     PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+
+                    _UpdateControlBoxImage();
                 }
                 else
                 {
@@ -685,6 +691,8 @@ namespace Com.WinForm
             _MinimizeButtonIsPointed = true;
 
             PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+
+            _UpdateControlBoxImage();
         }
 
         private void PictureBox_Minimize_MouseLeave(object sender, EventArgs e) // PictureBox_Minimize 的 MouseLeave 事件的回调函数。
@@ -692,6 +700,8 @@ namespace Com.WinForm
             _MinimizeButtonIsPointed = false;
 
             PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton.ToColor();
+
+            _UpdateControlBoxImage();
         }
 
         private void PictureBox_Minimize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseDown 事件的回调函数。
@@ -703,6 +713,8 @@ namespace Com.WinForm
                 _MinimizeButtonIsPressed = true;
 
                 PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
+
+                _UpdateControlBoxImage();
             }
         }
 
@@ -719,6 +731,8 @@ namespace Com.WinForm
                     _MinimizeButtonIsPointed = true;
 
                     PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+
+                    _UpdateControlBoxImage();
                 }
                 else
                 {
@@ -747,6 +761,8 @@ namespace Com.WinForm
             _MaximizeButtonIsPointed = true;
 
             PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+
+            _UpdateControlBoxImage();
         }
 
         private void PictureBox_Maximize_MouseLeave(object sender, EventArgs e) // PictureBox_Maximize 的 MouseLeave 事件的回调函数。
@@ -754,6 +770,8 @@ namespace Com.WinForm
             _MaximizeButtonIsPointed = false;
 
             PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton.ToColor();
+
+            _UpdateControlBoxImage();
         }
 
         private void PictureBox_Maximize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseDown 事件的回调函数。
@@ -765,6 +783,8 @@ namespace Com.WinForm
                 _MaximizeButtonIsPressed = true;
 
                 PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
+
+                _UpdateControlBoxImage();
             }
         }
 
@@ -781,6 +801,8 @@ namespace Com.WinForm
                     _MaximizeButtonIsPointed = true;
 
                     PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+
+                    _UpdateControlBoxImage();
                 }
                 else
                 {
@@ -802,6 +824,8 @@ namespace Com.WinForm
             _ExitButtonIsPointed = true;
 
             PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_DEC.ToColor();
+
+            _UpdateControlBoxImage();
         }
 
         private void PictureBox_Exit_MouseLeave(object sender, EventArgs e) // PictureBox_Exit 的 MouseLeave 事件的回调函数。
@@ -809,6 +833,8 @@ namespace Com.WinForm
             _ExitButtonIsPointed = false;
 
             PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton.ToColor();
+
+            _UpdateControlBoxImage();
         }
 
         private void PictureBox_Exit_MouseDown(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseDown 事件的回调函数。
@@ -820,6 +846,8 @@ namespace Com.WinForm
                 _ExitButtonIsPressed = true;
 
                 PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_INC.ToColor();
+
+                _UpdateControlBoxImage();
             }
         }
 
@@ -836,6 +864,8 @@ namespace Com.WinForm
                     _ExitButtonIsPointed = true;
 
                     PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_DEC.ToColor();
+
+                    _UpdateControlBoxImage();
                 }
                 else
                 {
@@ -1050,6 +1080,8 @@ namespace Com.WinForm
             PictureBox_Minimize.BackColor = (_MinimizeButtonIsPressed ? Me.RecommendColors.ControlButton_INC : (_MinimizeButtonIsPointed ? Me.RecommendColors.ControlButton_DEC : Me.RecommendColors.ControlButton)).ToColor();
             PictureBox_Maximize.BackColor = (_MaximizeButtonIsPressed ? Me.RecommendColors.ControlButton_INC : (_MaximizeButtonIsPointed ? Me.RecommendColors.ControlButton_DEC : Me.RecommendColors.ControlButton)).ToColor();
             PictureBox_Exit.BackColor = (_ExitButtonIsPressed ? Me.RecommendColors.ExitButton_INC : (_ExitButtonIsPointed ? Me.RecommendColors.ExitButton_DEC : Me.RecommendColors.ExitButton)).ToColor();
+
+            _UpdateControlBoxImage();
 
             //
 

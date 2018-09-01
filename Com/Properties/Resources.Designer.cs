@@ -47,7 +47,7 @@ namespace Com.Properties {
         }
         
         /// <summary>
-        ///   使用此强类型资源类，为所有资源查找
+        ///   重写当前线程的 CurrentUICulture 属性
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -63,9 +63,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_DarkImage_EnterFullScreen_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_DarkImage_EnterFullScreen_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_DarkImage_EnterFullScreen_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_DarkImage_EnterFullScreen_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_DarkImage_Exit_MouseOver_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_DarkImage_Exit_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_DarkImage_Exit_MouseOver_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_DarkImage_Exit_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_DarkImage_Exit_Normal_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_DarkImage_ExitFullScreen_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_DarkImage_Exit_Normal_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_DarkImage_ExitFullScreen_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_DarkImage_ExitFullScreen_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_DarkImage_Maximize_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_DarkImage_ExitFullScreen_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_DarkImage_Maximize_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_DarkImage_Maximize_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_DarkImage_Minimize_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_DarkImage_Maximize_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_DarkImage_Minimize_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_DarkImage_Minimize_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_DarkImage_Return_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_DarkImage_Minimize_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_DarkImage_Return_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_DarkImage_Return_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_LightImage_EnterFullScreen_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_DarkImage_Return_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_LightImage_EnterFullScreen_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_LightImage_EnterFullScreen_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_LightImage_Exit_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_LightImage_EnterFullScreen_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_LightImage_Exit_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_LightImage_Exit_MouseOver_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_LightImage_ExitFullScreen_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_LightImage_Exit_MouseOver_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_LightImage_ExitFullScreen_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_LightImage_Exit_Normal_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_LightImage_Maximize_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_LightImage_Exit_Normal_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_LightImage_Maximize_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_LightImage_ExitFullScreen_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_LightImage_Minimize_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_LightImage_ExitFullScreen_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_LightImage_Minimize_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_LightImage_Maximize_16 {
+        internal static System.Drawing.Bitmap ControlBox_Active_LightImage_Return_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_LightImage_Maximize_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Active_LightImage_Return_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_LightImage_Minimize_16 {
+        internal static System.Drawing.Bitmap ControlBox_Inactive_DarkImage_EnterFullScreen_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_LightImage_Minimize_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_DarkImage_EnterFullScreen_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,109 @@ namespace Com.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap ControlBox_LightImage_Return_16 {
+        internal static System.Drawing.Bitmap ControlBox_Inactive_DarkImage_Exit_16 {
             get {
-                object obj = ResourceManager.GetObject("ControlBox_LightImage_Return_16", resourceCulture);
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_DarkImage_Exit_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_DarkImage_ExitFullScreen_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_DarkImage_ExitFullScreen_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_DarkImage_Maximize_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_DarkImage_Maximize_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_DarkImage_Minimize_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_DarkImage_Minimize_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_DarkImage_Return_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_DarkImage_Return_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_LightImage_EnterFullScreen_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_LightImage_EnterFullScreen_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_LightImage_Exit_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_LightImage_Exit_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_LightImage_ExitFullScreen_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_LightImage_ExitFullScreen_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_LightImage_Maximize_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_LightImage_Maximize_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_LightImage_Minimize_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_LightImage_Minimize_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ControlBox_Inactive_LightImage_Return_16 {
+            get {
+                object obj = ResourceManager.GetObject("ControlBox_Inactive_LightImage_Return_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
