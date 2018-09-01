@@ -20,7 +20,7 @@ using System.Drawing;
 namespace Com
 {
     /// <summary>
-    /// 为以双精度浮点数数组表示的二维矩阵的基本计算提供静态方法。
+    /// 以双精度浮点数二维数组表示的矩阵。
     /// </summary>
     public sealed class Matrix
     {
