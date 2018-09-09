@@ -87,7 +87,7 @@ namespace Com.WinForm
 
                 //
 
-                if (Me.Caption.Length > 0)
+                if (Me.ShowCaption && Me.Caption.Length > 0)
                 {
                     Rectangle CaptionArea = new Rectangle(new Point((Me.ShowIconOnCaptionBar ? Panel_FormIcon.Right : 0), 0), new Size(Math.Max(1, Panel_ControlBox.Left - (Me.ShowIconOnCaptionBar ? Panel_FormIcon.Right : 0)), Math.Max(1, Panel_CaptionBar.Height)));
 
@@ -200,8 +200,8 @@ namespace Com.WinForm
 
         private void _UpdateForStyleOrStateChanged() // 在 FormStyleChanged 或 FormStateChanged 事件发生时更新控件的属性。
         {
-            ToolStripMenuItem_Return.Enabled = (Me.FormState != FormState.Normal);
             ToolStripMenuItem_Maximize.Enabled = (Me.FormState != FormState.Maximized);
+            ToolStripMenuItem_Return.Enabled = (Me.FormState != FormState.Normal);
 
             //
 
@@ -227,7 +227,7 @@ namespace Com.WinForm
                 {
                     case FormStyle.Sizable:
                     case FormStyle.Fixed:
-                        EnableMinimize = true;
+                        EnableMinimize = Me.ShowInTaskbar;
                         break;
 
                     case FormStyle.Dialog:
@@ -245,7 +245,7 @@ namespace Com.WinForm
                 {
                     case FormStyle.Sizable:
                         {
-                            EnableMinimize = true;
+                            EnableMinimize = Me.ShowInTaskbar;
                             EnableMaximize = true;
                             EnableReturn = true;
                         }
@@ -253,7 +253,7 @@ namespace Com.WinForm
 
                     case FormStyle.Fixed:
                         {
-                            EnableMinimize = true;
+                            EnableMinimize = Me.ShowInTaskbar;
                             EnableMaximize = false;
                             EnableReturn = false;
                         }

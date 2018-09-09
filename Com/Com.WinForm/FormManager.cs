@@ -92,7 +92,7 @@ namespace Com.WinForm
         //
 
         private FormManager _Owner = null; // 拥有此窗口的窗口的窗口管理器。
-        private List<FormManager> _Owned = new List<FormManager>(0); // 表示此窗口拥有的所有窗口的窗口管理器列表。
+        private List<FormManager> _Owned = new List<FormManager>(1); // 表示此窗口拥有的所有窗口的窗口管理器列表。
 
         private void _AddOwned(FormManager formManager) // 向表示此窗口拥有的所有窗口的窗口管理器列表添加一个窗口管理器。
         {
@@ -223,41 +223,15 @@ namespace Com.WinForm
         private int _MinimumWidth = 0; // 窗口的最小宽度。
         private int _MinimumHeight = 0; // 窗口的最小高度。
 
-        internal int MinimumWidth // 获取或设置窗口的最小宽度。
+        internal int MinimumWidth // 获取窗口的最小宽度。
         {
             get
             {
-                return _MinimumWidth;
-            }
-
-            set
-            {
-                _MinimumWidth = Math.Max(0, value);
+                return Math.Max(_ControlBoxButtonWidth, Math.Min(PrimaryScreenBounds.Width, _MinimumWidth));
             }
         }
 
-        internal int MinimumHeight // 获取或设置窗口的最小高度。
-        {
-            get
-            {
-                return _MinimumHeight;
-            }
-
-            set
-            {
-                _MinimumHeight = Math.Max(0, value);
-            }
-        }
-
-        internal int MinimumBoundsWidth // 获取窗口的最小宽度。
-        {
-            get
-            {
-                return Math.Max(Math.Min(_ControlBoxButtonHeight, _CaptionBarHeight) + _ControlBoxButtonWidth, Math.Min(PrimaryScreenBounds.Width, _MinimumWidth));
-            }
-        }
-
-        internal int MinimumBoundsHeight // 获取窗口的最小高度。
+        internal int MinimumHeight // 获取窗口的最小高度。
         {
             get
             {
@@ -265,44 +239,10 @@ namespace Com.WinForm
             }
         }
 
-        internal Size MinimumBoundsSize // 获取窗口的最小大小。
-        {
-            get
-            {
-                return new Size(MinimumBoundsWidth, MinimumBoundsHeight);
-            }
-        }
-
         private int _MaximumWidth = 0; // 窗口的最大宽度。
         private int _MaximumHeight = 0; // 窗口的最大高度。
 
-        internal int MaximumWidth // 获取或设置窗口的最大宽度。
-        {
-            get
-            {
-                return _MaximumWidth;
-            }
-
-            set
-            {
-                _MaximumWidth = Math.Max(0, value);
-            }
-        }
-
-        internal int MaximumHeight // 获取或设置窗口的最大高度。
-        {
-            get
-            {
-                return _MaximumHeight;
-            }
-
-            set
-            {
-                _MaximumHeight = Math.Max(0, value);
-            }
-        }
-
-        internal int MaximumBoundsWidth // 获取窗口的最大宽度。
+        internal int MaximumWidth // 获取窗口的最大宽度。
         {
             get
             {
@@ -310,19 +250,11 @@ namespace Com.WinForm
             }
         }
 
-        internal int MaximumBoundsHeight // 获取窗口的最大高度。
+        internal int MaximumHeight // 获取窗口的最大高度。
         {
             get
             {
                 return Math.Max(1, (_MaximumHeight > 0 ? Math.Min(PrimaryScreenBounds.Height, _MaximumHeight) : PrimaryScreenBounds.Height));
-            }
-        }
-
-        internal Size MaximumBoundsSize // 获取窗口的最大大小。
-        {
-            get
-            {
-                return new Size(MaximumBoundsWidth, MaximumBoundsHeight);
             }
         }
 
@@ -344,7 +276,8 @@ namespace Com.WinForm
         private bool _Enabled = true; // 表示窗口是否对用户交互作出响应的布尔值。
         private bool _Visible = true; // 表示窗口是否可见的布尔值。
         private double _Opacity = 1.0; // 窗口的不透明度。
-        private string _Caption = string.Empty; // 窗口的标题。
+        private string _Caption = null; // 窗口的标题。
+        private bool _ShowCaption = true; // 表示是否在窗口标题栏上显示窗口的标题的布尔值。
         private Font _CaptionFont = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point, 134); // 窗口标题的字体。
         private ContentAlignment _CaptionAlign = ContentAlignment.TopCenter; // 窗口标题的文本对齐方式。
         private Bitmap _CaptionBarBackgroundImage = null; // 窗口标题栏的背景图像。
@@ -450,7 +383,7 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Current_Width = Math.Max(MinimumBoundsWidth, Math.Min(value, MaximumBoundsWidth));
+                _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
             }
         }
 
@@ -463,7 +396,7 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Current_Height = Math.Max(MinimumBoundsHeight, Math.Min(value, MaximumBoundsHeight));
+                _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
             }
         }
 
@@ -490,8 +423,8 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Current_Width = Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth));
-                _Bounds_Current_Height = Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight));
+                _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
             }
         }
 
@@ -506,8 +439,8 @@ namespace Com.WinForm
             {
                 _Bounds_Current_X = value.X;
                 _Bounds_Current_Y = value.Y;
-                _Bounds_Current_Width = Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth));
-                _Bounds_Current_Height = Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight));
+                _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
             }
         }
 
@@ -567,7 +500,7 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Normal_Width = Math.Max(MinimumBoundsWidth, Math.Min(value, MaximumBoundsWidth));
+                _Bounds_Normal_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
             }
         }
 
@@ -580,7 +513,7 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Normal_Height = Math.Max(MinimumBoundsHeight, Math.Min(value, MaximumBoundsHeight));
+                _Bounds_Normal_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
             }
         }
 
@@ -607,8 +540,8 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Normal_Width = Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth));
-                _Bounds_Normal_Height = Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight));
+                _Bounds_Normal_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                _Bounds_Normal_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
             }
         }
 
@@ -623,8 +556,8 @@ namespace Com.WinForm
             {
                 _Bounds_Normal_X = value.X;
                 _Bounds_Normal_Y = value.Y;
-                _Bounds_Normal_Width = Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth));
-                _Bounds_Normal_Height = Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight));
+                _Bounds_Normal_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                _Bounds_Normal_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
             }
         }
 
@@ -684,7 +617,7 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_QuarterScreen_Width = Math.Max(MinimumBoundsWidth, Math.Min(value, MaximumBoundsWidth));
+                _Bounds_QuarterScreen_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
             }
         }
 
@@ -697,7 +630,7 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_QuarterScreen_Height = Math.Max(MinimumBoundsHeight, Math.Min(value, MaximumBoundsHeight));
+                _Bounds_QuarterScreen_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
             }
         }
 
@@ -724,8 +657,8 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_QuarterScreen_Width = Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth));
-                _Bounds_QuarterScreen_Height = Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight));
+                _Bounds_QuarterScreen_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                _Bounds_QuarterScreen_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
             }
         }
 
@@ -740,8 +673,8 @@ namespace Com.WinForm
             {
                 _Bounds_QuarterScreen_X = value.X;
                 _Bounds_QuarterScreen_Y = value.Y;
-                _Bounds_QuarterScreen_Width = Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth));
-                _Bounds_QuarterScreen_Height = Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight));
+                _Bounds_QuarterScreen_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                _Bounds_QuarterScreen_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
             }
         }
 
@@ -801,7 +734,7 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_BeforeFullScreen_Width = Math.Max(MinimumBoundsWidth, Math.Min(value, MaximumBoundsWidth));
+                _Bounds_BeforeFullScreen_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
             }
         }
 
@@ -814,7 +747,7 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_BeforeFullScreen_Height = Math.Max(MinimumBoundsHeight, Math.Min(value, MaximumBoundsHeight));
+                _Bounds_BeforeFullScreen_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
             }
         }
 
@@ -841,8 +774,8 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_BeforeFullScreen_Width = Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth));
-                _Bounds_BeforeFullScreen_Height = Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight));
+                _Bounds_BeforeFullScreen_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                _Bounds_BeforeFullScreen_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
             }
         }
 
@@ -857,8 +790,8 @@ namespace Com.WinForm
             {
                 _Bounds_BeforeFullScreen_X = value.X;
                 _Bounds_BeforeFullScreen_Y = value.Y;
-                _Bounds_BeforeFullScreen_Width = Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth));
-                _Bounds_BeforeFullScreen_Height = Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight));
+                _Bounds_BeforeFullScreen_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                _Bounds_BeforeFullScreen_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
             }
         }
 
@@ -963,7 +896,7 @@ namespace Com.WinForm
 
         private bool _CanMinimize() // 判断是否允许窗口最小化。
         {
-            return (_Initialized && _FormStyle != FormStyle.Dialog && _Client.WindowState != FormWindowState.Minimized);
+            return (_Initialized && _FormStyle != FormStyle.Dialog && _ShowInTaskbar && _Client.WindowState != FormWindowState.Minimized);
         }
 
         private bool _CanMaximize() // 判断是否允许窗口最大化。
@@ -1728,20 +1661,9 @@ namespace Com.WinForm
 
             //
 
-            if (string.IsNullOrEmpty(_Caption))
+            if (_Caption == null)
             {
-                if (!string.IsNullOrEmpty(_Client.Text))
-                {
-                    _Caption = _Client.Text;
-                }
-                else if (_IsMainForm)
-                {
-                    _Caption = Application.ProductName;
-                }
-                else
-                {
-                    _Caption = string.Empty;
-                }
+                _Caption = _Client.Text;
             }
 
             if (_Client.Text != _Caption)
@@ -2273,7 +2195,7 @@ namespace Com.WinForm
         {
             get
             {
-                return new Size(_MinimumWidth, _MinimumHeight);
+                return new Size(MinimumWidth, MinimumHeight);
             }
 
             set
@@ -2293,7 +2215,7 @@ namespace Com.WinForm
         {
             get
             {
-                return new Size(_MaximumWidth, _MaximumHeight);
+                return new Size(MaximumWidth, MaximumHeight);
             }
 
             set
@@ -2467,10 +2389,14 @@ namespace Com.WinForm
                         {
                             _Client.ShowInTaskbar = _ShowInTaskbar;
 
+                            _CaptionBar.OnFormStyleChanged();
+
                             _Resizer.BringToFront();
                             _CaptionBar.BringToFront();
                             _Client.BringToFront();
                             _Client.Focus();
+
+                            _UpdateLayout(UpdateLayoutEventType.None);
 
                             _OnFormStyleChanged();
                         };
@@ -2641,7 +2567,7 @@ namespace Com.WinForm
         {
             get
             {
-                return _Caption;
+                return (_Caption == null ? string.Empty : _Caption);
             }
 
             set
@@ -2661,6 +2587,35 @@ namespace Com.WinForm
                             _CaptionBar.OnCaptionChanged();
 
                             _OnCaptionChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示是否在窗口标题栏上显示窗口的标题的布尔值。
+        /// </summary>
+        public bool ShowCaption
+        {
+            get
+            {
+                return _ShowCaption;
+            }
+
+            set
+            {
+                if (_ShowCaption != value)
+                {
+                    _ShowCaption = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnCaptionChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -3121,7 +3076,7 @@ namespace Com.WinForm
         {
             get
             {
-                return (X + Width);
+                return Bounds_Current_Right;
             }
         }
 
@@ -3148,7 +3103,7 @@ namespace Com.WinForm
         {
             get
             {
-                return (Y + Height);
+                return Bounds_Current_Bottom;
             }
         }
 
@@ -3335,7 +3290,7 @@ namespace Com.WinForm
             set
             {
                 Rectangle _Bounds = new Rectangle();
-                _Bounds.Size = new Size(Math.Max(MinimumBoundsWidth, Math.Min(value.Width, MaximumBoundsWidth)), Math.Max(MinimumBoundsHeight, Math.Min(value.Height, MaximumBoundsHeight)));
+                _Bounds.Size = new Size(Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth)), Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight)));
                 _Bounds.Location = new Point(Math.Max(PrimaryScreenBounds.X - _Bounds.Width + 1, Math.Min(value.X, PrimaryScreenBounds.Right - 1)), Math.Max(PrimaryScreenBounds.Y - _Bounds.Height + 1, Math.Min(value.Y, PrimaryScreenBounds.Bottom - 1)));
 
                 if (_Initialized)
