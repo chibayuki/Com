@@ -223,38 +223,58 @@ namespace Com.WinForm
         private int _MinimumWidth = 0; // 窗口的最小宽度。
         private int _MinimumHeight = 0; // 窗口的最小高度。
 
-        internal int MinimumWidth // 获取窗口的最小宽度。
+        internal int MinimumWidth // 获取或设置窗口的最小宽度。
         {
             get
             {
                 return Math.Max(_ControlBoxButtonWidth, Math.Min(PrimaryScreenBounds.Width, _MinimumWidth));
             }
+
+            set
+            {
+                _MinimumWidth = value;
+            }
         }
 
-        internal int MinimumHeight // 获取窗口的最小高度。
+        internal int MinimumHeight // 获取或设置窗口的最小高度。
         {
             get
             {
                 return Math.Max(_CaptionBarHeight + 2, Math.Min(PrimaryScreenBounds.Height, _MinimumHeight));
+            }
+
+            set
+            {
+                _MinimumHeight = value;
             }
         }
 
         private int _MaximumWidth = 0; // 窗口的最大宽度。
         private int _MaximumHeight = 0; // 窗口的最大高度。
 
-        internal int MaximumWidth // 获取窗口的最大宽度。
+        internal int MaximumWidth // 获取或设置窗口的最大宽度。
         {
             get
             {
                 return Math.Max(1, (_MaximumWidth > 0 ? Math.Min(PrimaryScreenBounds.Width, _MaximumWidth) : PrimaryScreenBounds.Width));
             }
+
+            set
+            {
+                _MaximumWidth = value;
+            }
         }
 
-        internal int MaximumHeight // 获取窗口的最大高度。
+        internal int MaximumHeight // 获取或设置窗口的最大高度。
         {
             get
             {
                 return Math.Max(1, (_MaximumHeight > 0 ? Math.Min(PrimaryScreenBounds.Height, _MaximumHeight) : PrimaryScreenBounds.Height));
+            }
+
+            set
+            {
+                _MaximumHeight = value;
             }
         }
 
@@ -294,7 +314,7 @@ namespace Com.WinForm
         {
             get
             {
-                return (_EnableCaptionBarTransparent ? 0.9 : 1.0);
+                return (_EnableCaptionBarTransparent && _IsActive ? 0.9 : 1.0);
             }
         }
 
@@ -935,11 +955,11 @@ namespace Com.WinForm
 
         private void _TrigEvent(object eventKey) // 引发窗口事件。
         {
-            EventHandler Action = _Events[eventKey] as EventHandler;
+            EventHandler Method = _Events[eventKey] as EventHandler;
 
-            if (Action != null)
+            if (Method != null)
             {
-                Action(this, EventArgs.Empty);
+                Method(this, EventArgs.Empty);
             }
         }
 
@@ -2105,6 +2125,11 @@ namespace Com.WinForm
             {
                 _IsActive = Active;
 
+                if (_FormState != FormState.FullScreen)
+                {
+                    _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                }
+
                 _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor, _IsActive);
 
                 _CaptionBar.OnThemeChanged();
@@ -2202,8 +2227,8 @@ namespace Com.WinForm
             {
                 if (!_Initialized)
                 {
-                    _MinimumWidth = Math.Max(0, value.Width);
-                    _MinimumHeight = Math.Max(0, value.Height);
+                    MinimumWidth = Math.Max(0, value.Width);
+                    MinimumHeight = Math.Max(0, value.Height);
                 }
             }
         }
@@ -2222,8 +2247,8 @@ namespace Com.WinForm
             {
                 if (!_Initialized)
                 {
-                    _MaximumWidth = Math.Max(0, value.Width);
-                    _MaximumHeight = Math.Max(0, value.Height);
+                    MaximumWidth = Math.Max(0, value.Width);
+                    MaximumHeight = Math.Max(0, value.Height);
                 }
             }
         }
