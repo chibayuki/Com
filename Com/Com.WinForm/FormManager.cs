@@ -1684,7 +1684,18 @@ namespace Com.WinForm
 
             if (_Caption == null)
             {
-                _Caption = _Client.Text;
+                if (!string.IsNullOrEmpty(_Client.Text))
+                {
+                    _Caption = _Client.Text;
+                }
+                else if (_IsMainForm)
+                {
+                    _Caption = Application.ProductName;
+                }
+                else
+                {
+                    _Caption = string.Empty;
+                }
             }
 
             if (_Client.Text != _Caption)
