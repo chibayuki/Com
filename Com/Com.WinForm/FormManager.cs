@@ -2365,6 +2365,8 @@ namespace Com.WinForm
                         Action InvokeMethod = () =>
                         {
                             _CaptionBar.OnFormStyleChanged();
+
+                            _OnFormStyleChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
