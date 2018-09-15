@@ -2,7 +2,7 @@
 Copyright © 2018 chibayuki@foxmail.com
 
 Com.Text
-Version 18.7.6.2250
+Version 18.9.15.2000
 
 This file is part of Com
 

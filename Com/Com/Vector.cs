@@ -2,7 +2,7 @@
 Copyright © 2018 chibayuki@foxmail.com
 
 Com.Vector
-Version 18.7.27.0000
+Version 18.9.15.2000
 
 This file is part of Com
 
