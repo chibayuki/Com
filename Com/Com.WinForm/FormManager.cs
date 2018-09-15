@@ -2334,8 +2334,6 @@ namespace Com.WinForm
                             {
                                 _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
                             }
-
-                            _OnFormStyleChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -2365,8 +2363,6 @@ namespace Com.WinForm
                         Action InvokeMethod = () =>
                         {
                             _CaptionBar.OnFormStyleChanged();
-
-                            _OnFormStyleChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -2396,8 +2392,6 @@ namespace Com.WinForm
                         Action InvokeMethod = () =>
                         {
                             _Client.TopMost = _TopMost;
-
-                            _OnFormStyleChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -2436,8 +2430,6 @@ namespace Com.WinForm
                             _Client.Focus();
 
                             _UpdateLayout(UpdateLayoutEventType.None);
-
-                            _OnFormStyleChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -2623,7 +2615,10 @@ namespace Com.WinForm
                         {
                             _Client.Text = _Caption;
 
-                            _CaptionBar.OnCaptionChanged();
+                            if (_ShowCaption)
+                            {
+                                _CaptionBar.OnCaptionChanged();
+                            }
 
                             _OnCaptionChanged();
                         };
@@ -2681,12 +2676,15 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        if (_ShowCaption)
                         {
-                            _CaptionBar.OnCaptionChanged();
-                        };
+                            Action InvokeMethod = () =>
+                            {
+                                _CaptionBar.OnCaptionChanged();
+                            };
 
-                        _Client.Invoke(InvokeMethod);
+                            _Client.Invoke(InvokeMethod);
+                        }
                     }
                 }
             }
@@ -2710,12 +2708,15 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        if (_ShowCaption)
                         {
-                            _CaptionBar.OnCaptionChanged();
-                        };
+                            Action InvokeMethod = () =>
+                            {
+                                _CaptionBar.OnCaptionChanged();
+                            };
 
-                        _Client.Invoke(InvokeMethod);
+                            _Client.Invoke(InvokeMethod);
+                        }
                     }
                 }
             }
