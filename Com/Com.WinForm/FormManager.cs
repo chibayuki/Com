@@ -1017,11 +1017,6 @@ namespace Com.WinForm
             _TrigEvent(EventKey.SizeChanged);
         }
 
-        private void _OnFormStyleChanged() // 引发 FormStyleChanged 事件。
-        {
-            _TrigEvent(EventKey.FormStyleChanged);
-        }
-
         private void _OnFormStateChanged() // 引发 FormStateChanged 事件。
         {
             _TrigEvent(EventKey.FormStateChanged);
@@ -2298,8 +2293,6 @@ namespace Com.WinForm
                             {
                                 _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
                             }
-
-                            _OnFormStyleChanged();
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -3697,28 +3690,6 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 在窗口的样式更改时发生。
-        /// </summary>
-        public event EventHandler FormStyleChanged
-        {
-            add
-            {
-                if (value != null)
-                {
-                    _Events.AddHandler(EventKey.FormStyleChanged, value);
-                }
-            }
-
-            remove
-            {
-                if (value != null)
-                {
-                    _Events.RemoveHandler(EventKey.FormStyleChanged, value);
-                }
-            }
-        }
-
-        /// <summary>
         /// 在窗口的状态更改时发生。
         /// </summary>
         public event EventHandler FormStateChanged
@@ -4268,19 +4239,6 @@ namespace Com.WinForm
             if (_Initialized)
             {
                 Action InvokeMethod = () => _OnSizeChanged();
-
-                _Client.Invoke(InvokeMethod);
-            }
-        }
-
-        /// <summary>
-        /// 引发 FormStyleChanged 事件。
-        /// </summary>
-        public void OnFormStyleChanged()
-        {
-            if (_Initialized)
-            {
-                Action InvokeMethod = () => _OnFormStyleChanged();
 
                 _Client.Invoke(InvokeMethod);
             }

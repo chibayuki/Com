@@ -39,8 +39,6 @@ namespace Com.WinForm
 
         public static readonly object SizeChanged = new object(); // SizeChanged 事件键值。
 
-        public static readonly object FormStyleChanged = new object(); // FormStateChanged 事件键值。
-
         public static readonly object FormStateChanged = new object(); // FormStateChanged 事件键值。
 
         public static readonly object EnabledChanged = new object(); // EnabledChanged 事件键值。

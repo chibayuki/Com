@@ -1055,14 +1055,7 @@ namespace Com.WinForm
 
             //
 
-            if (Me.FormState == FormState.FullScreen)
-            {
-                Timer_FullScreenMonitor.Enabled = true;
-            }
-            else
-            {
-                Timer_FullScreenMonitor.Enabled = false;
-            }
+            Timer_FullScreenMonitor.Enabled = (Me.FormState == FormState.FullScreen);
         }
 
         public void OnCaptionChanged() // 在 CaptionChanged 事件发生时发生。
