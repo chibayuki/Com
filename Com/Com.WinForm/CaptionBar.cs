@@ -285,10 +285,49 @@ namespace Com.WinForm
 
         private void _UpdateControlBoxImage() // 更新控制按钮的图像。
         {
-            PictureBox_FullScreen.Image = (!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? PictureBox_FullScreen.BackColor : this.BackColor) ? (Me.FormState == FormState.FullScreen ? (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_ExitFullScreen_16 : Properties.Resources.ControlBox_Inactive_DarkImage_ExitFullScreen_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_EnterFullScreen_16 : Properties.Resources.ControlBox_Inactive_DarkImage_EnterFullScreen_16)) : (Me.FormState == FormState.FullScreen ? (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_ExitFullScreen_16 : Properties.Resources.ControlBox_Inactive_LightImage_ExitFullScreen_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_EnterFullScreen_16 : Properties.Resources.ControlBox_Inactive_LightImage_EnterFullScreen_16)));
-            PictureBox_Minimize.Image = (!RecommendColors.BackColorFitLightText(_MinimizeButtonIsPointed || _MinimizeButtonIsPressed ? PictureBox_Minimize.BackColor : this.BackColor) ? (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_Minimize_16 : Properties.Resources.ControlBox_Inactive_DarkImage_Minimize_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_Minimize_16 : Properties.Resources.ControlBox_Inactive_LightImage_Minimize_16));
-            PictureBox_Maximize.Image = (!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? PictureBox_Maximize.BackColor : this.BackColor) ? (Me.FormState == FormState.Maximized ? (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_Return_16 : Properties.Resources.ControlBox_Inactive_DarkImage_Return_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_Maximize_16 : Properties.Resources.ControlBox_Inactive_DarkImage_Maximize_16)) : (Me.FormState == FormState.Maximized ? (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_Return_16 : Properties.Resources.ControlBox_Inactive_LightImage_Return_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_Maximize_16 : Properties.Resources.ControlBox_Inactive_LightImage_Maximize_16)));
-            PictureBox_Exit.Image = (!RecommendColors.BackColorFitLightText(_ExitButtonIsPointed || _ExitButtonIsPressed ? PictureBox_Exit.BackColor : this.BackColor) ? (Me.IsActive ? Properties.Resources.ControlBox_Active_DarkImage_Exit_16 : Properties.Resources.ControlBox_Inactive_DarkImage_Exit_16) : (Me.IsActive ? Properties.Resources.ControlBox_Active_LightImage_Exit_16 : Properties.Resources.ControlBox_Inactive_LightImage_Exit_16));
+            Bitmap[,,] FullScreenImage = new Bitmap[2, 2, 2]
+            {
+                {
+                    { Properties.Resources.ControlBox_Active_DarkImage_ExitFullScreen_16, Properties.Resources.ControlBox_Inactive_DarkImage_ExitFullScreen_16 },
+                    { Properties.Resources.ControlBox_Active_DarkImage_EnterFullScreen_16, Properties.Resources.ControlBox_Inactive_DarkImage_EnterFullScreen_16 }
+                },
+                {
+                    { Properties.Resources.ControlBox_Active_LightImage_ExitFullScreen_16, Properties.Resources.ControlBox_Inactive_LightImage_ExitFullScreen_16 },
+                    { Properties.Resources.ControlBox_Active_LightImage_EnterFullScreen_16, Properties.Resources.ControlBox_Inactive_LightImage_EnterFullScreen_16 }
+                }
+            };
+
+            PictureBox_FullScreen.Image = FullScreenImage[(!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? PictureBox_FullScreen.BackColor : this.BackColor) ? 0 : 1), (Me.FormState == FormState.FullScreen ? 0 : 1), (_FullScreenButtonIsPointed || _FullScreenButtonIsPressed || Me.IsActive ? 0 : 1)];
+
+            Bitmap[,] MinimizeImage = new Bitmap[2, 2]
+            {
+                { Properties.Resources.ControlBox_Active_DarkImage_Minimize_16, Properties.Resources.ControlBox_Inactive_DarkImage_Minimize_16 },
+                { Properties.Resources.ControlBox_Active_LightImage_Minimize_16, Properties.Resources.ControlBox_Inactive_LightImage_Minimize_16 }
+            };
+
+            PictureBox_Minimize.Image = MinimizeImage[(!RecommendColors.BackColorFitLightText(_MinimizeButtonIsPointed || _MinimizeButtonIsPressed ? PictureBox_Minimize.BackColor : this.BackColor) ? 0 : 1), (_MinimizeButtonIsPointed || _MinimizeButtonIsPressed || Me.IsActive ? 0 : 1)];
+
+            Bitmap[,,] MaximizeImage = new Bitmap[2, 2, 2]
+            {
+                {
+                    { Properties.Resources.ControlBox_Active_DarkImage_Return_16, Properties.Resources.ControlBox_Inactive_DarkImage_Return_16 },
+                    { Properties.Resources.ControlBox_Active_DarkImage_Maximize_16, Properties.Resources.ControlBox_Inactive_DarkImage_Maximize_16 }
+                },
+                {
+                    { Properties.Resources.ControlBox_Active_LightImage_Return_16, Properties.Resources.ControlBox_Inactive_LightImage_Return_16 },
+                    { Properties.Resources.ControlBox_Active_LightImage_Maximize_16, Properties.Resources.ControlBox_Inactive_LightImage_Maximize_16 }
+                }
+            };
+
+            PictureBox_Maximize.Image = MaximizeImage[(!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? PictureBox_Maximize.BackColor : this.BackColor) ? 0 : 1), (Me.FormState == FormState.Maximized ? 0 : 1), (_MaximizeButtonIsPointed || _MaximizeButtonIsPressed || Me.IsActive ? 0 : 1)];
+
+            Bitmap[,] ExitImage = new Bitmap[2, 2]
+            {
+                { Properties.Resources.ControlBox_Active_DarkImage_Exit_16, Properties.Resources.ControlBox_Inactive_DarkImage_Exit_16 },
+                { Properties.Resources.ControlBox_Active_LightImage_Exit_16, Properties.Resources.ControlBox_Inactive_LightImage_Exit_16 }
+            };
+
+            PictureBox_Exit.Image = ExitImage[(!RecommendColors.BackColorFitLightText(_ExitButtonIsPointed || _ExitButtonIsPressed ? PictureBox_Exit.BackColor : this.BackColor) ? 0 : 1), (_ExitButtonIsPointed || _ExitButtonIsPressed || Me.IsActive ? 0 : 1)];
         }
 
         //
