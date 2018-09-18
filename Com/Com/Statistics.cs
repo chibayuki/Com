@@ -24,6 +24,8 @@ namespace Com
     {
         private static readonly Random _Rand = new Random(); // 用于生成随机数的 Random 类的实例。
 
+        //
+
         /// <summary>
         /// 返回一个概率密度平均分布的非负随机整数。
         /// </summary>
@@ -82,6 +84,8 @@ namespace Com
             }
         }
 
+        //
+
         /// <summary>
         /// 返回一个小于 1 的概率密度平均分布的非负随机双精度浮点数。
         /// </summary>
@@ -105,7 +109,7 @@ namespace Com
         {
             try
             {
-                if (right <= 0)
+                if (InternalMethod.IsNaNOrInfinity(right) || right <= 0)
                 {
                     return double.NaN;
                 }
@@ -127,7 +131,7 @@ namespace Com
         {
             try
             {
-                if (left >= right)
+                if (InternalMethod.IsNaNOrInfinity(left) || InternalMethod.IsNaNOrInfinity(right) || left >= right)
                 {
                     return double.NaN;
                 }
@@ -140,36 +144,18 @@ namespace Com
             }
         }
 
-        /// <summary>
-        /// 一维高斯分布的概率密度函数。
-        /// </summary>
-        /// <param name="ev">数学期望。</param>
-        /// <param name="sd">标准差。</param>
-        /// <param name="x">样本的值。</param>
-        public static double GaussDistribution(double ev, double sd, double x)
-        {
-            try
-            {
-                return Math.Exp(-0.5 * Math.Pow(x - ev, 2) / Math.Pow(sd, 2)) / Math.Sqrt(2 * Math.PI) / sd;
-            }
-            catch
-            {
-                return double.NaN;
-            }
-        }
+        //
 
-        /// <summary>
-        /// 返回两个概率密度服从一维标准高斯分布的随机双精度浮点数（数学期望 = 0，标准差 = 1）。
-        /// </summary>
-        public static double[] StdGaussRandom()
+        private static double[] _StdGaussRandom() // 返回两个概率密度服从一维标准高斯分布的随机双精度浮点数（数学期望 = 0，标准差 = 1）。
         {
             try
             {
-                double v0 = 0, v1 = 0, sum = 0;
+                double r0 = 0, r1 = 0, v0 = 0, v1 = 0, sum = 0;
 
                 while (sum > 1 || sum == 0)
                 {
-                    double r0 = _Rand.NextDouble(), r1 = _Rand.NextDouble();
+                    r0 = _Rand.NextDouble();
+                    r1 = _Rand.NextDouble();
 
                     v0 = 2 * r0 - 1;
                     v1 = 2 * r1 - 1;
@@ -189,7 +175,47 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个概率密度在区间内服从一维高斯分布的随机双精度浮点数。
+        /// 一维高斯分布的概率密度函数。
+        /// </summary>
+        /// <param name="ev">数学期望。</param>
+        /// <param name="sd">标准差。</param>
+        /// <param name="x">样本的值。</param>
+        public static double GaussDistributionProbabilityDensity(double ev, double sd, double x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(ev) || InternalMethod.IsNaNOrInfinity(sd) || InternalMethod.IsNaNOrInfinity(x))
+                {
+                    return double.NaN;
+                }
+
+                double N = (x - ev) / sd;
+
+                return Math.Exp(-0.5 * N * N) / Math.Sqrt(2 * Math.PI) / sd;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个概率密度服从一维标准高斯分布的随机双精度浮点数。
+        /// </summary>
+        public static double GaussRandom()
+        {
+            try
+            {
+                return _StdGaussRandom()[0];
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个概率密度在指定区间内服从一维高斯分布的随机双精度浮点数。
         /// </summary>
         /// <param name="ev">数学期望。</param>
         /// <param name="sd">标准差。</param>
@@ -199,15 +225,20 @@ namespace Com
         {
             try
             {
-                double GR = 0;
+                if (InternalMethod.IsNaNOrInfinity(ev) || InternalMethod.IsNaNOrInfinity(sd) || InternalMethod.IsNaNOrInfinity(left) || InternalMethod.IsNaNOrInfinity(right))
+                {
+                    return double.NaN;
+                }
+
+                double result = 0;
 
                 do
                 {
-                    GR = StdGaussRandom()[0] * Math.Pow(sd, 2) + ev;
+                    result = _StdGaussRandom()[0] * sd * sd + ev;
                 }
-                while (GR < left || GR >= right);
+                while (result < left || result >= right);
 
-                return GR;
+                return result;
             }
             catch
             {
