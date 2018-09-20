@@ -878,9 +878,9 @@ namespace Com.WinForm
 
                 Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                    Bounds_Current = new Rectangle((new PointD(oldBounds.Location) * (1 - Pct_F) + new PointD(bounds.Location) * Pct_F).ToPoint(), (new PointD(oldBounds.Size) * (1 - Pct_F) + new PointD(bounds.Size) * Pct_F).ToSize());
+                    Bounds_Current = new Rectangle((new PointD(oldBounds.Location) * (1 - Progress) + new PointD(bounds.Location) * Progress).ToPoint(), (new PointD(oldBounds.Size) * (1 - Progress) + new PointD(bounds.Size) * Progress).ToSize());
 
                     if (frameId == frameCount)
                     {
@@ -1405,9 +1405,9 @@ namespace Com.WinForm
 
                     Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                     {
-                        double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                        double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                        _Opacity = Opa * (1 - Pct_F);
+                        _Opacity = Opa * (1 - Progress);
 
                         _SplashScreen.Opacity = _Opacity;
 
@@ -1762,9 +1762,9 @@ namespace Com.WinForm
 
                 Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                    _Opacity = Opa * Pct_F;
+                    _Opacity = Opa * Progress;
 
                     _Client.Opacity = _SplashScreen.Opacity = _Opacity;
 
@@ -1914,9 +1914,9 @@ namespace Com.WinForm
 
                 Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                    _Opacity = Opa * (1 - Pct_F);
+                    _Opacity = Opa * (1 - Progress);
 
                     _SplashScreen.Opacity = _Opacity;
 

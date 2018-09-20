@@ -328,6 +328,34 @@ namespace Com.WinForm
             };
 
             PictureBox_Exit.Image = ExitImage[(!RecommendColors.BackColorFitLightText(_ExitButtonIsPointed || _ExitButtonIsPressed ? PictureBox_Exit.BackColor : this.BackColor) ? 0 : 1), (_ExitButtonIsPointed || _ExitButtonIsPressed || Me.IsActive ? 0 : 1)];
+
+            PictureBox_FullScreen.Refresh();
+            PictureBox_Minimize.Refresh();
+            PictureBox_Maximize.Refresh();
+            PictureBox_Exit.Refresh();
+        }
+
+        private void _UpdateControlBoxBackColor(Control control, ColorX backColor) // 更新控制按钮的背景颜色。
+        {
+            ColorX OldBackColor = new ColorX(control.BackColor);
+
+            Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+            {
+                double Progress = (frameId == frameCount ? 1 : (double)frameId / frameCount);
+
+                if (frameId == frameCount)
+                {
+                    control.BackColor = backColor.ToColor();
+                }
+                else
+                {
+                    control.BackColor = ColorManipulation.BlendByRGB(backColor, OldBackColor, Progress).ToColor();
+                }
+
+                control.Refresh();
+            };
+
+            Animation.Show(Frame, 4, 15);
         }
 
         //
@@ -666,7 +694,7 @@ namespace Com.WinForm
         {
             _FullScreenButtonIsPointed = true;
 
-            PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+            _UpdateControlBoxBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_DEC);
 
             _UpdateControlBoxImage();
         }
@@ -675,7 +703,7 @@ namespace Com.WinForm
         {
             _FullScreenButtonIsPointed = false;
 
-            PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton.ToColor();
+            _UpdateControlBoxBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton);
 
             _UpdateControlBoxImage();
         }
@@ -688,7 +716,7 @@ namespace Com.WinForm
             {
                 _FullScreenButtonIsPressed = true;
 
-                PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
+                _UpdateControlBoxBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_INC);
 
                 _UpdateControlBoxImage();
             }
@@ -706,7 +734,7 @@ namespace Com.WinForm
                 {
                     _FullScreenButtonIsPointed = true;
 
-                    PictureBox_FullScreen.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+                    _UpdateControlBoxBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_DEC);
 
                     _UpdateControlBoxImage();
                 }
@@ -729,7 +757,7 @@ namespace Com.WinForm
         {
             _MinimizeButtonIsPointed = true;
 
-            PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+            _UpdateControlBoxBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_DEC);
 
             _UpdateControlBoxImage();
         }
@@ -738,7 +766,7 @@ namespace Com.WinForm
         {
             _MinimizeButtonIsPointed = false;
 
-            PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton.ToColor();
+            _UpdateControlBoxBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton);
 
             _UpdateControlBoxImage();
         }
@@ -751,7 +779,7 @@ namespace Com.WinForm
             {
                 _MinimizeButtonIsPressed = true;
 
-                PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
+                _UpdateControlBoxBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_INC);
 
                 _UpdateControlBoxImage();
             }
@@ -769,7 +797,7 @@ namespace Com.WinForm
                 {
                     _MinimizeButtonIsPointed = true;
 
-                    PictureBox_Minimize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+                    _UpdateControlBoxBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_DEC);
 
                     _UpdateControlBoxImage();
                 }
@@ -799,7 +827,7 @@ namespace Com.WinForm
         {
             _MaximizeButtonIsPointed = true;
 
-            PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+            _UpdateControlBoxBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_DEC);
 
             _UpdateControlBoxImage();
         }
@@ -808,7 +836,7 @@ namespace Com.WinForm
         {
             _MaximizeButtonIsPointed = false;
 
-            PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton.ToColor();
+            _UpdateControlBoxBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton);
 
             _UpdateControlBoxImage();
         }
@@ -821,7 +849,7 @@ namespace Com.WinForm
             {
                 _MaximizeButtonIsPressed = true;
 
-                PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_INC.ToColor();
+                _UpdateControlBoxBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_INC);
 
                 _UpdateControlBoxImage();
             }
@@ -839,7 +867,7 @@ namespace Com.WinForm
                 {
                     _MaximizeButtonIsPointed = true;
 
-                    PictureBox_Maximize.BackColor = Me.RecommendColors.ControlButton_DEC.ToColor();
+                    _UpdateControlBoxBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_DEC);
 
                     _UpdateControlBoxImage();
                 }
@@ -862,7 +890,7 @@ namespace Com.WinForm
         {
             _ExitButtonIsPointed = true;
 
-            PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_DEC.ToColor();
+            _UpdateControlBoxBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_DEC);
 
             _UpdateControlBoxImage();
         }
@@ -871,7 +899,7 @@ namespace Com.WinForm
         {
             _ExitButtonIsPointed = false;
 
-            PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton.ToColor();
+            _UpdateControlBoxBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton);
 
             _UpdateControlBoxImage();
         }
@@ -884,7 +912,7 @@ namespace Com.WinForm
             {
                 _ExitButtonIsPressed = true;
 
-                PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_INC.ToColor();
+                _UpdateControlBoxBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_INC);
 
                 _UpdateControlBoxImage();
             }
@@ -902,7 +930,7 @@ namespace Com.WinForm
                 {
                     _ExitButtonIsPointed = true;
 
-                    PictureBox_Exit.BackColor = Me.RecommendColors.ExitButton_DEC.ToColor();
+                    _UpdateControlBoxBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_DEC);
 
                     _UpdateControlBoxImage();
                 }
@@ -972,20 +1000,20 @@ namespace Com.WinForm
 
                 Animation.Frame FrameShow = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                    this.Opacity = _Opacity * Pct_F;
-                    this.Height = (int)(Panel_ControlBox.Height * Pct_F);
+                    this.Opacity = _Opacity * Progress;
+                    this.Height = (int)(Panel_ControlBox.Height * Progress);
 
                     Panel_CaptionBar.Top = this.Height - Panel_CaptionBar.Height;
                 };
 
                 Animation.Frame FrameHide = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Pct_F = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                    this.Opacity = _Opacity * (1 - Pct_F);
-                    this.Height = (int)(Panel_ControlBox.Height * (1 - Pct_F));
+                    this.Opacity = _Opacity * (1 - Progress);
+                    this.Height = (int)(Panel_ControlBox.Height * (1 - Progress));
 
                     Panel_CaptionBar.Top = this.Height - Panel_CaptionBar.Height;
                 };
