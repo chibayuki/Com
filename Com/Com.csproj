@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Com.WinForm\ControlSubstitution.cs" />
+    <Compile Include="Com.WinForm\Effect.cs" />
     <Compile Include="Com.WinForm\EventKey.cs" />
     <Compile Include="Com.WinForm\Resizer.cs">
       <SubType>Form</SubType>
