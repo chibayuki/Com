@@ -283,7 +283,7 @@ namespace Com.WinForm
             Panel_ControlBox.Width = PictureBox_Exit.Right;
         }
 
-        private void _UpdateControlBoxImage() // 更新控制按钮的图像。
+        private void _UpdateControlBoxButtonImage() // 更新控制按钮的图像。
         {
             Bitmap[,,] FullScreenImage = new Bitmap[2, 2, 2]
             {
@@ -335,27 +335,35 @@ namespace Com.WinForm
             PictureBox_Exit.Refresh();
         }
 
-        private void _UpdateControlBoxBackColor(Control control, ColorX backColor) // 更新控制按钮的背景颜色。
+        private void _UpdateControlBoxButtonBackColor(Control control, ColorX backColor) // 更新控制按钮的背景颜色。
         {
-            ColorX OldBackColor = new ColorX(control.BackColor);
-
-            Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+            if (Me.Effect.HasFlag(Effect.Fade))
             {
-                double Progress = (frameId == frameCount ? 1 : (double)frameId / frameCount);
+                ColorX OldBackColor = new ColorX(control.BackColor);
 
-                if (frameId == frameCount)
+                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                 {
-                    control.BackColor = backColor.ToColor();
-                }
-                else
-                {
-                    control.BackColor = ColorManipulation.BlendByRGB(backColor, OldBackColor, Progress).ToColor();
-                }
+                    double Progress = (frameId == frameCount ? 1 : (double)frameId / frameCount);
 
+                    if (frameId == frameCount)
+                    {
+                        control.BackColor = backColor.ToColor();
+                    }
+                    else
+                    {
+                        control.BackColor = ColorManipulation.BlendByRGB(backColor, OldBackColor, Progress).ToColor();
+                    }
+
+                    control.Refresh();
+                };
+
+                Animation.Show(Frame, 4, 15);
+            }
+            else
+            {
+                control.BackColor = backColor.ToColor();
                 control.Refresh();
-            };
-
-            Animation.Show(Frame, 4, 15);
+            }
         }
 
         //
@@ -694,18 +702,18 @@ namespace Com.WinForm
         {
             _FullScreenButtonIsPointed = true;
 
-            _UpdateControlBoxBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_DEC);
+            _UpdateControlBoxButtonBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_DEC);
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
         }
 
         private void PictureBox_FullScreen_MouseLeave(object sender, EventArgs e) // PictureBox_FullScreen 的 MouseLeave 事件的回调函数。
         {
             _FullScreenButtonIsPointed = false;
 
-            _UpdateControlBoxBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton);
+            _UpdateControlBoxButtonBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton);
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
         }
 
         private void PictureBox_FullScreen_MouseDown(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseDown 事件的回调函数。
@@ -716,9 +724,9 @@ namespace Com.WinForm
             {
                 _FullScreenButtonIsPressed = true;
 
-                _UpdateControlBoxBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_INC);
+                _UpdateControlBoxButtonBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_INC);
 
-                _UpdateControlBoxImage();
+                _UpdateControlBoxButtonImage();
             }
         }
 
@@ -734,9 +742,9 @@ namespace Com.WinForm
                 {
                     _FullScreenButtonIsPointed = true;
 
-                    _UpdateControlBoxBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_DEC);
+                    _UpdateControlBoxButtonBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton_DEC);
 
-                    _UpdateControlBoxImage();
+                    _UpdateControlBoxButtonImage();
                 }
                 else
                 {
@@ -757,18 +765,18 @@ namespace Com.WinForm
         {
             _MinimizeButtonIsPointed = true;
 
-            _UpdateControlBoxBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_DEC);
+            _UpdateControlBoxButtonBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_DEC);
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
         }
 
         private void PictureBox_Minimize_MouseLeave(object sender, EventArgs e) // PictureBox_Minimize 的 MouseLeave 事件的回调函数。
         {
             _MinimizeButtonIsPointed = false;
 
-            _UpdateControlBoxBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton);
+            _UpdateControlBoxButtonBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton);
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
         }
 
         private void PictureBox_Minimize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseDown 事件的回调函数。
@@ -779,9 +787,9 @@ namespace Com.WinForm
             {
                 _MinimizeButtonIsPressed = true;
 
-                _UpdateControlBoxBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_INC);
+                _UpdateControlBoxButtonBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_INC);
 
-                _UpdateControlBoxImage();
+                _UpdateControlBoxButtonImage();
             }
         }
 
@@ -797,9 +805,9 @@ namespace Com.WinForm
                 {
                     _MinimizeButtonIsPointed = true;
 
-                    _UpdateControlBoxBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_DEC);
+                    _UpdateControlBoxButtonBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton_DEC);
 
-                    _UpdateControlBoxImage();
+                    _UpdateControlBoxButtonImage();
                 }
                 else
                 {
@@ -827,18 +835,18 @@ namespace Com.WinForm
         {
             _MaximizeButtonIsPointed = true;
 
-            _UpdateControlBoxBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_DEC);
+            _UpdateControlBoxButtonBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_DEC);
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
         }
 
         private void PictureBox_Maximize_MouseLeave(object sender, EventArgs e) // PictureBox_Maximize 的 MouseLeave 事件的回调函数。
         {
             _MaximizeButtonIsPointed = false;
 
-            _UpdateControlBoxBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton);
+            _UpdateControlBoxButtonBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton);
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
         }
 
         private void PictureBox_Maximize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseDown 事件的回调函数。
@@ -849,9 +857,9 @@ namespace Com.WinForm
             {
                 _MaximizeButtonIsPressed = true;
 
-                _UpdateControlBoxBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_INC);
+                _UpdateControlBoxButtonBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_INC);
 
-                _UpdateControlBoxImage();
+                _UpdateControlBoxButtonImage();
             }
         }
 
@@ -867,9 +875,9 @@ namespace Com.WinForm
                 {
                     _MaximizeButtonIsPointed = true;
 
-                    _UpdateControlBoxBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_DEC);
+                    _UpdateControlBoxButtonBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton_DEC);
 
-                    _UpdateControlBoxImage();
+                    _UpdateControlBoxButtonImage();
                 }
                 else
                 {
@@ -890,18 +898,18 @@ namespace Com.WinForm
         {
             _ExitButtonIsPointed = true;
 
-            _UpdateControlBoxBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_DEC);
+            _UpdateControlBoxButtonBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_DEC);
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
         }
 
         private void PictureBox_Exit_MouseLeave(object sender, EventArgs e) // PictureBox_Exit 的 MouseLeave 事件的回调函数。
         {
             _ExitButtonIsPointed = false;
 
-            _UpdateControlBoxBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton);
+            _UpdateControlBoxButtonBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton);
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
         }
 
         private void PictureBox_Exit_MouseDown(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseDown 事件的回调函数。
@@ -912,9 +920,9 @@ namespace Com.WinForm
             {
                 _ExitButtonIsPressed = true;
 
-                _UpdateControlBoxBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_INC);
+                _UpdateControlBoxButtonBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_INC);
 
-                _UpdateControlBoxImage();
+                _UpdateControlBoxButtonImage();
             }
         }
 
@@ -930,9 +938,9 @@ namespace Com.WinForm
                 {
                     _ExitButtonIsPointed = true;
 
-                    _UpdateControlBoxBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_DEC);
+                    _UpdateControlBoxButtonBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton_DEC);
 
-                    _UpdateControlBoxImage();
+                    _UpdateControlBoxButtonImage();
                 }
                 else
                 {
@@ -1018,13 +1026,36 @@ namespace Com.WinForm
                     Panel_CaptionBar.Top = this.Height - Panel_CaptionBar.Height;
                 };
 
+                Action Show = () =>
+                {
+                    this.Opacity = _Opacity;
+                    this.Height = Panel_ControlBox.Height;
+
+                    Panel_CaptionBar.Top = this.Height - Panel_CaptionBar.Height;
+                };
+
+                Action Hide = () =>
+                {
+                    this.Opacity = 0;
+                    this.Height = 0;
+
+                    Panel_CaptionBar.Top = -Panel_CaptionBar.Height;
+                };
+
                 if (Me.Enabled)
                 {
                     if (this.Height == Panel_ControlBox.Height)
                     {
                         if (FormManager.CursorPosition.Y > Me.Y + Panel_CaptionBar.Height * 2)
                         {
-                            Animation.Show(FrameHide, 9, 15);
+                            if (Me.Effect.HasFlag(Effect.SmoothShift) && Me.Effect.HasFlag(Effect.Fade))
+                            {
+                                Animation.Show(FrameHide, 9, 15);
+                            }
+                            else
+                            {
+                                Hide();
+                            }
                         }
                     }
                     else
@@ -1033,7 +1064,14 @@ namespace Com.WinForm
                         {
                             this.BringToFront();
 
-                            Animation.Show(FrameShow, 9, 15);
+                            if (Me.Effect.HasFlag(Effect.SmoothShift) && Me.Effect.HasFlag(Effect.Fade))
+                            {
+                                Animation.Show(FrameShow, 9, 15);
+                            }
+                            else
+                            {
+                                Show();
+                            }
                         }
                     }
                 }
@@ -1041,7 +1079,14 @@ namespace Com.WinForm
                 {
                     if (this.Height == Panel_ControlBox.Height)
                     {
-                        Animation.Show(FrameHide, 9, 15);
+                        if (Me.Effect.HasFlag(Effect.SmoothShift) && Me.Effect.HasFlag(Effect.Fade))
+                        {
+                            Animation.Show(FrameHide, 9, 15);
+                        }
+                        else
+                        {
+                            Hide();
+                        }
                     }
                 }
             }
@@ -1099,7 +1144,7 @@ namespace Com.WinForm
         {
             _UpdateForStyleOrStateChanged();
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
 
             //
 
@@ -1141,7 +1186,7 @@ namespace Com.WinForm
             PictureBox_Maximize.BackColor = (_MaximizeButtonIsPressed ? Me.RecommendColors.ControlButton_INC : (_MaximizeButtonIsPointed ? Me.RecommendColors.ControlButton_DEC : Me.RecommendColors.ControlButton)).ToColor();
             PictureBox_Exit.BackColor = (_ExitButtonIsPressed ? Me.RecommendColors.ExitButton_INC : (_ExitButtonIsPointed ? Me.RecommendColors.ExitButton_DEC : Me.RecommendColors.ExitButton)).ToColor();
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
 
             //
 
@@ -1150,7 +1195,7 @@ namespace Com.WinForm
 
             //
 
-            _UpdateControlBoxImage();
+            _UpdateControlBoxButtonImage();
 
             _RepaintCaptionBarBitmap();
         }

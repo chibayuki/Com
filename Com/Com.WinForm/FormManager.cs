@@ -310,6 +310,10 @@ namespace Com.WinForm
 
         //
 
+        private Effect _Effect = Effect.All; // 窗口交互过程显示的效果。
+
+        //
+
         internal double CaptionBarOpacityRatio // 获取窗口标题栏的不透明度系数。
         {
             get
@@ -871,28 +875,37 @@ namespace Com.WinForm
             }
             else if (updateLayoutBehavior == UpdateLayoutBehavior.Animate)
             {
-                int MaxLTRB = Math.Max(1, Math.Max(Math.Abs(bounds.Left - Bounds_Current.Left), Math.Max(Math.Abs(bounds.Top - Bounds_Current.Top), Math.Max(Math.Abs(bounds.Right - Bounds_Current.Right), Math.Abs(bounds.Bottom - Bounds_Current.Bottom)))));
-                int Delta = Math.Min(MaxLTRB, (int)(new PointD(PrimaryScreenBounds.Size).VectorModule / 40.96));
-
-                Rectangle oldBounds = Rectangle.FromLTRB(bounds.Left - (bounds.Left - Bounds_Current.Left) * Delta / MaxLTRB, bounds.Top - (bounds.Top - Bounds_Current.Top) * Delta / MaxLTRB, bounds.Right - (bounds.Right - Bounds_Current.Right) * Delta / MaxLTRB, bounds.Bottom - (bounds.Bottom - Bounds_Current.Bottom) * Delta / MaxLTRB);
-
-                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                if (_Effect.HasFlag(Effect.SmoothShift))
                 {
-                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    int MaxLTRB = Math.Max(1, Math.Max(Math.Abs(bounds.Left - Bounds_Current.Left), Math.Max(Math.Abs(bounds.Top - Bounds_Current.Top), Math.Max(Math.Abs(bounds.Right - Bounds_Current.Right), Math.Abs(bounds.Bottom - Bounds_Current.Bottom)))));
+                    int Delta = Math.Min(MaxLTRB, (int)(new PointD(PrimaryScreenBounds.Size).VectorModule / 40.96));
 
-                    Bounds_Current = new Rectangle((new PointD(oldBounds.Location) * (1 - Progress) + new PointD(bounds.Location) * Progress).ToPoint(), (new PointD(oldBounds.Size) * (1 - Progress) + new PointD(bounds.Size) * Progress).ToSize());
+                    Rectangle oldBounds = Rectangle.FromLTRB(bounds.Left - (bounds.Left - Bounds_Current.Left) * Delta / MaxLTRB, bounds.Top - (bounds.Top - Bounds_Current.Top) * Delta / MaxLTRB, bounds.Right - (bounds.Right - Bounds_Current.Right) * Delta / MaxLTRB, bounds.Bottom - (bounds.Bottom - Bounds_Current.Bottom) * Delta / MaxLTRB);
 
-                    if (frameId == frameCount)
+                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                     {
-                        _UpdateLayout(updateLayoutEventType);
-                    }
-                    else
-                    {
-                        _UpdateLayout(UpdateLayoutEventType.None);
-                    }
-                };
+                        double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                Animation.Show(Frame, 6, 15);
+                        Bounds_Current = new Rectangle((new PointD(oldBounds.Location) * (1 - Progress) + new PointD(bounds.Location) * Progress).ToPoint(), (new PointD(oldBounds.Size) * (1 - Progress) + new PointD(bounds.Size) * Progress).ToSize());
+
+                        if (frameId == frameCount)
+                        {
+                            _UpdateLayout(updateLayoutEventType);
+                        }
+                        else
+                        {
+                            _UpdateLayout(UpdateLayoutEventType.None);
+                        }
+                    };
+
+                    Animation.Show(Frame, 6, 15);
+                }
+                else
+                {
+                    Bounds_Current = bounds;
+
+                    _UpdateLayout(updateLayoutEventType);
+                }
             }
         }
 
@@ -1403,11 +1416,29 @@ namespace Com.WinForm
                 {
                     double Opa = _Opacity;
 
-                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                    if (_Effect.HasFlag(Effect.Fade))
                     {
-                        double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                        Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                        {
+                            double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                        _Opacity = Opa * (1 - Progress);
+                            _Opacity = Opa * (1 - Progress);
+
+                            _SplashScreen.Opacity = _Opacity;
+
+                            if (_FormState != FormState.FullScreen)
+                            {
+                                _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                            }
+
+                            _Resizer.OnThemeChanged();
+                        };
+
+                        Animation.Show(Frame, 9, 15);
+                    }
+                    else
+                    {
+                        _Opacity = 0;
 
                         _SplashScreen.Opacity = _Opacity;
 
@@ -1417,9 +1448,9 @@ namespace Com.WinForm
                         }
 
                         _Resizer.OnThemeChanged();
-                    };
+                    }
 
-                    Animation.Show(Frame, 9, 15);
+                    _Opacity = Opa;
                 }
 
                 //
@@ -1758,14 +1789,30 @@ namespace Com.WinForm
 
             if (_Visible)
             {
-                double Opa = _Opacity;
-
-                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                if (_Effect.HasFlag(Effect.Fade))
                 {
-                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Opa = _Opacity;
 
-                    _Opacity = Opa * Progress;
+                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                    {
+                        double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
+                        _Opacity = Opa * Progress;
+
+                        _Client.Opacity = _SplashScreen.Opacity = _Opacity;
+
+                        if (_FormState != FormState.FullScreen)
+                        {
+                            _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                        }
+
+                        _Resizer.OnThemeChanged();
+                    };
+
+                    Animation.Show(Frame, 9, 15);
+                }
+                else
+                {
                     _Client.Opacity = _SplashScreen.Opacity = _Opacity;
 
                     if (_FormState != FormState.FullScreen)
@@ -1774,9 +1821,7 @@ namespace Com.WinForm
                     }
 
                     _Resizer.OnThemeChanged();
-                };
-
-                Animation.Show(Frame, 9, 15);
+                }
             }
             else
             {
@@ -1912,11 +1957,29 @@ namespace Com.WinForm
             {
                 double Opa = _Opacity;
 
-                Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                if (_Effect.HasFlag(Effect.Fade))
                 {
-                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
+                    {
+                        double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                    _Opacity = Opa * (1 - Progress);
+                        _Opacity = Opa * (1 - Progress);
+
+                        _SplashScreen.Opacity = _Opacity;
+
+                        if (_FormState != FormState.FullScreen)
+                        {
+                            _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
+                        }
+
+                        _Resizer.OnThemeChanged();
+                    };
+
+                    Animation.Show(Frame, 9, 15);
+                }
+                else
+                {
+                    _Opacity = 0;
 
                     _SplashScreen.Opacity = _Opacity;
 
@@ -1926,11 +1989,7 @@ namespace Com.WinForm
                     }
 
                     _Resizer.OnThemeChanged();
-                };
-
-                Animation.Show(Frame, 9, 15);
-
-                //
+                }
 
                 _Opacity = Opa;
             }
@@ -2917,6 +2976,24 @@ namespace Com.WinForm
             get
             {
                 return _RecommendColors;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取或设置窗口交互过程显示的效果。
+        /// </summary>
+        public Effect Effect
+        {
+            get
+            {
+                return _Effect;
+            }
+
+            set
+            {
+                _Effect = value;
             }
         }
 
