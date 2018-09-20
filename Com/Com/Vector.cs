@@ -549,7 +549,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
         public void Rotate(int index1, int index2, double angle)
         {
-            if (_Size > 0 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
+            if (_Size >= 2 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
             {
                 Matrix matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
                 Matrix matrixVector = _ToMatrixForAffineTransform();
@@ -583,7 +583,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
         public Vector RotateCopy(int index1, int index2, double angle)
         {
-            if (_Size > 0 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
+            if (_Size >= 2 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
             {
                 Matrix matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
                 Matrix matrixVector = _ToMatrixForAffineTransform();
@@ -1570,7 +1570,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
         public static Matrix RotateMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
-            if (type != Type.NonVector && dimension > 0 && (index1 >= 0 && index1 < dimension) && (index2 >= 0 && index2 < dimension) && index1 != index2)
+            if (type != Type.NonVector && dimension >= 2 && (index1 >= 0 && index1 < dimension) && (index2 >= 0 && index2 < dimension) && index1 != index2)
             {
                 Matrix result = Matrix.Identity(dimension + 1);
 
