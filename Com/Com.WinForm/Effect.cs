@@ -41,6 +41,6 @@ namespace Com.WinForm
         /// <summary>
         /// 显示所有效果。
         /// </summary>
-        All = None | Fade
+        All = SmoothShift | Fade
     }
 }
