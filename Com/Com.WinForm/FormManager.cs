@@ -227,7 +227,7 @@ namespace Com.WinForm
         {
             get
             {
-                return Math.Max(_ControlBoxButtonWidth, Math.Min(PrimaryScreenBounds.Width, _MinimumWidth));
+                return Math.Max(_ControlBoxButtonWidth, Math.Min(_MinimumWidth, PrimaryScreenBounds.Width));
             }
 
             set
@@ -240,7 +240,7 @@ namespace Com.WinForm
         {
             get
             {
-                return Math.Max(_CaptionBarHeight + 2, Math.Min(PrimaryScreenBounds.Height, _MinimumHeight));
+                return Math.Max(_CaptionBarHeight + 2, Math.Min(_MinimumHeight, PrimaryScreenBounds.Height));
             }
 
             set
@@ -256,7 +256,7 @@ namespace Com.WinForm
         {
             get
             {
-                return Math.Max(1, (_MaximumWidth > 0 ? Math.Min(PrimaryScreenBounds.Width, _MaximumWidth) : PrimaryScreenBounds.Width));
+                return Math.Max(1, (_MaximumWidth > 0 ? Math.Min(_MaximumWidth, PrimaryScreenBounds.Width) : PrimaryScreenBounds.Width));
             }
 
             set
@@ -269,7 +269,7 @@ namespace Com.WinForm
         {
             get
             {
-                return Math.Max(1, (_MaximumHeight > 0 ? Math.Min(PrimaryScreenBounds.Height, _MaximumHeight) : PrimaryScreenBounds.Height));
+                return Math.Max(1, (_MaximumHeight > 0 ? Math.Min(_MaximumHeight, PrimaryScreenBounds.Height) : PrimaryScreenBounds.Height));
             }
 
             set
@@ -407,7 +407,14 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
+                if (_FormState == FormState.FullScreen)
+                {
+                    _Bounds_Current_Width = value;
+                }
+                else
+                {
+                    _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
+                }
             }
         }
 
@@ -420,7 +427,14 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
+                if (_FormState == FormState.FullScreen)
+                {
+                    _Bounds_Current_Height = value;
+                }
+                else
+                {
+                    _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
+                }
             }
         }
 
@@ -447,8 +461,16 @@ namespace Com.WinForm
 
             set
             {
-                _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
-                _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
+                if (_FormState == FormState.FullScreen)
+                {
+                    _Bounds_Current_Width = value.Width;
+                    _Bounds_Current_Height = value.Height;
+                }
+                else
+                {
+                    _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                    _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
+                }
             }
         }
 
@@ -463,8 +485,17 @@ namespace Com.WinForm
             {
                 _Bounds_Current_X = value.X;
                 _Bounds_Current_Y = value.Y;
-                _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
-                _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
+
+                if (_FormState == FormState.FullScreen)
+                {
+                    _Bounds_Current_Width = value.Width;
+                    _Bounds_Current_Height = value.Height;
+                }
+                else
+                {
+                    _Bounds_Current_Width = Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth));
+                    _Bounds_Current_Height = Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight));
+                }
             }
         }
 
@@ -1580,6 +1611,8 @@ namespace Com.WinForm
                 _ShowCaptionBarColor = _Owner._ShowCaptionBarColor;
                 _EnableCaptionBarTransparent = _Owner._EnableCaptionBarTransparent;
                 _ShowShadowColor = _Owner._ShowShadowColor;
+
+                _Effect = _Owner._Effect;
             }
 
             //
@@ -2291,10 +2324,23 @@ namespace Com.WinForm
 
             set
             {
-                if (!_Initialized)
+                MinimumWidth = Math.Max(0, value.Width);
+                MinimumHeight = Math.Max(0, value.Height);
+
+                if (_Initialized)
                 {
-                    MinimumWidth = Math.Max(0, value.Width);
-                    MinimumHeight = Math.Max(0, value.Height);
+                    if (Bounds_Current_Width < MinimumWidth || Bounds_Current_Height < MinimumHeight)
+                    {
+                        Bounds_Current_Width = Math.Max(MinimumWidth, Bounds_Current_Width);
+                        Bounds_Current_Height = Math.Max(MinimumHeight, Bounds_Current_Height);
+
+                        Action InvokeMethod = () =>
+                        {
+                            _UpdateLayout(UpdateLayoutEventType.SizeChanged);
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2311,10 +2357,23 @@ namespace Com.WinForm
 
             set
             {
-                if (!_Initialized)
+                MaximumWidth = Math.Max(0, value.Width);
+                MaximumHeight = Math.Max(0, value.Height);
+
+                if (_Initialized)
                 {
-                    MaximumWidth = Math.Max(0, value.Width);
-                    MaximumHeight = Math.Max(0, value.Height);
+                    if (Bounds_Current_Width > MaximumWidth || Bounds_Current_Height > MaximumHeight)
+                    {
+                        Bounds_Current_Width = Math.Min(MaximumWidth, Bounds_Current_Width);
+                        Bounds_Current_Height = Math.Min(MaximumHeight, Bounds_Current_Height);
+
+                        Action InvokeMethod = () =>
+                        {
+                            _UpdateLayout(UpdateLayoutEventType.SizeChanged);
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
                 }
             }
         }
@@ -2504,7 +2563,7 @@ namespace Com.WinForm
 
             set
             {
-                _CaptionBarHeight = Math.Max(24, Math.Min(PrimaryScreenBounds.Height, value));
+                _CaptionBarHeight = Math.Max(24, Math.Min(value, PrimaryScreenBounds.Height));
 
                 if (_Initialized)
                 {

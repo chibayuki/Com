@@ -357,7 +357,7 @@ namespace Com.WinForm
                     control.Refresh();
                 };
 
-                Animation.Show(Frame, 4, 15);
+                Animation.Show(Frame, 6, 15);
             }
             else
             {
