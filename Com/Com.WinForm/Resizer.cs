@@ -209,7 +209,7 @@ namespace Com.WinForm
                 {
                     if (Me.FormState == FormState.Normal)
                     {
-                        if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
+                        if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
                             if (!Me.HighAsScreen())
                             {
@@ -247,7 +247,7 @@ namespace Com.WinForm
                     Me.ReturnFromHighAsScreen();
                 }
 
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
@@ -348,7 +348,7 @@ namespace Com.WinForm
                 {
                     if (Me.FormState == FormState.Normal)
                     {
-                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
+                        if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
                             if (!Me.HighAsScreen())
                             {
@@ -388,7 +388,7 @@ namespace Com.WinForm
                     Me.ReturnFromHighAsScreen();
                 }
 
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
@@ -485,7 +485,7 @@ namespace Com.WinForm
         {
             if (_MeIsResizing)
             {
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
@@ -596,7 +596,7 @@ namespace Com.WinForm
         {
             if (_MeIsResizing)
             {
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
@@ -669,7 +669,7 @@ namespace Com.WinForm
                 {
                     if (Me.FormState == FormState.Normal)
                     {
-                        if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
+                        if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -709,7 +709,7 @@ namespace Com.WinForm
                     Me.ReturnFromHighAsScreen();
                 }
 
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
@@ -836,7 +836,7 @@ namespace Com.WinForm
                 {
                     if (Me.FormState == FormState.Normal)
                     {
-                        if (FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y)
+                        if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -876,7 +876,7 @@ namespace Com.WinForm
                     Me.ReturnFromHighAsScreen();
                 }
 
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
@@ -987,7 +987,7 @@ namespace Com.WinForm
                 {
                     if (Me.FormState == FormState.Normal)
                     {
-                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
+                        if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -1029,7 +1029,7 @@ namespace Com.WinForm
                     Me.ReturnFromHighAsScreen();
                 }
 
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
@@ -1140,7 +1140,7 @@ namespace Com.WinForm
                 {
                     if (Me.FormState == FormState.Normal)
                     {
-                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
+                        if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -1182,7 +1182,7 @@ namespace Com.WinForm
                     Me.ReturnFromHighAsScreen();
                 }
 
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)

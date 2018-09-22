@@ -487,7 +487,7 @@ namespace Com.WinForm
 
             if (_MeIsMoving == true && e.Button == MouseButtons.Left)
             {
-                Point CursorPosition = FormManager.CursorPosition;
+                Point CursorPosition = Cursor.Position;
                 Rectangle PrimaryScreenClient = FormManager.PrimaryScreenClient;
                 Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
@@ -561,9 +561,16 @@ namespace Com.WinForm
                     }
                     else if (CursorPosition.Y >= PrimaryScreenClient.Y && CursorPosition.Y <= PrimaryScreenClient.Y + _ExtendDist)
                     {
-                        if (Me.EnableMaximize && Me.FormState == FormState.Normal)
+                        if (Me.FormState == FormState.Normal)
                         {
-                            if (!Me.Maximize())
+                            if (Me.EnableMaximize)
+                            {
+                                if (!Me.Maximize())
+                                {
+                                    ReleaseAndCheckY();
+                                }
+                            }
+                            else
                             {
                                 ReleaseAndCheckY();
                             }
@@ -602,7 +609,7 @@ namespace Com.WinForm
             {
                 if (Me.FormState != FormState.FullScreen)
                 {
-                    Point CursorPosition = FormManager.CursorPosition;
+                    Point CursorPosition = Cursor.Position;
                     Rectangle PrimaryScreenClient = FormManager.PrimaryScreenClient;
                     Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
 
@@ -1040,7 +1047,7 @@ namespace Com.WinForm
 
                 if (Me.Enabled)
                 {
-                    Point CursorPosition = FormManager.CursorPosition;
+                    Point CursorPosition = Cursor.Position;
 
                     if (this.Height == Panel_ControlBox.Height)
                     {

@@ -28,14 +28,6 @@ namespace Com.WinForm
     {
         #region 私有与内部成员
 
-        internal static Point CursorPosition // 获取鼠标指针在桌面的位置。
-        {
-            get
-            {
-                return Cursor.Position;
-            }
-        }
-
         internal static Rectangle PrimaryScreenBounds // 获取主屏幕的边界。
         {
             get
