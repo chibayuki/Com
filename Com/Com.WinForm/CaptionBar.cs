@@ -220,51 +220,26 @@ namespace Com.WinForm
                 Panel_FormIcon.Visible = false;
 
                 EnableFullScreen = true;
+                EnableMinimize = Me.EnableMinimize;
                 EnableMaximize = false;
                 EnableReturn = false;
-
-                switch (Me.FormStyle)
-                {
-                    case FormStyle.Sizable:
-                    case FormStyle.Fixed:
-                        EnableMinimize = Me.ShowInTaskbar;
-                        break;
-
-                    case FormStyle.Dialog:
-                        EnableMinimize = false;
-                        break;
-                }
             }
             else
             {
                 Panel_FormIcon.Visible = Me.ShowIconOnCaptionBar;
 
                 EnableFullScreen = Me.EnableFullScreen;
+                EnableMinimize = Me.EnableMinimize;
+                EnableMaximize = Me.EnableMaximize;
 
                 switch (Me.FormStyle)
                 {
                     case FormStyle.Sizable:
-                        {
-                            EnableMinimize = Me.ShowInTaskbar;
-                            EnableMaximize = true;
-                            EnableReturn = true;
-                        }
+                        EnableReturn = true;
                         break;
 
                     case FormStyle.Fixed:
-                        {
-                            EnableMinimize = Me.ShowInTaskbar;
-                            EnableMaximize = false;
-                            EnableReturn = false;
-                        }
-                        break;
-
-                    case FormStyle.Dialog:
-                        {
-                            EnableMinimize = false;
-                            EnableMaximize = false;
-                            EnableReturn = false;
-                        }
+                        EnableReturn = false;
                         break;
                 }
             }
@@ -468,7 +443,7 @@ namespace Com.WinForm
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (Me.FormStyle == FormStyle.Sizable)
+                if (Me.EnableMaximize)
                 {
                     if (Me.FormState == FormState.Maximized)
                     {
@@ -517,7 +492,7 @@ namespace Com.WinForm
                     }
                 };
 
-                if (Me.FormStyle == FormStyle.Sizable)
+                if (Me.EnableMaximize)
                 {
                     if (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.X && FormManager.CursorPosition.X <= FormManager.PrimaryScreenClient.X + _ExtendDist)
                     {

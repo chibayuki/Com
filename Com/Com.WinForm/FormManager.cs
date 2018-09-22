@@ -28,6 +28,32 @@ namespace Com.WinForm
     {
         #region 私有与内部成员
 
+        internal static Point CursorPosition // 获取鼠标指针在桌面的位置。
+        {
+            get
+            {
+                return Cursor.Position;
+            }
+        }
+
+        internal static Rectangle PrimaryScreenBounds // 获取主屏幕的边界。
+        {
+            get
+            {
+                return Screen.PrimaryScreen.Bounds;
+            }
+        }
+
+        internal static Rectangle PrimaryScreenClient // 获取主屏幕的工作区。
+        {
+            get
+            {
+                return Screen.PrimaryScreen.WorkingArea;
+            }
+        }
+
+        //
+
         private bool _Initialized = false; // 表示此 FormManager 对象是否已完成初始化的布尔值。
 
         private bool _LoadingNow = false; // 表示此 FormManager 对象是否正在执行 Loading 事件或 Loaded 事件的布尔值。
@@ -127,32 +153,6 @@ namespace Com.WinForm
 
         //
 
-        internal static Point CursorPosition // 获取鼠标指针在桌面的位置。
-        {
-            get
-            {
-                return Cursor.Position;
-            }
-        }
-
-        internal static Rectangle PrimaryScreenBounds // 获取主屏幕的边界。
-        {
-            get
-            {
-                return Screen.PrimaryScreen.Bounds;
-            }
-        }
-
-        internal static Rectangle PrimaryScreenClient // 获取主屏幕的工作区。
-        {
-            get
-            {
-                return Screen.PrimaryScreen.WorkingArea;
-            }
-        }
-
-        //
-
         private Timer _ResolutionMonitor = null; // 用于监听主屏幕分辨率变更的 Timer。
 
         private Rectangle _PreviousPrimaryScreenClient = PrimaryScreenClient; // Screen.PrimaryScreen.WorkingArea 的此前值。
@@ -220,6 +220,22 @@ namespace Com.WinForm
 
         //
 
+        private FormStyle _FormStyle = FormStyle.Sizable; // 窗口的样式。
+
+        private bool _EnableMinimize = true; // 表示是否允许窗口最小化的布尔值。
+        private bool _EnableMaximize = true; // 表示是否允许窗口最大化的布尔值。
+        private bool _EnableFullScreen = true; // 表示是否允许窗口以全屏幕模式运行的布尔值。
+
+        private bool _ShowIconOnCaptionBar = true; // 表示是否在窗口标题栏上显示图标的布尔值。
+        private bool _ShowInTaskbar = true; // 表示窗口是否在任务栏显示的布尔值。
+        private bool _TopMost = false; // 表示是否允许窗口置于顶层的布尔值。
+
+        //
+
+        private Effect _Effect = Effect.All; // 窗口交互过程显示的效果。
+
+        //
+
         private int _MinimumWidth = 0; // 窗口的最小宽度。
         private int _MinimumHeight = 0; // 窗口的最小高度。
 
@@ -280,15 +296,6 @@ namespace Com.WinForm
 
         //
 
-        private FormStyle _FormStyle = FormStyle.Sizable; // 窗口的样式。
-
-        private bool _EnableFullScreen = true; // 表示是否允许窗口以全屏幕模式运行的布尔值。
-        private bool _ShowIconOnCaptionBar = true; // 表示是否在窗口标题栏上显示图标的布尔值。
-        private bool _TopMost = false; // 表示是否允许窗口置于顶层的布尔值。
-        private bool _ShowInTaskbar = true; // 表示窗口是否在任务栏显示的布尔值。
-
-        //
-
         private int _CaptionBarHeight = _ControlBoxButtonHeight; // 窗口标题栏的高度。
 
         //
@@ -307,10 +314,6 @@ namespace Com.WinForm
         private bool _EnableCaptionBarTransparent = true; // 表示是否允许以半透明方式显示窗口标题栏的布尔值。
         private bool _ShowShadowColor = true; // 表示是否在窗口阴影显示主题色的布尔值。
         private RecommendColors _RecommendColors = null; // 当前主题建议的颜色。
-
-        //
-
-        private Effect _Effect = Effect.All; // 窗口交互过程显示的效果。
 
         //
 
@@ -960,17 +963,17 @@ namespace Com.WinForm
 
         private bool _CanMinimize() // 判断是否允许窗口最小化。
         {
-            return (_Initialized && _FormStyle != FormStyle.Dialog && _ShowInTaskbar && _Client.WindowState != FormWindowState.Minimized);
+            return (_Initialized && _EnableMinimize && _Client.WindowState != FormWindowState.Minimized);
         }
 
         private bool _CanMaximize() // 判断是否允许窗口最大化。
         {
-            return (_Initialized && _FormStyle == FormStyle.Sizable && _Client.WindowState != FormWindowState.Minimized && (_FormState != FormState.FullScreen && _FormState != FormState.Maximized) && (_MaximizeVerification == null || (_MaximizeVerification != null && _MaximizeVerification(EventArgs.Empty))));
+            return (_Initialized && _EnableMaximize && _Client.WindowState != FormWindowState.Minimized && (_FormState != FormState.FullScreen && _FormState != FormState.Maximized) && (_MaximizeVerification == null || (_MaximizeVerification != null && _MaximizeVerification(EventArgs.Empty))));
         }
 
         private bool _CanEnterFullScreen() // 判断是否允许窗口进入全屏幕模式。
         {
-            return (_Initialized && _EnableFullScreen && _FormState != FormState.FullScreen && _Client.WindowState != FormWindowState.Minimized && (_EnterFullScreenVerification == null || (_EnterFullScreenVerification != null && _EnterFullScreenVerification(EventArgs.Empty))));
+            return (_Initialized && _EnableFullScreen && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen && (_EnterFullScreenVerification == null || (_EnterFullScreenVerification != null && _EnterFullScreenVerification(EventArgs.Empty))));
         }
 
         private bool _CanExitFullScreen() // 判断是否允许窗口退出全屏幕模式。
@@ -1100,23 +1103,30 @@ namespace Com.WinForm
 
         private void _Return(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口还原至普通大小。
         {
-            _PreviousFormState = _FormState;
-            _FormState = FormState.Normal;
-
-            Rectangle OldBounds = Bounds_Current;
-            Bounds_Current = Bounds_Normal;
-
-            _CaptionBar.OnFormStateChanged();
-            _Resizer.OnFormStateChanged();
-
-            Rectangle NewBounds = Bounds_Current;
-            Bounds_Current = OldBounds;
-
-            _SetBoundsAndUpdateLayout(NewBounds, updateLayoutBehavior, updateLayoutEventType);
-
-            if (updateLayoutEventType != UpdateLayoutEventType.None)
+            if (_Client.WindowState == FormWindowState.Minimized)
             {
-                _OnFormStateChanged();
+                _Client.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                _PreviousFormState = _FormState;
+                _FormState = FormState.Normal;
+
+                Rectangle OldBounds = Bounds_Current;
+                Bounds_Current = Bounds_Normal;
+
+                _CaptionBar.OnFormStateChanged();
+                _Resizer.OnFormStateChanged();
+
+                Rectangle NewBounds = Bounds_Current;
+                Bounds_Current = OldBounds;
+
+                _SetBoundsAndUpdateLayout(NewBounds, updateLayoutBehavior, updateLayoutEventType);
+
+                if (updateLayoutEventType != UpdateLayoutEventType.None)
+                {
+                    _OnFormStateChanged();
+                }
             }
         }
 
@@ -1602,6 +1612,8 @@ namespace Com.WinForm
 
                 //
 
+                _Effect = _Owner._Effect;
+
                 _Opacity = _Owner._Opacity;
                 _ShowCaption = _Owner._ShowCaption;
                 _CaptionFont = _Owner._CaptionFont;
@@ -1611,8 +1623,6 @@ namespace Com.WinForm
                 _ShowCaptionBarColor = _Owner._ShowCaptionBarColor;
                 _EnableCaptionBarTransparent = _Owner._EnableCaptionBarTransparent;
                 _ShowShadowColor = _Owner._ShowShadowColor;
-
-                _Effect = _Owner._Effect;
             }
 
             //
@@ -1803,7 +1813,7 @@ namespace Com.WinForm
 
             //
 
-            if (_FormStyle == FormStyle.Sizable && _FormState == FormState.Maximized)
+            if (_EnableMaximize && _FormState == FormState.Maximized)
             {
                 _Maximize(UpdateLayoutBehavior.Static, UpdateLayoutEventType.None);
             }
@@ -1813,7 +1823,7 @@ namespace Com.WinForm
 
                 _EnterFullScreen(UpdateLayoutBehavior.Static, UpdateLayoutEventType.None);
             }
-            else if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.FullScreen))
+            else if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.Maximized && _FormState != FormState.FullScreen))
             {
                 _Return(UpdateLayoutBehavior.Static, UpdateLayoutEventType.None);
             }
@@ -1902,7 +1912,7 @@ namespace Com.WinForm
 
         private void Client_SizeChanged(object sender, EventArgs e) // _Client 的 SizeChanged 事件的回调函数。
         {
-            if (_Client.WindowState == FormWindowState.Maximized || (_FormStyle == FormStyle.Dialog && _Client.WindowState == FormWindowState.Minimized))
+            if (_Client.WindowState == FormWindowState.Maximized || (!_EnableMinimize && _Client.WindowState == FormWindowState.Minimized))
             {
                 _Client.WindowState = FormWindowState.Normal;
             }
@@ -2313,6 +2323,277 @@ namespace Com.WinForm
         //
 
         /// <summary>
+        /// 获取或设置窗口的样式。
+        /// </summary>
+        public FormStyle FormStyle
+        {
+            get
+            {
+                return _FormStyle;
+            }
+
+            set
+            {
+                if (_FormStyle != value)
+                {
+                    _FormStyle = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnFormStyleChanged();
+                            _Resizer.OnFormStyleChanged();
+
+                            if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.Maximized && _FormState != FormState.FullScreen))
+                            {
+                                _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
+                            }
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示是否允许窗口最小化的布尔值。
+        /// </summary>
+        public bool EnableMinimize
+        {
+            get
+            {
+                return _EnableMinimize;
+            }
+
+            set
+            {
+                if (_EnableMinimize != value)
+                {
+                    _EnableMinimize = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnFormStyleChanged();
+
+                            if (!_EnableMinimize && _Client.WindowState == FormWindowState.Minimized)
+                            {
+                                _Return(UpdateLayoutBehavior.None, UpdateLayoutEventType.None);
+
+                                _OnFormStateChanged();
+                            }
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示是否允许窗口最大化的布尔值。
+        /// </summary>
+        public bool EnableMaximize
+        {
+            get
+            {
+                return _EnableMaximize;
+            }
+
+            set
+            {
+                if (_EnableMaximize != value)
+                {
+                    _EnableMaximize = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnFormStyleChanged();
+
+                            if (!_EnableMaximize && _FormState == FormState.Maximized)
+                            {
+                                _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
+                            }
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                    else
+                    {
+                        if (!_EnableMaximize && _FormState == FormState.Maximized)
+                        {
+                            _PreviousFormState = _FormState;
+                            _FormState = FormState.Normal;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示是否允许窗口以全屏幕模式运行的布尔值。
+        /// </summary>
+        public bool EnableFullScreen
+        {
+            get
+            {
+                return _EnableFullScreen;
+            }
+
+            set
+            {
+                if (_EnableFullScreen != value)
+                {
+                    _EnableFullScreen = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnFormStyleChanged();
+
+                            if (!_EnableFullScreen && _FormState == FormState.FullScreen)
+                            {
+                                _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
+                            }
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                    else
+                    {
+                        if (!_EnableFullScreen && _FormState == FormState.FullScreen)
+                        {
+                            _PreviousFormState = _FormState;
+                            _FormState = FormState.Normal;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示是否在窗口标题栏上显示图标的布尔值。
+        /// </summary>
+        public bool ShowIconOnCaptionBar
+        {
+            get
+            {
+                return _ShowIconOnCaptionBar;
+            }
+
+            set
+            {
+                if (_ShowIconOnCaptionBar != value)
+                {
+                    _ShowIconOnCaptionBar = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _CaptionBar.OnFormStyleChanged();
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示窗口是否在任务栏显示的布尔值。
+        /// </summary>
+        public bool ShowInTaskbar
+        {
+            get
+            {
+                return _ShowInTaskbar;
+            }
+
+            set
+            {
+                if (_ShowInTaskbar != value)
+                {
+                    _ShowInTaskbar = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.ShowInTaskbar = _ShowInTaskbar;
+
+                            _CaptionBar.OnFormStyleChanged();
+
+                            _Resizer.BringToFront();
+                            _CaptionBar.BringToFront();
+                            _Client.BringToFront();
+                            _Client.Focus();
+
+                            _UpdateLayout(UpdateLayoutEventType.None);
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示是否允许窗口置于顶层的布尔值。
+        /// </summary>
+        public bool TopMost
+        {
+            get
+            {
+                return _TopMost;
+            }
+
+            set
+            {
+                if (_TopMost != value)
+                {
+                    _TopMost = value;
+
+                    if (_Initialized)
+                    {
+                        Action InvokeMethod = () =>
+                        {
+                            _Client.TopMost = _TopMost;
+                        };
+
+                        _Client.Invoke(InvokeMethod);
+                    }
+                }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取或设置窗口交互过程显示的效果。
+        /// </summary>
+        public Effect Effect
+        {
+            get
+            {
+                return _Effect;
+            }
+
+            set
+            {
+                _Effect = value;
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 获取或设置窗口的最小大小。
         /// </summary>
         public Size MinimumSize
@@ -2370,177 +2651,6 @@ namespace Com.WinForm
                         Action InvokeMethod = () =>
                         {
                             _UpdateLayout(UpdateLayoutEventType.SizeChanged);
-                        };
-
-                        _Client.Invoke(InvokeMethod);
-                    }
-                }
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取或设置窗口的样式。
-        /// </summary>
-        public FormStyle FormStyle
-        {
-            get
-            {
-                return _FormStyle;
-            }
-
-            set
-            {
-                if (_FormStyle != value)
-                {
-                    _FormStyle = value;
-
-                    if (_Initialized)
-                    {
-                        Action InvokeMethod = () =>
-                        {
-                            _CaptionBar.OnFormStyleChanged();
-                            _Resizer.OnFormStyleChanged();
-
-                            if (_FormStyle == FormStyle.Dialog && _Client.WindowState == FormWindowState.Minimized)
-                            {
-                                _Client.WindowState = FormWindowState.Normal;
-                            }
-                            else if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.FullScreen))
-                            {
-                                _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
-                            }
-                        };
-
-                        _Client.Invoke(InvokeMethod);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置表示是否允许窗口以全屏幕模式运行的布尔值。
-        /// </summary>
-        public bool EnableFullScreen
-        {
-            get
-            {
-                return _EnableFullScreen;
-            }
-
-            set
-            {
-                if (_EnableFullScreen != value)
-                {
-                    _EnableFullScreen = value;
-
-                    if (_Initialized)
-                    {
-                        Action InvokeMethod = () =>
-                        {
-                            _CaptionBar.OnFormStyleChanged();
-
-                            if (!_EnableFullScreen && _FormState == FormState.FullScreen)
-                            {
-                                _ExitFullScreen(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
-                            }
-                        };
-
-                        _Client.Invoke(InvokeMethod);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置表示是否在窗口标题栏上显示图标的布尔值。
-        /// </summary>
-        public bool ShowIconOnCaptionBar
-        {
-            get
-            {
-                return _ShowIconOnCaptionBar;
-            }
-
-            set
-            {
-                if (_ShowIconOnCaptionBar != value)
-                {
-                    _ShowIconOnCaptionBar = value;
-
-                    if (_Initialized)
-                    {
-                        Action InvokeMethod = () =>
-                        {
-                            _CaptionBar.OnFormStyleChanged();
-                        };
-
-                        _Client.Invoke(InvokeMethod);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置表示是否允许窗口置于顶层的布尔值。
-        /// </summary>
-        public bool TopMost
-        {
-            get
-            {
-                return _TopMost;
-            }
-
-            set
-            {
-                if (_TopMost != value)
-                {
-                    _TopMost = value;
-
-                    if (_Initialized)
-                    {
-                        Action InvokeMethod = () =>
-                        {
-                            _Client.TopMost = _TopMost;
-                        };
-
-                        _Client.Invoke(InvokeMethod);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取或设置表示窗口是否在任务栏显示的布尔值。
-        /// </summary>
-        public bool ShowInTaskbar
-        {
-            get
-            {
-                return _ShowInTaskbar;
-            }
-
-            set
-            {
-                if (_ShowInTaskbar != value)
-                {
-                    _ShowInTaskbar = value;
-
-                    if (_Initialized)
-                    {
-                        Action InvokeMethod = () =>
-                        {
-                            _Client.ShowInTaskbar = _ShowInTaskbar;
-
-                            _CaptionBar.OnFormStyleChanged();
-
-                            _Resizer.BringToFront();
-                            _CaptionBar.BringToFront();
-                            _Client.BringToFront();
-                            _Client.Focus();
-
-                            _UpdateLayout(UpdateLayoutEventType.None);
                         };
 
                         _Client.Invoke(InvokeMethod);
@@ -3041,24 +3151,6 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 获取或设置窗口交互过程显示的效果。
-        /// </summary>
-        public Effect Effect
-        {
-            get
-            {
-                return _Effect;
-            }
-
-            set
-            {
-                _Effect = value;
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取或设置窗口的状态。
         /// </summary>
         public FormState FormState
@@ -3116,7 +3208,7 @@ namespace Com.WinForm
                     }
                     else if (_FormState != FormState.Maximized && value == FormState.Maximized)
                     {
-                        if (_FormStyle == FormStyle.Sizable)
+                        if (_EnableMaximize)
                         {
                             _PreviousFormState = _FormState;
                             _FormState = FormState.Maximized;
@@ -4008,7 +4100,7 @@ namespace Com.WinForm
             {
                 if (_Client.WindowState == FormWindowState.Minimized)
                 {
-                    _Client.WindowState = FormWindowState.Normal;
+                    _Return(UpdateLayoutBehavior.None, UpdateLayoutEventType.None);
 
                     return true;
                 }

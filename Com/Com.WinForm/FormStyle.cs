@@ -31,10 +31,5 @@ namespace Com.WinForm
         /// 大小固定的窗口。
         /// </summary>
         Fixed,
-
-        /// <summary>
-        /// 大小固定的对话框。
-        /// </summary>
-        Dialog
     }
 }
