@@ -454,6 +454,13 @@ namespace Com.WinForm
                         Me.Maximize();
                     }
                 }
+                else
+                {
+                    if (Me.FormState != FormState.Normal && Me.FormState != FormState.FullScreen)
+                    {
+                        Me.Return();
+                    }
+                }
             }
         }
 
@@ -480,9 +487,13 @@ namespace Com.WinForm
 
             if (_MeIsMoving == true && e.Button == MouseButtons.Left)
             {
+                Point CursorPosition = FormManager.CursorPosition;
+                Rectangle PrimaryScreenClient = FormManager.PrimaryScreenClient;
+                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+
                 Action ReleaseAndCheckY = () =>
                 {
-                    Me.Bounds_Current_Y = Math.Max(Me.Bounds_Current_Location.Y, FormManager.PrimaryScreenClient.Y);
+                    Me.Bounds_Current_Y = Math.Max(Me.Bounds_Current_Location.Y, PrimaryScreenClient.Y);
 
                     Me.UpdateLayout(UpdateLayoutEventType.LocationChanged);
 
@@ -492,59 +503,65 @@ namespace Com.WinForm
                     }
                 };
 
-                if (Me.EnableMaximize)
+                if (Me.FormStyle == FormStyle.Sizable || Me.EnableMaximize)
                 {
-                    if (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.X && FormManager.CursorPosition.X <= FormManager.PrimaryScreenClient.X + _ExtendDist)
+                    if (CursorPosition.X >= PrimaryScreenClient.X && CursorPosition.X <= PrimaryScreenClient.X + _ExtendDist)
                     {
-                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Y && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y + _ExtendDist)
+                        if (Me.FormStyle == FormStyle.Sizable)
                         {
-                            if (!Me.TopLeftQuarterScreen())
+                            if (CursorPosition.Y >= PrimaryScreenClient.Y && CursorPosition.Y <= PrimaryScreenClient.Y + _ExtendDist)
                             {
-                                ReleaseAndCheckY();
+                                if (!Me.TopLeftQuarterScreen())
+                                {
+                                    ReleaseAndCheckY();
+                                }
                             }
-                        }
-                        else if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - _ExtendDist && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenBounds.Bottom)
-                        {
-                            if (!Me.BottomLeftQuarterScreen())
+                            else if (CursorPosition.Y >= PrimaryScreenClient.Bottom - _ExtendDist && CursorPosition.Y <= PrimaryScreenBounds.Bottom)
                             {
-                                ReleaseAndCheckY();
+                                if (!Me.BottomLeftQuarterScreen())
+                                {
+                                    ReleaseAndCheckY();
+                                }
                             }
-                        }
-                        else
-                        {
-                            if (!Me.LeftHalfScreen())
+                            else
                             {
-                                ReleaseAndCheckY();
+                                if (!Me.LeftHalfScreen())
+                                {
+                                    ReleaseAndCheckY();
+                                }
                             }
                         }
                     }
-                    else if (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.Right - _ExtendDist && FormManager.CursorPosition.X <= FormManager.PrimaryScreenBounds.Right)
+                    else if (CursorPosition.X >= PrimaryScreenClient.Right - _ExtendDist && CursorPosition.X <= PrimaryScreenBounds.Right)
                     {
-                        if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Y && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y + _ExtendDist)
+                        if (Me.FormStyle == FormStyle.Sizable)
                         {
-                            if (!Me.TopRightQuarterScreen())
+                            if (CursorPosition.Y >= PrimaryScreenClient.Y && CursorPosition.Y <= PrimaryScreenClient.Y + _ExtendDist)
                             {
-                                ReleaseAndCheckY();
+                                if (!Me.TopRightQuarterScreen())
+                                {
+                                    ReleaseAndCheckY();
+                                }
                             }
-                        }
-                        else if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Bottom - _ExtendDist && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenBounds.Bottom)
-                        {
-                            if (!Me.BottomRightQuarterScreen())
+                            else if (CursorPosition.Y >= PrimaryScreenClient.Bottom - _ExtendDist && CursorPosition.Y <= PrimaryScreenBounds.Bottom)
                             {
-                                ReleaseAndCheckY();
+                                if (!Me.BottomRightQuarterScreen())
+                                {
+                                    ReleaseAndCheckY();
+                                }
                             }
-                        }
-                        else
-                        {
-                            if (!Me.RightHalfScreen())
+                            else
                             {
-                                ReleaseAndCheckY();
+                                if (!Me.RightHalfScreen())
+                                {
+                                    ReleaseAndCheckY();
+                                }
                             }
                         }
                     }
-                    else if (FormManager.CursorPosition.Y >= FormManager.PrimaryScreenClient.Y && FormManager.CursorPosition.Y <= FormManager.PrimaryScreenClient.Y + _ExtendDist)
+                    else if (CursorPosition.Y >= PrimaryScreenClient.Y && CursorPosition.Y <= PrimaryScreenClient.Y + _ExtendDist)
                     {
-                        if (Me.FormState == FormState.Normal)
+                        if (Me.EnableMaximize && Me.FormState == FormState.Normal)
                         {
                             if (!Me.Maximize())
                             {
@@ -585,7 +602,11 @@ namespace Com.WinForm
             {
                 if (Me.FormState != FormState.FullScreen)
                 {
-                    if ((Me.FormState == FormState.Maximized && (FormManager.CursorPosition.Y > FormManager.PrimaryScreenClient.Y + _ExtendDist || (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.X && FormManager.CursorPosition.X <= FormManager.PrimaryScreenClient.X + _ExtendDist) || (FormManager.CursorPosition.X >= FormManager.PrimaryScreenClient.Right - _ExtendDist && FormManager.CursorPosition.X <= FormManager.PrimaryScreenBounds.Right))) || (Me.FormState == FormState.HighAsScreen && FormManager.CursorPosition.Y > FormManager.PrimaryScreenClient.Y + Me.CaptionBarHeight + _ExtendDist) || Me.FormState == FormState.QuarterScreen)
+                    Point CursorPosition = FormManager.CursorPosition;
+                    Rectangle PrimaryScreenClient = FormManager.PrimaryScreenClient;
+                    Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+
+                    if ((Me.FormState == FormState.Maximized && (CursorPosition.Y > PrimaryScreenClient.Y + _ExtendDist || (CursorPosition.X >= PrimaryScreenClient.X && CursorPosition.X <= PrimaryScreenClient.X + _ExtendDist) || (CursorPosition.X >= PrimaryScreenClient.Right - _ExtendDist && CursorPosition.X <= PrimaryScreenBounds.Right))) || (Me.FormState == FormState.HighAsScreen && CursorPosition.Y > PrimaryScreenClient.Y + Me.CaptionBarHeight + _ExtendDist) || Me.FormState == FormState.QuarterScreen)
                     {
                         if (_CursorPositionOfMe.X >= Me.Bounds_Current_Width - Me.Bounds_Normal_Width / 2)
                         {
@@ -600,7 +621,7 @@ namespace Com.WinForm
                         {
                             Me.ReturnByMoveForm();
 
-                            Me.Bounds_Current_Location = new Point(FormManager.CursorPosition.X - _CursorPositionOfMe.X, FormManager.CursorPosition.Y - _CursorPositionOfMe.Y);
+                            Me.Bounds_Current_Location = new Point(CursorPosition.X - _CursorPositionOfMe.X, CursorPosition.Y - _CursorPositionOfMe.Y);
 
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
                         }
@@ -609,13 +630,13 @@ namespace Com.WinForm
                     {
                         if (Me.FormState == FormState.Normal)
                         {
-                            Me.Bounds_Current_Location = new Point(FormManager.CursorPosition.X - _CursorPositionOfMe.X, FormManager.CursorPosition.Y - _CursorPositionOfMe.Y);
+                            Me.Bounds_Current_Location = new Point(CursorPosition.X - _CursorPositionOfMe.X, CursorPosition.Y - _CursorPositionOfMe.Y);
 
                             _TryToUpdateLayout();
                         }
                         else if (Me.FormState == FormState.HighAsScreen)
                         {
-                            Me.Bounds_Current_X = FormManager.CursorPosition.X - _CursorPositionOfMe.X;
+                            Me.Bounds_Current_X = CursorPosition.X - _CursorPositionOfMe.X;
 
                             _TryToUpdateLayout();
                         }
@@ -1019,9 +1040,11 @@ namespace Com.WinForm
 
                 if (Me.Enabled)
                 {
+                    Point CursorPosition = FormManager.CursorPosition;
+
                     if (this.Height == Panel_ControlBox.Height)
                     {
-                        if (FormManager.CursorPosition.Y > Me.Y + Panel_CaptionBar.Height * 2)
+                        if (CursorPosition.Y > Me.Y + Panel_CaptionBar.Height * 2)
                         {
                             if (Me.Effect.HasFlag(Effect.SmoothShift) && Me.Effect.HasFlag(Effect.Fade))
                             {
@@ -1035,7 +1058,7 @@ namespace Com.WinForm
                     }
                     else
                     {
-                        if (FormManager.CursorPosition.Y <= Me.Y + _ExtendDist && FormManager.CursorPosition.X >= Me.Right - Panel_CaptionBar.Width && FormManager.CursorPosition.X <= Me.Right)
+                        if (CursorPosition.Y <= Me.Y + _ExtendDist && CursorPosition.X >= Me.Right - Panel_CaptionBar.Width && CursorPosition.X <= Me.Right)
                         {
                             this.BringToFront();
 
