@@ -157,6 +157,7 @@ namespace Com.WinForm
         private bool _SplashScreenIsActive = false; // 表示 _SplashScreen 是否处于激活状态的布尔值。
 
         private bool _MainMenuIsActive = false; // 表示主菜单是否处于激活状态的布尔值。
+
         internal bool MainMenuIsActive // 设置主菜单是否处于激活状态的布尔值。
         {
             set
@@ -2374,8 +2375,6 @@ namespace Com.WinForm
                             if (!_EnableMinimize && _Client.WindowState == FormWindowState.Minimized)
                             {
                                 _Return(UpdateLayoutBehavior.None, UpdateLayoutEventType.None);
-
-                                _OnFormStateChanged();
                             }
                         };
 
