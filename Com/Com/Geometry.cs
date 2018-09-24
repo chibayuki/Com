@@ -2,7 +2,7 @@
 Copyright © 2018 chibayuki@foxmail.com
 
 Com.Geometry
-Version 18.9.15.2000
+Version 18.9.24.1600
 
 This file is part of Com
 
@@ -262,6 +262,29 @@ namespace Com
                     edgeDist = Math.Max(0, edgeDist);
 
                     return Rectangle.FromLTRB(L - edgeDist, T - edgeDist, R + edgeDist - 1, B + edgeDist - 1);
+                }
+            }
+            catch
+            {
+                return Rectangle.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 计算同一容器中一组控件的最小外接矩形。
+        /// </summary>
+        /// <param name="ctrls">控件数组。</param>
+        public static Rectangle GetMinimumBoundingRectangleOfControls(Control[] ctrls)
+        {
+            try
+            {
+                if (InternalMethod.IsNullOrEmpty(ctrls))
+                {
+                    return Rectangle.Empty;
+                }
+                else
+                {
+                    return GetMinimumBoundingRectangleOfControls(ctrls, 0);
                 }
             }
             catch
