@@ -1254,9 +1254,11 @@ namespace Com.WinForm
             _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
 
+            Rectangle CurScrClient = PrimaryScreenClient;
+
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height);
-            Bounds_Current_Location = PrimaryScreenClient.Location;
+            Bounds_Current_Size = new Size(CurScrClient.Width / 2, CurScrClient.Height);
+            Bounds_Current_Location = CurScrClient.Location;
 
             _CaptionBar.OnFormStateChanged();
             _Resizer.OnFormStateChanged();
@@ -1277,9 +1279,11 @@ namespace Com.WinForm
             _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
 
+            Rectangle CurScrClient = PrimaryScreenClient;
+
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height);
-            Bounds_Current_Location = new Point(PrimaryScreenClient.Right - Bounds_Current_Width, PrimaryScreenClient.Y);
+            Bounds_Current_Size = new Size(CurScrClient.Width / 2, CurScrClient.Height);
+            Bounds_Current_Location = new Point(CurScrClient.Right - Bounds_Current_Width, CurScrClient.Y);
 
             _CaptionBar.OnFormStateChanged();
             _Resizer.OnFormStateChanged();
@@ -1300,9 +1304,11 @@ namespace Com.WinForm
             _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
 
+            Rectangle CurScrClient = PrimaryScreenClient;
+
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Height = PrimaryScreenClient.Height;
-            Bounds_Current_Y = PrimaryScreenClient.Y;
+            Bounds_Current_Height = CurScrClient.Height;
+            Bounds_Current_Y = CurScrClient.Y;
 
             _CaptionBar.OnFormStateChanged();
             _Resizer.OnFormStateChanged();
@@ -1323,9 +1329,11 @@ namespace Com.WinForm
             _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
 
+            Rectangle CurScrClient = PrimaryScreenClient;
+
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height / 2);
-            Bounds_Current_Location = Bounds_QuarterScreen_Location = PrimaryScreenClient.Location;
+            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(CurScrClient.Width / 2, CurScrClient.Height / 2);
+            Bounds_Current_Location = Bounds_QuarterScreen_Location = CurScrClient.Location;
 
             _CaptionBar.OnFormStateChanged();
             _Resizer.OnFormStateChanged();
@@ -1346,9 +1354,11 @@ namespace Com.WinForm
             _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
 
+            Rectangle CurScrClient = PrimaryScreenClient;
+
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height / 2);
-            Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(PrimaryScreenClient.Right - Bounds_Current_Width, PrimaryScreenClient.Y);
+            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(CurScrClient.Width / 2, CurScrClient.Height / 2);
+            Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(CurScrClient.Right - Bounds_Current_Width, CurScrClient.Y);
 
             _CaptionBar.OnFormStateChanged();
             _Resizer.OnFormStateChanged();
@@ -1369,9 +1379,11 @@ namespace Com.WinForm
             _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
 
+            Rectangle CurScrClient = PrimaryScreenClient;
+
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height / 2);
-            Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(PrimaryScreenClient.X, PrimaryScreenClient.Bottom - Bounds_Current_Height);
+            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(CurScrClient.Width / 2, CurScrClient.Height / 2);
+            Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(CurScrClient.X, CurScrClient.Bottom - Bounds_Current_Height);
 
             _CaptionBar.OnFormStateChanged();
             _Resizer.OnFormStateChanged();
@@ -1392,9 +1404,11 @@ namespace Com.WinForm
             _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
 
+            Rectangle CurScrClient = PrimaryScreenClient;
+
             Rectangle OldBounds = Bounds_Current;
-            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(PrimaryScreenClient.Width / 2, PrimaryScreenClient.Height / 2);
-            Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(PrimaryScreenClient.Right - Bounds_Current_Width, PrimaryScreenClient.Bottom - Bounds_Current_Height);
+            Bounds_Current_Size = Bounds_QuarterScreen_Size = new Size(CurScrClient.Width / 2, CurScrClient.Height / 2);
+            Bounds_Current_Location = Bounds_QuarterScreen_Location = new Point(CurScrClient.Right - Bounds_Current_Width, CurScrClient.Bottom - Bounds_Current_Height);
 
             _CaptionBar.OnFormStateChanged();
             _Resizer.OnFormStateChanged();
@@ -1703,8 +1717,10 @@ namespace Com.WinForm
                 }
             }
 
-            Rectangle Bounds_Screen = PrimaryScreenClient;
-            Rectangle Bounds_Parent = (_Owner != null ? _Owner.Bounds : PrimaryScreenClient);
+            Rectangle CurScrClient = PrimaryScreenClient;
+
+            Rectangle Bounds_Screen = CurScrClient;
+            Rectangle Bounds_Parent = (_Owner != null ? _Owner.Bounds : CurScrClient);
 
             switch (_Client.StartPosition)
             {
@@ -1806,7 +1822,11 @@ namespace Com.WinForm
 
             //
 
-            User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) + (_EnableMinimize ? 131072 : -131072));
+            try
+            {
+                User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) + (_EnableMinimize ? 131072 : -131072));
+            }
+            catch { }
 
             //
 
@@ -2058,7 +2078,9 @@ namespace Com.WinForm
 
         private void ResolutionMonitor_Tick(object sender, EventArgs e) // _ResolutionMonitor 的 Tick 事件的回调函数。
         {
-            if (_PreviousPrimaryScreenClient != PrimaryScreenClient)
+            Rectangle CurScrClient = PrimaryScreenClient;
+
+            if (_PreviousPrimaryScreenClient != CurScrClient)
             {
                 UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None;
 
@@ -2087,41 +2109,41 @@ namespace Com.WinForm
                             {
                                 case FormState.Maximized:
                                     {
-                                        Bounds_BeforeFullScreen = PrimaryScreenClient;
+                                        Bounds_BeforeFullScreen = CurScrClient;
                                     }
                                     break;
 
                                 case FormState.HighAsScreen:
                                     {
-                                        Bounds_BeforeFullScreen_Width = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Width);
-                                        Bounds_BeforeFullScreen_Height = PrimaryScreenClient.Height;
-                                        Bounds_BeforeFullScreen_Y = PrimaryScreenClient.Y;
+                                        Bounds_BeforeFullScreen_Width = Math.Min(CurScrClient.Width, Bounds_BeforeFullScreen_Width);
+                                        Bounds_BeforeFullScreen_Height = CurScrClient.Height;
+                                        Bounds_BeforeFullScreen_Y = CurScrClient.Y;
                                     }
                                     break;
 
                                 case FormState.QuarterScreen:
                                     {
-                                        Bounds_BeforeFullScreen_Width = Bounds_QuarterScreen_Width = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Width);
-                                        Bounds_BeforeFullScreen_Height = Bounds_QuarterScreen_Height = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Height);
+                                        Bounds_BeforeFullScreen_Width = Bounds_QuarterScreen_Width = Math.Min(CurScrClient.Width, Bounds_BeforeFullScreen_Width);
+                                        Bounds_BeforeFullScreen_Height = Bounds_QuarterScreen_Height = Math.Min(CurScrClient.Width, Bounds_BeforeFullScreen_Height);
                                     }
                                     break;
 
                                 case FormState.Normal:
                                     {
-                                        Bounds_BeforeFullScreen_Width = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Width);
-                                        Bounds_BeforeFullScreen_Height = Math.Min(PrimaryScreenClient.Width, Bounds_BeforeFullScreen_Height);
+                                        Bounds_BeforeFullScreen_Width = Math.Min(CurScrClient.Width, Bounds_BeforeFullScreen_Width);
+                                        Bounds_BeforeFullScreen_Height = Math.Min(CurScrClient.Width, Bounds_BeforeFullScreen_Height);
                                     }
                                     break;
                             }
 
-                            Bounds_BeforeFullScreen_Y = Math.Max(PrimaryScreenClient.Y, Bounds_BeforeFullScreen_Y);
+                            Bounds_BeforeFullScreen_Y = Math.Max(CurScrClient.Y, Bounds_BeforeFullScreen_Y);
                         }
                         break;
 
                     case FormState.Maximized:
                         {
                             Rectangle OldBounds = Bounds_Current;
-                            Bounds_Current = PrimaryScreenClient;
+                            Bounds_Current = CurScrClient;
 
                             Rectangle NewBounds = Bounds_Current;
                             Bounds_Current = OldBounds;
@@ -2133,9 +2155,9 @@ namespace Com.WinForm
                     case FormState.HighAsScreen:
                         {
                             Rectangle OldBounds = Bounds_Current;
-                            Bounds_Current_Width = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Width);
-                            Bounds_Current_Height = PrimaryScreenClient.Height;
-                            Bounds_Current_Y = PrimaryScreenClient.Y;
+                            Bounds_Current_Width = Math.Min(CurScrClient.Width, Bounds_Current_Width);
+                            Bounds_Current_Height = CurScrClient.Height;
+                            Bounds_Current_Y = CurScrClient.Y;
 
                             Rectangle NewBounds = Bounds_Current;
                             Bounds_Current = OldBounds;
@@ -2147,9 +2169,9 @@ namespace Com.WinForm
                     case FormState.QuarterScreen:
                         {
                             Rectangle OldBounds = Bounds_Current;
-                            Bounds_Current_Width = Bounds_QuarterScreen_Width = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Width);
-                            Bounds_Current_Height = Bounds_QuarterScreen_Height = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Height);
-                            Bounds_Current_Y = Bounds_QuarterScreen_Y = Math.Max(PrimaryScreenClient.Y, Bounds_Current_Y);
+                            Bounds_Current_Width = Bounds_QuarterScreen_Width = Math.Min(CurScrClient.Width, Bounds_Current_Width);
+                            Bounds_Current_Height = Bounds_QuarterScreen_Height = Math.Min(CurScrClient.Width, Bounds_Current_Height);
+                            Bounds_Current_Y = Bounds_QuarterScreen_Y = Math.Max(CurScrClient.Y, Bounds_Current_Y);
 
                             Rectangle NewBounds = Bounds_Current;
                             Bounds_Current = OldBounds;
@@ -2161,9 +2183,9 @@ namespace Com.WinForm
                     case FormState.Normal:
                         {
                             Rectangle OldBounds = Bounds_Current;
-                            Bounds_Current_Width = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Width);
-                            Bounds_Current_Height = Math.Min(PrimaryScreenClient.Width, Bounds_Current_Height);
-                            Bounds_Current_Y = Math.Max(PrimaryScreenClient.Y, Bounds_Current_Y);
+                            Bounds_Current_Width = Math.Min(CurScrClient.Width, Bounds_Current_Width);
+                            Bounds_Current_Height = Math.Min(CurScrClient.Width, Bounds_Current_Height);
+                            Bounds_Current_Y = Math.Max(CurScrClient.Y, Bounds_Current_Y);
 
                             Rectangle NewBounds = Bounds_Current;
                             Bounds_Current = OldBounds;
@@ -2173,11 +2195,11 @@ namespace Com.WinForm
                         break;
                 }
 
-                Bounds_Normal_Width = Math.Min(PrimaryScreenClient.Width, Bounds_Normal_Width);
-                Bounds_Normal_Height = Math.Min(PrimaryScreenClient.Width, Bounds_Normal_Height);
-                Bounds_Normal_Y = Math.Max(PrimaryScreenClient.Y, Bounds_Normal_Y);
+                Bounds_Normal_Width = Math.Min(CurScrClient.Width, Bounds_Normal_Width);
+                Bounds_Normal_Height = Math.Min(CurScrClient.Width, Bounds_Normal_Height);
+                Bounds_Normal_Y = Math.Max(CurScrClient.Y, Bounds_Normal_Y);
 
-                _PreviousPrimaryScreenClient = PrimaryScreenClient;
+                _PreviousPrimaryScreenClient = CurScrClient;
             }
         }
 
@@ -2374,7 +2396,11 @@ namespace Com.WinForm
                     {
                         Action InvokeMethod = () =>
                         {
-                            User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) + (_EnableMinimize ? 131072 : -131072));
+                            try
+                            {
+                                User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) + (_EnableMinimize ? 131072 : -131072));
+                            }
+                            catch { }
 
                             _CaptionBar.OnFormStyleChanged();
 
@@ -3237,7 +3263,9 @@ namespace Com.WinForm
 
             set
             {
-                int _X = Math.Max(PrimaryScreenBounds.X - Width + 1, Math.Min(value, PrimaryScreenBounds.Right - 1));
+                Rectangle CurScrBounds = PrimaryScreenBounds;
+
+                int _X = Math.Max(CurScrBounds.X - Width + 1, Math.Min(value, CurScrBounds.Right - 1));
 
                 if (_Initialized)
                 {
@@ -3282,7 +3310,9 @@ namespace Com.WinForm
 
             set
             {
-                int _Y = Math.Max(PrimaryScreenBounds.Y - Height + 1, Math.Min(value, PrimaryScreenBounds.Bottom - 1));
+                Rectangle CurScrBounds = PrimaryScreenBounds;
+
+                int _Y = Math.Max(CurScrBounds.Y - Height + 1, Math.Min(value, CurScrBounds.Bottom - 1));
 
                 if (_Initialized)
                 {
@@ -3377,7 +3407,9 @@ namespace Com.WinForm
 
             set
             {
-                Point _Location = new Point(Math.Max(PrimaryScreenBounds.X - Width + 1, Math.Min(value.X, PrimaryScreenBounds.Right - 1)), Math.Max(PrimaryScreenBounds.Y - Height + 1, Math.Min(value.Y, PrimaryScreenBounds.Bottom - 1)));
+                Rectangle CurScrBounds = PrimaryScreenBounds;
+
+                Point _Location = new Point(Math.Max(CurScrBounds.X - Width + 1, Math.Min(value.X, CurScrBounds.Right - 1)), Math.Max(CurScrBounds.Y - Height + 1, Math.Min(value.Y, CurScrBounds.Bottom - 1)));
 
                 if (_Initialized)
                 {
@@ -3547,9 +3579,11 @@ namespace Com.WinForm
 
             set
             {
+                Rectangle CurScrBounds = PrimaryScreenBounds;
+
                 Rectangle _Bounds = new Rectangle();
                 _Bounds.Size = new Size(Math.Max(MinimumWidth, Math.Min(value.Width, MaximumWidth)), Math.Max(MinimumHeight, Math.Min(value.Height, MaximumHeight)));
-                _Bounds.Location = new Point(Math.Max(PrimaryScreenBounds.X - _Bounds.Width + 1, Math.Min(value.X, PrimaryScreenBounds.Right - 1)), Math.Max(PrimaryScreenBounds.Y - _Bounds.Height + 1, Math.Min(value.Y, PrimaryScreenBounds.Bottom - 1)));
+                _Bounds.Location = new Point(Math.Max(CurScrBounds.X - _Bounds.Width + 1, Math.Min(value.X, CurScrBounds.Right - 1)), Math.Max(CurScrBounds.Y - _Bounds.Height + 1, Math.Min(value.Y, CurScrBounds.Bottom - 1)));
 
                 if (_Initialized)
                 {

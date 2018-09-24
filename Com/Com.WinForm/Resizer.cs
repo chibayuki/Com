@@ -91,12 +91,16 @@ namespace Com.WinForm
 
         //
 
-        private DateTime _LastUpdateLayout = new DateTime(); // 上次更新窗口大小调节器布局的日期时间。
+        private DateTime _LastUpdateLayout = new DateTime(); // 上次更新窗口布局的日期时间。
 
-        private void _TryToUpdateLayout() // 尝试更新窗口大小调节器布局。
+        private UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None; // 尝试更新窗口布局时希望触发的事件类型。
+
+        private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 尝试更新窗口布局。
         {
             if (!BackgroundWorker_UpdateLayoutDelay.IsBusy)
             {
+                _UpdateLayoutEventType = updateLayoutEventType;
+
                 BackgroundWorker_UpdateLayoutDelay.RunWorkerAsync();
             }
         }
@@ -248,21 +252,21 @@ namespace Com.WinForm
                 }
 
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
                 {
                     if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) >= Me.MinimumHeight)
                     {
-                        if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight))
+                        if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(CurScrBounds.Height, Me.MaximumHeight))
                         {
                             Me.Bounds_Current_Y = CursorPosition.Y - _CursorPositionOfMe.Y;
                             Me.Bounds_Current_Height = Me.Bounds_Normal_Bottom - Me.Bounds_Current_Y;
                         }
                         else
                         {
-                            Me.Bounds_Current_Y = Me.Bounds_Normal_Bottom - Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
-                            Me.Bounds_Current_Height = Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Y = Me.Bounds_Normal_Bottom - Math.Min(CurScrBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Height = Math.Min(CurScrBounds.Height, Me.MaximumHeight);
                         }
                     }
                     else
@@ -271,21 +275,21 @@ namespace Com.WinForm
                         Me.Bounds_Current_Height = Me.MinimumHeight;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) >= Me.MinimumHeight)
                     {
-                        if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight))
+                        if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(CurScrBounds.Height, Me.MaximumHeight))
                         {
                             Me.Bounds_Current_Y = CursorPosition.Y - _CursorPositionOfMe.Y;
                             Me.Bounds_Current_Height = Me.Bounds_QuarterScreen_Bottom - Me.Bounds_Current_Y;
                         }
                         else
                         {
-                            Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Bottom - Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
-                            Me.Bounds_Current_Height = Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Bottom - Math.Min(CurScrBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Height = Math.Min(CurScrBounds.Height, Me.MaximumHeight);
                         }
                     }
                     else
@@ -294,7 +298,7 @@ namespace Com.WinForm
                         Me.Bounds_Current_Height = Me.MinimumHeight;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
             }
         }
@@ -352,14 +356,14 @@ namespace Com.WinForm
                         {
                             if (!Me.HighAsScreen())
                             {
-                                Me.UpdateLayout(UpdateLayoutEventType.Result);
+                                Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                             }
                         }
                         else
                         {
                             Me.Bounds_Normal = Me.Bounds_Current;
 
-                            Me.UpdateLayout(UpdateLayoutEventType.Result);
+                            Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                         }
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
@@ -367,7 +371,7 @@ namespace Com.WinForm
                         Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
                         Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.Result);
+                        Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     }
                 }
 
@@ -389,14 +393,14 @@ namespace Com.WinForm
                 }
 
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
                 {
                     if (Me.Bounds_Normal_Height + CursorPosition.Y - Me.Bounds_Normal_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
                     {
                         Me.Bounds_Current_Y = Me.Bounds_Normal_Y;
-                        Me.Bounds_Current_Height = Math.Min(Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight), Me.Bounds_Normal_Height - Me.Bounds_Normal_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
+                        Me.Bounds_Current_Height = Math.Min(Math.Min(CurScrBounds.Height, Me.MaximumHeight), Me.Bounds_Normal_Height - Me.Bounds_Normal_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
                     }
                     else
                     {
@@ -404,14 +408,14 @@ namespace Com.WinForm
                         Me.Bounds_Current_Height = Me.MinimumHeight;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Resize);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
-                    if (Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight) && Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
+                    if (Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y <= Math.Min(CurScrBounds.Height, Me.MaximumHeight) && Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
                     {
                         Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Y;
-                        Me.Bounds_Current_Height = Math.Min(Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight), Me.Bounds_QuarterScreen_Height - Me.Bounds_QuarterScreen_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
+                        Me.Bounds_Current_Height = Math.Min(Math.Min(CurScrBounds.Height, Me.MaximumHeight), Me.Bounds_QuarterScreen_Height - Me.Bounds_QuarterScreen_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
                     }
                     else
                     {
@@ -419,7 +423,7 @@ namespace Com.WinForm
                         Me.Bounds_Current_Height = Me.MinimumHeight;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Resize);
                 }
             }
         }
@@ -486,21 +490,21 @@ namespace Com.WinForm
             if (_MeIsResizing)
             {
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
                 {
                     if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) >= Me.MinimumWidth)
                     {
-                        if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth))
+                        if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(CurScrBounds.Width, Me.MaximumWidth))
                         {
                             Me.Bounds_Current_X = CursorPosition.X - _CursorPositionOfMe.X;
                             Me.Bounds_Current_Width = Me.Bounds_Normal_Right - Me.Bounds_Current_X;
                         }
                         else
                         {
-                            Me.Bounds_Current_X = Me.Bounds_Normal_Right - Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
-                            Me.Bounds_Current_Width = Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_X = Me.Bounds_Normal_Right - Math.Min(CurScrBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_Width = Math.Min(CurScrBounds.Width, Me.MaximumWidth);
                         }
                     }
                     else
@@ -509,21 +513,21 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) >= Me.MinimumWidth)
                     {
-                        if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth))
+                        if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(CurScrBounds.Width, Me.MaximumWidth))
                         {
                             Me.Bounds_Current_X = CursorPosition.X - _CursorPositionOfMe.X;
                             Me.Bounds_Current_Width = Me.Bounds_QuarterScreen_Right - Me.Bounds_Current_X;
                         }
                         else
                         {
-                            Me.Bounds_Current_X = Me.Bounds_QuarterScreen_Right - Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
-                            Me.Bounds_Current_Width = Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_X = Me.Bounds_QuarterScreen_Right - Math.Min(CurScrBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_Width = Math.Min(CurScrBounds.Width, Me.MaximumWidth);
                         }
                     }
                     else
@@ -532,7 +536,7 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
             }
         }
@@ -576,13 +580,13 @@ namespace Com.WinForm
                     {
                         Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.Result);
+                        Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
                         Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.Result);
+                        Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     }
                 }
 
@@ -597,14 +601,14 @@ namespace Com.WinForm
             if (_MeIsResizing)
             {
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
                 {
                     if (Me.Bounds_Normal_Width + CursorPosition.X - Me.Bounds_Normal_X - _CursorPositionOfMe.X >= Me.MinimumWidth)
                     {
                         Me.Bounds_Current_X = Me.Bounds_Normal_X;
-                        Me.Bounds_Current_Width = Math.Min(Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth), Me.Bounds_Normal_Width - Me.Bounds_Normal_X + CursorPosition.X - _CursorPositionOfMe.X);
+                        Me.Bounds_Current_Width = Math.Min(Math.Min(CurScrBounds.Width, Me.MaximumWidth), Me.Bounds_Normal_Width - Me.Bounds_Normal_X + CursorPosition.X - _CursorPositionOfMe.X);
                     }
                     else
                     {
@@ -612,14 +616,14 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Resize);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     if (Me.Bounds_QuarterScreen_Width + CursorPosition.X - Me.Bounds_QuarterScreen_X - _CursorPositionOfMe.X >= Me.MinimumWidth)
                     {
                         Me.Bounds_Current_X = Me.Bounds_QuarterScreen_X;
-                        Me.Bounds_Current_Width = Math.Min(Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth), Me.Bounds_QuarterScreen_Width - Me.Bounds_QuarterScreen_X + CursorPosition.X - _CursorPositionOfMe.X);
+                        Me.Bounds_Current_Width = Math.Min(Math.Min(CurScrBounds.Width, Me.MaximumWidth), Me.Bounds_QuarterScreen_Width - Me.Bounds_QuarterScreen_X + CursorPosition.X - _CursorPositionOfMe.X);
                     }
                     else
                     {
@@ -627,7 +631,7 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Resize);
                 }
             }
         }
@@ -710,21 +714,21 @@ namespace Com.WinForm
                 }
 
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
                 {
                     if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) >= Me.MinimumHeight)
                     {
-                        if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight))
+                        if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(CurScrBounds.Height, Me.MaximumHeight))
                         {
                             Me.Bounds_Current_Y = CursorPosition.Y - _CursorPositionOfMe.Y;
                             Me.Bounds_Current_Height = Me.Bounds_Normal_Bottom - Me.Bounds_Current_Y;
                         }
                         else
                         {
-                            Me.Bounds_Current_Y = Me.Bounds_Normal_Bottom - Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
-                            Me.Bounds_Current_Height = Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Y = Me.Bounds_Normal_Bottom - Math.Min(CurScrBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Height = Math.Min(CurScrBounds.Height, Me.MaximumHeight);
                         }
                     }
                     else
@@ -735,15 +739,15 @@ namespace Com.WinForm
 
                     if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) >= Me.MinimumWidth)
                     {
-                        if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth))
+                        if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(CurScrBounds.Width, Me.MaximumWidth))
                         {
                             Me.Bounds_Current_X = CursorPosition.X - _CursorPositionOfMe.X;
                             Me.Bounds_Current_Width = Me.Bounds_Normal_Right - Me.Bounds_Current_X;
                         }
                         else
                         {
-                            Me.Bounds_Current_X = Me.Bounds_Normal_Right - Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
-                            Me.Bounds_Current_Width = Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_X = Me.Bounds_Normal_Right - Math.Min(CurScrBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_Width = Math.Min(CurScrBounds.Width, Me.MaximumWidth);
                         }
                     }
                     else
@@ -752,21 +756,21 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) >= Me.MinimumHeight)
                     {
-                        if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight))
+                        if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(CurScrBounds.Height, Me.MaximumHeight))
                         {
                             Me.Bounds_Current_Y = CursorPosition.Y - _CursorPositionOfMe.Y;
                             Me.Bounds_Current_Height = Me.Bounds_QuarterScreen_Bottom - Me.Bounds_Current_Y;
                         }
                         else
                         {
-                            Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Bottom - Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
-                            Me.Bounds_Current_Height = Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Bottom - Math.Min(CurScrBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Height = Math.Min(CurScrBounds.Height, Me.MaximumHeight);
                         }
                     }
                     else
@@ -777,15 +781,15 @@ namespace Com.WinForm
 
                     if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) >= Me.MinimumWidth)
                     {
-                        if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth))
+                        if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(CurScrBounds.Width, Me.MaximumWidth))
                         {
                             Me.Bounds_Current_X = CursorPosition.X - _CursorPositionOfMe.X;
                             Me.Bounds_Current_Width = Me.Bounds_QuarterScreen_Right - Me.Bounds_Current_X;
                         }
                         else
                         {
-                            Me.Bounds_Current_X = Me.Bounds_QuarterScreen_Right - Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
-                            Me.Bounds_Current_Width = Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_X = Me.Bounds_QuarterScreen_Right - Math.Min(CurScrBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_Width = Math.Min(CurScrBounds.Width, Me.MaximumWidth);
                         }
                     }
                     else
@@ -794,7 +798,7 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
             }
         }
@@ -877,21 +881,21 @@ namespace Com.WinForm
                 }
 
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
                 {
                     if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) >= Me.MinimumHeight)
                     {
-                        if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight))
+                        if (Me.Bounds_Normal_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(CurScrBounds.Height, Me.MaximumHeight))
                         {
                             Me.Bounds_Current_Y = CursorPosition.Y - _CursorPositionOfMe.Y;
                             Me.Bounds_Current_Height = Me.Bounds_Normal_Bottom - Me.Bounds_Current_Y;
                         }
                         else
                         {
-                            Me.Bounds_Current_Y = Me.Bounds_Normal_Bottom - Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
-                            Me.Bounds_Current_Height = Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Y = Me.Bounds_Normal_Bottom - Math.Min(CurScrBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Height = Math.Min(CurScrBounds.Height, Me.MaximumHeight);
                         }
                     }
                     else
@@ -903,7 +907,7 @@ namespace Com.WinForm
                     if (Me.Bounds_Normal_Width + CursorPosition.X - Me.Bounds_Normal_X - _CursorPositionOfMe.X >= Me.MinimumWidth)
                     {
                         Me.Bounds_Current_X = Me.Bounds_Normal_X;
-                        Me.Bounds_Current_Width = Math.Min(Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth), Me.Bounds_Normal_Width - Me.Bounds_Normal_X + CursorPosition.X - _CursorPositionOfMe.X);
+                        Me.Bounds_Current_Width = Math.Min(Math.Min(CurScrBounds.Width, Me.MaximumWidth), Me.Bounds_Normal_Width - Me.Bounds_Normal_X + CursorPosition.X - _CursorPositionOfMe.X);
                     }
                     else
                     {
@@ -911,21 +915,21 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
                     if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) >= Me.MinimumHeight)
                     {
-                        if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight))
+                        if (Me.Bounds_QuarterScreen_Bottom - (CursorPosition.Y - _CursorPositionOfMe.Y) <= Math.Min(CurScrBounds.Height, Me.MaximumHeight))
                         {
                             Me.Bounds_Current_Y = CursorPosition.Y - _CursorPositionOfMe.Y;
                             Me.Bounds_Current_Height = Me.Bounds_QuarterScreen_Bottom - Me.Bounds_Current_Y;
                         }
                         else
                         {
-                            Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Bottom - Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
-                            Me.Bounds_Current_Height = Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Bottom - Math.Min(CurScrBounds.Height, Me.MaximumHeight);
+                            Me.Bounds_Current_Height = Math.Min(CurScrBounds.Height, Me.MaximumHeight);
                         }
                     }
                     else
@@ -937,7 +941,7 @@ namespace Com.WinForm
                     if (Me.Bounds_QuarterScreen_Width + CursorPosition.X - Me.Bounds_QuarterScreen_X - _CursorPositionOfMe.X >= Me.MinimumWidth)
                     {
                         Me.Bounds_Current_X = Me.Bounds_QuarterScreen_X;
-                        Me.Bounds_Current_Width = Math.Min(Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth), Me.Bounds_QuarterScreen_Width - Me.Bounds_QuarterScreen_X + CursorPosition.X - _CursorPositionOfMe.X);
+                        Me.Bounds_Current_Width = Math.Min(Math.Min(CurScrBounds.Width, Me.MaximumWidth), Me.Bounds_QuarterScreen_Width - Me.Bounds_QuarterScreen_X + CursorPosition.X - _CursorPositionOfMe.X);
                     }
                     else
                     {
@@ -945,7 +949,7 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
             }
         }
@@ -1030,14 +1034,14 @@ namespace Com.WinForm
                 }
 
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
                 {
                     if (Me.Bounds_Normal_Height + CursorPosition.Y - Me.Bounds_Normal_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
                     {
                         Me.Bounds_Current_Y = Me.Bounds_Normal_Y;
-                        Me.Bounds_Current_Height = Math.Min(Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight), Me.Bounds_Normal_Height - Me.Bounds_Normal_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
+                        Me.Bounds_Current_Height = Math.Min(Math.Min(CurScrBounds.Height, Me.MaximumHeight), Me.Bounds_Normal_Height - Me.Bounds_Normal_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
                     }
                     else
                     {
@@ -1047,15 +1051,15 @@ namespace Com.WinForm
 
                     if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) >= Me.MinimumWidth)
                     {
-                        if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth))
+                        if (Me.Bounds_Normal_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(CurScrBounds.Width, Me.MaximumWidth))
                         {
                             Me.Bounds_Current_X = CursorPosition.X - _CursorPositionOfMe.X;
                             Me.Bounds_Current_Width = Me.Bounds_Normal_Right - Me.Bounds_Current_X;
                         }
                         else
                         {
-                            Me.Bounds_Current_X = Me.Bounds_Normal_Right - Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
-                            Me.Bounds_Current_Width = Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_X = Me.Bounds_Normal_Right - Math.Min(CurScrBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_Width = Math.Min(CurScrBounds.Width, Me.MaximumWidth);
                         }
                     }
                     else
@@ -1064,14 +1068,14 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
-                    if (Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight) && Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
+                    if (Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y <= Math.Min(CurScrBounds.Height, Me.MaximumHeight) && Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
                     {
                         Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Y;
-                        Me.Bounds_Current_Height = Math.Min(Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight), Me.Bounds_QuarterScreen_Height - Me.Bounds_QuarterScreen_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
+                        Me.Bounds_Current_Height = Math.Min(Math.Min(CurScrBounds.Height, Me.MaximumHeight), Me.Bounds_QuarterScreen_Height - Me.Bounds_QuarterScreen_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
                     }
                     else
                     {
@@ -1081,15 +1085,15 @@ namespace Com.WinForm
 
                     if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) >= Me.MinimumWidth)
                     {
-                        if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth))
+                        if (Me.Bounds_QuarterScreen_Right - (CursorPosition.X - _CursorPositionOfMe.X) <= Math.Min(CurScrBounds.Width, Me.MaximumWidth))
                         {
                             Me.Bounds_Current_X = CursorPosition.X - _CursorPositionOfMe.X;
                             Me.Bounds_Current_Width = Me.Bounds_QuarterScreen_Right - Me.Bounds_Current_X;
                         }
                         else
                         {
-                            Me.Bounds_Current_X = Me.Bounds_QuarterScreen_Right - Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
-                            Me.Bounds_Current_Width = Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_X = Me.Bounds_QuarterScreen_Right - Math.Min(CurScrBounds.Width, Me.MaximumWidth);
+                            Me.Bounds_Current_Width = Math.Min(CurScrBounds.Width, Me.MaximumWidth);
                         }
                     }
                     else
@@ -1098,7 +1102,7 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Process);
                 }
             }
         }
@@ -1147,21 +1151,21 @@ namespace Com.WinForm
 
                             if (!Me.HighAsScreen())
                             {
-                                Me.UpdateLayout(UpdateLayoutEventType.Result);
+                                Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                             }
                         }
                         else
                         {
                             Me.Bounds_Normal = Me.Bounds_Current;
 
-                            Me.UpdateLayout(UpdateLayoutEventType.Result);
+                            Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                         }
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
-                        Me.UpdateLayout(UpdateLayoutEventType.Result);
+                        Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     }
                 }
 
@@ -1183,14 +1187,14 @@ namespace Com.WinForm
                 }
 
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 if (Me.FormState == FormState.Normal)
                 {
                     if (Me.Bounds_Normal_Height + CursorPosition.Y - Me.Bounds_Normal_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
                     {
                         Me.Bounds_Current_Y = Me.Bounds_Normal_Y;
-                        Me.Bounds_Current_Height = Math.Min(Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight), Me.Bounds_Normal_Height - Me.Bounds_Normal_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
+                        Me.Bounds_Current_Height = Math.Min(Math.Min(CurScrBounds.Height, Me.MaximumHeight), Me.Bounds_Normal_Height - Me.Bounds_Normal_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
                     }
                     else
                     {
@@ -1201,7 +1205,7 @@ namespace Com.WinForm
                     if (Me.Bounds_Normal_Width + CursorPosition.X - Me.Bounds_Normal_X - _CursorPositionOfMe.X >= Me.MinimumWidth)
                     {
                         Me.Bounds_Current_X = Me.Bounds_Normal_X;
-                        Me.Bounds_Current_Width = Math.Min(Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth), Me.Bounds_Normal_Width - Me.Bounds_Normal_X + CursorPosition.X - _CursorPositionOfMe.X);
+                        Me.Bounds_Current_Width = Math.Min(Math.Min(CurScrBounds.Width, Me.MaximumWidth), Me.Bounds_Normal_Width - Me.Bounds_Normal_X + CursorPosition.X - _CursorPositionOfMe.X);
                     }
                     else
                     {
@@ -1209,14 +1213,14 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Resize);
                 }
                 else if (Me.FormState == FormState.QuarterScreen)
                 {
-                    if (Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y <= Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight) && Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
+                    if (Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y <= Math.Min(CurScrBounds.Height, Me.MaximumHeight) && Me.Bounds_QuarterScreen_Height + CursorPosition.Y - Me.Bounds_QuarterScreen_Y - _CursorPositionOfMe.Y >= Me.MinimumHeight)
                     {
                         Me.Bounds_Current_Y = Me.Bounds_QuarterScreen_Y;
-                        Me.Bounds_Current_Height = Math.Min(Math.Min(PrimaryScreenBounds.Height, Me.MaximumHeight), Me.Bounds_QuarterScreen_Height - Me.Bounds_QuarterScreen_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
+                        Me.Bounds_Current_Height = Math.Min(Math.Min(CurScrBounds.Height, Me.MaximumHeight), Me.Bounds_QuarterScreen_Height - Me.Bounds_QuarterScreen_Y + CursorPosition.Y - _CursorPositionOfMe.Y);
                     }
                     else
                     {
@@ -1227,7 +1231,7 @@ namespace Com.WinForm
                     if (Me.Bounds_QuarterScreen_Width + CursorPosition.X - Me.Bounds_QuarterScreen_X - _CursorPositionOfMe.X >= Me.MinimumWidth)
                     {
                         Me.Bounds_Current_X = Me.Bounds_QuarterScreen_X;
-                        Me.Bounds_Current_Width = Math.Min(Math.Min(PrimaryScreenBounds.Width, Me.MaximumWidth), Me.Bounds_QuarterScreen_Width - Me.Bounds_QuarterScreen_X + CursorPosition.X - _CursorPositionOfMe.X);
+                        Me.Bounds_Current_Width = Math.Min(Math.Min(CurScrBounds.Width, Me.MaximumWidth), Me.Bounds_QuarterScreen_Width - Me.Bounds_QuarterScreen_X + CursorPosition.X - _CursorPositionOfMe.X);
                     }
                     else
                     {
@@ -1235,7 +1239,7 @@ namespace Com.WinForm
                         Me.Bounds_Current_Width = Me.MinimumWidth;
                     }
 
-                    _TryToUpdateLayout();
+                    _TryToUpdateLayout(UpdateLayoutEventType.Resize);
                 }
             }
         }
@@ -1252,7 +1256,7 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            Me.UpdateLayout(UpdateLayoutEventType.Process);
+            Me.UpdateLayout(_UpdateLayoutEventType);
 
             _LastUpdateLayout = DateTime.Now;
         }

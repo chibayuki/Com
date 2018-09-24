@@ -343,12 +343,16 @@ namespace Com.WinForm
 
         //
 
-        private DateTime _LastUpdateLayout = new DateTime(); // 上次更新标题栏布局的日期时间。
+        private DateTime _LastUpdateLayout = new DateTime(); // 上次更新窗口布局的日期时间。
 
-        private void _TryToUpdateLayout() // 尝试更新标题栏布局。
+        private UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None; // 尝试更新窗口布局时希望触发的事件类型。
+
+        private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 尝试更新窗口布局。
         {
             if (!BackgroundWorker_UpdateLayoutDelay.IsBusy)
             {
+                _UpdateLayoutEventType = updateLayoutEventType;
+
                 BackgroundWorker_UpdateLayoutDelay.RunWorkerAsync();
             }
         }
@@ -488,12 +492,12 @@ namespace Com.WinForm
             if (_MeIsMoving == true && e.Button == MouseButtons.Left)
             {
                 Point CursorPosition = Cursor.Position;
-                Rectangle PrimaryScreenClient = FormManager.PrimaryScreenClient;
-                Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                Rectangle CurScrClient = FormManager.PrimaryScreenClient;
+                Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
                 Action ReleaseAndCheckY = () =>
                 {
-                    Me.Bounds_Current_Y = Math.Max(Me.Bounds_Current_Location.Y, PrimaryScreenClient.Y);
+                    Me.Bounds_Current_Y = Math.Max(Me.Bounds_Current_Location.Y, CurScrClient.Y);
 
                     Me.UpdateLayout(UpdateLayoutEventType.LocationChanged);
 
@@ -505,18 +509,18 @@ namespace Com.WinForm
 
                 if (Me.FormStyle == FormStyle.Sizable || Me.EnableMaximize)
                 {
-                    if (CursorPosition.X >= PrimaryScreenClient.X && CursorPosition.X <= PrimaryScreenClient.X + _ExtendDist)
+                    if (CursorPosition.X >= CurScrClient.X && CursorPosition.X <= CurScrClient.X + _ExtendDist)
                     {
                         if (Me.FormStyle == FormStyle.Sizable)
                         {
-                            if (CursorPosition.Y >= PrimaryScreenClient.Y && CursorPosition.Y <= PrimaryScreenClient.Y + _ExtendDist)
+                            if (CursorPosition.Y >= CurScrClient.Y && CursorPosition.Y <= CurScrClient.Y + _ExtendDist)
                             {
                                 if (!Me.TopLeftQuarterScreen())
                                 {
                                     ReleaseAndCheckY();
                                 }
                             }
-                            else if (CursorPosition.Y >= PrimaryScreenClient.Bottom - _ExtendDist && CursorPosition.Y <= PrimaryScreenBounds.Bottom)
+                            else if (CursorPosition.Y >= CurScrClient.Bottom - _ExtendDist && CursorPosition.Y <= CurScrBounds.Bottom)
                             {
                                 if (!Me.BottomLeftQuarterScreen())
                                 {
@@ -532,18 +536,18 @@ namespace Com.WinForm
                             }
                         }
                     }
-                    else if (CursorPosition.X >= PrimaryScreenClient.Right - _ExtendDist && CursorPosition.X <= PrimaryScreenBounds.Right)
+                    else if (CursorPosition.X >= CurScrClient.Right - _ExtendDist && CursorPosition.X <= CurScrBounds.Right)
                     {
                         if (Me.FormStyle == FormStyle.Sizable)
                         {
-                            if (CursorPosition.Y >= PrimaryScreenClient.Y && CursorPosition.Y <= PrimaryScreenClient.Y + _ExtendDist)
+                            if (CursorPosition.Y >= CurScrClient.Y && CursorPosition.Y <= CurScrClient.Y + _ExtendDist)
                             {
                                 if (!Me.TopRightQuarterScreen())
                                 {
                                     ReleaseAndCheckY();
                                 }
                             }
-                            else if (CursorPosition.Y >= PrimaryScreenClient.Bottom - _ExtendDist && CursorPosition.Y <= PrimaryScreenBounds.Bottom)
+                            else if (CursorPosition.Y >= CurScrClient.Bottom - _ExtendDist && CursorPosition.Y <= CurScrBounds.Bottom)
                             {
                                 if (!Me.BottomRightQuarterScreen())
                                 {
@@ -559,7 +563,7 @@ namespace Com.WinForm
                             }
                         }
                     }
-                    else if (CursorPosition.Y >= PrimaryScreenClient.Y && CursorPosition.Y <= PrimaryScreenClient.Y + _ExtendDist)
+                    else if (CursorPosition.Y >= CurScrClient.Y && CursorPosition.Y <= CurScrClient.Y + _ExtendDist)
                     {
                         if (Me.FormState == FormState.Normal)
                         {
@@ -610,10 +614,10 @@ namespace Com.WinForm
                 if (Me.FormState != FormState.FullScreen)
                 {
                     Point CursorPosition = Cursor.Position;
-                    Rectangle PrimaryScreenClient = FormManager.PrimaryScreenClient;
-                    Rectangle PrimaryScreenBounds = FormManager.PrimaryScreenBounds;
+                    Rectangle CurScrClient = FormManager.PrimaryScreenClient;
+                    Rectangle CurScrBounds = FormManager.PrimaryScreenBounds;
 
-                    if ((Me.FormState == FormState.Maximized && (CursorPosition.Y > PrimaryScreenClient.Y + _ExtendDist || (CursorPosition.X >= PrimaryScreenClient.X && CursorPosition.X <= PrimaryScreenClient.X + _ExtendDist) || (CursorPosition.X >= PrimaryScreenClient.Right - _ExtendDist && CursorPosition.X <= PrimaryScreenBounds.Right))) || (Me.FormState == FormState.HighAsScreen && CursorPosition.Y > PrimaryScreenClient.Y + Me.CaptionBarHeight + _ExtendDist) || Me.FormState == FormState.QuarterScreen)
+                    if ((Me.FormState == FormState.Maximized && (CursorPosition.Y > CurScrClient.Y + _ExtendDist || (CursorPosition.X >= CurScrClient.X && CursorPosition.X <= CurScrClient.X + _ExtendDist) || (CursorPosition.X >= CurScrClient.Right - _ExtendDist && CursorPosition.X <= CurScrBounds.Right))) || (Me.FormState == FormState.HighAsScreen && CursorPosition.Y > CurScrClient.Y + Me.CaptionBarHeight + _ExtendDist) || Me.FormState == FormState.QuarterScreen)
                     {
                         if (_CursorPositionOfMe.X >= Me.Bounds_Current_Width - Me.Bounds_Normal_Width / 2)
                         {
@@ -639,13 +643,13 @@ namespace Com.WinForm
                         {
                             Me.Bounds_Current_Location = new Point(CursorPosition.X - _CursorPositionOfMe.X, CursorPosition.Y - _CursorPositionOfMe.Y);
 
-                            _TryToUpdateLayout();
+                            _TryToUpdateLayout(UpdateLayoutEventType.Move);
                         }
                         else if (Me.FormState == FormState.HighAsScreen)
                         {
                             Me.Bounds_Current_X = CursorPosition.X - _CursorPositionOfMe.X;
 
-                            _TryToUpdateLayout();
+                            _TryToUpdateLayout(UpdateLayoutEventType.Move);
                         }
                     }
                 }
@@ -996,7 +1000,7 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            Me.UpdateLayout(UpdateLayoutEventType.Process);
+            Me.UpdateLayout(_UpdateLayoutEventType);
 
             _LastUpdateLayout = DateTime.Now;
         }
