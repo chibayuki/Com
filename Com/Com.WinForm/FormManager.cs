@@ -1806,6 +1806,10 @@ namespace Com.WinForm
 
             //
 
+            User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) + (_EnableMinimize ? 131072 : -131072));
+
+            //
+
             if (_EnableMaximize && _FormState == FormState.Maximized)
             {
                 _Maximize(UpdateLayoutBehavior.Static, UpdateLayoutEventType.None);
@@ -2370,6 +2374,8 @@ namespace Com.WinForm
                     {
                         Action InvokeMethod = () =>
                         {
+                            User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) + (_EnableMinimize ? 131072 : -131072));
+
                             _CaptionBar.OnFormStyleChanged();
 
                             if (!_EnableMinimize && _Client.WindowState == FormWindowState.Minimized)
