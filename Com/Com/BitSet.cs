@@ -608,7 +608,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                List<int> Ary = new List<int>(_Size);
+                List<int> result = new List<int>(_Size);
 
                 int Len = _GetUintNumOfBitNum(_Size);
 
@@ -625,14 +625,14 @@ namespace Com
                                 break;
                             }
 
-                            Ary.Add(i * _BitsPerUint + j);
+                            result.Add(i * _BitsPerUint + j);
                         }
 
                         Bin >>= 1;
                     }
                 }
 
-                return Ary.ToArray();
+                return result.ToArray();
             }
 
             return new int[0];
@@ -645,7 +645,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                List<int> Ary = new List<int>(_Size);
+                List<int> result = new List<int>(_Size);
 
                 int Len = _GetUintNumOfBitNum(_Size);
 
@@ -662,14 +662,14 @@ namespace Com
                                 break;
                             }
 
-                            Ary.Add(i * _BitsPerUint + j);
+                            result.Add(i * _BitsPerUint + j);
                         }
 
                         Bin >>= 1;
                     }
                 }
 
-                return Ary.ToArray();
+                return result.ToArray();
             }
 
             return new int[0];

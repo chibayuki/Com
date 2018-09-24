@@ -188,19 +188,19 @@ namespace Com
         {
             try
             {
-                List<int> Ary = new List<int>(8);
+                List<int> result = new List<int>(8);
 
                 for (int i = 0; i < 8; i++)
                 {
                     if ((bin & ((uint)1)) != 0)
                     {
-                        Ary.Add(i);
+                        result.Add(i);
                     }
 
                     bin >>= 1;
                 }
 
-                return Ary;
+                return result;
             }
             catch
             {
@@ -216,19 +216,19 @@ namespace Com
         {
             try
             {
-                List<int> Ary = new List<int>(8);
+                List<int> result = new List<int>(8);
 
                 for (int i = 0; i < 8; i++)
                 {
                     if ((bin & ((uint)1)) == 0)
                     {
-                        Ary.Add(i);
+                        result.Add(i);
                     }
 
                     bin >>= 1;
                 }
 
-                return Ary;
+                return result;
             }
             catch
             {
@@ -404,19 +404,19 @@ namespace Com
         {
             try
             {
-                List<int> Ary = new List<int>(16);
+                List<int> result = new List<int>(16);
 
                 for (int i = 0; i < 16; i++)
                 {
                     if ((bin & ((uint)1)) != 0)
                     {
-                        Ary.Add(i);
+                        result.Add(i);
                     }
 
                     bin >>= 1;
                 }
 
-                return Ary;
+                return result;
             }
             catch
             {
@@ -432,19 +432,19 @@ namespace Com
         {
             try
             {
-                List<int> Ary = new List<int>(16);
+                List<int> result = new List<int>(16);
 
                 for (int i = 0; i < 16; i++)
                 {
                     if ((bin & ((uint)1)) == 0)
                     {
-                        Ary.Add(i);
+                        result.Add(i);
                     }
 
                     bin >>= 1;
                 }
 
-                return Ary;
+                return result;
             }
             catch
             {
@@ -620,19 +620,19 @@ namespace Com
         {
             try
             {
-                List<int> Ary = new List<int>(32);
+                List<int> result = new List<int>(32);
 
                 for (int i = 0; i < 32; i++)
                 {
                     if ((bin & 1) != 0)
                     {
-                        Ary.Add(i);
+                        result.Add(i);
                     }
 
                     bin >>= 1;
                 }
 
-                return Ary;
+                return result;
             }
             catch
             {
@@ -648,19 +648,19 @@ namespace Com
         {
             try
             {
-                List<int> Ary = new List<int>(32);
+                List<int> result = new List<int>(32);
 
                 for (int i = 0; i < 32; i++)
                 {
                     if ((bin & 1) == 0)
                     {
-                        Ary.Add(i);
+                        result.Add(i);
                     }
 
                     bin >>= 1;
                 }
 
-                return Ary;
+                return result;
             }
             catch
             {
@@ -836,19 +836,19 @@ namespace Com
         {
             try
             {
-                List<int> Ary = new List<int>(64);
+                List<int> result = new List<int>(64);
 
                 for (int i = 0; i < 64; i++)
                 {
                     if ((bin & 1) != 0)
                     {
-                        Ary.Add(i);
+                        result.Add(i);
                     }
 
                     bin >>= 1;
                 }
 
-                return Ary;
+                return result;
             }
             catch
             {
@@ -864,19 +864,19 @@ namespace Com
         {
             try
             {
-                List<int> Ary = new List<int>(64);
+                List<int> result = new List<int>(64);
 
                 for (int i = 0; i < 64; i++)
                 {
                     if ((bin & 1) == 0)
                     {
-                        Ary.Add(i);
+                        result.Add(i);
                     }
 
                     bin >>= 1;
                 }
 
-                return Ary;
+                return result;
             }
             catch
             {
