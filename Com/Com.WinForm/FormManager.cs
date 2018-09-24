@@ -1824,7 +1824,14 @@ namespace Com.WinForm
 
             try
             {
-                User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) + (_EnableMinimize ? 131072 : -131072));
+                if (_EnableMinimize)
+                {
+                    User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) | 131072);
+                }
+                else
+                {
+                    User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) & (~131072));
+                }
             }
             catch { }
 
@@ -2398,7 +2405,14 @@ namespace Com.WinForm
                         {
                             try
                             {
-                                User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) + (_EnableMinimize ? 131072 : -131072));
+                                if (_EnableMinimize)
+                                {
+                                    User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) | 131072);
+                                }
+                                else
+                                {
+                                    User32.SetWindowLongA(_Client.Handle.ToInt32(), -16, User32.GetWindowLongA(_Client.Handle.ToInt32(), -16) & (~131072));
+                                }
                             }
                             catch { }
 
