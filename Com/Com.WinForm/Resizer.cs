@@ -95,14 +95,23 @@ namespace Com.WinForm
 
         private UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None; // 尝试更新窗口布局时希望触发的事件类型。
 
+        private bool _CancelUpdateLayout = false; // 是否已取消尝试更新窗口布局。
+
         private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 尝试更新窗口布局。
         {
             if (!BackgroundWorker_UpdateLayoutDelay.IsBusy)
             {
                 _UpdateLayoutEventType = updateLayoutEventType;
 
+                _CancelUpdateLayout = false;
+
                 BackgroundWorker_UpdateLayoutDelay.RunWorkerAsync();
             }
+        }
+
+        private void _CancelTryToUpdateLayout() // 取消尝试更新窗口布局。
+        {
+            _CancelUpdateLayout = true;
         }
 
         #endregion
@@ -209,12 +218,14 @@ namespace Com.WinForm
 
             if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (_MeIsResizing && e.Button == MouseButtons.Left)
+                if (_MeIsResizing)
                 {
                     if (Me.FormState == FormState.Normal)
                     {
                         if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
+                            _CancelTryToUpdateLayout();
+
                             if (!Me.HighAsScreen())
                             {
                                 Me.UpdateLayout(UpdateLayoutEventType.Result);
@@ -222,6 +233,8 @@ namespace Com.WinForm
                         }
                         else
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal = Me.Bounds_Current;
 
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
@@ -229,6 +242,8 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
                         Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
@@ -348,12 +363,14 @@ namespace Com.WinForm
 
             if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (_MeIsResizing && e.Button == MouseButtons.Left)
+                if (_MeIsResizing)
                 {
                     if (Me.FormState == FormState.Normal)
                     {
                         if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
+                            _CancelTryToUpdateLayout();
+
                             if (!Me.HighAsScreen())
                             {
                                 Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
@@ -361,6 +378,8 @@ namespace Com.WinForm
                         }
                         else
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal = Me.Bounds_Current;
 
                             Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
@@ -368,6 +387,8 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
                         Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
 
@@ -461,10 +482,12 @@ namespace Com.WinForm
 
             if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (_MeIsResizing && e.Button == MouseButtons.Left)
+                if (_MeIsResizing)
                 {
                     if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_Normal_X = Me.Bounds_Current_X;
                         Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
@@ -472,6 +495,8 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_QuarterScreen_X = Me.Bounds_Current_X;
                         Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
 
@@ -574,16 +599,20 @@ namespace Com.WinForm
 
             if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (_MeIsResizing && e.Button == MouseButtons.Left)
+                if (_MeIsResizing)
                 {
                     if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
                         Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
 
                         Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
@@ -669,12 +698,14 @@ namespace Com.WinForm
 
             if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (_MeIsResizing && e.Button == MouseButtons.Left)
+                if (_MeIsResizing)
                 {
                     if (Me.FormState == FormState.Normal)
                     {
                         if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
@@ -685,6 +716,8 @@ namespace Com.WinForm
                         }
                         else
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal = Me.Bounds_Current;
 
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
@@ -692,6 +725,8 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
@@ -836,12 +871,14 @@ namespace Com.WinForm
 
             if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (_MeIsResizing && e.Button == MouseButtons.Left)
+                if (_MeIsResizing)
                 {
                     if (Me.FormState == FormState.Normal)
                     {
                         if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
@@ -852,6 +889,8 @@ namespace Com.WinForm
                         }
                         else
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal = Me.Bounds_Current;
 
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
@@ -859,6 +898,8 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
@@ -987,12 +1028,14 @@ namespace Com.WinForm
 
             if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (_MeIsResizing && e.Button == MouseButtons.Left)
+                if (_MeIsResizing)
                 {
                     if (Me.FormState == FormState.Normal)
                     {
                         if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
@@ -1003,6 +1046,8 @@ namespace Com.WinForm
                         }
                         else
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal = Me.Bounds_Current;
 
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
@@ -1010,6 +1055,8 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
                         Me.UpdateLayout(UpdateLayoutEventType.Result);
@@ -1140,12 +1187,14 @@ namespace Com.WinForm
 
             if (Me.FormStyle == FormStyle.Sizable)
             {
-                if (_MeIsResizing && e.Button == MouseButtons.Left)
+                if (_MeIsResizing)
                 {
                     if (Me.FormState == FormState.Normal)
                     {
                         if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
@@ -1156,6 +1205,8 @@ namespace Com.WinForm
                         }
                         else
                         {
+                            _CancelTryToUpdateLayout();
+
                             Me.Bounds_Normal = Me.Bounds_Current;
 
                             Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
@@ -1163,6 +1214,8 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
+                        _CancelTryToUpdateLayout();
+
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
                         Me.UpdateLayout(UpdateLayoutEventType.SizeChanged);
@@ -1256,9 +1309,12 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            Me.UpdateLayout(_UpdateLayoutEventType);
+            if (!_CancelUpdateLayout)
+            {
+                Me.UpdateLayout(_UpdateLayoutEventType);
 
-            _LastUpdateLayout = DateTime.Now;
+                _LastUpdateLayout = DateTime.Now;
+            }
         }
 
         #endregion

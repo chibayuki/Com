@@ -347,14 +347,23 @@ namespace Com.WinForm
 
         private UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None; // 尝试更新窗口布局时希望触发的事件类型。
 
+        private bool _CancelUpdateLayout = false; // 是否已取消尝试更新窗口布局。
+
         private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 尝试更新窗口布局。
         {
             if (!BackgroundWorker_UpdateLayoutDelay.IsBusy)
             {
                 _UpdateLayoutEventType = updateLayoutEventType;
 
+                _CancelUpdateLayout = false;
+
                 BackgroundWorker_UpdateLayoutDelay.RunWorkerAsync();
             }
+        }
+
+        private void _CancelTryToUpdateLayout() // 取消尝试更新窗口布局。
+        {
+            _CancelUpdateLayout = true;
         }
 
         #endregion
@@ -470,6 +479,7 @@ namespace Com.WinForm
 
         private void Panel_CaptionBar_MouseDown(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseDown 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -487,9 +497,10 @@ namespace Com.WinForm
 
         private void Panel_CaptionBar_MouseUp(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseUp 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (_MeIsMoving == true && e.Button == MouseButtons.Left)
+            if (_MeIsMoving == true)
             {
                 Point CursorPosition = Cursor.Position;
                 Rectangle CurScrClient = FormManager.PrimaryScreenClient;
@@ -515,6 +526,8 @@ namespace Com.WinForm
                         {
                             if (CursorPosition.Y >= CurScrClient.Y && CursorPosition.Y <= CurScrClient.Y + _ExtendDist)
                             {
+                                _CancelTryToUpdateLayout();
+
                                 if (!Me.TopLeftQuarterScreen())
                                 {
                                     ReleaseAndCheckY();
@@ -522,6 +535,8 @@ namespace Com.WinForm
                             }
                             else if (CursorPosition.Y >= CurScrClient.Bottom - _ExtendDist && CursorPosition.Y <= CurScrBounds.Bottom)
                             {
+                                _CancelTryToUpdateLayout();
+
                                 if (!Me.BottomLeftQuarterScreen())
                                 {
                                     ReleaseAndCheckY();
@@ -529,6 +544,8 @@ namespace Com.WinForm
                             }
                             else
                             {
+                                _CancelTryToUpdateLayout();
+
                                 if (!Me.LeftHalfScreen())
                                 {
                                     ReleaseAndCheckY();
@@ -542,6 +559,8 @@ namespace Com.WinForm
                         {
                             if (CursorPosition.Y >= CurScrClient.Y && CursorPosition.Y <= CurScrClient.Y + _ExtendDist)
                             {
+                                _CancelTryToUpdateLayout();
+
                                 if (!Me.TopRightQuarterScreen())
                                 {
                                     ReleaseAndCheckY();
@@ -549,6 +568,8 @@ namespace Com.WinForm
                             }
                             else if (CursorPosition.Y >= CurScrClient.Bottom - _ExtendDist && CursorPosition.Y <= CurScrBounds.Bottom)
                             {
+                                _CancelTryToUpdateLayout();
+
                                 if (!Me.BottomRightQuarterScreen())
                                 {
                                     ReleaseAndCheckY();
@@ -556,6 +577,8 @@ namespace Com.WinForm
                             }
                             else
                             {
+                                _CancelTryToUpdateLayout();
+
                                 if (!Me.RightHalfScreen())
                                 {
                                     ReleaseAndCheckY();
@@ -569,6 +592,8 @@ namespace Com.WinForm
                         {
                             if (Me.EnableMaximize)
                             {
+                                _CancelTryToUpdateLayout();
+
                                 if (!Me.Maximize())
                                 {
                                     ReleaseAndCheckY();
@@ -576,17 +601,23 @@ namespace Com.WinForm
                             }
                             else
                             {
+                                _CancelTryToUpdateLayout();
+
                                 ReleaseAndCheckY();
                             }
                         }
                     }
                     else
                     {
+                        _CancelTryToUpdateLayout();
+
                         ReleaseAndCheckY();
                     }
                 }
                 else
                 {
+                    _CancelTryToUpdateLayout();
+
                     ReleaseAndCheckY();
                 }
             }
@@ -660,6 +691,7 @@ namespace Com.WinForm
 
         private void PictureBox_FormIcon_MouseDown(object sender, MouseEventArgs e) // PictureBox_FormIcon 的 MouseDown 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -725,6 +757,7 @@ namespace Com.WinForm
 
         private void PictureBox_FullScreen_MouseDown(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseDown 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -739,6 +772,7 @@ namespace Com.WinForm
 
         private void PictureBox_FullScreen_MouseUp(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseUp 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -788,6 +822,7 @@ namespace Com.WinForm
 
         private void PictureBox_Minimize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseDown 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -802,6 +837,7 @@ namespace Com.WinForm
 
         private void PictureBox_Minimize_MouseUp(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseUp 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -858,6 +894,7 @@ namespace Com.WinForm
 
         private void PictureBox_Maximize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseDown 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -872,6 +909,7 @@ namespace Com.WinForm
 
         private void PictureBox_Maximize_MouseUp(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseUp 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -921,6 +959,7 @@ namespace Com.WinForm
 
         private void PictureBox_Exit_MouseDown(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseDown 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -935,6 +974,7 @@ namespace Com.WinForm
 
         private void PictureBox_Exit_MouseUp(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseUp 事件的回调函数。
         {
+            Me.Client.BringToFront();
             Me.Client.Focus();
 
             if (e.Button == MouseButtons.Left)
@@ -1000,9 +1040,12 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            Me.UpdateLayout(_UpdateLayoutEventType);
+            if (!_CancelUpdateLayout)
+            {
+                Me.UpdateLayout(_UpdateLayoutEventType);
 
-            _LastUpdateLayout = DateTime.Now;
+                _LastUpdateLayout = DateTime.Now;
+            }
         }
 
         //
