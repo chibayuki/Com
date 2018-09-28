@@ -2,7 +2,7 @@
 Copyright © 2018 chibayuki@foxmail.com
 
 Com.Text
-Version 18.9.24.1600
+Version 18.9.28.2200
 
 This file is part of Com
 
@@ -66,17 +66,17 @@ namespace Com
         {
             try
             {
-                SizeF StrSzF = TextRenderer.MeasureText(str, strFont);
+                SizeF StrSz = TextRenderer.MeasureText(str, strFont);
 
-                if (StrSzF.Width > width && str.Length > 1)
+                if (StrSz.Width > width && str.Length > 1)
                 {
                     for (int i = str.Length - 1; i >= 1; i--)
                     {
                         str = str.Substring(0, i);
 
-                        StrSzF = TextRenderer.MeasureText(string.Concat(str, "..."), strFont);
+                        StrSz = TextRenderer.MeasureText(string.Concat(str, "..."), strFont);
 
-                        if (StrSzF.Width <= width)
+                        if (StrSz.Width <= width)
                         {
                             str = string.Concat(str, "...");
 
@@ -135,7 +135,7 @@ namespace Com
         /// 获取日期时间精确到秒的 64 位二进制值。
         /// </summary>
         /// <param name="dateTime">日期时间。</param>
-        public static Int64 GetBinaryFromDateTime(DateTime dateTime)
+        public static long GetBinaryFromDateTime(DateTime dateTime)
         {
             try
             {
@@ -392,7 +392,7 @@ namespace Com
         /// 获取 64 位存储大小的字符串格式。
         /// </summary>
         /// <param name="b">存储大小的字节数。</param>
-        public static string GetSize64StringFromByte(Int64 b)
+        public static string GetSize64StringFromByte(long b)
         {
             try
             {

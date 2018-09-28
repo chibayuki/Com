@@ -2,7 +2,7 @@
 Copyright © 2018 chibayuki@foxmail.com
 
 Com.Geometry
-Version 18.9.24.1600
+Version 18.9.28.2200
 
 This file is part of Com
 
@@ -45,31 +45,31 @@ namespace Com
                 }
                 else
                 {
-                    PointD _PD = new PointD();
+                    PointD foot = new PointD();
 
                     if (pt1.X == pt2.X && pt1.Y == pt2.Y)
                     {
-                        _PD = pt1;
+                        foot = pt1;
                     }
                     else if (pt1.X == pt2.X)
                     {
-                        _PD.X = pt1.X;
-                        _PD.Y = pt.Y;
+                        foot.X = pt1.X;
+                        foot.Y = pt.Y;
                     }
                     else if (pt1.Y == pt2.Y)
                     {
-                        _PD.X = pt.X;
-                        _PD.Y = pt1.Y;
+                        foot.X = pt.X;
+                        foot.Y = pt1.Y;
                     }
                     else
                     {
                         double K = (pt2.Y - pt1.Y) / (pt2.X - pt1.X);
 
-                        _PD.X = (pt.Y - pt1.Y + K * pt1.X + pt.X / K) / (K + 1 / K);
-                        _PD.Y = pt.Y - (_PD.X - pt.X) / K;
+                        foot.X = (pt.Y - pt1.Y + K * pt1.X + pt.X / K) / (K + 1 / K);
+                        foot.Y = pt.Y - (foot.X - pt.X) / K;
                     }
 
-                    return _PD;
+                    return foot;
                 }
             }
             catch
@@ -422,10 +422,10 @@ namespace Com
 
                     double RectRadius = Math.Sqrt(Math.Pow(rect.Width, 2) + Math.Pow(rect.Height, 2)) / 2;
 
-                    double Dist_RC_P0 = PointD.DistanceBetween(RectCenter, pt1);
-                    double Dist_RC_P1 = PointD.DistanceBetween(RectCenter, pt2);
+                    double Dist_RC_P1 = PointD.DistanceBetween(RectCenter, pt1);
+                    double Dist_RC_P2 = PointD.DistanceBetween(RectCenter, pt2);
 
-                    if (Dist_RC_P0 < RectRadius || Dist_RC_P1 < RectRadius)
+                    if (Dist_RC_P1 < RectRadius || Dist_RC_P2 < RectRadius)
                     {
                         return true;
                     }
@@ -441,11 +441,11 @@ namespace Com
                         }
                         else
                         {
-                            double Dist_FP_P0 = PointD.DistanceBetween(FootPoint, pt1);
-                            double Dist_FP_P1 = PointD.DistanceBetween(FootPoint, pt2);
-                            double Dist_P0_P1 = PointD.DistanceBetween(pt1, pt2);
+                            double Dist_FP_P1 = PointD.DistanceBetween(FootPoint, pt1);
+                            double Dist_FP_P2 = PointD.DistanceBetween(FootPoint, pt2);
+                            double Dist_P1_P2 = PointD.DistanceBetween(pt1, pt2);
 
-                            if (Dist_FP_P0 + Dist_FP_P1 > Dist_P0_P1)
+                            if (Dist_FP_P1 + Dist_FP_P2 > Dist_P1_P2)
                             {
                                 return false;
                             }
@@ -478,10 +478,10 @@ namespace Com
                 }
                 else
                 {
-                    double Dist_Off_P0 = PointD.DistanceBetween(offset, pt1);
-                    double Dist_Off_P1 = PointD.DistanceBetween(offset, pt2);
+                    double Dist_Off_P1 = PointD.DistanceBetween(offset, pt1);
+                    double Dist_Off_P2 = PointD.DistanceBetween(offset, pt2);
 
-                    if (Dist_Off_P0 < radius || Dist_Off_P1 < radius)
+                    if (Dist_Off_P1 < radius || Dist_Off_P2 < radius)
                     {
                         return true;
                     }
@@ -497,11 +497,11 @@ namespace Com
                         }
                         else
                         {
-                            double Dist_FP_P0 = PointD.DistanceBetween(FootPoint, pt1);
-                            double Dist_FP_P1 = PointD.DistanceBetween(FootPoint, pt2);
-                            double Dist_P0_P1 = PointD.DistanceBetween(pt1, pt2);
+                            double Dist_FP_P1 = PointD.DistanceBetween(FootPoint, pt1);
+                            double Dist_FP_P2 = PointD.DistanceBetween(FootPoint, pt2);
+                            double Dist_P1_P2 = PointD.DistanceBetween(pt1, pt2);
 
-                            if (Dist_FP_P0 + Dist_FP_P1 > Dist_P0_P1)
+                            if (Dist_FP_P1 + Dist_FP_P2 > Dist_P1_P2)
                             {
                                 return false;
                             }
@@ -865,48 +865,48 @@ namespace Com
         /// 创建一个表示圆角矩形的路径，此圆角矩形包含 4 个半径不同的圆角。
         /// </summary>
         /// <param name="rect">矩形。</param>
-        /// <param name="cornerRadius_LT">左上圆角的半径。</param>
-        /// <param name="cornerRadius_RT">右上圆角的半径。</param>
-        /// <param name="cornerRadius_RB">右下圆角的半径。</param>
-        /// <param name="cornerRadius_LB">左下圆角的半径。</param>
-        public static GraphicsPath CreateRoundedRectanglePath(Rectangle rect, int cornerRadius_LT, int cornerRadius_RT, int cornerRadius_RB, int cornerRadius_LB)
+        /// <param name="cornerRadiusLT">左上圆角的半径。</param>
+        /// <param name="cornerRadiusRT">右上圆角的半径。</param>
+        /// <param name="cornerRadiusRB">右下圆角的半径。</param>
+        /// <param name="cornerRadiusLB">左下圆角的半径。</param>
+        public static GraphicsPath CreateRoundedRectanglePath(Rectangle rect, int cornerRadiusLT, int cornerRadiusRT, int cornerRadiusRB, int cornerRadiusLB)
         {
             GraphicsPath RoundedRect = new GraphicsPath();
 
             try
             {
-                cornerRadius_LT = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadius_LT));
-                cornerRadius_RT = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadius_RT));
-                cornerRadius_RB = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadius_RB));
-                cornerRadius_LB = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadius_LB));
+                cornerRadiusLT = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadiusLT));
+                cornerRadiusRT = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadiusRT));
+                cornerRadiusRB = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadiusRB));
+                cornerRadiusLB = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadiusLB));
 
-                if (cornerRadius_LT > 0)
+                if (cornerRadiusLT > 0)
                 {
-                    RoundedRect.AddArc(rect.X, rect.Y, cornerRadius_LT * 2, cornerRadius_LT * 2, 180F, 90F);
+                    RoundedRect.AddArc(rect.X, rect.Y, cornerRadiusLT * 2, cornerRadiusLT * 2, 180F, 90F);
                 }
 
-                RoundedRect.AddLine(rect.X + cornerRadius_LT, rect.Y, rect.Right - cornerRadius_LT, rect.Y);
+                RoundedRect.AddLine(rect.X + cornerRadiusLT, rect.Y, rect.Right - cornerRadiusLT, rect.Y);
 
-                if (cornerRadius_RT > 0)
+                if (cornerRadiusRT > 0)
                 {
-                    RoundedRect.AddArc(rect.Right - cornerRadius_RT * 2, rect.Y, cornerRadius_RT * 2, cornerRadius_RT * 2, 270F, 90F);
+                    RoundedRect.AddArc(rect.Right - cornerRadiusRT * 2, rect.Y, cornerRadiusRT * 2, cornerRadiusRT * 2, 270F, 90F);
                 }
 
-                RoundedRect.AddLine(rect.Right, rect.Y + cornerRadius_RT, rect.Right, rect.Bottom - cornerRadius_RT);
+                RoundedRect.AddLine(rect.Right, rect.Y + cornerRadiusRT, rect.Right, rect.Bottom - cornerRadiusRT);
 
-                if (cornerRadius_RB > 0)
+                if (cornerRadiusRB > 0)
                 {
-                    RoundedRect.AddArc(rect.Right - cornerRadius_RB * 2, rect.Bottom - cornerRadius_RB * 2, cornerRadius_RB * 2, cornerRadius_RB * 2, 0F, 90F);
+                    RoundedRect.AddArc(rect.Right - cornerRadiusRB * 2, rect.Bottom - cornerRadiusRB * 2, cornerRadiusRB * 2, cornerRadiusRB * 2, 0F, 90F);
                 }
 
-                RoundedRect.AddLine(rect.Right - cornerRadius_RB, rect.Bottom, rect.X + cornerRadius_RB, rect.Bottom);
+                RoundedRect.AddLine(rect.Right - cornerRadiusRB, rect.Bottom, rect.X + cornerRadiusRB, rect.Bottom);
 
-                if (cornerRadius_LB > 0)
+                if (cornerRadiusLB > 0)
                 {
-                    RoundedRect.AddArc(rect.X, rect.Bottom - cornerRadius_LB * 2, cornerRadius_LB * 2, cornerRadius_LB * 2, 90F, 90F);
+                    RoundedRect.AddArc(rect.X, rect.Bottom - cornerRadiusLB * 2, cornerRadiusLB * 2, cornerRadiusLB * 2, 90F, 90F);
                 }
 
-                RoundedRect.AddLine(rect.X, rect.Bottom - cornerRadius_LB, rect.X, rect.Y + cornerRadius_LB);
+                RoundedRect.AddLine(rect.X, rect.Bottom - cornerRadiusLB, rect.X, rect.Y + cornerRadiusLB);
 
                 RoundedRect.CloseFigure();
 
@@ -966,50 +966,50 @@ namespace Com
         /// 创建一组表示矩形减去圆角矩形所剩区域的路径，此圆角矩形包含 4 个半径不同的圆角。
         /// </summary>
         /// <param name="rect">矩形。</param>
-        /// <param name="cornerRadius_LT">左上圆角的半径。</param>
-        /// <param name="cornerRadius_RT">右上圆角的半径。</param>
-        /// <param name="cornerRadius_RB">右下圆角的半径。</param>
-        /// <param name="cornerRadius_LB">左下圆角的半径。</param>
-        public static GraphicsPath[] CreateRoundedRectangleOuterPaths(Rectangle rect, int cornerRadius_LT, int cornerRadius_RT, int cornerRadius_RB, int cornerRadius_LB)
+        /// <param name="cornerRadiusLT">左上圆角的半径。</param>
+        /// <param name="cornerRadiusRT">右上圆角的半径。</param>
+        /// <param name="cornerRadiusRB">右下圆角的半径。</param>
+        /// <param name="cornerRadiusLB">左下圆角的半径。</param>
+        public static GraphicsPath[] CreateRoundedRectangleOuterPaths(Rectangle rect, int cornerRadiusLT, int cornerRadiusRT, int cornerRadiusRB, int cornerRadiusLB)
         {
             GraphicsPath[] RoundedRectOuter = new GraphicsPath[4] { new GraphicsPath(), new GraphicsPath(), new GraphicsPath(), new GraphicsPath() };
 
             try
             {
-                cornerRadius_LT = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadius_LT));
-                cornerRadius_RT = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadius_RT));
-                cornerRadius_RB = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadius_RB));
-                cornerRadius_LB = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadius_LB));
+                cornerRadiusLT = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadiusLT));
+                cornerRadiusRT = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadiusRT));
+                cornerRadiusRB = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadiusRB));
+                cornerRadiusLB = Math.Max(0, Math.Min(Math.Min(rect.Width, rect.Height) / 2, cornerRadiusLB));
 
-                if (cornerRadius_LT > 0)
+                if (cornerRadiusLT > 0)
                 {
-                    RoundedRectOuter[0].AddArc(rect.X, rect.Y, cornerRadius_LT * 2, cornerRadius_LT * 2, 180F, 90F);
-                    RoundedRectOuter[0].AddLine(rect.X + cornerRadius_LT, rect.Y, rect.X, rect.Y);
-                    RoundedRectOuter[0].AddLine(rect.X, rect.Y, rect.X, rect.Y + cornerRadius_LT);
+                    RoundedRectOuter[0].AddArc(rect.X, rect.Y, cornerRadiusLT * 2, cornerRadiusLT * 2, 180F, 90F);
+                    RoundedRectOuter[0].AddLine(rect.X + cornerRadiusLT, rect.Y, rect.X, rect.Y);
+                    RoundedRectOuter[0].AddLine(rect.X, rect.Y, rect.X, rect.Y + cornerRadiusLT);
                     RoundedRectOuter[0].CloseFigure();
                 }
 
-                if (cornerRadius_RT > 0)
+                if (cornerRadiusRT > 0)
                 {
-                    RoundedRectOuter[1].AddArc(rect.Right - cornerRadius_RT * 2, rect.Y, cornerRadius_RT * 2, cornerRadius_RT * 2, 270F, 90F);
-                    RoundedRectOuter[1].AddLine(rect.Right, rect.Y + cornerRadius_RT, rect.Right, rect.Y);
-                    RoundedRectOuter[1].AddLine(rect.Right, rect.Y, rect.Right - cornerRadius_RT, rect.Y);
+                    RoundedRectOuter[1].AddArc(rect.Right - cornerRadiusRT * 2, rect.Y, cornerRadiusRT * 2, cornerRadiusRT * 2, 270F, 90F);
+                    RoundedRectOuter[1].AddLine(rect.Right, rect.Y + cornerRadiusRT, rect.Right, rect.Y);
+                    RoundedRectOuter[1].AddLine(rect.Right, rect.Y, rect.Right - cornerRadiusRT, rect.Y);
                     RoundedRectOuter[1].CloseFigure();
                 }
 
-                if (cornerRadius_RB > 0)
+                if (cornerRadiusRB > 0)
                 {
-                    RoundedRectOuter[2].AddArc(rect.Right - cornerRadius_RB * 2, rect.Bottom - cornerRadius_RB * 2, cornerRadius_RB * 2, cornerRadius_RB * 2, 0F, 90F);
-                    RoundedRectOuter[2].AddLine(rect.Right - cornerRadius_RB, rect.Bottom, rect.Right, rect.Bottom);
-                    RoundedRectOuter[2].AddLine(rect.Right, rect.Bottom, rect.Right, rect.Bottom - cornerRadius_RB);
+                    RoundedRectOuter[2].AddArc(rect.Right - cornerRadiusRB * 2, rect.Bottom - cornerRadiusRB * 2, cornerRadiusRB * 2, cornerRadiusRB * 2, 0F, 90F);
+                    RoundedRectOuter[2].AddLine(rect.Right - cornerRadiusRB, rect.Bottom, rect.Right, rect.Bottom);
+                    RoundedRectOuter[2].AddLine(rect.Right, rect.Bottom, rect.Right, rect.Bottom - cornerRadiusRB);
                     RoundedRectOuter[2].CloseFigure();
                 }
 
-                if (cornerRadius_LB > 0)
+                if (cornerRadiusLB > 0)
                 {
-                    RoundedRectOuter[3].AddArc(rect.X, rect.Bottom - cornerRadius_LB * 2, cornerRadius_LB * 2, cornerRadius_LB * 2, 90F, 90F);
-                    RoundedRectOuter[3].AddLine(rect.X, rect.Bottom - cornerRadius_LB, rect.X, rect.Bottom);
-                    RoundedRectOuter[3].AddLine(rect.X, rect.Bottom, rect.X + cornerRadius_LB, rect.Bottom);
+                    RoundedRectOuter[3].AddArc(rect.X, rect.Bottom - cornerRadiusLB * 2, cornerRadiusLB * 2, cornerRadiusLB * 2, 90F, 90F);
+                    RoundedRectOuter[3].AddLine(rect.X, rect.Bottom - cornerRadiusLB, rect.X, rect.Bottom);
+                    RoundedRectOuter[3].AddLine(rect.X, rect.Bottom, rect.X + cornerRadiusLB, rect.Bottom);
                     RoundedRectOuter[3].CloseFigure();
                 }
 

@@ -2,7 +2,7 @@
 Copyright © 2018 chibayuki@foxmail.com
 
 Com.Painting2D
-Version 18.9.24.1600
+Version 18.9.28.2200
 
 This file is part of Com
 
@@ -58,30 +58,30 @@ namespace Com
 
                             double RectRadius = Math.Sqrt(Math.Pow(bmp.Width, 2) + Math.Pow(bmp.Height, 2)) / 2;
 
-                            double Dist_RC_P0 = PointD.DistanceBetween(RectCenter, pt1);
-                            double Dist_RC_P1 = PointD.DistanceBetween(RectCenter, pt2);
+                            double Dist_RC_P1 = PointD.DistanceBetween(RectCenter, pt1);
+                            double Dist_RC_P2 = PointD.DistanceBetween(RectCenter, pt2);
 
-                            if (Dist_RC_P0 > RectRadius || Dist_RC_P1 > RectRadius)
+                            if (Dist_RC_P1 > RectRadius || Dist_RC_P2 > RectRadius)
                             {
                                 PointD FootPoint = Geometry.GetFootPoint(RectCenter, pt1, pt2);
 
                                 double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
-                                double Dist_FP_P01 = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
-
-                                if (Dist_RC_P0 > RectRadius)
-                                {
-                                    double Angle_FP_P0 = Geometry.GetAngleOfTwoPoints(FootPoint, pt1);
-
-                                    pt1.X = FootPoint.X + Dist_FP_P01 * Math.Cos(Angle_FP_P0);
-                                    pt1.Y = FootPoint.Y + Dist_FP_P01 * Math.Sin(Angle_FP_P0);
-                                }
+                                double Dist_FP_P12 = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                 if (Dist_RC_P1 > RectRadius)
                                 {
-                                    double Angle_FP_P1 = Geometry.GetAngleOfTwoPoints(FootPoint, pt2);
+                                    double Angle_FP_P1 = Geometry.GetAngleOfTwoPoints(FootPoint, pt1);
 
-                                    pt2.X = FootPoint.X + Dist_FP_P01 * Math.Cos(Angle_FP_P1);
-                                    pt2.Y = FootPoint.Y + Dist_FP_P01 * Math.Sin(Angle_FP_P1);
+                                    pt1.X = FootPoint.X + Dist_FP_P12 * Math.Cos(Angle_FP_P1);
+                                    pt1.Y = FootPoint.Y + Dist_FP_P12 * Math.Sin(Angle_FP_P1);
+                                }
+
+                                if (Dist_RC_P2 > RectRadius)
+                                {
+                                    double Angle_FP_P2 = Geometry.GetAngleOfTwoPoints(FootPoint, pt2);
+
+                                    pt2.X = FootPoint.X + Dist_FP_P12 * Math.Cos(Angle_FP_P2);
+                                    pt2.Y = FootPoint.Y + Dist_FP_P12 * Math.Sin(Angle_FP_P2);
                                 }
                             }
 
@@ -240,17 +240,14 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias)
+        /// <param name="minDiv">在绘图位图的可见范围内将圆周按相位等分的最小数量。</param>
+        /// <param name="maxDiv">在绘图位图的可见范围内将圆周按相位等分的最大数量。</param>
+        /// <param name="divArc">圆周的任何等分的近似长度（像素）。</param>
+        public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias, int minDiv, int maxDiv, double divArc)
         {
-            // 【注意】下面的常量将直接影响绘图的质量与速度。
-            const int MinDiv = 32, MaxDiv = 256; // 在位图可见范围内将椭圆周按相位等分的最小数量与最大数量。
-            const double DivArc = 4; // 在满足上述约束条件的前提下，尽可能使椭圆周的任何等分近似为此长度（像素）。
-
-            //
-
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
+                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0) && (minDiv > 0 && maxDiv > 0 && minDiv <= maxDiv) && (!InternalMethod.IsNaNOrInfinity(divArc) && divArc > 0))
                 {
                     PointD RectCenter = new PointD(bmp.Width / 2, bmp.Height / 2);
 
@@ -275,7 +272,7 @@ namespace Com
 
                                 PointD RefPoint = new PointD(offset.X + radius * Math.Cos(refPhase), offset.Y + radius * Math.Sin(refPhase));
 
-                                int DivCount = (int)Math.Min(MaxDiv, Math.Max(MinDiv, 2 * Math.PI * radius / DivArc));
+                                int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, 2 * Math.PI * radius / divArc));
                                 double DivPhase = 0;
 
                                 if (Geometry.PointIsVisibleInCircle(offset, RectCenter, RectRadius))
@@ -449,7 +446,7 @@ namespace Com
 
                                     PointD RefPoint = new PointD(offset.X + radius * Math.Cos(refPhase), offset.Y + radius * Math.Sin(refPhase));
 
-                                    int DivCount = (int)Math.Min(MaxDiv, Math.Max(MinDiv, 2 * Math.PI * radius / DivArc));
+                                    int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, 2 * Math.PI * radius / divArc));
                                     double DivPhase = 0;
 
                                     if (Geometry.PointIsVisibleInCircle(offset, RectCenter, RectRadius))
@@ -640,6 +637,33 @@ namespace Com
         }
 
         /// <summary>
+        /// 绘制一个大型圆，并返回表示是否已经实际完成绘图的布尔值。
+        /// </summary>
+        /// <param name="bmp">绘图位图。</param>
+        /// <param name="offset">圆心。</param>
+        /// <param name="radius">半径。</param>
+        /// <param name="refPhase">参考相位（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="color">线条颜色。</param>
+        /// <param name="width">线条宽度，0 表示填充。</param>
+        /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias)
+        {
+            try
+            {
+                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
+                {
+                    return PaintLargeCircle(bmp, offset, radius, refPhase, color, width, antiAlias, 32, 256, 4);
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 绘制一个大型椭圆，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
         /// <param name="bmp">绘图位图。</param>
@@ -651,17 +675,14 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias)
+        /// <param name="minDiv">在绘图位图的可见范围内将椭圆周按相位等分的最小数量。</param>
+        /// <param name="maxDiv">在绘图位图的可见范围内将椭圆周按相位等分的最大数量。</param>
+        /// <param name="divArc">椭圆周的任何等分的近似长度（像素）。</param>
+        public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias, int minDiv, int maxDiv, double divArc)
         {
-            // 【注意】下面的常量将直接影响绘图的质量与速度。
-            const int MinDiv = 32, MaxDiv = 256; // 在位图可见范围内将椭圆周按相位等分的最小数量与最大数量。
-            const double DivArc = 4; // 在满足上述约束条件的前提下，尽可能使椭圆周的任何等分近似为此长度（像素）。
-
-            //
-
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(semiMajorAxis) && semiMajorAxis > 0) && (!InternalMethod.IsNaNOrInfinity(eccentricity) && eccentricity >= 0) && !InternalMethod.IsNaNOrInfinity(rotateAngle) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
+                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(semiMajorAxis) && semiMajorAxis > 0) && (!InternalMethod.IsNaNOrInfinity(eccentricity) && eccentricity >= 0) && !InternalMethod.IsNaNOrInfinity(rotateAngle) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0) && (minDiv > 0 && maxDiv > 0 && minDiv <= maxDiv) && (!InternalMethod.IsNaNOrInfinity(divArc) && divArc > 0))
                 {
                     PointD RectCenter = new PointD(bmp.Width / 2, bmp.Height / 2);
 
@@ -700,7 +721,7 @@ namespace Com
                                     RefPoint += offset;
                                 }
 
-                                int DivCount = (int)Math.Min(MaxDiv, Math.Max(MinDiv, 2 * Math.PI * semiMajorAxis / DivArc));
+                                int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, 2 * Math.PI * semiMajorAxis / divArc));
                                 double DivPhase = 0;
 
                                 if (Geometry.PointIsVisibleInCircle(EllipseCenter, RectCenter, RectRadius))
@@ -907,7 +928,7 @@ namespace Com
                                         RefPoint += offset;
                                     }
 
-                                    int DivCount = (int)Math.Min(MaxDiv, Math.Max(MinDiv, 2 * Math.PI * semiMajorAxis / DivArc));
+                                    int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, 2 * Math.PI * semiMajorAxis / divArc));
                                     double DivPhase = 0;
 
                                     if (Geometry.PointIsVisibleInCircle(EllipseCenter, RectCenter, RectRadius))
@@ -1109,6 +1130,35 @@ namespace Com
                             return true;
                         }
                     }
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 绘制一个大型椭圆，并返回表示是否已经实际完成绘图的布尔值。
+        /// </summary>
+        /// <param name="bmp">绘图位图。</param>
+        /// <param name="offset">焦点。</param>
+        /// <param name="semiMajorAxis">半长轴。</param>
+        /// <param name="eccentricity">离心率。</param>
+        /// <param name="rotateAngle">旋转角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，焦点到近焦点连线相对于 +X 轴的角度）。</param>
+        /// <param name="refPhase">参考相位（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="color">线条颜色。</param>
+        /// <param name="width">线条宽度，0 表示填充。</param>
+        /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias)
+        {
+            try
+            {
+                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(semiMajorAxis) && semiMajorAxis > 0) && (!InternalMethod.IsNaNOrInfinity(eccentricity) && eccentricity >= 0) && !InternalMethod.IsNaNOrInfinity(rotateAngle) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
+                {
+                    return PaintLargeEllipse(bmp, offset, semiMajorAxis, eccentricity, rotateAngle, refPhase, color, width, antiAlias, 32, 256, 4);
                 }
 
                 return false;

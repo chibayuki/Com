@@ -2,7 +2,7 @@
 Copyright © 2018 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.9.24.1600
+Version 18.9.28.2200
 
 This file is part of Com
 
@@ -1034,7 +1034,7 @@ namespace Com.WinForm
         {
             while ((DateTime.Now - _LastUpdateLayout).TotalMilliseconds < 16)
             {
-                Thread.Sleep(2);
+                Thread.Sleep(4);
             }
         }
 
