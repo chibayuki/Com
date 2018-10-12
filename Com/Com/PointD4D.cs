@@ -1399,7 +1399,9 @@ namespace Com
                     return 0;
                 }
 
-                return Math.Acos(DotProduct(this, pt) / VectorModule / pt.VectorModule);
+                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z + _U * pt._U;
+
+                return Math.Acos(DotProduct / VectorModule / pt.VectorModule);
             }
 
             return double.NaN;
@@ -1659,7 +1661,9 @@ namespace Com
                     return 0;
                 }
 
-                return Math.Acos(DotProduct(left, right) / left.VectorModule / right.VectorModule);
+                double DotProduct = left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U;
+
+                return Math.Acos(DotProduct / left.VectorModule / right.VectorModule);
             }
 
             return double.NaN;

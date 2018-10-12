@@ -1189,7 +1189,14 @@ namespace Com
                     return 0;
                 }
 
-                return Math.Acos(DotProduct(this, vector) / Module / vector.Module);
+                double DotProduct = 0;
+
+                for (int i = 0; i < _Size; i++)
+                {
+                    DotProduct += _VArray[i] * vector._VArray[i];
+                }
+
+                return Math.Acos(DotProduct / Module / vector.Module);
             }
 
             return double.NaN;
@@ -1720,7 +1727,14 @@ namespace Com
                     return 0;
                 }
 
-                return Math.Acos(DotProduct(left, right) / left.Module / right.Module);
+                double DotProduct = 0;
+
+                for (int i = 0; i < left._Size; i++)
+                {
+                    DotProduct += left._VArray[i] * right._VArray[i];
+                }
+
+                return Math.Acos(DotProduct / left.Module / right.Module);
             }
 
             return double.NaN;
