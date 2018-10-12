@@ -666,6 +666,8 @@ namespace Com.WinForm
                             Me.Bounds_Current_Location = new Point(CursorPosition.X - _CursorPositionOfMe.X, CursorPosition.Y - _CursorPositionOfMe.Y);
 
                             Me.UpdateLayout(UpdateLayoutEventType.Result);
+
+                            Me.OnFormStateChanged();
                         }
                     }
                     else

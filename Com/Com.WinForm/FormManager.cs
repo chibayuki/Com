@@ -1138,8 +1138,6 @@ namespace Com.WinForm
             Bounds_Current = OldBounds;
 
             _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.None, UpdateLayoutEventType.None);
-
-            _OnFormStateChanged();
         }
 
         internal void ReturnFromHighAsScreen() // 使窗口由与桌面高度相同状态还原至普通大小。
