@@ -34,7 +34,7 @@
 - Com.Vector.Type 表示向量类型 / Type of vector.
 - Com.WinForm.Effect 表示窗口交互过程显示的效果 / Effect of interaction of winform window.
 - Com.WinForm.FormState 表示窗口状态 / State of winform window.
-- Com.WinForm.FormStyle 表示窗口样式 / State of winform window.
+- Com.WinForm.FormStyle 表示窗口样式 / Style of winform window.
 - Com.WinForm.Theme 表示窗口配色主题 / Theme of color scheme of winform window.
 
 ### 公开的委托 / Public Delegate
