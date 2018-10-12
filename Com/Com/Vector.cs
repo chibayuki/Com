@@ -168,6 +168,24 @@ namespace Com
         //
 
         /// <summary>
+        /// 获取此 Vector 的维度。
+        /// </summary>
+        public int Dimension
+        {
+            get
+            {
+                if (_Size > 0)
+                {
+                    return _Size;
+                }
+
+                return 0;
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 获取表示此 Vector 是否为非向量的布尔值。
         /// </summary>
         public bool IsNonVector
@@ -200,21 +218,111 @@ namespace Com
             }
         }
 
-        //
-
         /// <summary>
-        /// 获取此 Vector 的维度。
+        /// 获取表示此 Vector 是否为零向量的布尔值。
         /// </summary>
-        public int Dimension
+        public bool IsZero
         {
             get
             {
                 if (_Size > 0)
                 {
-                    return _Size;
+                    bool result = true;
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        if (_VArray[i] != 0)
+                        {
+                            result = false;
+
+                            break;
+                        }
+                    }
+
+                    return result;
                 }
 
-                return 0;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为 NaN 的布尔值。
+        /// </summary>
+        public bool IsNaN
+        {
+            get
+            {
+                if (_Size > 0)
+                {
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        if (double.IsNaN(_VArray[i]))
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为 Infinity 的布尔值。
+        /// </summary>
+        public bool IsInfinity
+        {
+            get
+            {
+                if (_Size > 0)
+                {
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        if (double.IsNaN(_VArray[i]))
+                        {
+                            return false;
+                        }
+                    }
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        if (double.IsInfinity(_VArray[i]))
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Vector 是否为 NaN 或 Infinity 的布尔值。
+        /// </summary>
+        public bool IsNaNOrInfinity
+        {
+            get
+            {
+                if (_Size > 0)
+                {
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        if (double.IsNaN(_VArray[i]) || double.IsInfinity(_VArray[i]))
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                return false;
             }
         }
 
@@ -1076,50 +1184,12 @@ namespace Com
         {
             if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
             {
-                bool Flag1 = true;
-
-                for (int i = 0; i < _Size; i++)
+                if (IsZero || vector.IsZero)
                 {
-                    if (_VArray[i] != 0)
-                    {
-                        Flag1 = false;
-
-                        break;
-                    }
+                    return 0;
                 }
 
-                if (Flag1)
-                {
-                    _VArray[0] = 1;
-                }
-
-                bool Flag2 = true;
-
-                for (int i = 0; i < vector._Size; i++)
-                {
-                    if (vector._VArray[i] != 0)
-                    {
-                        Flag2 = false;
-
-                        break;
-                    }
-                }
-
-                if (Flag2)
-                {
-                    vector._VArray[0] = 1;
-                }
-
-                double DotProduct = 0;
-
-                for (int i = 0; i < _Size; i++)
-                {
-                    DotProduct += _VArray[i] * vector._VArray[i];
-                }
-
-                double ModProduct = Module * vector.Module;
-
-                return Math.Acos(DotProduct / ModProduct);
+                return Math.Acos(DotProduct(this, vector) / Module / vector.Module);
             }
 
             return double.NaN;
@@ -1135,6 +1205,11 @@ namespace Com
         {
             if (_Size > 0 && (index >= 0 && index < _Size))
             {
+                if (IsZero)
+                {
+                    return 0;
+                }
+
                 return AngleFrom(_VArray[index] >= 0 ? Basis(_Size, index) : Basis(_Size, index).Negate);
             }
 
@@ -1147,7 +1222,17 @@ namespace Com
         /// <param name="index">索引。</param>
         public double AngleOfSpace(int index)
         {
-            return (Math.PI / 2 - AngleOfBasis(index));
+            if (_Size > 0 && (index >= 0 && index < _Size))
+            {
+                if (IsZero)
+                {
+                    return 0;
+                }
+
+                return (Math.PI / 2 - AngleOfBasis(index));
+            }
+
+            return double.NaN;
         }
 
         //
@@ -1630,50 +1715,12 @@ namespace Com
         {
             if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
             {
-                bool Flag1 = true;
-
-                for (int i = 0; i < left._Size; i++)
+                if (left.IsZero || right.IsZero)
                 {
-                    if (left._VArray[i] != 0)
-                    {
-                        Flag1 = false;
-
-                        break;
-                    }
+                    return 0;
                 }
 
-                if (Flag1)
-                {
-                    left._VArray[0] = 1;
-                }
-
-                bool Flag2 = true;
-
-                for (int i = 0; i < right._Size; i++)
-                {
-                    if (right._VArray[i] != 0)
-                    {
-                        Flag2 = false;
-
-                        break;
-                    }
-                }
-
-                if (Flag2)
-                {
-                    right._VArray[0] = 1;
-                }
-
-                double DotProduct = 0;
-
-                for (int i = 0; i < left._Size; i++)
-                {
-                    DotProduct += left._VArray[i] * right._VArray[i];
-                }
-
-                double ModProduct = left.Module * right.Module;
-
-                return Math.Acos(DotProduct / ModProduct);
+                return Math.Acos(DotProduct(left, right) / left.Module / right.Module);
             }
 
             return double.NaN;

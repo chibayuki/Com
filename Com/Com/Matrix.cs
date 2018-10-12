@@ -137,13 +137,7 @@ namespace Com
                 _Size = new Size(values.GetLength(0), values.GetLength(1));
                 _MArray = new double[_Size.Width, _Size.Height];
 
-                for (int x = 0; x < _Size.Width; x++)
-                {
-                    for (int y = 0; y < _Size.Height; y++)
-                    {
-                        _MArray[x, y] = values[x, y];
-                    }
-                }
+                Array.Copy(values, _MArray, _Size.Width * _Size.Height);
             }
             else
             {

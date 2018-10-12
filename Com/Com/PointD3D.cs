@@ -35,9 +35,11 @@ namespace Com
         #region 常量与只读成员
 
         /// <summary>
-        /// 表示所有属性为其数据类型的默认值的 PointD3D 结构的实例。
+        /// 表示零向量的 PointD3D 结构的实例。
         /// </summary>
-        public static readonly PointD3D Empty = default(PointD3D);
+        public static readonly PointD3D Zero = new PointD3D(0, 0, 0);
+
+        //
 
         /// <summary>
         /// 表示所有属性为非数字的 PointD3D 结构的实例。
@@ -45,11 +47,6 @@ namespace Com
         public static readonly PointD3D NaN = new PointD3D(double.NaN, double.NaN, double.NaN);
 
         //
-
-        /// <summary>
-        /// 表示零向量的 PointD3D 结构的实例。
-        /// </summary>
-        public static readonly PointD3D Zero = new PointD3D(0, 0, 0);
 
         /// <summary>
         /// 表示 X 基向量的 PointD3D 结构的实例。
@@ -118,13 +115,13 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 PointD3D 结构是否为 Empty 的布尔值。
+        /// 获取表示此 PointD3D 结构是否为零向量的布尔值。
         /// </summary>
-        public bool IsEmpty
+        public bool IsZero
         {
             get
             {
-                return (_X == Empty._X && _Y == Empty._Y && _Z == Empty._Z);
+                return (_X == Zero._X && _Y == Zero._Y && _Z == Zero._Z);
             }
         }
 
@@ -273,6 +270,11 @@ namespace Com
         {
             get
             {
+                if (IsZero)
+                {
+                    return 0;
+                }
+
                 return AngleFrom(_X >= 0 ? Ex : -Ex);
             }
         }
@@ -284,6 +286,11 @@ namespace Com
         {
             get
             {
+                if (IsZero)
+                {
+                    return 0;
+                }
+
                 return AngleFrom(_Y >= 0 ? Ey : -Ey);
             }
         }
@@ -295,6 +302,11 @@ namespace Com
         {
             get
             {
+                if (IsZero)
+                {
+                    return 0;
+                }
+
                 return AngleFrom(_Z >= 0 ? Ez : -Ez);
             }
         }
@@ -306,6 +318,11 @@ namespace Com
         {
             get
             {
+                if (IsZero)
+                {
+                    return 0;
+                }
+
                 return (Math.PI / 2 - AngleZ);
             }
         }
@@ -317,6 +334,11 @@ namespace Com
         {
             get
             {
+                if (IsZero)
+                {
+                    return 0;
+                }
+
                 return (Math.PI / 2 - AngleX);
             }
         }
@@ -328,6 +350,11 @@ namespace Com
         {
             get
             {
+                if (IsZero)
+                {
+                    return 0;
+                }
+
                 return (Math.PI / 2 - AngleY);
             }
         }
@@ -1092,20 +1119,12 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                if (_X == 0 && _Y == 0 && _Z == 0)
+                if (IsZero || pt.IsZero)
                 {
-                    _X = 1;
+                    return 0;
                 }
 
-                if (pt._X == 0 && pt._Y == 0 && pt._Z == 0)
-                {
-                    pt._X = 1;
-                }
-
-                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z;
-                double ModProduct = VectorModule * pt.VectorModule;
-
-                return Math.Acos(DotProduct / ModProduct);
+                return Math.Acos(DotProduct(this, pt) / VectorModule / pt.VectorModule);
             }
 
             return double.NaN;
@@ -1331,20 +1350,12 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                if (left._X == 0 && left._Y == 0 && left._Z == 0)
+                if (left.IsZero || right.IsZero)
                 {
-                    left._X = 1;
+                    return 0;
                 }
 
-                if (right._X == 0 && right._Y == 0 && right._Z == 0)
-                {
-                    right._X = 1;
-                }
-
-                double DotProduct = left._X * right._X + left._Y * right._Y + left._Z * right._Z;
-                double ModProduct = left.VectorModule * right.VectorModule;
-
-                return Math.Acos(DotProduct / ModProduct);
+                return Math.Acos(DotProduct(left, right) / left.VectorModule / right.VectorModule);
             }
 
             return double.NaN;
