@@ -751,6 +751,7 @@ namespace Com.WinForm
         private void PictureBox_FullScreen_MouseLeave(object sender, EventArgs e) // PictureBox_FullScreen 的 MouseLeave 事件的回调函数。
         {
             _FullScreenButtonIsPointed = false;
+            _FullScreenButtonIsPressed = false;
 
             _UpdateControlBoxButtonBackColor(PictureBox_FullScreen, Me.RecommendColors.ControlButton);
 
@@ -816,6 +817,7 @@ namespace Com.WinForm
         private void PictureBox_Minimize_MouseLeave(object sender, EventArgs e) // PictureBox_Minimize 的 MouseLeave 事件的回调函数。
         {
             _MinimizeButtonIsPointed = false;
+            _MinimizeButtonIsPressed = false;
 
             _UpdateControlBoxButtonBackColor(PictureBox_Minimize, Me.RecommendColors.ControlButton);
 
@@ -888,6 +890,7 @@ namespace Com.WinForm
         private void PictureBox_Maximize_MouseLeave(object sender, EventArgs e) // PictureBox_Maximize 的 MouseLeave 事件的回调函数。
         {
             _MaximizeButtonIsPointed = false;
+            _MaximizeButtonIsPressed = false;
 
             _UpdateControlBoxButtonBackColor(PictureBox_Maximize, Me.RecommendColors.ControlButton);
 
@@ -953,6 +956,7 @@ namespace Com.WinForm
         private void PictureBox_Exit_MouseLeave(object sender, EventArgs e) // PictureBox_Exit 的 MouseLeave 事件的回调函数。
         {
             _ExitButtonIsPointed = false;
+            _ExitButtonIsPressed = false;
 
             _UpdateControlBoxButtonBackColor(PictureBox_Exit, Me.RecommendColors.ExitButton);
 
