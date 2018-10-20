@@ -124,17 +124,17 @@ namespace Com
         /// <summary>
         /// 使用表示位值的布尔值数组初始化 BitSet 的新实例。
         /// </summary>
-        /// <param name="array">表示位值的布尔值数组。</param>
-        public BitSet(bool[] array)
+        /// <param name="values">表示位值的布尔值数组。</param>
+        public BitSet(bool[] values)
         {
-            if (!InternalMethod.IsNullOrEmpty(array))
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = Math.Min(_MaxSize, array.Length);
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(array.Length)];
+                _Size = Math.Min(_MaxSize, values.Length);
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(values.Length)];
 
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < values.Length; i++)
                 {
-                    if (array[i])
+                    if (values[i])
                     {
                         Set(i, true);
                     }
@@ -150,17 +150,17 @@ namespace Com
         /// <summary>
         /// 使用表示位值的 32 位整数数组初始化 BitSet 的新实例。
         /// </summary>
-        /// <param name="array">表示位值的 32 位整数数组。</param>
-        public BitSet(int[] array)
+        /// <param name="values">表示位值的 32 位整数数组。</param>
+        public BitSet(int[] values)
         {
-            if (!InternalMethod.IsNullOrEmpty(array))
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = Math.Min(_MaxSize, array.Length);
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(array.Length)];
+                _Size = Math.Min(_MaxSize, values.Length);
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(values.Length)];
 
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < values.Length; i++)
                 {
-                    if (array[i] != 0)
+                    if (values[i] != 0)
                     {
                         Set(i, true);
                     }
