@@ -25,6 +25,409 @@ namespace Com
     /// </summary>
     public static class Text
     {
+        #region 科学计数法
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="useMagnitudeOrderCode">对于数量级介于 ±24 的数值，是否使用数量级符号。</param>
+        /// <param name="unit">单位。</param>
+        public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression, bool useMagnitudeOrderCode, string unit)
+        {
+            const string _PositiveMagnitudeOrderCode = "kMGTPEZY";
+            const string _NegativeMagnitudeOrderCode = "mμnpfazy";
+
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    string part1 = string.Empty, part2 = string.Empty, part3 = string.Empty, part4 = string.Empty;
+
+                    int sign = Math.Sign(value);
+
+                    part1 = (sign < 0 ? "-" : string.Empty);
+
+                    value = Math.Abs(value);
+
+                    significance = Math.Max(0, significance);
+
+                    int exp = (int)Math.Floor(Math.Log10(value));
+
+                    if (significance > 0)
+                    {
+                        exp -= (significance - 1);
+
+                        value = Math.Round(value / Math.Pow(10, exp));
+                    }
+                    else
+                    {
+                        value /= Math.Pow(10, exp);
+                    }
+
+                    while (value >= 10)
+                    {
+                        value /= 10;
+                        exp++;
+                    }
+
+                    if (useMagnitudeOrderCode)
+                    {
+                        if (exp >= -24 && exp < 27)
+                        {
+                            int mod = 0;
+
+                            if (exp >= 0)
+                            {
+                                mod = exp % 3;
+                            }
+                            else
+                            {
+                                mod = (-exp) % 3;
+
+                                if (mod > 0)
+                                {
+                                    mod = 3 - mod;
+                                }
+                            }
+
+                            if (mod > 0)
+                            {
+                                value *= Math.Pow(10, mod);
+                            }
+
+                            part2 = (significance > 0 ? value.ToString("N" + Math.Max(0, significance - 1 - mod)) : value.ToString());
+
+                            int mag = 0;
+
+                            if (exp >= 0)
+                            {
+                                mag = exp / 3;
+                            }
+                            else
+                            {
+                                mag = (exp + 1) / 3 - 1;
+                            }
+
+                            string magCode = (mag > 0 ? _PositiveMagnitudeOrderCode[mag - 1].ToString() : (mag < 0 ? _NegativeMagnitudeOrderCode[-mag - 1].ToString() : string.Empty));
+
+                            if (string.IsNullOrEmpty(unit))
+                            {
+                                part3 = magCode;
+                                part4 = string.Empty;
+                            }
+                            else
+                            {
+                                part3 = " " + magCode;
+                                part4 = unit;
+                            }
+                        }
+                        else
+                        {
+                            part2 = (significance > 0 ? value.ToString("N" + Math.Max(0, significance - 1)) : value.ToString());
+                            part3 = (useNaturalExpression ? "×10^" + exp : (exp > 0 ? "E+" + exp : "E" + exp));
+                            part4 = (string.IsNullOrEmpty(unit) ? string.Empty : " " + unit);
+                        }
+                    }
+                    else
+                    {
+                        part2 = (significance > 0 ? value.ToString("N" + Math.Max(0, significance - 1)) : value.ToString());
+                        part3 = (exp == 0 ? string.Empty : (useNaturalExpression ? "×10^" + exp : (exp > 0 ? "E+" + exp : "E" + exp)));
+                        part4 = (string.IsNullOrEmpty(unit) ? string.Empty : " " + unit);
+                    }
+
+                    return string.Concat(part1, part2, part3, part4);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="unit">单位。</param>
+        public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression, string unit)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, significance, useNaturalExpression, false, unit);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="useMagnitudeOrderCode">对于数量级介于 ±24 的数值，是否使用数量级符号。</param>
+        public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression, bool useMagnitudeOrderCode)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, significance, useNaturalExpression, useMagnitudeOrderCode, null);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, significance, useNaturalExpression, false, null);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="useMagnitudeOrderCode">对于数量级介于 ±24 的数值，是否使用数量级符号。</param>
+        /// <param name="unit">单位。</param>
+        public static string GetScientificNotationString(double value, bool useNaturalExpression, bool useMagnitudeOrderCode, string unit)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, unit);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="unit">单位。</param>
+        public static string GetScientificNotationString(double value, bool useNaturalExpression, string unit)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, 0, useNaturalExpression, false, unit);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
+        /// <param name="unit">单位。</param>
+        public static string GetScientificNotationString(double value, int significance, string unit)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, significance, false, false, unit);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
+        public static string GetScientificNotationString(double value, int significance)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, significance, false, false, null);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="useMagnitudeOrderCode">对于数量级介于 ±24 的数值，是否使用数量级符号。</param>
+        public static string GetScientificNotationString(double value, bool useNaturalExpression, bool useMagnitudeOrderCode)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, null);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        public static string GetScientificNotationString(double value, bool useNaturalExpression)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, 0, useNaturalExpression, false, null);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="unit">单位。</param>
+        public static string GetScientificNotationString(double value, string unit)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, 0, false, false, unit);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        public static string GetScientificNotationString(double value)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(value))
+                {
+                    return "N/A";
+                }
+                else
+                {
+                    return GetScientificNotationString(value, 0, false, false, null);
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        #endregion
+
+        #region 字符串处理
+
         /// <summary>
         /// 获取源字符串中位于两个指定字符串之间的部分。
         /// </summary>
@@ -37,14 +440,17 @@ namespace Com
         {
             try
             {
-                if (sourceString.Contains(startString) && sourceString.Contains(endString))
+                if (!string.IsNullOrEmpty(sourceString) && !string.IsNullOrEmpty(startString) && !string.IsNullOrEmpty(endString))
                 {
-                    int StartIndex = sourceString.IndexOf(startString) + (includeStartString ? 0 : startString.Length);
-                    int EndIndex = sourceString.IndexOf(endString) + (includeEndString ? endString.Length : 0);
-
-                    if (StartIndex < EndIndex)
+                    if (sourceString.Contains(startString) && sourceString.Contains(endString))
                     {
-                        return sourceString.Substring(StartIndex, EndIndex - StartIndex);
+                        int StartIndex = sourceString.IndexOf(startString) + (includeStartString ? 0 : startString.Length);
+                        int EndIndex = sourceString.IndexOf(endString) + (includeEndString ? endString.Length : 0);
+
+                        if (StartIndex < EndIndex)
+                        {
+                            return sourceString.Substring(StartIndex, EndIndex - StartIndex);
+                        }
                     }
                 }
 
@@ -59,33 +465,38 @@ namespace Com
         /// <summary>
         /// 返回按照指定字体与绘图宽度截取后的字符串。
         /// </summary>
-        /// <param name="str">字符串。</param>
-        /// <param name="strFont">字体。</param>
-        /// <param name="width">绘图宽度。</param>
-        public static string StringIntercept(string str, Font strFont, int width)
+        /// <param name="text">字符串。</param>
+        /// <param name="font">字体。</param>
+        /// <param name="width">绘图宽度（像素）。</param>
+        public static string StringIntercept(string text, Font font, int width)
         {
             try
             {
-                SizeF StrSz = TextRenderer.MeasureText(str, strFont);
-
-                if (StrSz.Width > width && str.Length > 1)
+                if (!string.IsNullOrEmpty(text) && font != null)
                 {
-                    for (int i = str.Length - 1; i >= 1; i--)
+                    SizeF StrSz = TextRenderer.MeasureText(text, font);
+
+                    if (StrSz.Width > width && text.Length > 1)
                     {
-                        str = str.Substring(0, i);
-
-                        StrSz = TextRenderer.MeasureText(string.Concat(str, "..."), strFont);
-
-                        if (StrSz.Width <= width)
+                        for (int i = text.Length - 1; i >= 1; i--)
                         {
-                            str = string.Concat(str, "...");
+                            text = text.Substring(0, i);
 
-                            break;
+                            StrSz = TextRenderer.MeasureText(string.Concat(text, "..."), font);
+
+                            if (StrSz.Width <= width)
+                            {
+                                text = string.Concat(text, "...");
+
+                                break;
+                            }
                         }
                     }
+
+                    return text;
                 }
 
-                return str;
+                return string.Empty;
             }
             catch
             {
@@ -94,36 +505,41 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个新的字体（仅改变当前字体的大小），使字符串的绘制范围不超过限定的大小。
+        /// 返回一个字体（仅改变当前字体的大小），使字符串的绘图区域不超过指定的大小。
         /// </summary>
         /// <param name="text">字符串。</param>
-        /// <param name="font">当前字体。</param>
-        /// <param name="size">绘制范围的大小。</param>
+        /// <param name="font">字体。</param>
+        /// <param name="size">绘图区域的大小（像素）。</param>
         public static Font GetSuitableFont(string text, Font font, SizeF size)
         {
             try
             {
-                Font Ft = font;
-                SizeF Sz = TextRenderer.MeasureText(text, Ft);
-
-                while (Sz.Width <= size.Width || Sz.Height <= size.Height)
+                if (!string.IsNullOrEmpty(text) && font != null)
                 {
-                    Ft = new Font(Ft.Name, Ft.Size * 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet);
-                    Sz = TextRenderer.MeasureText(text, Ft);
-                }
+                    Font Ft = font;
+                    SizeF Sz = TextRenderer.MeasureText(text, Ft);
 
-                while (Sz.Width > size.Width || Sz.Height > size.Height)
-                {
-                    if (Ft.Size <= 1F)
+                    while (Sz.Width <= size.Width || Sz.Height <= size.Height)
                     {
-                        break;
+                        Ft = new Font(Ft.Name, Ft.Size * 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet);
+                        Sz = TextRenderer.MeasureText(text, Ft);
                     }
 
-                    Ft = new Font(Ft.Name, Ft.Size / 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet);
-                    Sz = TextRenderer.MeasureText(text, Ft);
+                    while (Sz.Width > size.Width || Sz.Height > size.Height)
+                    {
+                        if (Ft.Size <= 1F)
+                        {
+                            break;
+                        }
+
+                        Ft = new Font(Ft.Name, Ft.Size / 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet);
+                        Sz = TextRenderer.MeasureText(text, Ft);
+                    }
+
+                    return Ft;
                 }
 
-                return Ft;
+                return font;
             }
             catch
             {
@@ -131,24 +547,12 @@ namespace Com
             }
         }
 
-        /// <summary>
-        /// 获取日期时间精确到秒的 64 位二进制值。
-        /// </summary>
-        /// <param name="dateTime">日期时间。</param>
-        public static long GetBinaryFromDateTime(DateTime dateTime)
-        {
-            try
-            {
-                return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second).ToBinary();
-            }
-            catch
-            {
-                return 0;
-            }
-        }
+        #endregion
+
+        #region 转换为字符串
 
         /// <summary>
-        /// 获取时间间隔的长格式字符串。
+        /// 返回一个以 "h:m:s.ms" 格式表示时间间隔的字符串。
         /// </summary>
         /// <param name="timeSpan">时间间隔。</param>
         public static string GetLongTimeStringFromTimeSpan(TimeSpan timeSpan)
@@ -164,7 +568,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取时间间隔的字符串。
+        /// 返回一个以 "h 小时 m 分 s 秒" 格式表示时间间隔的字符串。
         /// </summary>
         /// <param name="timeSpan">时间间隔。</param>
         public static string GetTimeStringFromTimeSpan(TimeSpan timeSpan)
@@ -180,74 +584,96 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个在合适的单位下其科学记数法具有指定位位有效数字的时间间隔（秒）。
+        /// 返回将一个时间间隔（秒）在合适的单位下保留指定位数有效数字的数值。
         /// </summary>
-        /// <param name="second">以秒为单位的时间间隔。</param>
-        /// <param name="significance">有效数字位数。</param>
+        /// <param name="second">时间间隔（秒）。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
         public static double GetStandardizationTimespanOfSecond(double second, int significance)
         {
             try
             {
-                if (second != 0)
+                if (InternalMethod.IsNaNOrInfinity(second))
                 {
-                    int Sign = Math.Sign(second);
-
-                    second = Math.Abs(second);
-
-                    double Unit = 1;
-
-                    if (second >= 31557600.0)
-                    {
-                        second /= (Unit = 31557600.0);
-                    }
-                    else if (second >= 86400.0)
-                    {
-                        second /= (Unit = 86400.0);
-                    }
-                    else if (second >= 3600.0)
-                    {
-                        second /= (Unit = 3600.0);
-                    }
-                    else if (second >= 60.0)
-                    {
-                        second /= (Unit = 60.0);
-                    }
-                    else if (second < 1)
-                    {
-                        second /= (Unit = 0.001);
-                    }
-
-                    double Exp = Math.Pow(10, Math.Floor(Math.Log10(Math.Abs(second))) - Math.Max(0, significance - 1));
-
-                    return (Sign * Math.Floor(second / Exp) * Exp * Unit);
+                    return double.NaN;
                 }
+                else
+                {
+                    if (second != 0 && significance > 0)
+                    {
+                        int sign = Math.Sign(second);
 
-                return 0;
+                        second = Math.Abs(second);
+
+                        double unit = 1;
+
+                        if (second >= 31557600.0)
+                        {
+                            second /= (unit = 31557600.0);
+                        }
+                        else if (second >= 86400.0)
+                        {
+                            second /= (unit = 86400.0);
+                        }
+                        else if (second >= 3600.0)
+                        {
+                            second /= (unit = 3600.0);
+                        }
+                        else if (second >= 60.0)
+                        {
+                            second /= (unit = 60.0);
+                        }
+                        else if (second < 1)
+                        {
+                            second /= (unit = 0.001);
+                        }
+
+                        int exp = (int)Math.Floor(Math.Log10(Math.Abs(second))) - Math.Max(0, significance - 1);
+
+                        second = Math.Round(second / Math.Pow(10, exp));
+
+                        while (second >= 10)
+                        {
+                            second /= 10;
+                            exp++;
+                        }
+
+                        second *= (sign * Math.Pow(10, exp) * unit);
+                    }
+
+                    return second;
+                }
             }
             catch
             {
-                return 0;
+                return double.NaN;
             }
         }
 
         /// <summary>
-        /// 获取以秒为单位的一个时间间隔的字符串格式（秒）。
+        /// 返回一个表示时间间隔（秒）的字符串。
         /// </summary>
-        /// <param name="second">以秒为单位的时间间隔。</param>
+        /// <param name="second">时间间隔（秒）。</param>
         public static string GetLargeTimespanStringOfSecond(double second)
         {
             try
             {
-                if (second != 0)
+                if (InternalMethod.IsNaNOrInfinity(second))
                 {
-                    int Sign = Math.Sign(second);
-
-                    second = Math.Abs(second);
-
-                    return string.Concat((Sign == -1 ? "-" : string.Empty), (second >= 31557600E12 ? string.Concat(second / (31557600E12), " Ta") : (second >= 31557600E9 ? string.Concat(second / (31557600E9), " Ga") : (second >= 31557600E6 ? string.Concat(second / (31557600E6), " Ma") : (second >= 31557600E3 ? string.Concat(second / (31557600E3), " ka") : (second >= 31557600.0 ? string.Concat(second / 31557600.0, " a") : (second >= 86400.0 ? string.Concat(second / 86400.0, " d") : (second >= 3600.0 ? string.Concat(second / 3600.0, " h") : (second >= 60 ? string.Concat(second / 60.0, " min") : (second >= 1 ? string.Concat(second, " s") : string.Concat(second * 1000.0, " ms")))))))))));
+                    return "N/A";
                 }
+                else
+                {
+                    if (second != 0)
+                    {
+                        int Sign = Math.Sign(second);
 
-                return "0";
+                        second = Math.Abs(second);
+
+                        return string.Concat((Sign == -1 ? "-" : string.Empty), (second >= 31557600E12 ? string.Concat(second / (31557600E12), " Ta") : (second >= 31557600E9 ? string.Concat(second / (31557600E9), " Ga") : (second >= 31557600E6 ? string.Concat(second / (31557600E6), " Ma") : (second >= 31557600E3 ? string.Concat(second / (31557600E3), " ka") : (second >= 31557600.0 ? string.Concat(second / 31557600.0, " a") : (second >= 86400.0 ? string.Concat(second / 86400.0, " d") : (second >= 3600.0 ? string.Concat(second / 3600.0, " h") : (second >= 60 ? string.Concat(second / 60.0, " min") : (second >= 1 ? string.Concat(second, " s") : string.Concat(second * 1000.0, " ms")))))))))));
+                    }
+
+                    return "0";
+                }
             }
             catch
             {
@@ -256,66 +682,88 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个在合适的单位下其科学记数法具有指定位有效数字的距离（米）。
+        /// 返回将一个距离（米）在合适的单位下保留指定位数有效数字的数值。
         /// </summary>
-        /// <param name="meter">以米为单位的距离。</param>
-        /// <param name="significance">有效数字位数。</param>
+        /// <param name="meter">距离（米）。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
         public static double GetStandardizationDistanceOfMeter(double meter, int significance)
         {
             try
             {
-                if (meter != 0)
+                if (InternalMethod.IsNaNOrInfinity(meter))
                 {
-                    int Sign = Math.Sign(meter);
-
-                    meter = Math.Abs(meter);
-
-                    double Unit = 1;
-
-                    if (meter >= 9460730472580800.0)
-                    {
-                        meter /= (Unit = 9460730472580800.0);
-                    }
-                    else if (meter >= 149597870700.0)
-                    {
-                        meter /= (Unit = 149597870700.0);
-                    }
-                    else if (meter >= 1000.0)
-                    {
-                        meter /= (Unit = 1000.0);
-                    }
-
-                    double Exp = Math.Pow(10, Math.Floor(Math.Log10(Math.Abs(meter))) - Math.Max(0, significance - 1));
-
-                    return (Sign * Math.Floor(meter / Exp) * Exp * Unit);
+                    return double.NaN;
                 }
+                else
+                {
+                    if (meter != 0 && significance > 0)
+                    {
+                        int sign = Math.Sign(meter);
 
-                return 0;
+                        meter = Math.Abs(meter);
+
+                        double unit = 1;
+
+                        if (meter >= 9460730472580800.0)
+                        {
+                            meter /= (unit = 9460730472580800.0);
+                        }
+                        else if (meter >= 149597870700.0)
+                        {
+                            meter /= (unit = 149597870700.0);
+                        }
+                        else if (meter >= 1000.0)
+                        {
+                            meter /= (unit = 1000.0);
+                        }
+
+                        int exp = (int)Math.Floor(Math.Log10(Math.Abs(meter))) - Math.Max(0, significance - 1);
+
+                        meter = Math.Round(meter / Math.Pow(10, exp));
+
+                        while (meter >= 10)
+                        {
+                            meter /= 10;
+                            exp++;
+                        }
+
+                        meter *= (sign * Math.Pow(10, exp) * unit);
+                    }
+
+                    return meter;
+                }
             }
             catch
             {
-                return 0;
+                return double.NaN;
             }
         }
 
         /// <summary>
-        /// 获取以米为单位的一个距离的字符串格式。
+        /// 返回一个表示距离（米）的字符串。
         /// </summary>
-        /// <param name="meter">以米为单位的距离。</param>
+        /// <param name="meter">距离（米）。</param>
         public static string GetLargeDistanceStringOfMeter(double meter)
         {
             try
             {
-                if (meter != 0)
+                if (InternalMethod.IsNaNOrInfinity(meter))
                 {
-                    int Sign = Math.Sign(meter);
-
-                    meter = Math.Abs(meter);
-
-                    return string.Concat((Sign == -1 ? "-" : string.Empty), (meter >= 9460730472580800E12 ? string.Concat(meter / 9460730472580800E12, " Tly") : (meter >= 9460730472580800E9 ? string.Concat(meter / 9460730472580800E9, " Gly") : (meter >= 9460730472580800E6 ? string.Concat(meter / 9460730472580800E6, " Mly") : (meter >= 9460730472580800E3 ? string.Concat(meter / 9460730472580800E3, " kly") : (meter >= 9460730472580800.0 ? string.Concat(meter / 9460730472580800.0, " ly") : (meter >= 149597870700.0 ? string.Concat(meter / 149597870700.0, " AU") : (meter >= 1000.0 ? string.Concat(meter / 1000.0, " km") : string.Concat(meter, " m")))))))));
+                    return "N/A";
                 }
+                else
+                {
+                    if (meter != 0)
+                    {
+                        int Sign = Math.Sign(meter);
 
-                return "0";
+                        meter = Math.Abs(meter);
+
+                        return string.Concat((Sign == -1 ? "-" : string.Empty), (meter >= 9460730472580800E12 ? string.Concat(meter / 9460730472580800E12, " Tly") : (meter >= 9460730472580800E9 ? string.Concat(meter / 9460730472580800E9, " Gly") : (meter >= 9460730472580800E6 ? string.Concat(meter / 9460730472580800E6, " Mly") : (meter >= 9460730472580800E3 ? string.Concat(meter / 9460730472580800E3, " kly") : (meter >= 9460730472580800.0 ? string.Concat(meter / 9460730472580800.0, " ly") : (meter >= 149597870700.0 ? string.Concat(meter / 149597870700.0, " AU") : (meter >= 1000.0 ? string.Concat(meter / 1000.0, " km") : string.Concat(meter, " m")))))))));
+                    }
+
+                    return "0";
+                }
             }
             catch
             {
@@ -324,7 +772,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取以度分秒表示的一个以角度为单位的角度的字符串格式。
+        /// 返回一个以 "d° m′ s″ " 格式表示角度（角度）的字符串。
         /// </summary>
         /// <param name="degree">以角度为单位的角度。</param>
         /// <param name="decimalDigits">保留的小数位数，0 表示不保留小数，-1 表示保留所有小数。</param>
@@ -333,54 +781,61 @@ namespace Com
         {
             try
             {
-                string Sign = (degree < 0 ? "-" : string.Empty);
-                degree = Math.Abs(degree);
-
-                double DegF = degree;
-                double DegD = Math.Floor(DegF);
-                double MinF = (DegF - DegD) * 60;
-                double MinD = Math.Floor(MinF);
-                double SecF = (MinF - MinD) * 60;
-
-                string DegStr = string.Concat(DegD, "° ");
-                string MinStr = string.Concat(MinD, "′ ");
-                string SecStr = string.Concat(SecF.ToString(decimalDigits >= 0 ? string.Concat("N", Math.Min(16, decimalDigits)) : string.Empty), "″ ");
-
-                if (cutdownIdleZeros)
+                if (InternalMethod.IsNaNOrInfinity(degree))
                 {
-                    int DotIndex = SecStr.IndexOf('.');
-
-                    if (DotIndex >= 0)
-                    {
-                        int LastPartIndex = DotIndex + 1;
-
-                        while (LastPartIndex < SecStr.Length && char.IsDigit(SecStr, LastPartIndex))
-                        {
-                            LastPartIndex++;
-                        }
-
-                        string HeadPart = SecStr.Substring(0, DotIndex);
-                        string MiddlePart = SecStr.Substring(DotIndex, LastPartIndex - DotIndex);
-                        string LastPart = (LastPartIndex < SecStr.Length ? SecStr.Substring(LastPartIndex) : string.Empty);
-
-                        if (MiddlePart.Length > 0)
-                        {
-                            while (MiddlePart[MiddlePart.Length - 1] == '0')
-                            {
-                                MiddlePart = MiddlePart.Substring(0, MiddlePart.Length - 1);
-                            }
-
-                            if (MiddlePart.Length == 1)
-                            {
-                                MiddlePart = string.Empty;
-                            }
-                        }
-
-                        SecStr = string.Concat(HeadPart, MiddlePart, LastPart);
-                    }
+                    return "N/A";
                 }
+                else
+                {
+                    string Sign = (degree < 0 ? "-" : string.Empty);
+                    degree = Math.Abs(degree);
 
-                return string.Concat(Sign, DegStr, MinStr, SecStr);
+                    double DegF = degree;
+                    double DegD = Math.Floor(DegF);
+                    double MinF = (DegF - DegD) * 60;
+                    double MinD = Math.Floor(MinF);
+                    double SecF = (MinF - MinD) * 60;
+
+                    string DegStr = string.Concat(DegD, "° ");
+                    string MinStr = string.Concat(MinD, "′ ");
+                    string SecStr = string.Concat(SecF.ToString(decimalDigits >= 0 ? string.Concat("N", Math.Min(16, decimalDigits)) : string.Empty), "″ ");
+
+                    if (cutdownIdleZeros)
+                    {
+                        int DotIndex = SecStr.IndexOf('.');
+
+                        if (DotIndex >= 0)
+                        {
+                            int LastPartIndex = DotIndex + 1;
+
+                            while (LastPartIndex < SecStr.Length && char.IsDigit(SecStr, LastPartIndex))
+                            {
+                                LastPartIndex++;
+                            }
+
+                            string HeadPart = SecStr.Substring(0, DotIndex);
+                            string MiddlePart = SecStr.Substring(DotIndex, LastPartIndex - DotIndex);
+                            string LastPart = (LastPartIndex < SecStr.Length ? SecStr.Substring(LastPartIndex) : string.Empty);
+
+                            if (MiddlePart.Length > 0)
+                            {
+                                while (MiddlePart[MiddlePart.Length - 1] == '0')
+                                {
+                                    MiddlePart = MiddlePart.Substring(0, MiddlePart.Length - 1);
+                                }
+
+                                if (MiddlePart.Length == 1)
+                                {
+                                    MiddlePart = string.Empty;
+                                }
+                            }
+
+                            SecStr = string.Concat(HeadPart, MiddlePart, LastPart);
+                        }
+                    }
+
+                    return string.Concat(Sign, DegStr, MinStr, SecStr);
+                }
             }
             catch
             {
@@ -389,13 +844,15 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取 64 位存储大小的字符串格式。
+        /// 返回一个表示存储大小（字节）的字符串。
         /// </summary>
-        /// <param name="b">存储大小的字节数。</param>
+        /// <param name="b">存储大小（字节）。</param>
         public static string GetSize64StringFromByte(long b)
         {
             try
             {
+                b = Math.Abs(b);
+
                 if (b < 1E3)
                 {
                     return string.Concat(b, " B");
@@ -432,5 +889,7 @@ namespace Com
                 return string.Empty;
             }
         }
+
+        #endregion
     }
 }
