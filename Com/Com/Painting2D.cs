@@ -650,7 +650,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
+                if (bmp != null)
                 {
                     return PaintLargeCircle(bmp, offset, radius, refPhase, color, width, antiAlias, 32, 256, 4);
                 }
@@ -1156,7 +1156,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(semiMajorAxis) && semiMajorAxis > 0) && (!InternalMethod.IsNaNOrInfinity(eccentricity) && eccentricity >= 0) && !InternalMethod.IsNaNOrInfinity(rotateAngle) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
+                if (bmp != null)
                 {
                     return PaintLargeEllipse(bmp, offset, semiMajorAxis, eccentricity, rotateAngle, refPhase, color, width, antiAlias, 32, 256, 4);
                 }

@@ -42,11 +42,7 @@ namespace Com
 
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
+                if (!InternalMethod.IsNaNOrInfinity(value))
                 {
                     string part1 = string.Empty, part2 = string.Empty, part3 = string.Empty, part4 = string.Empty;
 
@@ -144,6 +140,8 @@ namespace Com
 
                     return string.Concat(part1, part2, part3, part4);
                 }
+
+                return "N/A";
             }
             catch
             {
@@ -162,14 +160,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, significance, useNaturalExpression, false, unit);
-                }
+                return GetScientificNotationString(value, significance, useNaturalExpression, false, unit);
             }
             catch
             {
@@ -188,14 +179,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, significance, useNaturalExpression, useMagnitudeOrderCode, null);
-                }
+                return GetScientificNotationString(value, significance, useNaturalExpression, useMagnitudeOrderCode, null);
             }
             catch
             {
@@ -213,14 +197,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, significance, useNaturalExpression, false, null);
-                }
+                return GetScientificNotationString(value, significance, useNaturalExpression, false, null);
             }
             catch
             {
@@ -239,14 +216,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, unit);
-                }
+                return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, unit);
             }
             catch
             {
@@ -264,14 +234,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, 0, useNaturalExpression, false, unit);
-                }
+                return GetScientificNotationString(value, 0, useNaturalExpression, false, unit);
             }
             catch
             {
@@ -289,14 +252,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, significance, false, false, unit);
-                }
+                return GetScientificNotationString(value, significance, false, false, unit);
             }
             catch
             {
@@ -313,14 +269,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, significance, false, false, null);
-                }
+                return GetScientificNotationString(value, significance, false, false, null);
             }
             catch
             {
@@ -338,14 +287,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, null);
-                }
+                return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, null);
             }
             catch
             {
@@ -362,14 +304,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, 0, useNaturalExpression, false, null);
-                }
+                return GetScientificNotationString(value, 0, useNaturalExpression, false, null);
             }
             catch
             {
@@ -386,14 +321,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, 0, false, false, unit);
-                }
+                return GetScientificNotationString(value, 0, false, false, unit);
             }
             catch
             {
@@ -409,14 +337,7 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return "N/A";
-                }
-                else
-                {
-                    return GetScientificNotationString(value, 0, false, false, null);
-                }
+                return GetScientificNotationString(value, 0, false, false, null);
             }
             catch
             {

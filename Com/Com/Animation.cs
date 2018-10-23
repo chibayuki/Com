@@ -164,7 +164,7 @@ namespace Com
         {
             try
             {
-                if (frame != null && frameCount > 0 && msPerFrame > 0)
+                if (frame != null)
                 {
                     Show(frame, frameCount, msPerFrame, keyFrameDensity, null);
                 }
@@ -183,7 +183,7 @@ namespace Com
         {
             try
             {
-                if (frame != null && frameCount > 0 && msPerFrame > 0)
+                if (frame != null)
                 {
                     Show(frame, frameCount, msPerFrame, 0, keyFrameList);
                 }
@@ -201,7 +201,7 @@ namespace Com
         {
             try
             {
-                if (frame != null && frameCount > 0 && msPerFrame > 0)
+                if (frame != null)
                 {
                     Show(frame, frameCount, msPerFrame, 0, null);
                 }

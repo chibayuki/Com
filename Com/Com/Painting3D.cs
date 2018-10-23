@@ -517,7 +517,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !center.IsNaNOrInfinity && (!size.IsNaNOrInfinity && !size.IsZero) && (!color.IsEmpty && color.A > 0) && !InternalMethod.IsNaNOrInfinity(edgeWidth) && !Matrix.IsNullOrNonMatrix(affineMatrix) && (!InternalMethod.IsNaNOrInfinity(trueLenDist) && trueLenDist >= 0) && !illuminationDirection.IsNaNOrInfinity && !InternalMethod.IsNaNOrInfinity(exposure))
+                if (bmp != null && affineMatrix != null)
                 {
                     List<Matrix> affineMatrixList = new List<Matrix>(1) { affineMatrix };
 
@@ -547,7 +547,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !center.IsNaNOrInfinity && (!size.IsNaNOrInfinity && !size.IsZero) && (!color.IsEmpty && color.A > 0) && !InternalMethod.IsNaNOrInfinity(edgeWidth) && !InternalMethod.IsNullOrEmpty(affineMatrixList) && (!InternalMethod.IsNaNOrInfinity(trueLenDist) && trueLenDist >= 0))
+                if (bmp != null && affineMatrixList != null)
                 {
                     return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrixList, trueLenDist, PointD3D.Zero, false, 0, antiAlias);
                 }
@@ -575,7 +575,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !center.IsNaNOrInfinity && (!size.IsNaNOrInfinity && !size.IsZero) && (!color.IsEmpty && color.A > 0) && !InternalMethod.IsNaNOrInfinity(edgeWidth) && !Matrix.IsNullOrNonMatrix(affineMatrix) && (!InternalMethod.IsNaNOrInfinity(trueLenDist) && trueLenDist >= 0))
+                if (bmp != null && affineMatrix != null)
                 {
                     List<Matrix> affineMatrixList = new List<Matrix>(1) { affineMatrix };
 

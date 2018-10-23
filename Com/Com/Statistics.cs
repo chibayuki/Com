@@ -146,7 +146,7 @@ namespace Com
 
         //
 
-        private static double[] _StdGaussRandom() // 返回两个概率密度服从一维标准高斯分布的随机双精度浮点数（数学期望 = 0，标准差 = 1）。
+        private static double[] _StdGaussRandom() // 返回两个概率密度服从一维标准高斯分布的随机双精度浮点数。
         {
             try
             {
@@ -207,6 +207,28 @@ namespace Com
             try
             {
                 return _StdGaussRandom()[0];
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 返回一个概率密度服从一维高斯分布的随机双精度浮点数。
+        /// </summary>
+        /// <param name="ev">数学期望。</param>
+        /// <param name="sd">标准差。</param>
+        public static double GaussRandom(double ev, double sd)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(ev) || InternalMethod.IsNaNOrInfinity(sd))
+                {
+                    return double.NaN;
+                }
+
+                return _StdGaussRandom()[0] * sd * sd + ev;
             }
             catch
             {

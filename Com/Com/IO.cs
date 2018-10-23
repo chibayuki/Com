@@ -36,12 +36,7 @@ namespace Com
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(sourceFolder) || string.IsNullOrWhiteSpace(destFolder))
-                {
-                    return false;
-                }
-
-                if (Directory.Exists(sourceFolder))
+                if (!string.IsNullOrWhiteSpace(sourceFolder) && !string.IsNullOrWhiteSpace(destFolder) && Directory.Exists(sourceFolder))
                 {
                     if (!Directory.Exists(destFolder))
                     {
