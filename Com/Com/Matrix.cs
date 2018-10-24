@@ -215,9 +215,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 Matrix 是否为非矩阵的布尔值。
+        /// 获取表示此 Matrix 是否为空矩阵的布尔值。
         /// </summary>
-        public bool IsNonMatrix
+        public bool IsEmpty
         {
             get
             {
@@ -443,7 +443,7 @@ namespace Com
                             {
                                 Matrix sub = SubMatrix(x, y, i, i);
 
-                                if (IsNullOrNonMatrix(sub))
+                                if (IsNullOrEmpty(sub))
                                 {
                                     break;
                                 }
@@ -563,7 +563,7 @@ namespace Com
                 {
                     Matrix result = Adjoint;
 
-                    if (!IsNullOrNonMatrix(result))
+                    if (!IsNullOrEmpty(result))
                     {
                         double det = Determinant;
 
@@ -618,7 +618,7 @@ namespace Com
         /// <param name="matrix">用于比较的 Matrix 对象。</param>
         public bool Equals(Matrix matrix)
         {
-            if (_Size.Width <= 0 || _Size.Height <= 0 || IsNullOrNonMatrix(matrix) || _Size != matrix._Size)
+            if (_Size.Width <= 0 || _Size.Height <= 0 || IsNullOrEmpty(matrix) || _Size != matrix._Size)
             {
                 return false;
             }
@@ -782,10 +782,10 @@ namespace Com
         #region 静态方法
 
         /// <summary>
-        /// 判断指定的 Matrix 是否为 null 或表示非矩阵。
+        /// 判断指定的 Matrix 是否为 null 或表示空矩阵。
         /// </summary>
         /// <param name="matrix">用于判断的 Matrix 对象。</param>
-        public static bool IsNullOrNonMatrix(Matrix matrix)
+        public static bool IsNullOrEmpty(Matrix matrix)
         {
             return ((object)matrix == null || matrix._Size.Width <= 0 || matrix._Size.Height <= 0);
         }
@@ -807,7 +807,7 @@ namespace Com
             {
                 return true;
             }
-            else if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right))
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return false;
             }
@@ -952,7 +952,7 @@ namespace Com
         /// <param name="right">右矩阵。</param>
         public static Matrix Augment(Matrix left, Matrix right)
         {
-            if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
@@ -987,7 +987,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示加数。</param>
         public static Matrix Add(Matrix matrix, double n)
         {
-            if (!IsNullOrNonMatrix(matrix))
+            if (!IsNullOrEmpty(matrix))
             {
                 Size size = matrix.Size;
 
@@ -1014,7 +1014,7 @@ namespace Com
         /// <param name="matrix">Matrix 对象，表示加数。</param>
         public static Matrix Add(double n, Matrix matrix)
         {
-            if (!IsNullOrNonMatrix(matrix))
+            if (!IsNullOrEmpty(matrix))
             {
                 Size size = matrix.Size;
 
@@ -1041,7 +1041,7 @@ namespace Com
         /// <param name="right">Matrix 对象，表示加数。</param>
         public static Matrix Add(Matrix left, Matrix right)
         {
-            if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
@@ -1074,7 +1074,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示减数。</param>
         public static Matrix Subtract(Matrix matrix, double n)
         {
-            if (!IsNullOrNonMatrix(matrix))
+            if (!IsNullOrEmpty(matrix))
             {
                 Size size = matrix.Size;
 
@@ -1101,7 +1101,7 @@ namespace Com
         /// <param name="matrix">Matrix 对象，表示减数。</param>
         public static Matrix Subtract(double n, Matrix matrix)
         {
-            if (!IsNullOrNonMatrix(matrix))
+            if (!IsNullOrEmpty(matrix))
             {
                 Size size = matrix.Size;
 
@@ -1128,7 +1128,7 @@ namespace Com
         /// <param name="right">Matrix 对象，表示减数。</param>
         public static Matrix Subtract(Matrix left, Matrix right)
         {
-            if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
@@ -1161,7 +1161,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示乘数。</param>
         public static Matrix Multiply(Matrix matrix, double n)
         {
-            if (!IsNullOrNonMatrix(matrix))
+            if (!IsNullOrEmpty(matrix))
             {
                 Size size = matrix.Size;
 
@@ -1188,7 +1188,7 @@ namespace Com
         /// <param name="matrix">Matrix 对象，表示乘数。</param>
         public static Matrix Multiply(double n, Matrix matrix)
         {
-            if (!IsNullOrNonMatrix(matrix))
+            if (!IsNullOrEmpty(matrix))
             {
                 Size size = matrix.Size;
 
@@ -1215,7 +1215,7 @@ namespace Com
         /// <param name="right">Matrix 对象，表示乘数。</param>
         public static Matrix Multiply(Matrix left, Matrix right)
         {
-            if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
@@ -1256,7 +1256,7 @@ namespace Com
         {
             if (list.Count > 0)
             {
-                if (!IsNullOrNonMatrix(list[0]))
+                if (!IsNullOrEmpty(list[0]))
                 {
                     Matrix result = list[0].Copy();
 
@@ -1268,11 +1268,11 @@ namespace Com
                     {
                         for (int i = 1; i < list.Count; i++)
                         {
-                            if (!IsNullOrNonMatrix(list[i]))
+                            if (!IsNullOrEmpty(list[i]))
                             {
                                 result = Multiply(list[i], result);
 
-                                if (IsNullOrNonMatrix(result))
+                                if (IsNullOrEmpty(result))
                                 {
                                     return NonMatrix;
                                 }
@@ -1299,7 +1299,7 @@ namespace Com
         {
             if (list.Count > 0)
             {
-                if (!IsNullOrNonMatrix(list[0]))
+                if (!IsNullOrEmpty(list[0]))
                 {
                     Matrix result = list[0].Copy();
 
@@ -1311,11 +1311,11 @@ namespace Com
                     {
                         for (int i = 1; i < list.Count; i++)
                         {
-                            if (!IsNullOrNonMatrix(list[i]))
+                            if (!IsNullOrEmpty(list[i]))
                             {
                                 result = Multiply(result, list[i]);
 
-                                if (IsNullOrNonMatrix(result))
+                                if (IsNullOrEmpty(result))
                                 {
                                     return NonMatrix;
                                 }
@@ -1341,7 +1341,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示除数。</param>
         public static Matrix Divide(Matrix matrix, double n)
         {
-            if (!IsNullOrNonMatrix(matrix))
+            if (!IsNullOrEmpty(matrix))
             {
                 Size size = matrix.Size;
 
@@ -1368,7 +1368,7 @@ namespace Com
         /// <param name="matrix">Matrix 对象，表示除数。</param>
         public static Matrix Divide(double n, Matrix matrix)
         {
-            if (!IsNullOrNonMatrix(matrix))
+            if (!IsNullOrEmpty(matrix))
             {
                 Size size = matrix.Size;
 
@@ -1395,7 +1395,7 @@ namespace Com
         /// <param name="right">Matrix 对象，表示除数。</param>
         public static Matrix DivideLeft(Matrix left, Matrix right)
         {
-            if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
@@ -1404,7 +1404,7 @@ namespace Com
                 {
                     Matrix invLeft = left.Invert;
 
-                    if (!IsNullOrNonMatrix(invLeft))
+                    if (!IsNullOrEmpty(invLeft))
                     {
                         return Multiply(invLeft, right);
                     }
@@ -1421,7 +1421,7 @@ namespace Com
         /// <param name="right">Matrix 对象，表示除数。</param>
         public static Matrix DivideRight(Matrix left, Matrix right)
         {
-            if (!IsNullOrNonMatrix(left) && !IsNullOrNonMatrix(right))
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
@@ -1430,7 +1430,7 @@ namespace Com
                 {
                     Matrix invRight = right.Invert;
 
-                    if (!IsNullOrNonMatrix(invRight))
+                    if (!IsNullOrEmpty(invRight))
                     {
                         return Multiply(left, invRight);
                     }
@@ -1449,7 +1449,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示常数项。</param>
         public static Vector SolveLinearEquation(Matrix matrix, Vector vector)
         {
-            if (!IsNullOrNonMatrix(matrix) && !Vector.IsNullOrNonVector(vector) && vector.IsColumnVector)
+            if (!IsNullOrEmpty(matrix) && !Vector.IsNullOrEmpty(vector) && vector.IsColumnVector)
             {
                 Size size = matrix.Size;
 
@@ -1461,7 +1461,7 @@ namespace Com
                     {
                         Matrix solution = DivideLeft(matrix, vector.ToMatrix());
 
-                        if (!IsNullOrNonMatrix(solution) && solution.Size == new Size(1, order))
+                        if (!IsNullOrEmpty(solution) && solution.Size == new Size(1, order))
                         {
                             return solution.GetColumn(0);
                         }
@@ -1536,7 +1536,7 @@ namespace Com
             {
                 return true;
             }
-            else if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right) || left._Size != right._Size)
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return false;
             }
@@ -1570,7 +1570,7 @@ namespace Com
             {
                 return false;
             }
-            else if (IsNullOrNonMatrix(left) || IsNullOrNonMatrix(right) || left._Size != right._Size)
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return true;
             }

@@ -191,6 +191,17 @@ namespace Com
         //
 
         /// <summary>
+        /// 获取表示此 PointD6D 结构是否为空向量的布尔值。
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 获取表示此 PointD6D 结构是否为零向量的布尔值。
         /// </summary>
         public bool IsZero
@@ -1056,7 +1067,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1075,7 +1086,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 2, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1094,7 +1105,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 3, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1113,7 +1124,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 4, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1132,7 +1143,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1151,7 +1162,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1170,7 +1181,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 3, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1189,7 +1200,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 4, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1208,7 +1219,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1227,7 +1238,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(2, 3, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1246,7 +1257,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(2, 4, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1265,7 +1276,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(2, 3, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1284,7 +1295,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(3, 4, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1303,7 +1314,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(3, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1322,7 +1333,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(4, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1341,7 +1352,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1357,7 +1368,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 2, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1373,7 +1384,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 3, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1389,7 +1400,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 4, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1405,7 +1416,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1421,7 +1432,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1437,7 +1448,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 3, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1453,7 +1464,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 4, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1469,7 +1480,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1485,7 +1496,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(2, 3, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1501,7 +1512,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(2, 4, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1517,7 +1528,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(2, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1533,7 +1544,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(3, 4, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1549,7 +1560,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(3, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1565,7 +1576,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(4, 5, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
             {
                 return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
             }
@@ -1602,7 +1613,7 @@ namespace Com
 
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1620,11 +1631,11 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 7x7 仿射矩阵（左矩阵）。</param>
         public void AffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(7, 7))
+            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(7, 7))
             {
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1646,7 +1657,7 @@ namespace Com
             {
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1685,7 +1696,7 @@ namespace Com
 
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
                 }
@@ -1700,11 +1711,11 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 7x7 仿射矩阵（左矩阵）。</param>
         public PointD6D AffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(7, 7))
+            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(7, 7))
             {
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
                 }
@@ -1723,7 +1734,7 @@ namespace Com
             {
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
                 }
@@ -1759,7 +1770,7 @@ namespace Com
 
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1777,11 +1788,11 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 7x7 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(7, 7))
+            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(7, 7))
             {
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1803,7 +1814,7 @@ namespace Com
             {
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1842,7 +1853,7 @@ namespace Com
 
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
                 }
@@ -1857,11 +1868,11 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 7x7 仿射矩阵（左矩阵）。</param>
         public PointD6D InverseAffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(7, 7))
+            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(7, 7))
             {
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
                 }
@@ -1880,7 +1891,7 @@ namespace Com
             {
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 6)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
                 {
                     return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
                 }

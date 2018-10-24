@@ -248,9 +248,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 Vector 是否为非向量的布尔值。
+        /// 获取表示此 Vector 是否为空向量的布尔值。
         /// </summary>
-        public bool IsNonVector
+        public bool IsEmpty
         {
             get
             {
@@ -528,7 +528,7 @@ namespace Com
         /// <param name="vector">用于比较的 Vector 对象。</param>
         public bool Equals(Vector vector)
         {
-            if (_Size <= 0 || IsNullOrNonVector(vector) || _Type != vector._Type || _Size != vector._Size)
+            if (_Size <= 0 || IsNullOrEmpty(vector) || _Type != vector._Type || _Size != vector._Size)
             {
                 return false;
             }
@@ -584,7 +584,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于平移此 Vector。</param>
         public void Offset(Vector vector)
         {
-            if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
+            if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
             {
                 for (int i = 0; i < _Size; i++)
                 {
@@ -620,7 +620,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于平移此 Vector。</param>
         public Vector OffsetCopy(Vector vector)
         {
-            if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
+            if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
             {
                 Vector result = Copy();
 
@@ -658,7 +658,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于缩放此 Vector。</param>
         public void Scale(Vector vector)
         {
-            if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
+            if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
             {
                 for (int i = 0; i < _Size; i++)
                 {
@@ -694,7 +694,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于缩放此 Vector。</param>
         public Vector ScaleCopy(Vector vector)
         {
-            if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
+            if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
             {
                 Vector result = Copy();
 
@@ -728,7 +728,7 @@ namespace Com
                 {
                     Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -737,7 +737,7 @@ namespace Com
                 {
                     Matrix result = Matrix.Multiply(matrixRotate, matrixVector);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -762,7 +762,7 @@ namespace Com
                 {
                     Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -775,7 +775,7 @@ namespace Com
                 {
                     Matrix result = Matrix.Multiply(matrixRotate, matrixVector);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -797,7 +797,7 @@ namespace Com
         /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public void AffineTransform(Matrix matrix)
         {
-            if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            if (_Size > 0 && !Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
             {
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
@@ -805,7 +805,7 @@ namespace Com
                 {
                     Matrix result = Matrix.Multiply(matrixVector, matrix);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -814,7 +814,7 @@ namespace Com
                 {
                     Matrix result = Matrix.Multiply(matrix, matrixVector);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -838,13 +838,13 @@ namespace Com
                     {
                         Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
                             result = Matrix.Multiply(result, matrix);
 
-                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -853,7 +853,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -864,13 +864,13 @@ namespace Com
                     {
                         Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
                             result = Matrix.Multiply(matrix, result);
 
-                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -879,7 +879,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -893,7 +893,7 @@ namespace Com
         /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public Vector AffineTransformCopy(Matrix matrix)
         {
-            if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            if (_Size > 0 && !Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
             {
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
@@ -901,7 +901,7 @@ namespace Com
                 {
                     Matrix result = Matrix.Multiply(matrixVector, matrix);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -914,7 +914,7 @@ namespace Com
                 {
                     Matrix result = Matrix.Multiply(matrix, matrixVector);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -944,13 +944,13 @@ namespace Com
                     {
                         Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
                             result = Matrix.Multiply(result, matrix);
 
-                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -959,7 +959,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -974,13 +974,13 @@ namespace Com
                     {
                         Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
                             result = Matrix.Multiply(matrix, result);
 
-                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -989,7 +989,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1009,7 +1009,7 @@ namespace Com
         /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public void InverseAffineTransform(Matrix matrix)
         {
-            if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            if (_Size > 0 && !Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
             {
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
@@ -1017,7 +1017,7 @@ namespace Com
                 {
                     Matrix result = Matrix.DivideRight(matrixVector, matrix);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -1026,7 +1026,7 @@ namespace Com
                 {
                     Matrix result = Matrix.DivideLeft(matrix, matrixVector);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -1050,13 +1050,13 @@ namespace Com
                     {
                         Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
                             result = Matrix.DivideRight(result, matrix);
 
-                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -1065,7 +1065,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
@@ -1076,13 +1076,13 @@ namespace Com
                     {
                         Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
                             result = Matrix.DivideLeft(matrix, result);
 
-                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -1091,7 +1091,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
@@ -1105,7 +1105,7 @@ namespace Com
         /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public Vector InverseAffineTransformCopy(Matrix matrix)
         {
-            if (_Size > 0 && !Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            if (_Size > 0 && !Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
             {
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
@@ -1113,7 +1113,7 @@ namespace Com
                 {
                     Matrix result = Matrix.DivideRight(matrixVector, matrix);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1126,7 +1126,7 @@ namespace Com
                 {
                     Matrix result = Matrix.DivideLeft(matrix, matrixVector);
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1156,13 +1156,13 @@ namespace Com
                     {
                         Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
                             result = Matrix.DivideRight(result, matrix);
 
-                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1));
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
                         }
 
                         if (!flag)
@@ -1171,7 +1171,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(_Size + 1, 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1186,13 +1186,13 @@ namespace Com
                     {
                         Matrix matrix = matrixList[i];
 
-                        bool flag = (!Matrix.IsNullOrNonMatrix(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
 
                         if (flag)
                         {
                             result = Matrix.DivideLeft(matrix, result);
 
-                            flag = (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1));
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1));
                         }
 
                         if (!flag)
@@ -1201,7 +1201,7 @@ namespace Com
                         }
                     }
 
-                    if (!Matrix.IsNullOrNonMatrix(result) && result.Size == new Size(1, _Size + 1))
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Vector vector = _GetZeroVector(_Type, _Size);
 
@@ -1223,7 +1223,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示起始点。</param>
         public double DistanceFrom(Vector vector)
         {
-            if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
+            if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
             {
                 double SqrSum = 0;
 
@@ -1244,7 +1244,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示起始向量。</param>
         public double AngleFrom(Vector vector)
         {
-            if (_Size > 0 && !IsNullOrNonVector(vector) && _Size == vector._Size)
+            if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
             {
                 if (IsZero || vector.IsZero)
                 {
@@ -1497,10 +1497,10 @@ namespace Com
         #region 静态方法
 
         /// <summary>
-        /// 判断指定的 Vector 是否为 null 或表示非向量。
+        /// 判断指定的 Vector 是否为 null 或表示空向量。
         /// </summary>
         /// <param name="vector">用于判断的 Vector 对象。</param>
-        public static bool IsNullOrNonVector(Vector vector)
+        public static bool IsNullOrEmpty(Vector vector)
         {
             return ((object)vector == null || vector._Size <= 0);
         }
@@ -1522,7 +1522,7 @@ namespace Com
             {
                 return true;
             }
-            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right))
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return false;
             }
@@ -1641,7 +1641,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于平移 Vector 对象。</param>
         public static Matrix OffsetMatrix(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 int dimension = vector._Size;
 
@@ -1697,7 +1697,7 @@ namespace Com
         /// <param name="vector">Vector 对象，用于缩放 Vector 对象。</param>
         public static Matrix ScaleMatrix(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 int dimension = vector._Size;
 
@@ -1760,7 +1760,7 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double DistanceBetween(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 double SqrSum = 0;
 
@@ -1782,7 +1782,7 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double AngleBetween(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 if (left.IsZero || right.IsZero)
                 {
@@ -1811,7 +1811,7 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double DotProduct(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 double SqrSum = 0;
 
@@ -1833,7 +1833,7 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static Vector CrossProduct(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 if (left._Size > 1)
                 {
@@ -1866,7 +1866,7 @@ namespace Com
         /// <param name="vector">用于转换的 Vector 对象。</param>
         public static Vector Abs(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -1887,7 +1887,7 @@ namespace Com
         /// <param name="vector">用于转换的 Vector 对象。</param>
         public static Vector Sign(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -1908,7 +1908,7 @@ namespace Com
         /// <param name="vector">用于转换的 Vector 对象。</param>
         public static Vector Ceiling(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -1929,7 +1929,7 @@ namespace Com
         /// <param name="vector">用于转换的 Vector 对象。</param>
         public static Vector Floor(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -1950,7 +1950,7 @@ namespace Com
         /// <param name="vector">用于转换的 Vector 对象。</param>
         public static Vector Round(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -1971,7 +1971,7 @@ namespace Com
         /// <param name="vector">用于转换的 Vector 对象。</param>
         public static Vector Truncate(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -1993,7 +1993,7 @@ namespace Com
         /// <param name="right">用于比较的第二个 Vector 对象。</param>
         public static Vector Max(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 Vector result = _GetZeroVector(left._Type, left._Size);
 
@@ -2015,7 +2015,7 @@ namespace Com
         /// <param name="right">用于比较的第二个 Vector 对象。</param>
         public static Vector Min(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 Vector result = _GetZeroVector(left._Type, left._Size);
 
@@ -2094,7 +2094,7 @@ namespace Com
             {
                 return true;
             }
-            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -2125,7 +2125,7 @@ namespace Com
             {
                 return false;
             }
-            else if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return true;
             }
@@ -2148,7 +2148,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -2163,7 +2163,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -2178,7 +2178,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <=(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -2193,7 +2193,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >=(Vector left, Vector right)
         {
-            if (IsNullOrNonVector(left) || IsNullOrNonVector(right) || left._Type != right._Type || left._Size != right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
             }
@@ -2209,7 +2209,7 @@ namespace Com
         /// <param name="vector">用于转换的 Vector 对象。</param>
         public static Vector operator +(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2230,7 +2230,7 @@ namespace Com
         /// <param name="vector">用于转换的 Vector 对象。</param>
         public static Vector operator -(Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2254,7 +2254,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示加数。</param>
         public static Vector operator +(Vector vector, double n)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2276,7 +2276,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示加数。</param>
         public static Vector operator +(double n, Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2298,7 +2298,7 @@ namespace Com
         /// <param name="right">Vector 对象，表示加数。</param>
         public static Vector operator +(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 Vector result = _GetZeroVector(left._Type, left._Size);
 
@@ -2322,7 +2322,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示减数。</param>
         public static Vector operator -(Vector vector, double n)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2344,7 +2344,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示减数。</param>
         public static Vector operator -(double n, Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2366,7 +2366,7 @@ namespace Com
         /// <param name="right">Vector 对象，表示减数。</param>
         public static Vector operator -(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 Vector result = _GetZeroVector(left._Type, left._Size);
 
@@ -2390,7 +2390,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示乘数。</param>
         public static Vector operator *(Vector vector, double n)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2412,7 +2412,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示乘数。</param>
         public static Vector operator *(double n, Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2434,7 +2434,7 @@ namespace Com
         /// <param name="right">Vector 对象，表示乘数。</param>
         public static Vector operator *(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 Vector result = _GetZeroVector(left._Type, left._Size);
 
@@ -2458,7 +2458,7 @@ namespace Com
         /// <param name="n">双精度浮点数，表示除数。</param>
         public static Vector operator /(Vector vector, double n)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2480,7 +2480,7 @@ namespace Com
         /// <param name="vector">Vector 对象，表示除数。</param>
         public static Vector operator /(double n, Vector vector)
         {
-            if (!IsNullOrNonVector(vector))
+            if (!IsNullOrEmpty(vector))
             {
                 Vector result = _GetZeroVector(vector._Type, vector._Size);
 
@@ -2502,7 +2502,7 @@ namespace Com
         /// <param name="right">Vector 对象，表示除数。</param>
         public static Vector operator /(Vector left, Vector right)
         {
-            if (!IsNullOrNonVector(left) && !IsNullOrNonVector(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
             {
                 Vector result = _GetZeroVector(left._Type, left._Size);
 

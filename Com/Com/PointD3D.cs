@@ -161,6 +161,17 @@ namespace Com
         //
 
         /// <summary>
+        /// 获取表示此 PointD3D 结构是否为空向量的布尔值。
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 获取表示此 PointD3D 结构是否为零向量的布尔值。
         /// </summary>
         public bool IsZero
@@ -685,7 +696,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -701,7 +712,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(2, 0, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -717,7 +728,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
             {
                 _X = result[0];
                 _Y = result[1];
@@ -733,7 +744,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
             {
                 return new PointD3D(result[0], result[1], result[2]);
             }
@@ -749,7 +760,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(2, 0, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
             {
                 return new PointD3D(result[0], result[1], result[2]);
             }
@@ -765,7 +776,7 @@ namespace Com
         {
             Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
 
-            if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
             {
                 return new PointD3D(result[0], result[1], result[2]);
             }
@@ -796,7 +807,7 @@ namespace Com
 
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -811,11 +822,11 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
         public void AffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
+            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -834,7 +845,7 @@ namespace Com
             {
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -864,7 +875,7 @@ namespace Com
 
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     return new PointD3D(result[0], result[1], result[2]);
                 }
@@ -879,11 +890,11 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
         public PointD3D AffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
+            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     return new PointD3D(result[0], result[1], result[2]);
                 }
@@ -902,7 +913,7 @@ namespace Com
             {
                 Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     return new PointD3D(result[0], result[1], result[2]);
                 }
@@ -932,7 +943,7 @@ namespace Com
 
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -947,11 +958,11 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
+            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -970,7 +981,7 @@ namespace Com
             {
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1000,7 +1011,7 @@ namespace Com
 
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     return new PointD3D(result[0], result[1], result[2]);
                 }
@@ -1015,11 +1026,11 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
         public PointD3D InverseAffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrNonMatrix(matrixLeft) && matrixLeft.Size == new Size(4, 4))
+            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     return new PointD3D(result[0], result[1], result[2]);
                 }
@@ -1038,7 +1049,7 @@ namespace Com
             {
                 Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrNonVector(result) && result.Dimension == 3)
+                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
                     return new PointD3D(result[0], result[1], result[2]);
                 }
