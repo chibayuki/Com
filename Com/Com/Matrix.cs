@@ -40,7 +40,7 @@ namespace Com
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         public Matrix(Size size)
         {
-            if (size.Width > 0 && size.Height > 0)
+            if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= int.MaxValue)
             {
                 _Size = size;
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -59,7 +59,7 @@ namespace Com
         /// <param name="value">矩阵的所有元素的值。</param>
         public Matrix(Size size, double value)
         {
-            if (size.Width > 0 && size.Height > 0)
+            if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= int.MaxValue)
             {
                 _Size = size;
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -86,7 +86,7 @@ namespace Com
         /// <param name="height">矩阵的高度（行数）。</param>
         public Matrix(int width, int height)
         {
-            if (width > 0 && height > 0)
+            if (width > 0 && height > 0 && (long)width * height <= int.MaxValue)
             {
                 _Size = new Size(width, height);
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -106,7 +106,7 @@ namespace Com
         /// <param name="value">矩阵的所有元素的值。</param>
         public Matrix(int width, int height, double value)
         {
-            if (width > 0 && height > 0)
+            if (width > 0 && height > 0 && (long)width * height <= int.MaxValue)
             {
                 _Size = new Size(width, height);
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -134,10 +134,21 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = new Size(values.GetLength(0), values.GetLength(1));
-                _MArray = new double[_Size.Width, _Size.Height];
+                int width = values.GetLength(0);
+                int height = values.GetLength(1);
 
-                Array.Copy(values, _MArray, _Size.Width * _Size.Height);
+                if ((long)width * height <= int.MaxValue)
+                {
+                    _Size = new Size(width, height);
+                    _MArray = new double[_Size.Width, _Size.Height];
+
+                    Array.Copy(values, _MArray, _Size.Width * _Size.Height);
+                }
+                else
+                {
+                    _Size = Size.Empty;
+                    _MArray = null;
+                }
             }
             else
             {
@@ -217,7 +228,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 Matrix 的宽度（列数）与高度（行数）。
+        /// 获取或设置此 Matrix 的宽度（列数）与高度（行数）。
         /// </summary>
         public Size Size
         {
@@ -230,69 +241,70 @@ namespace Com
 
                 return Size.Empty;
             }
+
+            set
+            {
+                if (value.Width > 0 && value.Height > 0)
+                {
+                    if ((long)value.Width * value.Height <= int.MaxValue && _Size != value)
+                    {
+                        Size OldSize = _Size;
+
+                        _Size = value;
+
+                        double[,] NewMArray = new double[_Size.Width, _Size.Height];
+
+                        int CopyWidth = Math.Min(_Size.Width, OldSize.Width);
+                        int CopyHeight = Math.Min(_Size.Height, OldSize.Height);
+
+                        for (int x = 0; x < CopyWidth; x++)
+                        {
+                            for (int y = 0; y < CopyHeight; y++)
+                            {
+                                NewMArray[x, y] = _MArray[x, y];
+                            }
+                        }
+
+                        _MArray = NewMArray;
+                    }
+                }
+                else
+                {
+                    _Size = Size.Empty;
+                    _MArray = null;
+                }
+            }
         }
 
         /// <summary>
-        /// 获取此 Matrix 的宽度（列数）。
+        /// 获取或设置此 Matrix 的宽度（列数）。
         /// </summary>
         public int Width
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0)
-                {
-                    return _Size.Width;
-                }
-
-                return 0;
+                return Size.Width;
             }
-        }
 
-        /// <summary>
-        /// 获取此 Matrix 的列数（宽度）。
-        /// </summary>
-        public int Column
-        {
-            get
+            set
             {
-                if (_Size.Width > 0 && _Size.Height > 0)
-                {
-                    return _Size.Width;
-                }
-
-                return 0;
+                Size = new Size(value, Size.Height);
             }
         }
 
         /// <summary>
-        /// 获取此 Matrix 的高度（行数）。
+        /// 获取或设置此 Matrix 的高度（行数）。
         /// </summary>
         public int Height
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0)
-                {
-                    return _Size.Height;
-                }
-
-                return 0;
+                return Size.Height;
             }
-        }
 
-        /// <summary>
-        /// 获取此 Matrix 的行数（高度）。
-        /// </summary>
-        public int Row
-        {
-            get
+            set
             {
-                if (_Size.Width > 0 && _Size.Height > 0)
-                {
-                    return _Size.Height;
-                }
-
-                return 0;
+                Size = new Size(Size.Width, value);
             }
         }
 
@@ -309,6 +321,39 @@ namespace Com
                 }
 
                 return 0;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix 包含的元素数量。
+        /// </summary>
+        public int Length
+        {
+            get
+            {
+                return Count;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix 的列数（宽度）。
+        /// </summary>
+        public int Column
+        {
+            get
+            {
+                return Width;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix 的行数（高度）。
+        /// </summary>
+        public int Row
+        {
+            get
+            {
+                return Height;
             }
         }
 

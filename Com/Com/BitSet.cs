@@ -230,7 +230,7 @@ namespace Com
                 {
                     if (_Size != value)
                     {
-                        int SizeOld = _Size;
+                        int OldSize = _Size;
 
                         _Size = Math.Min(_MaxSize, value);
 
@@ -242,14 +242,14 @@ namespace Com
                         {
                             uint[] NewUintArray = new uint[NewArrayLength];
 
-                            int LenMin = Math.Min(Len, _GetUintNumOfBitNum(SizeOld));
+                            int LenMin = Math.Min(Len, _GetUintNumOfBitNum(OldSize));
 
                             Array.Copy(_UintArray, NewUintArray, LenMin);
 
                             _UintArray = NewUintArray;
                         }
 
-                        if (_Size < SizeOld)
+                        if (_Size < OldSize)
                         {
                             if (_Size % _BitsPerUint != 0)
                             {
@@ -283,12 +283,7 @@ namespace Com
         {
             get
             {
-                if (_Size > 0)
-                {
-                    return _Size;
-                }
-
-                return 0;
+                return Size;
             }
         }
 
@@ -299,12 +294,7 @@ namespace Com
         {
             get
             {
-                if (_Size > 0)
-                {
-                    return _Size;
-                }
-
-                return 0;
+                return Size;
             }
         }
 

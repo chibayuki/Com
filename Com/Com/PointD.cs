@@ -195,6 +195,52 @@ namespace Com
         //
 
         /// <summary>
+        /// 获取此 PointD 结构包含的元素数量。
+        /// </summary>
+        public int Size
+        {
+            get
+            {
+                return 2;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD 结构包含的元素数量。
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return Size;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD 结构包含的元素数量。
+        /// </summary>
+        public int Length
+        {
+            get
+            {
+                return Size;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD 结构的维度。
+        /// </summary>
+        public int Dimension
+        {
+            get
+            {
+                return Size;
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 获取表示此 PointD 结构是否为零向量的布尔值。
         /// </summary>
         public bool IsZero

@@ -168,9 +168,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 Vector 的维度。
+        /// 获取或设置此 Vector 包含的元素数量。
         /// </summary>
-        public int Dimension
+        public int Size
         {
             get
             {
@@ -180,6 +180,68 @@ namespace Com
                 }
 
                 return 0;
+            }
+
+            set
+            {
+                if (value > 0)
+                {
+                    if (_Size != value)
+                    {
+                        int OldSize = _Size;
+
+                        _Size = value;
+
+                        double[] NewVArray = new double[_Size];
+
+                        int CopySize = Math.Min(_Size, OldSize);
+
+                        for (int i = 0; i < CopySize; i++)
+                        {
+                            NewVArray[i] = _VArray[i];
+                        }
+
+                        _VArray = NewVArray;
+                    }
+                }
+                else
+                {
+                    _Size = 0;
+                    _VArray = null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Vector 包含的元素数量。
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return Size;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Vector 包含的元素数量。
+        /// </summary>
+        public int Length
+        {
+            get
+            {
+                return Size;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Vector 的维度。
+        /// </summary>
+        public int Dimension
+        {
+            get
+            {
+                return Size;
             }
         }
 
