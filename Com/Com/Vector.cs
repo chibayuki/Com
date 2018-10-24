@@ -73,7 +73,7 @@ namespace Com
 
         private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的零向量。
         {
-            if (type != Type.NonVector && dimension > 0)
+            if (dimension > 0)
             {
                 Vector result = NonVector;
 
@@ -98,9 +98,10 @@ namespace Com
         /// <param name="values">各基向量方向的分量。</param>
         public Vector(Type type, params double[] values)
         {
-            if (type != Type.NonVector && !InternalMethod.IsNullOrEmpty(values))
+            _Type = type;
+
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Type = type;
                 _Size = values.Length;
                 _VArray = new double[values.Length];
 
@@ -108,7 +109,6 @@ namespace Com
             }
             else
             {
-                _Type = Type.NonVector;
                 _Size = 0;
                 _VArray = null;
             }
@@ -120,9 +120,10 @@ namespace Com
         /// <param name="values">各基向量方向的分量。</param>
         public Vector(params double[] values)
         {
+            _Type = Type.ColumnVector;
+
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Type = Type.ColumnVector;
                 _Size = values.Length;
                 _VArray = new double[values.Length];
 
@@ -130,7 +131,6 @@ namespace Com
             }
             else
             {
-                _Type = Type.NonVector;
                 _Size = 0;
                 _VArray = null;
             }
@@ -514,7 +514,7 @@ namespace Com
         {
             get
             {
-                return new Vector(Type.NonVector, null);
+                return new Vector(null);
             }
         }
 
@@ -1539,7 +1539,7 @@ namespace Com
         /// <param name="dimension">向量维度。</param>
         public static Vector Zero(Type type, int dimension)
         {
-            if (type != Type.NonVector && dimension > 0)
+            if (dimension > 0)
             {
                 return _GetZeroVector(type, dimension);
             }
@@ -1569,7 +1569,7 @@ namespace Com
         /// <param name="index">索引。</param>
         public static Vector Basis(Type type, int dimension, int index)
         {
-            if (type != Type.NonVector && dimension > 0 && (index >= 0 && index < dimension))
+            if (dimension > 0 && (index >= 0 && index < dimension))
             {
                 Vector result = _GetZeroVector(type, dimension);
 
@@ -1610,7 +1610,7 @@ namespace Com
         /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
         public static Matrix OffsetMatrix(Type type, int dimension, double d)
         {
-            if (type != Type.NonVector && dimension > 0)
+            if (dimension > 0)
             {
                 Matrix result = Matrix.Identity(dimension + 1);
 
@@ -1676,7 +1676,7 @@ namespace Com
         /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
         public static Matrix ScaleMatrix(Type type, int dimension, double s)
         {
-            if (type != Type.NonVector && dimension > 0)
+            if (dimension > 0)
             {
                 Matrix result = Matrix.Identity(dimension + 1);
 
@@ -1724,7 +1724,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
         public static Matrix RotateMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
-            if (type != Type.NonVector && dimension >= 2 && (index1 >= 0 && index1 < dimension) && (index2 >= 0 && index2 < dimension) && index1 != index2)
+            if (dimension >= 2 && (index1 >= 0 && index1 < dimension) && (index2 >= 0 && index2 < dimension) && index1 != index2)
             {
                 Matrix result = Matrix.Identity(dimension + 1);
 
@@ -2525,14 +2525,9 @@ namespace Com
         public enum Type
         {
             /// <summary>
-            /// 非向量。
-            /// </summary>
-            NonVector = 0,
-
-            /// <summary>
             /// 列向量。
             /// </summary>
-            ColumnVector,
+            ColumnVector = 0,
 
             /// <summary>
             /// 行向量。
