@@ -38,20 +38,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                if (_Type == Type.RowVector)
-                {
-                    double[,] values = new double[_Size + 1, 1];
-
-                    for (int i = 0; i < _Size; i++)
-                    {
-                        values[i, 0] = _VArray[i];
-                    }
-
-                    values[_Size, 0] = 1;
-
-                    return new Matrix(values);
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     double[,] values = new double[1, _Size + 1];
 
@@ -64,9 +51,22 @@ namespace Com
 
                     return new Matrix(values);
                 }
+                else
+                {
+                    double[,] values = new double[_Size + 1, 1];
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        values[i, 0] = _VArray[i];
+                    }
+
+                    values[_Size, 0] = 1;
+
+                    return new Matrix(values);
+                }
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         //
@@ -75,7 +75,7 @@ namespace Com
         {
             if (dimension > 0)
             {
-                Vector result = NonVector;
+                Vector result = Empty;
 
                 result._Type = type;
                 result._Size = dimension;
@@ -84,7 +84,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         #endregion
@@ -168,7 +168,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取或设置此 Vector 包含的元素数量。
+        /// 获取此 Vector 包含的元素数量。
         /// </summary>
         public int Size
         {
@@ -180,35 +180,6 @@ namespace Com
                 }
 
                 return 0;
-            }
-
-            set
-            {
-                if (value > 0)
-                {
-                    if (_Size != value)
-                    {
-                        int OldSize = _Size;
-
-                        _Size = value;
-
-                        double[] NewVArray = new double[_Size];
-
-                        int CopySize = Math.Min(_Size, OldSize);
-
-                        for (int i = 0; i < CopySize; i++)
-                        {
-                            NewVArray[i] = _VArray[i];
-                        }
-
-                        _VArray = NewVArray;
-                    }
-                }
-                else
-                {
-                    _Size = 0;
-                    _VArray = null;
-                }
             }
         }
 
@@ -265,7 +236,7 @@ namespace Com
         {
             get
             {
-                return (_Size > 0 && _Type != Type.RowVector);
+                return (_Size > 0 && _Type == Type.ColumnVector);
             }
         }
 
@@ -309,7 +280,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 Vector 是否为 NaN 的布尔值。
+        /// 获取表示此 Vector 是否包含非数字分量的布尔值。
         /// </summary>
         public bool IsNaN
         {
@@ -333,7 +304,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 Vector 是否为 Infinity 的布尔值。
+        /// 获取表示此 Vector 是否包含无穷大分量的布尔值。
         /// </summary>
         public bool IsInfinity
         {
@@ -365,7 +336,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 Vector 是否为 NaN 或 Infinity 的布尔值。
+        /// 获取表示此 Vector 是否包含非数字或无穷大分量的布尔值。
         /// </summary>
         public bool IsNaNOrInfinity
         {
@@ -445,10 +416,10 @@ namespace Com
             {
                 if (_Size > 0)
                 {
-                    return new Vector((_Type == Type.RowVector ? Type.ColumnVector : Type.RowVector), _VArray);
+                    return new Vector((_Type == Type.ColumnVector ? Type.RowVector : Type.ColumnVector), _VArray);
                 }
 
-                return NonVector;
+                return Empty;
             }
         }
 
@@ -471,7 +442,7 @@ namespace Com
                     return result;
                 }
 
-                return NonVector;
+                return Empty;
             }
         }
 
@@ -499,7 +470,7 @@ namespace Com
                     }
                 }
 
-                return NonVector;
+                return Empty;
             }
         }
 
@@ -508,9 +479,9 @@ namespace Com
         #region 静态属性
 
         /// <summary>
-        /// 获取表示非向量的 Vector 的新实例。
+        /// 获取表示空向量的 Vector 的新实例。
         /// </summary>
-        public static Vector NonVector
+        public static Vector Empty
         {
             get
             {
@@ -558,7 +529,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -611,7 +582,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -632,7 +603,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -685,7 +656,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -706,7 +677,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -724,22 +695,22 @@ namespace Com
                 Matrix matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
-                if (_Type == Type.RowVector)
-                {
-                    Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     Matrix result = Matrix.Multiply(matrixRotate, matrixVector);
 
                     if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
             }
@@ -758,20 +729,7 @@ namespace Com
                 Matrix matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
-                if (_Type == Type.RowVector)
-                {
-                    Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
-                    }
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     Matrix result = Matrix.Multiply(matrixRotate, matrixVector);
 
@@ -784,9 +742,22 @@ namespace Com
                         return vector;
                     }
                 }
+                else
+                {
+                    Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+
+                        return vector;
+                    }
+                }
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -801,22 +772,22 @@ namespace Com
             {
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
-                if (_Type == Type.RowVector)
-                {
-                    Matrix result = Matrix.Multiply(matrixVector, matrix);
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     Matrix result = Matrix.Multiply(matrix, matrixVector);
 
                     if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    Matrix result = Matrix.Multiply(matrixVector, matrix);
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
             }
@@ -832,33 +803,7 @@ namespace Com
             {
                 Matrix result = _ToMatrixForAffineTransform();
 
-                if (_Type == Type.RowVector)
-                {
-                    for (int i = 0; i < matrixList.Count; i++)
-                    {
-                        Matrix matrix = matrixList[i];
-
-                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
-
-                        if (flag)
-                        {
-                            result = Matrix.Multiply(result, matrix);
-
-                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
-                        }
-
-                        if (!flag)
-                        {
-                            return;
-                        }
-                    }
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     for (int i = 0; i < matrixList.Count; i++)
                     {
@@ -882,6 +827,32 @@ namespace Com
                     if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < matrixList.Count; i++)
+                    {
+                        Matrix matrix = matrixList[i];
+
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix.Multiply(result, matrix);
+
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
+                        }
+
+                        if (!flag)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
             }
@@ -897,20 +868,7 @@ namespace Com
             {
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
-                if (_Type == Type.RowVector)
-                {
-                    Matrix result = Matrix.Multiply(matrixVector, matrix);
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
-                    }
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     Matrix result = Matrix.Multiply(matrix, matrixVector);
 
@@ -923,9 +881,22 @@ namespace Com
                         return vector;
                     }
                 }
+                else
+                {
+                    Matrix result = Matrix.Multiply(matrixVector, matrix);
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+
+                        return vector;
+                    }
+                }
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -938,37 +909,7 @@ namespace Com
             {
                 Matrix result = _ToMatrixForAffineTransform();
 
-                if (_Type == Type.RowVector)
-                {
-                    for (int i = 0; i < matrixList.Count; i++)
-                    {
-                        Matrix matrix = matrixList[i];
-
-                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
-
-                        if (flag)
-                        {
-                            result = Matrix.Multiply(result, matrix);
-
-                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
-                        }
-
-                        if (!flag)
-                        {
-                            return NonVector;
-                        }
-                    }
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
-                    }
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     for (int i = 0; i < matrixList.Count; i++)
                     {
@@ -985,7 +926,7 @@ namespace Com
 
                         if (!flag)
                         {
-                            return NonVector;
+                            return Empty;
                         }
                     }
 
@@ -998,9 +939,39 @@ namespace Com
                         return vector;
                     }
                 }
+                else
+                {
+                    for (int i = 0; i < matrixList.Count; i++)
+                    {
+                        Matrix matrix = matrixList[i];
+
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix.Multiply(result, matrix);
+
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
+                        }
+
+                        if (!flag)
+                        {
+                            return Empty;
+                        }
+                    }
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+
+                        return vector;
+                    }
+                }
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1013,22 +984,22 @@ namespace Com
             {
                 Matrix matrixVector = _ToMatrixForAffineTransform();
 
-                if (_Type == Type.RowVector)
-                {
-                    Matrix result = Matrix.DivideRight(matrixVector, matrix);
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     Matrix result = Matrix.DivideLeft(matrix, matrixVector);
 
                     if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
                     {
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                    }
+                }
+                else
+                {
+                    Matrix result = Matrix.DivideRight(matrixVector, matrix);
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
             }
@@ -1044,33 +1015,7 @@ namespace Com
             {
                 Matrix result = _ToMatrixForAffineTransform();
 
-                if (_Type == Type.RowVector)
-                {
-                    for (int i = matrixList.Count - 1; i >= 0; i--)
-                    {
-                        Matrix matrix = matrixList[i];
-
-                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
-
-                        if (flag)
-                        {
-                            result = Matrix.DivideRight(result, matrix);
-
-                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
-                        }
-
-                        if (!flag)
-                        {
-                            return;
-                        }
-                    }
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     for (int i = matrixList.Count - 1; i >= 0; i--)
                     {
@@ -1096,61 +1041,7 @@ namespace Com
                         Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 的副本进行逆仿射变换的新实例。
-        /// </summary>
-        /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        public Vector InverseAffineTransformCopy(Matrix matrix)
-        {
-            if (_Size > 0 && !Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
-            {
-                Matrix matrixVector = _ToMatrixForAffineTransform();
-
-                if (_Type == Type.RowVector)
-                {
-                    Matrix result = Matrix.DivideRight(matrixVector, matrix);
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
-                    }
-                }
                 else
-                {
-                    Matrix result = Matrix.DivideLeft(matrix, matrixVector);
-
-                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
-                    }
-                }
-            }
-
-            return NonVector;
-        }
-
-        /// <summary>
-        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 的副本进行逆仿射变换的新实例。
-        /// </summary>
-        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
-        {
-            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
-            {
-                Matrix result = _ToMatrixForAffineTransform();
-
-                if (_Type == Type.RowVector)
                 {
                     for (int i = matrixList.Count - 1; i >= 0; i--)
                     {
@@ -1167,9 +1058,44 @@ namespace Com
 
                         if (!flag)
                         {
-                            return NonVector;
+                            return;
                         }
                     }
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 的副本进行逆仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrix"> Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        public Vector InverseAffineTransformCopy(Matrix matrix)
+        {
+            if (_Size > 0 && !Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
+            {
+                Matrix matrixVector = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.ColumnVector)
+                {
+                    Matrix result = Matrix.DivideLeft(matrix, matrixVector);
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
+
+                        return vector;
+                    }
+                }
+                else
+                {
+                    Matrix result = Matrix.DivideRight(matrixVector, matrix);
 
                     if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
                     {
@@ -1180,7 +1106,22 @@ namespace Com
                         return vector;
                     }
                 }
-                else
+            }
+
+            return Empty;
+        }
+
+        /// <summary>
+        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 的副本进行逆仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
+        {
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                Matrix result = _ToMatrixForAffineTransform();
+
+                if (_Type == Type.ColumnVector)
                 {
                     for (int i = matrixList.Count - 1; i >= 0; i--)
                     {
@@ -1197,7 +1138,7 @@ namespace Com
 
                         if (!flag)
                         {
-                            return NonVector;
+                            return Empty;
                         }
                     }
 
@@ -1210,9 +1151,39 @@ namespace Com
                         return vector;
                     }
                 }
+                else
+                {
+                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    {
+                        Matrix matrix = matrixList[i];
+
+                        bool flag = (!Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1));
+
+                        if (flag)
+                        {
+                            result = Matrix.DivideRight(result, matrix);
+
+                            flag = (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1));
+                        }
+
+                        if (!flag)
+                        {
+                            return Empty;
+                        }
+                    }
+
+                    if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
+                    {
+                        Vector vector = _GetZeroVector(_Type, _Size);
+
+                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+
+                        return vector;
+                    }
+                }
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -1386,7 +1357,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1434,7 +1405,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -1446,18 +1417,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                if (_Type == Type.RowVector)
-                {
-                    double[,] values = new double[_Size, 1];
-
-                    for (int i = 0; i < _Size; i++)
-                    {
-                        values[i, 0] = _VArray[i];
-                    }
-
-                    return new Matrix(values);
-                }
-                else
+                if (_Type == Type.ColumnVector)
                 {
                     double[,] values = new double[1, _Size];
 
@@ -1468,9 +1428,20 @@ namespace Com
 
                     return new Matrix(values);
                 }
+                else
+                {
+                    double[,] values = new double[_Size, 1];
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        values[i, 0] = _VArray[i];
+                    }
+
+                    return new Matrix(values);
+                }
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         //
@@ -1544,7 +1515,7 @@ namespace Com
                 return _GetZeroVector(type, dimension);
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1558,7 +1529,7 @@ namespace Com
                 return _GetZeroVector(Type.ColumnVector, dimension);
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1578,7 +1549,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1597,7 +1568,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -1614,25 +1585,25 @@ namespace Com
             {
                 Matrix result = Matrix.Identity(dimension + 1);
 
-                if (type == Type.RowVector)
-                {
-                    for (int i = 0; i < dimension; i++)
-                    {
-                        result[i, dimension] = d;
-                    }
-                }
-                else
+                if (type == Type.ColumnVector)
                 {
                     for (int i = 0; i < dimension; i++)
                     {
                         result[dimension, i] = d;
                     }
                 }
+                else
+                {
+                    for (int i = 0; i < dimension; i++)
+                    {
+                        result[i, dimension] = d;
+                    }
+                }
 
                 return result;
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         /// <summary>
@@ -1647,25 +1618,25 @@ namespace Com
 
                 Matrix result = Matrix.Identity(dimension + 1);
 
-                if (vector._Type == Type.RowVector)
-                {
-                    for (int i = 0; i < dimension; i++)
-                    {
-                        result[i, dimension] = vector._VArray[i];
-                    }
-                }
-                else
+                if (vector._Type == Type.ColumnVector)
                 {
                     for (int i = 0; i < dimension; i++)
                     {
                         result[dimension, i] = vector._VArray[i];
                     }
                 }
+                else
+                {
+                    for (int i = 0; i < dimension; i++)
+                    {
+                        result[i, dimension] = vector._VArray[i];
+                    }
+                }
 
                 return result;
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         /// <summary>
@@ -1688,7 +1659,7 @@ namespace Com
                 return result;
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         /// <summary>
@@ -1711,7 +1682,7 @@ namespace Com
                 return result;
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         /// <summary>
@@ -1734,21 +1705,21 @@ namespace Com
                 result[index1, index1] = CosA;
                 result[index2, index2] = CosA;
 
-                if (type == Type.RowVector)
-                {
-                    result[index2, index1] = SinA;
-                    result[index1, index2] = -SinA;
-                }
-                else
+                if (type == Type.ColumnVector)
                 {
                     result[index1, index2] = SinA;
                     result[index2, index1] = -SinA;
+                }
+                else
+                {
+                    result[index2, index1] = SinA;
+                    result[index1, index2] = -SinA;
                 }
 
                 return result;
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         //
@@ -1855,7 +1826,7 @@ namespace Com
                 }
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -1878,7 +1849,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1899,7 +1870,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1920,7 +1891,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1941,7 +1912,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1962,7 +1933,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -1983,7 +1954,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2005,7 +1976,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2027,7 +1998,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         #endregion
@@ -2065,7 +2036,7 @@ namespace Com
 
             if (_Size > 0)
             {
-                Str = string.Concat("Type=", (_Type == Type.RowVector ? "RowVector" : "ColumnVector"), ", Dimension=", _Size);
+                Str = string.Concat("Type=", (_Type == Type.ColumnVector ? "ColumnVector" : "RowVector"), ", Dimension=", _Size);
             }
             else
             {
@@ -2221,7 +2192,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2242,7 +2213,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -2266,7 +2237,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2288,7 +2259,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2310,7 +2281,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -2334,7 +2305,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2356,7 +2327,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2378,7 +2349,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -2402,7 +2373,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2424,7 +2395,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2446,7 +2417,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         //
@@ -2470,7 +2441,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2492,7 +2463,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         /// <summary>
@@ -2514,7 +2485,7 @@ namespace Com
                 return result;
             }
 
-            return NonVector;
+            return Empty;
         }
 
         #endregion

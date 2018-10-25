@@ -42,7 +42,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 表示所有属性为非数字的 PointD3D 结构的实例。
+        /// 表示所有分量为非数字的 PointD3D 结构的实例。
         /// </summary>
         public static readonly PointD3D NaN = new PointD3D(double.NaN, double.NaN, double.NaN);
 
@@ -172,6 +172,28 @@ namespace Com
         }
 
         /// <summary>
+        /// 获取表示此 PointD3D 结构是否为列向量的布尔值。
+        /// </summary>
+        public bool IsColumnVector
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD3D 结构是否为行向量的布尔值。
+        /// </summary>
+        public bool IsRowVector
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 获取表示此 PointD3D 结构是否为零向量的布尔值。
         /// </summary>
         public bool IsZero
@@ -183,7 +205,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 PointD3D 结构是否为 NaN 的布尔值。
+        /// 获取表示此 PointD3D 结构是否包含非数字分量的布尔值。
         /// </summary>
         public bool IsNaN
         {
@@ -194,7 +216,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 PointD3D 结构是否为 Infinity 的布尔值。
+        /// 获取表示此 PointD3D 结构是否包含无穷大分量的布尔值。
         /// </summary>
         public bool IsInfinity
         {
@@ -205,7 +227,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 PointD3D 结构是否为 NaN 或 Infinity 的布尔值。
+        /// 获取表示此 PointD3D 结构是否包含非数字或无穷大分量的布尔值。
         /// </summary>
         public bool IsNaNOrInfinity
         {
@@ -1313,7 +1335,7 @@ namespace Com
                 return Vector.OffsetMatrix(pt.ToVectorColumn());
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         //
@@ -1349,7 +1371,7 @@ namespace Com
                 return Vector.ScaleMatrix(pt.ToVectorColumn());
             }
 
-            return Matrix.NonMatrix;
+            return Matrix.Empty;
         }
 
         //

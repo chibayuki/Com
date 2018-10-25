@@ -32,7 +32,7 @@ namespace Com
         #region 常量与只读成员
 
         /// <summary>
-        /// 表示所有属性为非数字的 Complex 结构的实例。
+        /// 表示非数字的 Complex 结构的实例。
         /// </summary>
         public static readonly Complex NaN = new Complex(double.NaN, double.NaN);
 
@@ -111,7 +111,7 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取表示此 Complex 结构是否为 NaN 的布尔值。
+        /// 获取表示此 Complex 结构是否为非数字的布尔值。
         /// </summary>
         public bool IsNaN
         {
@@ -122,7 +122,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 Complex 结构是否为 Infinity 的布尔值。
+        /// 获取表示此 Complex 结构是否为无穷大的布尔值。
         /// </summary>
         public bool IsInfinity
         {
@@ -133,7 +133,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 Complex 结构是否为 NaN 或 Infinity 的布尔值。
+        /// 获取表示此 Complex 结构是否为非数字或无穷大的布尔值。
         /// </summary>
         public bool IsNaNOrInfinity
         {

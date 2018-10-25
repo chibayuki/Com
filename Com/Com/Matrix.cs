@@ -228,7 +228,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取或设置此 Matrix 的宽度（列数）与高度（行数）。
+        /// 获取此 Matrix 的宽度（列数）与高度（行数）。
         /// </summary>
         public Size Size
         {
@@ -241,43 +241,10 @@ namespace Com
 
                 return Size.Empty;
             }
-
-            set
-            {
-                if (value.Width > 0 && value.Height > 0)
-                {
-                    if ((long)value.Width * value.Height <= int.MaxValue && _Size != value)
-                    {
-                        Size OldSize = _Size;
-
-                        _Size = value;
-
-                        double[,] NewMArray = new double[_Size.Width, _Size.Height];
-
-                        int CopyWidth = Math.Min(_Size.Width, OldSize.Width);
-                        int CopyHeight = Math.Min(_Size.Height, OldSize.Height);
-
-                        for (int x = 0; x < CopyWidth; x++)
-                        {
-                            for (int y = 0; y < CopyHeight; y++)
-                            {
-                                NewMArray[x, y] = _MArray[x, y];
-                            }
-                        }
-
-                        _MArray = NewMArray;
-                    }
-                }
-                else
-                {
-                    _Size = Size.Empty;
-                    _MArray = null;
-                }
-            }
         }
 
         /// <summary>
-        /// 获取或设置此 Matrix 的宽度（列数）。
+        /// 获取此 Matrix 的宽度（列数）。
         /// </summary>
         public int Width
         {
@@ -285,26 +252,16 @@ namespace Com
             {
                 return Size.Width;
             }
-
-            set
-            {
-                Size = new Size(value, Size.Height);
-            }
         }
 
         /// <summary>
-        /// 获取或设置此 Matrix 的高度（行数）。
+        /// 获取此 Matrix 的高度（行数）。
         /// </summary>
         public int Height
         {
             get
             {
                 return Size.Height;
-            }
-
-            set
-            {
-                Size = new Size(Size.Width, value);
             }
         }
 
@@ -508,7 +465,7 @@ namespace Com
                     return result;
                 }
 
-                return NonMatrix;
+                return Empty;
             }
         }
 
@@ -548,7 +505,7 @@ namespace Com
                     return result;
                 }
 
-                return NonMatrix;
+                return Empty;
             }
         }
 
@@ -569,7 +526,7 @@ namespace Com
 
                         if (InternalMethod.IsNaNOrInfinity(det))
                         {
-                            return NonMatrix;
+                            return Empty;
                         }
 
                         for (int x = 0; x < _Size.Width; x++)
@@ -580,7 +537,7 @@ namespace Com
 
                                 if (InternalMethod.IsNaNOrInfinity(result._MArray[x, y]))
                                 {
-                                    return NonMatrix;
+                                    return Empty;
                                 }
                             }
                         }
@@ -589,7 +546,7 @@ namespace Com
                     }
                 }
 
-                return NonMatrix;
+                return Empty;
             }
         }
 
@@ -598,9 +555,9 @@ namespace Com
         #region 静态属性
 
         /// <summary>
-        /// 获取表示非矩阵的 Matrix 的新实例。
+        /// 获取表示空矩阵的 Matrix 的新实例。
         /// </summary>
-        public static Matrix NonMatrix
+        public static Matrix Empty
         {
             get
             {
@@ -651,7 +608,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         //
@@ -678,7 +635,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -705,7 +662,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         //
@@ -728,7 +685,7 @@ namespace Com
                 return new Vector(Vector.Type.ColumnVector, values);
             }
 
-            return Vector.NonVector;
+            return Vector.Empty;
         }
 
         /// <summary>
@@ -749,7 +706,7 @@ namespace Com
                 return new Vector(Vector.Type.RowVector, values);
             }
 
-            return Vector.NonVector;
+            return Vector.Empty;
         }
 
         //
@@ -835,7 +792,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -849,7 +806,7 @@ namespace Com
                 return new Matrix(size);
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -864,7 +821,7 @@ namespace Com
                 return new Matrix(width, height);
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -878,7 +835,7 @@ namespace Com
                 return new Matrix(size, 1);
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -893,7 +850,7 @@ namespace Com
                 return new Matrix(width, height, 1);
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -917,7 +874,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -940,7 +897,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         //
@@ -975,7 +932,7 @@ namespace Com
                 }
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         //
@@ -1004,7 +961,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1031,7 +988,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1064,7 +1021,7 @@ namespace Com
                 }
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1091,7 +1048,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1118,7 +1075,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1151,7 +1108,7 @@ namespace Com
                 }
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1178,7 +1135,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1205,7 +1162,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1245,7 +1202,7 @@ namespace Com
                 }
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1274,12 +1231,12 @@ namespace Com
 
                                 if (IsNullOrEmpty(result))
                                 {
-                                    return NonMatrix;
+                                    return Empty;
                                 }
                             }
                             else
                             {
-                                return NonMatrix;
+                                return Empty;
                             }
                         }
 
@@ -1288,7 +1245,7 @@ namespace Com
                 }
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1317,12 +1274,12 @@ namespace Com
 
                                 if (IsNullOrEmpty(result))
                                 {
-                                    return NonMatrix;
+                                    return Empty;
                                 }
                             }
                             else
                             {
-                                return NonMatrix;
+                                return Empty;
                             }
                         }
 
@@ -1331,7 +1288,7 @@ namespace Com
                 }
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1358,7 +1315,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1385,7 +1342,7 @@ namespace Com
                 return result;
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1411,7 +1368,7 @@ namespace Com
                 }
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         /// <summary>
@@ -1437,7 +1394,7 @@ namespace Com
                 }
             }
 
-            return NonMatrix;
+            return Empty;
         }
 
         //
@@ -1469,7 +1426,7 @@ namespace Com
                 }
             }
 
-            return Vector.NonVector;
+            return Vector.Empty;
         }
 
         #endregion
