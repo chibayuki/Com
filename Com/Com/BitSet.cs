@@ -28,7 +28,7 @@ namespace Com
 
         private const uint _TrueUint = uint.MaxValue, _FalseUint = uint.MinValue; // 所有位值为 true 或 false 的 32 位无符号整数。
 
-        private const int _MaxSize = 2147483520; // BitSet 能够包含的最大元素数量。
+        private const int _MaxSize = 2146434944; // BitSet 允许包含的最大元素数量，等于 (System.Array.MaxArrayLength / Com.BitSet._BitsPerUint / 4) * Com.BitSet._BitsPerUint * 4。
 
         //
 
@@ -78,7 +78,7 @@ namespace Com
             if (length > 0)
             {
                 _Size = Math.Min(_MaxSize, length);
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(length)];
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
             }
             else
             {
@@ -97,7 +97,7 @@ namespace Com
             if (length > 0)
             {
                 _Size = Math.Min(_MaxSize, length);
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(length)];
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
 
                 if (bitValue)
                 {
@@ -130,7 +130,7 @@ namespace Com
             if (!InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = Math.Min(_MaxSize, values.Length);
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(values.Length)];
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
 
                 for (int i = 0; i < values.Length; i++)
                 {
@@ -156,7 +156,7 @@ namespace Com
             if (!InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = Math.Min(_MaxSize, values.Length);
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(values.Length)];
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
 
                 for (int i = 0; i < values.Length; i++)
                 {

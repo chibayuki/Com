@@ -26,6 +26,10 @@ namespace Com
     {
         #region 私有与内部成员
 
+        private const int _MaxSize = 2146435071; // Matrix 允许包含的最大元素数量，等于 System.Array.MaxArrayLength。
+
+        //
+
         private Size _Size; // 此 Matrix 存储的矩阵大小。
 
         private double[,] _MArray = null; // 用于存储矩阵元素的数组。
@@ -40,7 +44,7 @@ namespace Com
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         public Matrix(Size size)
         {
-            if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= int.MaxValue)
+            if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= _MaxSize)
             {
                 _Size = size;
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -59,7 +63,7 @@ namespace Com
         /// <param name="value">矩阵的所有元素的值。</param>
         public Matrix(Size size, double value)
         {
-            if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= int.MaxValue)
+            if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= _MaxSize)
             {
                 _Size = size;
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -86,7 +90,7 @@ namespace Com
         /// <param name="height">矩阵的高度（行数）。</param>
         public Matrix(int width, int height)
         {
-            if (width > 0 && height > 0 && (long)width * height <= int.MaxValue)
+            if (width > 0 && height > 0 && (long)width * height <= _MaxSize)
             {
                 _Size = new Size(width, height);
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -106,7 +110,7 @@ namespace Com
         /// <param name="value">矩阵的所有元素的值。</param>
         public Matrix(int width, int height, double value)
         {
-            if (width > 0 && height > 0 && (long)width * height <= int.MaxValue)
+            if (width > 0 && height > 0 && (long)width * height <= _MaxSize)
             {
                 _Size = new Size(width, height);
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -137,7 +141,7 @@ namespace Com
                 int width = values.GetLength(0);
                 int height = values.GetLength(1);
 
-                if ((long)width * height <= int.MaxValue)
+                if ((long)width * height <= _MaxSize)
                 {
                     _Size = new Size(width, height);
                     _MArray = new double[_Size.Width, _Size.Height];

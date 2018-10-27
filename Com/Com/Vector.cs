@@ -42,6 +42,10 @@ namespace Com
 
         #region 私有与内部成员
 
+        private const int _MaxSize = 2146435071; // Vector 允许包含的最大元素数量，等于 System.Array.MaxArrayLength。
+
+        //
+
         private Type _Type; // 此 Vector 的向量类型。
 
         private int _Size; // 此 Vector 存储的向量维度。
@@ -94,8 +98,8 @@ namespace Com
                 Vector result = Empty;
 
                 result._Type = type;
-                result._Size = dimension;
-                result._VArray = new double[dimension];
+                result._Size = Math.Min(_MaxSize, dimension);
+                result._VArray = new double[result._Size];
 
                 return result;
             }
@@ -118,8 +122,8 @@ namespace Com
 
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = values.Length;
-                _VArray = new double[values.Length];
+                _Size = Math.Min(_MaxSize, values.Length);
+                _VArray = new double[_Size];
 
                 Array.Copy(values, _VArray, values.Length);
             }
@@ -140,8 +144,8 @@ namespace Com
 
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = values.Length;
-                _VArray = new double[values.Length];
+                _Size = Math.Min(_MaxSize, values.Length);
+                _VArray = new double[_Size];
 
                 Array.Copy(values, _VArray, values.Length);
             }
