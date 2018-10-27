@@ -848,7 +848,7 @@ namespace Com.WinForm
 
         //
 
-        private void _UpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 更新窗口布局。
+        private void _UpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 更新窗口布局，并触发指定的事件。
         {
             if (_FormState == FormState.FullScreen)
             {
@@ -883,12 +883,12 @@ namespace Com.WinForm
             }
         }
 
-        internal void UpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 更新窗口布局。
+        internal void UpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 更新窗口布局，并触发指定的事件。
         {
             _UpdateLayout(updateLayoutEventType);
         }
 
-        private void _SetBoundsAndUpdateLayout(Rectangle bounds, UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 设置窗口的位置与大小，并更新窗口布局。
+        private void _SetBoundsAndUpdateLayout(Rectangle bounds, UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 设置窗口的位置与大小，并以指定的行为更新窗口布局，触发指定的事件。
         {
             if (updateLayoutBehavior == UpdateLayoutBehavior.None)
             {

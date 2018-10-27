@@ -95,7 +95,7 @@ namespace Com.WinForm
 
         private UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None; // 尝试更新窗口布局时希望触发的事件类型。
 
-        private bool _CancelUpdateLayout = false; // 是否已取消尝试更新窗口布局。
+        private bool _UpdateLayoutCanceled = false; // 是否已取消更新窗口布局。
 
         private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 尝试更新窗口布局。
         {
@@ -103,15 +103,15 @@ namespace Com.WinForm
             {
                 _UpdateLayoutEventType = updateLayoutEventType;
 
-                _CancelUpdateLayout = false;
+                _UpdateLayoutCanceled = false;
 
                 BackgroundWorker_UpdateLayoutDelay.RunWorkerAsync();
             }
         }
 
-        private void _CancelTryToUpdateLayout() // 取消尝试更新窗口布局。
+        private void _CancelUpdateLayout() // 取消更新窗口布局。
         {
-            _CancelUpdateLayout = true;
+            _UpdateLayoutCanceled = true;
         }
 
         #endregion
@@ -224,7 +224,7 @@ namespace Com.WinForm
                     {
                         if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             if (!Me.HighAsScreen())
                             {
@@ -233,7 +233,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal = Me.Bounds_Current;
 
@@ -242,7 +242,7 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
                         Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
@@ -369,7 +369,7 @@ namespace Com.WinForm
                     {
                         if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             if (!Me.HighAsScreen())
                             {
@@ -378,7 +378,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal = Me.Bounds_Current;
 
@@ -387,7 +387,7 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_QuarterScreen_Y = Me.Bounds_Current_Y;
                         Me.Bounds_QuarterScreen_Height = Me.Bounds_Current_Height;
@@ -486,7 +486,7 @@ namespace Com.WinForm
                 {
                     if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_Normal_X = Me.Bounds_Current_X;
                         Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -495,7 +495,7 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_QuarterScreen_X = Me.Bounds_Current_X;
                         Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
@@ -603,7 +603,7 @@ namespace Com.WinForm
                 {
                     if (Me.FormState == FormState.Normal || Me.FormState == FormState.HighAsScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
 
@@ -611,7 +611,7 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_QuarterScreen_Width = Me.Bounds_Current_Width;
 
@@ -704,7 +704,7 @@ namespace Com.WinForm
                     {
                         if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -716,7 +716,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal = Me.Bounds_Current;
 
@@ -725,7 +725,7 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
@@ -877,7 +877,7 @@ namespace Com.WinForm
                     {
                         if (Cursor.Position.Y <= FormManager.PrimaryScreenClient.Y)
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -889,7 +889,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal = Me.Bounds_Current;
 
@@ -898,7 +898,7 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
@@ -1034,7 +1034,7 @@ namespace Com.WinForm
                     {
                         if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -1046,7 +1046,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal = Me.Bounds_Current;
 
@@ -1055,7 +1055,7 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
@@ -1193,7 +1193,7 @@ namespace Com.WinForm
                     {
                         if (Cursor.Position.Y >= FormManager.PrimaryScreenClient.Bottom - 1)
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal_X = Me.Bounds_Current_X;
                             Me.Bounds_Normal_Width = Me.Bounds_Current_Width;
@@ -1205,7 +1205,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CancelTryToUpdateLayout();
+                            _CancelUpdateLayout();
 
                             Me.Bounds_Normal = Me.Bounds_Current;
 
@@ -1214,7 +1214,7 @@ namespace Com.WinForm
                     }
                     else if (Me.FormState == FormState.QuarterScreen)
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         Me.Bounds_QuarterScreen = Me.Bounds_Current;
 
@@ -1309,7 +1309,7 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            if (!_CancelUpdateLayout)
+            if (!_UpdateLayoutCanceled)
             {
                 Me.UpdateLayout(_UpdateLayoutEventType);
 

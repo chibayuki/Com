@@ -347,7 +347,7 @@ namespace Com.WinForm
 
         private UpdateLayoutEventType _UpdateLayoutEventType = UpdateLayoutEventType.None; // 尝试更新窗口布局时希望触发的事件类型。
 
-        private bool _CancelUpdateLayout = false; // 是否已取消尝试更新窗口布局。
+        private bool _UpdateLayoutCanceled = false; // 是否已取消更新窗口布局。
 
         private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 尝试更新窗口布局。
         {
@@ -355,15 +355,15 @@ namespace Com.WinForm
             {
                 _UpdateLayoutEventType = updateLayoutEventType;
 
-                _CancelUpdateLayout = false;
+                _UpdateLayoutCanceled = false;
 
                 BackgroundWorker_UpdateLayoutDelay.RunWorkerAsync();
             }
         }
 
-        private void _CancelTryToUpdateLayout() // 取消尝试更新窗口布局。
+        private void _CancelUpdateLayout() // 取消更新窗口布局。
         {
-            _CancelUpdateLayout = true;
+            _UpdateLayoutCanceled = true;
         }
 
         #endregion
@@ -526,7 +526,7 @@ namespace Com.WinForm
                         {
                             if (CursorPosition.Y >= CurScrClient.Y && CursorPosition.Y <= CurScrClient.Y + _ExtendDist)
                             {
-                                _CancelTryToUpdateLayout();
+                                _CancelUpdateLayout();
 
                                 if (!Me.TopLeftQuarterScreen())
                                 {
@@ -535,7 +535,7 @@ namespace Com.WinForm
                             }
                             else if (CursorPosition.Y >= CurScrClient.Bottom - _ExtendDist && CursorPosition.Y <= CurScrBounds.Bottom)
                             {
-                                _CancelTryToUpdateLayout();
+                                _CancelUpdateLayout();
 
                                 if (!Me.BottomLeftQuarterScreen())
                                 {
@@ -544,7 +544,7 @@ namespace Com.WinForm
                             }
                             else
                             {
-                                _CancelTryToUpdateLayout();
+                                _CancelUpdateLayout();
 
                                 if (!Me.LeftHalfScreen())
                                 {
@@ -559,7 +559,7 @@ namespace Com.WinForm
                         {
                             if (CursorPosition.Y >= CurScrClient.Y && CursorPosition.Y <= CurScrClient.Y + _ExtendDist)
                             {
-                                _CancelTryToUpdateLayout();
+                                _CancelUpdateLayout();
 
                                 if (!Me.TopRightQuarterScreen())
                                 {
@@ -568,7 +568,7 @@ namespace Com.WinForm
                             }
                             else if (CursorPosition.Y >= CurScrClient.Bottom - _ExtendDist && CursorPosition.Y <= CurScrBounds.Bottom)
                             {
-                                _CancelTryToUpdateLayout();
+                                _CancelUpdateLayout();
 
                                 if (!Me.BottomRightQuarterScreen())
                                 {
@@ -577,7 +577,7 @@ namespace Com.WinForm
                             }
                             else
                             {
-                                _CancelTryToUpdateLayout();
+                                _CancelUpdateLayout();
 
                                 if (!Me.RightHalfScreen())
                                 {
@@ -592,7 +592,7 @@ namespace Com.WinForm
                         {
                             if (Me.EnableMaximize)
                             {
-                                _CancelTryToUpdateLayout();
+                                _CancelUpdateLayout();
 
                                 if (!Me.Maximize())
                                 {
@@ -601,7 +601,7 @@ namespace Com.WinForm
                             }
                             else
                             {
-                                _CancelTryToUpdateLayout();
+                                _CancelUpdateLayout();
 
                                 ReleaseAndCheckY();
                             }
@@ -609,14 +609,14 @@ namespace Com.WinForm
                     }
                     else
                     {
-                        _CancelTryToUpdateLayout();
+                        _CancelUpdateLayout();
 
                         ReleaseAndCheckY();
                     }
                 }
                 else
                 {
-                    _CancelTryToUpdateLayout();
+                    _CancelUpdateLayout();
 
                     ReleaseAndCheckY();
                 }
@@ -1046,7 +1046,7 @@ namespace Com.WinForm
 
         private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
         {
-            if (!_CancelUpdateLayout)
+            if (!_UpdateLayoutCanceled)
             {
                 Me.UpdateLayout(_UpdateLayoutEventType);
 
