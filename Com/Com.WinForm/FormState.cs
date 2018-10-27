@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Com.WinForm
 {
     /// <summary>
-    /// 窗口状态枚举。
+    /// 窗口状态。
     /// </summary>
     public enum FormState
     {

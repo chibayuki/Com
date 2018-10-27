@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Com.WinForm
 {
     /// <summary>
-    /// 窗口样式枚举。
+    /// 窗口样式。
     /// </summary>
     public enum FormStyle
     {

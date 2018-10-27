@@ -888,40 +888,6 @@ namespace Com.WinForm
 
         #endregion
 
-        #region 基类方法
-
-        /// <summary>
-        /// 判断此 RecommendColors 对象是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is RecommendColors))
-            {
-                return false;
-            }
-
-            return Equals((RecommendColors)obj);
-        }
-
-        /// <summary>
-        /// 返回此 RecommendColors 对象的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 RecommendColors 对象转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            return base.GetType().Name;
-        }
-
-        #endregion
-
         #region 运算符
 
         /// <summary>
@@ -969,6 +935,44 @@ namespace Com.WinForm
 
             return (left._FormBackground != right._FormBackground || left._CaptionBar != right._CaptionBar || left._Caption != right._Caption || left._ControlButton != right._ControlButton || left._ControlButton_DEC != right._ControlButton_DEC || left._ControlButton_INC != right._ControlButton_INC || left._ExitButton != right._ExitButton || left._ExitButton_DEC != right._ExitButton_DEC || left._ExitButton_INC != right._ExitButton_INC || left._MenuItemBackground != right._MenuItemBackground || left._MenuItemText != right._MenuItemText || left._Main != right._Main || left._Main_DEC != right._Main_DEC || left._Main_INC != right._Main_INC || left._Text != right._Text || left._Text_DEC != right._Text_DEC || left._Text_INC != right._Text_INC || left._Background != right._Background || left._Background_DEC != right._Background_DEC || left._Background_INC != right._Background_INC || left._Border != right._Border || left._Border_DEC != right._Border_DEC || left._Border_INC != right._Border_INC || left._Button != right._Button || left._Button_DEC != right._Button_DEC || left._Button_INC != right._Button_INC || left._Slider != right._Slider || left._Slider_DEC != right._Slider_DEC || left._Slider_INC != right._Slider_INC || left._ScrollBar != right._ScrollBar || left._ScrollBar_DEC != right._ScrollBar_DEC || left._ScrollBar_INC != right._ScrollBar_INC);
         }
+
+        #endregion
+
+        #region 基类与接口
+
+        #region System.Object
+
+        /// <summary>
+        /// 判断此 RecommendColors 对象是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is RecommendColors))
+            {
+                return false;
+            }
+
+            return Equals((RecommendColors)obj);
+        }
+
+        /// <summary>
+        /// 返回此 RecommendColors 对象的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 RecommendColors 对象转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            return base.GetType().Name;
+        }
+
+        #endregion
 
         #endregion
     }

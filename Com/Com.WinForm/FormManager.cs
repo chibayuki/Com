@@ -4635,47 +4635,6 @@ namespace Com.WinForm
 
         #endregion
 
-        #region 基类方法
-
-        /// <summary>
-        /// 判断此 FormManager 对象是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is FormManager))
-            {
-                return false;
-            }
-
-            return Equals((FormManager)obj);
-        }
-
-        /// <summary>
-        /// 返回此 FormManager 对象的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 FormManager 对象转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            string Str = base.ToString();
-
-            if (!string.IsNullOrEmpty(_Caption))
-            {
-                return string.Concat(Str, ", Caption: ", _Caption);
-            }
-
-            return Str;
-        }
-
-        #endregion
-
         #region 运算符
 
         /// <summary>
@@ -4723,6 +4682,51 @@ namespace Com.WinForm
 
             return !left.Equals(right);
         }
+
+        #endregion
+
+        #region 基类与接口
+
+        #region System.Object
+
+        /// <summary>
+        /// 判断此 FormManager 对象是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is FormManager))
+            {
+                return false;
+            }
+
+            return Equals((FormManager)obj);
+        }
+
+        /// <summary>
+        /// 返回此 FormManager 对象的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 FormManager 对象转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = base.ToString();
+
+            if (!string.IsNullOrEmpty(_Caption))
+            {
+                return string.Concat(Str, ", Caption: ", _Caption);
+            }
+
+            return Str;
+        }
+
+        #endregion
 
         #endregion
     }
