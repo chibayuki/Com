@@ -24,6 +24,22 @@ namespace Com
     /// </summary>
     public sealed class Vector
     {
+        /// <summary>
+        /// 向量类型。
+        /// </summary>
+        public enum Type
+        {
+            /// <summary>
+            /// 列向量。
+            /// </summary>
+            ColumnVector = 0,
+
+            /// <summary>
+            /// 行向量。
+            /// </summary>
+            RowVector
+        }
+
         #region 私有与内部成员
 
         private Type _Type; // 此 Vector 的向量类型。
@@ -2003,51 +2019,6 @@ namespace Com
 
         #endregion
 
-        #region 基类方法
-
-        /// <summary>
-        /// 判断此 Vector 是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is Vector))
-            {
-                return false;
-            }
-
-            return Equals((Vector)obj);
-        }
-
-        /// <summary>
-        /// 返回此 Vector 的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 Vector 转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            string Str = string.Empty;
-
-            if (_Size > 0)
-            {
-                Str = string.Concat("Type=", (_Type == Type.ColumnVector ? "ColumnVector" : "RowVector"), ", Dimension=", _Size);
-            }
-            else
-            {
-                Str = "NonVector";
-            }
-
-            return string.Concat(base.GetType().Name, " [", Str, "]");
-        }
-
-        #endregion
-
         #region 运算符
 
         /// <summary>
@@ -2490,20 +2461,53 @@ namespace Com
 
         #endregion
 
-        /// <summary>
-        /// 向量类型枚举。
-        /// </summary>
-        public enum Type
-        {
-            /// <summary>
-            /// 列向量。
-            /// </summary>
-            ColumnVector = 0,
+        #region 基类与接口
 
-            /// <summary>
-            /// 行向量。
-            /// </summary>
-            RowVector
+        #region System.Object
+
+        /// <summary>
+        /// 判断此 Vector 是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Vector))
+            {
+                return false;
+            }
+
+            return Equals((Vector)obj);
         }
+
+        /// <summary>
+        /// 返回此 Vector 的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 Vector 转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = string.Empty;
+
+            if (_Size > 0)
+            {
+                Str = string.Concat("Type=", (_Type == Type.ColumnVector ? "ColumnVector" : "RowVector"), ", Dimension=", _Size);
+            }
+            else
+            {
+                Str = "NonVector";
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
+        }
+
+        #endregion
+
+        #endregion
     }
 }

@@ -1842,40 +1842,6 @@ namespace Com
 
         #endregion
 
-        #region 基类方法
-
-        /// <summary>
-        /// 判断此 PointD 结构是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is PointD))
-            {
-                return false;
-            }
-
-            return Equals((PointD)obj);
-        }
-
-        /// <summary>
-        /// 返回此 PointD 结构的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 PointD 结构转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Concat("{X=", _X, ", Y=", _Y, "}");
-        }
-
-        #endregion
-
         #region 运算符
 
         /// <summary>
@@ -2681,6 +2647,44 @@ namespace Com
 
             return NaN;
         }
+
+        #endregion
+
+        #region 基类与接口
+
+        #region System.Object
+
+        /// <summary>
+        /// 判断此 PointD 结构是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is PointD))
+            {
+                return false;
+            }
+
+            return Equals((PointD)obj);
+        }
+
+        /// <summary>
+        /// 返回此 PointD 结构的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 PointD 结构转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            return string.Concat("{X=", _X, ", Y=", _Y, "}");
+        }
+
+        #endregion
 
         #endregion
     }
