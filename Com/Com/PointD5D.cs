@@ -2572,7 +2572,7 @@ namespace Com
 
         #region 基类与接口
 
-        #region System.Object
+        #region System.ValueType
 
         /// <summary>
         /// 判断此 PointD5D 结构是否与指定的对象相等。
