@@ -633,7 +633,7 @@ namespace Com.WinForm
             {
                 Point CurPt = Geometry.GetCursorPositionOfControl(Panel_CaptionBar);
 
-                if (PointD.DistanceBetween(new PointD(CurPt), new PointD(_CursorPositionOfMe)) >= _ExtendDist)
+                if (new PointD(CurPt).DistanceFrom(new PointD(_CursorPositionOfMe)) >= _ExtendDist)
                 {
                     _MeWillMove = false;
                     _MeIsMoving = true;
