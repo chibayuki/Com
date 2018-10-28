@@ -58,14 +58,14 @@ namespace Com
 
                             double RectRadius = Math.Sqrt(Math.Pow(bmp.Width, 2) + Math.Pow(bmp.Height, 2)) / 2;
 
-                            double Dist_RC_P1 = PointD.DistanceBetween(RectCenter, pt1);
-                            double Dist_RC_P2 = PointD.DistanceBetween(RectCenter, pt2);
+                            double Dist_RC_P1 = RectCenter.DistanceFrom(pt1);
+                            double Dist_RC_P2 = RectCenter.DistanceFrom(pt2);
 
                             if (Dist_RC_P1 > RectRadius || Dist_RC_P2 > RectRadius)
                             {
                                 PointD FootPoint = Geometry.GetFootPoint(RectCenter, pt1, pt2);
 
-                                double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                 double Dist_FP_P12 = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                 if (Dist_RC_P1 > RectRadius)
@@ -316,7 +316,7 @@ namespace Com
                                 else
                                 {
                                     double Angle_EC_RC = Geometry.GetAngleOfTwoPoints(offset, RectCenter);
-                                    double Angle_Delta = Math.Asin(RectRadius / PointD.DistanceBetween(offset, RectCenter));
+                                    double Angle_Delta = Math.Asin(RectRadius / offset.DistanceFrom(RectCenter));
                                     double Angle_Min = Angle_EC_RC - Angle_Delta;
                                     double Angle_Max = Angle_EC_RC + Angle_Delta;
 
@@ -382,7 +382,7 @@ namespace Com
                                     {
                                         PointD FootPoint = Geometry.GetFootPoint(RectCenter, L_PD[1], L_PD[0]);
 
-                                        double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                        double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                         double Dist_FP_P = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                         double Angle_FP_P = Geometry.GetAngleOfTwoPoints(FootPoint, L_PD[0]);
@@ -394,7 +394,7 @@ namespace Com
                                     {
                                         PointD FootPoint = Geometry.GetFootPoint(RectCenter, L_PD[L_PD.Count - 2], L_PD[L_PD.Count - 1]);
 
-                                        double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                        double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                         double Dist_FP_P = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                         double Angle_FP_P = Geometry.GetAngleOfTwoPoints(FootPoint, L_PD[L_PD.Count - 1]);
@@ -490,7 +490,7 @@ namespace Com
                                     else
                                     {
                                         double Angle_EC_RC = Geometry.GetAngleOfTwoPoints(offset, RectCenter);
-                                        double Angle_Delta = Math.Asin(RectRadius / PointD.DistanceBetween(offset, RectCenter));
+                                        double Angle_Delta = Math.Asin(RectRadius / offset.DistanceFrom(RectCenter));
                                         double Angle_Min = Angle_EC_RC - Angle_Delta;
                                         double Angle_Max = Angle_EC_RC + Angle_Delta;
 
@@ -556,7 +556,7 @@ namespace Com
                                         {
                                             PointD FootPoint = Geometry.GetFootPoint(RectCenter, L_PD[1], L_PD[0]);
 
-                                            double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                            double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                             double Dist_FP_P = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                             double Angle_FP_P = Geometry.GetAngleOfTwoPoints(FootPoint, L_PD[0]);
@@ -568,7 +568,7 @@ namespace Com
                                         {
                                             PointD FootPoint = Geometry.GetFootPoint(RectCenter, L_PD[L_PD.Count - 2], L_PD[L_PD.Count - 1]);
 
-                                            double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                            double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                             double Dist_FP_P = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                             double Angle_FP_P = Geometry.GetAngleOfTwoPoints(FootPoint, L_PD[L_PD.Count - 1]);
@@ -776,7 +776,7 @@ namespace Com
                                 else
                                 {
                                     double Angle_EC_RC = Geometry.GetAngleOfTwoPoints(EllipseCenter, RectCenter) - rotateAngle;
-                                    double Angle_Delta = Math.Asin(RectRadius / PointD.DistanceBetween(EllipseCenter, RectCenter));
+                                    double Angle_Delta = Math.Asin(RectRadius / EllipseCenter.DistanceFrom(RectCenter));
                                     double Angle_Min = Angle_EC_RC - Angle_Delta;
                                     double Angle_Max = Angle_EC_RC + Angle_Delta;
 
@@ -853,7 +853,7 @@ namespace Com
                                     {
                                         PointD FootPoint = Geometry.GetFootPoint(RectCenter, L_PD[1], L_PD[0]);
 
-                                        double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                        double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                         double Dist_FP_P = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                         double Angle_FP_P = Geometry.GetAngleOfTwoPoints(FootPoint, L_PD[0]);
@@ -865,7 +865,7 @@ namespace Com
                                     {
                                         PointD FootPoint = Geometry.GetFootPoint(RectCenter, L_PD[L_PD.Count - 2], L_PD[L_PD.Count - 1]);
 
-                                        double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                        double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                         double Dist_FP_P = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                         double Angle_FP_P = Geometry.GetAngleOfTwoPoints(FootPoint, L_PD[L_PD.Count - 1]);
@@ -983,7 +983,7 @@ namespace Com
                                     else
                                     {
                                         double Angle_EC_RC = Geometry.GetAngleOfTwoPoints(EllipseCenter, RectCenter) - rotateAngle;
-                                        double Angle_Delta = Math.Asin(RectRadius / PointD.DistanceBetween(EllipseCenter, RectCenter));
+                                        double Angle_Delta = Math.Asin(RectRadius / EllipseCenter.DistanceFrom(RectCenter));
                                         double Angle_Min = Angle_EC_RC - Angle_Delta;
                                         double Angle_Max = Angle_EC_RC + Angle_Delta;
 
@@ -1060,7 +1060,7 @@ namespace Com
                                         {
                                             PointD FootPoint = Geometry.GetFootPoint(RectCenter, L_PD[1], L_PD[0]);
 
-                                            double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                            double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                             double Dist_FP_P = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                             double Angle_FP_P = Geometry.GetAngleOfTwoPoints(FootPoint, L_PD[0]);
@@ -1072,7 +1072,7 @@ namespace Com
                                         {
                                             PointD FootPoint = Geometry.GetFootPoint(RectCenter, L_PD[L_PD.Count - 2], L_PD[L_PD.Count - 1]);
 
-                                            double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                                            double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
                                             double Dist_FP_P = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
 
                                             double Angle_FP_P = Geometry.GetAngleOfTwoPoints(FootPoint, L_PD[L_PD.Count - 1]);

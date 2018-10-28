@@ -454,7 +454,7 @@ namespace Com
                                                         return Alpha;
                                                     };
 
-                                                    if (PointD.DistanceBetween(new PointD(Element[0]), new PointD(Element[1])) > 1)
+                                                    if (new PointD(Element[0]).DistanceFrom(new PointD(Element[1])) > 1)
                                                     {
                                                         int Alpha0 = GetAlpha(EColor, Element3D[EIndex][0].Z), Alpha1 = GetAlpha(EColor, Element3D[EIndex][1].Z);
 

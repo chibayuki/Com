@@ -30,11 +30,111 @@ namespace Com
         #region 平面直角坐标系
 
         /// <summary>
-        /// 计算平面直角坐标系中过一个定点到一条直线段的垂足。
+        /// 计算平面直角坐标系中过两个定点的直线的一般式方程的参数。
+        /// </summary>
+        /// <param name="pt1">第一个点。</param>
+        /// <param name="pt2">第二个点。</param>
+        /// <param name="A">直线的一般式方程的第一个参数。</param>
+        /// <param name="B">直线的一般式方程的第二个参数。</param>
+        /// <param name="C">直线的一般式方程的第三个参数。</param>
+        public static void CalcLineGeneralFunction(PointD pt1, PointD pt2, out double A, out double B, out double C)
+        {
+            try
+            {
+                if (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity || pt1 == pt2)
+                {
+                    A = double.NaN;
+                    B = double.NaN;
+                    C = double.NaN;
+                }
+                else
+                {
+                    A = pt2.Y - pt1.Y;
+                    B = pt1.X - pt2.X;
+                    C = pt2.X * pt1.Y - pt1.X * pt2.Y;
+                }
+            }
+            catch
+            {
+                A = double.NaN;
+                B = double.NaN;
+                C = double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算平面直角坐标系中过一个定点到一条直线的距离。
         /// </summary>
         /// <param name="pt">定点。</param>
-        /// <param name="pt1">直线段的第一个端点。</param>
-        /// <param name="pt2">直线段的第二个端点。</param>
+        /// <param name="A">直线的一般式方程的第一个参数。</param>
+        /// <param name="B">直线的一般式方程的第二个参数。</param>
+        /// <param name="C">直线的一般式方程的第三个参数。</param>
+        public static double GetDistanceBetweenPointAndLine(PointD pt, double A, double B, double C)
+        {
+            try
+            {
+                if (pt.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(A) || InternalMethod.IsNaNOrInfinity(B) || InternalMethod.IsNaNOrInfinity(C))
+                {
+                    return double.NaN;
+                }
+                else
+                {
+                    if (A == 0 && B == 0)
+                    {
+                        return double.NaN;
+                    }
+
+                    return ((A * pt.X + B * pt.Y + C) / Math.Sqrt(A * A + B * B));
+                }
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算平面直角坐标系中过一个定点到一条直线的距离。
+        /// </summary>
+        /// <param name="pt">定点。</param>
+        /// <param name="pt1">直线上的第一个点。</param>
+        /// <param name="pt2">直线上的第二个点。</param>
+        public static double GetDistanceBetweenPointAndLine(PointD pt, PointD pt1, PointD pt2)
+        {
+            try
+            {
+                if (pt.IsNaNOrInfinity || pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity)
+                {
+                    return double.NaN;
+                }
+                else
+                {
+                    if (pt1 == pt2)
+                    {
+                        return pt.DistanceFrom(pt1);
+                    }
+                    else
+                    {
+                        double A, B, C;
+
+                        CalcLineGeneralFunction(pt1, pt2, out A, out B, out C);
+
+                        return GetDistanceBetweenPointAndLine(pt, A, B, C);
+                    }
+                }
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算平面直角坐标系中过一个定点到一条直线的垂足。
+        /// </summary>
+        /// <param name="pt">定点。</param>
+        /// <param name="pt1">直线上的第一个点。</param>
+        /// <param name="pt2">直线上的第二个点。</param>
         public static PointD GetFootPoint(PointD pt, PointD pt1, PointD pt2)
         {
             try
@@ -47,7 +147,7 @@ namespace Com
                 {
                     PointD foot = new PointD();
 
-                    if (pt1.X == pt2.X && pt1.Y == pt2.Y)
+                    if (pt1 == pt2)
                     {
                         foot = pt1;
                     }
@@ -334,7 +434,7 @@ namespace Com
                     return false;
                 }
 
-                return (PointD.DistanceBetween(pt, offset) < radius);
+                return (pt.DistanceFrom(offset) < radius);
             }
             catch
             {
@@ -362,7 +462,7 @@ namespace Com
                 {
                     PointD _Offset = new PointD(offset.X - 2 * semiMajorAxis * eccentricity * Math.Cos(rotateAngle), offset.Y - 2 * semiMajorAxis * eccentricity * Math.Sin(rotateAngle));
 
-                    double FocalDistSum = PointD.DistanceBetween(pt, offset) + PointD.DistanceBetween(pt, _Offset);
+                    double FocalDistSum = pt.DistanceFrom(offset) + pt.DistanceFrom(_Offset);
 
                     return (FocalDistSum < 2 * semiMajorAxis);
                 }
@@ -422,30 +522,28 @@ namespace Com
 
                     double RectRadius = Math.Sqrt(Math.Pow(rect.Width, 2) + Math.Pow(rect.Height, 2)) / 2;
 
-                    double Dist_RC_P1 = PointD.DistanceBetween(RectCenter, pt1);
-                    double Dist_RC_P2 = PointD.DistanceBetween(RectCenter, pt2);
+                    double Dist_RC_P1 = RectCenter.DistanceFrom(pt1);
+                    double Dist_RC_P2 = RectCenter.DistanceFrom(pt2);
 
-                    if (Dist_RC_P1 < RectRadius || Dist_RC_P2 < RectRadius)
+                    if (Dist_RC_P1 <= RectRadius || Dist_RC_P2 <= RectRadius)
                     {
                         return true;
                     }
                     else
                     {
-                        PointD FootPoint = GetFootPoint(RectCenter, pt1, pt2);
+                        double A, B, C;
 
-                        double Dist_RC_FP = PointD.DistanceBetween(RectCenter, FootPoint);
+                        CalcLineGeneralFunction(pt1, pt2, out A, out B, out C);
 
-                        if (Dist_RC_FP >= RectRadius)
+                        double Dist_RC_FP = GetDistanceBetweenPointAndLine(RectCenter, A, B, C);
+
+                        if (Dist_RC_FP > RectRadius)
                         {
                             return false;
                         }
                         else
                         {
-                            double Dist_FP_P1 = PointD.DistanceBetween(FootPoint, pt1);
-                            double Dist_FP_P2 = PointD.DistanceBetween(FootPoint, pt2);
-                            double Dist_P1_P2 = PointD.DistanceBetween(pt1, pt2);
-
-                            if (Dist_FP_P1 + Dist_FP_P2 > Dist_P1_P2)
+                            if ((A * pt1.X + B * pt1.Y + C) * (A * pt2.X + B * pt2.Y + C) > 0)
                             {
                                 return false;
                             }
@@ -478,30 +576,28 @@ namespace Com
                 }
                 else
                 {
-                    double Dist_Off_P1 = PointD.DistanceBetween(offset, pt1);
-                    double Dist_Off_P2 = PointD.DistanceBetween(offset, pt2);
+                    double Dist_Off_P1 = offset.DistanceFrom(pt1);
+                    double Dist_Off_P2 = offset.DistanceFrom(pt2);
 
-                    if (Dist_Off_P1 < radius || Dist_Off_P2 < radius)
+                    if (Dist_Off_P1 <= radius || Dist_Off_P2 <= radius)
                     {
                         return true;
                     }
                     else
                     {
-                        PointD FootPoint = GetFootPoint(offset, pt1, pt2);
+                        double A, B, C;
 
-                        double Dist_Off_FP = PointD.DistanceBetween(offset, FootPoint);
+                        CalcLineGeneralFunction(pt1, pt2, out A, out B, out C);
 
-                        if (Dist_Off_FP >= radius)
+                        double Dist_Off_FP = GetDistanceBetweenPointAndLine(offset, A, B, C);
+
+                        if (Dist_Off_FP > radius)
                         {
                             return false;
                         }
                         else
                         {
-                            double Dist_FP_P1 = PointD.DistanceBetween(FootPoint, pt1);
-                            double Dist_FP_P2 = PointD.DistanceBetween(FootPoint, pt2);
-                            double Dist_P1_P2 = PointD.DistanceBetween(pt1, pt2);
-
-                            if (Dist_FP_P1 + Dist_FP_P2 > Dist_P1_P2)
+                            if ((A * pt1.X + B * pt1.Y + C) * (A * pt2.X + B * pt2.Y + C) > 0)
                             {
                                 return false;
                             }
