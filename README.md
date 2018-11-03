@@ -37,6 +37,15 @@
 - Com.WinForm.FormStyle 表示窗口样式 / Style of winform window.
 - Com.WinForm.Theme 表示窗口配色主题 / Theme of color scheme of winform window.
 
+### 公开的接口 / Public Interface
+- Com.IAffine 表示用于支持仿射变换的方法 / Method for affine transform.
+- Com.IAffine<T> 表示用于支持仿射变换的方法 / Method for affine transform.
+- Com.IEuclideanVector 表示欧几里得向量 / Euclidean vector.
+- Com.IEuclideanVector<T> 表示欧几里得向量 / Euclidean vector.
+- Com.ILinearAlgebraVector 表示线性代数向量 / Linear algebra vector.
+- Com.ILinearAlgebraVector<T> 表示线性代数向量 / Linear algebra vector.
+- Com.IVector<T> 表示向量（包含确定数量与值的元素的可迭代的有限有序集合） / Vector (A vector is a finite and ordered set, which contains certain number of elements with clear values).
+
 ### 公开的委托 / Public Delegate
 - Com.Animation.Frame 表示用于绘制动画的某一帧的方法 / Method of presenting animation frames.
 
