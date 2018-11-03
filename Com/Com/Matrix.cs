@@ -22,7 +22,7 @@ namespace Com
     /// <summary>
     /// 以双精度浮点数二维数组表示的矩阵。
     /// </summary>
-    public sealed class Matrix
+    public sealed class Matrix : IEquatable<Matrix>
     {
         #region 私有与内部成员
 
@@ -52,7 +52,7 @@ namespace Com
             else
             {
                 _Size = Size.Empty;
-                _MArray = null;
+                _MArray = new double[0, 0];
             }
         }
 
@@ -79,7 +79,7 @@ namespace Com
             else
             {
                 _Size = Size.Empty;
-                _MArray = null;
+                _MArray = new double[0, 0];
             }
         }
 
@@ -98,7 +98,7 @@ namespace Com
             else
             {
                 _Size = Size.Empty;
-                _MArray = null;
+                _MArray = new double[0, 0];
             }
         }
 
@@ -126,7 +126,7 @@ namespace Com
             else
             {
                 _Size = Size.Empty;
-                _MArray = null;
+                _MArray = new double[0, 0];
             }
         }
 
@@ -151,13 +151,13 @@ namespace Com
                 else
                 {
                     _Size = Size.Empty;
-                    _MArray = null;
+                    _MArray = new double[0, 0];
                 }
             }
             else
             {
                 _Size = Size.Empty;
-                _MArray = null;
+                _MArray = new double[0, 0];
             }
         }
 
@@ -259,6 +259,17 @@ namespace Com
         }
 
         /// <summary>
+        /// 获取此 Matrix 的列数（宽度）。
+        /// </summary>
+        public int Column
+        {
+            get
+            {
+                return Width;
+            }
+        }
+
+        /// <summary>
         /// 获取此 Matrix 的高度（行数）。
         /// </summary>
         public int Height
@@ -266,6 +277,17 @@ namespace Com
             get
             {
                 return Size.Height;
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Matrix 的行数（高度）。
+        /// </summary>
+        public int Row
+        {
+            get
+            {
+                return Height;
             }
         }
 
@@ -282,39 +304,6 @@ namespace Com
                 }
 
                 return 0;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 Matrix 包含的元素数量。
-        /// </summary>
-        public int Length
-        {
-            get
-            {
-                return Count;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 Matrix 的列数（宽度）。
-        /// </summary>
-        public int Column
-        {
-            get
-            {
-                return Width;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 Matrix 的行数（高度）。
-        /// </summary>
-        public int Row
-        {
-            get
-            {
-                return Height;
             }
         }
 
@@ -572,6 +561,49 @@ namespace Com
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 判断此 Matrix 是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Matrix))
+            {
+                return false;
+            }
+
+            return Equals((Matrix)obj);
+        }
+
+        /// <summary>
+        /// 返回此 Matrix 的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 Matrix 转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = string.Empty;
+
+            if (_Size.Width > 0 && _Size.Height > 0)
+            {
+                Str = string.Concat("Column=", _Size.Width, ", Row=", _Size.Height);
+            }
+            else
+            {
+                Str = "NonMatrix";
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
+        }
+
+        //
 
         /// <summary>
         /// 判断此 Matrix 是否与指定的 Matrix 对象相等。
@@ -1504,55 +1536,6 @@ namespace Com
 
             return false;
         }
-
-        #endregion
-
-        #region 基类与接口
-
-        #region System.Object
-
-        /// <summary>
-        /// 判断此 Matrix 是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is Matrix))
-            {
-                return false;
-            }
-
-            return Equals((Matrix)obj);
-        }
-
-        /// <summary>
-        /// 返回此 Matrix 的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 Matrix 转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            string Str = string.Empty;
-
-            if (_Size.Width > 0 && _Size.Height > 0)
-            {
-                Str = string.Concat("Column=", _Size.Width, ", Row=", _Size.Height);
-            }
-            else
-            {
-                Str = "NonMatrix";
-            }
-
-            return string.Concat(base.GetType().Name, " [", Str, "]");
-        }
-
-        #endregion
 
         #endregion
     }

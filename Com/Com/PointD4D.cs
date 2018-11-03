@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Collections;
 using System.Drawing;
 
 namespace Com
@@ -22,7 +23,7 @@ namespace Com
     /// <summary>
     /// 以一组有序的双精度浮点数表示的四维直角坐标系坐标。
     /// </summary>
-    public struct PointD4D
+    public struct PointD4D : IEquatable<PointD4D>, IEuclideanVector<PointD4D>, IAffine<PointD4D>
     {
         #region 私有与内部成员
 
@@ -125,131 +126,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 PointD4D 结构包含的元素数量。
-        /// </summary>
-        public int Size
-        {
-            get
-            {
-                return 4;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD4D 结构包含的元素数量。
-        /// </summary>
-        public int Count
-        {
-            get
-            {
-                return Size;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD4D 结构包含的元素数量。
-        /// </summary>
-        public int Length
-        {
-            get
-            {
-                return Size;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD4D 结构的维度。
-        /// </summary>
-        public int Dimension
-        {
-            get
-            {
-                return Size;
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取表示此 PointD4D 结构是否为空向量的布尔值。
-        /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD4D 结构是否为列向量的布尔值。
-        /// </summary>
-        public bool IsColumnVector
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD4D 结构是否为行向量的布尔值。
-        /// </summary>
-        public bool IsRowVector
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD4D 结构是否为零向量的布尔值。
-        /// </summary>
-        public bool IsZero
-        {
-            get
-            {
-                return (_X == Zero._X && _Y == Zero._Y && _Z == Zero._Z && _U == Zero._U);
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD4D 结构是否包含非数字分量的布尔值。
-        /// </summary>
-        public bool IsNaN
-        {
-            get
-            {
-                return (double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z) || double.IsNaN(_U));
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD4D 结构是否包含无穷大分量的布尔值。
-        /// </summary>
-        public bool IsInfinity
-        {
-            get
-            {
-                return ((!double.IsNaN(_X) && !double.IsNaN(_Y) && !double.IsNaN(_Z) && !double.IsNaN(_U)) && (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z) || double.IsInfinity(_U)));
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD4D 结构是否包含非数字或无穷大分量的布尔值。
-        /// </summary>
-        public bool IsNaNOrInfinity
-        {
-            get
-            {
-                return ((double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z) || double.IsNaN(_U)) || (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z) || double.IsInfinity(_U)));
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取或设置此 PointD4D 结构在 X 轴的分量。
         /// </summary>
         public double X
@@ -310,6 +186,155 @@ namespace Com
             set
             {
                 _U = value;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 PointD4D 结构的维度。
+        /// </summary>
+        public int Dimension
+        {
+            get
+            {
+                return 4;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示此 PointD4D 结构是否为空向量的布尔值。
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD4D 结构是否为零向量的布尔值。
+        /// </summary>
+        public bool IsZero
+        {
+            get
+            {
+                return (_X == Zero._X && _Y == Zero._Y && _Z == Zero._Z && _U == Zero._U);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD4D 结构是否只读的布尔值。
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD4D 结构是否具有固定的维度的布尔值。
+        /// </summary>
+        public bool IsFixedSize
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD4D 结构是否包含非数字分量的布尔值。
+        /// </summary>
+        public bool IsNaN
+        {
+            get
+            {
+                return (double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z) || double.IsNaN(_U));
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD4D 结构是否包含无穷大分量的布尔值。
+        /// </summary>
+        public bool IsInfinity
+        {
+            get
+            {
+                return ((!double.IsNaN(_X) && !double.IsNaN(_Y) && !double.IsNaN(_Z) && !double.IsNaN(_U)) && (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z) || double.IsInfinity(_U)));
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD4D 结构是否包含非数字或无穷大分量的布尔值。
+        /// </summary>
+        public bool IsNaNOrInfinity
+        {
+            get
+            {
+                return ((double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z) || double.IsNaN(_U)) || (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z) || double.IsInfinity(_U)));
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量的模。
+        /// </summary>
+        public double Module
+        {
+            get
+            {
+                return Math.Sqrt(ModuleSquared);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量的模平方。
+        /// </summary>
+        public double ModuleSquared
+        {
+            get
+            {
+                return (_X * _X + _Y * _Y + _Z * _Z + _U * _U);
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量的相反向量。
+        /// </summary>
+        public PointD4D Negate
+        {
+            get
+            {
+                return new PointD4D(-_X, -_Y, -_Z, -_U);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD4D 结构表示的向量的规范化向量。
+        /// </summary>
+        public PointD4D Normalize
+        {
+            get
+            {
+                double Mod = Module;
+
+                if (Mod > 0)
+                {
+                    return new PointD4D(_X / Mod, _Y / Mod, _Z / Mod, _U / Mod);
+                }
+                else
+                {
+                    return Ex;
+                }
             }
         }
 
@@ -520,28 +545,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 PointD4D 结构表示的向量的模。
-        /// </summary>
-        public double VectorModule
-        {
-            get
-            {
-                return Math.Sqrt(_X * _X + _Y * _Y + _Z * _Z + _U * _U);
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD4D 结构表示的向量的模平方。
-        /// </summary>
-        public double VectorModuleSquared
-        {
-            get
-            {
-                return (_X * _X + _Y * _Y + _Z * _Z + _U * _U);
-            }
-        }
-
-        /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，远离 +X 轴的方向为正方向）。
         /// </summary>
         public double VectorAngleX
@@ -630,40 +633,41 @@ namespace Com
             }
         }
 
-        /// <summary>
-        /// 获取此 PointD4D 结构表示的向量的相反向量。
-        /// </summary>
-        public PointD4D VectorNegate
-        {
-            get
-            {
-                return new PointD4D(-_X, -_Y, -_Z, -_U);
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD4D 结构表示的向量的规范化向量。
-        /// </summary>
-        public PointD4D VectorNormalize
-        {
-            get
-            {
-                double Mod = VectorModule;
-
-                if (Mod > 0)
-                {
-                    return new PointD4D(_X / Mod, _Y / Mod, _Z / Mod, _U / Mod);
-                }
-                else
-                {
-                    return Ex;
-                }
-            }
-        }
-
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 判断此 PointD4D 结构是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is PointD4D))
+            {
+                return false;
+            }
+
+            return Equals((PointD4D)obj);
+        }
+
+        /// <summary>
+        /// 返回此 PointD4D 结构的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 PointD4D 结构转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            return string.Concat("{X=", _X, ", Y=", _Y, ", Z=", _Z, ", U=", _U, "}");
+        }
+
+        //
 
         /// <summary>
         /// 判断此 PointD4D 结构是否与指定的 PointD4D 结构相等。
@@ -682,9 +686,126 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的所有坐标偏移量将此 PointD4D 结构平移指定的量。
+        /// 遍历此 PointD4D 结构的所有分量并返回第一个与指定值相等的索引。
         /// </summary>
-        /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
+        /// <param name="item">用于检索的值。</param>
+        public int IndexOf(double item)
+        {
+            if (_X.Equals(item))
+            {
+                return 0;
+            }
+            else if (_Y.Equals(item))
+            {
+                return 1;
+            }
+            else if (_Z.Equals(item))
+            {
+                return 2;
+            }
+            else if (_U.Equals(item))
+            {
+                return 3;
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 遍历此 PointD4D 结构的所有分量并返回表示是否存在与指定值相等的分量的布尔值。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        public bool Contains(double item)
+        {
+            if (_X.Equals(item) || _Y.Equals(item) || _Z.Equals(item) || _U.Equals(item))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 PointD4D 结构转换为双精度浮点数数组。
+        /// </summary>
+        public double[] ToArray()
+        {
+            return new double[4] { _X, _Y, _Z, _U };
+        }
+
+        /// <summary>
+        /// 将此 PointD4D 结构转换为双精度浮点数列表。
+        /// </summary>
+        public List<double> ToList()
+        {
+            return new List<double>(4) { _X, _Y, _Z, _U };
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将此 PointD4D 结构表示的直角坐标系坐标转换为超球坐标系坐标的新实例。
+        /// </summary>
+        public PointD4D ToSpherical()
+        {
+            return new PointD4D(Module, VectorAngleX, VectorAngleY, VectorAngleZU);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD4D 结构表示的超球坐标系坐标转换为直角坐标系坐标的新实例。
+        /// </summary>
+        public PointD4D ToCartesian()
+        {
+            return new PointD4D(_X * Math.Cos(_Y), _X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Cos(_U), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U));
+        }
+
+        //
+
+        /// <summary>
+        /// 返回此 PointD4D 结构与指定的 PointD4D 结构之间的距离。
+        /// </summary>
+        /// <param name="pt">PointD4D 结构，表示起始点。</param>
+        public double DistanceFrom(PointD4D pt)
+        {
+            if ((object)pt != null)
+            {
+                double dx = _X - pt._X, dy = _Y - pt._Y, dz = _Z - pt._Z, du = _U - pt._U;
+
+                return Math.Sqrt(dx * dx + dy * dy + dz * dz + du * du);
+            }
+
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// 返回此 PointD4D 结构表示的向量与指定的 PointD4D 结构表示的向量之间的夹角（弧度）。
+        /// </summary>
+        /// <param name="pt">PointD4D 结构，表示起始向量。</param>
+        public double AngleFrom(PointD4D pt)
+        {
+            if ((object)pt != null)
+            {
+                if (IsZero || pt.IsZero)
+                {
+                    return 0;
+                }
+
+                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z + _U * pt._U;
+
+                return Math.Acos(DotProduct / Module / pt.Module);
+            }
+
+            return double.NaN;
+        }
+
+        //
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD4D 结构的所有分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
         public void Offset(double d)
         {
             _X += d;
@@ -694,12 +815,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的 X 坐标偏移量、Y 坐标偏移量、Z 坐标偏移量与 U 坐标偏移量将此 PointD4D 结构平移指定的量。
+        /// 按双精度浮点数表示的 X 坐标位移、Y 坐标位移、Z 坐标位移与 U 坐标位移将此 PointD4D 结构平移指定的量。
         /// </summary>
-        /// <param name="dx">双精度浮点数表示的 X 坐标偏移量。</param>
-        /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
-        /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
-        /// <param name="du">双精度浮点数表示的 U 坐标偏移量。</param>
+        /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
+        /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
+        /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
+        /// <param name="du">双精度浮点数表示的 U 坐标位移。</param>
         public void Offset(double dx, double dy, double dz, double du)
         {
             _X += dx;
@@ -724,21 +845,21 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标偏移量将此 PointD4D 结构的副本平移指定的量的新实例。
+        /// 返回按双精度浮点数表示的位移将此 PointD4D 结构的副本的所有分量平移指定的量的新实例。
         /// </summary>
-        /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
         public PointD4D OffsetCopy(double d)
         {
             return new PointD4D(_X + d, _Y + d, _Z + d, _U + d);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标偏移量、Y 坐标偏移量、Z 坐标偏移量与 U 坐标偏移量将此 PointD4D 结构的副本平移指定的量的新实例。
+        /// 返回按双精度浮点数表示的 X 坐标位移、Y 坐标位移、Z 坐标位移与 U 坐标位移将此 PointD4D 结构的副本平移指定的量的新实例。
         /// </summary>
-        /// <param name="dx">双精度浮点数表示的 X 坐标偏移量。</param>
-        /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
-        /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
-        /// <param name="du">双精度浮点数表示的 U 坐标偏移量。</param>
+        /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
+        /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
+        /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
+        /// <param name="du">双精度浮点数表示的 U 坐标位移。</param>
         public PointD4D OffsetCopy(double dx, double dy, double dz, double du)
         {
             return new PointD4D(_X + dx, _Y + dy, _Z + dz, _U + du);
@@ -761,9 +882,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的所有坐标缩放因子将此 PointD4D 结构缩放指定的倍数。
+        /// 按双精度浮点数表示的缩放因数将此 PointD4D 结构的所有分量缩放指定的倍数。
         /// </summary>
-        /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
         public void Scale(double s)
         {
             _X *= s;
@@ -773,12 +894,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的 X 坐标缩放因子、Y 坐标缩放因子、Z 坐标缩放因子与 U 坐标缩放因子将此 PointD4D 结构缩放指定的倍数。
+        /// 按双精度浮点数表示的 X 坐标缩放因数、Y 坐标缩放因数、Z 坐标缩放因数与 U 坐标缩放因数将此 PointD4D 结构缩放指定的倍数。
         /// </summary>
-        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因子。</param>
-        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
-        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
-        /// <param name="su">双精度浮点数表示的 U 坐标缩放因子。</param>
+        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
+        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
+        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
+        /// <param name="su">双精度浮点数表示的 U 坐标缩放因数。</param>
         public void Scale(double sx, double sy, double sz, double su)
         {
             _X *= sx;
@@ -803,21 +924,21 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标缩放因子将此 PointD4D 结构的副本缩放指定的倍数的新实例。
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD4D 结构的副本的所有分量缩放指定的倍数的新实例。
         /// </summary>
-        /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
         public PointD4D ScaleCopy(double s)
         {
             return new PointD4D(_X * s, _Y * s, _Z * s, _U * s);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标缩放因子、Y 坐标缩放因子、Z 坐标缩放因子与 U 坐标缩放因子将此 PointD4D 结构的副本缩放指定的倍数的新实例。
+        /// 返回按双精度浮点数表示的 X 坐标缩放因数、Y 坐标缩放因数、Z 坐标缩放因数与 U 坐标缩放因数将此 PointD4D 结构的副本缩放指定的倍数的新实例。
         /// </summary>
-        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因子。</param>
-        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
-        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
-        /// <param name="su">双精度浮点数表示的 U 坐标缩放因子。</param>
+        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
+        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
+        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
+        /// <param name="su">双精度浮点数表示的 U 坐标缩放因数。</param>
         public PointD4D ScaleCopy(double sx, double sy, double sz, double su)
         {
             return new PointD4D(_X * sx, _Y * sy, _Z * sz, _U * su);
@@ -840,12 +961,48 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 XY 平面的法向平面旋转指定的角度。
+        /// 将此 PointD4D 结构的指定的基向量方向的分量翻转。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 XY 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
-        public void RotateXY(double angle)
+        /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
+        public void Reflect(int index)
         {
-            Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
+            switch (index)
+            {
+                case 0: _X = -_X; break;
+                case 1: _Y = -_Y; break;
+                case 2: _Z = -_Z; break;
+                case 3: _U = -_U; break;
+            }
+        }
+
+        /// <summary>
+        /// 返回将此 PointD4D 结构的副本的由指定的基向量方向的分量翻转的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
+        public PointD4D ReflectCopy(int index)
+        {
+            switch (index)
+            {
+                case 0: return new PointD4D(-_X, _Y, _Z, _U);
+                case 1: return new PointD4D(_X, -_Y, _Z, _U);
+                case 2: return new PointD4D(_X, _Y, -_Z, _U);
+                case 3: return new PointD4D(_X, _Y, _Z, -_U);
+            }
+
+            return NaN;
+        }
+
+        //
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD4D 结构剪切指定的角度。
+        /// </summary>
+        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构的副本沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        public void Shear(int index1, int index2, double angle)
+        {
+            Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
             if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
             {
@@ -857,97 +1014,14 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 XZ 平面的法向平面旋转指定的角度。
+        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本剪切指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 XZ 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
-        public void RotateXZ(double angle)
+        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构的副本沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        public PointD4D ShearCopy(int index1, int index2, double angle)
         {
-            Vector result = ToVectorColumn().RotateCopy(0, 2, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
-        }
-
-        /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 XU 平面的法向平面旋转指定的角度。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 XU 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
-        public void RotateXU(double angle)
-        {
-            Vector result = ToVectorColumn().RotateCopy(0, 3, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
-        }
-
-        /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 YZ 平面的法向平面旋转指定的角度。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 YZ 平面的法向平面旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
-        public void RotateYZ(double angle)
-        {
-            Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
-        }
-
-        /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 YU 平面的法向平面旋转指定的角度。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 YU 平面的法向平面旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
-        public void RotateYU(double angle)
-        {
-            Vector result = ToVectorColumn().RotateCopy(1, 3, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
-        }
-
-        /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD4D 结构绕 ZU 平面的法向平面旋转指定的角度。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 ZU 平面的法向平面旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
-        public void RotateZU(double angle)
-        {
-            Vector result = ToVectorColumn().RotateCopy(2, 3, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 XY 平面的法向平面旋转指定的角度的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 XY 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
-        public PointD4D RotateXYCopy(double angle)
-        {
-            Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
+            Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
             if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
             {
@@ -957,77 +1031,36 @@ namespace Com
             return NaN;
         }
 
+        //
+
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 XZ 平面的法向平面旋转指定的角度的新实例。
+        /// 按双精度浮点数表示的弧度将此 PointD4D 结构旋转指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 XZ 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
-        public PointD4D RotateXZCopy(double angle)
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public void Rotate(int index1, int index2, double angle)
         {
-            Vector result = ToVectorColumn().RotateCopy(0, 2, angle);
+            Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
             if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
             {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+                _U = result[3];
             }
-
-            return NaN;
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 XU 平面的法向平面旋转指定的角度的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 XU 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
-        public PointD4D RotateXUCopy(double angle)
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构的副本绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public PointD4D RotateCopy(int index1, int index2, double angle)
         {
-            Vector result = ToVectorColumn().RotateCopy(0, 3, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
-
-            return NaN;
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 YZ 平面的法向平面旋转指定的角度的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 YZ 平面的法向平面旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
-        public PointD4D RotateYZCopy(double angle)
-        {
-            Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
-
-            return NaN;
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 YU 平面的法向平面旋转指定的角度的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 YU 平面的法向平面旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
-        public PointD4D RotateYUCopy(double angle)
-        {
-            Vector result = ToVectorColumn().RotateCopy(1, 3, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
-
-            return NaN;
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构的副本绕 ZU 平面的法向平面旋转指定的角度的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构绕 ZU 平面的法向平面旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
-        public PointD4D RotateZUCopy(double angle)
-        {
-            Vector result = ToVectorColumn().RotateCopy(2, 3, angle);
+            Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
             if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
             {
@@ -1060,7 +1093,7 @@ namespace Com
                     { offset._X, offset._Y, offset._Z, offset._U, 1 }
                 });
 
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1080,7 +1113,7 @@ namespace Com
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(5, 5))
             {
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1100,7 +1133,7 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1133,7 +1166,7 @@ namespace Com
                     { offset._X, offset._Y, offset._Z, offset._U, 1 }
                 });
 
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1152,7 +1185,7 @@ namespace Com
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(5, 5))
             {
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1171,7 +1204,7 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1203,7 +1236,7 @@ namespace Com
                     { offset._X, offset._Y, offset._Z, offset._U, 1 }
                 });
 
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1223,7 +1256,7 @@ namespace Com
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(5, 5))
             {
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1243,7 +1276,7 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1276,7 +1309,7 @@ namespace Com
                     { offset._X, offset._Y, offset._Z, offset._U, 1 }
                 });
 
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1295,7 +1328,7 @@ namespace Com
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(5, 5))
             {
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1314,7 +1347,7 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
                 {
@@ -1450,63 +1483,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回此 PointD4D 结构与指定的 PointD4D 结构之间的距离。
-        /// </summary>
-        /// <param name="pt">PointD4D 结构，表示起始点。</param>
-        public double DistanceFrom(PointD4D pt)
-        {
-            if ((object)pt != null)
-            {
-                double dx = _X - pt._X, dy = _Y - pt._Y, dz = _Z - pt._Z, du = _U - pt._U;
-
-                return Math.Sqrt(dx * dx + dy * dy + dz * dz + du * du);
-            }
-
-            return double.NaN;
-        }
-
-        /// <summary>
-        /// 返回此 PointD4D 结构表示的向量与指定的 PointD4D 结构表示的向量之间的夹角（弧度）。
-        /// </summary>
-        /// <param name="pt">PointD4D 结构，表示起始向量。</param>
-        public double AngleFrom(PointD4D pt)
-        {
-            if ((object)pt != null)
-            {
-                if (IsZero || pt.IsZero)
-                {
-                    return 0;
-                }
-
-                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z + _U * pt._U;
-
-                return Math.Acos(DotProduct / VectorModule / pt.VectorModule);
-            }
-
-            return double.NaN;
-        }
-
-        //
-
-        /// <summary>
-        /// 返回将此 PointD4D 结构表示的直角坐标系坐标转换为超球坐标系坐标的新实例。
-        /// </summary>
-        public PointD4D ToSpherical()
-        {
-            return new PointD4D(VectorModule, VectorAngleX, VectorAngleY, VectorAngleZU);
-        }
-
-        /// <summary>
-        /// 返回将此 PointD4D 结构表示的超球坐标系坐标转换为直角坐标系坐标的新实例。
-        /// </summary>
-        public PointD4D ToCartesian()
-        {
-            return new PointD4D(_X * Math.Cos(_Y), _X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Cos(_U), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U));
-        }
-
-        //
-
-        /// <summary>
         /// 返回将此 PointD4D 结构转换为向量（列向量）的 Vector 的新实例。
         /// </summary>
         public Vector ToVector()
@@ -1517,7 +1493,7 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD4D 结构转换为列向量的 Vector 的新实例。
         /// </summary>
-        public Vector ToVectorColumn()
+        public Vector ToColumnVector()
         {
             return new Vector(Vector.Type.ColumnVector, _X, _Y, _Z, _U);
         }
@@ -1525,19 +1501,9 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD4D 结构转换为行向量的 Vector 的新实例。
         /// </summary>
-        public Vector ToVectorRow()
+        public Vector ToRowVector()
         {
             return new Vector(Vector.Type.RowVector, _X, _Y, _Z, _U);
-        }
-
-        //
-
-        /// <summary>
-        /// 将此 PointD4D 结构转换为双精度浮点数数组。
-        /// </summary>
-        public double[] ToArray()
-        {
-            return new double[4] { _X, _Y, _Z, _U };
         }
 
         #endregion
@@ -1580,21 +1546,21 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标偏移量将 PointD4D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回按双精度浮点数表示的位移将 PointD4D 结构的所有分量平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
         public static Matrix OffsetMatrix(double d)
         {
             return Vector.OffsetMatrix(Vector.Type.ColumnVector, 4, d);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标偏移量、Y 坐标偏移量与 Z 坐标偏移量将 PointD4D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回按双精度浮点数表示的 X 坐标位移、Y 坐标位移与 Z 坐标位移将 PointD4D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="dx">双精度浮点数表示的 X 坐标偏移量。</param>
-        /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
-        /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
-        /// <param name="du">双精度浮点数表示的 U 坐标偏移量。</param>
+        /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
+        /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
+        /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
+        /// <param name="du">双精度浮点数表示的 U 坐标位移。</param>
         public static Matrix OffsetMatrix(double dx, double dy, double dz, double du)
         {
             return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, dx, dy, dz, du));
@@ -1608,7 +1574,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(pt.ToVectorColumn());
+                return Vector.OffsetMatrix(pt.ToColumnVector());
             }
 
             return Matrix.Empty;
@@ -1617,21 +1583,21 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标缩放因子将 PointD4D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回按双精度浮点数表示的缩放因数将 PointD4D 结构的所有分量缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
         public static Matrix ScaleMatrix(double s)
         {
             return Vector.ScaleMatrix(Vector.Type.ColumnVector, 4, s);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标缩放因子、Y 坐标缩放因子与 Z 坐标缩放因子将 PointD4D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回按双精度浮点数表示的 X 坐标缩放因数、Y 坐标缩放因数与 Z 坐标缩放因数将 PointD4D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因子。</param>
-        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
-        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
-        /// <param name="su">双精度浮点数表示的 U 坐标缩放因子。</param>
+        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
+        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
+        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
+        /// <param name="su">双精度浮点数表示的 U 坐标缩放因数。</param>
         public static Matrix ScaleMatrix(double sx, double sy, double sz, double su)
         {
             return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sx, sy, sz, su));
@@ -1645,7 +1611,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(pt.ToVectorColumn());
+                return Vector.ScaleMatrix(pt.ToColumnVector());
             }
 
             return Matrix.Empty;
@@ -1654,57 +1620,38 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 XY 平面的法向平面旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示用于翻转 PointD4D 结构的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示 PointD4D 结构绕 XY 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
-        public static Matrix RotateXYMatrix(double angle)
+        /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
+        public static Matrix ReflectMatrix(int index)
         {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 4, 0, 1, angle);
+            return Vector.ReflectMatrix(Vector.Type.ColumnVector, 4, index);
         }
 
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 XZ 平面的法向平面旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示 PointD4D 结构绕 XZ 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Z 轴的方向为正方向）。</param>
-        public static Matrix RotateXZMatrix(double angle)
-        {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 4, 0, 2, angle);
-        }
+        //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 XU 平面的法向平面旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示用于剪切 PointD4D 结构的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示 PointD4D 结构绕 XU 平面的法向平面旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +U 轴的方向为正方向）。</param>
-        public static Matrix RotateXUMatrix(double angle)
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 PointD4D 结构绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public static Matrix ShearMatrix(int index1, int index2, double angle)
         {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 4, 0, 3, angle);
+            return Vector.ShearMatrix(Vector.Type.ColumnVector, 4, index1, index2, angle);
         }
 
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 YZ 平面的法向平面旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示 PointD4D 结构绕 YZ 平面的法向平面旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
-        public static Matrix RotateYZMatrix(double angle)
-        {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 4, 1, 2, angle);
-        }
+        //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 YU 平面的法向平面旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示用于旋转 PointD4D 结构的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示 PointD4D 结构绕 YU 平面的法向平面旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +U 轴的方向为正方向）。</param>
-        public static Matrix RotateYUMatrix(double angle)
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 PointD4D 结构绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public static Matrix RotateMatrix(int index1, int index2, double angle)
         {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 4, 1, 3, angle);
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的弧度将 PointD4D 结构绕 ZU 平面的法向平面旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
-        /// </summary>
-        /// <param name="angle">双精度浮点数，表示 PointD4D 结构绕 ZU 平面的法向平面旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。</param>
-        public static Matrix RotateZUMatrix(double angle)
-        {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 4, 2, 3, angle);
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 4, index1, index2, angle);
         }
 
         //
@@ -1742,7 +1689,7 @@ namespace Com
 
                 double DotProduct = left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U;
 
-                return Math.Acos(DotProduct / left.VectorModule / right.VectorModule);
+                return Math.Acos(DotProduct / left.Module / right.Module);
             }
 
             return double.NaN;
@@ -1958,7 +1905,7 @@ namespace Com
                 return false;
             }
 
-            return (left.VectorModuleSquared < right.VectorModuleSquared);
+            return (left.ModuleSquared < right.ModuleSquared);
         }
 
         /// <summary>
@@ -1973,7 +1920,7 @@ namespace Com
                 return false;
             }
 
-            return (left.VectorModuleSquared > right.VectorModuleSquared);
+            return (left.ModuleSquared > right.ModuleSquared);
         }
 
         /// <summary>
@@ -1988,7 +1935,7 @@ namespace Com
                 return false;
             }
 
-            return (left.VectorModuleSquared <= right.VectorModuleSquared);
+            return (left.ModuleSquared <= right.ModuleSquared);
         }
 
         /// <summary>
@@ -2003,7 +1950,7 @@ namespace Com
                 return false;
             }
 
-            return (left.VectorModuleSquared >= right.VectorModuleSquared);
+            return (left.ModuleSquared >= right.ModuleSquared);
         }
 
         //
@@ -2226,38 +2173,299 @@ namespace Com
 
         #endregion
 
-        #region 基类与接口
+        #region 显式接口成员实现
 
-        #region System.ValueType
+        #region Com.IVector<T>
 
-        /// <summary>
-        /// 判断此 PointD4D 结构是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
+        int IVector<double>.Size
         {
-            if (obj == null || !(obj is PointD4D))
+            get
+            {
+                return Dimension;
+            }
+
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        int IVector<double>.Capacity
+        {
+            get
+            {
+                return Dimension;
+            }
+        }
+
+        void IVector<double>.Trim()
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.IList
+
+        object IList.this[int index]
+        {
+            get
+            {
+                return this[index];
+            }
+
+            set
+            {
+                this[index] = (double)value;
+            }
+        }
+
+        int IList.Add(object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Clear()
+        {
+            this = default(PointD4D);
+        }
+
+        bool IList.Contains(object item)
+        {
+            if (item != null && item is double)
+            {
+                return Contains((double)item);
+            }
+
+            return false;
+        }
+
+        int IList.IndexOf(object item)
+        {
+            if (item != null && item is double)
+            {
+                return IndexOf((double)item);
+            }
+
+            return -1;
+        }
+
+        void IList.Insert(int index, object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Remove(object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.ICollection
+
+        int ICollection.Count
+        {
+            get
+            {
+                return Dimension;
+            }
+        }
+
+        object ICollection.SyncRoot
+        {
+            get
+            {
+                return this;
+            }
+        }
+
+        bool ICollection.IsSynchronized
+        {
+            get
             {
                 return false;
             }
-
-            return Equals((PointD4D)obj);
         }
 
-        /// <summary>
-        /// 返回此 PointD4D 结构的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
+        void ICollection.CopyTo(Array array, int index)
         {
-            return base.GetHashCode();
+            if (array != null && array.Rank == 1 && array.Length >= Dimension)
+            {
+                ToArray().CopyTo(array, index);
+            }
         }
 
-        /// <summary>
-        /// 将此 PointD4D 结构转换为字符串。
-        /// </summary>
-        public override string ToString()
+        #endregion
+
+        #region System.Collections.IEnumerable
+
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return string.Concat("{X=", _X, ", Y=", _Y, ", Z=", _Z, ", U=", _U, "}");
+            return new Enumerator(this);
+        }
+
+        private sealed class Enumerator : IEnumerator // 实现 System.Collections.IEnumerator 的迭代器。
+        {
+            private PointD4D _Pt;
+            private int _Index = -1;
+
+            internal Enumerator(PointD4D pt)
+            {
+                _Pt = pt;
+            }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    {
+                        return _Pt[_Index];
+                    }
+
+                    return null;
+                }
+            }
+
+            bool IEnumerator.MoveNext()
+            {
+                if (_Index < _Pt.Dimension - 1)
+                {
+                    _Index++;
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            void IEnumerator.Reset()
+            {
+                _Index = -1;
+            }
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.IList<T>
+
+        void IList<double>.Insert(int index, double item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList<double>.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.ICollection<T>
+
+        int ICollection<double>.Count
+        {
+            get
+            {
+                return Dimension;
+            }
+        }
+
+        void ICollection<double>.Add(double item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void ICollection<double>.Clear()
+        {
+            this = default(PointD4D);
+        }
+
+        void ICollection<double>.CopyTo(double[] array, int index)
+        {
+            if (array != null && array.Length >= Dimension)
+            {
+                ToArray().CopyTo(array, index);
+            }
+        }
+
+        bool ICollection<double>.Remove(double item)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.IEnumerable<out T>
+
+        IEnumerator<double> IEnumerable<double>.GetEnumerator()
+        {
+            return new GenericEnumerator(this);
+        }
+
+        private sealed class GenericEnumerator : IEnumerator<double> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
+        {
+            private PointD4D _Pt;
+            private int _Index = -1;
+
+            internal GenericEnumerator(PointD4D pt)
+            {
+                _Pt = pt;
+            }
+
+            void IDisposable.Dispose()
+            {
+
+            }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    {
+                        return _Pt[_Index];
+                    }
+
+                    return null;
+                }
+            }
+
+            bool IEnumerator.MoveNext()
+            {
+                if (_Index < _Pt.Dimension - 1)
+                {
+                    _Index++;
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            void IEnumerator.Reset()
+            {
+                _Index = -1;
+            }
+
+            double IEnumerator<double>.Current
+            {
+                get
+                {
+                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    {
+                        return _Pt[_Index];
+                    }
+
+                    return double.NaN;
+                }
+            }
         }
 
         #endregion

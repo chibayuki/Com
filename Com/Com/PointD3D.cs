@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Collections;
 using System.Drawing;
 
 namespace Com
@@ -22,7 +23,7 @@ namespace Com
     /// <summary>
     /// 以一组有序的双精度浮点数表示的三维直角坐标系坐标。
     /// </summary>
-    public struct PointD3D
+    public struct PointD3D : IEquatable<PointD3D>, IEuclideanVector<PointD3D>, IAffine<PointD3D>
     {
         #region 私有与内部成员
 
@@ -115,131 +116,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 PointD3D 结构包含的元素数量。
-        /// </summary>
-        public int Size
-        {
-            get
-            {
-                return 3;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD3D 结构包含的元素数量。
-        /// </summary>
-        public int Count
-        {
-            get
-            {
-                return Size;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD3D 结构包含的元素数量。
-        /// </summary>
-        public int Length
-        {
-            get
-            {
-                return Size;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD3D 结构的维度。
-        /// </summary>
-        public int Dimension
-        {
-            get
-            {
-                return Size;
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取表示此 PointD3D 结构是否为空向量的布尔值。
-        /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD3D 结构是否为列向量的布尔值。
-        /// </summary>
-        public bool IsColumnVector
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD3D 结构是否为行向量的布尔值。
-        /// </summary>
-        public bool IsRowVector
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD3D 结构是否为零向量的布尔值。
-        /// </summary>
-        public bool IsZero
-        {
-            get
-            {
-                return (_X == Zero._X && _Y == Zero._Y && _Z == Zero._Z);
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD3D 结构是否包含非数字分量的布尔值。
-        /// </summary>
-        public bool IsNaN
-        {
-            get
-            {
-                return (double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z));
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD3D 结构是否包含无穷大分量的布尔值。
-        /// </summary>
-        public bool IsInfinity
-        {
-            get
-            {
-                return ((!double.IsNaN(_X) && !double.IsNaN(_Y) && !double.IsNaN(_Z)) && (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z)));
-            }
-        }
-
-        /// <summary>
-        /// 获取表示此 PointD3D 结构是否包含非数字或无穷大分量的布尔值。
-        /// </summary>
-        public bool IsNaNOrInfinity
-        {
-            get
-            {
-                return ((double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z)) || (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z)));
-            }
-        }
-
-        //
-
-        /// <summary>
         /// 获取或设置此 PointD3D 结构在 X 轴的分量。
         /// </summary>
         public double X
@@ -284,6 +160,155 @@ namespace Com
             set
             {
                 _Z = value;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 PointD3D 结构的维度。
+        /// </summary>
+        public int Dimension
+        {
+            get
+            {
+                return 3;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示此 PointD3D 结构是否为空向量的布尔值。
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD3D 结构是否为零向量的布尔值。
+        /// </summary>
+        public bool IsZero
+        {
+            get
+            {
+                return (_X == Zero._X && _Y == Zero._Y && _Z == Zero._Z);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD3D 结构是否只读的布尔值。
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD3D 结构是否具有固定的维度的布尔值。
+        /// </summary>
+        public bool IsFixedSize
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD3D 结构是否包含非数字分量的布尔值。
+        /// </summary>
+        public bool IsNaN
+        {
+            get
+            {
+                return (double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z));
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD3D 结构是否包含无穷大分量的布尔值。
+        /// </summary>
+        public bool IsInfinity
+        {
+            get
+            {
+                return ((!double.IsNaN(_X) && !double.IsNaN(_Y) && !double.IsNaN(_Z)) && (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z)));
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 PointD3D 结构是否包含非数字或无穷大分量的布尔值。
+        /// </summary>
+        public bool IsNaNOrInfinity
+        {
+            get
+            {
+                return ((double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z)) || (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z)));
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量的模。
+        /// </summary>
+        public double Module
+        {
+            get
+            {
+                return Math.Sqrt(ModuleSquared);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量的模平方。
+        /// </summary>
+        public double ModuleSquared
+        {
+            get
+            {
+                return (_X * _X + _Y * _Y + _Z * _Z);
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量的相反向量。
+        /// </summary>
+        public PointD3D Negate
+        {
+            get
+            {
+                return new PointD3D(-_X, -_Y, -_Z);
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量的规范化向量。
+        /// </summary>
+        public PointD3D Normalize
+        {
+            get
+            {
+                double Mod = Module;
+
+                if (Mod > 0)
+                {
+                    return new PointD3D(_X / Mod, _Y / Mod, _Z / Mod);
+                }
+                else
+                {
+                    return Ex;
+                }
             }
         }
 
@@ -441,28 +466,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 PointD3D 结构表示的向量的模。
-        /// </summary>
-        public double VectorModule
-        {
-            get
-            {
-                return Math.Sqrt(_X * _X + _Y * _Y + _Z * _Z);
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD3D 结构表示的向量的模平方。
-        /// </summary>
-        public double VectorModuleSquared
-        {
-            get
-            {
-                return (_X * _X + _Y * _Y + _Z * _Z);
-            }
-        }
-
-        /// <summary>
         /// 获取此 PointD3D 结构表示的向量与 +Z 轴之间的夹角（弧度）（以 +Z 轴为 0 弧度，远离 +Z 轴的方向为正方向）。
         /// </summary>
         public double VectorAngleZ
@@ -475,7 +478,7 @@ namespace Com
                 }
                 else
                 {
-                    return Math.Acos(_Z / VectorModule);
+                    return Math.Acos(_Z / Module);
                 }
             }
         }
@@ -511,40 +514,41 @@ namespace Com
             }
         }
 
-        /// <summary>
-        /// 获取此 PointD3D 结构表示的向量的相反向量。
-        /// </summary>
-        public PointD3D VectorNegate
-        {
-            get
-            {
-                return new PointD3D(-_X, -_Y, -_Z);
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD3D 结构表示的向量的规范化向量。
-        /// </summary>
-        public PointD3D VectorNormalize
-        {
-            get
-            {
-                double Mod = VectorModule;
-
-                if (Mod > 0)
-                {
-                    return new PointD3D(_X / Mod, _Y / Mod, _Z / Mod);
-                }
-                else
-                {
-                    return Ex;
-                }
-            }
-        }
-
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 判断此 PointD3D 结构是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is PointD3D))
+            {
+                return false;
+            }
+
+            return Equals((PointD3D)obj);
+        }
+
+        /// <summary>
+        /// 返回此 PointD3D 结构的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 PointD3D 结构转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            return string.Concat("{X=", _X, ", Y=", _Y, ", Z=", _Z, "}");
+        }
+
+        //
 
         /// <summary>
         /// 判断此 PointD3D 结构是否与指定的 PointD3D 结构相等。
@@ -563,9 +567,122 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的所有坐标偏移量将此 PointD3D 结构平移指定的量。
+        /// 遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的索引。
         /// </summary>
-        /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
+        /// <param name="item">用于检索的值。</param>
+        public int IndexOf(double item)
+        {
+            if (_X.Equals(item))
+            {
+                return 0;
+            }
+            else if (_Y.Equals(item))
+            {
+                return 1;
+            }
+            else if (_Z.Equals(item))
+            {
+                return 2;
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 遍历此 PointD3D 结构的所有分量并返回表示是否存在与指定值相等的分量的布尔值。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        public bool Contains(double item)
+        {
+            if (_X.Equals(item) || _Y.Equals(item) || _Z.Equals(item))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 PointD3D 结构转换为双精度浮点数数组。
+        /// </summary>
+        public double[] ToArray()
+        {
+            return new double[3] { _X, _Y, _Z };
+        }
+
+        /// <summary>
+        /// 将此 PointD3D 结构转换为双精度浮点数列表。
+        /// </summary>
+        public List<double> ToList()
+        {
+            return new List<double>(3) { _X, _Y, _Z };
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将此 PointD3D 结构表示的直角坐标系坐标转换为球坐标系坐标的新实例。
+        /// </summary>
+        public PointD3D ToSpherical()
+        {
+            return new PointD3D(Module, VectorAngleZ, VectorAngleXY);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD3D 结构表示的球坐标系坐标转换为直角坐标系坐标的新实例。
+        /// </summary>
+        public PointD3D ToCartesian()
+        {
+            return new PointD3D(_X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z), _X * Math.Cos(_Y));
+        }
+
+        //
+
+        /// <summary>
+        /// 返回此 PointD3D 结构与指定的 PointD3D 结构之间的距离。
+        /// </summary>
+        /// <param name="pt">PointD3D 结构，表示起始点。</param>
+        public double DistanceFrom(PointD3D pt)
+        {
+            if ((object)pt != null)
+            {
+                double dx = _X - pt._X, dy = _Y - pt._Y, dz = _Z - pt._Z;
+
+                return Math.Sqrt(dx * dx + dy * dy + dz * dz);
+            }
+
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// 返回此 PointD3D 结构表示的向量与指定的 PointD3D 结构表示的向量之间的夹角（弧度）。
+        /// </summary>
+        /// <param name="pt">PointD3D 结构，表示起始向量。</param>
+        public double AngleFrom(PointD3D pt)
+        {
+            if ((object)pt != null)
+            {
+                if (IsZero || pt.IsZero)
+                {
+                    return 0;
+                }
+
+                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z;
+
+                return Math.Acos(DotProduct / Module / pt.Module);
+            }
+
+            return double.NaN;
+        }
+
+        //
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD3D 结构的所有分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
         public void Offset(double d)
         {
             _X += d;
@@ -574,11 +691,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的 X 坐标偏移量、Y 坐标偏移量与 Z 坐标偏移量将此 PointD3D 结构平移指定的量。
+        /// 按双精度浮点数表示的 X 坐标位移、Y 坐标位移与 Z 坐标位移将此 PointD3D 结构平移指定的量。
         /// </summary>
-        /// <param name="dx">双精度浮点数表示的 X 坐标偏移量。</param>
-        /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
-        /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
+        /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
+        /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
+        /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
         public void Offset(double dx, double dy, double dz)
         {
             _X += dx;
@@ -601,20 +718,20 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标偏移量将此 PointD3D 结构的副本平移指定的量的新实例。
+        /// 返回按双精度浮点数表示的位移将此 PointD3D 结构的副本的所有分量平移指定的量的新实例。
         /// </summary>
-        /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
         public PointD3D OffsetCopy(double d)
         {
             return new PointD3D(_X + d, _Y + d, _Z + d);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标偏移量、Y 坐标偏移量与 Z 坐标偏移量将此 PointD3D 结构的副本平移指定的量的新实例。
+        /// 返回按双精度浮点数表示的 X 坐标位移、Y 坐标位移与 Z 坐标位移将此 PointD3D 结构的副本平移指定的量的新实例。
         /// </summary>
-        /// <param name="dx">双精度浮点数表示的 X 坐标偏移量。</param>
-        /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
-        /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
+        /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
+        /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
+        /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
         public PointD3D OffsetCopy(double dx, double dy, double dz)
         {
             return new PointD3D(_X + dx, _Y + dy, _Z + dz);
@@ -637,9 +754,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的所有坐标缩放因子将此 PointD3D 结构缩放指定的倍数。
+        /// 按双精度浮点数表示的缩放因数将此 PointD3D 结构的所有分量缩放指定的倍数。
         /// </summary>
-        /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
         public void Scale(double s)
         {
             _X *= s;
@@ -648,11 +765,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的 X 坐标缩放因子、Y 坐标缩放因子与 Z 坐标缩放因子将此 PointD3D 结构缩放指定的倍数。
+        /// 按双精度浮点数表示的 X 坐标缩放因数、Y 坐标缩放因数与 Z 坐标缩放因数将此 PointD3D 结构缩放指定的倍数。
         /// </summary>
-        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因子。</param>
-        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
-        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
+        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
+        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
+        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
         public void Scale(double sx, double sy, double sz)
         {
             _X *= sx;
@@ -675,20 +792,20 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标缩放因子将此 PointD3D 结构的副本缩放指定的倍数的新实例。
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构的副本的所有分量缩放指定的倍数的新实例。
         /// </summary>
-        /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
         public PointD3D ScaleCopy(double s)
         {
             return new PointD3D(_X * s, _Y * s, _Z * s);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标缩放因子、Y 坐标缩放因子与 Z 坐标缩放因子将此 PointD3D 结构的副本缩放指定的倍数的新实例。
+        /// 返回按双精度浮点数表示的 X 坐标缩放因数、Y 坐标缩放因数与 Z 坐标缩放因数将此 PointD3D 结构的副本缩放指定的倍数的新实例。
         /// </summary>
-        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因子。</param>
-        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
-        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
+        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
+        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
+        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
         public PointD3D ScaleCopy(double sx, double sy, double sz)
         {
             return new PointD3D(_X * sx, _Y * sy, _Z * sz);
@@ -711,12 +828,94 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD3D 结构绕 X 轴旋转指定的角度。
+        /// 将此 PointD3D 结构的指定的基向量方向的分量翻转。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
-        public void RotateX(double angle)
+        /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
+        public void Reflect(int index)
         {
-            Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
+            switch (index)
+            {
+                case 0: _X = -_X; break;
+                case 1: _Y = -_Y; break;
+                case 2: _Z = -_Z; break;
+            }
+        }
+
+        /// <summary>
+        /// 将此 PointD3D 结构在 X 轴的分量翻转。
+        /// </summary>
+        public void ReflectX()
+        {
+            _X = -_X;
+        }
+
+        /// <summary>
+        /// 将此 PointD3D 结构在 Y 轴的分量翻转。
+        /// </summary>
+        public void ReflectY()
+        {
+            _Y = -_Y;
+        }
+
+        /// <summary>
+        /// 将此 PointD3D 结构在 Z 轴的分量翻转。
+        /// </summary>
+        public void ReflectZ()
+        {
+            _Z = -_Z;
+        }
+
+        /// <summary>
+        /// 返回将此 PointD3D 结构的副本的由指定的基向量方向的分量翻转的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
+        public PointD3D ReflectCopy(int index)
+        {
+            switch (index)
+            {
+                case 0: return new PointD3D(-_X, _Y, _Z);
+                case 1: return new PointD3D(_X, -_Y, _Z);
+                case 2: return new PointD3D(_X, _Y, -_Z);
+            }
+
+            return NaN;
+        }
+
+        /// <summary>
+        /// 返回将此 PointD3D 结构的副本在 X 轴的分量翻转的新实例。
+        /// </summary>
+        public PointD3D ReflectXCopy()
+        {
+            return new PointD3D(-_X, _Y, _Z);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD3D 结构的副本在 Y 轴的分量翻转的新实例。
+        /// </summary>
+        public PointD3D ReflectYCopy()
+        {
+            return new PointD3D(_X, -_Y, _Z);
+        }
+
+        /// <summary>
+        /// 返回将此 PointD3D 结构的副本在 Z 轴的分量翻转的新实例。
+        /// </summary>
+        public PointD3D ReflectZCopy()
+        {
+            return new PointD3D(_X, _Y, -_Z);
+        }
+
+        //
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构剪切指定的角度。
+        /// </summary>
+        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        public void Shear(int index1, int index2, double angle)
+        {
+            Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
             if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
             {
@@ -724,6 +923,161 @@ namespace Com
                 _Y = result[1];
                 _Z = result[2];
             }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +X 轴剪切指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴剪切的角度（弧度）。</param>
+        public void ShearXY(double angle)
+        {
+            Shear(0, 1, angle);
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +Y 轴剪切指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴剪切的角度（弧度）。</param>
+        public void ShearYX(double angle)
+        {
+            Shear(1, 0, angle);
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Y 轴剪切指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴剪切的角度（弧度）。</param>
+        public void ShearYZ(double angle)
+        {
+            Shear(1, 2, angle);
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Z 轴剪切指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴剪切的角度（弧度）。</param>
+        public void ShearZY(double angle)
+        {
+            Shear(2, 1, angle);
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +Z 轴剪切指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴剪切的角度（弧度）。</param>
+        public void ShearZX(double angle)
+        {
+            Shear(2, 0, angle);
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +X 轴剪切指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴剪切的角度（弧度）。</param>
+        public void ShearXZ(double angle)
+        {
+            Shear(0, 2, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本剪切指定的角度的新实例。
+        /// </summary>
+        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        public PointD3D ShearCopy(int index1, int index2, double angle)
+        {
+            Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
+
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
+            {
+                return new PointD3D(result[0], result[1], result[2]);
+            }
+
+            return NaN;
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本在 XY 平面向 +X 轴剪切指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本在 XY 平面向 +X 轴剪切的角度（弧度）。</param>
+        public PointD3D ShearXYCopy(double angle)
+        {
+            return ShearCopy(0, 1, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本在 XY 平面向 +Y 轴剪切指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本在 XY 平面向 +Y 轴剪切的角度（弧度）。</param>
+        public PointD3D ShearYXCopy(double angle)
+        {
+            return ShearCopy(1, 0, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本在 YZ 平面向 +Y 轴剪切指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本在 YZ 平面向 +Y 轴剪切的角度（弧度）。</param>
+        public PointD3D ShearYZCopy(double angle)
+        {
+            return ShearCopy(1, 2, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本在 YZ 平面向 +Z 轴剪切指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本在 YZ 平面向 +Z 轴剪切的角度（弧度）。</param>
+        public PointD3D ShearZYCopy(double angle)
+        {
+            return ShearCopy(2, 1, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本在 ZX 平面向 +Z 轴剪切指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本在 ZX 平面向 +Z 轴剪切的角度（弧度）。</param>
+        public PointD3D ShearZXCopy(double angle)
+        {
+            return ShearCopy(2, 0, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本在 ZX 平面向 +X 轴剪切指定的角度的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本在 ZX 平面向 +X 轴剪切的角度（弧度）。</param>
+        public PointD3D ShearXZCopy(double angle)
+        {
+            return ShearCopy(0, 2, angle);
+        }
+
+        //
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构旋转指定的角度。
+        /// </summary>
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public void Rotate(int index1, int index2, double angle)
+        {
+            Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
+
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
+            {
+                _X = result[0];
+                _Y = result[1];
+                _Z = result[2];
+            }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构绕 X 轴旋转指定的角度。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
+        public void RotateX(double angle)
+        {
+            Rotate(1, 2, angle);
         }
 
         /// <summary>
@@ -732,14 +1086,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public void RotateY(double angle)
         {
-            Vector result = ToVectorColumn().RotateCopy(2, 0, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-            }
+            Rotate(2, 0, angle);
         }
 
         /// <summary>
@@ -748,62 +1095,52 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void RotateZ(double angle)
         {
-            Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
+            Rotate(0, 1, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本旋转指定的角度的新实例。
+        /// </summary>
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public PointD3D RotateCopy(int index1, int index2, double angle)
+        {
+            Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
             if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
             {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
+                return new PointD3D(result[0], result[1], result[2]);
             }
+
+            return NaN;
         }
 
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本绕 X 轴旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public PointD3D RotateXCopy(double angle)
         {
-            Vector result = ToVectorColumn().RotateCopy(1, 2, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
-            {
-                return new PointD3D(result[0], result[1], result[2]);
-            }
-
-            return NaN;
+            return RotateCopy(1, 2, angle);
         }
 
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本绕 Y 轴旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public PointD3D RotateYCopy(double angle)
         {
-            Vector result = ToVectorColumn().RotateCopy(2, 0, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
-            {
-                return new PointD3D(result[0], result[1], result[2]);
-            }
-
-            return NaN;
+            return RotateCopy(2, 0, angle);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本绕 Z 轴旋转指定的角度的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构的副本的副本绕 Z 轴旋转指定的角度的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构的副本绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public PointD3D RotateZCopy(double angle)
         {
-            Vector result = ToVectorColumn().RotateCopy(0, 1, angle);
-
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
-            {
-                return new PointD3D(result[0], result[1], result[2]);
-            }
-
-            return NaN;
+            return RotateCopy(0, 1, angle);
         }
 
         //
@@ -827,7 +1164,7 @@ namespace Com
                     { offset._X, offset._Y, offset._Z, 1 }
                 });
 
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -846,7 +1183,7 @@ namespace Com
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -865,7 +1202,7 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -895,7 +1232,7 @@ namespace Com
                     { offset._X, offset._Y, offset._Z, 1 }
                 });
 
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -914,7 +1251,7 @@ namespace Com
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -933,7 +1270,7 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Vector result = ToVectorColumn().AffineTransformCopy(matrixLeftList);
+                Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -963,7 +1300,7 @@ namespace Com
                     { offset._X, offset._Y, offset._Z, 1 }
                 });
 
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -982,7 +1319,7 @@ namespace Com
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -1001,7 +1338,7 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -1031,7 +1368,7 @@ namespace Com
                     { offset._X, offset._Y, offset._Z, 1 }
                 });
 
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -1050,7 +1387,7 @@ namespace Com
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
             {
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeft);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -1069,7 +1406,7 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                Vector result = ToVectorColumn().InverseAffineTransformCopy(matrixLeftList);
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
                 if (!Vector.IsNullOrEmpty(result) && result.Dimension == 3)
                 {
@@ -1175,63 +1512,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回此 PointD3D 结构与指定的 PointD3D 结构之间的距离。
-        /// </summary>
-        /// <param name="pt">PointD3D 结构，表示起始点。</param>
-        public double DistanceFrom(PointD3D pt)
-        {
-            if ((object)pt != null)
-            {
-                double dx = _X - pt._X, dy = _Y - pt._Y, dz = _Z - pt._Z;
-
-                return Math.Sqrt(dx * dx + dy * dy + dz * dz);
-            }
-
-            return double.NaN;
-        }
-
-        /// <summary>
-        /// 返回此 PointD3D 结构表示的向量与指定的 PointD3D 结构表示的向量之间的夹角（弧度）。
-        /// </summary>
-        /// <param name="pt">PointD3D 结构，表示起始向量。</param>
-        public double AngleFrom(PointD3D pt)
-        {
-            if ((object)pt != null)
-            {
-                if (IsZero || pt.IsZero)
-                {
-                    return 0;
-                }
-
-                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z;
-
-                return Math.Acos(DotProduct / VectorModule / pt.VectorModule);
-            }
-
-            return double.NaN;
-        }
-
-        //
-
-        /// <summary>
-        /// 返回将此 PointD3D 结构表示的直角坐标系坐标转换为球坐标系坐标的新实例。
-        /// </summary>
-        public PointD3D ToSpherical()
-        {
-            return new PointD3D(VectorModule, VectorAngleZ, VectorAngleXY);
-        }
-
-        /// <summary>
-        /// 返回将此 PointD3D 结构表示的球坐标系坐标转换为直角坐标系坐标的新实例。
-        /// </summary>
-        public PointD3D ToCartesian()
-        {
-            return new PointD3D(_X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z), _X * Math.Cos(_Y));
-        }
-
-        //
-
-        /// <summary>
         /// 返回将此 PointD3D 结构转换为向量（列向量）的 Vector 的新实例。
         /// </summary>
         public Vector ToVector()
@@ -1242,7 +1522,7 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD3D 结构转换为列向量的 Vector 的新实例。
         /// </summary>
-        public Vector ToVectorColumn()
+        public Vector ToColumnVector()
         {
             return new Vector(Vector.Type.ColumnVector, _X, _Y, _Z);
         }
@@ -1250,19 +1530,9 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD3D 结构转换为行向量的 Vector 的新实例。
         /// </summary>
-        public Vector ToVectorRow()
+        public Vector ToRowVector()
         {
             return new Vector(Vector.Type.RowVector, _X, _Y, _Z);
-        }
-
-        //
-
-        /// <summary>
-        /// 将此 PointD3D 结构转换为双精度浮点数数组。
-        /// </summary>
-        public double[] ToArray()
-        {
-            return new double[3] { _X, _Y, _Z };
         }
 
         #endregion
@@ -1305,20 +1575,20 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标偏移量将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回按双精度浮点数表示的位移将 PointD3D 结构的所有分量平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="d">双精度浮点数表示的所有坐标偏移量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
         public static Matrix OffsetMatrix(double d)
         {
             return Vector.OffsetMatrix(Vector.Type.ColumnVector, 3, d);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标偏移量、Y 坐标偏移量与 Z 坐标偏移量将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回按双精度浮点数表示的 X 坐标位移、Y 坐标位移与 Z 坐标位移将 PointD3D 结构平移指定的量的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="dx">双精度浮点数表示的 X 坐标偏移量。</param>
-        /// <param name="dy">双精度浮点数表示的 Y 坐标偏移量。</param>
-        /// <param name="dz">双精度浮点数表示的 Z 坐标偏移量。</param>
+        /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
+        /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
+        /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
         public static Matrix OffsetMatrix(double dx, double dy, double dz)
         {
             return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, dx, dy, dz));
@@ -1332,7 +1602,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(pt.ToVectorColumn());
+                return Vector.OffsetMatrix(pt.ToColumnVector());
             }
 
             return Matrix.Empty;
@@ -1341,20 +1611,20 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的所有坐标缩放因子将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回按双精度浮点数表示的缩放因数将 PointD3D 结构的所有分量缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="s">双精度浮点数表示的所有坐标缩放因子。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
         public static Matrix ScaleMatrix(double s)
         {
             return Vector.ScaleMatrix(Vector.Type.ColumnVector, 3, s);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的 X 坐标缩放因子、Y 坐标缩放因子与 Z 坐标缩放因子将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回按双精度浮点数表示的 X 坐标缩放因数、Y 坐标缩放因数与 Z 坐标缩放因数将 PointD3D 结构缩放指定的倍数的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因子。</param>
-        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因子。</param>
-        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因子。</param>
+        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
+        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
+        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
         public static Matrix ScaleMatrix(double sx, double sy, double sz)
         {
             return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sx, sy, sz));
@@ -1368,7 +1638,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(pt.ToVectorColumn());
+                return Vector.ScaleMatrix(pt.ToColumnVector());
             }
 
             return Matrix.Empty;
@@ -1377,12 +1647,125 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回表示用于翻转 PointD3D 结构的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
+        public static Matrix ReflectMatrix(int index)
+        {
+            return Vector.ReflectMatrix(Vector.Type.ColumnVector, 3, index);
+        }
+
+        /// <summary>
+        /// 返回将 PointD3D 结构在 X 轴的分量翻转的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        public static Matrix ReflectXMatrix()
+        {
+            return ReflectMatrix(0);
+        }
+
+        /// <summary>
+        /// 返回将 PointD3D 结构在 Y 轴的分量翻转的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        public static Matrix ReflectYMatrix()
+        {
+            return ReflectMatrix(1);
+        }
+
+        /// <summary>
+        /// 返回将 PointD3D 结构在 Z 轴的分量翻转的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        public static Matrix ReflectZMatrix()
+        {
+            return ReflectMatrix(2);
+        }
+
+        //
+
+        /// <summary>
+        /// 返回表示用于剪切 PointD3D 结构的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public static Matrix ShearMatrix(int index1, int index2, double angle)
+        {
+            return Vector.ShearMatrix(Vector.Type.ColumnVector, 3, index1, index2, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +X 轴剪切指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴剪切的角度（弧度）。</param>
+        public static Matrix ShearXYMatrix(double angle)
+        {
+            return ShearMatrix(0, 1, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +Y 轴剪切指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴剪切的角度（弧度）。</param>
+        public static Matrix ShearYXMatrix(double angle)
+        {
+            return ShearMatrix(1, 0, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Y 轴剪切指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴剪切的角度（弧度）。</param>
+        public static Matrix ShearYZMatrix(double angle)
+        {
+            return ShearMatrix(1, 2, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Z 轴剪切指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴剪切的角度（弧度）。</param>
+        public static Matrix ShearZYMatrix(double angle)
+        {
+            return ShearMatrix(2, 1, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +Z 轴剪切指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴剪切的角度（弧度）。</param>
+        public static Matrix ShearZXMatrix(double angle)
+        {
+            return ShearMatrix(2, 0, angle);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +X 轴剪切指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴剪切的角度（弧度）。</param>
+        public static Matrix ShearXZMatrix(double angle)
+        {
+            return ShearMatrix(0, 2, angle);
+        }
+
+        //
+
+        /// <summary>
+        /// 返回表示用于旋转 PointD3D 结构的仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        public static Matrix RotateMatrix(int index1, int index2, double angle)
+        {
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, 3, index1, index2, angle);
+        }
+
+        /// <summary>
         /// 返回按双精度浮点数表示的弧度将 PointD3D 结构绕 X 轴旋转指定的角度的仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public static Matrix RotateXMatrix(double angle)
         {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 3, 1, 2, angle);
+            return RotateMatrix(1, 2, angle);
         }
 
         /// <summary>
@@ -1391,7 +1774,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public static Matrix RotateYMatrix(double angle)
         {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 3, 2, 0, angle);
+            return RotateMatrix(2, 0, angle);
         }
 
         /// <summary>
@@ -1400,7 +1783,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public static Matrix RotateZMatrix(double angle)
         {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 3, 0, 1, angle);
+            return RotateMatrix(0, 1, angle);
         }
 
         //
@@ -1438,7 +1821,7 @@ namespace Com
 
                 double DotProduct = left._X * right._X + left._Y * right._Y + left._Z * right._Z;
 
-                return Math.Acos(DotProduct / left.VectorModule / right.VectorModule);
+                return Math.Acos(DotProduct / left.Module / right.Module);
             }
 
             return double.NaN;
@@ -1654,7 +2037,7 @@ namespace Com
                 return false;
             }
 
-            return (left.VectorModuleSquared < right.VectorModuleSquared);
+            return (left.ModuleSquared < right.ModuleSquared);
         }
 
         /// <summary>
@@ -1669,7 +2052,7 @@ namespace Com
                 return false;
             }
 
-            return (left.VectorModuleSquared > right.VectorModuleSquared);
+            return (left.ModuleSquared > right.ModuleSquared);
         }
 
         /// <summary>
@@ -1684,7 +2067,7 @@ namespace Com
                 return false;
             }
 
-            return (left.VectorModuleSquared <= right.VectorModuleSquared);
+            return (left.ModuleSquared <= right.ModuleSquared);
         }
 
         /// <summary>
@@ -1699,7 +2082,7 @@ namespace Com
                 return false;
             }
 
-            return (left.VectorModuleSquared >= right.VectorModuleSquared);
+            return (left.ModuleSquared >= right.ModuleSquared);
         }
 
         //
@@ -1922,38 +2305,299 @@ namespace Com
 
         #endregion
 
-        #region 基类与接口
+        #region 显式接口成员实现
 
-        #region System.ValueType
+        #region Com.IVector<T>
 
-        /// <summary>
-        /// 判断此 PointD3D 结构是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
+        int IVector<double>.Size
         {
-            if (obj == null || !(obj is PointD3D))
+            get
+            {
+                return Dimension;
+            }
+
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        int IVector<double>.Capacity
+        {
+            get
+            {
+                return Dimension;
+            }
+        }
+
+        void IVector<double>.Trim()
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.IList
+
+        object IList.this[int index]
+        {
+            get
+            {
+                return this[index];
+            }
+
+            set
+            {
+                this[index] = (double)value;
+            }
+        }
+
+        int IList.Add(object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Clear()
+        {
+            this = default(PointD3D);
+        }
+
+        bool IList.Contains(object item)
+        {
+            if (item != null && item is double)
+            {
+                return Contains((double)item);
+            }
+
+            return false;
+        }
+
+        int IList.IndexOf(object item)
+        {
+            if (item != null && item is double)
+            {
+                return IndexOf((double)item);
+            }
+
+            return -1;
+        }
+
+        void IList.Insert(int index, object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Remove(object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.ICollection
+
+        int ICollection.Count
+        {
+            get
+            {
+                return Dimension;
+            }
+        }
+
+        object ICollection.SyncRoot
+        {
+            get
+            {
+                return this;
+            }
+        }
+
+        bool ICollection.IsSynchronized
+        {
+            get
             {
                 return false;
             }
-
-            return Equals((PointD3D)obj);
         }
 
-        /// <summary>
-        /// 返回此 PointD3D 结构的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
+        void ICollection.CopyTo(Array array, int index)
         {
-            return base.GetHashCode();
+            if (array != null && array.Rank == 1 && array.Length >= Dimension)
+            {
+                ToArray().CopyTo(array, index);
+            }
         }
 
-        /// <summary>
-        /// 将此 PointD3D 结构转换为字符串。
-        /// </summary>
-        public override string ToString()
+        #endregion
+
+        #region System.Collections.IEnumerable
+
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return string.Concat("{X=", _X, ", Y=", _Y, ", Z=", _Z, "}");
+            return new Enumerator(this);
+        }
+
+        private sealed class Enumerator : IEnumerator // 实现 System.Collections.IEnumerator 的迭代器。
+        {
+            private PointD3D _Pt;
+            private int _Index = -1;
+
+            internal Enumerator(PointD3D pt)
+            {
+                _Pt = pt;
+            }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    {
+                        return _Pt[_Index];
+                    }
+
+                    return null;
+                }
+            }
+
+            bool IEnumerator.MoveNext()
+            {
+                if (_Index < _Pt.Dimension - 1)
+                {
+                    _Index++;
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            void IEnumerator.Reset()
+            {
+                _Index = -1;
+            }
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.IList<T>
+
+        void IList<double>.Insert(int index, double item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList<double>.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.ICollection<T>
+
+        int ICollection<double>.Count
+        {
+            get
+            {
+                return Dimension;
+            }
+        }
+
+        void ICollection<double>.Add(double item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void ICollection<double>.Clear()
+        {
+            this = default(PointD3D);
+        }
+
+        void ICollection<double>.CopyTo(double[] array, int index)
+        {
+            if (array != null && array.Length >= Dimension)
+            {
+                ToArray().CopyTo(array, index);
+            }
+        }
+
+        bool ICollection<double>.Remove(double item)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.IEnumerable<out T>
+
+        IEnumerator<double> IEnumerable<double>.GetEnumerator()
+        {
+            return new GenericEnumerator(this);
+        }
+
+        private sealed class GenericEnumerator : IEnumerator<double> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
+        {
+            private PointD3D _Pt;
+            private int _Index = -1;
+
+            internal GenericEnumerator(PointD3D pt)
+            {
+                _Pt = pt;
+            }
+
+            void IDisposable.Dispose()
+            {
+
+            }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    {
+                        return _Pt[_Index];
+                    }
+
+                    return null;
+                }
+            }
+
+            bool IEnumerator.MoveNext()
+            {
+                if (_Index < _Pt.Dimension - 1)
+                {
+                    _Index++;
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            void IEnumerator.Reset()
+            {
+                _Index = -1;
+            }
+
+            double IEnumerator<double>.Current
+            {
+                get
+                {
+                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    {
+                        return _Pt[_Index];
+                    }
+
+                    return double.NaN;
+                }
+            }
         }
 
         #endregion

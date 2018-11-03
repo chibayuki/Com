@@ -23,7 +23,7 @@ namespace Com
     /// <summary>
     /// 以双精度浮点数在 RGB、HSV、HSL、CMYK、LAB 等色彩空间中表示的颜色。
     /// </summary>
-    public struct ColorX
+    public struct ColorX : IEquatable<ColorX>
     {
         #region 私有与内部成员
 
@@ -1654,6 +1654,49 @@ namespace Com
         #region 方法
 
         /// <summary>
+        /// 判断此 ColorX 结构是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is ColorX))
+            {
+                return false;
+            }
+
+            return Equals((ColorX)obj);
+        }
+
+        /// <summary>
+        /// 返回此 ColorX 结构的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 ColorX 结构转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = string.Empty;
+
+            if (IsEmpty)
+            {
+                Str = "Empty";
+            }
+            else
+            {
+                Str = string.Concat("A=", Alpha, ", R=", Red, ", G=", Green, ", B=", Blue);
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
+        }
+
+        //
+
+        /// <summary>
         /// 判断此 ColorX 结构是否与指定的 ColorX 结构相等。
         /// </summary>
         /// <param name="color">用于比较的 ColorX 结构。</param>
@@ -2383,55 +2426,6 @@ namespace Com
 
             return ((int)Math.Round(left.Alpha) != (int)Math.Round(right.Alpha) || ((int)Math.Round(left.Red) != (int)Math.Round(right.Red) || (int)Math.Round(left.Green) != (int)Math.Round(right.Green) || (int)Math.Round(left.Blue) != (int)Math.Round(right.Blue)));
         }
-
-        #endregion
-
-        #region 基类与接口
-
-        #region System.ValueType
-
-        /// <summary>
-        /// 判断此 ColorX 结构是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is ColorX))
-            {
-                return false;
-            }
-
-            return Equals((ColorX)obj);
-        }
-
-        /// <summary>
-        /// 返回此 ColorX 结构的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 ColorX 结构转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            string Str = string.Empty;
-
-            if (IsEmpty)
-            {
-                Str = "Empty";
-            }
-            else
-            {
-                Str = string.Concat("A=", Alpha, ", R=", Red, ", G=", Green, ", B=", Blue);
-            }
-
-            return string.Concat(base.GetType().Name, " [", Str, "]");
-        }
-
-        #endregion
 
         #endregion
     }

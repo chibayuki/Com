@@ -20,7 +20,7 @@ namespace Com
     /// <summary>
     /// 以一组有序的双精度浮点数表示的直角坐标形式的二元复数。
     /// </summary>
-    public struct Complex
+    public struct Complex : IEquatable<Complex>
     {
         #region 私有与内部成员
 
@@ -221,7 +221,7 @@ namespace Com
         {
             get
             {
-                return Math.Sqrt(_Real * _Real + _Image * _Image);
+                return Math.Sqrt(ModuleSquared);
             }
         }
 
@@ -281,6 +281,89 @@ namespace Com
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 判断此 Complex 结构是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Complex))
+            {
+                return false;
+            }
+
+            return Equals((Complex)obj);
+        }
+
+        /// <summary>
+        /// 返回此 Complex 结构的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 Complex 结构转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            if (IsNaN)
+            {
+                return "NaN";
+            }
+            else if (IsInfinity)
+            {
+                return "Infinity";
+            }
+            else
+            {
+                if (_Image == 0)
+                {
+                    return _Real.ToString();
+                }
+                else
+                {
+                    if (_Real == 0)
+                    {
+                        if (_Image == 1)
+                        {
+                            return "i";
+                        }
+                        else if (_Image == -1)
+                        {
+                            return "-i";
+                        }
+                        else
+                        {
+                            return string.Concat(_Image, " i");
+                        }
+                    }
+                    else
+                    {
+                        if (_Image == 1)
+                        {
+                            return string.Concat(_Real, " + i");
+                        }
+                        else if (_Image == -1)
+                        {
+                            return string.Concat(_Real, " - i");
+                        }
+                        else if (_Image > 0)
+                        {
+                            return string.Concat(_Real, " + ", _Image, " i");
+                        }
+                        else
+                        {
+                            return string.Concat(_Real, " - ", (-_Image), " i");
+                        }
+                    }
+                }
+            }
+        }
+
+        //
 
         /// <summary>
         /// 判断此 Complex 结构是否与指定的 Complex 结构相等。
@@ -970,95 +1053,6 @@ namespace Com
 
             return NaN;
         }
-
-        #endregion
-
-        #region 基类与接口
-
-        #region System.ValueType
-
-        /// <summary>
-        /// 判断此 Complex 结构是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is Complex))
-            {
-                return false;
-            }
-
-            return Equals((Complex)obj);
-        }
-
-        /// <summary>
-        /// 返回此 Complex 结构的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 Complex 结构转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            if (IsNaN)
-            {
-                return "NaN";
-            }
-            else if (IsInfinity)
-            {
-                return "Infinity";
-            }
-            else
-            {
-                if (_Image == 0)
-                {
-                    return _Real.ToString();
-                }
-                else
-                {
-                    if (_Real == 0)
-                    {
-                        if (_Image == 1)
-                        {
-                            return "i";
-                        }
-                        else if (_Image == -1)
-                        {
-                            return "-i";
-                        }
-                        else
-                        {
-                            return string.Concat(_Image, " i");
-                        }
-                    }
-                    else
-                    {
-                        if (_Image == 1)
-                        {
-                            return string.Concat(_Real, " + i");
-                        }
-                        else if (_Image == -1)
-                        {
-                            return string.Concat(_Real, " - i");
-                        }
-                        else if (_Image > 0)
-                        {
-                            return string.Concat(_Real, " + ", _Image, " i");
-                        }
-                        else
-                        {
-                            return string.Concat(_Real, " - ", (-_Image), " i");
-                        }
-                    }
-                }
-            }
-        }
-
-        #endregion
 
         #endregion
     }

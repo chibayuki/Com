@@ -20,7 +20,7 @@ namespace Com
     /// <summary>
     /// 以日期与当天的时间表示一个时刻。
     /// </summary>
-    public struct DateTimeX
+    public struct DateTimeX : IEquatable<DateTimeX>
     {
         #region 私有与内部成员
 
@@ -1512,6 +1512,38 @@ namespace Com
         #region 方法
 
         /// <summary>
+        /// 判断此 DateTimeX 结构是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is DateTimeX))
+            {
+                return false;
+            }
+
+            return Equals((DateTimeX)obj);
+        }
+
+        /// <summary>
+        /// 返回此 DateTimeX 结构的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 DateTimeX 结构转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            return string.Concat((Year < 0 ? string.Concat("BC", (-Year)) : Year.ToString()), "/", Month, "/", Day, " ", Hour, ":", Minute.ToString("D2"), ":", Second.ToString("D2"));
+        }
+
+        //
+
+        /// <summary>
         /// 判断此 DateTimeX 结构是否与指定的 DateTimeX 结构相等。
         /// </summary>
         /// <param name="dateTime">用于比较的 DateTimeX 结构。</param>
@@ -2153,44 +2185,6 @@ namespace Com
         {
             return dateTime.AddMilliseconds(-(timeSpan.TotalMilliseconds));
         }
-
-        #endregion
-
-        #region 基类与接口
-
-        #region System.ValueType
-
-        /// <summary>
-        /// 判断此 DateTimeX 结构是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is DateTimeX))
-            {
-                return false;
-            }
-
-            return Equals((DateTimeX)obj);
-        }
-
-        /// <summary>
-        /// 返回此 DateTimeX 结构的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 DateTimeX 结构转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            return string.Concat((Year < 0 ? string.Concat("BC", (-Year)) : Year.ToString()), "/", Month, "/", Day, " ", Hour, ":", Minute.ToString("D2"), ":", Second.ToString("D2"));
-        }
-
-        #endregion
 
         #endregion
     }

@@ -20,7 +20,7 @@ namespace Com
     /// <summary>
     /// 以数组的形式管理位值的集合，位值 1 与 0 分别以布尔值 true 与 false 表示。
     /// </summary>
-    public sealed class BitSet
+    public sealed class BitSet : IEquatable<BitSet>
     {
         #region 私有与内部成员
 
@@ -83,7 +83,7 @@ namespace Com
             else
             {
                 _Size = 0;
-                _UintArray = null;
+                _UintArray = new uint[0];
             }
         }
 
@@ -117,7 +117,7 @@ namespace Com
             else
             {
                 _Size = 0;
-                _UintArray = null;
+                _UintArray = new uint[0];
             }
         }
 
@@ -143,7 +143,7 @@ namespace Com
             else
             {
                 _Size = 0;
-                _UintArray = null;
+                _UintArray = new uint[0];
             }
         }
 
@@ -169,7 +169,7 @@ namespace Com
             else
             {
                 _Size = 0;
-                _UintArray = null;
+                _UintArray = new uint[0];
             }
         }
 
@@ -271,7 +271,7 @@ namespace Com
                 else
                 {
                     _Size = 0;
-                    _UintArray = null;
+                    _UintArray = new uint[0];
                 }
             }
         }
@@ -280,17 +280,6 @@ namespace Com
         /// 获取此 BitSet 包含的元素数量。
         /// </summary>
         public int Count
-        {
-            get
-            {
-                return Size;
-            }
-        }
-
-        /// <summary>
-        /// 获取此 BitSet 包含的元素数量。
-        /// </summary>
-        public int Length
         {
             get
             {
@@ -332,6 +321,49 @@ namespace Com
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 判断此 BitSet 是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is BitSet))
+            {
+                return false;
+            }
+
+            return Equals((BitSet)obj);
+        }
+
+        /// <summary>
+        /// 返回此 BitSet 的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 BitSet 转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = string.Empty;
+
+            if (_Size > 0)
+            {
+                Str = string.Concat("Count=", _Size);
+            }
+            else
+            {
+                Str = "Empty";
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
+        }
+
+        //
 
         /// <summary>
         /// 判断此 BitSet 是否与指定的 BitSet 对象相等。
@@ -939,55 +971,6 @@ namespace Com
 
             return false;
         }
-
-        #endregion
-
-        #region 基类与接口
-
-        #region System.Object
-
-        /// <summary>
-        /// 判断此 BitSet 是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is BitSet))
-            {
-                return false;
-            }
-
-            return Equals((BitSet)obj);
-        }
-
-        /// <summary>
-        /// 返回此 BitSet 的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 BitSet 转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            string Str = string.Empty;
-
-            if (_Size > 0)
-            {
-                Str = string.Concat("Count=", _Size);
-            }
-            else
-            {
-                Str = "Empty";
-            }
-
-            return string.Concat(base.GetType().Name, " [", Str, "]");
-        }
-
-        #endregion
 
         #endregion
     }
