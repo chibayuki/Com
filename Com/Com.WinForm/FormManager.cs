@@ -24,7 +24,7 @@ namespace Com.WinForm
     /// <summary>
     /// 窗口管理器。
     /// </summary>
-    public sealed class FormManager
+    public sealed class FormManager : IEquatable<FormManager>
     {
         #region 私有与内部成员
 
@@ -905,7 +905,7 @@ namespace Com.WinForm
                 if (_Effect.HasFlag(Effect.SmoothShift))
                 {
                     int MaxLTRB = Math.Max(1, Math.Max(Math.Abs(bounds.Left - Bounds_Current.Left), Math.Max(Math.Abs(bounds.Top - Bounds_Current.Top), Math.Max(Math.Abs(bounds.Right - Bounds_Current.Right), Math.Abs(bounds.Bottom - Bounds_Current.Bottom)))));
-                    int Delta = Math.Min(MaxLTRB, (int)(new PointD(PrimaryScreenBounds.Size).VectorModule / 40.96));
+                    int Delta = Math.Min(MaxLTRB, (int)(new PointD(PrimaryScreenBounds.Size).Module / 40.96));
 
                     Rectangle oldBounds = Rectangle.FromLTRB(bounds.Left - (bounds.Left - Bounds_Current.Left) * Delta / MaxLTRB, bounds.Top - (bounds.Top - Bounds_Current.Top) * Delta / MaxLTRB, bounds.Right - (bounds.Right - Bounds_Current.Right) * Delta / MaxLTRB, bounds.Bottom - (bounds.Bottom - Bounds_Current.Bottom) * Delta / MaxLTRB);
 
@@ -4119,6 +4119,45 @@ namespace Com.WinForm
         #region 方法
 
         /// <summary>
+        /// 判断此 FormManager 对象是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is FormManager))
+            {
+                return false;
+            }
+
+            return Equals((FormManager)obj);
+        }
+
+        /// <summary>
+        /// 返回此 FormManager 对象的哈希代码。
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 FormManager 对象转换为字符串。
+        /// </summary>
+        public override string ToString()
+        {
+            string Str = base.ToString();
+
+            if (!string.IsNullOrEmpty(_Caption))
+            {
+                return string.Concat(Str, ", Caption: ", _Caption);
+            }
+
+            return Str;
+        }
+
+        //
+
+        /// <summary>
         /// 判断此 FormManager 对象是否与指定的 FormManager 对象相等。
         /// </summary>
         /// <param name="formManager">用于比较的 FormManager 对象。</param>
@@ -4682,51 +4721,6 @@ namespace Com.WinForm
 
             return !left.Equals(right);
         }
-
-        #endregion
-
-        #region 基类与接口
-
-        #region System.Object
-
-        /// <summary>
-        /// 判断此 FormManager 对象是否与指定的对象相等。
-        /// </summary>
-        /// <param name="obj">用于比较的对象。</param>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || !(obj is FormManager))
-            {
-                return false;
-            }
-
-            return Equals((FormManager)obj);
-        }
-
-        /// <summary>
-        /// 返回此 FormManager 对象的哈希代码。
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        /// <summary>
-        /// 将此 FormManager 对象转换为字符串。
-        /// </summary>
-        public override string ToString()
-        {
-            string Str = base.ToString();
-
-            if (!string.IsNullOrEmpty(_Caption))
-            {
-                return string.Concat(Str, ", Caption: ", _Caption);
-            }
-
-            return Str;
-        }
-
-        #endregion
 
         #endregion
     }
