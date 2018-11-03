@@ -73,7 +73,11 @@
     <Compile Include="Com.WinForm\UpdateLayoutEventType.cs" />
     <Compile Include="Com\BitSet.cs" />
     <Compile Include="Com\ColorManipulation.cs" />
+    <Compile Include="Com\IAffine.cs" />
+    <Compile Include="Com\IEuclideanVector.cs" />
+    <Compile Include="Com\ILinearAlgebraVector.cs" />
     <Compile Include="Com\InternalMethod.cs" />
+    <Compile Include="Com\IVector.cs" />
     <Compile Include="Com\PointD5D.cs" />
     <Compile Include="Com\PointD6D.cs" />
     <Compile Include="Com\Vector.cs" />
