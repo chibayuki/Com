@@ -1,5 +1,5 @@
 # Com
-用于支持线性代数运算、位运算、大型日期时间、高精度非线性色彩处理、动画呈现、窗口管理等功能的DLL / DLL for supporting linear algebra, bit operation, large date-time, high precision nonlinear color processing, animation presentation, window management, etc.
+Com是通用组件，是用于支持线性代数运算、位运算、大型日期时间、高精度非线性色彩处理、动画呈现、窗口管理等功能的DLL / Com is a common component, which is a DLL for supporting linear algebra, bit operation, large date-time, high precision nonlinear color processing, animation presentation, window management, etc.
 
 ### 公开的类 / Public Class
 - Com.BitSet 管理位（Bit）的集合（至多2146434944位），提供基本的位运算功能 / Managing set of bits (up to 2147483520 bits) and providing basic bit operations.
