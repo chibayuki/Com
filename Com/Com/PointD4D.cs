@@ -1084,7 +1084,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[5, 5]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[5, 5]
                 {
                     { ex._X, ex._Y, ex._Z, ex._U, 0 },
                     { ey._X, ey._Y, ey._Z, ey._U, 0 },
@@ -1157,7 +1157,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[5, 5]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[5, 5]
                 {
                     { ex._X, ex._Y, ex._Z, ex._U, 0 },
                     { ey._X, ey._Y, ey._Z, ey._U, 0 },
@@ -1227,7 +1227,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[5, 5]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[5, 5]
                 {
                     { ex._X, ex._Y, ex._Z, ex._U, 0 },
                     { ey._X, ey._Y, ey._Z, ey._U, 0 },
@@ -1300,7 +1300,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)eu != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[5, 5]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[5, 5]
                 {
                     { ex._X, ex._Y, ex._Z, ex._U, 0 },
                     { ey._X, ey._Y, ey._Z, ey._U, 0 },
@@ -1483,19 +1483,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将此 PointD4D 结构转换为向量（列向量）的 Vector 的新实例。
-        /// </summary>
-        public Vector ToVector()
-        {
-            return new Vector(_X, _Y, _Z, _U);
-        }
-
-        /// <summary>
         /// 返回将此 PointD4D 结构转换为列向量的 Vector 的新实例。
         /// </summary>
         public Vector ToColumnVector()
         {
-            return new Vector(Vector.Type.ColumnVector, _X, _Y, _Z, _U);
+            return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, _X, _Y, _Z, _U);
         }
 
         /// <summary>
@@ -1503,7 +1495,7 @@ namespace Com
         /// </summary>
         public Vector ToRowVector()
         {
-            return new Vector(Vector.Type.RowVector, _X, _Y, _Z, _U);
+            return Vector.UnsafeCreateInstance(Vector.Type.RowVector, _X, _Y, _Z, _U);
         }
 
         #endregion
@@ -1563,7 +1555,7 @@ namespace Com
         /// <param name="du">双精度浮点数表示的 U 坐标位移。</param>
         public static Matrix OffsetMatrix(double dx, double dy, double dz, double du)
         {
-            return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, dx, dy, dz, du));
+            return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, dx, dy, dz, du));
         }
 
         /// <summary>
@@ -1600,7 +1592,7 @@ namespace Com
         /// <param name="su">双精度浮点数表示的 U 坐标缩放因数。</param>
         public static Matrix ScaleMatrix(double sx, double sy, double sz, double su)
         {
-            return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sx, sy, sz, su));
+            return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sx, sy, sz, su));
         }
 
         /// <summary>
@@ -1721,7 +1713,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Vector(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X, left._X * right._Z - left._Z * right._X, left._X * right._U - left._U * right._X, left._Y * right._Z - left._Z * right._Y, left._Y * right._U - left._U * right._Y, left._Z * right._U - left._U * right._Z);
+                return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X, left._X * right._Z - left._Z * right._X, left._X * right._U - left._U * right._X, left._Y * right._Z - left._Z * right._Y, left._Y * right._U - left._U * right._Y, left._Z * right._U - left._U * right._Z);
             }
 
             return Vector.Empty;

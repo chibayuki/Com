@@ -1156,7 +1156,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[4, 4]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[4, 4]
                 {
                     { ex._X, ex._Y, ex._Z, 0 },
                     { ey._X, ey._Y, ey._Z, 0 },
@@ -1224,7 +1224,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[4, 4]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[4, 4]
                 {
                     { ex._X, ex._Y, ex._Z, 0 },
                     { ey._X, ey._Y, ey._Z, 0 },
@@ -1292,7 +1292,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[4, 4]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[4, 4]
                 {
                     { ex._X, ex._Y, ex._Z, 0 },
                     { ey._X, ey._Y, ey._Z, 0 },
@@ -1360,7 +1360,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)ez != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[4, 4]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[4, 4]
                 {
                     { ex._X, ex._Y, ex._Z, 0 },
                     { ey._X, ey._Y, ey._Z, 0 },
@@ -1512,19 +1512,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将此 PointD3D 结构转换为向量（列向量）的 Vector 的新实例。
-        /// </summary>
-        public Vector ToVector()
-        {
-            return new Vector(_X, _Y, _Z);
-        }
-
-        /// <summary>
         /// 返回将此 PointD3D 结构转换为列向量的 Vector 的新实例。
         /// </summary>
         public Vector ToColumnVector()
         {
-            return new Vector(Vector.Type.ColumnVector, _X, _Y, _Z);
+            return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, _X, _Y, _Z);
         }
 
         /// <summary>
@@ -1532,7 +1524,7 @@ namespace Com
         /// </summary>
         public Vector ToRowVector()
         {
-            return new Vector(Vector.Type.RowVector, _X, _Y, _Z);
+            return Vector.UnsafeCreateInstance(Vector.Type.RowVector, _X, _Y, _Z);
         }
 
         #endregion
@@ -1591,7 +1583,7 @@ namespace Com
         /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
         public static Matrix OffsetMatrix(double dx, double dy, double dz)
         {
-            return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, dx, dy, dz));
+            return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, dx, dy, dz));
         }
 
         /// <summary>
@@ -1627,7 +1619,7 @@ namespace Com
         /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
         public static Matrix ScaleMatrix(double sx, double sy, double sz)
         {
-            return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sx, sy, sz));
+            return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sx, sy, sz));
         }
 
         /// <summary>

@@ -1214,7 +1214,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[3, 3]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
                 {
                     { ex._X, ex._Y, 0 },
                     { ey._X, ey._Y, 0 },
@@ -1277,7 +1277,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[3, 3]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
                 {
                     { ex._X, ex._Y, 0 },
                     { ey._X, ey._Y, 0 },
@@ -1343,7 +1343,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[3, 3]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
                 {
                     { ex._X, ex._Y, 0 },
                     { ey._X, ey._Y, 0 },
@@ -1406,7 +1406,7 @@ namespace Com
         {
             if ((object)ex != null && (object)ey != null && (object)offset != null)
             {
-                Matrix matrixLeft = new Matrix(new double[3, 3]
+                Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
                 {
                     { ex._X, ex._Y, 0 },
                     { ey._X, ey._Y, 0 },
@@ -1465,19 +1465,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回将此 PointD 结构转换为向量（列向量）的 Vector 的新实例。
-        /// </summary>
-        public Vector ToVector()
-        {
-            return new Vector(_X, _Y);
-        }
-
-        /// <summary>
         /// 返回将此 PointD 结构转换为列向量的 Vector 的新实例。
         /// </summary>
         public Vector ToColumnVector()
         {
-            return new Vector(Vector.Type.ColumnVector, _X, _Y);
+            return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, _X, _Y);
         }
 
         /// <summary>
@@ -1485,7 +1477,7 @@ namespace Com
         /// </summary>
         public Vector ToRowVector()
         {
-            return new Vector(Vector.Type.RowVector, _X, _Y);
+            return Vector.UnsafeCreateInstance(Vector.Type.RowVector, _X, _Y);
         }
 
         //
@@ -1669,7 +1661,7 @@ namespace Com
         /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
         public static Matrix OffsetMatrix(double dx, double dy)
         {
-            return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, dx, dy));
+            return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, dx, dy));
         }
 
         /// <summary>
@@ -1694,7 +1686,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, pt.X, pt.Y));
+                return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, pt.X, pt.Y));
             }
 
             return Matrix.Empty;
@@ -1708,7 +1700,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, pt.X, pt.Y));
+                return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, pt.X, pt.Y));
             }
 
             return Matrix.Empty;
@@ -1722,7 +1714,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, sz.Width, sz.Height));
+                return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sz.Width, sz.Height));
             }
 
             return Matrix.Empty;
@@ -1736,7 +1728,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return Vector.OffsetMatrix(new Vector(Vector.Type.ColumnVector, sz.Width, sz.Height));
+                return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sz.Width, sz.Height));
             }
 
             return Matrix.Empty;
@@ -1760,7 +1752,7 @@ namespace Com
         /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
         public static Matrix ScaleMatrix(double sx, double sy)
         {
-            return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sx, sy));
+            return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sx, sy));
         }
 
         /// <summary>
@@ -1785,7 +1777,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, pt.X, pt.Y));
+                return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, pt.X, pt.Y));
             }
 
             return Matrix.Empty;
@@ -1799,7 +1791,7 @@ namespace Com
         {
             if ((object)pt != null)
             {
-                return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, pt.X, pt.Y));
+                return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, pt.X, pt.Y));
             }
 
             return Matrix.Empty;
@@ -1813,7 +1805,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sz.Width, sz.Height));
+                return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sz.Width, sz.Height));
             }
 
             return Matrix.Empty;
@@ -1827,7 +1819,7 @@ namespace Com
         {
             if ((object)sz != null)
             {
-                return Vector.ScaleMatrix(new Vector(Vector.Type.ColumnVector, sz.Width, sz.Height));
+                return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sz.Width, sz.Height));
             }
 
             return Matrix.Empty;
@@ -1914,7 +1906,7 @@ namespace Com
                 double CosA = Math.Cos(angle);
                 double SinA = Math.Sin(angle);
 
-                return new Matrix(new double[3, 3]
+                return Matrix.UnsafeCreateInstance(new double[3, 3]
                 {
                     { CosA, SinA, 0 },
                     { -SinA, CosA, 0 },
@@ -1992,7 +1984,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return new Vector(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X);
+                return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X);
             }
 
             return Vector.Empty;

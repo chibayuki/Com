@@ -38,7 +38,7 @@ namespace Com
 
         internal static Matrix UnsafeCreateInstance(double[,] values) // 以不安全方式创建 Matrix 的新实例。
         {
-            Matrix result = new Matrix();
+            Matrix result = Empty;
 
             if (!InternalMethod.IsNullOrEmpty(values))
             {
@@ -745,7 +745,7 @@ namespace Com
                     values[i] = _MArray[x, i];
                 }
 
-                return new Vector(Vector.Type.ColumnVector, values);
+                return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, values);
             }
 
             return Vector.Empty;
@@ -766,7 +766,7 @@ namespace Com
                     values[i] = _MArray[i, y];
                 }
 
-                return new Vector(Vector.Type.RowVector, values);
+                return Vector.UnsafeCreateInstance(Vector.Type.RowVector, values);
             }
 
             return Vector.Empty;

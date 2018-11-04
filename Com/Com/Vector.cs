@@ -70,7 +70,7 @@ namespace Com
 
                     values[0, _Size] = 1;
 
-                    return new Matrix(values);
+                    return Matrix.UnsafeCreateInstance(values);
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace Com
 
                     values[_Size, 0] = 1;
 
-                    return new Matrix(values);
+                    return Matrix.UnsafeCreateInstance(values);
                 }
             }
 
@@ -112,7 +112,7 @@ namespace Com
 
         internal static Vector UnsafeCreateInstance(Type type, params double[] values) // 以不安全方式创建 Vector 的新实例。
         {
-            Vector result = new Vector();
+            Vector result = Empty;
 
             result._Type = type;
 
@@ -795,7 +795,7 @@ namespace Com
                         values[0, i] = _VArray[i];
                     }
 
-                    return new Matrix(values);
+                    return Matrix.UnsafeCreateInstance(values);
                 }
                 else
                 {
@@ -806,7 +806,7 @@ namespace Com
                         values[i, 0] = _VArray[i];
                     }
 
-                    return new Matrix(values);
+                    return Matrix.UnsafeCreateInstance(values);
                 }
             }
 
