@@ -26,7 +26,7 @@ namespace Com.WinForm
     /// </summary>
     public sealed class FormManager : IEquatable<FormManager>
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         internal static Rectangle PrimaryScreenBounds // 获取主屏幕的边界。
         {

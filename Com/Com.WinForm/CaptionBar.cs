@@ -26,7 +26,7 @@ namespace Com.WinForm
 {
     internal partial class CaptionBar : Form // 标题栏。
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         private FormManager Me; // 窗口管理器。
 
