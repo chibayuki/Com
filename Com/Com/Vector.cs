@@ -108,9 +108,38 @@ namespace Com
             return Empty;
         }
 
+        //
+
+        internal static Vector UnsafeCreateInstance(Type type, params double[] values) // 以不安全方式创建 Vector 的新实例。
+        {
+            Vector result = new Vector();
+
+            result._Type = type;
+
+            if (!InternalMethod.IsNullOrEmpty(values))
+            {
+                int length = values.Length;
+
+                if (length <= _MaxSize)
+                {
+                    result._Size = length;
+                    result._VArray = values;
+                }
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region 构造函数
+
+        internal Vector() // 不使用任何参数初始化 Vector 的新实例。
+        {
+            _Type = Type.ColumnVector;
+            _Size = 0;
+            _VArray = new double[0];
+        }
 
         /// <summary>
         /// 使用双精度浮点数表示的各基向量方向的分量初始化 Vector 的新实例。
@@ -123,10 +152,20 @@ namespace Com
 
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = Math.Min(_MaxSize, values.Length);
-                _VArray = new double[_Size];
+                int length = values.Length;
 
-                Array.Copy(values, _VArray, values.Length);
+                if (length <= _MaxSize)
+                {
+                    _Size = length;
+                    _VArray = new double[_Size];
+
+                    Array.Copy(values, _VArray, _Size);
+                }
+                else
+                {
+                    _Size = 0;
+                    _VArray = new double[0];
+                }
             }
             else
             {
@@ -145,10 +184,20 @@ namespace Com
 
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = Math.Min(_MaxSize, values.Length);
-                _VArray = new double[_Size];
+                int length = values.Length;
 
-                Array.Copy(values, _VArray, values.Length);
+                if (length <= _MaxSize)
+                {
+                    _Size = length;
+                    _VArray = new double[_Size];
+
+                    Array.Copy(values, _VArray, _Size);
+                }
+                else
+                {
+                    _Size = 0;
+                    _VArray = new double[0];
+                }
             }
             else
             {
@@ -490,7 +539,7 @@ namespace Com
         {
             get
             {
-                return new Vector(null);
+                return new Vector();
             }
         }
 
@@ -1683,7 +1732,7 @@ namespace Com
                     return 0;
                 }
 
-                return AngleFrom(_VArray[index] >= 0 ? Basis(_Size, index) : Basis(_Size, index).Negate);
+                return AngleFrom(_VArray[index] >= 0 ? Base(_Size, index) : Base(_Size, index).Negate);
             }
 
             return double.NaN;
@@ -1783,7 +1832,7 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引。</param>
-        public static Vector Basis(Type type, int dimension, int index)
+        public static Vector Base(Type type, int dimension, int index)
         {
             if (dimension > 0 && (index >= 0 && index < dimension))
             {
@@ -1802,7 +1851,7 @@ namespace Com
         /// </summary>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引。</param>
-        public static Vector Basis(int dimension, int index)
+        public static Vector Base(int dimension, int index)
         {
             if (dimension > 0 && (index >= 0 && index < dimension))
             {
@@ -2749,7 +2798,7 @@ namespace Com
         {
             get
             {
-                return _Size;
+                return Dimension;
             }
 
             set
@@ -2762,7 +2811,7 @@ namespace Com
         {
             get
             {
-                return _Size;
+                return Dimension;
             }
         }
 
@@ -2847,7 +2896,7 @@ namespace Com
         {
             get
             {
-                return _Size;
+                return Dimension;
             }
         }
 

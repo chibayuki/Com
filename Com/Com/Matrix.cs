@@ -34,9 +34,36 @@ namespace Com
 
         private double[,] _MArray = null; // 用于存储矩阵元素的数组。
 
+        //
+
+        internal static Matrix UnsafeCreateInstance(double[,] values) // 以不安全方式创建 Matrix 的新实例。
+        {
+            Matrix result = new Matrix();
+
+            if (!InternalMethod.IsNullOrEmpty(values))
+            {
+                int width = values.GetLength(0);
+                int height = values.GetLength(1);
+
+                if ((long)width * height <= _MaxSize)
+                {
+                    result._Size = new Size(width, height);
+                    result._MArray = values;
+                }
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region 构造函数
+
+        internal Matrix() // 不使用任何参数初始化 Matrix 的新实例。
+        {
+            _Size = Size.Empty;
+            _MArray = new double[0, 0];
+        }
 
         /// <summary>
         /// 使用指定的宽度（列数）与高度（行数）初始化 Matrix 的新实例。
@@ -554,7 +581,7 @@ namespace Com
         {
             get
             {
-                return new Matrix(null);
+                return new Matrix();
             }
         }
 

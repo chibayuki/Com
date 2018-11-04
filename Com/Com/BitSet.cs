@@ -69,6 +69,12 @@ namespace Com
 
         #region 构造函数
 
+        internal BitSet() // 不使用任何参数初始化 BitSet 的新实例。
+        {
+            _Size = 0;
+            _UintArray = new uint[0];
+        }
+
         /// <summary>
         /// 使用指定的元素数量与默认的位值（false）初始化 BitSet 的新实例。
         /// </summary>
@@ -314,7 +320,7 @@ namespace Com
         {
             get
             {
-                return new BitSet(0);
+                return new BitSet();
             }
         }
 
