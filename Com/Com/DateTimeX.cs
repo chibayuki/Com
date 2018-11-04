@@ -22,7 +22,7 @@ namespace Com
     /// </summary>
     public struct DateTimeX : IEquatable<DateTimeX>
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         private const double _MinUtcOffset = -24D, _MaxUtcOffset = 24D, _Utc = 0D; // 所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的最小值、最大值与表示与协调世界时（UTC）之间为零时差的值。
 
@@ -455,7 +455,7 @@ namespace Com
 
         #endregion
 
-        #region 常量与只读成员
+        #region 常量与只读字段
 
         /// <summary>
         /// 表示所有属性为其数据类型的默认值的 DateTimeX 结构的实例。

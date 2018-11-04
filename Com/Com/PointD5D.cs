@@ -25,7 +25,7 @@ namespace Com
     /// </summary>
     public struct PointD5D : IEquatable<PointD5D>, IEuclideanVector<PointD5D>, IAffine<PointD5D>
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         private double _X; // X 坐标。
         private double _Y; // Y 坐标。
@@ -35,7 +35,7 @@ namespace Com
 
         #endregion
 
-        #region 常量与只读成员
+        #region 常量与只读字段
 
         /// <summary>
         /// 表示零向量的 PointD5D 结构的实例。

@@ -22,14 +22,14 @@ namespace Com
     /// </summary>
     public struct Complex : IEquatable<Complex>
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         private double _Real; // 实部。
         private double _Image; // 虚部。
 
         #endregion
 
-        #region 常量与只读成员
+        #region 常量与只读字段
 
         /// <summary>
         /// 表示非数字的 Complex 结构的实例。

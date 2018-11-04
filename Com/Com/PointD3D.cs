@@ -25,7 +25,7 @@ namespace Com
     /// </summary>
     public struct PointD3D : IEquatable<PointD3D>, IEuclideanVector<PointD3D>, IAffine<PointD3D>
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         private double _X; // X 坐标。
         private double _Y; // Y 坐标。
@@ -33,7 +33,7 @@ namespace Com
 
         #endregion
 
-        #region 常量与只读成员
+        #region 常量与只读字段
 
         /// <summary>
         /// 表示零向量的 PointD3D 结构的实例。
@@ -463,6 +463,57 @@ namespace Com
             }
         }
 
+        //
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量的仰角。仰角是向量与 +Z 轴之间的夹角（弧度）（以 +Z 轴为 0 弧度，远离 +Z 轴的方向为正方向）。
+        /// </summary>
+        public double Zenith
+        {
+            get
+            {
+                if (_X == 0 && _Y == 0 && _Z == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return Math.Acos(_Z / Module);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取此 PointD3D 结构表示的向量的方位角。方位角是向量在 XY 平面内的投影与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。
+        /// </summary>
+        public double Azimuth
+        {
+            get
+            {
+                if (_X == 0 && _Y == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double Angle = Math.Atan(_Y / _X);
+
+                    if (_X < 0)
+                    {
+                        return (Angle + Math.PI);
+                    }
+                    else if (_Y < 0)
+                    {
+                        return (Angle + 2 * Math.PI);
+                    }
+                    else
+                    {
+                        return Angle;
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region 方法
@@ -576,30 +627,7 @@ namespace Com
         /// </summary>
         public PointD3D ToSpherical()
         {
-            double _AngleFromZ = 0;
-
-            if (_X != 0 || _Y != 0 || _Z != 0)
-            {
-                _AngleFromZ = Math.Acos(_Z / Module);
-            }
-
-            double _AngleInXY = 0;
-
-            if (_X != 0 || _Y != 0)
-            {
-                _AngleInXY = Math.Atan(_Y / _X);
-
-                if (_X < 0)
-                {
-                    _AngleInXY += Math.PI;
-                }
-                else if (_Y < 0)
-                {
-                    _AngleInXY += 2 * Math.PI;
-                }
-            }
-
-            return new PointD3D(Module, _AngleFromZ, _AngleInXY);
+            return new PointD3D(Module, Zenith, Azimuth);
         }
 
         /// <summary>
@@ -1809,7 +1837,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回 PointD3D 结构表示的两个向量的向量积，该向量积为一个三维向量，其所有分量的数值依次为 X 基向量、Y 基向量与 Z 基向量的系数。
+        /// 返回 PointD3D 结构表示的两个向量的向量积。该向量积为一个三维向量，其所有分量的数值依次为 X 基向量、Y 基向量与 Z 基向量的系数。
         /// </summary>
         /// <param name="left">PointD3D 结构，表示左向量。</param>
         /// <param name="right">PointD3D 结构，表示右向量。</param>

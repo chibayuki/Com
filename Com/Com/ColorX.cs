@@ -25,7 +25,7 @@ namespace Com
     /// </summary>
     public struct ColorX : IEquatable<ColorX>
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         private const double _MinOpacity = 0D, _MaxOpacity = 100D; // 颜色的不透明度的最小值与最大值。
 
@@ -1130,7 +1130,7 @@ namespace Com
 
         #endregion
 
-        #region 常量与只读成员
+        #region 常量与只读字段
 
         /// <summary>
         /// 表示所有属性为其数据类型的默认值的 ColorX 结构的实例。

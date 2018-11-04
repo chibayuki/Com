@@ -25,7 +25,7 @@ namespace Com
     /// </summary>
     public struct PointD4D : IEquatable<PointD4D>, IEuclideanVector<PointD4D>, IAffine<PointD4D>
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         private double _X; // X 坐标。
         private double _Y; // Y 坐标。
@@ -34,7 +34,7 @@ namespace Com
 
         #endregion
 
-        #region 常量与只读成员
+        #region 常量与只读字段
 
         /// <summary>
         /// 表示零向量的 PointD4D 结构的实例。

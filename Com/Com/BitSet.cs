@@ -22,7 +22,7 @@ namespace Com
     /// </summary>
     public sealed class BitSet : IEquatable<BitSet>
     {
-        #region 私有与内部成员
+        #region 私有成员与内部成员
 
         private const int _BitsPerUint = 32; // 32 位无符号整数包含的位值数量。
 
