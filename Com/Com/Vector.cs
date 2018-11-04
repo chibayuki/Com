@@ -1723,7 +1723,7 @@ namespace Com
         /// 返回此 Vector 与指定索引的基向量之间的夹角（弧度）。
         /// </summary>
         /// <param name="index">索引。</param>
-        public double AngleOfBasis(int index)
+        public double AngleFromBase(int index)
         {
             if (_Size > 0 && (index >= 0 && index < _Size))
             {
@@ -1739,10 +1739,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回此 Vector 与正交于指定索引的基向量的子空间之间的夹角（弧度）。
+        /// 返回此 Vector 与垂直于指定索引的基向量的子空间之间的夹角（弧度）。
         /// </summary>
         /// <param name="index">索引。</param>
-        public double AngleOfSpace(int index)
+        public double AngleFromSpace(int index)
         {
             if (_Size > 0 && (index >= 0 && index < _Size))
             {
@@ -1751,7 +1751,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleOfBasis(index));
+                return (Math.PI / 2 - AngleFromBase(index));
             }
 
             return double.NaN;
@@ -2076,7 +2076,7 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double DistanceBetween(Vector left, Vector right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
             {
                 double SqrSum = 0;
 
@@ -2098,7 +2098,7 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double AngleBetween(Vector left, Vector right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
             {
                 if (left.IsZero || right.IsZero)
                 {
@@ -2127,7 +2127,7 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static double DotProduct(Vector left, Vector right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
             {
                 double SqrSum = 0;
 
@@ -2149,7 +2149,7 @@ namespace Com
         /// <param name="right">第二个 Vector 对象。</param>
         public static Vector CrossProduct(Vector left, Vector right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
             {
                 if (left._Size > 1)
                 {

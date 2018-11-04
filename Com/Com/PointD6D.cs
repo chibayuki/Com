@@ -517,7 +517,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 X 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleX
+        public double AngleFromX
         {
             get
             {
@@ -533,7 +533,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 Y 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleY
+        public double AngleFromY
         {
             get
             {
@@ -549,7 +549,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 Z 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleZ
+        public double AngleFromZ
         {
             get
             {
@@ -565,7 +565,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 U 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleU
+        public double AngleFromU
         {
             get
             {
@@ -581,7 +581,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 V 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleV
+        public double AngleFromV
         {
             get
             {
@@ -597,7 +597,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 W 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleW
+        public double AngleFromW
         {
             get
             {
@@ -613,7 +613,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 XYZUV 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleXYZUV
+        public double AngleFromXYZUV
         {
             get
             {
@@ -622,14 +622,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleW);
+                return (Math.PI / 2 - AngleFromW);
             }
         }
 
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 YZUVW 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleYZUVW
+        public double AngleFromYZUVW
         {
             get
             {
@@ -638,14 +638,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleX);
+                return (Math.PI / 2 - AngleFromX);
             }
         }
 
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 ZUVWX 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleZUVWX
+        public double AngleFromZUVWX
         {
             get
             {
@@ -654,14 +654,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleY);
+                return (Math.PI / 2 - AngleFromY);
             }
         }
 
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 UVWXY 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleUVWXY
+        public double AngleFromUVWXY
         {
             get
             {
@@ -670,14 +670,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleZ);
+                return (Math.PI / 2 - AngleFromZ);
             }
         }
 
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 VWXYZ 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleVWXYZ
+        public double AngleFromVWXYZ
         {
             get
             {
@@ -686,14 +686,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleU);
+                return (Math.PI / 2 - AngleFromU);
             }
         }
 
         /// <summary>
         /// 获取此 PointD6D 结构表示的向量与 WXYZU 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleWXYZU
+        public double AngleFromWXYZU
         {
             get
             {
@@ -702,156 +702,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleV);
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取此 PointD6D 结构表示的向量与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，远离 +X 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleX
-        {
-            get
-            {
-                double _YZUVW = Math.Sqrt(_Y * _Y + _Z * _Z + _U * _U + _V * _V + _W * _W);
-
-                if (_X == 0 && _YZUVW == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_YZUVW / _X);
-
-                    if (_X < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD6D 结构表示的向量与 +Y 轴之间的夹角（弧度）（以 +Y 轴为 0 弧度，远离 +Y 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleY
-        {
-            get
-            {
-                double _ZUVW = Math.Sqrt(_Z * _Z + _U * _U + _V * _V + _W * _W);
-
-                if (_Y == 0 && _ZUVW == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_ZUVW / _Y);
-
-                    if (_Y < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD6D 结构表示的向量与 +Z 轴之间的夹角（弧度）（以 +Z 轴为 0 弧度，远离 +Z 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleZ
-        {
-            get
-            {
-                double _UVW = Math.Sqrt(_U * _U + _V * _V + _W * _W);
-
-                if (_Z == 0 && _UVW == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_UVW / _Z);
-
-                    if (_Z < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD6D 结构表示的向量与 +U 轴之间的夹角（弧度）（以 +U 轴为 0 弧度，远离 +U 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleU
-        {
-            get
-            {
-                double _VW = Math.Sqrt(_V * _V + _W * _W);
-
-                if (_U == 0 && _VW == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_VW / _U);
-
-                    if (_U < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD6D 结构表示的向量在 VW 平面内的投影与 +V 轴之间的夹角（弧度）（以 +V 轴为 0 弧度，从 +V 轴指向 +W 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleVW
-        {
-            get
-            {
-                if (_V == 0 && _W == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_W / _V);
-
-                    if (_V < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else if (_W < 0)
-                    {
-                        return (Angle + 2 * Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
+                return (Math.PI / 2 - AngleFromV);
             }
         }
 
@@ -980,7 +831,14 @@ namespace Com
         /// </summary>
         public PointD6D ToSpherical()
         {
-            return new PointD6D(Module, VectorAngleX, VectorAngleY, VectorAngleZ, VectorAngleU, VectorAngleVW);
+            Vector result = ToColumnVector().ToSpherical();
+
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
+            {
+                return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
+            }
+
+            return NaN;
         }
 
         /// <summary>
@@ -988,7 +846,14 @@ namespace Com
         /// </summary>
         public PointD6D ToCartesian()
         {
-            return new PointD6D(_X * Math.Cos(_Y), _X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Cos(_U), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U) * Math.Cos(_V), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U) * Math.Sin(_V) * Math.Cos(_W), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U) * Math.Sin(_V) * Math.Sin(_W));
+            Vector result = ToColumnVector().ToCartesian();
+
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 6)
+            {
+                return new PointD6D(result[0], result[1], result[2], result[3], result[4], result[5]);
+            }
+
+            return NaN;
         }
 
         //
@@ -2048,14 +1913,14 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return (left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U + left._V * right._V + left._W * right._W);
+                return Vector.DotProduct(left.ToColumnVector(), right.ToColumnVector());
             }
 
             return double.NaN;
         }
 
         /// <summary>
-        /// 返回 PointD6D 结构表示的两个向量的向量积，该向量积为一个十五维向量，其所有分量的数值依次为 X∧Y 基向量、X∧Z 基向量、X∧U 基向量、X∧V 基向量、X∧W 基向量、Y∧Z 基向量、Y∧U 基向量、Y∧V 基向量、Y∧W 基向量、Z∧U 基向量、Z∧V 基向量、Z∧W 基向量、U∧V 基向量、U∧W 基向量与 V∧W 基向量的系数。
+        /// 返回 PointD6D 结构表示的两个向量的向量积。该向量积为一个十五维向量，其所有分量的数值依次为 X∧Y 基向量、X∧Z 基向量、X∧U 基向量、X∧V 基向量、X∧W 基向量、Y∧Z 基向量、Y∧U 基向量、Y∧V 基向量、Y∧W 基向量、Z∧U 基向量、Z∧V 基向量、Z∧W 基向量、U∧V 基向量、U∧W 基向量与 V∧W 基向量的系数。
         /// </summary>
         /// <param name="left">PointD6D 结构，表示左向量。</param>
         /// <param name="right">PointD6D 结构，表示右向量。</param>
@@ -2063,7 +1928,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X, left._X * right._Z - left._Z * right._X, left._X * right._U - left._U * right._X, left._X * right._V - left._V * right._X, left._X * right._W - left._W * right._X, left._Y * right._Z - left._Z * right._Y, left._Y * right._U - left._U * right._Y, left._Y * right._V - left._V * right._Y, left._Y * right._W - left._W * right._Y, left._Z * right._U - left._U * right._Z, left._Z * right._V - left._V * right._Z, left._Z * right._W - left._W * right._Z, left._U * right._V - left._V * right._U, left._U * right._W - left._W * right._U, left._V * right._W - left._W * right._V);
+                return Vector.CrossProduct(left.ToColumnVector(), right.ToColumnVector());
             }
 
             return Vector.Empty;

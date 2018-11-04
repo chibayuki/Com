@@ -381,7 +381,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD 结构表示的向量与 X 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleX
+        public double AngleFromX
         {
             get
             {
@@ -397,7 +397,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD 结构表示的向量与 Y 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleY
+        public double AngleFromY
         {
             get
             {
@@ -407,39 +407,6 @@ namespace Com
                 }
 
                 return AngleFrom(_Y >= 0 ? Ey : -Ey);
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取此 PointD 结构表示的向量与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngle
-        {
-            get
-            {
-                if (_X == 0 && _Y == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_Y / _X);
-
-                    if (_X < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else if (_Y < 0)
-                    {
-                        return (Angle + 2 * Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
             }
         }
 
@@ -552,7 +519,23 @@ namespace Com
         /// </summary>
         public PointD ToSpherical()
         {
-            return new PointD(Module, VectorAngle);
+            double _AngleInXY = 0;
+
+            if (_X != 0 || _Y != 0)
+            {
+                _AngleInXY = Math.Atan(_Y / _X);
+
+                if (_X < 0)
+                {
+                    _AngleInXY += Math.PI;
+                }
+                else if (_Y < 0)
+                {
+                    _AngleInXY += 2 * Math.PI;
+                }
+            }
+
+            return new PointD(Module, _AngleInXY);
         }
 
         /// <summary>

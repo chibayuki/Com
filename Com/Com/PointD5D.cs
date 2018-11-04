@@ -466,7 +466,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 X 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleX
+        public double AngleFromX
         {
             get
             {
@@ -482,7 +482,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 Y 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleY
+        public double AngleFromY
         {
             get
             {
@@ -498,7 +498,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 Z 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleZ
+        public double AngleFromZ
         {
             get
             {
@@ -514,7 +514,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 U 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleU
+        public double AngleFromU
         {
             get
             {
@@ -530,7 +530,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 V 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleV
+        public double AngleFromV
         {
             get
             {
@@ -546,7 +546,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 XYZU 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleXYZU
+        public double AngleFromXYZU
         {
             get
             {
@@ -555,14 +555,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleV);
+                return (Math.PI / 2 - AngleFromV);
             }
         }
 
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 YZUV 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleYZUV
+        public double AngleFromYZUV
         {
             get
             {
@@ -571,14 +571,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleX);
+                return (Math.PI / 2 - AngleFromX);
             }
         }
 
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 ZUVX 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleZUVX
+        public double AngleFromZUVX
         {
             get
             {
@@ -587,14 +587,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleY);
+                return (Math.PI / 2 - AngleFromY);
             }
         }
 
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 UVXY 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleUVXY
+        public double AngleFromUVXY
         {
             get
             {
@@ -603,14 +603,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleZ);
+                return (Math.PI / 2 - AngleFromZ);
             }
         }
 
         /// <summary>
         /// 获取此 PointD5D 结构表示的向量与 VXYZ 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleVXYZ
+        public double AngleFromVXYZ
         {
             get
             {
@@ -619,127 +619,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleU);
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取此 PointD5D 结构表示的向量与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，远离 +X 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleX
-        {
-            get
-            {
-                double _YZUV = Math.Sqrt(_Y * _Y + _Z * _Z + _U * _U + _V * _V);
-
-                if (_X == 0 && _YZUV == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_YZUV / _X);
-
-                    if (_X < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD5D 结构表示的向量与 +Y 轴之间的夹角（弧度）（以 +Y 轴为 0 弧度，远离 +Y 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleY
-        {
-            get
-            {
-                double _ZUV = Math.Sqrt(_Z * _Z + _U * _U + _V * _V);
-
-                if (_Y == 0 && _ZUV == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_ZUV / _Y);
-
-                    if (_Y < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD5D 结构表示的向量与 +Z 轴之间的夹角（弧度）（以 +Z 轴为 0 弧度，远离 +Z 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleZ
-        {
-            get
-            {
-                double _UV = Math.Sqrt(_U * _U + _V * _V);
-
-                if (_Z == 0 && _UV == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_UV / _Z);
-
-                    if (_Z < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD5D 结构表示的向量在 UV 平面内的投影与 +U 轴之间的夹角（弧度）（以 +U 轴为 0 弧度，从 +U 轴指向 +V 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleUV
-        {
-            get
-            {
-                if (_U == 0 && _V == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_V / _U);
-
-                    if (_U < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else if (_V < 0)
-                    {
-                        return (Angle + 2 * Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
+                return (Math.PI / 2 - AngleFromU);
             }
         }
 
@@ -864,7 +744,14 @@ namespace Com
         /// </summary>
         public PointD5D ToSpherical()
         {
-            return new PointD5D(Module, VectorAngleX, VectorAngleY, VectorAngleZ, VectorAngleUV);
+            Vector result = ToColumnVector().ToSpherical();
+
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 5)
+            {
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
+            }
+
+            return NaN;
         }
 
         /// <summary>
@@ -872,7 +759,14 @@ namespace Com
         /// </summary>
         public PointD5D ToCartesian()
         {
-            return new PointD5D(_X * Math.Cos(_Y), _X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Cos(_U), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U) * Math.Cos(_V), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U) * Math.Sin(_V));
+            Vector result = ToColumnVector().ToCartesian();
+
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 5)
+            {
+                return new PointD5D(result[0], result[1], result[2], result[3], result[4]);
+            }
+
+            return NaN;
         }
 
         //
@@ -1872,14 +1766,14 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return (left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U + left._V * right._V);
+                return Vector.DotProduct(left.ToColumnVector(), right.ToColumnVector());
             }
 
             return double.NaN;
         }
 
         /// <summary>
-        /// 返回 PointD5D 结构表示的两个向量的向量积，该向量积为一个十维向量，其所有分量的数值依次为 X∧Y 基向量、X∧Z 基向量、X∧U 基向量、X∧V 基向量、Y∧Z 基向量、Y∧U 基向量、Y∧V 基向量、Z∧U 基向量、Z∧V 基向量与 U∧V 基向量的系数。
+        /// 返回 PointD5D 结构表示的两个向量的向量积。该向量积为一个十维向量，其所有分量的数值依次为 X∧Y 基向量、X∧Z 基向量、X∧U 基向量、X∧V 基向量、Y∧Z 基向量、Y∧U 基向量、Y∧V 基向量、Z∧U 基向量、Z∧V 基向量与 U∧V 基向量的系数。
         /// </summary>
         /// <param name="left">PointD5D 结构，表示左向量。</param>
         /// <param name="right">PointD5D 结构，表示右向量。</param>
@@ -1887,7 +1781,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X, left._X * right._Z - left._Z * right._X, left._X * right._U - left._U * right._X, left._X * right._V - left._V * right._X, left._Y * right._Z - left._Z * right._Y, left._Y * right._U - left._U * right._Y, left._Y * right._V - left._V * right._Y, left._Z * right._U - left._U * right._Z, left._Z * right._V - left._V * right._Z, left._U * right._V - left._V * right._U);
+                return Vector.CrossProduct(left.ToColumnVector(), right.ToColumnVector());
             }
 
             return Vector.Empty;

@@ -370,7 +370,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD3D 结构表示的向量与 X 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleX
+        public double AngleFromX
         {
             get
             {
@@ -386,7 +386,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD3D 结构表示的向量与 Y 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleY
+        public double AngleFromY
         {
             get
             {
@@ -402,7 +402,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD3D 结构表示的向量与 Z 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleZ
+        public double AngleFromZ
         {
             get
             {
@@ -418,7 +418,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD3D 结构表示的向量与 XY 平面之间的夹角（弧度）。
         /// </summary>
-        public double AngleXY
+        public double AngleFromXY
         {
             get
             {
@@ -427,14 +427,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleZ);
+                return (Math.PI / 2 - AngleFromZ);
             }
         }
 
         /// <summary>
         /// 获取此 PointD3D 结构表示的向量与 YZ 平面之间的夹角（弧度）。
         /// </summary>
-        public double AngleYZ
+        public double AngleFromYZ
         {
             get
             {
@@ -443,14 +443,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleX);
+                return (Math.PI / 2 - AngleFromX);
             }
         }
 
         /// <summary>
         /// 获取此 PointD3D 结构表示的向量与 ZX 平面之间的夹角（弧度）。
         /// </summary>
-        public double AngleZX
+        public double AngleFromZX
         {
             get
             {
@@ -459,58 +459,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleY);
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取此 PointD3D 结构表示的向量与 +Z 轴之间的夹角（弧度）（以 +Z 轴为 0 弧度，远离 +Z 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleZ
-        {
-            get
-            {
-                if (_X == 0 && _Y == 0 && _Z == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Acos(_Z / Module);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD3D 结构表示的向量在 XY 平面内的投影与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleXY
-        {
-            get
-            {
-                if (_X == 0 && _Y == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_Y / _X);
-
-                    if (_X < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else if (_Y < 0)
-                    {
-                        return (Angle + 2 * Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
+                return (Math.PI / 2 - AngleFromY);
             }
         }
 
@@ -627,7 +576,30 @@ namespace Com
         /// </summary>
         public PointD3D ToSpherical()
         {
-            return new PointD3D(Module, VectorAngleZ, VectorAngleXY);
+            double _AngleFromZ = 0;
+
+            if (_X != 0 || _Y != 0 || _Z != 0)
+            {
+                _AngleFromZ = Math.Acos(_Z / Module);
+            }
+
+            double _AngleInXY = 0;
+
+            if (_X != 0 || _Y != 0)
+            {
+                _AngleInXY = Math.Atan(_Y / _X);
+
+                if (_X < 0)
+                {
+                    _AngleInXY += Math.PI;
+                }
+                else if (_Y < 0)
+                {
+                    _AngleInXY += 2 * Math.PI;
+                }
+            }
+
+            return new PointD3D(Module, _AngleFromZ, _AngleInXY);
         }
 
         /// <summary>

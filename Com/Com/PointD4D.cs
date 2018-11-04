@@ -417,7 +417,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 X 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleX
+        public double AngleFromX
         {
             get
             {
@@ -433,7 +433,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 Y 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleY
+        public double AngleFromY
         {
             get
             {
@@ -449,7 +449,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 Z 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleZ
+        public double AngleFromZ
         {
             get
             {
@@ -465,7 +465,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 U 轴之间的夹角（弧度）。
         /// </summary>
-        public double AngleU
+        public double AngleFromU
         {
             get
             {
@@ -481,7 +481,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 XYZ 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleXYZ
+        public double AngleFromXYZ
         {
             get
             {
@@ -490,14 +490,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleU);
+                return (Math.PI / 2 - AngleFromU);
             }
         }
 
         /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 YZU 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleYZU
+        public double AngleFromYZU
         {
             get
             {
@@ -506,14 +506,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleX);
+                return (Math.PI / 2 - AngleFromX);
             }
         }
 
         /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 ZUX 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleZUX
+        public double AngleFromZUX
         {
             get
             {
@@ -522,14 +522,14 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleY);
+                return (Math.PI / 2 - AngleFromY);
             }
         }
 
         /// <summary>
         /// 获取此 PointD4D 结构表示的向量与 UXY 空间之间的夹角（弧度）。
         /// </summary>
-        public double AngleUXY
+        public double AngleFromUXY
         {
             get
             {
@@ -538,98 +538,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleZ);
-            }
-        }
-
-        //
-
-        /// <summary>
-        /// 获取此 PointD4D 结构表示的向量与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，远离 +X 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleX
-        {
-            get
-            {
-                double _YZU = Math.Sqrt(_Y * _Y + _Z * _Z + _U * _U);
-
-                if (_X == 0 && _YZU == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_YZU / _X);
-
-                    if (_X < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD4D 结构表示的向量与 +Y 轴之间的夹角（弧度）（以 +Y 轴为 0 弧度，远离 +Y 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleY
-        {
-            get
-            {
-                double _ZU = Math.Sqrt(_Z * _Z + _U * _U);
-
-                if (_Y == 0 && _ZU == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_ZU / _Y);
-
-                    if (_Y < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 获取此 PointD4D 结构表示的向量在 ZU 平面内的投影与 +Z 轴之间的夹角（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +U 轴的方向为正方向）。
-        /// </summary>
-        public double VectorAngleZU
-        {
-            get
-            {
-                if (_Z == 0 && _U == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_U / _Z);
-
-                    if (_Z < 0)
-                    {
-                        return (Angle + Math.PI);
-                    }
-                    else if (_U < 0)
-                    {
-                        return (Angle + 2 * Math.PI);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
+                return (Math.PI / 2 - AngleFromZ);
             }
         }
 
@@ -750,7 +659,14 @@ namespace Com
         /// </summary>
         public PointD4D ToSpherical()
         {
-            return new PointD4D(Module, VectorAngleX, VectorAngleY, VectorAngleZU);
+            Vector result = ToColumnVector().ToSpherical();
+
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            {
+                return new PointD4D(result[0], result[1], result[2], result[3]);
+            }
+
+            return NaN;
         }
 
         /// <summary>
@@ -758,7 +674,14 @@ namespace Com
         /// </summary>
         public PointD4D ToCartesian()
         {
-            return new PointD4D(_X * Math.Cos(_Y), _X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Cos(_U), _X * Math.Sin(_Y) * Math.Sin(_Z) * Math.Sin(_U));
+            Vector result = ToColumnVector().ToCartesian();
+
+            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            {
+                return new PointD4D(result[0], result[1], result[2], result[3]);
+            }
+
+            return NaN;
         }
 
         //
@@ -1698,14 +1621,14 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return (left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U);
+                return Vector.DotProduct(left.ToColumnVector(), right.ToColumnVector());
             }
 
             return double.NaN;
         }
 
         /// <summary>
-        /// 返回 PointD4D 结构表示的两个向量的向量积，该向量积为一个六维向量，其所有分量的数值依次为 X∧Y 基向量、X∧Z 基向量、X∧U 基向量、Y∧Z 基向量、Y∧U 基向量与 Z∧U 基向量的系数。
+        /// 返回 PointD4D 结构表示的两个向量的向量积。该向量积为一个六维向量，其所有分量的数值依次为 X∧Y 基向量、X∧Z 基向量、X∧U 基向量、Y∧Z 基向量、Y∧U 基向量与 Z∧U 基向量的系数。
         /// </summary>
         /// <param name="left">PointD4D 结构，表示左向量。</param>
         /// <param name="right">PointD4D 结构，表示右向量。</param>
@@ -1713,7 +1636,7 @@ namespace Com
         {
             if ((object)left != null && (object)right != null)
             {
-                return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X, left._X * right._Z - left._Z * right._X, left._X * right._U - left._U * right._X, left._Y * right._Z - left._Z * right._Y, left._Y * right._U - left._U * right._Y, left._Z * right._U - left._U * right._Z);
+                return Vector.CrossProduct(left.ToColumnVector(), right.ToColumnVector());
             }
 
             return Vector.Empty;

@@ -197,7 +197,7 @@ namespace Com
                 }
                 else
                 {
-                    return (pt2 - pt1).VectorAngle;
+                    return (pt2 - pt1).ToSpherical().Y;
                 }
             }
             catch
