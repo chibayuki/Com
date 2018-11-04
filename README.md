@@ -18,6 +18,15 @@
 - Com.PointD5D 五维欧式空间中表示的坐标（向量） / Coordinate (vector) in 5D Euclidean space.
 - Com.PointD6D 六维欧式空间中表示的坐标（向量） / Coordinate (vector) in 6D Euclidean space.
 
+### 公开的接口 / Public Interface
+- Com.IAffine 表示用于支持仿射变换的方法 / Method for affine transform.
+- Com.IAffine\<T\> 表示用于支持仿射变换的方法 / Method for affine transform.
+- Com.IEuclideanVector 表示欧几里得向量 / Euclidean vector.
+- Com.IEuclideanVector\<T\> 表示欧几里得向量 / Euclidean vector.
+- Com.ILinearAlgebraVector 表示线性代数向量 / Linear algebra vector.
+- Com.ILinearAlgebraVector\<T\> 表示线性代数向量 / Linear algebra vector.
+- Com.IVector\<T\> 表示向量（包含确定数量与值的元素的可迭代的有限有序集合） / Vector (a finite and ordered set, which contains certain number of elements with clear values).
+
 ### 公开的静态类 / Public Static Class
 - Com.Animation 使用指定的帧率、帧数与绘制方法呈现动画 / Presenting animation by frame rate, frame number and drawing method.
 - Com.BitOperation 快速的位运算方案（性能远高于BitSet，但至多64位） / Scheme of rapid bit operation (up to 64 bits and far faster than BitSet).
@@ -36,15 +45,6 @@
 - Com.WinForm.FormState 表示窗口状态 / State of winform window.
 - Com.WinForm.FormStyle 表示窗口样式 / Style of winform window.
 - Com.WinForm.Theme 表示窗口配色主题 / Theme of color scheme of winform window.
-
-### 公开的接口 / Public Interface
-- Com.IAffine 表示用于支持仿射变换的方法 / Method for affine transform.
-- Com.IAffine\<T\> 表示用于支持仿射变换的方法 / Method for affine transform.
-- Com.IEuclideanVector 表示欧几里得向量 / Euclidean vector.
-- Com.IEuclideanVector\<T\> 表示欧几里得向量 / Euclidean vector.
-- Com.ILinearAlgebraVector 表示线性代数向量 / Linear algebra vector.
-- Com.ILinearAlgebraVector\<T\> 表示线性代数向量 / Linear algebra vector.
-- Com.IVector\<T\> 表示向量（包含确定数量与值的元素的可迭代的有限有序集合） / Vector (a finite and ordered set, which contains certain number of elements with clear values).
 
 ### 公开的委托 / Public Delegate
 - Com.Animation.Frame 表示用于绘制动画的某一帧的方法 / Method of presenting animation frames.
