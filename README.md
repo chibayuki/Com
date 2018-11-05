@@ -1,6 +1,18 @@
 # Com
 Com是通用组件，是用于支持线性代数运算、位运算、大型日期时间、高精度非线性色彩处理、动画呈现、窗口管理等功能的DLL / Com is a common component, which is a DLL for supporting linear algebra, bit operation, large date-time, high precision nonlinear color processing, animation presentation, window management, etc.
 
+### 公开的静态类 / Public Static Class
+- Com.Animation 使用指定的帧率、帧数与绘制方法呈现动画 / Presenting animation by frame rate, frame number and drawing method.
+- Com.BitOperation 快速的位运算方案（性能远高于BitSet，但至多64位） / Scheme of rapid bit operation (up to 64 bits and far faster than BitSet).
+- Com.ColorManipulation 提供基于ColorX的非线性色彩处理方案 / Scheme of nonlinear color processing based on ColorX.
+- Com.Geometry 提供几何学的基本计算 / Basic geometry calculation.
+- Com.IO 提供文件操作功能 / File operation.
+- Com.Painting2D 提供基本的2D绘图方案 / Basic 2D drawing scheme.
+- Com.Painting3D 提供基本的3D绘图方案 / Basic 3D drawing scheme.
+- Com.Statistics 提供统计学的基本计算 / Basic statistical calculation.
+- Com.Text 提供文本处理功能 / Text processing.
+- Com.WinForm.ControlSubstitution 提供控件的替代使用方案 / Scheme of substitution of control.
+
 ### 公开的类 / Public Class
 - Com.BitSet 管理位（Bit）的集合（至多2146434944位），提供基本的位运算功能 / Managing set of bits (up to 2147483520 bits) and providing basic bit operations.
 - Com.Matrix 表示矩阵，并为所有线性变换提供实现 / Matrix, supporting all linear transformations.
@@ -26,18 +38,6 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 - Com.ILinearAlgebraVector 表示线性代数向量 / Linear algebra vector.
 - Com.ILinearAlgebraVector\<T\> 表示线性代数向量 / Linear algebra vector.
 - Com.IVector\<T\> 表示向量（包含确定数量与值的元素的可迭代的有限有序集合） / Vector (a finite and ordered set, which contains certain number of elements with clear values).
-
-### 公开的静态类 / Public Static Class
-- Com.Animation 使用指定的帧率、帧数与绘制方法呈现动画 / Presenting animation by frame rate, frame number and drawing method.
-- Com.BitOperation 快速的位运算方案（性能远高于BitSet，但至多64位） / Scheme of rapid bit operation (up to 64 bits and far faster than BitSet).
-- Com.ColorManipulation 提供基于ColorX的非线性色彩处理方案 / Scheme of nonlinear color processing based on ColorX.
-- Com.Geometry 提供几何学的基本计算 / Basic geometry calculation.
-- Com.IO 提供文件操作功能 / File operation.
-- Com.Painting2D 提供基本的2D绘图方案 / Basic 2D drawing scheme.
-- Com.Painting3D 提供基本的3D绘图方案 / Basic 3D drawing scheme.
-- Com.Statistics 提供统计学的基本计算 / Basic statistical calculation.
-- Com.Text 提供文本处理功能 / Text processing.
-- Com.WinForm.ControlSubstitution 提供控件的替代使用方案 / Scheme of substitution of control.
 
 ### 公开的枚举 / Public Enumerate
 - Com.Vector.Type 表示向量类型 / Type of vector.
