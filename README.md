@@ -37,7 +37,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 - Com.IEuclideanVector\<T\> 表示欧几里得向量 / Euclidean vector.
 - Com.ILinearAlgebraVector 表示线性代数向量 / Linear algebra vector.
 - Com.ILinearAlgebraVector\<T\> 表示线性代数向量 / Linear algebra vector.
-- Com.IVector\<T\> 表示向量（包含确定数量与值的元素的可迭代的有限有序集合） / Vector (a finite and ordered set, which contains certain number of elements with clear values).
+- Com.IVector\<T\> 表示向量（包含确定数量与值的元素的可迭代的有限有序集合） / Vector (a finite, ordered, and iterable set, which contains certain number of elements with clear values).
 
 ### 公开的枚举 / Public Enumerate
 - Com.Vector.Type 表示向量类型 / Type of vector.
