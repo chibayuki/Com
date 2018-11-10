@@ -1521,6 +1521,10 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return Equals((DateTimeX)obj);
         }
@@ -1552,6 +1556,10 @@ namespace Com
             if ((object)dateTime == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(this, dateTime))
+            {
+                return true;
             }
 
             return (_UtcOffset.Equals(dateTime._UtcOffset) && _TotalMilliseconds == dateTime._TotalMilliseconds && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond);

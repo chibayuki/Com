@@ -292,6 +292,10 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return Equals((Complex)obj);
         }
@@ -374,6 +378,10 @@ namespace Com
             if ((object)comp == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(this, comp))
+            {
+                return true;
             }
 
             return (_Real.Equals(comp._Real) && _Image.Equals(comp._Image));

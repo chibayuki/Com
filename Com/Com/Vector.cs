@@ -23,7 +23,7 @@ namespace Com
     /// <summary>
     /// 以一组有序的双精度浮点数表示的向量。
     /// </summary>
-    public sealed class Vector : IEquatable<Vector>, IEuclideanVector<Vector>, ILinearAlgebraVector<Vector>, IAffine<Vector>
+    public sealed class Vector : IEquatable<Vector>, IComparable, IComparable<Vector>, IEuclideanVector<Vector>, ILinearAlgebraVector<Vector>, IAffine<Vector>
     {
         /// <summary>
         /// 向量类型。
@@ -557,6 +557,10 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return Equals((Vector)obj);
         }
@@ -596,7 +600,15 @@ namespace Com
         /// <param name="vector">用于比较的 Vector 对象。</param>
         public bool Equals(Vector vector)
         {
-            if (_Size <= 0 || IsNullOrEmpty(vector) || _Type != vector._Type || _Size != vector._Size)
+            if ((object)vector == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(this, vector))
+            {
+                return true;
+            }
+            else if (_Type != vector._Type || _Size != vector._Size)
             {
                 return false;
             }
@@ -610,6 +622,55 @@ namespace Com
             }
 
             return true;
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 Vector 与指定的对象进行比较。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public int CompareTo(object obj)
+        {
+            if (obj == null || !(obj is Vector))
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return 0;
+            }
+
+            return CompareTo((Vector)obj);
+        }
+
+        /// <summary>
+        /// 将此 Vector 与指定的 Vector 对象进行比较。
+        /// </summary>
+        /// <param name="vector">用于比较的 Vector 对象。</param>
+        public int CompareTo(Vector vector)
+        {
+            if ((object)vector == null)
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, vector))
+            {
+                return 0;
+            }
+            else if (_Size != vector._Size)
+            {
+                if (_Size < vector._Size)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+
+            return ModuleSquared.CompareTo(vector.ModuleSquared);
         }
 
         //
@@ -2413,60 +2474,76 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的模平方是否前者小于后者。
+        /// 判断两个 Vector 对象的维度与模平方是否前者小于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
             {
                 return false;
+            }
+            else if (left._Size != right._Size)
+            {
+                return (left._Size < right._Size);
             }
 
             return (left.ModuleSquared < right.ModuleSquared);
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的模平方是否前者大于后者。
+        /// 判断两个 Vector 对象的维度与模平方是否前者大于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
             {
                 return false;
+            }
+            else if (left._Size != right._Size)
+            {
+                return (left._Size > right._Size);
             }
 
             return (left.ModuleSquared > right.ModuleSquared);
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的模平方是否前者小于或等于后者。
+        /// 判断两个 Vector 对象的维度与模平方是否前者小于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <=(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
             {
                 return false;
+            }
+            else if (left._Size != right._Size)
+            {
+                return (left._Size < right._Size);
             }
 
             return (left.ModuleSquared <= right.ModuleSquared);
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的模平方是否前者大于或等于后者。
+        /// 判断两个 Vector 对象的维度与模平方是否前者大于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >=(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
             {
                 return false;
+            }
+            else if (left._Size != right._Size)
+            {
+                return (left._Size > right._Size);
             }
 
             return (left.ModuleSquared >= right.ModuleSquared);

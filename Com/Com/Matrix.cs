@@ -599,6 +599,10 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return Equals((Matrix)obj);
         }
@@ -638,7 +642,15 @@ namespace Com
         /// <param name="matrix">用于比较的 Matrix 对象。</param>
         public bool Equals(Matrix matrix)
         {
-            if (_Size.Width <= 0 || _Size.Height <= 0 || IsNullOrEmpty(matrix) || _Size != matrix._Size)
+            if ((object)matrix == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(this, matrix))
+            {
+                return true;
+            }
+            else if (_Size != matrix._Size)
             {
                 return false;
             }

@@ -1663,6 +1663,10 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return Equals((ColorX)obj);
         }
@@ -1705,6 +1709,10 @@ namespace Com
             if ((object)color == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(this, color))
+            {
+                return true;
             }
 
             return (_Opacity.Equals(color._Opacity) && (_Alpha.Equals(color._Alpha) && _Red.Equals(color._Red) && _Green.Equals(color._Green) && _Blue.Equals(color._Blue)) && (_Hue_HSV.Equals(color._Hue_HSV) && _Saturation_HSV.Equals(color._Saturation_HSV) && _Brightness.Equals(color._Brightness)) && (_Hue_HSL.Equals(color._Hue_HSL) && _Saturation_HSL.Equals(color._Saturation_HSL) && _Lightness_HSL.Equals(color._Lightness_HSL)) && (_Cyan.Equals(color._Cyan) && _Magenta.Equals(color._Magenta) && _Yellow.Equals(color._Yellow) && _Black.Equals(color._Black)) && (_Lightness_LAB.Equals(color._Lightness_LAB) && _GreenRed.Equals(color._GreenRed) && _BlueYellow.Equals(color._BlueYellow)));

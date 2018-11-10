@@ -23,7 +23,7 @@ namespace Com
     /// <summary>
     /// 以一组有序的双精度浮点数表示的二维直角坐标系坐标。
     /// </summary>
-    public struct PointD : IEquatable<PointD>, IEuclideanVector<PointD>, IAffine<PointD>
+    public struct PointD : IEquatable<PointD>, IComparable, IComparable<PointD>, IEuclideanVector<PointD>, IAffine<PointD>
     {
         #region 私有成员与内部成员
 
@@ -457,6 +457,10 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return Equals((PointD)obj);
         }
@@ -489,8 +493,50 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, pt))
+            {
+                return true;
+            }
 
             return (_X.Equals(pt._X) && _Y.Equals(pt._Y));
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 PointD 结构与指定的对象进行比较。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public int CompareTo(object obj)
+        {
+            if (obj == null || !(obj is PointD))
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return 0;
+            }
+
+            return CompareTo((PointD)obj);
+        }
+
+        /// <summary>
+        /// 将此 PointD 结构与指定的 PointD 结构进行比较。
+        /// </summary>
+        /// <param name="pt">用于比较的 PointD 结构。</param>
+        public int CompareTo(PointD pt)
+        {
+            if ((object)pt == null)
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, pt))
+            {
+                return 0;
+            }
+
+            return ModuleSquared.CompareTo(pt.ModuleSquared);
         }
 
         //

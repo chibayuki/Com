@@ -338,6 +338,10 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return Equals((BitSet)obj);
         }
@@ -377,7 +381,15 @@ namespace Com
         /// <param name="bitSet">用于比较的 BitSet 对象。</param>
         public bool Equals(BitSet bitSet)
         {
-            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size || _UintArray.Length != bitSet._UintArray.Length)
+            if ((object)bitSet == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(this, bitSet))
+            {
+                return true;
+            }
+            else if (_Size != bitSet._Size || _UintArray.Length != bitSet._UintArray.Length)
             {
                 return false;
             }
