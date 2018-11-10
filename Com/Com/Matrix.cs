@@ -628,7 +628,7 @@ namespace Com
             }
             else
             {
-                Str = "NonMatrix";
+                Str = "Empty";
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");

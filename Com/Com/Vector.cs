@@ -586,7 +586,7 @@ namespace Com
             }
             else
             {
-                Str = "NonVector";
+                Str = "Empty";
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");
