@@ -4128,6 +4128,10 @@ namespace Com.WinForm
             {
                 return false;
             }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return Equals((FormManager)obj);
         }
@@ -4166,6 +4170,10 @@ namespace Com.WinForm
             if ((object)formManager == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(this, formManager))
+            {
+                return true;
             }
 
             return base.Equals(formManager);
