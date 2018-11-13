@@ -235,37 +235,5 @@ namespace Com
                 return double.NaN;
             }
         }
-
-        /// <summary>
-        /// 返回一个概率密度在指定区间内服从一维高斯分布的随机双精度浮点数。
-        /// </summary>
-        /// <param name="ev">数学期望。</param>
-        /// <param name="sd">标准差。</param>
-        /// <param name="left">区间左端点（含）。</param>
-        /// <param name="right">区间右端点（不含）。</param>
-        public static double GaussRandom(double ev, double sd, double left, double right)
-        {
-            try
-            {
-                if (InternalMethod.IsNaNOrInfinity(ev) || InternalMethod.IsNaNOrInfinity(sd) || InternalMethod.IsNaNOrInfinity(left) || InternalMethod.IsNaNOrInfinity(right))
-                {
-                    return double.NaN;
-                }
-
-                double result = 0;
-
-                do
-                {
-                    result = _StdGaussRandom()[0] * sd * sd + ev;
-                }
-                while (result < left || result >= right);
-
-                return result;
-            }
-            catch
-            {
-                return double.NaN;
-            }
-        }
     }
 }

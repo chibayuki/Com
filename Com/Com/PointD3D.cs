@@ -575,7 +575,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 将此 PointD3D 结构与指定的对象进行比较。
+        /// 将此 PointD3D 结构与指定的对象进行次序比较。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
         public int CompareTo(object obj)
@@ -593,7 +593,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 将此 PointD3D 结构与指定的 PointD3D 结构进行比较。
+        /// 将此 PointD3D 结构与指定的 PointD3D 结构进行次序比较。
         /// </summary>
         /// <param name="pt">用于比较的 PointD3D 结构。</param>
         public int CompareTo(PointD3D pt)
@@ -1598,6 +1598,35 @@ namespace Com
             }
 
             return left.Equals(right);
+        }
+
+        //
+
+        /// <summary>
+        /// 比较两个 PointD3D 结构的次序。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 PointD3D 结构。</param>
+        /// <param name="right">用于比较的第二个 PointD3D 结构。</param>
+        public static int Compare(PointD3D left, PointD3D right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return 0;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return 0;
+            }
+            else if ((object)left == null)
+            {
+                return -1;
+            }
+            else if ((object)right == null)
+            {
+                return 1;
+            }
+
+            return left.CompareTo(right);
         }
 
         //

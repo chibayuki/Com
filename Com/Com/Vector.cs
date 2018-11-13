@@ -627,7 +627,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 将此 Vector 与指定的对象进行比较。
+        /// 将此 Vector 与指定的对象进行次序比较。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
         public int CompareTo(object obj)
@@ -645,7 +645,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 将此 Vector 与指定的 Vector 对象进行比较。
+        /// 将此 Vector 与指定的 Vector 对象进行次序比较。
         /// </summary>
         /// <param name="vector">用于比较的 Vector 对象。</param>
         public int CompareTo(Vector vector)
@@ -1848,12 +1848,41 @@ namespace Com
             {
                 return true;
             }
-            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            else if ((object)left == null || (object)right == null)
             {
                 return false;
             }
 
             return left.Equals(right);
+        }
+
+        //
+
+        /// <summary>
+        /// 比较两个 Vector 对象的次序。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 Vector 对象。</param>
+        /// <param name="right">用于比较的第二个 Vector 对象。</param>
+        public static int Compare(Vector left, Vector right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return 0;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return 0;
+            }
+            else if ((object)left == null)
+            {
+                return -1;
+            }
+            else if ((object)right == null)
+            {
+                return 1;
+            }
+
+            return left.CompareTo(right);
         }
 
         //

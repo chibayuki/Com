@@ -839,7 +839,7 @@ namespace Com
             {
                 return true;
             }
-            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            else if ((object)left == null || (object)right == null)
             {
                 return false;
             }
