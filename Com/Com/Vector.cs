@@ -51,7 +51,7 @@ namespace Com
 
         private int _Size; // 此 Vector 存储的向量维度。
 
-        private double[] _VArray = null; // 用于存储向量在各基向量方向的分量的数组。
+        private double[] _VArray; // 用于存储向量在各基向量方向的分量的数组。
 
         //
 
@@ -112,7 +112,7 @@ namespace Com
 
         internal static Vector UnsafeCreateInstance(Type type, params double[] values) // 以不安全方式创建 Vector 的新实例。
         {
-            Vector result = Empty;
+            Vector result = new Vector();
 
             result._Type = type;
 
@@ -125,6 +125,16 @@ namespace Com
                     result._Size = length;
                     result._VArray = values;
                 }
+                else
+                {
+                    result._Size = 0;
+                    result._VArray = new double[0];
+                }
+            }
+            else
+            {
+                result._Size = 0;
+                result._VArray = new double[0];
             }
 
             return result;
@@ -134,11 +144,9 @@ namespace Com
 
         #region 构造函数
 
-        internal Vector() // 不使用任何参数初始化 Vector 的新实例。
+        private Vector() // 不使用任何参数初始化 Vector 的新实例。
         {
-            _Type = Type.ColumnVector;
-            _Size = 0;
-            _VArray = new double[0];
+
         }
 
         /// <summary>
@@ -539,7 +547,12 @@ namespace Com
         {
             get
             {
-                return new Vector();
+                return new Vector()
+                {
+                    _Type = Type.ColumnVector,
+                    _Size = 0,
+                    _VArray = new double[0]
+                };
             }
         }
 
@@ -3042,18 +3055,19 @@ namespace Com
         private sealed class Enumerator : IEnumerator // 实现 System.Collections.IEnumerator 的迭代器。
         {
             private Vector _Vector;
-            private int _Index = -1;
+            private int _Index;
 
             internal Enumerator(Vector vector)
             {
                 _Vector = vector;
+                _Index = -1;
             }
 
             object IEnumerator.Current
             {
                 get
                 {
-                    if (_Vector._Size > 0 && (_Index >= 0 && _Index < _Vector._Size))
+                    if (!IsNullOrEmpty(_Vector) && (_Index >= 0 && _Index < _Vector._Size))
                     {
                         return _Vector._VArray[_Index];
                     }
@@ -3064,7 +3078,7 @@ namespace Com
 
             bool IEnumerator.MoveNext()
             {
-                if (_Index < _Vector._Size - 1)
+                if (!IsNullOrEmpty(_Vector) && _Index < _Vector._Size - 1)
                 {
                     _Index++;
 
@@ -3147,11 +3161,12 @@ namespace Com
         private sealed class GenericEnumerator : IEnumerator<double> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
         {
             private Vector _Vector;
-            private int _Index = -1;
+            private int _Index;
 
             internal GenericEnumerator(Vector vector)
             {
                 _Vector = vector;
+                _Index = -1;
             }
 
             void IDisposable.Dispose()
@@ -3163,7 +3178,7 @@ namespace Com
             {
                 get
                 {
-                    if (_Vector._Size > 0 && (_Index >= 0 && _Index < _Vector._Size))
+                    if (!IsNullOrEmpty(_Vector) && (_Index >= 0 && _Index < _Vector._Size))
                     {
                         return _Vector._VArray[_Index];
                     }
@@ -3174,7 +3189,7 @@ namespace Com
 
             bool IEnumerator.MoveNext()
             {
-                if (_Index < _Vector._Size - 1)
+                if (!IsNullOrEmpty(_Vector) && _Index < _Vector._Size - 1)
                 {
                     _Index++;
 
@@ -3193,7 +3208,7 @@ namespace Com
             {
                 get
                 {
-                    if (_Vector._Size > 0 && (_Index >= 0 && _Index < _Vector._Size))
+                    if (!IsNullOrEmpty(_Vector) && (_Index >= 0 && _Index < _Vector._Size))
                     {
                         return _Vector._VArray[_Index];
                     }

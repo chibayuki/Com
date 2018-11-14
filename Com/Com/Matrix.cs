@@ -32,13 +32,13 @@ namespace Com
 
         private Size _Size; // 此 Matrix 存储的矩阵大小。
 
-        private double[,] _MArray = null; // 用于存储矩阵元素的数组。
+        private double[,] _MArray; // 用于存储矩阵元素的数组。
 
         //
 
         internal static Matrix UnsafeCreateInstance(double[,] values) // 以不安全方式创建 Matrix 的新实例。
         {
-            Matrix result = Empty;
+            Matrix result = new Matrix();
 
             if (!InternalMethod.IsNullOrEmpty(values))
             {
@@ -50,6 +50,16 @@ namespace Com
                     result._Size = new Size(width, height);
                     result._MArray = values;
                 }
+                else
+                {
+                    result._Size = Size.Empty;
+                    result._MArray = new double[0, 0];
+                }
+            }
+            else
+            {
+                result._Size = Size.Empty;
+                result._MArray = new double[0, 0];
             }
 
             return result;
@@ -59,10 +69,9 @@ namespace Com
 
         #region 构造函数
 
-        internal Matrix() // 不使用任何参数初始化 Matrix 的新实例。
+        private Matrix() // 不使用任何参数初始化 Matrix 的新实例。
         {
-            _Size = Size.Empty;
-            _MArray = new double[0, 0];
+
         }
 
         /// <summary>
@@ -581,7 +590,11 @@ namespace Com
         {
             get
             {
-                return new Matrix();
+                return new Matrix()
+                {
+                    _Size = Size.Empty,
+                    _MArray = new double[0, 0]
+                };
             }
         }
 

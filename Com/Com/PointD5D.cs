@@ -2448,11 +2448,12 @@ namespace Com
         private sealed class Enumerator : IEnumerator // 实现 System.Collections.IEnumerator 的迭代器。
         {
             private PointD5D _Pt;
-            private int _Index = -1;
+            private int _Index;
 
             internal Enumerator(PointD5D pt)
             {
                 _Pt = pt;
+                _Index = -1;
             }
 
             object IEnumerator.Current
@@ -2547,11 +2548,12 @@ namespace Com
         private sealed class GenericEnumerator : IEnumerator<double> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
         {
             private PointD5D _Pt;
-            private int _Index = -1;
+            private int _Index;
 
             internal GenericEnumerator(PointD5D pt)
             {
                 _Pt = pt;
+                _Index = -1;
             }
 
             void IDisposable.Dispose()

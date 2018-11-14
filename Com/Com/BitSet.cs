@@ -34,7 +34,7 @@ namespace Com
 
         private int _Size; // 此 BitSet 包含的元素数量。
 
-        private uint[] _UintArray = null; // 用于存储位值的 32 位无符号整数数组。
+        private uint[] _UintArray; // 用于存储位值的 32 位无符号整数数组。
 
         //
 
@@ -69,10 +69,9 @@ namespace Com
 
         #region 构造函数
 
-        internal BitSet() // 不使用任何参数初始化 BitSet 的新实例。
+        private BitSet() // 不使用任何参数初始化 BitSet 的新实例。
         {
-            _Size = 0;
-            _UintArray = new uint[0];
+
         }
 
         /// <summary>
@@ -320,7 +319,11 @@ namespace Com
         {
             get
             {
-                return new BitSet();
+                return new BitSet()
+                {
+                    _Size = 0,
+                    _UintArray = new uint[0]
+                };
             }
         }
 
