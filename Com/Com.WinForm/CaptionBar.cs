@@ -37,7 +37,7 @@ namespace Com.WinForm
         private bool _MeWillMove = false; // 是否即将移动窗口。
         private bool _MeIsMoving = false; // 是否正在移动窗口。
 
-        private const int _ExtendDist = 2; // 扩展距离，用于某些鼠标动作的判定。
+        private const int _ExtendDist = 4; // 扩展距离，用于某些鼠标动作的判定。
 
         //
 
@@ -456,22 +456,29 @@ namespace Com.WinForm
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (Me.EnableMaximize)
+                if (_MeIsMoving)
                 {
-                    if (Me.FormState == FormState.Maximized)
-                    {
-                        Me.Return();
-                    }
-                    else if (Me.FormState != FormState.FullScreen)
-                    {
-                        Me.Maximize();
-                    }
+                    Panel_CaptionBar_MouseUp(sender, e);
                 }
                 else
                 {
-                    if (Me.FormState != FormState.Normal && Me.FormState != FormState.FullScreen)
+                    if (Me.EnableMaximize)
                     {
-                        Me.Return();
+                        if (Me.FormState == FormState.Maximized)
+                        {
+                            Me.Return();
+                        }
+                        else if (Me.FormState != FormState.FullScreen)
+                        {
+                            Me.Maximize();
+                        }
+                    }
+                    else
+                    {
+                        if (Me.FormState != FormState.Normal && Me.FormState != FormState.FullScreen)
+                        {
+                            Me.Return();
+                        }
                     }
                 }
             }
@@ -500,7 +507,7 @@ namespace Com.WinForm
             Me.Client.BringToFront();
             Me.Client.Focus();
 
-            if (_MeIsMoving == true)
+            if (_MeIsMoving)
             {
                 Point CursorPosition = Cursor.Position;
                 Rectangle CurScrClient = FormManager.PrimaryScreenClient;
