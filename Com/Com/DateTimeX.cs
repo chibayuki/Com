@@ -20,7 +20,7 @@ namespace Com
     /// <summary>
     /// 以日期与当天的时间表示一个时刻。
     /// </summary>
-    public struct DateTimeX : IEquatable<DateTimeX>
+    public struct DateTimeX : IEquatable<DateTimeX>, IComparable
     {
         #region 私有成员与内部成员
 
@@ -1568,6 +1568,44 @@ namespace Com
         //
 
         /// <summary>
+        /// 将此 DateTimeX 结构与指定的对象进行次序比较。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        public int CompareTo(object obj)
+        {
+            if (obj == null || !(obj is DateTimeX))
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return 0;
+            }
+
+            return CompareTo((DateTimeX)obj);
+        }
+
+        /// <summary>
+        /// 将此 DateTimeX 结构与指定的 DateTimeX 结构进行次序比较。
+        /// </summary>
+        /// <param name="dateTime">用于比较的 DateTimeX 结构。</param>
+        public int CompareTo(DateTimeX dateTime)
+        {
+            if ((object)dateTime == null)
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, dateTime))
+            {
+                return 0;
+            }
+
+            return TotalMilliseconds.CompareTo(dateTime.TotalMilliseconds);
+        }
+
+        //
+
+        /// <summary>
         /// 返回将此 DateTimeX 结构与 TimeSpan 结构相加得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="timeSpan">TimeSpan 结构，用于相加到此 DateTimeX 结构。</param>
@@ -2006,6 +2044,35 @@ namespace Com
             }
 
             return left.Equals(right);
+        }
+
+        //
+
+        /// <summary>
+        /// 比较两个 DateTimeX 结构的次序。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 DateTimeX 结构。</param>
+        /// <param name="right">用于比较的第二个 DateTimeX 结构。</param>
+        public static int Compare(DateTimeX left, DateTimeX right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return 0;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return 0;
+            }
+            else if ((object)left == null)
+            {
+                return -1;
+            }
+            else if ((object)right == null)
+            {
+                return 1;
+            }
+
+            return left.CompareTo(right);
         }
 
         //
