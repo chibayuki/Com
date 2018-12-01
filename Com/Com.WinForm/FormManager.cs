@@ -337,6 +337,14 @@ namespace Com.WinForm
 
         private FormState _PreviousFormState = FormState.Normal; // FormState 的此前值。
 
+        internal FormState ActualFormState // 获取 FormState 的实际值（非 FormState.Minimized 值）。
+        {
+            get
+            {
+                return _FormState;
+            }
+        }
+
         internal FormState PreviousFormState // 获取 FormState 的此前值。
         {
             get

@@ -272,7 +272,7 @@ namespace Com.WinForm
                 }
             };
 
-            PictureBox_FullScreen.Image = FullScreenImage[(!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? PictureBox_FullScreen.BackColor : this.BackColor) ? 0 : 1), (Me.FormState == FormState.FullScreen ? 0 : 1), (_FullScreenButtonIsPointed || _FullScreenButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_FullScreen.Image = FullScreenImage[(!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? PictureBox_FullScreen.BackColor : this.BackColor) ? 0 : 1), (Me.ActualFormState == FormState.FullScreen ? 0 : 1), (_FullScreenButtonIsPointed || _FullScreenButtonIsPressed || Me.IsActive ? 0 : 1)];
 
             Bitmap[,] MinimizeImage = new Bitmap[2, 2]
             {
@@ -294,7 +294,7 @@ namespace Com.WinForm
                 }
             };
 
-            PictureBox_Maximize.Image = MaximizeImage[(!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? PictureBox_Maximize.BackColor : this.BackColor) ? 0 : 1), (Me.FormState == FormState.Maximized ? 0 : 1), (_MaximizeButtonIsPointed || _MaximizeButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_Maximize.Image = MaximizeImage[(!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? PictureBox_Maximize.BackColor : this.BackColor) ? 0 : 1), (Me.ActualFormState == FormState.Maximized ? 0 : 1), (_MaximizeButtonIsPointed || _MaximizeButtonIsPressed || Me.IsActive ? 0 : 1)];
 
             Bitmap[,] ExitImage = new Bitmap[2, 2]
             {
@@ -1246,6 +1246,10 @@ namespace Com.WinForm
 
             //
 
+            _RepaintCaptionBarBitmap();
+
+            //
+
             PictureBox_FullScreen.BackColor = (_FullScreenButtonIsPressed ? Me.RecommendColors.ControlButton_INC : (_FullScreenButtonIsPointed ? Me.RecommendColors.ControlButton_DEC : Me.RecommendColors.ControlButton)).ToColor();
             PictureBox_Minimize.BackColor = (_MinimizeButtonIsPressed ? Me.RecommendColors.ControlButton_INC : (_MinimizeButtonIsPointed ? Me.RecommendColors.ControlButton_DEC : Me.RecommendColors.ControlButton)).ToColor();
             PictureBox_Maximize.BackColor = (_MaximizeButtonIsPressed ? Me.RecommendColors.ControlButton_INC : (_MaximizeButtonIsPointed ? Me.RecommendColors.ControlButton_DEC : Me.RecommendColors.ControlButton)).ToColor();
@@ -1257,12 +1261,6 @@ namespace Com.WinForm
 
             ContextMenuStrip_Main.BackColor = Me.RecommendColors.MenuItemBackground.ToColor();
             ToolStripMenuItem_Return.ForeColor = ToolStripMenuItem_Minimize.ForeColor = ToolStripMenuItem_Maximize.ForeColor = ToolStripMenuItem_Exit.ForeColor = Me.RecommendColors.MenuItemText.ToColor();
-
-            //
-
-            _UpdateControlBoxButtonImage();
-
-            _RepaintCaptionBarBitmap();
         }
 
         #endregion
