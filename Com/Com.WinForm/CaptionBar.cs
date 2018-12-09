@@ -151,31 +151,7 @@ namespace Com.WinForm
                             CaptionLocF.Y = CaptionBounds.Y + Math.Max(0, CaptionBounds.Height - CaptionSizeF.Height);
                         }
 
-                        Color Cr_Caption_Fr = Me.RecommendColors.Caption.ToColor();
-                        Color Cr_Caption_Bk_Outer, Cr_Caption_Bk_Inner;
-
-                        if (!RecommendColors.BackColorFitLightText(Me.RecommendColors.CaptionBar))
-                        {
-                            Cr_Caption_Bk_Outer = Color.FromArgb(48, Color.White);
-                            Cr_Caption_Bk_Inner = Color.FromArgb(96, Color.White);
-                        }
-                        else
-                        {
-                            Cr_Caption_Bk_Outer = Color.FromArgb(32, Color.Black);
-                            Cr_Caption_Bk_Inner = Color.FromArgb(64, Color.Black);
-                        }
-
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Outer), new PointF(CaptionLocF.X - 2, CaptionLocF.Y - 2));
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Outer), new PointF(CaptionLocF.X + 2, CaptionLocF.Y - 2));
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Outer), new PointF(CaptionLocF.X + 2, CaptionLocF.Y + 2));
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Outer), new PointF(CaptionLocF.X - 2, CaptionLocF.Y + 2));
-
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Inner), new PointF(CaptionLocF.X - 1, CaptionLocF.Y));
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Inner), new PointF(CaptionLocF.X, CaptionLocF.Y - 1));
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Inner), new PointF(CaptionLocF.X + 1, CaptionLocF.Y));
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk_Inner), new PointF(CaptionLocF.X, CaptionLocF.Y + 1));
-
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Fr), CaptionLocF);
+                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Me.RecommendColors.Caption.ToColor()), CaptionLocF);
                     }
                 }
             }
