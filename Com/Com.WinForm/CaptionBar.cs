@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Threading;
 
 namespace Com.WinForm
@@ -1261,6 +1262,35 @@ namespace Com.WinForm
 
             ContextMenuStrip_Main.BackColor = Me.RecommendColors.MenuItemBackground.ToColor();
             ToolStripMenuItem_Return.ForeColor = ToolStripMenuItem_Minimize.ForeColor = ToolStripMenuItem_Maximize.ForeColor = ToolStripMenuItem_Exit.ForeColor = Me.RecommendColors.MenuItemText.ToColor();
+        }
+
+        public void OnActivated() // 在 Activated 事件发生时发生。
+        {
+            PictureBox_FormIcon.Image = Me.Client.Icon.ToBitmap();
+        }
+
+        public void OnDeactivate() // 在 Deactivate 事件发生时发生。
+        {
+            ColorMatrix CrMtrx = new ColorMatrix();
+
+            for (int i = 0; i < 3; i++)
+            {
+                CrMtrx[0, i] = 0.2126F;
+                CrMtrx[1, i] = 0.7152F;
+                CrMtrx[2, i] = 0.0722F;
+            }
+
+            ImageAttributes ImgAttr = new ImageAttributes();
+            ImgAttr.SetColorMatrix(CrMtrx, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+            Bitmap Img = Me.Client.Icon.ToBitmap();
+
+            Bitmap Img_Gray = new Bitmap(Img.Width, Img.Height);
+            Graphics Grap = Graphics.FromImage(Img_Gray);
+
+            Grap.DrawImage(Img, new Rectangle(0, 0, Img.Width, Img.Height), 0, 0, Img.Width, Img.Height, GraphicsUnit.Pixel, ImgAttr);
+
+            PictureBox_FormIcon.Image = Img_Gray;
         }
 
         #endregion

@@ -2276,6 +2276,15 @@ namespace Com.WinForm
                 _CaptionBar.OnThemeChanged();
                 _Resizer.OnThemeChanged();
 
+                if (_IsActive)
+                {
+                    _CaptionBar.OnActivated();
+                }
+                else
+                {
+                    _CaptionBar.OnDeactivate();
+                }
+
                 if (_Initialized)
                 {
                     if (_IsActive)
