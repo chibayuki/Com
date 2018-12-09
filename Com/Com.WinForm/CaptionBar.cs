@@ -1285,12 +1285,12 @@ namespace Com.WinForm
 
             Bitmap Img = Me.Client.Icon.ToBitmap();
 
-            Bitmap Img_Gray = new Bitmap(Img.Width, Img.Height);
-            Graphics Grap = Graphics.FromImage(Img_Gray);
+            Bitmap GrayscaleImg = new Bitmap(Img.Width, Img.Height);
+            Graphics Grap = Graphics.FromImage(GrayscaleImg);
 
             Grap.DrawImage(Img, new Rectangle(0, 0, Img.Width, Img.Height), 0, 0, Img.Width, Img.Height, GraphicsUnit.Pixel, ImgAttr);
 
-            PictureBox_FormIcon.Image = Img_Gray;
+            PictureBox_FormIcon.Image = GrayscaleImg;
         }
 
         #endregion

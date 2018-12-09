@@ -26,49 +26,49 @@ namespace Com.WinForm
     {
         #region 私有成员与内部成员
 
-        private ColorX _FormBackground = new ColorX(); // 窗口背景颜色。
-        private ColorX _CaptionBar = new ColorX(); // 窗口标题栏颜色。
-        private ColorX _Caption = new ColorX(); // 窗口标题颜色。
-        private ColorX _Shadow = new ColorX(); // 窗口阴影颜色。
+        private ColorX _FormBackground; // 窗口背景颜色。
+        private ColorX _CaptionBar; // 窗口标题栏颜色。
+        private ColorX _Caption; // 窗口标题颜色。
+        private ColorX _Shadow; // 窗口阴影颜色。
 
-        private ColorX _ControlButton = new ColorX(); // 控制按钮颜色。
-        private ColorX _ControlButton_DEC = new ColorX(); // 控制按钮颜色，降低对比度。
-        private ColorX _ControlButton_INC = new ColorX(); // 控制按钮颜色，提高对比度。
+        private ColorX _ControlButton; // 控制按钮颜色。
+        private ColorX _ControlButton_DEC; // 控制按钮颜色，降低对比度。
+        private ColorX _ControlButton_INC; // 控制按钮颜色，提高对比度。
 
-        private ColorX _ExitButton = new ColorX(); // 退出按钮颜色。
-        private ColorX _ExitButton_DEC = new ColorX(); // 退出按钮颜色，降低对比度。
-        private ColorX _ExitButton_INC = new ColorX(); // 退出按钮颜色，提高对比度。
+        private ColorX _ExitButton; // 退出按钮颜色。
+        private ColorX _ExitButton_DEC; // 退出按钮颜色，降低对比度。
+        private ColorX _ExitButton_INC; // 退出按钮颜色，提高对比度。
 
-        private ColorX _MenuItemBackground = new ColorX(); // 菜单项背景颜色。
-        private ColorX _MenuItemText = new ColorX(); // 菜单项文字颜色。
+        private ColorX _MenuItemBackground; // 菜单项背景颜色。
+        private ColorX _MenuItemText; // 菜单项文字颜色。
 
-        private ColorX _Main = new ColorX(); // 主要颜色。
-        private ColorX _Main_DEC = new ColorX(); // 主要颜色，降低对比度。
-        private ColorX _Main_INC = new ColorX(); // 主要颜色，提高对比度。
+        private ColorX _Main; // 主要颜色。
+        private ColorX _Main_DEC; // 主要颜色，降低对比度。
+        private ColorX _Main_INC; // 主要颜色，提高对比度。
 
-        private ColorX _Text = new ColorX(); // 文本颜色。
-        private ColorX _Text_DEC = new ColorX(); // 文本颜色，降低对比度。
-        private ColorX _Text_INC = new ColorX(); // 文本颜色，提高对比度。
+        private ColorX _Text; // 文本颜色。
+        private ColorX _Text_DEC; // 文本颜色，降低对比度。
+        private ColorX _Text_INC; // 文本颜色，提高对比度。
 
-        private ColorX _Background = new ColorX(); // 背景颜色。
-        private ColorX _Background_DEC = new ColorX(); // 背景颜色，降低对比度。
-        private ColorX _Background_INC = new ColorX(); // 背景颜色，提高对比度。
+        private ColorX _Background; // 背景颜色。
+        private ColorX _Background_DEC; // 背景颜色，降低对比度。
+        private ColorX _Background_INC; // 背景颜色，提高对比度。
 
-        private ColorX _Border = new ColorX(); // 边框颜色。
-        private ColorX _Border_DEC = new ColorX(); // 边框颜色，降低对比度。
-        private ColorX _Border_INC = new ColorX(); // 边框颜色，提高对比度。
+        private ColorX _Border; // 边框颜色。
+        private ColorX _Border_DEC; // 边框颜色，降低对比度。
+        private ColorX _Border_INC; // 边框颜色，提高对比度。
 
-        private ColorX _Button = new ColorX(); // 按钮颜色。
-        private ColorX _Button_DEC = new ColorX(); // 按钮颜色，降低对比度。
-        private ColorX _Button_INC = new ColorX(); // 按钮颜色，提高对比度。
+        private ColorX _Button; // 按钮颜色。
+        private ColorX _Button_DEC; // 按钮颜色，降低对比度。
+        private ColorX _Button_INC; // 按钮颜色，提高对比度。
 
-        private ColorX _Slider = new ColorX(); // 滑块颜色。
-        private ColorX _Slider_DEC = new ColorX(); // 滑块颜色，降低对比度。
-        private ColorX _Slider_INC = new ColorX(); // 滑块颜色，提高对比度。
+        private ColorX _Slider; // 滑块颜色。
+        private ColorX _Slider_DEC; // 滑块颜色，降低对比度。
+        private ColorX _Slider_INC; // 滑块颜色，提高对比度。
 
-        private ColorX _ScrollBar = new ColorX(); // 滚动条颜色。
-        private ColorX _ScrollBar_DEC = new ColorX(); // 滚动条颜色，降低对比度。
-        private ColorX _ScrollBar_INC = new ColorX(); // 滚动条颜色，提高对比度。
+        private ColorX _ScrollBar; // 滚动条颜色。
+        private ColorX _ScrollBar_DEC; // 滚动条颜色，降低对比度。
+        private ColorX _ScrollBar_INC; // 滚动条颜色，提高对比度。
 
         //
 
@@ -166,7 +166,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -177,7 +177,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(56).GrayscaleColor;
+                            _Caption = new ColorX(Color.FromArgb(192, 192, 192));
                         }
 
                         if (showShadowColor)
@@ -240,7 +240,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -251,7 +251,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(56).GrayscaleColor;
+                            _Caption = new ColorX(Color.FromArgb(192, 192, 192));
                         }
 
                         if (showShadowColor)
@@ -314,7 +314,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -325,7 +325,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(56).GrayscaleColor;
+                            _Caption = new ColorX(Color.FromArgb(192, 192, 192));
                         }
 
                         if (showShadowColor)
@@ -388,7 +388,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -399,7 +399,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(44).GrayscaleColor;
+                            _Caption = new ColorX(Color.FromArgb(128, 128, 128));
                         }
 
                         if (showShadowColor)
@@ -462,7 +462,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.Black : Color.White);
+                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -473,7 +473,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = themeColor.AtLightness_HSL(44).GrayscaleColor;
+                            _Caption = new ColorX(Color.FromArgb(128, 128, 128));
                         }
 
                         if (showShadowColor)

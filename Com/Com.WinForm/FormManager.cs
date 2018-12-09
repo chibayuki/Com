@@ -2273,9 +2273,6 @@ namespace Com.WinForm
 
                 _RecommendColors = new RecommendColors(_Theme, _ThemeColor, _ShowCaptionBarColor, _ShowShadowColor, _IsActive);
 
-                _CaptionBar.OnThemeChanged();
-                _Resizer.OnThemeChanged();
-
                 if (_IsActive)
                 {
                     _CaptionBar.OnActivated();
@@ -2284,6 +2281,9 @@ namespace Com.WinForm
                 {
                     _CaptionBar.OnDeactivate();
                 }
+
+                _CaptionBar.OnThemeChanged();
+                _Resizer.OnThemeChanged();
 
                 if (_Initialized)
                 {
