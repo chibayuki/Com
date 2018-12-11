@@ -2522,7 +2522,11 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right) || left._Type != right._Type)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2541,7 +2545,11 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right) || left._Type != right._Type)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2560,9 +2568,13 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <=(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right) || left._Type != right._Type)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
             else if (left._Size != right._Size)
             {
@@ -2579,9 +2591,13 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >=(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right) || left._Type != right._Type)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
             else if (left._Size != right._Size)
             {

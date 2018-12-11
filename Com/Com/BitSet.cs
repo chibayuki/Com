@@ -1115,7 +1115,11 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于后者。</returns>
         public static bool operator <(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -1145,7 +1149,11 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于后者。</returns>
         public static bool operator >(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -1175,9 +1183,13 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于或等于后者。</returns>
         public static bool operator <=(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
             else if (left._Size != right._Size)
             {
@@ -1205,9 +1217,13 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于或等于后者。</returns>
         public static bool operator >=(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
             else if (left._Size != right._Size)
             {

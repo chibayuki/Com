@@ -2216,7 +2216,11 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于后者。</returns>
         public static bool operator <(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty) || object.ReferenceEquals(left, right))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2232,7 +2236,11 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于后者。</returns>
         public static bool operator >(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty) || object.ReferenceEquals(left, right))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2248,9 +2256,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于或等于后者。</returns>
         public static bool operator <=(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty) || object.ReferenceEquals(left, right))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return (left.TotalMilliseconds <= right.TotalMilliseconds);
@@ -2264,9 +2276,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于或等于后者。</returns>
         public static bool operator >=(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty) || object.ReferenceEquals(left, right))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return (left.TotalMilliseconds >= right.TotalMilliseconds);
