@@ -20,7 +20,7 @@ namespace Com
     /// <summary>
     /// 以日期与当天的时间表示一个时刻。
     /// </summary>
-    public struct DateTimeX : IEquatable<DateTimeX>, IComparable
+    public struct DateTimeX : IEquatable<DateTimeX>, IComparable, IComparable<DateTimeX>
     {
         #region 私有成员与内部成员
 
@@ -1515,6 +1515,7 @@ namespace Com
         /// 判断此 DateTimeX 结构是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 DateTimeX 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || !(obj is DateTimeX))
@@ -1532,6 +1533,7 @@ namespace Com
         /// <summary>
         /// 返回此 DateTimeX 结构的哈希代码。
         /// </summary>
+        /// <returns>32 位整数，表示此 DateTimeX 结构的哈希代码。</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -1540,6 +1542,7 @@ namespace Com
         /// <summary>
         /// 将此 DateTimeX 结构转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 DateTimeX 结构的字符串形式。</returns>
         public override string ToString()
         {
             return string.Concat((Year < 0 ? string.Concat("BC", (-Year)) : Year.ToString()), "/", Month, "/", Day, " ", Hour, ":", Minute.ToString("D2"), ":", Second.ToString("D2"));
@@ -1551,6 +1554,7 @@ namespace Com
         /// 判断此 DateTimeX 结构是否与指定的 DateTimeX 结构相等。
         /// </summary>
         /// <param name="dateTime">用于比较的 DateTimeX 结构。</param>
+        /// <returns>布尔值，表示此 DateTimeX 结构是否与指定的 DateTimeX 结构相等。</returns>
         public bool Equals(DateTimeX dateTime)
         {
             if ((object)dateTime == null)
@@ -1571,6 +1575,7 @@ namespace Com
         /// 将此 DateTimeX 结构与指定的对象进行次序比较。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>32 位整数，表示将此 DateTimeX 结构与指定的对象进行次序比较得到的结果。</returns>
         public int CompareTo(object obj)
         {
             if (obj == null || !(obj is DateTimeX))
@@ -1589,6 +1594,7 @@ namespace Com
         /// 将此 DateTimeX 结构与指定的 DateTimeX 结构进行次序比较。
         /// </summary>
         /// <param name="dateTime">用于比较的 DateTimeX 结构。</param>
+        /// <returns>32 位整数，表示将此 DateTimeX 结构与指定的 DateTimeX 结构进行次序比较得到的结果。</returns>
         public int CompareTo(DateTimeX dateTime)
         {
             if ((object)dateTime == null)
@@ -1609,6 +1615,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构与 TimeSpan 结构相加得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="timeSpan">TimeSpan 结构，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构与 TimeSpan 结构相加得到的结果。</returns>
         public DateTimeX Add(TimeSpan timeSpan)
         {
             return AddMilliseconds(timeSpan.TotalMilliseconds);
@@ -1618,6 +1625,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干年得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="years">64 位整数表示的年，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干年得到的结果。</returns>
         public DateTimeX AddYears(long years)
         {
             if ((double)Year + years - 1 < long.MinValue)
@@ -1665,6 +1673,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干个月得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="months">64 位整数表示的月，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干个月得到的结果。</returns>
         public DateTimeX AddMonths(long months)
         {
             if ((double)Year + (months / _MonthsPerYear) - 2 < long.MinValue)
@@ -1724,6 +1733,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干周得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="weeks">双精度浮点数表示的周，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干周得到的结果。</returns>
         public DateTimeX AddWeeks(double weeks)
         {
             if (InternalMethod.IsNaNOrInfinity(weeks))
@@ -1760,6 +1770,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干天得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="days">双精度浮点数表示的天，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干天得到的结果。</returns>
         public DateTimeX AddDays(double days)
         {
             if (InternalMethod.IsNaNOrInfinity(days))
@@ -1796,6 +1807,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干小时得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="hours">双精度浮点数表示的小时，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干小时得到的结果。</returns>
         public DateTimeX AddHours(double hours)
         {
             if (InternalMethod.IsNaNOrInfinity(hours))
@@ -1832,6 +1844,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干分钟得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="minutes">双精度浮点数表示的分钟，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干分钟得到的结果。</returns>
         public DateTimeX AddMinutes(double minutes)
         {
             if (InternalMethod.IsNaNOrInfinity(minutes))
@@ -1868,6 +1881,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干秒得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="seconds">双精度浮点数表示的秒，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干秒得到的结果。</returns>
         public DateTimeX AddSeconds(double seconds)
         {
             if (InternalMethod.IsNaNOrInfinity(seconds))
@@ -1904,6 +1918,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干毫秒得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="milliseconds">十进制数表示的毫秒，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干毫秒得到的结果。</returns>
         public DateTimeX AddMilliseconds(decimal milliseconds)
         {
             if ((double)TotalMilliseconds + (double)milliseconds < (double)decimal.MinValue)
@@ -1935,6 +1950,7 @@ namespace Com
         /// 返回将此 DateTimeX 结构加上若干毫秒得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="milliseconds">双精度浮点数表示的毫秒，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干毫秒得到的结果。</returns>
         public DateTimeX AddMilliseconds(double milliseconds)
         {
             if (InternalMethod.IsNaNOrInfinity(milliseconds))
@@ -1972,6 +1988,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构转换为以本地时区表示的 DateTimeX 结构的新实例。
         /// </summary>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以本地时区表示的 DateTimeX 结构的新实例。</returns>
         public DateTimeX ToLocalTime()
         {
             return new DateTimeX(TotalMilliseconds, _LocalUtcOffset);
@@ -1980,6 +1997,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构转换为以协调世界时（UTC）表示的 DateTimeX 结构的新实例。
         /// </summary>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以协调世界时（UTC）表示的 DateTimeX 结构的新实例。</returns>
         public DateTimeX ToUniversalTime()
         {
             return new DateTimeX(TotalMilliseconds, _Utc);
@@ -1990,6 +2008,7 @@ namespace Com
         /// <summary>
         /// 返回表示此 DateTimeX 结构的长日期字符串。
         /// </summary>
+        /// <returns>字符串，表示此 DateTimeX 结构的长日期字符串形式。</returns>
         public string ToLongDateString()
         {
             return DateLongString;
@@ -1998,6 +2017,7 @@ namespace Com
         /// <summary>
         /// 返回表示此 DateTimeX 结构的短日期字符串。
         /// </summary>
+        /// <returns>字符串，表示此 DateTimeX 结构的短日期字符串形式。</returns>
         public string ToShortDateString()
         {
             return DateShortString;
@@ -2006,6 +2026,7 @@ namespace Com
         /// <summary>
         /// 返回表示此 DateTimeX 结构的长时间字符串。
         /// </summary>
+        /// <returns>字符串，表示此 DateTimeX 结构的长时间字符串形式。</returns>
         public string ToLongTimeString()
         {
             return TimeLongString;
@@ -2014,6 +2035,7 @@ namespace Com
         /// <summary>
         /// 返回表示此 DateTimeX 结构的短时间字符串。
         /// </summary>
+        /// <returns>字符串，表示此 DateTimeX 结构的短时间字符串形式。</returns>
         public string ToShortTimeString()
         {
             return TimeShortString;
@@ -2028,19 +2050,20 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 DateTimeX 结构。</param>
         /// <param name="right">用于比较的第二个 DateTimeX 结构。</param>
+        /// <returns>布尔值，表示两个 DateTimeX 结构是否相等。</returns>
         public static bool Equals(DateTimeX left, DateTimeX right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return left.Equals(right);
@@ -2053,13 +2076,10 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 DateTimeX 结构。</param>
         /// <param name="right">用于比较的第二个 DateTimeX 结构。</param>
+        /// <returns>32 位整数，表示将两个 DateTimeX 结构进行次序比较得到的结果。</returns>
         public static int Compare(DateTimeX left, DateTimeX right)
         {
             if ((object)left == null && (object)right == null)
-            {
-                return 0;
-            }
-            else if (object.ReferenceEquals(left, right))
             {
                 return 0;
             }
@@ -2071,6 +2091,10 @@ namespace Com
             {
                 return 1;
             }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return 0;
+            }
 
             return left.CompareTo(right);
         }
@@ -2081,6 +2105,7 @@ namespace Com
         /// 返回表示指定年是否为闰年的布尔值。
         /// </summary>
         /// <param name="year">64 位整数表示的年。</param>
+        /// <returns>布尔值，表示指定年是否为闰年。</returns>
         public static bool IsLeapYear(long year)
         {
             if (year == 0)
@@ -2102,6 +2127,7 @@ namespace Com
         /// 返回指定年的天数。
         /// </summary>
         /// <param name="year">64 位整数表示的年。</param>
+        /// <returns>32 位整数，表示指定年的天数。</returns>
         public static int DaysInYear(long year)
         {
             if (year != 0)
@@ -2117,6 +2143,7 @@ namespace Com
         /// </summary>
         /// <param name="year">64 位整数表示的年。</param>
         /// <param name="month">32 位整数表示的月。</param>
+        /// <returns>32 位整数，表示指定年的指定月的天数。</returns>
         public static int DaysInMonth(long year, int month)
         {
             if (year != 0 && (month >= _MinMonth && month <= _MaxMonth))
@@ -2138,19 +2165,20 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
+        /// <returns>布尔值，表示两个 Complex。</returns>
         public static bool operator ==(DateTimeX left, DateTimeX right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return (left.TotalMilliseconds == right.TotalMilliseconds);
@@ -2161,19 +2189,20 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
+        /// <returns>布尔值，表示两个 DateTimeX 结构是否表示不同的时刻。</returns>
         public static bool operator !=(DateTimeX left, DateTimeX right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
             else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
             }
 
             return (left.TotalMilliseconds != right.TotalMilliseconds);
@@ -2184,9 +2213,10 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
+        /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于后者。</returns>
         public static bool operator <(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty) || object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2199,9 +2229,10 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
+        /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于后者。</returns>
         public static bool operator >(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty) || object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2214,9 +2245,10 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
+        /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于或等于后者。</returns>
         public static bool operator <=(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty) || object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2229,9 +2261,10 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
+        /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于或等于后者。</returns>
         public static bool operator >=(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty) || object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2246,6 +2279,7 @@ namespace Com
         /// </summary>
         /// <param name="dateTime">DateTimeX 结构，表示被加数。</param>
         /// <param name="timeSpan">TimeSpan 结构，表示加数。</param>
+        /// <returns>DateTimeX 结构，表示将 DateTimeX 结构与 TimeSpan 结构相加得到的结果。</returns>
         public static DateTimeX operator +(DateTimeX dateTime, TimeSpan timeSpan)
         {
             return dateTime.AddMilliseconds(timeSpan.TotalMilliseconds);
@@ -2256,6 +2290,7 @@ namespace Com
         /// </summary>
         /// <param name="dateTime">DateTimeX 结构，表示被减数。</param>
         /// <param name="timeSpan">TimeSpan 结构，表示减数。</param>
+        /// <returns>DateTimeX 结构，表示将 DateTimeX 结构与 TimeSpan 结构相减得到的结果。</returns>
         public static DateTimeX operator -(DateTimeX dateTime, TimeSpan timeSpan)
         {
             return dateTime.AddMilliseconds(-(timeSpan.TotalMilliseconds));

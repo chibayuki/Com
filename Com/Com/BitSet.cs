@@ -20,7 +20,7 @@ namespace Com
     /// <summary>
     /// 以数组的形式管理位值的集合，位值 1 与 0 分别以布尔值 true 与 false 表示。
     /// </summary>
-    public sealed class BitSet : IEquatable<BitSet>
+    public sealed class BitSet : IEquatable<BitSet>, IComparable, IComparable<BitSet>
     {
         #region 私有成员与内部成员
 
@@ -335,6 +335,7 @@ namespace Com
         /// 判断此 BitSet 是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 BitSet 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || !(obj is BitSet))
@@ -352,6 +353,7 @@ namespace Com
         /// <summary>
         /// 返回此 BitSet 的哈希代码。
         /// </summary>
+        /// <returns>32 位整数，表示此 BitSet 的哈希代码。</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -360,6 +362,7 @@ namespace Com
         /// <summary>
         /// 将此 BitSet 转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 BitSet 的字符串形式。</returns>
         public override string ToString()
         {
             string Str = string.Empty;
@@ -382,6 +385,7 @@ namespace Com
         /// 判断此 BitSet 是否与指定的 BitSet 对象相等。
         /// </summary>
         /// <param name="bitSet">用于比较的 BitSet 对象。</param>
+        /// <returns>布尔值，表示此 BitSet 是否与指定的 BitSet 对象相等。</returns>
         public bool Equals(BitSet bitSet)
         {
             if ((object)bitSet == null)
@@ -411,8 +415,72 @@ namespace Com
         //
 
         /// <summary>
+        /// 将此 BitSet 与指定的对象进行次序比较。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        /// <returns>32 位整数，表示此 BitSet 与指定的对象进行次序比较的结果。</returns>
+        public int CompareTo(object obj)
+        {
+            if (obj == null || !(obj is BitSet))
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return 0;
+            }
+
+            return CompareTo((BitSet)obj);
+        }
+
+        /// <summary>
+        /// 将此 BitSet 与指定的 BitSet 对象进行次序比较。
+        /// </summary>
+        /// <param name="bitSet">用于比较的 BitSet 对象。</param>
+        /// <returns>32 位整数，表示此 BitSet 与指定的 BitSet 对象进行次序比较的结果。</returns>
+        public int CompareTo(BitSet bitSet)
+        {
+            if ((object)bitSet == null)
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, bitSet))
+            {
+                return 0;
+            }
+            else if (_Size != bitSet._Size)
+            {
+                if (_Size < bitSet._Size)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+
+            int Len = _GetUintNumOfBitNum(_Size);
+
+            for (int i = 0; i < Len; i++)
+            {
+                int result = _UintArray[i].CompareTo(bitSet._UintArray[i]);
+
+                if (result != 0)
+                {
+                    return result;
+                }
+            }
+
+            return 0;
+        }
+
+        //
+
+        /// <summary>
         /// 获取此 BitSet 的副本。
         /// </summary>
+        /// <returns>BitSet 对象，表示此 BitSet 的副本。</returns>
         public BitSet Copy()
         {
             if (_Size > 0)
@@ -459,6 +527,7 @@ namespace Com
         /// 获取此 BitSet 指定索引位置的位值。
         /// </summary>
         /// <param name="index">索引。</param>
+        /// <returns>布尔值，表示此 BitSet 指定索引位置的位值。</returns>
         public bool Get(int index)
         {
             if (_Size > 0 && (index >= 0 && index < _Size))
@@ -603,8 +672,9 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 BitSet 值为 true 的位值的数量。
+        /// 返回此 BitSet 值为 true 的位值的数量。
         /// </summary>
+        /// <returns>32 位整数，表示此 BitSet 值为 true 的位值的数量。</returns>
         public int TrueBitCount()
         {
             if (_Size > 0)
@@ -632,8 +702,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 BitSet 值为 false 的位值的数量。
+        /// 返回此 BitSet 值为 false 的位值的数量。
         /// </summary>
+        /// <returns>32 位整数，表示此 BitSet 值为 false 的位值的数量。</returns>
         public int FalseBitCount()
         {
             if (_Size > 0)
@@ -645,8 +716,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取包含此 BitSet 值为 true 的位值的索引的数组。
+        /// 返回包含此 BitSet 值为 true 的位值的索引的数组。
         /// </summary>
+        /// <returns>32 位整数数组，该数组包含此 BitSet 值为 true 的位值的索引。</returns>
         public int[] TrueBitIndex()
         {
             if (_Size > 0)
@@ -682,8 +754,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取包含此 BitSet 值为 true 的位值的索引的数组。
+        /// 返回包含此 BitSet 值为 false 的位值的索引的数组。
         /// </summary>
+        /// <returns>32 位整数数组，该数组包含此 BitSet 值为 false 的位值的索引。</returns>
         public int[] FalseBitIndex()
         {
             if (_Size > 0)
@@ -724,6 +797,7 @@ namespace Com
         /// 返回将此 BitSet 与指定的 BitSet 按位与得到的 BitSet 的新实例。
         /// </summary>
         /// <param name="bitSet">运算符右侧的 BitSet。</param>
+        /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位与得到的结果。</returns>
         public BitSet And(BitSet bitSet)
         {
             if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
@@ -747,6 +821,7 @@ namespace Com
         /// 返回将此 BitSet 与指定的 BitSet 按位或得到的 BitSet 的新实例。
         /// </summary>
         /// <param name="bitSet">运算符右侧的 BitSet。</param>
+        /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位或得到的结果。</returns>
         public BitSet Or(BitSet bitSet)
         {
             if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
@@ -770,6 +845,7 @@ namespace Com
         /// 返回将此 BitSet 与指定的 BitSet 按位异或得到的 BitSet 的新实例。
         /// </summary>
         /// <param name="bitSet">运算符右侧的 BitSet。</param>
+        /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位异或得到的结果。</returns>
         public BitSet Xor(BitSet bitSet)
         {
             if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
@@ -792,6 +868,7 @@ namespace Com
         /// <summary>
         /// 返回将此 BitSet 按位取反得到的 BitSet 的新实例。
         /// </summary>
+        /// <returns>BitSet 对象，表示将此 BitSet 按位取反得到的结果。</returns>
         public BitSet Not()
         {
             if (_Size > 0)
@@ -826,6 +903,7 @@ namespace Com
         /// <summary>
         /// 将此 BitSet 转换为布尔值数组。
         /// </summary>
+        /// <returns>布尔值数组，数组元素表示此 BitSet 的位值的布尔值形式。</returns>
         public bool[] ToBoolArray()
         {
             if (_Size > 0)
@@ -846,6 +924,7 @@ namespace Com
         /// <summary>
         /// 将此 BitSet 转换为 32 位整数数组。
         /// </summary>
+        /// <returns>32 位整数数组，数组元素表示此 BitSet 的位值的数值形式。</returns>
         public int[] ToIntArray()
         {
             if (_Size > 0)
@@ -868,6 +947,7 @@ namespace Com
         /// <summary>
         /// 将此 BitSet 的所有位值转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 BitSet 的所有位值的字符串形式。</returns>
         public string ToBitString()
         {
             if (_Size > 0)
@@ -893,6 +973,7 @@ namespace Com
         /// 判断指定的 BitSet 是否为 null 或不包含任何元素。
         /// </summary>
         /// <param name="bitSet">用于判断的 BitSet 对象。</param>
+        /// <returns>布尔值，表示指定的 BitSet 是否为 null 或不包含任何元素。</returns>
         public static bool IsNullOrEmpty(BitSet bitSet)
         {
             return ((object)bitSet == null || bitSet._Size <= 0);
@@ -905,13 +986,10 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 BitSet 对象。</param>
         /// <param name="right">用于比较的第二个 BitSet 对象。</param>
+        /// <returns>布尔值，表示两个 BitSet 对象是否相等。</returns>
         public static bool Equals(BitSet left, BitSet right)
         {
             if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
@@ -919,8 +997,42 @@ namespace Com
             {
                 return false;
             }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
 
             return left.Equals(right);
+        }
+
+        //
+
+        /// <summary>
+        /// 比较两个 BitSet 对象的次序。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 BitSet 对象。</param>
+        /// <param name="right">用于比较的第二个 BitSet 对象。</param>
+        /// <returns>32 位整数，表示对两个 BitSet 对象进行次序比较的结果。</returns>
+        public static int Compare(BitSet left, BitSet right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return 0;
+            }
+            else if ((object)left == null)
+            {
+                return -1;
+            }
+            else if ((object)right == null)
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return 0;
+            }
+
+            return left.CompareTo(right);
         }
 
         #endregion
@@ -932,19 +1044,20 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
+        /// <returns>布尔值，表示两个 BitSet 对象是否相等。</returns>
         public static bool operator ==(BitSet left, BitSet right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             int Len = _GetUintNumOfBitNum(left._Size);
@@ -965,19 +1078,20 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
+        /// <returns>布尔值，表示两个 BitSet 对象是否不相等。</returns>
         public static bool operator !=(BitSet left, BitSet right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
             }
 
             int Len = _GetUintNumOfBitNum(left._Size);
@@ -991,6 +1105,126 @@ namespace Com
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 判断两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
+        /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于后者。</returns>
+        public static bool operator <(BitSet left, BitSet right)
+        {
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if (left._Size != right._Size)
+            {
+                return (left._Size < right._Size);
+            }
+
+            int Len = _GetUintNumOfBitNum(left._Size);
+
+            for (int i = 0; i < Len; i++)
+            {
+                if (left._UintArray[i] != right._UintArray[i])
+                {
+                    return (left._UintArray[i] < right._UintArray[i]);
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 判断两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
+        /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于后者。</returns>
+        public static bool operator >(BitSet left, BitSet right)
+        {
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if (left._Size != right._Size)
+            {
+                return (left._Size < right._Size);
+            }
+
+            int Len = _GetUintNumOfBitNum(left._Size);
+
+            for (int i = 0; i < Len; i++)
+            {
+                if (left._UintArray[i] != right._UintArray[i])
+                {
+                    return (left._UintArray[i] > right._UintArray[i]);
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 判断两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于或等于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
+        /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于或等于后者。</returns>
+        public static bool operator <=(BitSet left, BitSet right)
+        {
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if (left._Size != right._Size)
+            {
+                return (left._Size < right._Size);
+            }
+
+            int Len = _GetUintNumOfBitNum(left._Size);
+
+            for (int i = 0; i < Len; i++)
+            {
+                if (left._UintArray[i] != right._UintArray[i])
+                {
+                    return (left._UintArray[i] < right._UintArray[i]);
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 判断两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于或等于后者。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
+        /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于或等于后者。</returns>
+        public static bool operator >=(BitSet left, BitSet right)
+        {
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if (left._Size != right._Size)
+            {
+                return (left._Size < right._Size);
+            }
+
+            int Len = _GetUintNumOfBitNum(left._Size);
+
+            for (int i = 0; i < Len; i++)
+            {
+                if (left._UintArray[i] != right._UintArray[i])
+                {
+                    return (left._UintArray[i] > right._UintArray[i]);
+                }
+            }
+
+            return true;
         }
 
         #endregion

@@ -1857,13 +1857,13 @@ namespace Com
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return left.Equals(right);
@@ -1882,10 +1882,6 @@ namespace Com
             {
                 return 0;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return 0;
-            }
             else if ((object)left == null)
             {
                 return -1;
@@ -1893,6 +1889,10 @@ namespace Com
             else if ((object)right == null)
             {
                 return 1;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return 0;
             }
 
             return left.CompareTo(right);
@@ -2464,13 +2464,13 @@ namespace Com
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             for (int i = 0; i < left._Size; i++)
@@ -2495,13 +2495,13 @@ namespace Com
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
             }
 
             for (int i = 0; i < left._Size; i++)
@@ -2522,7 +2522,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right) || left._Type != right._Type)
             {
                 return false;
             }
@@ -2541,7 +2541,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right) || left._Type != right._Type)
             {
                 return false;
             }
@@ -2560,7 +2560,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator <=(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right) || left._Type != right._Type)
             {
                 return false;
             }
@@ -2579,7 +2579,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
         public static bool operator >=(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || object.ReferenceEquals(left, right) || left._Type != right._Type)
             {
                 return false;
             }

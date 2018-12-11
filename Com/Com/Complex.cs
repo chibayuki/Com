@@ -286,6 +286,7 @@ namespace Com
         /// 判断此 Complex 结构是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 Complex 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || !(obj is Complex))
@@ -303,6 +304,7 @@ namespace Com
         /// <summary>
         /// 返回此 Complex 结构的哈希代码。
         /// </summary>
+        /// <returns>32 位整数，表示此 Complex 结构的哈希代码。</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -311,6 +313,7 @@ namespace Com
         /// <summary>
         /// 将此 Complex 结构转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 Complex 结构的字符串形式。</returns>
         public override string ToString()
         {
             if (IsNaN)
@@ -373,6 +376,7 @@ namespace Com
         /// 判断此 Complex 结构是否与指定的 Complex 结构相等。
         /// </summary>
         /// <param name="comp">用于比较的 Complex 结构。</param>
+        /// <returns>布尔值，表示此 Complex 结构是否与指定的 Complex 结构相等。</returns>
         public bool Equals(Complex comp)
         {
             if ((object)comp == null)
@@ -392,6 +396,7 @@ namespace Com
         /// <summary>
         /// 返回将此 Complex 结构转换为 PointD 结构的新实例。
         /// </summary>
+        /// <returns>PointD 结构，表示将此 Complex 结构转换为 PointD 结构的新实例。</returns>
         public PointD ToPointD()
         {
             return new PointD(_Real, _Image);
@@ -406,19 +411,20 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 Complex 结构。</param>
         /// <param name="right">用于比较的第二个 Complex 结构。</param>
+        /// <returns>布尔值，表示两个 Complex 结构是否相等。</returns>
         public static bool Equals(Complex left, Complex right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return left.Equals(right);
@@ -430,6 +436,7 @@ namespace Com
         /// 返回将 PointD 结构转换为 Complex 结构的新实例。
         /// </summary>
         /// <param name="pt">Point 结构。</param>
+        /// <returns>Complex 结构，表示将 PointD 结构转换为 Complex 结构的新实例。</returns>
         public static Complex FromPointD(PointD pt)
         {
             if ((object)pt != null)
@@ -446,6 +453,7 @@ namespace Com
         /// 返回对 Complex 结构的计算平方得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示底数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算平方得到的结果。</returns>
         public static Complex Sqr(Complex comp)
         {
             if ((object)comp != null)
@@ -460,6 +468,7 @@ namespace Com
         /// 返回对 Complex 结构的计算平方根得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示被开方数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算平方根得到的结果。</returns>
         public static Complex Sqrt(Complex comp)
         {
             if ((object)comp != null)
@@ -477,6 +486,7 @@ namespace Com
         /// 返回对 Complex 结构的计算自然幂得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示底数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算自然幂得到的结果。</returns>
         public static Complex Exp(Complex comp)
         {
             if ((object)comp != null)
@@ -495,6 +505,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Complex 结构，表示底数。</param>
         /// <param name="right">Complex 结构，表示指数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算幂得到的结果。</returns>
         public static Complex Pow(Complex left, Complex right)
         {
             if ((object)left != null && (object)right != null)
@@ -531,6 +542,7 @@ namespace Com
         /// 返回对 Complex 结构的计算自然对数得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示幂。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算自然对数得到的结果。</returns>
         public static Complex Log(Complex comp)
         {
             if ((object)comp != null)
@@ -549,6 +561,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Complex 结构，表示基数。</param>
         /// <param name="right">Complex 结构，表示幂。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算对数得到的结果。</returns>
         public static Complex Log(Complex left, Complex right)
         {
             if ((object)left != null && (object)right != null)
@@ -572,6 +585,7 @@ namespace Com
         /// 返回对 Complex 结构的计算正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算正弦得到的结果。</returns>
         public static Complex Sin(Complex comp)
         {
             if ((object)comp != null)
@@ -589,6 +603,7 @@ namespace Com
         /// 返回对 Complex 结构的计算余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算余弦得到的结果。</returns>
         public static Complex Cos(Complex comp)
         {
             if ((object)comp != null)
@@ -606,6 +621,7 @@ namespace Com
         /// 返回对 Complex 结构的计算正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算正切得到的结果。</returns>
         public static Complex Tan(Complex comp)
         {
             if ((object)comp != null)
@@ -620,6 +636,7 @@ namespace Com
         /// 返回对 Complex 结构的计算反正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示正弦值的复数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算反正弦得到的结果。</returns>
         public static Complex Asin(Complex comp)
         {
             if ((object)comp != null)
@@ -634,6 +651,7 @@ namespace Com
         /// 返回对 Complex 结构的计算反余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示余弦值的复数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算反余弦得到的结果。</returns>
         public static Complex Acos(Complex comp)
         {
             if ((object)comp != null)
@@ -648,6 +666,7 @@ namespace Com
         /// 返回对 Complex 结构的计算反正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示正切值的复数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算反正切得到的结果。</returns>
         public static Complex Atan(Complex comp)
         {
             if ((object)comp != null)
@@ -662,6 +681,7 @@ namespace Com
         /// 返回对 Complex 结构的计算双曲正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算双曲正弦得到的结果。</returns>
         public static Complex Sinh(Complex comp)
         {
             if ((object)comp != null)
@@ -676,6 +696,7 @@ namespace Com
         /// 返回对 Complex 结构的计算双曲余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算双曲余弦得到的结果。</returns>
         public static Complex Cosh(Complex comp)
         {
             if ((object)comp != null)
@@ -690,6 +711,7 @@ namespace Com
         /// 返回对 Complex 结构的计算双曲正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算双曲正切得到的结果。</returns>
         public static Complex Tanh(Complex comp)
         {
             if ((object)comp != null)
@@ -704,6 +726,7 @@ namespace Com
         /// 返回对 Complex 结构的计算反双曲正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲正弦值的复数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲正弦得到的结果。</returns>
         public static Complex Asinh(Complex comp)
         {
             if ((object)comp != null)
@@ -718,6 +741,7 @@ namespace Com
         /// 返回对 Complex 结构的计算反双曲余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲余弦值的复数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲余弦得到的结果。</returns>
         public static Complex Acosh(Complex comp)
         {
             if ((object)comp != null)
@@ -732,6 +756,7 @@ namespace Com
         /// 返回对 Complex 结构的计算反双曲正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲正切值的复数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲正切得到的结果。</returns>
         public static Complex Atanh(Complex comp)
         {
             if ((object)comp != null)
@@ -748,6 +773,7 @@ namespace Com
         /// 返回将 Complex 结构的所有分量取绝对值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构的所有分量取绝对值得到的结果。</returns>
         public static Complex Abs(Complex comp)
         {
             if ((object)comp != null)
@@ -762,6 +788,7 @@ namespace Com
         /// 返回将 Complex 结构的所有分量取符号数得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构的所有分量取符号数得到的结果。</returns>
         public static Complex Sign(Complex comp)
         {
             if ((object)comp != null)
@@ -776,6 +803,7 @@ namespace Com
         /// 返回将 Complex 结构的所有分量舍入到较大的整数值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到较大的整数值得到的结果。</returns>
         public static Complex Ceiling(Complex comp)
         {
             if ((object)comp != null)
@@ -790,6 +818,7 @@ namespace Com
         /// 返回将 Complex 结构的所有分量舍入到较小的整数值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到较小的整数值得到的结果。</returns>
         public static Complex Floor(Complex comp)
         {
             if ((object)comp != null)
@@ -804,6 +833,7 @@ namespace Com
         /// 返回将 Complex 结构的所有分量舍入到最接近的整数值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到最接近的整数值得到的结果。</returns>
         public static Complex Round(Complex comp)
         {
             if ((object)comp != null)
@@ -818,6 +848,7 @@ namespace Com
         /// 返回将 Complex 结构的所有分量截断小数部分取整得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构的所有分量截断小数部分取整得到的结果。</returns>
         public static Complex Truncate(Complex comp)
         {
             if ((object)comp != null)
@@ -833,6 +864,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Complex 结构，用于比较的第一个结构。</param>
         /// <param name="right">Complex 结构，用于比较的第二个结构。</param>
+        /// <returns>Complex 结构，表示将两个 Complex 结构的所有分量分别取最大值得到的结果。</returns>
         public static Complex Max(Complex left, Complex right)
         {
             if ((object)left != null && (object)right != null)
@@ -848,6 +880,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Complex 结构，用于比较的第一个结构。</param>
         /// <param name="right">Complex 结构，用于比较的第二个结构。</param>
+        /// <returns>Complex 结构，表示将两个 Complex 结构的所有分量分别取最小值得到的结果。</returns>
         public static Complex Min(Complex left, Complex right)
         {
             if ((object)left != null && (object)right != null)
@@ -867,19 +900,20 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        /// <returns>布尔值，表示两个 Complex 结构是否相等。</returns>
         public static bool operator ==(Complex left, Complex right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return (left._Real == right._Real && left._Image == right._Image);
@@ -890,19 +924,20 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        /// <returns>布尔值，表示两个 Complex 结构是否不相等。</returns>
         public static bool operator !=(Complex left, Complex right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
             }
 
             return (left._Real != right._Real || left._Image != right._Image);
@@ -913,6 +948,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者小于后者。</returns>
         public static bool operator <(Complex left, Complex right)
         {
             if ((object)left == null || (object)right == null)
@@ -928,6 +964,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者大于后者。</returns>
         public static bool operator >(Complex left, Complex right)
         {
             if ((object)left == null || (object)right == null)
@@ -943,6 +980,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者小于或等于后者。</returns>
         public static bool operator <=(Complex left, Complex right)
         {
             if ((object)left == null || (object)right == null)
@@ -958,6 +996,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
+        /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者大于或等于后者。</returns>
         public static bool operator >=(Complex left, Complex right)
         {
             if ((object)left == null || (object)right == null)
@@ -974,6 +1013,7 @@ namespace Com
         /// 返回在 Complex 结构的所有分量前添加正号得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示在 Complex 结构的所有分量前添加正号得到的结果。</returns>
         public static Complex operator +(Complex comp)
         {
             if ((object)comp != null)
@@ -988,6 +1028,7 @@ namespace Com
         /// 返回在 Complex 结构的所有分量前添加负号得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示在 Complex 结构的所有分量前添加负号得到的结果。</returns>
         public static Complex operator -(Complex comp)
         {
             if ((object)comp != null)
@@ -1005,6 +1046,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Complex 结构，表示被加数。</param>
         /// <param name="right">Complex 结构，表示加数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相加得到的结果。</returns>
         public static Complex operator +(Complex left, Complex right)
         {
             if ((object)left != null && (object)right != null)
@@ -1020,6 +1062,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Complex 结构，表示被减数。</param>
         /// <param name="right">Complex 结构，表示减数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相减得到的结果。</returns>
         public static Complex operator -(Complex left, Complex right)
         {
             if ((object)left != null && (object)right != null)
@@ -1035,6 +1078,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Complex 结构，表示被乘数。</param>
         /// <param name="right">Complex 结构，表示乘数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相乘得到的结果。</returns>
         public static Complex operator *(Complex left, Complex right)
         {
             if ((object)left != null && (object)right != null)
@@ -1050,6 +1094,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Complex 结构，表示被除数。</param>
         /// <param name="right">Complex 结构，表示除数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相除得到的结果。</returns>
         public static Complex operator /(Complex left, Complex right)
         {
             if ((object)left != null && (object)right != null)

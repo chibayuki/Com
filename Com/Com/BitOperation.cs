@@ -28,6 +28,7 @@ namespace Com
         /// 返回一个仅指定二进制位为 1 的 8 位无符号整数。
         /// </summary>
         /// <param name="bit">指定的二进制位。</param>
+        /// <returns>8 位无符号整数，该 8 位无符号整数仅指定二进制位为 1。</returns>
         public static byte GetBinary8WithSingleBit1(int bit)
         {
             try
@@ -49,6 +50,7 @@ namespace Com
         /// 返回一个仅指定二进制位为 0 的 8 位无符号整数。
         /// </summary>
         /// <param name="bit">指定的二进制位。</param>
+        /// <returns>8 位无符号整数，该 8 位无符号整数仅指定二进制位为 0。</returns>
         public static byte GetBinary8WithSingleBit0(int bit)
         {
             try
@@ -121,7 +123,8 @@ namespace Com
         /// 判断 8 位无符号整数的指定二进制位是否为 1。
         /// </summary>
         /// <param name="bin">8 位无符号整数。</param>
-        /// <param name="bit">需要处理的二进制位。</param>
+        /// <param name="bit">指定的二进制位。</param>
+        /// <returns>布尔值，表示 8 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(byte bin, int bit)
         {
             try
@@ -143,6 +146,7 @@ namespace Com
         /// 计算 8 位无符号整数的值为 1 的二进制位的数量。
         /// </summary>
         /// <param name="bin">8 位无符号整数。</param>
+        /// <returns>8 位无符号整数的值为 1 的二进制位的数量。</returns>
         public static int GetBit1CountOfBinary(byte bin)
         {
             try
@@ -168,6 +172,7 @@ namespace Com
         /// 计算 8 位无符号整数的值为 0 的二进制位的数量。
         /// </summary>
         /// <param name="bin">8 位无符号整数。</param>
+        /// <returns>8 位无符号整数的值为 0 的二进制位的数量。</returns>
         public static int GetBit0CountOfBinary(byte bin)
         {
             try
@@ -181,9 +186,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个整数列表，列表元素表示 8 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
+        /// 返回一个列表，列表元素表示 8 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
         /// </summary>
         /// <param name="bin">8 位无符号整数。</param>
+        /// <returns>32 位整数列表，列表元素表示 8 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit1IndexOfBinary(byte bin)
         {
             try
@@ -209,9 +215,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个整数列表，列表元素表示 8 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
+        /// 返回一个列表，列表元素表示 8 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
         /// </summary>
         /// <param name="bin">8 位无符号整数。</param>
+        /// <returns>32 位整数列表，列表元素表示 8 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit0IndexOfBinary(byte bin)
         {
             try
@@ -244,6 +251,7 @@ namespace Com
         /// 返回一个仅指定二进制位为 1 的 16 位无符号整数。
         /// </summary>
         /// <param name="bit">指定的二进制位。</param>
+        /// <returns>16 位无符号整数，该 16 位无符号整数仅指定二进制位为 1。</returns>
         public static ushort GetBinary16WithSingleBit1(int bit)
         {
             try
@@ -265,6 +273,7 @@ namespace Com
         /// 返回一个仅指定二进制位为 0 的 16 位无符号整数。
         /// </summary>
         /// <param name="bit">指定的二进制位。</param>
+        /// <returns>16 位无符号整数，该 16 位无符号整数仅指定二进制位为 0。</returns>
         public static ushort GetBinary16WithSingleBit0(int bit)
         {
             try
@@ -337,7 +346,8 @@ namespace Com
         /// 判断 16 位无符号整数的指定二进制位是否为 1。
         /// </summary>
         /// <param name="bin">16 位无符号整数。</param>
-        /// <param name="bit">需要处理的二进制位。</param>
+        /// <param name="bit">指定的二进制位。</param>
+        /// <returns>布尔值，表示 16 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(ushort bin, int bit)
         {
             try
@@ -359,6 +369,7 @@ namespace Com
         /// 计算 16 位无符号整数的值为 1 的二进制位的数量。
         /// </summary>
         /// <param name="bin">16 位无符号整数。</param>
+        /// <returns>16 位无符号整数的值为 1 的二进制位的数量。</returns>
         public static int GetBit1CountOfBinary(ushort bin)
         {
             try
@@ -384,6 +395,7 @@ namespace Com
         /// 计算 16 位无符号整数的值为 0 的二进制位的数量。
         /// </summary>
         /// <param name="bin">16 位无符号整数。</param>
+        /// <returns>16 位无符号整数的值为 0 的二进制位的数量。</returns>
         public static int GetBit0CountOfBinary(ushort bin)
         {
             try
@@ -397,9 +409,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个整数列表，列表元素表示 16 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
+        /// 返回一个列表，列表元素表示 16 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
         /// </summary>
         /// <param name="bin">16 位无符号整数。</param>
+        /// <returns>32 位整数列表，列表元素表示 16 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit1IndexOfBinary(ushort bin)
         {
             try
@@ -425,9 +438,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个整数列表，列表元素表示 16 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
+        /// 返回一个列表，列表元素表示 16 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
         /// </summary>
         /// <param name="bin">16 位无符号整数。</param>
+        /// <returns>32 位整数列表，列表元素表示 16 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit0IndexOfBinary(ushort bin)
         {
             try
@@ -460,6 +474,7 @@ namespace Com
         /// 返回一个仅指定二进制位为 1 的 32 位无符号整数。
         /// </summary>
         /// <param name="bit">指定的二进制位。</param>
+        /// <returns>32 位无符号整数，该 32 位无符号整数仅指定二进制位为 1。</returns>
         public static uint GetBinary32WithSingleBit1(int bit)
         {
             try
@@ -481,6 +496,7 @@ namespace Com
         /// 返回一个仅指定二进制位为 0 的 32 位无符号整数。
         /// </summary>
         /// <param name="bit">指定的二进制位。</param>
+        /// <returns>32 位无符号整数，该 32 位无符号整数仅指定二进制位为 0。</returns>
         public static uint GetBinary32WithSingleBit0(int bit)
         {
             try
@@ -553,7 +569,8 @@ namespace Com
         /// 判断 32 位无符号整数的指定二进制位是否为 1。
         /// </summary>
         /// <param name="bin">32 位无符号整数。</param>
-        /// <param name="bit">需要处理的二进制位。</param>
+        /// <param name="bit">指定的二进制位。</param>
+        /// <returns>布尔值，表示 32 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(uint bin, int bit)
         {
             try
@@ -575,6 +592,7 @@ namespace Com
         /// 计算 32 位无符号整数的值为 1 的二进制位的数量。
         /// </summary>
         /// <param name="bin">32 位无符号整数。</param>
+        /// <returns>32 位无符号整数的值为 1 的二进制位的数量。</returns>
         public static int GetBit1CountOfBinary(uint bin)
         {
             try
@@ -600,6 +618,7 @@ namespace Com
         /// 计算 32 位无符号整数的值为 0 的二进制位的数量。
         /// </summary>
         /// <param name="bin">32 位无符号整数。</param>
+        /// <returns>32 位无符号整数的值为 0 的二进制位的数量。</returns>
         public static int GetBit0CountOfBinary(uint bin)
         {
             try
@@ -613,9 +632,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个整数列表，列表元素表示 32 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
+        /// 返回一个列表，列表元素表示 32 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
         /// </summary>
         /// <param name="bin">32 位无符号整数。</param>
+        /// <returns>32 位整数列表，列表元素表示 32 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit1IndexOfBinary(uint bin)
         {
             try
@@ -641,9 +661,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个整数列表，列表元素表示 32 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
+        /// 返回一个列表，列表元素表示 32 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
         /// </summary>
         /// <param name="bin">32 位无符号整数。</param>
+        /// <returns>32 位整数列表，列表元素表示 32 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit0IndexOfBinary(uint bin)
         {
             try
@@ -676,6 +697,7 @@ namespace Com
         /// 返回一个仅指定二进制位为 1 的 64 位无符号整数。
         /// </summary>
         /// <param name="bit">指定的二进制位。</param>
+        /// <returns>64 位无符号整数，该 64 位无符号整数仅指定二进制位为 1。</returns>
         public static ulong GetBinary64WithSingleBit1(int bit)
         {
             try
@@ -697,6 +719,7 @@ namespace Com
         /// 返回一个仅指定二进制位为 0 的 64 位无符号整数。
         /// </summary>
         /// <param name="bit">指定的二进制位。</param>
+        /// <returns>64 位无符号整数，该 64 位无符号整数仅指定二进制位为 0。</returns>
         public static ulong GetBinary64WithSingleBit0(int bit)
         {
             try
@@ -769,7 +792,8 @@ namespace Com
         /// 判断 64 位无符号整数的指定二进制位是否为 1。
         /// </summary>
         /// <param name="bin">64 位无符号整数。</param>
-        /// <param name="bit">需要处理的二进制位。</param>
+        /// <param name="bit">指定的二进制位。</param>
+        /// <returns>布尔值，表示 64 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(ulong bin, int bit)
         {
             try
@@ -791,6 +815,7 @@ namespace Com
         /// 计算 64 位无符号整数的值为 1 的二进制位的数量。
         /// </summary>
         /// <param name="bin">64 位无符号整数。</param>
+        /// <returns>64 位无符号整数的值为 1 的二进制位的数量。</returns>
         public static int GetBit1CountOfBinary(ulong bin)
         {
             try
@@ -816,6 +841,7 @@ namespace Com
         /// 计算 64 位无符号整数的值为 0 的二进制位的数量。
         /// </summary>
         /// <param name="bin">64 位无符号整数。</param>
+        /// <returns>64 位无符号整数的值为 0 的二进制位的数量。</returns>
         public static int GetBit0CountOfBinary(ulong bin)
         {
             try
@@ -829,9 +855,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个整数列表，列表元素表示 64 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
+        /// 返回一个列表，列表元素表示 64 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
         /// </summary>
         /// <param name="bin">64 位无符号整数。</param>
+        /// <returns>32 位整数列表，列表元素表示 64 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit1IndexOfBinary(ulong bin)
         {
             try
@@ -857,9 +884,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回一个整数列表，列表元素表示 64 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
+        /// 返回一个列表，列表元素表示 64 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
         /// </summary>
         /// <param name="bin">64 位无符号整数。</param>
+        /// <returns>32 位整数列表，列表元素表示 64 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit0IndexOfBinary(ulong bin)
         {
             try

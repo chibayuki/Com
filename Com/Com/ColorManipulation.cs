@@ -55,6 +55,7 @@ namespace Com
         /// 获取 ColorX 结构表示的颜色的名称。
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
+        /// <returns>字符串，表示指定颜色的名称。</returns>
         public static string GetColorName(ColorX color)
         {
             try
@@ -71,6 +72,7 @@ namespace Com
         /// 获取 Color 结构表示的颜色的名称。
         /// </summary>
         /// <param name="color">Color 结构表示的颜色。</param>
+        /// <returns>字符串，表示指定颜色的名称。</returns>
         public static string GetColorName(Color color)
         {
             try
@@ -88,6 +90,7 @@ namespace Com
         /// <summary>
         /// 返回一个 ColorX 结构表示的随机颜色。
         /// </summary>
+        /// <returns>ColorX 结构，表示随机颜色。</returns>
         public static ColorX GetRandomColorX()
         {
             try
@@ -103,6 +106,7 @@ namespace Com
         /// <summary>
         /// 返回一个 Color 结构表示的随机颜色。
         /// </summary>
+        /// <returns>Color 结构，表示随机颜色。</returns>
         public static Color GetRandomColor()
         {
             try
@@ -121,6 +125,7 @@ namespace Com
         /// 返回 ColorX 结构表示的颜色的互补色。
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
+        /// <returns>ColorX 结构，表示指定颜色的互补色。</returns>
         public static ColorX GetComplementaryColor(ColorX color)
         {
             try
@@ -137,6 +142,7 @@ namespace Com
         /// 返回 Color 结构表示的颜色的互补色。
         /// </summary>
         /// <param name="color">Color 结构表示的颜色。</param>
+        /// <returns>Color 结构，表示指定颜色的互补色。</returns>
         public static Color GetComplementaryColor(Color color)
         {
             try
@@ -153,6 +159,7 @@ namespace Com
         /// 返回 ColorX 结构表示的颜色的灰度颜色。
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
+        /// <returns>ColorX 结构，表示指定颜色的灰度颜色。</returns>
         public static ColorX GetGrayscaleColor(ColorX color)
         {
             try
@@ -169,6 +176,7 @@ namespace Com
         /// 返回 Color 结构表示的颜色的灰度颜色。
         /// </summary>
         /// <param name="color">Color 结构表示的颜色。</param>
+        /// <returns>Color 结构，表示指定颜色的灰度颜色。</returns>
         public static Color GetGrayscaleColor(Color color)
         {
             try
@@ -208,6 +216,7 @@ namespace Com
         /// <param name="color1">ColorX 结构表示的第一种颜色。</param>
         /// <param name="color2">ColorX 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将两种颜色在 RGB 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByRGB(ColorX color1, ColorX color2, double proportion)
         {
             try
@@ -228,6 +237,7 @@ namespace Com
         /// <param name="color1">Color 结构表示的第一种颜色。</param>
         /// <param name="color2">Color 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>Color 结构，表示将两种颜色在 RGB 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByRGB(Color color1, Color color2, double proportion)
         {
             try
@@ -246,6 +256,7 @@ namespace Com
         /// <param name="color1">ColorX 结构表示的第一种颜色。</param>
         /// <param name="color2">ColorX 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将两种颜色在 HSV 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByHSV(ColorX color1, ColorX color2, double proportion)
         {
             try
@@ -266,6 +277,7 @@ namespace Com
         /// <param name="color1">Color 结构表示的第一种颜色。</param>
         /// <param name="color2">Color 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>Color 结构，表示将两种颜色在 HSV 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByHSV(Color color1, Color color2, double proportion)
         {
             try
@@ -284,6 +296,7 @@ namespace Com
         /// <param name="color1">ColorX 结构表示的第一种颜色。</param>
         /// <param name="color2">ColorX 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将两种颜色在 HSL 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByHSL(ColorX color1, ColorX color2, double proportion)
         {
             try
@@ -304,6 +317,7 @@ namespace Com
         /// <param name="color1">Color 结构表示的第一种颜色。</param>
         /// <param name="color2">Color 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>Color 结构，表示将两种颜色在 HSL 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByHSL(Color color1, Color color2, double proportion)
         {
             try
@@ -322,6 +336,7 @@ namespace Com
         /// <param name="color1">ColorX 结构表示的第一种颜色。</param>
         /// <param name="color2">ColorX 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将两种颜色在 CMYK 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByCMYK(ColorX color1, ColorX color2, double proportion)
         {
             try
@@ -342,6 +357,7 @@ namespace Com
         /// <param name="color1">Color 结构表示的第一种颜色。</param>
         /// <param name="color2">Color 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>Color 结构，表示将两种颜色在 CMYK 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByCMYK(Color color1, Color color2, double proportion)
         {
             try
@@ -360,6 +376,7 @@ namespace Com
         /// <param name="color1">ColorX 结构表示的第一种颜色。</param>
         /// <param name="color2">ColorX 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将两种颜色在 LAB 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByLAB(ColorX color1, ColorX color2, double proportion)
         {
             try
@@ -380,6 +397,7 @@ namespace Com
         /// <param name="color1">Color 结构表示的第一种颜色。</param>
         /// <param name="color2">Color 结构表示的第二种颜色。</param>
         /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>Color 结构，表示将两种颜色在 LAB 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByLAB(Color color1, Color color2, double proportion)
         {
             try
@@ -418,6 +436,7 @@ namespace Com
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将指定颜色在 HSV 色彩空间调整明度得到的颜色。</returns>
         public static ColorX ShiftLightnessByHSV(ColorX color, double level)
         {
             try
@@ -449,6 +468,7 @@ namespace Com
         /// </summary>
         /// <param name="color">Color 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>Color 结构，表示将指定颜色在 HSV 色彩空间调整明度得到的颜色。</returns>
         public static Color ShiftLightnessByHSV(Color color, double level)
         {
             try
@@ -466,6 +486,7 @@ namespace Com
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>ColorX 结构，表示在 HSL 色彩空间调整明度得到的颜色。</returns>
         public static ColorX ShiftLightnessByHSL(ColorX color, double level)
         {
             try
@@ -497,6 +518,7 @@ namespace Com
         /// </summary>
         /// <param name="color">Color 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>Color 结构，表示将指定颜色在 HSL 色彩空间调整明度得到的颜色。</returns>
         public static Color ShiftLightnessByHSL(Color color, double level)
         {
             try
@@ -514,6 +536,7 @@ namespace Com
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将指定颜色在 LAB 色彩空间调整明度得到的颜色。</returns>
         public static ColorX ShiftLightnessByLAB(ColorX color, double level)
         {
             try
@@ -545,6 +568,7 @@ namespace Com
         /// </summary>
         /// <param name="color">Color 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>Color 结构，表示将指定颜色在 LAB 色彩空间调整明度得到的颜色。</returns>
         public static Color ShiftLightnessByLAB(Color color, double level)
         {
             try
@@ -562,6 +586,7 @@ namespace Com
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将指定颜色在 HSV 色彩空间调整饱和度得到的颜色。</returns>
         public static ColorX ShiftSaturationByHSV(ColorX color, double level)
         {
             try
@@ -593,6 +618,7 @@ namespace Com
         /// </summary>
         /// <param name="color">Color 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>Color 结构，表示将指定颜色在 HSV 色彩空间调整饱和度得到的颜色。</returns>
         public static Color ShiftSaturationByHSV(Color color, double level)
         {
             try
@@ -610,6 +636,7 @@ namespace Com
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将指定颜色在 HSL 色彩空间调整饱和度得到的颜色。</returns>
         public static ColorX ShiftSaturationByHSL(ColorX color, double level)
         {
             try
@@ -641,6 +668,7 @@ namespace Com
         /// </summary>
         /// <param name="color">Color 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>Color 结构，表示将指定颜色在 HSL 色彩空间调整饱和度得到的颜色。</returns>
         public static Color ShiftSaturationByHSL(Color color, double level)
         {
             try

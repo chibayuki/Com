@@ -1595,13 +1595,13 @@ namespace Com
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return left.Equals(right);
@@ -1620,10 +1620,6 @@ namespace Com
             {
                 return 0;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return 0;
-            }
             else if ((object)left == null)
             {
                 return -1;
@@ -1631,6 +1627,10 @@ namespace Com
             else if ((object)right == null)
             {
                 return 1;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return 0;
             }
 
             return left.CompareTo(right);
@@ -2196,13 +2196,13 @@ namespace Com
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return (left._X == right._X && left._Y == right._Y);
@@ -2219,13 +2219,13 @@ namespace Com
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
             }
 
             return (left._X != right._X || left._Y != right._Y);
@@ -2238,7 +2238,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD 结构。</param>
         public static bool operator <(PointD left, PointD right)
         {
-            if ((object)left == null || (object)right == null)
+            if ((object)left == null || (object)right == null || object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2253,7 +2253,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD 结构。</param>
         public static bool operator >(PointD left, PointD right)
         {
-            if ((object)left == null || (object)right == null)
+            if ((object)left == null || (object)right == null || object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2268,7 +2268,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD 结构。</param>
         public static bool operator <=(PointD left, PointD right)
         {
-            if ((object)left == null || (object)right == null)
+            if ((object)left == null || (object)right == null || object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -2283,7 +2283,7 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD 结构。</param>
         public static bool operator >=(PointD left, PointD right)
         {
-            if ((object)left == null || (object)right == null)
+            if ((object)left == null || (object)right == null || object.ReferenceEquals(left, right))
             {
                 return false;
             }

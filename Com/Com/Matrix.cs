@@ -848,13 +848,13 @@ namespace Com
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return left.Equals(right);
@@ -1532,13 +1532,13 @@ namespace Com
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             for (int x = 0; x < left._Size.Width; x++)
@@ -1566,13 +1566,13 @@ namespace Com
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
                 return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
             }
 
             for (int x = 0; x < left._Size.Width; x++)

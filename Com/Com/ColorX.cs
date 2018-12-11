@@ -1657,6 +1657,7 @@ namespace Com
         /// 判断此 ColorX 结构是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 ColorX 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || !(obj is ColorX))
@@ -1674,6 +1675,7 @@ namespace Com
         /// <summary>
         /// 返回此 ColorX 结构的哈希代码。
         /// </summary>
+        /// <returns>32 位整数，表示此 ColorX 结构的哈希代码。</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -1682,6 +1684,7 @@ namespace Com
         /// <summary>
         /// 将此 ColorX 结构转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 ColorX 结构的字符串形式。</returns>
         public override string ToString()
         {
             string Str = string.Empty;
@@ -1704,6 +1707,7 @@ namespace Com
         /// 判断此 ColorX 结构是否与指定的 ColorX 结构相等。
         /// </summary>
         /// <param name="color">用于比较的 ColorX 结构。</param>
+        /// <returns>布尔值，表示此 ColorX 结构是否与指定的 ColorX 结构相等。</returns>
         public bool Equals(ColorX color)
         {
             if ((object)color == null)
@@ -1723,6 +1727,7 @@ namespace Com
         /// <summary>
         /// 返回将此 ColorX 结构转换为 Color 结构的新实例。
         /// </summary>
+        /// <returns>Color 结构，表示将此 ColorX 结构转换为 Color 结构的新实例。</returns>
         public Color ToColor()
         {
             if (IsEmpty)
@@ -1736,6 +1741,7 @@ namespace Com
         /// <summary>
         /// 返回将此 ColorX 结构转换为 Color 结构的 32 位 ARGB 值。
         /// </summary>
+        /// <returns>32 位整数，表示将此 ColorX 结构转换为 Color 结构的 32 位 ARGB 值。</returns>
         public int ToARGB()
         {
             return ToColor().ToArgb();
@@ -1747,6 +1753,7 @@ namespace Com
         /// 返回将此 ColorX 结构的不透明度更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构的不透明度更改为指定值得到的结果。</returns>
         public ColorX AtOpacity(double opacity)
         {
             ColorX color = this;
@@ -1762,6 +1769,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 RGB 色彩空间中的 Alpha 通道（A）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="alpha">颜色在 RGB 色彩空间中的 Alpha 通道（A）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 RGB 色彩空间中的 Alpha 通道（A）的值更改为指定值得到的结果。</returns>
         public ColorX AtAlpha(double alpha)
         {
             ColorX color = this;
@@ -1775,6 +1783,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 RGB 色彩空间中的红色通道（R）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="red">颜色在 RGB 色彩空间中的红色通道（R）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 RGB 色彩空间中的红色通道（R）的值更改为指定值得到的结果。</returns>
         public ColorX AtRed(double red)
         {
             ColorX color = this;
@@ -1788,6 +1797,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 RGB 色彩空间中的绿色通道（G）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="green">颜色在 RGB 色彩空间中的绿色通道（G）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 RGB 色彩空间中的绿色通道（G）的值更改为指定值得到的结果。</returns>
         public ColorX AtGreen(double green)
         {
             ColorX color = this;
@@ -1801,6 +1811,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 RGB 色彩空间中的蓝色通道（B）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="blue">颜色在 RGB 色彩空间中的蓝色通道（B）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 RGB 色彩空间中的蓝色通道（B）的值更改为指定值得到的结果。</returns>
         public ColorX AtBlue(double blue)
         {
             ColorX color = this;
@@ -1816,6 +1827,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 HSV 色彩空间中的色相（H）更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="hue">颜色在 HSV 色彩空间中的色相（H）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 HSV 色彩空间中的色相（H）更改为指定值得到的结果。</returns>
         public ColorX AtHue_HSV(double hue)
         {
             ColorX color = this;
@@ -1829,6 +1841,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 HSV 色彩空间中的饱和度（S）更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="saturation">颜色在 HSV 色彩空间中的饱和度（S）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 HSV 色彩空间中的饱和度（S）更改为指定值得到的结果。</returns>
         public ColorX AtSaturation_HSV(double saturation)
         {
             ColorX color = this;
@@ -1842,6 +1855,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 HSV 色彩空间中的明度（V）更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="brightness">颜色在 HSV 色彩空间中的明度（V）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 HSV 色彩空间中的明度（V）更改为指定值得到的结果。</returns>
         public ColorX AtBrightness(double brightness)
         {
             ColorX color = this;
@@ -1857,6 +1871,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 HSL 色彩空间中的色相（H）更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="hue">颜色在 HSL 色彩空间中的色相（H）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 HSL 色彩空间中的色相（H）更改为指定值得到的结果。</returns>
         public ColorX AtHue_HSL(double hue)
         {
             ColorX color = this;
@@ -1870,6 +1885,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 HSL 色彩空间中的饱和度（S）更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="saturation">颜色在 HSL 色彩空间中的饱和度（S）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 HSL 色彩空间中的饱和度（S）更改为指定值得到的结果。</returns>
         public ColorX AtSaturation_HSL(double saturation)
         {
             ColorX color = this;
@@ -1883,6 +1899,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 HSL 色彩空间中的明度（L）更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="lightness">颜色在 HSL 色彩空间中的明度（L）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 HSL 色彩空间中的明度（L）更改为指定值得到的结果。</returns>
         public ColorX AtLightness_HSL(double lightness)
         {
             ColorX color = this;
@@ -1898,6 +1915,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 CMYK 色彩空间中的青色通道（C）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="cyan">颜色在 CMYK 色彩空间中的青色通道（C）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 CMYK 色彩空间中的青色通道（C）的值更改为指定值得到的结果。</returns>
         public ColorX AtCyan(double cyan)
         {
             ColorX color = this;
@@ -1911,6 +1929,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 CMYK 色彩空间中的洋红色通道（M）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="magenta">颜色在 CMYK 色彩空间中的洋红色通道（M）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 CMYK 色彩空间中的洋红色通道（M）的值更改为指定值得到的结果。</returns>
         public ColorX AtMagenta(double magenta)
         {
             ColorX color = this;
@@ -1924,6 +1943,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 CMYK 色彩空间中的黄色通道（Y）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="yellow">颜色在 CMYK 色彩空间中的黄色通道（Y）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 CMYK 色彩空间中的黄色通道（Y）的值更改为指定值得到的结果。</returns>
         public ColorX AtYellow(double yellow)
         {
             ColorX color = this;
@@ -1937,6 +1957,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 CMYK 色彩空间中的黑色通道（K）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="black">颜色在 CMYK 色彩空间中的黑色通道（K）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 CMYK 色彩空间中的黑色通道（K）的值更改为指定值得到的结果。</returns>
         public ColorX AtBlack(double black)
         {
             ColorX color = this;
@@ -1952,6 +1973,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 LAB 色彩空间中的明度（L）更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="lightness">颜色在 LAB 色彩空间中的明度（L）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 LAB 色彩空间中的明度（L）更改为指定值得到的结果。</returns>
         public ColorX AtLightness_LAB(double lightness)
         {
             ColorX color = this;
@@ -1965,6 +1987,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 LAB 色彩空间中的绿色-红色通道（A）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="greenRed">颜色在 LAB 色彩空间中的绿色-红色通道（A）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 LAB 色彩空间中的绿色-红色通道（A）的值更改为指定值得到的结果。</returns>
         public ColorX AtGreenRed(double greenRed)
         {
             ColorX color = this;
@@ -1978,6 +2001,7 @@ namespace Com
         /// 返回将此 ColorX 结构在 LAB 色彩空间中的蓝色-黄色通道（B）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
         /// <param name="blueYellow">颜色在 LAB 色彩空间中的蓝色-黄色通道（B）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 LAB 色彩空间中的蓝色-黄色通道（B）的值更改为指定值得到的结果。</returns>
         public ColorX AtBlueYellow(double blueYellow)
         {
             ColorX color = this;
@@ -1996,19 +2020,20 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 ColorX 结构。</param>
         /// <param name="right">用于比较的第二个 ColorX 结构。</param>
+        /// <returns>布尔值，表示两个 ColorX 结构是否相等。</returns>
         public static bool Equals(ColorX left, ColorX right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return left.Equals(right);
@@ -2021,6 +2046,7 @@ namespace Com
         /// </summary>
         /// <param name="alpha">Alpha 通道（A）的值。</param>
         /// <param name="color">Color 结构。</param>
+        /// <returns>ColorX 结构，表示将 Color 结构转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromColor(int alpha, Color color)
         {
             return new ColorX(Color.FromArgb((int)Math.Round(_CheckAlpha(alpha)), color));
@@ -2030,6 +2056,7 @@ namespace Com
         /// 返回将 Color 结构转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="color">Color 结构。</param>
+        /// <returns>ColorX 结构，表示将 Color 结构转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromColor(Color color)
         {
             return new ColorX(color);
@@ -2044,6 +2071,7 @@ namespace Com
         /// <param name="red">颜色在 RGB 色彩空间中的红色通道（R）的值。</param>
         /// <param name="green">颜色在 RGB 色彩空间中的绿色通道（G）的值。</param>
         /// <param name="blue">颜色在 RGB 色彩空间中的蓝色通道（B）的值。</param>
+        /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromRGB(double alpha, double red, double green, double blue)
         {
             ColorX color = default(ColorX);
@@ -2059,6 +2087,7 @@ namespace Com
         /// <param name="red">颜色在 RGB 色彩空间中的红色通道（R）的值。</param>
         /// <param name="green">颜色在 RGB 色彩空间中的绿色通道（G）的值。</param>
         /// <param name="blue">颜色在 RGB 色彩空间中的蓝色通道（B）的值。</param>
+        /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromRGB(double red, double green, double blue)
         {
             ColorX color = default(ColorX);
@@ -2073,6 +2102,7 @@ namespace Com
         /// </summary>
         /// <param name="alpha">颜色在 RGB 色彩空间中的 Alpha 通道（A）的值。</param>
         /// <param name="rgb">表示颜色在 RGB 色彩空间中的各分量的 PointD3D 结构。</param>
+        /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromRGB(double alpha, PointD3D rgb)
         {
             ColorX color = default(ColorX);
@@ -2086,6 +2116,7 @@ namespace Com
         /// 返回将颜色在 RGB 色彩空间中的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="rgb">表示颜色在 RGB 色彩空间中的各分量的 PointD3D 结构。</param>
+        /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromRGB(PointD3D rgb)
         {
             ColorX color = default(ColorX);
@@ -2099,6 +2130,7 @@ namespace Com
         /// 返回将颜色在 RGB 色彩空间中的 32 位 ARGB 值转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="argb">颜色在 RGB 色彩空间中的 32 位 ARGB 值。</param>
+        /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间中的 32 位 ARGB 值转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromRGB(int argb)
         {
             return new ColorX(argb);
@@ -2113,6 +2145,7 @@ namespace Com
         /// <param name="saturation">颜色在 HSV 色彩空间中的饱和度（S）。</param>
         /// <param name="brightness">颜色在 HSV 色彩空间中的明度（V）。</param>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHSV(double hue, double saturation, double brightness, double opacity)
         {
             ColorX color = default(ColorX);
@@ -2128,6 +2161,7 @@ namespace Com
         /// <param name="hue">颜色在 HSV 色彩空间中的色相（H）。</param>
         /// <param name="saturation">颜色在 HSV 色彩空间中的饱和度（S）。</param>
         /// <param name="brightness">颜色在 HSV 色彩空间中的明度（V）。</param>
+        /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHSV(double hue, double saturation, double brightness)
         {
             ColorX color = default(ColorX);
@@ -2142,6 +2176,7 @@ namespace Com
         /// </summary>
         /// <param name="hsv">表示颜色在 HSV 色彩空间中的各分量的 PointD3D 结构。</param>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHSV(PointD3D hsv, double opacity)
         {
             ColorX color = default(ColorX);
@@ -2155,6 +2190,7 @@ namespace Com
         /// 返回将颜色在 HSV 色彩空间中的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="hsv">表示颜色在 HSV 色彩空间中的各分量的 PointD3D 结构。</param>
+        /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHSV(PointD3D hsv)
         {
             ColorX color = default(ColorX);
@@ -2173,6 +2209,7 @@ namespace Com
         /// <param name="saturation">颜色在 HSL 色彩空间中的饱和度（S）。</param>
         /// <param name="lightness">颜色在 HSL 色彩空间中的明度（L）。</param>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 HSL 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHSL(double hue, double saturation, double lightness, double opacity)
         {
             ColorX color = default(ColorX);
@@ -2188,6 +2225,7 @@ namespace Com
         /// <param name="hue">颜色在 HSL 色彩空间中的色相（H）。</param>
         /// <param name="saturation">颜色在 HSL 色彩空间中的饱和度（S）。</param>
         /// <param name="lightness">颜色在 HSL 色彩空间中的明度（L）。</param>
+        /// <returns>ColorX 结构，表示将颜色在 HSL 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHSL(double hue, double saturation, double lightness)
         {
             ColorX color = default(ColorX);
@@ -2202,6 +2240,7 @@ namespace Com
         /// </summary>
         /// <param name="hsl">表示颜色在 HSL 色彩空间中的各分量的 PointD3D 结构。</param>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 HSL 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHSL(PointD3D hsl, double opacity)
         {
             ColorX color = default(ColorX);
@@ -2215,6 +2254,7 @@ namespace Com
         /// 返回将颜色在 HSL 色彩空间中的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="hsl">表示颜色在 HSL 色彩空间中的各分量的 PointD3D 结构。</param>
+        /// <returns>ColorX 结构，表示将颜色在 HSL 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHSL(PointD3D hsl)
         {
             ColorX color = default(ColorX);
@@ -2234,6 +2274,7 @@ namespace Com
         /// <param name="yellow">颜色在 CMYK 色彩空间中的黄色通道（Y）的值。</param>
         /// <param name="black">颜色在 CMYK 色彩空间中的黑色通道（K）的值。</param>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 CMYK 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromCMYK(double cyan, double magenta, double yellow, double black, double opacity)
         {
             ColorX color = default(ColorX);
@@ -2250,6 +2291,7 @@ namespace Com
         /// <param name="magenta">颜色在 CMYK 色彩空间中的洋红色通道（M）的值。</param>
         /// <param name="yellow">颜色在 CMYK 色彩空间中的黄色通道（Y）的值。</param>
         /// <param name="black">颜色在 CMYK 色彩空间中的黑色通道（K）的值。</param>
+        /// <returns>ColorX 结构，表示将颜色在 CMYK 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromCMYK(double cyan, double magenta, double yellow, double black)
         {
             ColorX color = default(ColorX);
@@ -2264,6 +2306,7 @@ namespace Com
         /// </summary>
         /// <param name="cmyk">表示颜色在 CMYK 色彩空间中的各分量的 PointD4D 结构。</param>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 CMYK 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromCMYK(PointD4D cmyk, double opacity)
         {
             ColorX color = default(ColorX);
@@ -2277,6 +2320,7 @@ namespace Com
         /// 返回将颜色在 CMYK 色彩空间中的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="cmyk">表示颜色在 CMYK 色彩空间中的各分量的 PointD4D 结构。</param>
+        /// <returns>ColorX 结构，表示将颜色在 CMYK 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromCMYK(PointD4D cmyk)
         {
             ColorX color = default(ColorX);
@@ -2295,6 +2339,7 @@ namespace Com
         /// <param name="greenRed">颜色在 LAB 色彩空间中的绿色-红色通道（A）的值。</param>
         /// <param name="blueYellow">颜色在 LAB 色彩空间中的蓝色-黄色通道（B）的值。</param>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 LAB 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromLAB(double lightness, double greenRed, double blueYellow, double opacity)
         {
             ColorX color = default(ColorX);
@@ -2310,6 +2355,7 @@ namespace Com
         /// <param name="lightness">颜色在 LAB 色彩空间中的明度（L）。</param>
         /// <param name="greenRed">颜色在 LAB 色彩空间中的绿色-红色通道（A）的值。</param>
         /// <param name="blueYellow">颜色在 LAB 色彩空间中的蓝色-黄色通道（B）的值。</param>
+        /// <returns>ColorX 结构，表示将颜色在 LAB 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromLAB(double lightness, double greenRed, double blueYellow)
         {
             ColorX color = default(ColorX);
@@ -2324,6 +2370,7 @@ namespace Com
         /// </summary>
         /// <param name="lab">表示颜色在 LAB 色彩空间中的各分量的 PointD3D 结构。</param>
         /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 LAB 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromLAB(PointD3D lab, double opacity)
         {
             ColorX color = default(ColorX);
@@ -2337,6 +2384,7 @@ namespace Com
         /// 返回将颜色在 LAB 色彩空间中的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="lab">表示颜色在 LAB 色彩空间中的各分量的 PointD3D 结构。</param>
+        /// <returns>ColorX 结构，表示将颜色在 LAB 色彩空间中的各分量转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromLAB(PointD3D lab)
         {
             ColorX color = default(ColorX);
@@ -2352,6 +2400,7 @@ namespace Com
         /// 返回将颜色的 16 进制 ARGB 码或 RGB 码转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="hexCode">表示颜色的 16 进制 ARGB 码或 RGB 码的字符串。</param>
+        /// <returns>ColorX 结构，表示将颜色的 16 进制 ARGB 码或 RGB 码转换为 ColorX 结构的新实例。</returns>
         public static ColorX FromHexCode(string hexCode)
         {
             if (!string.IsNullOrEmpty(hexCode))
@@ -2380,6 +2429,7 @@ namespace Com
         /// <summary>
         /// 返回一个不透明度为 100%，其他分量为随机数的 ColorX 结构的新实例。
         /// </summary>
+        /// <returns>ColorX 结构，表示不透明度为 100%，其他分量为随机数的 ColorX 结构的新实例。</returns>
         public static ColorX RandomColor()
         {
             return FromRGB(Statistics.RandomDouble(_MinRed, _MaxRed), Statistics.RandomDouble(_MinGreen, _MaxGreen), Statistics.RandomDouble(_MinBlue, _MaxBlue));
@@ -2394,19 +2444,20 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 ColorX 结构。</param>
         /// <param name="right">运算符右侧比较的 ColorX 结构。</param>
+        /// <returns>布尔值，表示两个 ColorX 结构是否表示相同的颜色。</returns>
         public static bool operator ==(ColorX left, ColorX right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
             else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return false;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return true;
             }
 
             return ((int)Math.Round(left.Alpha) == (int)Math.Round(right.Alpha) && ((int)Math.Round(left.Red) == (int)Math.Round(right.Red) && (int)Math.Round(left.Green) == (int)Math.Round(right.Green) && (int)Math.Round(left.Blue) == (int)Math.Round(right.Blue)));
@@ -2417,19 +2468,20 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 ColorX 结构。</param>
         /// <param name="right">运算符右侧比较的 ColorX 结构。</param>
+        /// <returns>布尔值，表示两个 ColorX 结构是否表示不同的颜色。</returns>
         public static bool operator !=(ColorX left, ColorX right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
             else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
             {
                 return true;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return false;
             }
 
             return ((int)Math.Round(left.Alpha) != (int)Math.Round(right.Alpha) || ((int)Math.Round(left.Red) != (int)Math.Round(right.Red) || (int)Math.Round(left.Green) != (int)Math.Round(right.Green) || (int)Math.Round(left.Blue) != (int)Math.Round(right.Blue)));
