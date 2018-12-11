@@ -151,7 +151,19 @@ namespace Com.WinForm
                             CaptionLocF.Y = CaptionBounds.Y + Math.Max(0, CaptionBounds.Height - CaptionSizeF.Height);
                         }
 
-                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Me.RecommendColors.Caption.ToColor()), CaptionLocF);
+                        if (Me.ShowCaptionBarColor && Me.IsActive)
+                        {
+                            Color Cr_Caption_Bk = (!RecommendColors.BackColorFitLightText(Me.RecommendColors.CaptionBar) ? Color.FromArgb(128, Color.White) : Color.FromArgb(96, Color.Black));
+
+                            CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk), new PointF(CaptionLocF.X - 0.5F, CaptionLocF.Y));
+                            CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk), new PointF(CaptionLocF.X + 0.5F, CaptionLocF.Y));
+                            CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk), new PointF(CaptionLocF.X, CaptionLocF.Y - 0.5F));
+                            CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk), new PointF(CaptionLocF.X, CaptionLocF.Y + 0.5F));
+                        }
+
+                        Color Cr_Caption_Fr = Me.RecommendColors.Caption.ToColor();
+
+                        CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Fr), CaptionLocF);
                     }
                 }
             }
