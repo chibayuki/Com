@@ -69,6 +69,7 @@ namespace Com
         /// <param name="A">直线的一般式方程的第一个参数。</param>
         /// <param name="B">直线的一般式方程的第二个参数。</param>
         /// <param name="C">直线的一般式方程的第三个参数。</param>
+        /// <returns>双精度浮点数，表示平面直角坐标系中过一个定点到一条直线的距离。</returns>
         public static double GetDistanceBetweenPointAndLine(PointD pt, double A, double B, double C)
         {
             try
@@ -99,6 +100,7 @@ namespace Com
         /// <param name="pt">定点。</param>
         /// <param name="pt1">直线上的第一个点。</param>
         /// <param name="pt2">直线上的第二个点。</param>
+        /// <returns>双精度浮点数，表示平面直角坐标系中过一个定点到一条直线的距离。</returns>
         public static double GetDistanceBetweenPointAndLine(PointD pt, PointD pt1, PointD pt2)
         {
             try
@@ -135,6 +137,7 @@ namespace Com
         /// <param name="pt">定点。</param>
         /// <param name="pt1">直线上的第一个点。</param>
         /// <param name="pt2">直线上的第二个点。</param>
+        /// <returns>PointD 结构，表示平面直角坐标系中过一个定点到一条直线的垂足。</returns>
         public static PointD GetFootPoint(PointD pt, PointD pt1, PointD pt2)
         {
             try
@@ -187,6 +190,7 @@ namespace Com
         /// </summary>
         /// <param name="pt1">向量的起点。</param>
         /// <param name="pt2">向量的终点。</param>
+        /// <returns>双精度浮点数，表示平面直角坐标系中由指定的起点与终点确定的向量与 +X 轴之间的夹角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</returns>
         public static double GetAngleOfTwoPoints(PointD pt1, PointD pt2)
         {
             try
@@ -210,6 +214,7 @@ namespace Com
         /// 将一个角度（弧度）映射到 [0, 2 * PI) 区间。
         /// </summary>
         /// <param name="angle">角度（弧度）。</param>
+        /// <returns>双精度浮点数，表示将一个角度（弧度）映射到 [0, 2 * PI) 区间得到的结果。</returns>
         public static double AngleMapping(double angle)
         {
             try
@@ -242,6 +247,7 @@ namespace Com
         /// 获取鼠标相对于控件的坐标。
         /// </summary>
         /// <param name="ctrl">控件。</param>
+        /// <returns>Point 结构，表示鼠标相对于控件的坐标。</returns>
         public static Point GetCursorPositionOfControl(Control ctrl)
         {
             try
@@ -263,6 +269,7 @@ namespace Com
         /// 判断鼠标指针是否在控件内部。
         /// </summary>
         /// <param name="ctrl">控件。</param>
+        /// <returns>布尔值，表示鼠标指针是否在控件内部。</returns>
         public static bool CursorIsInControl(Control ctrl)
         {
             try
@@ -289,6 +296,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">控件坐标系中的点。</param>
         /// <param name="ctrl">控件。</param>
+        /// <returns>布尔值，表示控件坐标系中的一个点是否在控件内部。</returns>
         public static bool PointIsInControl(Point pt, Control ctrl)
         {
             try
@@ -313,6 +321,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">屏幕坐标系中的点。</param>
         /// <param name="ctrl">控件。</param>
+        /// <returns>布尔值，表示屏幕坐标系中的一个点是否在控件内部。</returns>
         public static bool ScreenPointIsInControl(Point pt, Control ctrl)
         {
             try
@@ -339,6 +348,7 @@ namespace Com
         /// </summary>
         /// <param name="ctrls">控件数组。</param>
         /// <param name="edgeDist">矩形的每边到控件边缘的距离。</param>
+        /// <returns>Point 结构，表示同一容器中一组控件的最小外接矩形。</returns>
         public static Rectangle GetMinimumBoundingRectangleOfControls(Control[] ctrls, int edgeDist)
         {
             try
@@ -374,6 +384,7 @@ namespace Com
         /// 计算同一容器中一组控件的最小外接矩形。
         /// </summary>
         /// <param name="ctrls">控件数组。</param>
+        /// <returns>Point 结构，表示同一容器中一组控件的最小外接矩形。</returns>
         public static Rectangle GetMinimumBoundingRectangleOfControls(Control[] ctrls)
         {
             try
@@ -402,6 +413,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">点。</param>
         /// <param name="rect">矩形。</param>
+        /// <returns>布尔值，表示在一个矩形内部能否看到一个点。</returns>
         public static bool PointIsVisibleInRectangle(PointD pt, RectangleF rect)
         {
             try
@@ -425,6 +437,7 @@ namespace Com
         /// <param name="pt">点。</param>
         /// <param name="offset">圆心。</param>
         /// <param name="radius">半径。</param>
+        /// <returns>布尔值，表示在一个圆内部能否看到一个点。</returns>
         public static bool PointIsVisibleInCircle(PointD pt, PointD offset, double radius)
         {
             try
@@ -450,6 +463,7 @@ namespace Com
         /// <param name="semiMajorAxis">半长轴。</param>
         /// <param name="eccentricity">离心率。</param>
         /// <param name="rotateAngle">旋转角（弧度）（以焦点为中心，以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，焦点到近焦点连线相对于 +X 轴的角度）。</param>
+        /// <returns>布尔值，表示在一个椭圆内部能否看到一个点。</returns>
         public static bool PointIsVisibleInEllipse(PointD pt, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle)
         {
             try
@@ -481,6 +495,7 @@ namespace Com
         /// <param name="semiMajorAxis">半长轴。</param>
         /// <param name="semiMinorAxis">半短轴。</param>
         /// <param name="rotateAngle">旋转角（弧度）（以焦点为中心，以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，半长轴相对于 +X 轴的角度）。</param>
+        /// <returns>布尔值，表示在一个菱形内部能否看到一个点。</returns>
         public static bool PointIsVisibleInRhombus(PointD pt, PointD offset, double semiMajorAxis, double semiMinorAxis, double rotateAngle)
         {
             try
@@ -508,6 +523,7 @@ namespace Com
         /// <param name="pt1">直线段的第一个端点。</param>
         /// <param name="pt2">直线段的第二个端点。</param>
         /// <param name="rect">矩形。</param>
+        /// <returns>布尔值，表示在一个矩形内部能否看到一个直线段的部分或全部。</returns>
         public static bool LineIsVisibleInRectangle(PointD pt1, PointD pt2, RectangleF rect)
         {
             try
@@ -566,6 +582,7 @@ namespace Com
         /// <param name="pt2">直线段的第二个端点。</param>
         /// <param name="offset">圆心。</param>
         /// <param name="radius">半径。</param>
+        /// <returns>布尔值，表示在一个圆内部能否看到一个直线段的部分或全部。</returns>
         public static bool LineIsVisibleInCircle(PointD pt1, PointD pt2, PointD offset, double radius)
         {
             try
@@ -619,6 +636,7 @@ namespace Com
         /// <param name="offset">圆心。</param>
         /// <param name="radius">半径。</param>
         /// <param name="rect">矩形。</param>
+        /// <returns>布尔值，表示在一个矩形内部能否看到一个圆的内部或者圆周的部分或全部。</returns>
         public static bool CircleInnerIsVisibleInRectangle(PointD offset, double radius, RectangleF rect)
         {
             try
@@ -685,6 +703,7 @@ namespace Com
         /// <param name="offset">圆心。</param>
         /// <param name="radius">半径。</param>
         /// <param name="rect">矩形。</param>
+        /// <returns>布尔值，表示在一个矩形内部能否看到一个圆的圆周的部分或全部。</returns>
         public static bool CircumferenceIsVisibleInRectangle(PointD offset, double radius, RectangleF rect)
         {
             try
@@ -770,6 +789,7 @@ namespace Com
         /// <param name="semiMajorAxis">半长轴。</param>
         /// <param name="eccentricity">离心率。</param>
         /// <param name="phase">相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <returns>双精度浮点数，表示椭圆在指定相位的半径。</returns>
         public static double GetRadiusOfEllipse(double semiMajorAxis, double eccentricity, double phase)
         {
             try
@@ -795,6 +815,7 @@ namespace Com
         /// <param name="semiMajorAxis">半长轴。</param>
         /// <param name="eccentricity">离心率。</param>
         /// <param name="phase">相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <returns>双精度浮点数，表示椭圆在指定相位的焦半径。</returns>
         public static double GetFocalRadiusOfEllipse(double semiMajorAxis, double eccentricity, double phase)
         {
             try
@@ -819,6 +840,7 @@ namespace Com
         /// </summary>
         /// <param name="centralAngle">圆心角（弧度）。</param>
         /// <param name="eccentricity">离心率。</param>
+        /// <returns>双精度浮点数，表示将椭圆的圆心角转换为相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）得到的结果。</returns>
         public static double EllipseCentralAngleToPhase(double centralAngle, double eccentricity)
         {
             try
@@ -848,6 +870,7 @@ namespace Com
         /// <param name="bmp">被旋转的位图。</param>
         /// <param name="rotateAngle">旋转的角度（弧度）。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        /// <returns>Bitmap 对象，表示屏幕坐标系中，将位图的副本按顺时针方向旋转一个角度得到的结果。</returns>
         public static Bitmap RotateBitmap(Bitmap bmp, double rotateAngle, bool antiAlias)
         {
             try
@@ -923,6 +946,7 @@ namespace Com
         /// </summary>
         /// <param name="rect">矩形。</param>
         /// <param name="cornerRadius">圆角的半径。</param>
+        /// <returns>GraphicsPath 对象，表示圆角矩形的路径，此圆角矩形包含 4 个半径相同的圆角。</returns>
         public static GraphicsPath CreateRoundedRectanglePath(Rectangle rect, int cornerRadius)
         {
             GraphicsPath RoundedRect = new GraphicsPath();
@@ -965,6 +989,7 @@ namespace Com
         /// <param name="cornerRadiusRT">右上圆角的半径。</param>
         /// <param name="cornerRadiusRB">右下圆角的半径。</param>
         /// <param name="cornerRadiusLB">左下圆角的半径。</param>
+        /// <returns>GraphicsPath 对象，表示圆角矩形的路径，此圆角矩形包含 4 个半径不同的圆角。</returns>
         public static GraphicsPath CreateRoundedRectanglePath(Rectangle rect, int cornerRadiusLT, int cornerRadiusRT, int cornerRadiusRB, int cornerRadiusLB)
         {
             GraphicsPath RoundedRect = new GraphicsPath();
@@ -1019,6 +1044,7 @@ namespace Com
         /// </summary>
         /// <param name="rect">矩形。</param>
         /// <param name="cornerRadius">圆角的半径。</param>
+        /// <returns>GraphicsPath 对象数组，数组元素表示矩形减去圆角矩形所剩区域的路径，此圆角矩形包含 4 个半径相同的圆角。</returns>
         public static GraphicsPath[] CreateRoundedRectangleOuterPaths(Rectangle rect, int cornerRadius)
         {
             GraphicsPath[] RoundedRectOuter = new GraphicsPath[4] { new GraphicsPath(), new GraphicsPath(), new GraphicsPath(), new GraphicsPath() };
@@ -1066,6 +1092,7 @@ namespace Com
         /// <param name="cornerRadiusRT">右上圆角的半径。</param>
         /// <param name="cornerRadiusRB">右下圆角的半径。</param>
         /// <param name="cornerRadiusLB">左下圆角的半径。</param>
+        /// <returns>GraphicsPath 对象数组，数组元素表示矩形减去圆角矩形所剩区域的路径，此圆角矩形包含 4 个半径不同的圆角。</returns>
         public static GraphicsPath[] CreateRoundedRectangleOuterPaths(Rectangle rect, int cornerRadiusLT, int cornerRadiusRT, int cornerRadiusRB, int cornerRadiusLB)
         {
             GraphicsPath[] RoundedRectOuter = new GraphicsPath[4] { new GraphicsPath(), new GraphicsPath(), new GraphicsPath(), new GraphicsPath() };

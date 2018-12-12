@@ -32,6 +32,7 @@ namespace Com
         /// <param name="recursive">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         /// <param name="merge">如果存在同名文件夹，是否合并文件夹内容。</param>
         /// <param name="overwrite">如果存在同名文件，是否覆盖目标文件。</param>
+        /// <returns>布尔值，表示此操作是否成功。</returns>
         public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive, bool merge, bool overwrite)
         {
             try
@@ -91,6 +92,7 @@ namespace Com
         /// <param name="destFolder">目标文件夹。</param>
         /// <param name="recursive">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         /// <param name="merge">如果存在同名文件夹，是否合并文件夹内容。</param>
+        /// <returns>布尔值，表示此操作是否成功。</returns>
         public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive, bool merge)
         {
             try
@@ -109,6 +111,7 @@ namespace Com
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
         /// <param name="recursive">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
+        /// <returns>布尔值，表示此操作是否成功。</returns>
         public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive)
         {
             try
@@ -126,6 +129,7 @@ namespace Com
         /// </summary>
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
+        /// <returns>布尔值，表示此操作是否成功。</returns>
         public static bool CopyFolder(string sourceFolder, string destFolder)
         {
             try
