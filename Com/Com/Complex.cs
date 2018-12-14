@@ -94,16 +94,8 @@ namespace Com
         /// <param name="pt">PointD 结构。</param>
         public Complex(PointD pt)
         {
-            if ((object)pt != null)
-            {
-                _Real = pt.X;
-                _Image = pt.Y;
-            }
-            else
-            {
-                _Real = 0;
-                _Image = 0;
-            }
+            _Real = pt.X;
+            _Image = pt.Y;
         }
 
         #endregion
@@ -439,12 +431,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 PointD 结构转换为 Complex 结构的新实例。</returns>
         public static Complex FromPointD(PointD pt)
         {
-            if ((object)pt != null)
-            {
-                return new Complex(pt.X, pt.Y);
-            }
-
-            return NaN;
+            return new Complex(pt);
         }
 
         //
@@ -456,12 +443,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算平方得到的结果。</returns>
         public static Complex Sqr(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(comp._Real * comp._Real - comp._Image * comp._Image, 2 * comp._Real * comp._Image);
-            }
-
-            return NaN;
+            return new Complex(comp._Real * comp._Real - comp._Image * comp._Image, 2 * comp._Real * comp._Image);
         }
 
         /// <summary>
@@ -471,15 +453,10 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算平方根得到的结果。</returns>
         public static Complex Sqrt(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                double Mod = Math.Sqrt(comp.Module);
-                double Arg = comp.Argument / 2;
+            double Mod = Math.Sqrt(comp.Module);
+            double Arg = comp.Argument / 2;
 
-                return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
-            }
-
-            return NaN;
+            return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
         }
 
         /// <summary>
@@ -489,15 +466,10 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算自然幂得到的结果。</returns>
         public static Complex Exp(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                double Mod = Math.Exp(comp._Real);
-                double Arg = comp._Image;
+            double Mod = Math.Exp(comp._Real);
+            double Arg = comp._Image;
 
-                return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
-            }
-
-            return NaN;
+            return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
         }
 
         /// <summary>
@@ -508,34 +480,29 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算幂得到的结果。</returns>
         public static Complex Pow(Complex left, Complex right)
         {
-            if ((object)left != null && (object)right != null)
-            {
-                double ModL = left.Module;
+            double ModL = left.Module;
 
-                if (ModL == 0)
+            if (ModL == 0)
+            {
+                if (right.Module == 0)
                 {
-                    if (right.Module == 0)
-                    {
-                        return One;
-                    }
-                    else
-                    {
-                        return Zero;
-                    }
+                    return One;
                 }
                 else
                 {
-                    double LnModL = Math.Log(ModL);
-                    double ArgL = left.Argument;
-
-                    double Mod = Math.Exp(LnModL * right._Real - ArgL * right._Image);
-                    double Arg = ArgL * right._Real + LnModL * right._Image;
-
-                    return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
+                    return Zero;
                 }
             }
+            else
+            {
+                double LnModL = Math.Log(ModL);
+                double ArgL = left.Argument;
 
-            return NaN;
+                double Mod = Math.Exp(LnModL * right._Real - ArgL * right._Image);
+                double Arg = ArgL * right._Real + LnModL * right._Image;
+
+                return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
+            }
         }
 
         /// <summary>
@@ -545,15 +512,10 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算自然对数得到的结果。</returns>
         public static Complex Log(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                double Real = Math.Log(comp.Module);
-                double Image = comp.Argument;
+            double Real = Math.Log(comp.Module);
+            double Image = comp.Argument;
 
-                return new Complex(Real, Image);
-            }
-
-            return NaN;
+            return new Complex(Real, Image);
         }
 
         /// <summary>
@@ -564,19 +526,14 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算对数得到的结果。</returns>
         public static Complex Log(Complex left, Complex right)
         {
-            if ((object)left != null && (object)right != null)
+            if (left.Module == 0 && right.IsOne)
             {
-                if (left.Module == 0 && right.IsOne)
-                {
-                    return Zero;
-                }
-                else
-                {
-                    return (Log(right) / Log(left));
-                }
+                return Zero;
             }
-
-            return NaN;
+            else
+            {
+                return (Log(right) / Log(left));
+            }
         }
 
         //
@@ -588,15 +545,10 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算正弦得到的结果。</returns>
         public static Complex Sin(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                double ExpPIm = Math.Exp(comp._Image);
-                double ExpNIm = Math.Exp(-comp._Image);
+            double ExpPIm = Math.Exp(comp._Image);
+            double ExpNIm = Math.Exp(-comp._Image);
 
-                return new Complex((ExpPIm + ExpNIm) * Math.Sin(comp._Real) / 2, (ExpPIm - ExpNIm) * Math.Cos(comp._Real) / 2);
-            }
-
-            return NaN;
+            return new Complex((ExpPIm + ExpNIm) * Math.Sin(comp._Real) / 2, (ExpPIm - ExpNIm) * Math.Cos(comp._Real) / 2);
         }
 
         /// <summary>
@@ -606,15 +558,10 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算余弦得到的结果。</returns>
         public static Complex Cos(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                double ExpPIm = Math.Exp(comp._Image);
-                double ExpNIm = Math.Exp(-comp._Image);
+            double ExpPIm = Math.Exp(comp._Image);
+            double ExpNIm = Math.Exp(-comp._Image);
 
-                return new Complex((ExpPIm + ExpNIm) * Math.Cos(comp._Real) / 2, -(ExpPIm - ExpNIm) * Math.Sin(comp._Real) / 2);
-            }
-
-            return NaN;
+            return new Complex((ExpPIm + ExpNIm) * Math.Cos(comp._Real) / 2, -(ExpPIm - ExpNIm) * Math.Sin(comp._Real) / 2);
         }
 
         /// <summary>
@@ -624,12 +571,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算正切得到的结果。</returns>
         public static Complex Tan(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return (Sin(comp) / Cos(comp));
-            }
-
-            return NaN;
+            return (Sin(comp) / Cos(comp));
         }
 
         /// <summary>
@@ -639,12 +581,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算反正弦得到的结果。</returns>
         public static Complex Asin(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return (-I * Log(I * comp + Sqrt(One - comp * comp)));
-            }
-
-            return NaN;
+            return (-I * Log(I * comp + Sqrt(One - comp * comp)));
         }
 
         /// <summary>
@@ -654,12 +591,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算反余弦得到的结果。</returns>
         public static Complex Acos(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return (-I * Log(comp + Sqrt(comp * comp - One)));
-            }
-
-            return NaN;
+            return (-I * Log(comp + Sqrt(comp * comp - One)));
         }
 
         /// <summary>
@@ -669,12 +601,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算反正切得到的结果。</returns>
         public static Complex Atan(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return (I * Log((One - I * comp) / (One + I * comp)) / new Complex(2));
-            }
-
-            return NaN;
+            return (I * Log((One - I * comp) / (One + I * comp)) / new Complex(2));
         }
 
         /// <summary>
@@ -684,12 +611,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算双曲正弦得到的结果。</returns>
         public static Complex Sinh(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return (-I * Sin(I * comp));
-            }
-
-            return NaN;
+            return (-I * Sin(I * comp));
         }
 
         /// <summary>
@@ -699,12 +621,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算双曲余弦得到的结果。</returns>
         public static Complex Cosh(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return Cos(I * comp);
-            }
-
-            return NaN;
+            return Cos(I * comp);
         }
 
         /// <summary>
@@ -714,12 +631,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算双曲正切得到的结果。</returns>
         public static Complex Tanh(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return (-I * Tan(I * comp));
-            }
-
-            return NaN;
+            return (-I * Tan(I * comp));
         }
 
         /// <summary>
@@ -729,12 +641,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲正弦得到的结果。</returns>
         public static Complex Asinh(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return Log(comp + Sqrt(comp * comp + One));
-            }
-
-            return NaN;
+            return Log(comp + Sqrt(comp * comp + One));
         }
 
         /// <summary>
@@ -744,12 +651,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲余弦得到的结果。</returns>
         public static Complex Acosh(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return Log(comp + Sqrt(comp * comp - One));
-            }
-
-            return NaN;
+            return Log(comp + Sqrt(comp * comp - One));
         }
 
         /// <summary>
@@ -759,12 +661,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲正切得到的结果。</returns>
         public static Complex Atanh(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return (Log((One + comp) / (One - comp)) / new Complex(2));
-            }
-
-            return NaN;
+            return (Log((One + comp) / (One - comp)) / new Complex(2));
         }
 
         //
@@ -776,12 +673,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量取绝对值得到的结果。</returns>
         public static Complex Abs(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(Math.Abs(comp._Real), Math.Abs(comp._Image));
-            }
-
-            return NaN;
+            return new Complex(Math.Abs(comp._Real), Math.Abs(comp._Image));
         }
 
         /// <summary>
@@ -791,12 +683,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量取符号数得到的结果。</returns>
         public static Complex Sign(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(Math.Sign(comp._Real), Math.Sign(comp._Image));
-            }
-
-            return NaN;
+            return new Complex(Math.Sign(comp._Real), Math.Sign(comp._Image));
         }
 
         /// <summary>
@@ -806,12 +693,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到较大的整数值得到的结果。</returns>
         public static Complex Ceiling(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(Math.Ceiling(comp._Real), Math.Ceiling(comp._Image));
-            }
-
-            return NaN;
+            return new Complex(Math.Ceiling(comp._Real), Math.Ceiling(comp._Image));
         }
 
         /// <summary>
@@ -821,12 +703,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到较小的整数值得到的结果。</returns>
         public static Complex Floor(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(Math.Floor(comp._Real), Math.Floor(comp._Image));
-            }
-
-            return NaN;
+            return new Complex(Math.Floor(comp._Real), Math.Floor(comp._Image));
         }
 
         /// <summary>
@@ -836,12 +713,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到最接近的整数值得到的结果。</returns>
         public static Complex Round(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(Math.Round(comp._Real), Math.Round(comp._Image));
-            }
-
-            return NaN;
+            return new Complex(Math.Round(comp._Real), Math.Round(comp._Image));
         }
 
         /// <summary>
@@ -851,12 +723,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量截断小数部分取整得到的结果。</returns>
         public static Complex Truncate(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(Math.Truncate(comp._Real), Math.Truncate(comp._Image));
-            }
-
-            return NaN;
+            return new Complex(Math.Truncate(comp._Real), Math.Truncate(comp._Image));
         }
 
         /// <summary>
@@ -867,12 +734,7 @@ namespace Com
         /// <returns>Complex 结构，表示将两个 Complex 结构的所有分量分别取最大值得到的结果。</returns>
         public static Complex Max(Complex left, Complex right)
         {
-            if ((object)left != null && (object)right != null)
-            {
-                return new Complex(Math.Max(left._Real, right._Real), Math.Max(left._Image, right._Image));
-            }
-
-            return NaN;
+            return new Complex(Math.Max(left._Real, right._Real), Math.Max(left._Image, right._Image));
         }
 
         /// <summary>
@@ -883,12 +745,7 @@ namespace Com
         /// <returns>Complex 结构，表示将两个 Complex 结构的所有分量分别取最小值得到的结果。</returns>
         public static Complex Min(Complex left, Complex right)
         {
-            if ((object)left != null && (object)right != null)
-            {
-                return new Complex(Math.Min(left._Real, right._Real), Math.Min(left._Image, right._Image));
-            }
-
-            return NaN;
+            return new Complex(Math.Min(left._Real, right._Real), Math.Min(left._Image, right._Image));
         }
 
         #endregion
@@ -1016,12 +873,7 @@ namespace Com
         /// <returns>Complex 结构，表示在 Complex 结构的所有分量前添加正号得到的结果。</returns>
         public static Complex operator +(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(+comp._Real, +comp._Image);
-            }
-
-            return NaN;
+            return new Complex(+comp._Real, +comp._Image);
         }
 
         /// <summary>
@@ -1031,12 +883,7 @@ namespace Com
         /// <returns>Complex 结构，表示在 Complex 结构的所有分量前添加负号得到的结果。</returns>
         public static Complex operator -(Complex comp)
         {
-            if ((object)comp != null)
-            {
-                return new Complex(-comp._Real, -comp._Image);
-            }
-
-            return NaN;
+            return new Complex(-comp._Real, -comp._Image);
         }
 
         //
@@ -1049,12 +896,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相加得到的结果。</returns>
         public static Complex operator +(Complex left, Complex right)
         {
-            if ((object)left != null && (object)right != null)
-            {
-                return new Complex(left._Real + right._Real, left._Image + right._Image);
-            }
-
-            return NaN;
+            return new Complex(left._Real + right._Real, left._Image + right._Image);
         }
 
         /// <summary>
@@ -1065,12 +907,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相减得到的结果。</returns>
         public static Complex operator -(Complex left, Complex right)
         {
-            if ((object)left != null && (object)right != null)
-            {
-                return new Complex(left._Real - right._Real, left._Image - right._Image);
-            }
-
-            return NaN;
+            return new Complex(left._Real - right._Real, left._Image - right._Image);
         }
 
         /// <summary>
@@ -1081,12 +918,7 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相乘得到的结果。</returns>
         public static Complex operator *(Complex left, Complex right)
         {
-            if ((object)left != null && (object)right != null)
-            {
-                return new Complex(left._Real * right._Real - left._Image * right._Image, left._Image * right._Real + left._Real * right._Image);
-            }
-
-            return NaN;
+            return new Complex(left._Real * right._Real - left._Image * right._Image, left._Image * right._Real + left._Real * right._Image);
         }
 
         /// <summary>
@@ -1097,14 +929,21 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相除得到的结果。</returns>
         public static Complex operator /(Complex left, Complex right)
         {
-            if ((object)left != null && (object)right != null)
-            {
-                double ModSqrR = right.ModuleSquared;
+            double ModSqrR = right.ModuleSquared;
 
-                return new Complex((left._Real * right._Real + left._Image * right._Image) / ModSqrR, (left._Image * right._Real - left._Real * right._Image) / ModSqrR);
-            }
+            return new Complex((left._Real * right._Real + left._Image * right._Image) / ModSqrR, (left._Image * right._Real - left._Real * right._Image) / ModSqrR);
+        }
 
-            return NaN;
+        //
+
+        /// <summary>
+        /// 将指定的 Complex 结构显式转换为 PointD 结构。
+        /// </summary>
+        /// <param name="comp">用于转换的 Complex 结构。</param>
+        /// <returns>PointD 结构，表示显式转换的结果。</returns>
+        public static explicit operator PointD(Complex comp)
+        {
+            return comp.ToPointD();
         }
 
         #endregion

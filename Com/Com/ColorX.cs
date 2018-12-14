@@ -2487,6 +2487,28 @@ namespace Com
             return ((int)Math.Round(left.Alpha) != (int)Math.Round(right.Alpha) || ((int)Math.Round(left.Red) != (int)Math.Round(right.Red) || (int)Math.Round(left.Green) != (int)Math.Round(right.Green) || (int)Math.Round(left.Blue) != (int)Math.Round(right.Blue)));
         }
 
+        //
+
+        /// <summary>
+        /// 将指定的 ColorX 结构显式转换为 Color 结构。
+        /// </summary>
+        /// <param name="color">用于转换的 ColorX 结构。</param>
+        /// <returns>Color 结构，表示显式转换的结果。</returns>
+        public static explicit operator Color(ColorX color)
+        {
+            return color.ToColor();
+        }
+
+        /// <summary>
+        /// 将指定的 Color 结构隐式转换为 ColorX 结构。
+        /// </summary>
+        /// <param name="color">用于转换的 Color 结构。</param>
+        /// <returns>ColorX 结构，表示隐式转换的结果。</returns>
+        public static implicit operator ColorX(Color color)
+        {
+            return new ColorX(color);
+        }
+
         #endregion
     }
 }

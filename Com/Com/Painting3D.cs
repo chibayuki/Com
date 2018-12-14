@@ -170,7 +170,7 @@ namespace Com
 
                         foreach (PointF P in Element2D[i])
                         {
-                            PointD P2D = new PointD(P);
+                            PointD P2D = P;
 
                             if (P2D.IsNaNOrInfinity)
                             {
@@ -327,7 +327,7 @@ namespace Com
                             }
                             else
                             {
-                                ColorX EColor = new ColorX(color);
+                                ColorX EColor = color;
 
                                 if (_IlluminationIntensity < 0)
                                 {
@@ -454,7 +454,7 @@ namespace Com
                                                         return Alpha;
                                                     };
 
-                                                    if (new PointD(Element[0]).DistanceFrom(new PointD(Element[1])) > 1)
+                                                    if (((PointD)Element[0]).DistanceFrom(Element[1]) > 1)
                                                     {
                                                         int Alpha0 = GetAlpha(EColor, Element3D[EIndex][0].Z), Alpha1 = GetAlpha(EColor, Element3D[EIndex][1].Z);
 

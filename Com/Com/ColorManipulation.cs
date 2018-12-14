@@ -77,7 +77,7 @@ namespace Com
         {
             try
             {
-                return GetColorName(new ColorX(color));
+                return GetColorName((ColorX)color);
             }
             catch
             {
@@ -147,7 +147,7 @@ namespace Com
         {
             try
             {
-                return GetComplementaryColor(new ColorX(color)).ToColor();
+                return GetComplementaryColor((ColorX)color).ToColor();
             }
             catch
             {
@@ -181,7 +181,7 @@ namespace Com
         {
             try
             {
-                return GetGrayscaleColor(new ColorX(color)).ToColor();
+                return GetGrayscaleColor((ColorX)color).ToColor();
             }
             catch
             {
@@ -242,7 +242,7 @@ namespace Com
         {
             try
             {
-                return BlendByRGB(new ColorX(color1), new ColorX(color2), proportion).ToColor();
+                return BlendByRGB((ColorX)color1, (ColorX)color2, proportion).ToColor();
             }
             catch
             {
@@ -282,7 +282,7 @@ namespace Com
         {
             try
             {
-                return BlendByHSV(new ColorX(color1), new ColorX(color2), proportion).ToColor();
+                return BlendByHSV((ColorX)color1, (ColorX)color2, proportion).ToColor();
             }
             catch
             {
@@ -322,7 +322,7 @@ namespace Com
         {
             try
             {
-                return BlendByHSL(new ColorX(color1), new ColorX(color2), proportion).ToColor();
+                return BlendByHSL((ColorX)color1, (ColorX)color2, proportion).ToColor();
             }
             catch
             {
@@ -362,7 +362,7 @@ namespace Com
         {
             try
             {
-                return BlendByCMYK(new ColorX(color1), new ColorX(color2), proportion).ToColor();
+                return BlendByCMYK((ColorX)color1, (ColorX)color2, proportion).ToColor();
             }
             catch
             {
@@ -402,7 +402,7 @@ namespace Com
         {
             try
             {
-                return BlendByLAB(new ColorX(color1), new ColorX(color2), proportion).ToColor();
+                return BlendByLAB((ColorX)color1, (ColorX)color2, proportion).ToColor();
             }
             catch
             {
@@ -473,7 +473,7 @@ namespace Com
         {
             try
             {
-                return ShiftLightnessByHSV(new ColorX(color), level).ToColor();
+                return ShiftLightnessByHSV((ColorX)color, level).ToColor();
             }
             catch
             {
@@ -523,7 +523,7 @@ namespace Com
         {
             try
             {
-                return ShiftLightnessByHSL(new ColorX(color), level).ToColor();
+                return ShiftLightnessByHSL((ColorX)color, level).ToColor();
             }
             catch
             {
@@ -573,7 +573,7 @@ namespace Com
         {
             try
             {
-                return ShiftLightnessByLAB(new ColorX(color), level).ToColor();
+                return ShiftLightnessByLAB((ColorX)color, level).ToColor();
             }
             catch
             {
@@ -623,7 +623,7 @@ namespace Com
         {
             try
             {
-                return ShiftSaturationByHSV(new ColorX(color), level).ToColor();
+                return ShiftSaturationByHSV((ColorX)color, level).ToColor();
             }
             catch
             {
@@ -673,7 +673,7 @@ namespace Com
         {
             try
             {
-                return ShiftSaturationByHSL(new ColorX(color), level).ToColor();
+                return ShiftSaturationByHSL((ColorX)color, level).ToColor();
             }
             catch
             {

@@ -2312,6 +2312,18 @@ namespace Com
             return dateTime.AddMilliseconds(-(timeSpan.TotalMilliseconds));
         }
 
+        //
+
+        /// <summary>
+        /// 将指定的 DateTime 结构隐式转换为 DateTimeX 结构。
+        /// </summary>
+        /// <param name="dateTime">用于转换的 DateTime 结构。</param>
+        /// <returns>DateTimeX 结构，表示隐式转换的结果。</returns>
+        public static implicit operator DateTimeX(DateTime dateTime)
+        {
+            return new DateTimeX(dateTime);
+        }
+
         #endregion
     }
 }

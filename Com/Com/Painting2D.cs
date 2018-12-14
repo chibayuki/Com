@@ -1184,7 +1184,7 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !string.IsNullOrWhiteSpace(text) && font != null && (!frontColor.IsEmpty && frontColor.A > 0) && !new PointD(pt).IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(offset) && offset >= 0))
+                if (bmp != null && !string.IsNullOrWhiteSpace(text) && font != null && (!frontColor.IsEmpty && frontColor.A > 0) && !((PointD)pt).IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(offset) && offset >= 0))
                 {
                     using (Graphics Grph = Graphics.FromImage(bmp))
                     {
