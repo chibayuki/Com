@@ -261,7 +261,7 @@ namespace Com.WinForm
                 }
             };
 
-            PictureBox_FullScreen.Image = FullScreenImage[(!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? new ColorX(PictureBox_FullScreen.BackColor) : Me.RecommendColors.CaptionBar) ? 0 : 1), (Me.ActualFormState == FormState.FullScreen ? 0 : 1), (_FullScreenButtonIsPointed || _FullScreenButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_FullScreen.Image = FullScreenImage[(!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? (ColorX)PictureBox_FullScreen.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1), (Me.ActualFormState == FormState.FullScreen ? 0 : 1), (_FullScreenButtonIsPointed || _FullScreenButtonIsPressed || Me.IsActive ? 0 : 1)];
 
             Bitmap[,] MinimizeImage = new Bitmap[2, 2]
             {
@@ -269,7 +269,7 @@ namespace Com.WinForm
                 { Properties.Resources.ControlBox_Active_LightImage_Minimize_16, Properties.Resources.ControlBox_Inactive_LightImage_Minimize_16 }
             };
 
-            PictureBox_Minimize.Image = MinimizeImage[(!RecommendColors.BackColorFitLightText(_MinimizeButtonIsPointed || _MinimizeButtonIsPressed ? new ColorX(PictureBox_Minimize.BackColor) : Me.RecommendColors.CaptionBar) ? 0 : 1), (_MinimizeButtonIsPointed || _MinimizeButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_Minimize.Image = MinimizeImage[(!RecommendColors.BackColorFitLightText(_MinimizeButtonIsPointed || _MinimizeButtonIsPressed ? (ColorX)PictureBox_Minimize.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1), (_MinimizeButtonIsPointed || _MinimizeButtonIsPressed || Me.IsActive ? 0 : 1)];
 
             Bitmap[,,] MaximizeImage = new Bitmap[2, 2, 2]
             {
@@ -283,7 +283,7 @@ namespace Com.WinForm
                 }
             };
 
-            PictureBox_Maximize.Image = MaximizeImage[(!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? new ColorX(PictureBox_Maximize.BackColor) : Me.RecommendColors.CaptionBar) ? 0 : 1), (Me.ActualFormState == FormState.Maximized ? 0 : 1), (_MaximizeButtonIsPointed || _MaximizeButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_Maximize.Image = MaximizeImage[(!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? (ColorX)PictureBox_Maximize.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1), (Me.ActualFormState == FormState.Maximized ? 0 : 1), (_MaximizeButtonIsPointed || _MaximizeButtonIsPressed || Me.IsActive ? 0 : 1)];
 
             Bitmap[,] ExitImage = new Bitmap[2, 2]
             {
@@ -291,7 +291,7 @@ namespace Com.WinForm
                 { Properties.Resources.ControlBox_Active_LightImage_Exit_16, Properties.Resources.ControlBox_Inactive_LightImage_Exit_16 }
             };
 
-            PictureBox_Exit.Image = ExitImage[(!RecommendColors.BackColorFitLightText(_ExitButtonIsPointed || _ExitButtonIsPressed ? new ColorX(PictureBox_Exit.BackColor) : Me.RecommendColors.CaptionBar) ? 0 : 1), (_ExitButtonIsPointed || _ExitButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_Exit.Image = ExitImage[(!RecommendColors.BackColorFitLightText(_ExitButtonIsPointed || _ExitButtonIsPressed ? (ColorX)PictureBox_Exit.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1), (_ExitButtonIsPointed || _ExitButtonIsPressed || Me.IsActive ? 0 : 1)];
 
             PictureBox_FullScreen.Refresh();
             PictureBox_Minimize.Refresh();
@@ -303,7 +303,7 @@ namespace Com.WinForm
         {
             if (Me.Effect.HasFlag(Effect.Fade))
             {
-                ColorX OldBackColor = new ColorX(control.BackColor);
+                ColorX OldBackColor = control.BackColor;
 
                 Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                 {
@@ -629,7 +629,7 @@ namespace Com.WinForm
             {
                 Point CurPt = Geometry.GetCursorPositionOfControl(Panel_CaptionBar);
 
-                if (new PointD(CurPt).DistanceFrom(new PointD(_CursorPositionOfMe)) >= _ExtendDist)
+                if (((PointD)CurPt).DistanceFrom(_CursorPositionOfMe) >= _ExtendDist)
                 {
                     _MeWillMove = false;
                     _MeIsMoving = true;

@@ -913,7 +913,7 @@ namespace Com.WinForm
                 if (_Effect.HasFlag(Effect.SmoothShift))
                 {
                     int MaxLTRB = Math.Max(1, Math.Max(Math.Abs(bounds.Left - Bounds_Current.Left), Math.Max(Math.Abs(bounds.Top - Bounds_Current.Top), Math.Max(Math.Abs(bounds.Right - Bounds_Current.Right), Math.Abs(bounds.Bottom - Bounds_Current.Bottom)))));
-                    int Delta = Math.Min(MaxLTRB, (int)(new PointD(PrimaryScreenBounds.Size).Module / 40.96));
+                    int Delta = Math.Min(MaxLTRB, (int)(((PointD)PrimaryScreenBounds.Size).Module / 40.96));
 
                     Rectangle oldBounds = Rectangle.FromLTRB(bounds.Left - (bounds.Left - Bounds_Current.Left) * Delta / MaxLTRB, bounds.Top - (bounds.Top - Bounds_Current.Top) * Delta / MaxLTRB, bounds.Right - (bounds.Right - Bounds_Current.Right) * Delta / MaxLTRB, bounds.Bottom - (bounds.Bottom - Bounds_Current.Bottom) * Delta / MaxLTRB);
 
@@ -921,7 +921,7 @@ namespace Com.WinForm
                     {
                         double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
 
-                        Bounds_Current = new Rectangle((new PointD(oldBounds.Location) * (1 - Progress) + new PointD(bounds.Location) * Progress).ToPoint(), (new PointD(oldBounds.Size) * (1 - Progress) + new PointD(bounds.Size) * Progress).ToSize());
+                        Bounds_Current = new Rectangle(((PointD)oldBounds.Location * (1 - Progress) + (PointD)bounds.Location * Progress).ToPoint(), ((PointD)oldBounds.Size * (1 - Progress) + (PointD)bounds.Size * Progress).ToSize());
 
                         if (frameId == frameCount)
                         {

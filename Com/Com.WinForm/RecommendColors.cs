@@ -131,7 +131,7 @@ namespace Com.WinForm
 
         internal static bool BackColorFitLightText(Color color) // 返回表示指定的背景色是否与浅色文本相符的布尔值。
         {
-            return (new ColorX(color).Lightness_LAB < 70);
+            return (((ColorX)color).Lightness_LAB < 70);
         }
 
         internal static bool BackColorFitDarkText(ColorX color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
@@ -141,7 +141,7 @@ namespace Com.WinForm
 
         internal static bool BackColorFitDarkText(Color color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
         {
-            return (new ColorX(color).Lightness_LAB > 30);
+            return (((ColorX)color).Lightness_LAB > 30);
         }
 
         #endregion
@@ -166,7 +166,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -177,7 +177,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = new ColorX(Color.FromArgb(128, 128, 128));
+                            _Caption = Color.FromArgb(128, 128, 128);
                         }
 
                         if (showShadowColor)
@@ -186,7 +186,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _Shadow = new ColorX(Color.Black);
+                            _Shadow = Color.Black;
                         }
 
                         _ControlButton = ColorX.Transparent;
@@ -240,7 +240,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -251,7 +251,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = new ColorX(Color.FromArgb(128, 128, 128));
+                            _Caption = Color.FromArgb(128, 128, 128);
                         }
 
                         if (showShadowColor)
@@ -260,7 +260,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _Shadow = new ColorX(Color.Black);
+                            _Shadow = Color.Black;
                         }
 
                         _ControlButton = ColorX.Transparent;
@@ -314,7 +314,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -325,7 +325,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = new ColorX(Color.FromArgb(128, 128, 128));
+                            _Caption = Color.FromArgb(128, 128, 128);
                         }
 
                         if (showShadowColor)
@@ -334,7 +334,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _Shadow = new ColorX(Color.Black);
+                            _Shadow = Color.Black;
                         }
 
                         _ControlButton = ColorX.Transparent;
@@ -388,7 +388,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -399,7 +399,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = new ColorX(Color.FromArgb(192, 192, 192));
+                            _Caption = Color.FromArgb(192, 192, 192);
                         }
 
                         if (showShadowColor)
@@ -408,7 +408,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _Shadow = new ColorX(Color.Black);
+                            _Shadow = Color.Black;
                         }
 
                         _ControlButton = ColorX.Transparent;
@@ -462,7 +462,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = new ColorX(!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
                             }
                             else
                             {
@@ -473,7 +473,7 @@ namespace Com.WinForm
                         else
                         {
                             _CaptionBar = _FormBackground.GrayscaleColor;
-                            _Caption = new ColorX(Color.FromArgb(192, 192, 192));
+                            _Caption = Color.FromArgb(192, 192, 192);
                         }
 
                         if (showShadowColor)
@@ -482,7 +482,7 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _Shadow = new ColorX(Color.Black);
+                            _Shadow = Color.Black;
                         }
 
                         _ControlButton = ColorX.Transparent;
