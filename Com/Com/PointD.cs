@@ -1004,7 +1004,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD 结构的副本向 +Y 轴剪切的角度（弧度）。</param>
         public PointD ShearYCopy(double angle)
         {
-            return new PointD(_Y + _X * Math.Tan(angle), _X);
+            return new PointD(_X, _Y + _X * Math.Tan(angle));
         }
 
         //
@@ -1122,9 +1122,9 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
             {
-                    { ex._X, ex._Y, 0 },
-                    { ey._X, ey._Y, 0 },
-                    { offset._X, offset._Y, 1 }
+                { ex._X, ex._Y, 0 },
+                { ey._X, ey._Y, 0 },
+                { offset._X, offset._Y, 1 }
             });
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1182,9 +1182,9 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
             {
-                    { ex._X, ex._Y, 0 },
-                    { ey._X, ey._Y, 0 },
-                    { offset._X, offset._Y, 1 }
+                { ex._X, ex._Y, 0 },
+                { ey._X, ey._Y, 0 },
+                { offset._X, offset._Y, 1 }
             });
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1245,9 +1245,9 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
             {
-                    { ex._X, ex._Y, 0 },
-                    { ey._X, ey._Y, 0 },
-                    { offset._X, offset._Y, 1 }
+                { ex._X, ex._Y, 0 },
+                { ey._X, ey._Y, 0 },
+                { offset._X, offset._Y, 1 }
             });
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
@@ -1305,9 +1305,9 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
             {
-                    { ex._X, ex._Y, 0 },
-                    { ey._X, ey._Y, 0 },
-                    { offset._X, offset._Y, 1 }
+                { ex._X, ex._Y, 0 },
+                { ey._X, ey._Y, 0 },
+                { offset._X, offset._Y, 1 }
             });
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
@@ -1756,9 +1756,9 @@ namespace Com
 
             return Matrix.UnsafeCreateInstance(new double[3, 3]
             {
-                    { CosA, SinA, 0 },
-                    { -SinA, CosA, 0 },
-                    { -pt._X * CosA + pt._Y * SinA + pt._X, -pt._X * SinA - pt._Y * CosA + pt._Y, 1 }
+                { CosA, SinA, 0 },
+                { -SinA, CosA, 0 },
+                { -pt._X * CosA + pt._Y * SinA + pt._X, -pt._X * SinA - pt._Y * CosA + pt._Y, 1 }
             });
         }
 

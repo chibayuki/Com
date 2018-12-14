@@ -1229,13 +1229,13 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[7, 7]
             {
-                    { ex._X, ex._Y, ex._Z, ex._U, ex._V, ex._W, 0 },
-                    { ey._X, ey._Y, ey._Z, ey._U, ey._V, ey._W, 0 },
-                    { ez._X, ez._Y, ez._Z, ez._U, ez._V, ez._W, 0 },
-                    { eu._X, eu._Y, eu._Z, eu._U, eu._V, eu._W, 0 },
-                    { ev._X, ev._Y, ev._Z, ev._U, ev._V, ev._W, 0 },
-                    { ew._X, ew._Y, ew._Z, ew._U, ew._V, ew._W, 0 },
-                    { offset._X, offset._Y, offset._Z, offset._U, offset._V, offset._W, 1 }
+                { ex._X, ex._Y, ex._Z, ex._U, ex._V, ex._W, 0 },
+                { ey._X, ey._Y, ey._Z, ey._U, ey._V, ey._W, 0 },
+                { ez._X, ez._Y, ez._Z, ez._U, ez._V, ez._W, 0 },
+                { eu._X, eu._Y, eu._Z, eu._U, eu._V, eu._W, 0 },
+                { ev._X, ev._Y, ev._Z, ev._U, ev._V, ev._W, 0 },
+                { ew._X, ew._Y, ew._Z, ew._U, ew._V, ew._W, 0 },
+                { offset._X, offset._Y, offset._Z, offset._U, offset._V, offset._W, 1 }
             });
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1309,13 +1309,13 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[7, 7]
             {
-                    { ex._X, ex._Y, ex._Z, ex._U, ex._V, ex._W, 0 },
-                    { ey._X, ey._Y, ey._Z, ey._U, ey._V, ey._W, 0 },
-                    { ez._X, ez._Y, ez._Z, ez._U, ez._V, ez._W, 0 },
-                    { eu._X, eu._Y, eu._Z, eu._U, eu._V, eu._W, 0 },
-                    { ev._X, ev._Y, ev._Z, ev._U, ev._V, ev._W, 0 },
-                    { ew._X, ew._Y, ew._Z, ew._U, ew._V, ew._W, 0 },
-                    { offset._X, offset._Y, offset._Z, offset._U, offset._V, offset._W, 1 }
+                { ex._X, ex._Y, ex._Z, ex._U, ex._V, ex._W, 0 },
+                { ey._X, ey._Y, ey._Z, ey._U, ey._V, ey._W, 0 },
+                { ez._X, ez._Y, ez._Z, ez._U, ez._V, ez._W, 0 },
+                { eu._X, eu._Y, eu._Z, eu._U, eu._V, eu._W, 0 },
+                { ev._X, ev._Y, ev._Z, ev._U, ev._V, ev._W, 0 },
+                { ew._X, ew._Y, ew._Z, ew._U, ew._V, ew._W, 0 },
+                { offset._X, offset._Y, offset._Z, offset._U, offset._V, offset._W, 1 }
             });
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1380,13 +1380,13 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[7, 7]
             {
-                    { ex._X, ex._Y, ex._Z, ex._U, ex._V, ex._W, 0 },
-                    { ey._X, ey._Y, ey._Z, ey._U, ey._V, ey._W, 0 },
-                    { ez._X, ez._Y, ez._Z, ez._U, ez._V, ez._W, 0 },
-                    { eu._X, eu._Y, eu._Z, eu._U, eu._V, eu._W, 0 },
-                    { ev._X, ev._Y, ev._Z, ev._U, ev._V, ev._W, 0 },
-                    { ew._X, ew._Y, ew._Z, ew._U, ew._V, ew._W, 0 },
-                    { offset._X, offset._Y, offset._Z, offset._U, offset._V, offset._W, 1 }
+                { ex._X, ex._Y, ex._Z, ex._U, ex._V, ex._W, 0 },
+                { ey._X, ey._Y, ey._Z, ey._U, ey._V, ey._W, 0 },
+                { ez._X, ez._Y, ez._Z, ez._U, ez._V, ez._W, 0 },
+                { eu._X, eu._Y, eu._Z, eu._U, eu._V, eu._W, 0 },
+                { ev._X, ev._Y, ev._Z, ev._U, ev._V, ev._W, 0 },
+                { ew._X, ew._Y, ew._Z, ew._U, ew._V, ew._W, 0 },
+                { offset._X, offset._Y, offset._Z, offset._U, offset._V, offset._W, 1 }
             });
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
@@ -1460,13 +1460,13 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[7, 7]
             {
-                    { ex._X, ex._Y, ex._Z, ex._U, ex._V, ex._W, 0 },
-                    { ey._X, ey._Y, ey._Z, ey._U, ey._V, ey._W, 0 },
-                    { ez._X, ez._Y, ez._Z, ez._U, ez._V, ez._W, 0 },
-                    { eu._X, eu._Y, eu._Z, eu._U, eu._V, eu._W, 0 },
-                    { ev._X, ev._Y, ev._Z, ev._U, ev._V, ev._W, 0 },
-                    { ew._X, ew._Y, ew._Z, ew._U, ew._V, ew._W, 0 },
-                    { offset._X, offset._Y, offset._Z, offset._U, offset._V, offset._W, 1 }
+                { ex._X, ex._Y, ex._Z, ex._U, ex._V, ex._W, 0 },
+                { ey._X, ey._Y, ey._Z, ey._U, ey._V, ey._W, 0 },
+                { ez._X, ez._Y, ez._Z, ez._U, ez._V, ez._W, 0 },
+                { eu._X, eu._Y, eu._Z, eu._U, eu._V, eu._W, 0 },
+                { ev._X, ev._Y, ev._Z, ev._U, ev._V, ev._W, 0 },
+                { ew._X, ew._Y, ew._Z, ew._U, ew._V, ew._W, 0 },
+                { offset._X, offset._Y, offset._Z, offset._U, offset._V, offset._W, 1 }
             });
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);

@@ -1176,10 +1176,10 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[4, 4]
             {
-                    { ex._X, ex._Y, ex._Z, 0 },
-                    { ey._X, ey._Y, ey._Z, 0 },
-                    { ez._X, ez._Y, ez._Z, 0 },
-                    { offset._X, offset._Y, offset._Z, 1 }
+                { ex._X, ex._Y, ex._Z, 0 },
+                { ey._X, ey._Y, ey._Z, 0 },
+                { ez._X, ez._Y, ez._Z, 0 },
+                { offset._X, offset._Y, offset._Z, 1 }
             });
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1241,10 +1241,10 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[4, 4]
             {
-                    { ex._X, ex._Y, ex._Z, 0 },
-                    { ey._X, ey._Y, ey._Z, 0 },
-                    { ez._X, ez._Y, ez._Z, 0 },
-                    { offset._X, offset._Y, offset._Z, 1 }
+                { ex._X, ex._Y, ex._Z, 0 },
+                { ey._X, ey._Y, ey._Z, 0 },
+                { ez._X, ez._Y, ez._Z, 0 },
+                { offset._X, offset._Y, offset._Z, 1 }
             });
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1306,10 +1306,10 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[4, 4]
             {
-                    { ex._X, ex._Y, ex._Z, 0 },
-                    { ey._X, ey._Y, ey._Z, 0 },
-                    { ez._X, ez._Y, ez._Z, 0 },
-                    { offset._X, offset._Y, offset._Z, 1 }
+                { ex._X, ex._Y, ex._Z, 0 },
+                { ey._X, ey._Y, ey._Z, 0 },
+                { ez._X, ez._Y, ez._Z, 0 },
+                { offset._X, offset._Y, offset._Z, 1 }
             });
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
@@ -1371,10 +1371,10 @@ namespace Com
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[4, 4]
             {
-                    { ex._X, ex._Y, ex._Z, 0 },
-                    { ey._X, ey._Y, ey._Z, 0 },
-                    { ez._X, ez._Y, ez._Z, 0 },
-                    { offset._X, offset._Y, offset._Z, 1 }
+                { ex._X, ex._Y, ex._Z, 0 },
+                { ey._X, ey._Y, ey._Z, 0 },
+                { ez._X, ez._Y, ez._Z, 0 },
+                { offset._X, offset._Y, offset._Z, 1 }
             });
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
