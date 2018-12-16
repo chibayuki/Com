@@ -437,20 +437,20 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回对 Complex 结构的计算平方得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算平方得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示底数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算平方得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算平方得到的结果。</returns>
         public static Complex Sqr(Complex comp)
         {
             return new Complex(comp._Real * comp._Real - comp._Image * comp._Image, 2 * comp._Real * comp._Image);
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算平方根得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算平方根得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示被开方数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算平方根得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算平方根得到的结果。</returns>
         public static Complex Sqrt(Complex comp)
         {
             double Mod = Math.Sqrt(comp.Module);
@@ -460,10 +460,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算自然幂得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算自然幂得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示底数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算自然幂得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算自然幂得到的结果。</returns>
         public static Complex Exp(Complex comp)
         {
             double Mod = Math.Exp(comp._Real);
@@ -473,11 +473,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算幂得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算复幂得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="left">Complex 结构，表示底数。</param>
         /// <param name="right">Complex 结构，表示指数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算幂得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算复幂得到的结果。</returns>
         public static Complex Pow(Complex left, Complex right)
         {
             double ModL = left.Module;
@@ -506,10 +506,76 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算自然对数得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算实幂得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">Complex 结构，表示底数。</param>
+        /// <param name="right">双精度浮点数，表示指数。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构计算实幂得到的结果。</returns>
+        public static Complex Pow(Complex left, double right)
+        {
+            double ModL = left.Module;
+
+            if (ModL == 0)
+            {
+                if (right == 0)
+                {
+                    return One;
+                }
+                else
+                {
+                    return Zero;
+                }
+            }
+            else
+            {
+                double LnModL = Math.Log(ModL);
+                double ArgL = left.Argument;
+
+                double Mod = Math.Exp(LnModL * right);
+                double Arg = ArgL * right;
+
+                return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
+            }
+        }
+
+        /// <summary>
+        /// 返回对双精度浮点数计算复幂得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">双精度浮点数，表示底数。</param>
+        /// <param name="right">Complex 结构，表示指数。</param>
+        /// <returns>Complex 结构，表示对双精度浮点数计算复幂得到的结果。</returns>
+        public static Complex Pow(double left, Complex right)
+        {
+            double ModL = left;
+
+            if (ModL == 0)
+            {
+                if (right.Module == 0)
+                {
+                    return One;
+                }
+                else
+                {
+                    return Zero;
+                }
+            }
+            else
+            {
+                double LnModL = Math.Log(ModL);
+                double ArgL = 0;
+
+                double Mod = Math.Exp(LnModL * right._Real - ArgL * right._Image);
+                double Arg = ArgL * right._Real + LnModL * right._Image;
+
+                return new Complex(Mod * Math.Cos(Arg), Mod * Math.Sin(Arg));
+            }
+        }
+
+        /// <summary>
+        /// 返回对 Complex 结构计算自然对数得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示幂。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算自然对数得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算自然对数得到的结果。</returns>
         public static Complex Log(Complex comp)
         {
             double Real = Math.Log(comp.Module);
@@ -519,11 +585,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算对数得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算复对数得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="left">Complex 结构，表示基数。</param>
         /// <param name="right">Complex 结构，表示幂。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算对数得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算复对数得到的结果。</returns>
         public static Complex Log(Complex left, Complex right)
         {
             if (left.Module == 0 && right.IsOne)
@@ -536,13 +602,49 @@ namespace Com
             }
         }
 
+        /// <summary>
+        /// 返回对双精度浮点数计算复对数得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">Complex 结构，表示基数。</param>
+        /// <param name="right">双精度浮点数，表示幂。</param>
+        /// <returns>Complex 结构，表示对双精度浮点数计算复对数得到的结果。</returns>
+        public static Complex Log(Complex left, double right)
+        {
+            if (left.Module == 0 && right == 1)
+            {
+                return Zero;
+            }
+            else
+            {
+                return (Math.Log(right) / Log(left));
+            }
+        }
+
+        /// <summary>
+        /// 返回对 Complex 结构计算实对数得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">双精度浮点数，表示基数。</param>
+        /// <param name="right">Complex 结构，表示幂。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构计算实对数得到的结果。</returns>
+        public static Complex Log(double left, Complex right)
+        {
+            if (left == 0 && right.IsOne)
+            {
+                return Zero;
+            }
+            else
+            {
+                return (Log(right) / Math.Log(left));
+            }
+        }
+
         //
 
         /// <summary>
-        /// 返回对 Complex 结构的计算正弦得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算正弦得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算正弦得到的结果。</returns>
         public static Complex Sin(Complex comp)
         {
             double ExpPIm = Math.Exp(comp._Image);
@@ -552,10 +654,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算余弦得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算余弦得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算余弦得到的结果。</returns>
         public static Complex Cos(Complex comp)
         {
             double ExpPIm = Math.Exp(comp._Image);
@@ -565,100 +667,100 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算正切得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算正切得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算正切得到的结果。</returns>
         public static Complex Tan(Complex comp)
         {
             return (Sin(comp) / Cos(comp));
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算反正弦得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算反正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示正弦值的复数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算反正弦得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算反正弦得到的结果。</returns>
         public static Complex Asin(Complex comp)
         {
             return (-I * Log(I * comp + Sqrt(One - comp * comp)));
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算反余弦得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算反余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示余弦值的复数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算反余弦得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算反余弦得到的结果。</returns>
         public static Complex Acos(Complex comp)
         {
             return (-I * Log(comp + Sqrt(comp * comp - One)));
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算反正切得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算反正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示正切值的复数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算反正切得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算反正切得到的结果。</returns>
         public static Complex Atan(Complex comp)
         {
             return (I * Log((One - I * comp) / (One + I * comp)) / new Complex(2));
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算双曲正弦得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算双曲正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算双曲正弦得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算双曲正弦得到的结果。</returns>
         public static Complex Sinh(Complex comp)
         {
             return (-I * Sin(I * comp));
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算双曲余弦得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算双曲余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算双曲余弦得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算双曲余弦得到的结果。</returns>
         public static Complex Cosh(Complex comp)
         {
             return Cos(I * comp);
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算双曲正切得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算双曲正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算双曲正切得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算双曲正切得到的结果。</returns>
         public static Complex Tanh(Complex comp)
         {
             return (-I * Tan(I * comp));
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算反双曲正弦得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算反双曲正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲正弦值的复数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲正弦得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算反双曲正弦得到的结果。</returns>
         public static Complex Asinh(Complex comp)
         {
             return Log(comp + Sqrt(comp * comp + One));
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算反双曲余弦得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算反双曲余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲余弦值的复数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲余弦得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算反双曲余弦得到的结果。</returns>
         public static Complex Acosh(Complex comp)
         {
             return Log(comp + Sqrt(comp * comp - One));
         }
 
         /// <summary>
-        /// 返回对 Complex 结构的计算反双曲正切得到的 Complex 结构的新实例。
+        /// 返回对 Complex 结构计算反双曲正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲正切值的复数。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构的计算反双曲正切得到的结果。</returns>
+        /// <returns>Complex 结构，表示对 Complex 结构计算反双曲正切得到的结果。</returns>
         public static Complex Atanh(Complex comp)
         {
             return (Log((One + comp) / (One - comp)) / new Complex(2));
@@ -900,6 +1002,30 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回将 Complex 结构与双精度浮点数的相加得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">Complex 结构，表示被加数。</param>
+        /// <param name="right">双精度浮点数，表示加数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与双精度浮点数的相加得到的结果。</returns>
+        public static Complex operator +(Complex left, double right)
+        {
+            return new Complex(left._Real + right, left._Image);
+        }
+
+        /// <summary>
+        /// 返回将双精度浮点数与 Complex 结构的相加得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">双精度浮点数，表示被加数。</param>
+        /// <param name="right">Complex 结构，表示加数。</param>
+        /// <returns>Complex 结构，表示将双精度浮点数与 Complex 结构的相加得到的结果。</returns>
+        public static Complex operator +(double left, Complex right)
+        {
+            return new Complex(left + right._Real, right._Image);
+        }
+
+        //
+
+        /// <summary>
         /// 返回将 Complex 结构与 Complex 结构的相减得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="left">Complex 结构，表示被减数。</param>
@@ -911,6 +1037,30 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回将 Complex 结构与双精度浮点数的相减得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">Complex 结构，表示被减数。</param>
+        /// <param name="right">双精度浮点数，表示减数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与双精度浮点数的相减得到的结果。</returns>
+        public static Complex operator -(Complex left, double right)
+        {
+            return new Complex(left._Real - right, left._Image);
+        }
+
+        /// <summary>
+        /// 返回将双精度浮点数与 Complex 结构的相减得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">双精度浮点数，表示被减数。</param>
+        /// <param name="right">Complex 结构，表示减数。</param>
+        /// <returns>Complex 结构，表示将双精度浮点数与 Complex 结构的相减得到的结果。</returns>
+        public static Complex operator -(double left, Complex right)
+        {
+            return new Complex(left - right._Real, -right._Image);
+        }
+
+        //
+
+        /// <summary>
         /// 返回将 Complex 结构与 Complex 结构的相乘得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="left">Complex 结构，表示被乘数。</param>
@@ -920,6 +1070,30 @@ namespace Com
         {
             return new Complex(left._Real * right._Real - left._Image * right._Image, left._Image * right._Real + left._Real * right._Image);
         }
+
+        /// <summary>
+        /// 返回将 Complex 结构与双精度浮点数的相乘得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">Complex 结构，表示被乘数。</param>
+        /// <param name="right">双精度浮点数，表示乘数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与双精度浮点数的相乘得到的结果。</returns>
+        public static Complex operator *(Complex left, double right)
+        {
+            return new Complex(left._Real * right, left._Image * right);
+        }
+
+        /// <summary>
+        /// 返回将双精度浮点数与 Complex 结构的相乘得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">双精度浮点数，表示被乘数。</param>
+        /// <param name="right">Complex 结构，表示乘数。</param>
+        /// <returns>Complex 结构，表示将双精度浮点数与 Complex 结构的相乘得到的结果。</returns>
+        public static Complex operator *(double left, Complex right)
+        {
+            return new Complex(left * right._Real, left * right._Image);
+        }
+
+        //
 
         /// <summary>
         /// 返回将 Complex 结构与 Complex 结构的相除得到的 Complex 结构的新实例。
@@ -934,6 +1108,30 @@ namespace Com
             return new Complex((left._Real * right._Real + left._Image * right._Image) / ModSqrR, (left._Image * right._Real - left._Real * right._Image) / ModSqrR);
         }
 
+        /// <summary>
+        /// 返回将 Complex 结构与双精度浮点数的相除得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">Complex 结构，表示被除数。</param>
+        /// <param name="right">双精度浮点数，表示除数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与双精度浮点数的相除得到的结果。</returns>
+        public static Complex operator /(Complex left, double right)
+        {
+            return new Complex(left._Real / right, left._Image / right);
+        }
+
+        /// <summary>
+        /// 返回将 Complex 结构与 Complex 结构的相除得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="left">Complex 结构，表示被除数。</param>
+        /// <param name="right">Complex 结构，表示除数。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相除得到的结果。</returns>
+        public static Complex operator /(double left, Complex right)
+        {
+            double ModSqrR = right.ModuleSquared;
+
+            return new Complex(left * right._Real / ModSqrR, -left * right._Image / ModSqrR);
+        }
+
         //
 
         /// <summary>
@@ -944,6 +1142,16 @@ namespace Com
         public static explicit operator PointD(Complex comp)
         {
             return comp.ToPointD();
+        }
+
+        /// <summary>
+        /// 将指定的双精度浮点数显式转换为 Complex 结构。
+        /// </summary>
+        /// <param name="real">用于转换的双精度浮点数。</param>
+        /// <returns>PointD 结构，表示显式转换的结果。</returns>
+        public static explicit operator Complex(double real)
+        {
+            return new Complex(real);
         }
 
         #endregion
