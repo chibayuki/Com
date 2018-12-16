@@ -486,7 +486,7 @@ namespace Com
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
         /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
-        /// <returns>ColorX 结构，表示在 HSL 色彩空间调整明度得到的颜色。</returns>
+        /// <returns>ColorX 结构，表示将指定颜色在 HSL 色彩空间调整明度得到的颜色。</returns>
         public static ColorX ShiftLightnessByHSL(ColorX color, double level)
         {
             try
