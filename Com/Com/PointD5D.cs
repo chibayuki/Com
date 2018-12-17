@@ -727,25 +727,79 @@ namespace Com
         /// <param name="item">用于检索的值。</param>
         public int IndexOf(double item)
         {
-            if (_X.Equals(item))
+            return Array.IndexOf(ToArray(), item, 0, Dimension);
+        }
+
+        /// <summary>
+        /// 从指定的索引开始遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <param name="startIndex">起始索引。</param>
+        public int IndexOf(double item, int startIndex)
+        {
+            if (startIndex >= 0 && startIndex < Dimension)
             {
-                return 0;
+                return Array.IndexOf(ToArray(), item, startIndex, Dimension - startIndex);
             }
-            else if (_Y.Equals(item))
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 从指定的索引开始遍历此 PointD5D 结构指定数量的分量并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <param name="startIndex">起始索引。</param>
+        /// <param name="count">遍历的分量数量。</param>
+        public int IndexOf(double item, int startIndex, int count)
+        {
+            if ((startIndex >= 0 && startIndex < Dimension) && count > 0)
             {
-                return 1;
+                count = Math.Min(Dimension - startIndex, count);
+
+                return Array.IndexOf(ToArray(), item, startIndex, count);
             }
-            else if (_Z.Equals(item))
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 逆序遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        public int LastIndexOf(double item)
+        {
+            return Array.LastIndexOf(ToArray(), item, Dimension - 1, Dimension);
+        }
+
+        /// <summary>
+        /// 从指定的索引开始逆序遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <param name="startIndex">起始索引。</param>
+        public int LastIndexOf(double item, int startIndex)
+        {
+            if (startIndex >= 0 && startIndex < Dimension)
             {
-                return 2;
+                return Array.LastIndexOf(ToArray(), item, startIndex, startIndex + 1);
             }
-            else if (_U.Equals(item))
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 从指定的索引开始逆序遍历此 PointD5D 结构指定数量的分量并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <param name="startIndex">起始索引。</param>
+        /// <param name="count">遍历的分量数量。</param>
+        public int LastIndexOf(double item, int startIndex, int count)
+        {
+            if ((startIndex >= 0 && startIndex < Dimension) && count > 0)
             {
-                return 3;
-            }
-            else if (_V.Equals(item))
-            {
-                return 4;
+                count = Math.Min(startIndex + 1, count);
+
+                return Array.LastIndexOf(ToArray(), item, startIndex, count);
             }
 
             return -1;
@@ -1986,7 +2040,7 @@ namespace Com
         /// <summary>
         /// 返回在 PointD5D 结构的所有分量前添加正号得到的 PointD5D 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointD5D 结构，用于转换的结构。</param>
+        /// <param name="pt">运算符右侧的 PointD5D 结构。</param>
         public static PointD5D operator +(PointD5D pt)
         {
             return new PointD5D(+pt._X, +pt._Y, +pt._Z, +pt._U, +pt._V);
@@ -1995,7 +2049,7 @@ namespace Com
         /// <summary>
         /// 返回在 PointD5D 结构的所有分量前添加负号得到的 PointD5D 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointD5D 结构，用于转换的结构。</param>
+        /// <param name="pt">运算符右侧的 PointD5D 结构。</param>
         public static PointD5D operator -(PointD5D pt)
         {
             return new PointD5D(-pt._X, -pt._Y, -pt._Z, -pt._U, -pt._V);
@@ -2174,7 +2228,10 @@ namespace Com
 
             set
             {
-                this[index] = (double)value;
+                if (value != null && value is double)
+                {
+                    this[index] = (double)value;
+                }
             }
         }
 
@@ -2423,7 +2480,7 @@ namespace Com
                         return _Pt[_Index];
                     }
 
-                    return double.NaN;
+                    return default(double);
                 }
             }
         }

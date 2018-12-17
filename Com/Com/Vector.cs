@@ -775,7 +775,7 @@ namespace Com
         {
             if (_Size > 0 && (startIndex >= 0 && startIndex < _Size))
             {
-                return Array.IndexOf(_VArray, item, startIndex, startIndex + 1);
+                return Array.LastIndexOf(_VArray, item, startIndex, startIndex + 1);
             }
 
             return -1;
@@ -793,7 +793,7 @@ namespace Com
             {
                 count = Math.Min(startIndex + 1, count);
 
-                return Array.IndexOf(_VArray, item, startIndex, count);
+                return Array.LastIndexOf(_VArray, item, startIndex, count);
             }
 
             return -1;
@@ -2612,7 +2612,7 @@ namespace Com
         /// <summary>
         /// 返回在 Vector 对象的所有分量前添加正号得到的 Vector 的新实例。
         /// </summary>
-        /// <param name="vector">用于转换的 Vector 对象。</param>
+        /// <param name="vector">运算符右侧的 Vector 对象。</param>
         public static Vector operator +(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2633,7 +2633,7 @@ namespace Com
         /// <summary>
         /// 返回在 Vector 对象的所有分量前添加负号得到的 Vector 的新实例。
         /// </summary>
-        /// <param name="vector">用于转换的 Vector 对象。</param>
+        /// <param name="vector">运算符右侧的 Vector 对象。</param>
         public static Vector operator -(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2968,7 +2968,10 @@ namespace Com
 
             set
             {
-                this[index] = (double)value;
+                if (value != null && value is double)
+                {
+                    this[index] = (double)value;
+                }
             }
         }
 
@@ -3132,7 +3135,7 @@ namespace Com
         {
             get
             {
-                return _Size;
+                return Dimension;
             }
         }
 
@@ -3229,7 +3232,7 @@ namespace Com
                         return _Vector._VArray[_Index];
                     }
 
-                    return double.NaN;
+                    return default(double);
                 }
             }
         }

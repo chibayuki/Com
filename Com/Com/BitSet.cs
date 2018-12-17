@@ -15,12 +15,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Collections;
+
 namespace Com
 {
     /// <summary>
     /// 以数组的形式管理位值的集合，位值 1 与 0 分别以布尔值 true 与 false 表示。
     /// </summary>
-    public sealed class BitSet : IEquatable<BitSet>, IComparable, IComparable<BitSet>
+    public sealed class BitSet : IEquatable<BitSet>, IComparable, IComparable<BitSet>, IVector<bool>
     {
         #region 私有成员与内部成员
 
@@ -130,7 +132,7 @@ namespace Com
         /// 使用表示位值的布尔值数组初始化 BitSet 的新实例。
         /// </summary>
         /// <param name="values">表示位值的布尔值数组。</param>
-        public BitSet(bool[] values)
+        public BitSet(params bool[] values)
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
@@ -209,6 +211,28 @@ namespace Com
             get
             {
                 return (_Size <= 0);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 BitSet 是否只读的布尔值。
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 BitSet 是否具有固定的维度的布尔值。
+        /// </summary>
+        public bool IsFixedSize
+        {
+            get
+            {
+                return false;
             }
         }
 
@@ -495,6 +519,412 @@ namespace Com
             }
 
             return Empty;
+        }
+
+        //
+
+        /// <summary>
+        /// 遍历此 BitSet 的所有位值并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        public int IndexOf(bool item)
+        {
+            if (_Size > 0)
+            {
+                return IndexOf(item, 0, _Size);
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 从指定的索引开始遍历此 BitSet 的所有位值并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <param name="startIndex">起始索引。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        public int IndexOf(bool item, int startIndex)
+        {
+            if (_Size > 0 && (startIndex >= 0 && startIndex < _Size))
+            {
+                return IndexOf(item, startIndex, _Size - startIndex);
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 从指定的索引开始遍历此 BitSet 指定数量的位值并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <param name="startIndex">起始索引。</param>
+        /// <param name="count">遍历的位值数量。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        public int IndexOf(bool item, int startIndex, int count)
+        {
+            if (_Size > 0 && (startIndex >= 0 && startIndex < _Size) && count > 0)
+            {
+                count = Math.Min(_Size - startIndex, count);
+
+                int _Left = startIndex / _BitsPerUint, _Right = (startIndex + count - 1) / _BitsPerUint;
+
+                if (item)
+                {
+                    if (_Left == _Right)
+                    {
+                        for (int j = startIndex; j < startIndex + count; j++)
+                        {
+                            if (Get(j))
+                            {
+                                return j;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = _Left; i <= _Right; i++)
+                        {
+                            if (i == _Left)
+                            {
+                                for (int j = startIndex; j < (_Left + 1) * _BitsPerUint; j++)
+                                {
+                                    if (Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                            else if (i == _Right)
+                            {
+                                for (int j = _Right * _BitsPerUint; j < startIndex + count; j++)
+                                {
+                                    if (Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                            else if (_UintArray[i] != _FalseUint)
+                            {
+                                for (int j = i * _BitsPerUint; j < (i + 1) * _BitsPerUint; j++)
+                                {
+                                    if (Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (_Left == _Right)
+                    {
+                        for (int j = startIndex; j < startIndex + count; j++)
+                        {
+                            if (!Get(j))
+                            {
+                                return j;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = _Left; i <= _Right; i++)
+                        {
+                            if (i == _Left)
+                            {
+                                for (int j = startIndex; j < (_Left + 1) * _BitsPerUint; j++)
+                                {
+                                    if (!Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                            else if (i == _Right)
+                            {
+                                for (int j = _Right * _BitsPerUint; j < startIndex + count; j++)
+                                {
+                                    if (!Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                            else if (_UintArray[i] != _TrueUint)
+                            {
+                                for (int j = i * _BitsPerUint; j < (i + 1) * _BitsPerUint; j++)
+                                {
+                                    if (!Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 逆序遍历此 BitSet 的所有位值并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        public int LastIndexOf(bool item)
+        {
+            if (_Size > 0)
+            {
+                return LastIndexOf(item, _Size - 1, _Size);
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 从指定的索引开始逆序遍历此 BitSet 的所有位值并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <param name="startIndex">起始索引。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        public int LastIndexOf(bool item, int startIndex)
+        {
+            if (_Size > 0 && (startIndex >= 0 && startIndex < _Size))
+            {
+                return LastIndexOf(item, startIndex, startIndex + 1);
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 从指定的索引开始逆序遍历此 BitSet 指定数量的位值并返回第一个与指定值相等的索引。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <param name="startIndex">起始索引。</param>
+        /// <param name="count">遍历的分量数量。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        public int LastIndexOf(bool item, int startIndex, int count)
+        {
+            if (_Size > 0 && (startIndex >= 0 && startIndex < _Size) && count > 0)
+            {
+                count = Math.Min(startIndex + 1, count);
+
+                int _Right = startIndex / _BitsPerUint, _Left = (startIndex - count + 1) / _BitsPerUint;
+
+                if (item)
+                {
+                    if (_Left == _Right)
+                    {
+                        for (int j = startIndex; j > startIndex - count; j--)
+                        {
+                            if (Get(j))
+                            {
+                                return j;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = _Right; i >= _Left; i++)
+                        {
+                            if (i == _Right)
+                            {
+                                for (int j = startIndex; j >= _Right * _BitsPerUint; j--)
+                                {
+                                    if (Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                            else if (i == _Left)
+                            {
+                                for (int j = (_Left + 1) * _BitsPerUint - 1; j > startIndex - count; j--)
+                                {
+                                    if (Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                            else if (_UintArray[i] != _FalseUint)
+                            {
+                                for (int j = (i + 1) * _BitsPerUint - 1; j >= i * _BitsPerUint; j--)
+                                {
+                                    if (Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (_Left == _Right)
+                    {
+                        for (int j = startIndex; j > startIndex - count; j--)
+                        {
+                            if (!Get(j))
+                            {
+                                return j;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = _Right; i >= _Left; i++)
+                        {
+                            if (i == _Right)
+                            {
+                                for (int j = startIndex; j >= _Right * _BitsPerUint; j--)
+                                {
+                                    if (!Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                            else if (i == _Left)
+                            {
+                                for (int j = (_Left + 1) * _BitsPerUint - 1; j > startIndex - count; j--)
+                                {
+                                    if (!Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                            else if (_UintArray[i] != _TrueUint)
+                            {
+                                for (int j = (i + 1) * _BitsPerUint - 1; j >= i * _BitsPerUint; j--)
+                                {
+                                    if (!Get(j))
+                                    {
+                                        return j;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 遍历此 BitSet 的所有位值并返回表示是否存在与指定值相等的位值的布尔值。
+        /// </summary>
+        /// <param name="item">用于检索的值。</param>
+        /// <returns>布尔值，表示是否存在与指定值相等的位值。</returns>
+        public bool Contains(bool item)
+        {
+            if (_Size > 0)
+            {
+                int Len = _GetUintNumOfBitNum(_Size);
+
+                if (item)
+                {
+                    for (int i = 0; i < Len; i++)
+                    {
+                        if (i == Len - 1)
+                        {
+                            for (int j = i * _BitsPerUint; j < _Size; j++)
+                            {
+                                if (Get(j))
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (_UintArray[i] != _FalseUint)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Len; i++)
+                    {
+                        if (i == Len - 1)
+                        {
+                            for (int j = i * _BitsPerUint; j < _Size; j++)
+                            {
+                                if (!Get(j))
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (_UintArray[i] != _TrueUint)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 BitSet 转换为布尔值数组。
+        /// </summary>
+        /// <returns>布尔值数组，数组元素表示此 BitSet 的位值的布尔值形式。</returns>
+        public bool[] ToArray()
+        {
+            if (_Size > 0)
+            {
+                bool[] result = new bool[_Size];
+
+                for (int i = 0; i < _Size; i++)
+                {
+                    result[i] = Get(i);
+                }
+
+                return result;
+            }
+
+            return new bool[0];
+        }
+
+        /// <summary>
+        /// 将此 BitSet 转换为布尔值列表。
+        /// </summary>
+        /// <returns>布尔值列表，列表元素表示此 BitSet 的位值的布尔值形式。</returns>
+        public List<bool> ToList()
+        {
+            if (_Size > 0)
+            {
+                List<bool> result = new List<bool>(_Size);
+
+                for (int i = 0; i < _Size; i++)
+                {
+                    result.Add(Get(i));
+                }
+
+                return result;
+            }
+
+            return new List<bool>(0);
         }
 
         //
@@ -901,27 +1331,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 将此 BitSet 转换为布尔值数组。
-        /// </summary>
-        /// <returns>布尔值数组，数组元素表示此 BitSet 的位值的布尔值形式。</returns>
-        public bool[] ToBoolArray()
-        {
-            if (_Size > 0)
-            {
-                bool[] Result = new bool[_Size];
-
-                for (int i = 0; i < _Size; i++)
-                {
-                    Result[i] = Get(i);
-                }
-
-                return Result;
-            }
-
-            return new bool[0];
-        }
-
-        /// <summary>
         /// 将此 BitSet 转换为 32 位整数数组。
         /// </summary>
         /// <returns>32 位整数数组，数组元素表示此 BitSet 的位值的数值形式。</returns>
@@ -929,26 +1338,24 @@ namespace Com
         {
             if (_Size > 0)
             {
-                int[] Result = new int[_Size];
+                int[] result = new int[_Size];
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    Result[i] = (Get(i) ? 1 : 0);
+                    result[i] = (Get(i) ? 1 : 0);
                 }
 
-                return Result;
+                return result;
             }
 
             return new int[0];
         }
 
-        //
-
         /// <summary>
-        /// 将此 BitSet 的所有位值转换为字符串。
+        /// 将此 BitSet 转换为二进制形式的字符串。
         /// </summary>
-        /// <returns>字符串，表示此 BitSet 的所有位值的字符串形式。</returns>
-        public string ToBitString()
+        /// <returns>字符串，表示此 BitSet 的二进制形式。</returns>
+        public string ToBinaryString()
         {
             if (_Size > 0)
             {
@@ -1242,6 +1649,347 @@ namespace Com
 
             return true;
         }
+
+        //
+
+        /// <summary>
+        /// 返回将 BitSet 对象与 BitSet 对象按位与得到的 BitSet 的新实例。
+        /// </summary>
+        /// <param name="left">运算符左侧的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧的 BitSet 对象。</param>
+        /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位与得到的结果。</returns>
+        public static BitSet operator &(BitSet left, BitSet right)
+        {
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
+            {
+                return left.And(right);
+            }
+
+            return Empty;
+        }
+
+        /// <summary>
+        /// 返回将 BitSet 对象与 BitSet 对象按位或得到的 BitSet 的新实例。
+        /// </summary>
+        /// <param name="left">运算符左侧的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧的 BitSet 对象。</param>
+        /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位或得到的结果。</returns>
+        public static BitSet operator |(BitSet left, BitSet right)
+        {
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
+            {
+                return left.Or(right);
+            }
+
+            return Empty;
+        }
+
+        /// <summary>
+        /// 返回将 BitSet 对象与 BitSet 对象按位异或得到的 BitSet 的新实例。
+        /// </summary>
+        /// <param name="left">运算符左侧的 BitSet 对象。</param>
+        /// <param name="right">运算符右侧的 BitSet 对象。</param>
+        /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位异或得到的结果。</returns>
+        public static BitSet operator ^(BitSet left, BitSet right)
+        {
+            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
+            {
+                return left.Xor(right);
+            }
+
+            return Empty;
+        }
+
+        /// <summary>
+        /// 返回将 BitSet 对象按位取反得到的 BitSet 的新实例。
+        /// </summary>
+        /// <param name="bitSet">运算符右侧的 BitSet 对象。</param>
+        /// <returns>BitSet 对象，表示将 BitSet 对象按位取反得到的结果。</returns>
+        public static BitSet operator ~(BitSet bitSet)
+        {
+            if (!IsNullOrEmpty(bitSet))
+            {
+                return bitSet.Not();
+            }
+
+            return Empty;
+        }
+
+        #endregion
+
+        #region 显式接口成员实现
+
+        #region System.Collections.IList
+
+        object IList.this[int index]
+        {
+            get
+            {
+                return Get(index);
+            }
+
+            set
+            {
+                if (value != null && value is bool)
+                {
+                    Set(index, (bool)value);
+                }
+            }
+        }
+
+        int IList.Add(object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Clear()
+        {
+            if (_Size > 0)
+            {
+                _Size = 0;
+                _UintArray = new uint[0];
+            }
+        }
+
+        bool IList.Contains(object item)
+        {
+            if (item != null && item is bool)
+            {
+                return Contains((bool)item);
+            }
+
+            return false;
+        }
+
+        int IList.IndexOf(object item)
+        {
+            if (item != null && item is bool)
+            {
+                return IndexOf((bool)item);
+            }
+
+            return -1;
+        }
+
+        void IList.Insert(int index, object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Remove(object item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.ICollection
+
+        int ICollection.Count
+        {
+            get
+            {
+                return Size;
+            }
+        }
+
+        object ICollection.SyncRoot
+        {
+            get
+            {
+                return this;
+            }
+        }
+
+        bool ICollection.IsSynchronized
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        void ICollection.CopyTo(Array array, int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.IEnumerable
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new Enumerator(this);
+        }
+
+        private sealed class Enumerator : IEnumerator // 实现 System.Collections.IEnumerator 的迭代器。
+        {
+            private BitSet _BitSet;
+            private int _Index;
+
+            internal Enumerator(BitSet bitSet)
+            {
+                _BitSet = bitSet;
+                _Index = -1;
+            }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (!IsNullOrEmpty(_BitSet) && (_Index >= 0 && _Index < _BitSet._Size))
+                    {
+                        return _BitSet.Get(_Index);
+                    }
+
+                    return null;
+                }
+            }
+
+            bool IEnumerator.MoveNext()
+            {
+                if (!IsNullOrEmpty(_BitSet) && _Index < _BitSet._Size - 1)
+                {
+                    _Index++;
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            void IEnumerator.Reset()
+            {
+                _Index = -1;
+            }
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.IList<T>
+
+        void IList<bool>.Insert(int index, bool item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList<bool>.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.ICollection<T>
+
+        int ICollection<bool>.Count
+        {
+            get
+            {
+                return Size;
+            }
+        }
+
+        void ICollection<bool>.Add(bool item)
+        {
+            throw new NotSupportedException();
+        }
+
+        void ICollection<bool>.Clear()
+        {
+            if (_Size > 0)
+            {
+                _Size = 0;
+                _UintArray = new uint[0];
+            }
+        }
+
+        void ICollection<bool>.CopyTo(bool[] array, int index)
+        {
+            throw new NotSupportedException();
+        }
+
+        bool ICollection<bool>.Remove(bool item)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.IEnumerable<out T>
+
+        IEnumerator<bool> IEnumerable<bool>.GetEnumerator()
+        {
+            return new GenericEnumerator(this);
+        }
+
+        private sealed class GenericEnumerator : IEnumerator<bool> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
+        {
+            private BitSet _BitSet;
+            private int _Index;
+
+            internal GenericEnumerator(BitSet bitSet)
+            {
+                _BitSet = bitSet;
+                _Index = -1;
+            }
+
+            void IDisposable.Dispose()
+            {
+                _BitSet = null;
+            }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (!IsNullOrEmpty(_BitSet) && (_Index >= 0 && _Index < _BitSet._Size))
+                    {
+                        return _BitSet.Get(_Index);
+                    }
+
+                    return null;
+                }
+            }
+
+            bool IEnumerator.MoveNext()
+            {
+                if (!IsNullOrEmpty(_BitSet) && _Index < _BitSet._Size - 1)
+                {
+                    _Index++;
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            void IEnumerator.Reset()
+            {
+                _Index = -1;
+            }
+
+            bool IEnumerator<bool>.Current
+            {
+                get
+                {
+                    if (!IsNullOrEmpty(_BitSet) && (_Index >= 0 && _Index < _BitSet._Size))
+                    {
+                        return _BitSet.Get(_Index);
+                    }
+
+                    return default(bool);
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
     }
