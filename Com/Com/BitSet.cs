@@ -831,7 +831,7 @@ namespace Com
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
-        /// <param name="count">遍历的分量数量。</param>
+        /// <param name="count">遍历的位值数量。</param>
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(bool item, int startIndex, int count)
         {
