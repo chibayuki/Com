@@ -26,7 +26,14 @@ namespace Com
     {
         #region 私有成员与内部成员
 
+        private const int _BitsPerByte = 8; // 8 位无符号整数包含的位值数量。
+        private const int _BitsPerUshort = 16; // 16 位无符号整数包含的位值数量。
         private const int _BitsPerUint = 32; // 32 位无符号整数包含的位值数量。
+        private const int _BitsPerUlong = 64; // 64 位无符号整数包含的位值数量。
+
+        private const int _BytesPerUint = _BitsPerUint / _BitsPerByte; // 32 位无符号整数包含的 8 位无符号整数数量。
+        private const int _UshortsPerUint = _BitsPerUint / _BitsPerUshort; // 32 位无符号整数包含的 16 位无符号整数数量。
+        private const int _UintsPerUlong = _BitsPerUlong / _BitsPerUint; // 64 位无符号整数包含的 32 位无符号整数数量。
 
         private const uint _TrueUint = uint.MaxValue, _FalseUint = uint.MinValue; // 所有位值为 true 或 false 的 32 位无符号整数。
 
@@ -82,9 +89,9 @@ namespace Com
         /// <param name="length">元素数量。</param>
         public BitSet(int length)
         {
-            if (length > 0)
+            if (length > 0 && length <= _MaxSize)
             {
-                _Size = Math.Min(_MaxSize, length);
+                _Size = length;
                 _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
             }
             else
@@ -101,9 +108,9 @@ namespace Com
         /// <param name="bitValue">位值。</param>
         public BitSet(int length, bool bitValue)
         {
-            if (length > 0)
+            if (length > 0 && length <= _MaxSize)
             {
-                _Size = Math.Min(_MaxSize, length);
+                _Size = length;
                 _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
 
                 if (bitValue)
@@ -136,15 +143,25 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = Math.Min(_MaxSize, values.Length);
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+                int length = values.Length;
 
-                for (int i = 0; i < values.Length; i++)
+                if (length <= _MaxSize)
                 {
-                    if (values[i])
+                    _Size = length;
+                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                    for (int i = 0; i < length; i++)
                     {
-                        Set(i, true);
+                        if (values[i])
+                        {
+                            Set(i, true);
+                        }
                     }
+                }
+                else
+                {
+                    _Size = 0;
+                    _UintArray = new uint[0];
                 }
             }
             else
@@ -155,22 +172,128 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用表示位值的 32 位整数数组初始化 BitSet 的新实例。
+        /// 使用 8 位无符号整数数组初始化 BitSet 的新实例。
         /// </summary>
-        /// <param name="values">表示位值的 32 位整数数组。</param>
-        public BitSet(int[] values)
+        /// <param name="values">8 位无符号整数数组。</param>
+        public BitSet(params byte[] values)
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                _Size = Math.Min(_MaxSize, values.Length);
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+                int length = values.Length;
 
-                for (int i = 0; i < values.Length; i++)
+                if ((long)length * _BitsPerByte <= _MaxSize)
                 {
-                    if (values[i] != 0)
+                    _Size = length * _BitsPerByte;
+                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                    for (int i = 0; i < length; i++)
                     {
-                        Set(i, true);
+                        _UintArray[i / _BytesPerUint] |= (((uint)values[i]) << (_BitsPerByte * (i % _BytesPerUint)));
                     }
+                }
+                else
+                {
+                    _Size = 0;
+                    _UintArray = new uint[0];
+                }
+            }
+            else
+            {
+                _Size = 0;
+                _UintArray = new uint[0];
+            }
+        }
+
+        /// <summary>
+        /// 使用 16 位无符号整数数组初始化 BitSet 的新实例。
+        /// </summary>
+        /// <param name="values">16 位无符号整数数组。</param>
+        public BitSet(params ushort[] values)
+        {
+            if (!InternalMethod.IsNullOrEmpty(values))
+            {
+                int length = values.Length;
+
+                if ((long)length * _BitsPerUshort <= _MaxSize)
+                {
+                    _Size = length * _BitsPerUshort;
+                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        _UintArray[i / _UshortsPerUint] |= (((uint)values[i]) << (_BitsPerUshort * (i % _UshortsPerUint)));
+                    }
+                }
+                else
+                {
+                    _Size = 0;
+                    _UintArray = new uint[0];
+                }
+            }
+            else
+            {
+                _Size = 0;
+                _UintArray = new uint[0];
+            }
+        }
+
+        /// <summary>
+        /// 使用 32 位无符号整数数组初始化 BitSet 的新实例。
+        /// </summary>
+        /// <param name="values">32 位无符号整数数组。</param>
+        public BitSet(params uint[] values)
+        {
+            if (!InternalMethod.IsNullOrEmpty(values))
+            {
+                int length = values.Length;
+
+                if ((long)length * _BitsPerUint <= _MaxSize)
+                {
+                    _Size = length * _BitsPerUint;
+                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                    int Len = _GetUintNumOfBitNum(_Size);
+
+                    Array.Copy(values, _UintArray, Len);
+                }
+                else
+                {
+                    _Size = 0;
+                    _UintArray = new uint[0];
+                }
+            }
+            else
+            {
+                _Size = 0;
+                _UintArray = new uint[0];
+            }
+        }
+
+        /// <summary>
+        /// 使用 64 位无符号整数数组初始化 BitSet 的新实例。
+        /// </summary>
+        /// <param name="values">64 位无符号整数数组。</param>
+        public BitSet(params ulong[] values)
+        {
+            if (!InternalMethod.IsNullOrEmpty(values))
+            {
+                int length = values.Length;
+
+                if ((long)length * _BitsPerUlong <= _MaxSize)
+                {
+                    _Size = length * _BitsPerUlong;
+                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        _UintArray[i * _UintsPerUlong] = (uint)values[i];
+                        _UintArray[i * _UintsPerUlong + 1] = (uint)(values[i] >> _BitsPerUint);
+                    }
+                }
+                else
+                {
+                    _Size = 0;
+                    _UintArray = new uint[0];
                 }
             }
             else
@@ -1331,27 +1454,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 将此 BitSet 转换为 32 位整数数组。
-        /// </summary>
-        /// <returns>32 位整数数组，数组元素表示此 BitSet 的位值的数值形式。</returns>
-        public int[] ToIntArray()
-        {
-            if (_Size > 0)
-            {
-                int[] result = new int[_Size];
-
-                for (int i = 0; i < _Size; i++)
-                {
-                    result[i] = (Get(i) ? 1 : 0);
-                }
-
-                return result;
-            }
-
-            return new int[0];
-        }
-
-        /// <summary>
         /// 将此 BitSet 转换为二进制形式的字符串。
         /// </summary>
         /// <returns>字符串，表示此 BitSet 的二进制形式。</returns>
@@ -1363,7 +1465,7 @@ namespace Com
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    BitCharArray[i] = (Get(i) ? '1' : '0');
+                    BitCharArray[_Size - 1 - i] = (Get(i) ? '1' : '0');
                 }
 
                 return new string(BitCharArray);
