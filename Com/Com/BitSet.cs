@@ -349,7 +349,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 BitSet 是否具有固定的维度的布尔值。
+        /// 获取表示此 BitSet 是否具有固定的大小的布尔值。
         /// </summary>
         public bool IsFixedSize
         {
