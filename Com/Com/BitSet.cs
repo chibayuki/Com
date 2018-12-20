@@ -595,9 +595,12 @@ namespace Com
             {
                 return 0;
             }
-            else if (_Size != bitSet._Size)
+
+            int Last1L = LastIndexOf(true), Last1R = bitSet.LastIndexOf(true);
+
+            if (Last1L != Last1R)
             {
-                if (_Size < bitSet._Size)
+                if (Last1L < Last1R)
                 {
                     return -1;
                 }
@@ -606,16 +609,30 @@ namespace Com
                     return 1;
                 }
             }
-
-            int Len = _GetUintNumOfBitNum(_Size);
-
-            for (int i = 0; i < Len; i++)
+            else
             {
-                int result = _UintArray[i].CompareTo(bitSet._UintArray[i]);
+                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
-                if (result != 0)
+                for (int i = Len - 1; i >= 0; i--)
                 {
-                    return result;
+                    int result = _UintArray[i].CompareTo(bitSet._UintArray[i]);
+
+                    if (result != 0)
+                    {
+                        return result;
+                    }
+                }
+
+                if (_Size != bitSet._Size)
+                {
+                    if (_Size < bitSet._Size)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
                 }
             }
 
@@ -855,7 +872,7 @@ namespace Com
                     }
                     else
                     {
-                        for (int i = _Right; i >= _Left; i++)
+                        for (int i = _Right; i >= _Left; i--)
                         {
                             if (i == _Right)
                             {
@@ -904,7 +921,7 @@ namespace Com
                     }
                     else
                     {
-                        for (int i = _Right; i >= _Left; i++)
+                        for (int i = _Right; i >= _Left; i--)
                         {
                             if (i == _Right)
                             {
@@ -1549,18 +1566,18 @@ namespace Com
         #region 运算符
 
         /// <summary>
-        /// 判断两个 BitSet 对象是否相等。
+        /// 判断两个 BitSet 对象表示的整数是否相等。
         /// </summary>
         /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
-        /// <returns>布尔值，表示两个 BitSet 对象是否相等。</returns>
+        /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否相等。</returns>
         public static bool operator ==(BitSet left, BitSet right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return true;
             }
-            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return false;
             }
@@ -1569,13 +1586,22 @@ namespace Com
                 return true;
             }
 
-            int Len = _GetUintNumOfBitNum(left._Size);
+            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
 
-            for (int i = 0; i < Len; i++)
+            if (Last1L != Last1R)
             {
-                if (left._UintArray[i] != right._UintArray[i])
+                return false;
+            }
+            else
+            {
+                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                for (int i = 0; i < Len; i++)
                 {
-                    return false;
+                    if (left._UintArray[i] != right._UintArray[i])
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -1583,18 +1609,18 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 BitSet 对象是否不相等。
+        /// 判断两个 BitSet 对象表示的整数是否不相等。
         /// </summary>
         /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
-        /// <returns>布尔值，表示两个 BitSet 对象是否不相等。</returns>
+        /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否不相等。</returns>
         public static bool operator !=(BitSet left, BitSet right)
         {
             if ((object)left == null && (object)right == null)
             {
                 return false;
             }
-            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return true;
             }
@@ -1603,13 +1629,22 @@ namespace Com
                 return false;
             }
 
-            int Len = _GetUintNumOfBitNum(left._Size);
+            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
 
-            for (int i = 0; i < Len; i++)
+            if (Last1L != Last1R)
             {
-                if (left._UintArray[i] != right._UintArray[i])
+                return true;
+            }
+            else
+            {
+                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                for (int i = 0; i < Len; i++)
                 {
-                    return true;
+                    if (left._UintArray[i] != right._UintArray[i])
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -1617,11 +1652,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于后者。
+        /// 判断两个 BitSet 对象表示的整数是否前者小于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
-        /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于后者。</returns>
+        /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否前者小于后者。</returns>
         public static bool operator <(BitSet left, BitSet right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
@@ -1632,18 +1667,23 @@ namespace Com
             {
                 return false;
             }
-            else if (left._Size != right._Size)
+
+            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
+
+            if (Last1L != Last1R)
             {
-                return (left._Size < right._Size);
+                return (Last1L < Last1R);
             }
-
-            int Len = _GetUintNumOfBitNum(left._Size);
-
-            for (int i = 0; i < Len; i++)
+            else
             {
-                if (left._UintArray[i] != right._UintArray[i])
+                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                for (int i = Len - 1; i >= 0; i--)
                 {
-                    return (left._UintArray[i] < right._UintArray[i]);
+                    if (left._UintArray[i] != right._UintArray[i])
+                    {
+                        return (left._UintArray[i] < right._UintArray[i]);
+                    }
                 }
             }
 
@@ -1651,11 +1691,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于后者。
+        /// 判断两个 BitSet 对象表示的整数是否前者大于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
-        /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于后者。</returns>
+        /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否前者大于后者。</returns>
         public static bool operator >(BitSet left, BitSet right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
@@ -1666,18 +1706,23 @@ namespace Com
             {
                 return false;
             }
-            else if (left._Size != right._Size)
+
+            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
+
+            if (Last1L != Last1R)
             {
-                return (left._Size < right._Size);
+                return (Last1L > Last1R);
             }
-
-            int Len = _GetUintNumOfBitNum(left._Size);
-
-            for (int i = 0; i < Len; i++)
+            else
             {
-                if (left._UintArray[i] != right._UintArray[i])
+                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                for (int i = Len - 1; i >= 0; i--)
                 {
-                    return (left._UintArray[i] > right._UintArray[i]);
+                    if (left._UintArray[i] != right._UintArray[i])
+                    {
+                        return (left._UintArray[i] > right._UintArray[i]);
+                    }
                 }
             }
 
@@ -1685,11 +1730,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于或等于后者。
+        /// 判断两个 BitSet 对象表示的整数是否前者小于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
-        /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者小于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否前者小于或等于后者。</returns>
         public static bool operator <=(BitSet left, BitSet right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
@@ -1700,18 +1745,23 @@ namespace Com
             {
                 return true;
             }
-            else if (left._Size != right._Size)
+
+            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
+
+            if (Last1L != Last1R)
             {
-                return (left._Size < right._Size);
+                return (Last1L < Last1R);
             }
-
-            int Len = _GetUintNumOfBitNum(left._Size);
-
-            for (int i = 0; i < Len; i++)
+            else
             {
-                if (left._UintArray[i] != right._UintArray[i])
+                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                for (int i = Len - 1; i >= 0; i--)
                 {
-                    return (left._UintArray[i] < right._UintArray[i]);
+                    if (left._UintArray[i] != right._UintArray[i])
+                    {
+                        return (left._UintArray[i] < right._UintArray[i]);
+                    }
                 }
             }
 
@@ -1719,11 +1769,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于或等于后者。
+        /// 判断两个 BitSet 对象表示的整数是否前者大于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 BitSet 对象。</param>
         /// <param name="right">运算符右侧比较的 BitSet 对象。</param>
-        /// <returns>布尔值，表示两个 BitSet 对象的包含的元素数量与二进制数值是否前者大于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否前者大于或等于后者。</returns>
         public static bool operator >=(BitSet left, BitSet right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
@@ -1734,18 +1784,23 @@ namespace Com
             {
                 return true;
             }
-            else if (left._Size != right._Size)
+
+            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
+
+            if (Last1L != Last1R)
             {
-                return (left._Size < right._Size);
+                return (Last1L > Last1R);
             }
-
-            int Len = _GetUintNumOfBitNum(left._Size);
-
-            for (int i = 0; i < Len; i++)
+            else
             {
-                if (left._UintArray[i] != right._UintArray[i])
+                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                for (int i = Len - 1; i >= 0; i--)
                 {
-                    return (left._UintArray[i] > right._UintArray[i]);
+                    if (left._UintArray[i] != right._UintArray[i])
+                    {
+                        return (left._UintArray[i] > right._UintArray[i]);
+                    }
                 }
             }
 
