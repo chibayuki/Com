@@ -1157,9 +1157,32 @@ namespace Com
         /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相除得到的结果。</returns>
         public static Complex operator /(Complex left, Complex right)
         {
-            double ModSqrR = right.ModuleSquared;
+            double AbsReR = Math.Abs(right._Real);
+            double AbsImR = Math.Abs(right._Imaginary);
 
-            return new Complex((left._Real * right._Real + left._Imaginary * right._Imaginary) / ModSqrR, (left._Imaginary * right._Real - left._Real * right._Imaginary) / ModSqrR);
+            double AbsMaxR = Math.Max(AbsReR, AbsImR);
+
+            if (AbsMaxR == 0)
+            {
+                return NaN;
+            }
+            else
+            {
+                if (AbsReR > AbsImR)
+                {
+                    double ImRDivReR = right._Imaginary / right._Real;
+                    double Down = right._Real + right._Imaginary * ImRDivReR;
+
+                    return new Complex((left._Real + left._Imaginary * ImRDivReR) / Down, (-left._Real * ImRDivReR + left._Imaginary) / Down);
+                }
+                else
+                {
+                    double ReRDivImR = right._Real / right._Imaginary;
+                    double Down = right._Imaginary + right._Real * ReRDivImR;
+
+                    return new Complex((left._Real * ReRDivImR + left._Imaginary) / Down, (-left._Real + left._Imaginary * ReRDivImR) / Down);
+                }
+            }
         }
 
         /// <summary>
@@ -1174,16 +1197,39 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将 Complex 结构与 Complex 结构的相除得到的 Complex 结构的新实例。
+        /// 返回将双精度浮点数与 Complex 结构的相除得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="left">Complex 结构，表示被除数。</param>
         /// <param name="right">Complex 结构，表示除数。</param>
-        /// <returns>Complex 结构，表示将 Complex 结构与 Complex 结构的相除得到的结果。</returns>
+        /// <returns>Complex 结构，表示将双精度浮点数与 Complex 结构的相除得到的结果。</returns>
         public static Complex operator /(double left, Complex right)
         {
-            double ModSqrR = right.ModuleSquared;
+            double AbsReR = Math.Abs(right._Real);
+            double AbsImR = Math.Abs(right._Imaginary);
 
-            return new Complex(left * right._Real / ModSqrR, -left * right._Imaginary / ModSqrR);
+            double AbsMaxR = Math.Max(AbsReR, AbsImR);
+
+            if (AbsMaxR == 0)
+            {
+                return NaN;
+            }
+            else
+            {
+                if (AbsReR > AbsImR)
+                {
+                    double ImRDivReR = right._Imaginary / right._Real;
+                    double Down = right._Real + right._Imaginary * ImRDivReR;
+
+                    return new Complex(left / Down, -left * ImRDivReR / Down);
+                }
+                else
+                {
+                    double ReRDivImR = right._Real / right._Imaginary;
+                    double Down = right._Imaginary + right._Real * ReRDivImR;
+
+                    return new Complex(left * ReRDivImR / Down, -left / Down);
+                }
+            }
         }
 
         //
