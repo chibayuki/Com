@@ -1138,16 +1138,23 @@ namespace Com
             {
                 int Len = _GetUintNumOfBitNum(_Size);
 
-                for (int i = 0; i < Len; i++)
-                {
-                    _UintArray[i] = (bitValue ? _TrueUint : _FalseUint);
-                }
-
                 if (bitValue)
                 {
+                    for (int i = 0; i < Len; i++)
+                    {
+                        _UintArray[i] = _TrueUint;
+                    }
+
                     if (_Size % _BitsPerUint != 0)
                     {
                         _UintArray[Len - 1] >>= (_BitsPerUint - _Size % _BitsPerUint);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Len; i++)
+                    {
+                        _UintArray[i] = _FalseUint;
                     }
                 }
             }
