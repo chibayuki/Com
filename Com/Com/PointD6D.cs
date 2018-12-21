@@ -274,7 +274,7 @@ namespace Com
         {
             get
             {
-                return (_X == Zero._X && _Y == Zero._Y && _Z == Zero._Z && _U == Zero._U && _V == Zero._V && _W == Zero._W);
+                return (_X == 0 && _Y == 0 && _Z == 0 && _U == 0 && _V == 0 && _W == 0);
             }
         }
 
@@ -342,7 +342,32 @@ namespace Com
         {
             get
             {
-                return Math.Sqrt(ModuleSquared);
+                double AbsX = Math.Abs(_X);
+                double AbsY = Math.Abs(_Y);
+                double AbsZ = Math.Abs(_Z);
+                double AbsU = Math.Abs(_U);
+                double AbsV = Math.Abs(_V);
+                double AbsW = Math.Abs(_W);
+
+                double AbsMax = Math.Max(Math.Max(Math.Max(Math.Max(Math.Max(AbsX, AbsY), AbsZ), AbsU), AbsV), AbsW);
+
+                if (AbsMax == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    AbsX /= AbsMax;
+                    AbsY /= AbsMax;
+                    AbsZ /= AbsMax;
+                    AbsU /= AbsMax;
+                    AbsV /= AbsMax;
+                    AbsW /= AbsMax;
+
+                    double SqrSum = AbsX * AbsX + AbsY * AbsY + AbsZ * AbsZ + AbsU * AbsU + AbsV * AbsV + AbsW * AbsW;
+
+                    return (AbsMax * Math.Sqrt(SqrSum));
+                }
             }
         }
 

@@ -120,7 +120,7 @@ namespace Com
         public PointD(Complex comp)
         {
             _X = comp.Real;
-            _Y = comp.Image;
+            _Y = comp.Imaginary;
         }
 
         #endregion
@@ -220,7 +220,7 @@ namespace Com
         {
             get
             {
-                return (_X == Zero._X && _Y == Zero._Y);
+                return (_X == 0 && _Y == 0);
             }
         }
 
@@ -288,7 +288,24 @@ namespace Com
         {
             get
             {
-                return Math.Sqrt(ModuleSquared);
+                double AbsX = Math.Abs(_X);
+                double AbsY = Math.Abs(_Y);
+
+                double AbsMax = Math.Max(AbsX, AbsY);
+
+                if (AbsMax == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    AbsX /= AbsMax;
+                    AbsY /= AbsMax;
+
+                    double SqrSum = AbsX * AbsX + AbsY * AbsY;
+
+                    return (AbsMax * Math.Sqrt(SqrSum));
+                }
             }
         }
 

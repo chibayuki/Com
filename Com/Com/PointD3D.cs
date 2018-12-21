@@ -196,7 +196,7 @@ namespace Com
         {
             get
             {
-                return (_X == Zero._X && _Y == Zero._Y && _Z == Zero._Z);
+                return (_X == 0 && _Y == 0 && _Z == 0);
             }
         }
 
@@ -264,7 +264,26 @@ namespace Com
         {
             get
             {
-                return Math.Sqrt(ModuleSquared);
+                double AbsX = Math.Abs(_X);
+                double AbsY = Math.Abs(_Y);
+                double AbsZ = Math.Abs(_Z);
+
+                double AbsMax = Math.Max(Math.Max(AbsX, AbsY), AbsZ);
+
+                if (AbsMax == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    AbsX /= AbsMax;
+                    AbsY /= AbsMax;
+                    AbsZ /= AbsMax;
+
+                    double SqrSum = AbsX * AbsX + AbsY * AbsY + AbsZ * AbsZ;
+
+                    return (AbsMax * Math.Sqrt(SqrSum));
+                }
             }
         }
 

@@ -437,7 +437,32 @@ namespace Com
             {
                 if (_Size > 0)
                 {
-                    return Math.Sqrt(ModuleSquared);
+                    double[] AbsValues = new double[_Size];
+
+                    double AbsMax = 0;
+
+                    for (int i = 0; i < _Size; i++)
+                    {
+                        AbsValues[i] = Math.Abs(_VArray[i]);
+                        AbsMax = Math.Max(AbsMax, AbsValues[i]);
+                    }
+
+                    if (AbsMax == 0)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        double SqrSum = 0;
+
+                        for (int i = 0; i < _Size; i++)
+                        {
+                            AbsValues[i] /= AbsMax;
+                            SqrSum += AbsValues[i] * AbsValues[i];
+                        }
+
+                        return (AbsMax * Math.Sqrt(SqrSum));
+                    }
                 }
 
                 return double.NaN;
