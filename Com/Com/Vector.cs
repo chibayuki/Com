@@ -437,14 +437,11 @@ namespace Com
             {
                 if (_Size > 0)
                 {
-                    double[] AbsValues = new double[_Size];
-
                     double AbsMax = 0;
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        AbsValues[i] = Math.Abs(_VArray[i]);
-                        AbsMax = Math.Max(AbsMax, AbsValues[i]);
+                        AbsMax = Math.Max(AbsMax, _VArray[i]);
                     }
 
                     if (AbsMax == 0)
@@ -457,8 +454,9 @@ namespace Com
 
                         for (int i = 0; i < _Size; i++)
                         {
-                            AbsValues[i] /= AbsMax;
-                            SqrSum += AbsValues[i] * AbsValues[i];
+                            double Factor = _VArray[i] / AbsMax;
+
+                            SqrSum += Factor * Factor;
                         }
 
                         return (AbsMax * Math.Sqrt(SqrSum));
