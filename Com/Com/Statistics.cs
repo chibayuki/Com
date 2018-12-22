@@ -977,7 +977,7 @@ namespace Com
         /// 计算一组可排序对象的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (IComparable, IComparable) MinMax(params IComparable[] values)
+        public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values)
         {
             try
             {
@@ -1035,7 +1035,7 @@ namespace Com
         /// 计算一组 8 位整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (sbyte, sbyte) MinMax(params sbyte[] values)
+        public static (sbyte Min, sbyte Max) MinMax(params sbyte[] values)
         {
             try
             {
@@ -1065,7 +1065,7 @@ namespace Com
         /// 计算一组 8 位无符号整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (byte, byte) MinMax(params byte[] values)
+        public static (byte Min, byte Max) MinMax(params byte[] values)
         {
             try
             {
@@ -1095,7 +1095,7 @@ namespace Com
         /// 计算一组 16 位整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (short, short) MinMax(params short[] values)
+        public static (short Min, short Max) MinMax(params short[] values)
         {
             try
             {
@@ -1125,7 +1125,7 @@ namespace Com
         /// 计算一组 16 位无符号整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (ushort, ushort) MinMax(params ushort[] values)
+        public static (ushort Min, ushort Max) MinMax(params ushort[] values)
         {
             try
             {
@@ -1155,7 +1155,7 @@ namespace Com
         /// 计算一组 32 位整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (int, int) MinMax(params int[] values)
+        public static (int Min, int Max) MinMax(params int[] values)
         {
             try
             {
@@ -1185,7 +1185,7 @@ namespace Com
         /// 计算一组 32 位无符号整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (uint, uint) MinMax(params uint[] values)
+        public static (uint Min, uint Max) MinMax(params uint[] values)
         {
             try
             {
@@ -1215,7 +1215,7 @@ namespace Com
         /// 计算一组 64 位整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (long, long) MinMax(params long[] values)
+        public static (long Min, long Max) MinMax(params long[] values)
         {
             try
             {
@@ -1245,7 +1245,7 @@ namespace Com
         /// 计算一组 64 位无符号整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (ulong, ulong) MinMax(params ulong[] values)
+        public static (ulong Min, ulong Max) MinMax(params ulong[] values)
         {
             try
             {
@@ -1275,7 +1275,7 @@ namespace Com
         /// 计算一组单精度浮点数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (float, float) MinMax(params float[] values)
+        public static (float Min, float Max) MinMax(params float[] values)
         {
             try
             {
@@ -1305,7 +1305,7 @@ namespace Com
         /// 计算一组双精度浮点数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (double, double) MinMax(params double[] values)
+        public static (double Min, double Max) MinMax(params double[] values)
         {
             try
             {
@@ -1335,7 +1335,7 @@ namespace Com
         /// 计算一组十进制数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (decimal, decimal) MinMax(params decimal[] values)
+        public static (decimal Min, decimal Max) MinMax(params decimal[] values)
         {
             try
             {
@@ -1418,7 +1418,7 @@ namespace Com
         /// 计算一组双精度浮点数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        public static (double, double, double) MinMaxAverage(params double[] values)
+        public static (double Min, double Max, double Average) MinMaxAverage(params double[] values)
         {
             try
             {
