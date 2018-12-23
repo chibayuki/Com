@@ -56,6 +56,160 @@ namespace Com
             }
         }
 
+        //
+
+        private static double _Gamma(double x) // 计算指定双精度浮点数的伽马函数。
+        {
+            if (InternalMethod.IsNaNOrInfinity(x))
+            {
+                return double.NaN;
+            }
+
+            Func<int, double> GammaFact = (v) =>
+            {
+                double Fact = 1;
+
+                for (int i = 2; i < v; i++)
+                {
+                    Fact *= i;
+                }
+
+                return Fact;
+            };
+
+            Func<int, double, double> GammaFactMod = (v, mod) =>
+            {
+                double Fact = mod;
+
+                for (int i = 1; i < v; i++)
+                {
+                    Fact *= (i + mod);
+                }
+
+                return Fact;
+            };
+
+            Func<double, double> Gamma0To1 = (v) =>
+            {
+                double[] Coeff = new double[]
+                {
+                    0.99999999999980993,
+                    676.5203681218851,
+                    -1259.1392167224028,
+                    771.32342877765313,
+                    -176.61502916214059,
+                    12.507343278686905,
+                    -0.13857109526572012,
+                    9.9843695780195716E-6,
+                    1.5056327351493116E-7
+                };
+
+                double Sum = Coeff[0];
+
+                for (int i = 1; i < Coeff.Length; i++)
+                {
+                    Sum += Coeff[i] / (v + i - 1);
+                }
+
+                double Base = v + Coeff.Length - 2.5;
+
+                return Math.Sqrt(2 * Math.PI) * Math.Pow(Base, v - 0.5) * Math.Exp(-Base) * Sum;
+            };
+
+            Func<double, double> GammaNormal = (v) =>
+            {
+                int Trunc = (int)Math.Truncate(v);
+                double Mod = v - Trunc;
+
+                return GammaFactMod(Trunc, Mod) * Gamma0To1(Mod);
+            };
+
+            Func<double, double> GammaNegative = (v) =>
+            {
+                return (Math.PI / Math.Sin(Math.PI * v) / GammaNormal(1 - v));
+            };
+
+            if (x == Math.Truncate(x))
+            {
+                if (x == 1 || x == 2)
+                {
+                    return 0;
+                }
+                else if (x > 2 && x < 172)
+                {
+                    return GammaFact((int)x);
+                }
+                else if (x >= 172)
+                {
+                    return double.PositiveInfinity;
+                }
+                else
+                {
+                    return double.NaN;
+                }
+            }
+            else
+            {
+                if (x > 0 && x <= 1)
+                {
+                    return Gamma0To1(x);
+                }
+                else if (x > 1 && x < 172)
+                {
+                    return GammaNormal(x);
+                }
+                else if (x >= -171 && x <= 0)
+                {
+                    return GammaNegative(x);
+                }
+                else if (x < -171)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return double.PositiveInfinity;
+                }
+            }
+        }
+
+        private static double _Fact(double x) // 计算指定双精度浮点数的阶乘。
+        {
+            if (InternalMethod.IsNaNOrInfinity(x))
+            {
+                return double.NaN;
+            }
+
+            return _Gamma(x + 1);
+        }
+
+        private static double _Fact(int x) // 计算指定 32 位整数的阶乘。
+        {
+            if (x == 0 || x == 1)
+            {
+                return 1;
+            }
+            else if (x > 1 && x < 171)
+            {
+                double Fact = 1;
+
+                for (int i = 2; i <= x; i++)
+                {
+                    Fact *= i;
+                }
+
+                return Fact;
+            }
+            else if (x >= 171)
+            {
+                return double.PositiveInfinity;
+            }
+            else
+            {
+                return double.NaN;
+            }
+        }
+
         #endregion
 
         #region 随机数
@@ -83,9 +237,14 @@ namespace Com
         {
             try
             {
-                if (right <= 0)
+                if (right < 0)
                 {
                     return int.MinValue;
+                }
+
+                if (right == 0)
+                {
+                    return 0;
                 }
 
                 return _Rand.Next(right);
@@ -105,9 +264,14 @@ namespace Com
         {
             try
             {
-                if (left >= right)
+                if (left > right)
                 {
                     return int.MinValue;
+                }
+
+                if (left == right)
+                {
+                    return left;
                 }
 
                 return _Rand.Next(left, right);
@@ -143,9 +307,14 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(right) || right <= 0)
+                if (InternalMethod.IsNaNOrInfinity(right) || right < 0)
                 {
                     return double.NaN;
+                }
+
+                if (right == 0)
+                {
+                    return 0;
                 }
 
                 return right * _Rand.NextDouble();
@@ -165,9 +334,14 @@ namespace Com
         {
             try
             {
-                if (InternalMethod.IsNaNOrInfinity(left) || InternalMethod.IsNaNOrInfinity(right) || left >= right)
+                if (InternalMethod.IsNaNOrInfinity(left) || InternalMethod.IsNaNOrInfinity(right) || left > right)
                 {
                     return double.NaN;
+                }
+
+                if (left == right)
+                {
+                    return left;
                 }
 
                 return left + (right - left) * _Rand.NextDouble();
@@ -219,14 +393,450 @@ namespace Com
 
         #endregion
 
-        #region 概率分布
+        #region 排列组合
 
         /// <summary>
-        /// 正态分布的概率密度函数。
+        /// 计算从有限个元素中任取若干个元素的排列数。
+        /// </summary>
+        /// <param name="n">元素总数。</param>
+        /// <param name="m">抽取的元素数量。</param>
+        public static double Permutation(double n, double m)
+        {
+            if (InternalMethod.IsNaNOrInfinity(n) || InternalMethod.IsNaNOrInfinity(m))
+            {
+                return double.NaN;
+            }
+
+            return (_Fact(n) / _Fact(n - m));
+        }
+
+        /// <summary>
+        /// 计算从有限个元素中任取若干个元素的排列数。
+        /// </summary>
+        /// <param name="n">元素总数。</param>
+        /// <param name="m">抽取的元素数量。</param>
+        public static double Permutation(int n, int m)
+        {
+            return (_Fact(n) / _Fact(n - m));
+        }
+
+        /// <summary>
+        /// 计算从有限个元素中任取若干个元素的组合数。
+        /// </summary>
+        /// <param name="n">元素总数。</param>
+        /// <param name="m">抽取的元素数量。</param>
+        public static double Combination(double n, double m)
+        {
+            if (InternalMethod.IsNaNOrInfinity(n) || InternalMethod.IsNaNOrInfinity(m))
+            {
+                return double.NaN;
+            }
+
+            return (_Fact(n) / _Fact(m) / _Fact(n - m));
+        }
+
+        /// <summary>
+        /// 计算从有限个元素中任取若干个元素的组合数。
+        /// </summary>
+        /// <param name="n">元素总数。</param>
+        /// <param name="m">抽取的元素数量。</param>
+        public static double Combination(int n, int m)
+        {
+            return (_Fact(n) / _Fact(m) / _Fact(n - m));
+        }
+
+        #endregion
+
+        #region 分布
+
+        /// <summary>
+        /// 计算服从几何分布的随机变量在指定分布参数的概率。
+        /// </summary>
+        /// <param name="p">单个样本满足某个条件的概率，等于数学期望的倒数。</param>
+        /// <param name="x">测试的样本数量。</param>
+        public static double GeometricDistributionProbability(double p, double x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(p) || InternalMethod.IsNaNOrInfinity(x))
+                {
+                    return double.NaN;
+                }
+
+                if (p >= 0 && p <= 1)
+                {
+                    if (p == 1)
+                    {
+                        if (x > 0)
+                        {
+                            return 1;
+                        }
+                    }
+                    else if (p > 0)
+                    {
+                        if (x > 0)
+                        {
+                            return (p * Math.Pow(1 - p, x - 1));
+                        }
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从几何分布的随机变量在指定分布参数的概率。
+        /// </summary>
+        /// <param name="p">单个样本满足某个条件的概率，等于数学期望的倒数。</param>
+        /// <param name="x">测试的样本数量。</param>
+        public static double GeometricDistributionProbability(double p, int x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(p))
+                {
+                    return double.NaN;
+                }
+
+                if (p >= 0 && p <= 1)
+                {
+                    if (p == 1)
+                    {
+                        if (x > 0)
+                        {
+                            return 1;
+                        }
+                    }
+                    else if (p > 0)
+                    {
+                        if (x > 0)
+                        {
+                            return (p * Math.Pow(1 - p, x - 1));
+                        }
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从超几何分布的随机变量在指定分布参数的概率。
+        /// </summary>
+        /// <param name="N">样本总量。</param>
+        /// <param name="M">满足某个条件的样本数量。</param>
+        /// <param name="n">测试的样本数量。</param>
+        /// <param name="x">测试的样本中满足某个条件的样本数量。</param>
+        public static double HypergeometricDistributionProbability(double N, double M, double n, double x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(N) || InternalMethod.IsNaNOrInfinity(M) || InternalMethod.IsNaNOrInfinity(n) || InternalMethod.IsNaNOrInfinity(x))
+                {
+                    return double.NaN;
+                }
+
+                if (N > 0 && M < N)
+                {
+                    if (M > 0 && n > 0 && x > 0 && x < n)
+                    {
+                        return (Combination(M, x) / Combination(N, n) * Combination(N - M, n - x));
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从超几何分布的随机变量在指定分布参数的概率。
+        /// </summary>
+        /// <param name="N">样本总量。</param>
+        /// <param name="M">满足某个条件的样本数量。</param>
+        /// <param name="n">测试的样本数量。</param>
+        /// <param name="x">测试的样本中满足某个条件的样本数量。</param>
+        public static double HypergeometricDistributionProbability(int N, int M, int n, int x)
+        {
+            try
+            {
+                if (N > 0 && M < N)
+                {
+                    if (M > 0 && n > 0 && x > 0 && x < n)
+                    {
+                        return (Combination(M, x) / Combination(N, n) * Combination(N - M, n - x));
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从二项分布的随机变量在指定分布参数的概率。
+        /// </summary>
+        /// <param name="n">样本总量。</param>
+        /// <param name="p">单个样本满足某个条件的概率，等于样本总量为 1 时的数学期望。</param>
+        /// <param name="x">测试的样本数量。</param>
+        public static double BinomialDistributionProbability(double n, double p, double x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(n) || InternalMethod.IsNaNOrInfinity(p) || InternalMethod.IsNaNOrInfinity(x))
+                {
+                    return double.NaN;
+                }
+
+                if (n > 0 && p >= 0 && p <= 1)
+                {
+                    if (x > 0 && x <= n)
+                    {
+                        if (p == 1)
+                        {
+                            return 1;
+                        }
+                        else if (p > 0)
+                        {
+                            return (Combination(n, x) * Math.Pow(p, x) * Math.Pow(1 - p, n - x));
+                        }
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从二项分布的随机变量在指定分布参数的概率。
+        /// </summary>
+        /// <param name="n">样本总量。</param>
+        /// <param name="p">单个样本满足某个条件的概率，等于样本总量为 1 时的数学期望。</param>
+        /// <param name="x">测试的样本数量。</param>
+        public static double BinomialDistributionProbability(int n, double p, int x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(p))
+                {
+                    return double.NaN;
+                }
+
+                if (n > 0 && p >= 0 && p <= 1)
+                {
+                    if (x > 0 && x <= n)
+                    {
+                        if (p == 1)
+                        {
+                            return 1;
+                        }
+                        else if (p > 0)
+                        {
+                            return (Combination(n, x) * Math.Pow(p, x) * Math.Pow(1 - p, n - x));
+                        }
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从泊松分布的随机变量在指定分布参数的概率。
+        /// </summary>
+        /// <param name="lambda">单位测度内满足某个条件的平均样本数量，等于数学期望或方差。</param>
+        /// <param name="x">单位测度内测试的样本数量。</param>
+        public static double PoissonDistributionProbability(double lambda, double x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(lambda) || InternalMethod.IsNaNOrInfinity(x))
+                {
+                    return double.NaN;
+                }
+
+                if (lambda > 0)
+                {
+                    if (x > 0)
+                    {
+                        return (Math.Pow(lambda, x) * Math.Exp(-lambda) / _Fact(x));
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从泊松分布的随机变量在指定分布参数的概率。
+        /// </summary>
+        /// <param name="lambda">单位测度内满足某个条件的平均样本数量，等于数学期望或方差。</param>
+        /// <param name="x">单位测度内测试的样本数量。</param>
+        public static double PoissonDistributionProbability(double lambda, int x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(lambda))
+                {
+                    return double.NaN;
+                }
+
+                if (lambda > 0)
+                {
+                    if (x > 0)
+                    {
+                        return (Math.Pow(lambda, x) * Math.Exp(-lambda) / _Fact(x));
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从指数分布的随机变量在指定分布参数的概率密度。
+        /// </summary>
+        /// <param name="lambda">率参数，等于数学期望的倒数或标准差的倒数。</param>
+        /// <param name="x">样本值。</param>
+        public static double ExponentialDistributionProbabilityDensity(double lambda, double x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(lambda) || InternalMethod.IsNaNOrInfinity(x))
+                {
+                    return double.NaN;
+                }
+
+                if (lambda > 0)
+                {
+                    if (x > 0)
+                    {
+                        return (lambda * Math.Exp(-lambda * x));
+                    }
+
+                    return 0;
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从指数分布的随机变量在指定分布参数的在指定区间的概率。
+        /// </summary>
+        /// <param name="lambda">率参数，等于数学期望的倒数或标准差的倒数。</param>
+        /// <param name="left">区间左端点。</param>
+        /// <param name="right">区间右端点。</param>
+        public static double ExponentialDistributionProbability(double lambda, double left, double right)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(lambda) || InternalMethod.IsNaNOrInfinity(left) || InternalMethod.IsNaNOrInfinity(right) || left > right)
+                {
+                    return double.NaN;
+                }
+
+                if (lambda > 0)
+                {
+                    Func<double, double> Prim = (x) =>
+                    {
+                        if (x > 0)
+                        {
+                            return (-Math.Exp(-lambda * x));
+                        }
+
+                        return -1;
+                    };
+
+                    return (Prim(right) - Prim(left));
+                }
+
+                return double.NaN;
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从标准正态分布的随机变量在指定分布参数的概率密度。
+        /// </summary>
+        /// <param name="x">样本值。</param>
+        public static double StandardNormalDistributionProbabilityDensity(double x)
+        {
+            try
+            {
+                if (InternalMethod.IsNaNOrInfinity(x))
+                {
+                    return double.NaN;
+                }
+
+                return Math.Exp(-0.5 * x * x) / Math.Sqrt(2 * Math.PI);
+            }
+            catch
+            {
+                return double.NaN;
+            }
+        }
+
+        /// <summary>
+        /// 计算服从正态分布的随机变量在指定分布参数的概率密度。
         /// </summary>
         /// <param name="ev">数学期望。</param>
         /// <param name="sd">标准差。</param>
-        /// <param name="x">样本的值。</param>
+        /// <param name="x">样本值。</param>
         public static double NormalDistributionProbabilityDensity(double ev, double sd, double x)
         {
             try
@@ -239,27 +849,6 @@ namespace Com
                 double N = (x - ev) / sd;
 
                 return Math.Exp(-0.5 * N * N) / Math.Sqrt(2 * Math.PI) / sd;
-            }
-            catch
-            {
-                return double.NaN;
-            }
-        }
-
-        /// <summary>
-        /// 标准正态分布的概率密度函数。
-        /// </summary>
-        /// <param name="x">样本的值。</param>
-        public static double StandardNormalDistributionProbabilityDensity(double x)
-        {
-            try
-            {
-                if (InternalMethod.IsNaNOrInfinity(x))
-                {
-                    return double.NaN;
-                }
-
-                return Math.Exp(-0.5 * x * x) / Math.Sqrt(2 * Math.PI);
             }
             catch
             {
@@ -1363,7 +1952,7 @@ namespace Com
 
         #endregion
 
-        #region 统计
+        #region 描述
 
         /// <summary>
         /// 计算一组双精度浮点数的求和。
@@ -1541,7 +2130,7 @@ namespace Com
                         SqrSum += Delta * Delta;
                     }
 
-                    return (Math.Sqrt(AbsMax) * Math.Sqrt(SqrSum / Len));
+                    return (AbsMax * Math.Sqrt(SqrSum / Len));
                 }
 
                 return 0;
@@ -1583,7 +2172,7 @@ namespace Com
                         SqrSum += Delta * Delta;
                     }
 
-                    return (Math.Sqrt(AbsMax) * Math.Sqrt(SqrSum / (Len - 1)));
+                    return (AbsMax * Math.Sqrt(SqrSum / (Len - 1)));
                 }
 
                 return 0;
