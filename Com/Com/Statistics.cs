@@ -58,29 +58,24 @@ namespace Com
 
         //
 
-        private static double _Gamma(int n) // 计算指定 32 位整数的伽马函数。
+        private static double _Factorial(int n) // 计算指定 32 位整数的阶乘。
         {
-            Func<int, double> GammaFact = (trunc) =>
-            {
-                double Fact = 1;
-
-                for (int i = 2; i < trunc; i++)
-                {
-                    Fact *= i;
-                }
-
-                return Fact;
-            };
-
-            if (n == 1 || n == 2)
+            if (n == 0 || n == 1)
             {
                 return 1;
             }
-            else if (n > 2 && n < 172)
+            else if (n > 1 && n < 171)
             {
-                return GammaFact(n);
+                double result = 1;
+
+                for (int i = 2; i <= n; i++)
+                {
+                    result *= i;
+                }
+
+                return result;
             }
-            else if (n >= 172)
+            else if (n >= 171)
             {
                 return double.PositiveInfinity;
             }
@@ -88,124 +83,6 @@ namespace Com
             {
                 return double.NaN;
             }
-        }
-
-        private static double _Gamma(double n) // 计算指定双精度浮点数的伽马函数。
-        {
-            if (!InternalMethod.IsNaNOrInfinity(n))
-            {
-                Func<int, double, double> GammaFactMod = (trunc, mod) =>
-                {
-                    double Fact = mod;
-
-                    for (int i = 1; i < trunc; i++)
-                    {
-                        Fact *= (i + mod);
-                    }
-
-                    return Fact;
-                };
-
-                Func<double, double> Gamma0To1 = (val) =>
-                {
-                    double[] Coeff = new double[]
-                    {
-                        0.99999999999980993,
-                        676.5203681218851,
-                        -1259.1392167224028,
-                        771.32342877765313,
-                        -176.61502916214059,
-                        12.507343278686905,
-                        -0.13857109526572012,
-                        9.9843695780195716E-6,
-                        1.5056327351493116E-7
-                    };
-
-                    double Sum = Coeff[0];
-
-                    for (int i = 1; i < Coeff.Length; i++)
-                    {
-                        Sum += Coeff[i] / (val + i - 1);
-                    }
-
-                    double Base = val + Coeff.Length - 2.5;
-
-                    return Math.Sqrt(2 * Math.PI) * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum;
-                };
-
-                Func<double, double> GammaPositive = (val) =>
-                {
-                    int Trunc = (int)Math.Truncate(val);
-                    double Mod = val - Trunc;
-
-                    return GammaFactMod(Trunc, Mod) * Gamma0To1(Mod);
-                };
-
-                Func<double, double> GammaNegative = (val) =>
-                {
-                    return (Math.PI / Math.Sin(Math.PI * val) / GammaPositive(1 - val));
-                };
-
-                if (n == Math.Truncate(n))
-                {
-                    if (n == 1 || n == 2)
-                    {
-                        return 1;
-                    }
-                    else if (n > 2 && n < 172)
-                    {
-                        return _Gamma((int)n);
-                    }
-                    else if (n >= 172)
-                    {
-                        return double.PositiveInfinity;
-                    }
-                    else
-                    {
-                        return double.NaN;
-                    }
-                }
-                else
-                {
-                    if (n > 0 && n <= 1)
-                    {
-                        return Gamma0To1(n);
-                    }
-                    else if (n > 1 && n < 172)
-                    {
-                        return GammaPositive(n);
-                    }
-                    else if (n >= -171 && n <= 0)
-                    {
-                        return GammaNegative(n);
-                    }
-                    else if (n < -171)
-                    {
-                        return 0;
-                    }
-                    else
-                    {
-                        return double.PositiveInfinity;
-                    }
-                }
-            }
-
-            return double.NaN;
-        }
-
-        private static double _Factorial(int n) // 计算指定 32 位整数的阶乘。
-        {
-            return _Gamma(n + 1);
-        }
-
-        private static double _Factorial(double n) // 计算指定双精度浮点数的阶乘。
-        {
-            if (!InternalMethod.IsNaNOrInfinity(n))
-            {
-                return _Gamma(n + 1);
-            }
-
-            return double.NaN;
         }
 
         #endregion
@@ -439,34 +316,19 @@ namespace Com
         {
             if (total >= 0)
             {
-                long Delta = (long)total - selection;
-
-                if (Delta >= 0)
+                if (selection >= 0 && selection <= total)
                 {
+                    int Delta = total - selection;
+
                     double result = 1;
 
-                    if (total > Delta)
+                    for (int i = total; i > Delta; i--)
                     {
-                        for (long i = total; i > Delta; i--)
-                        {
-                            result *= i;
+                        result *= i;
 
-                            if (double.IsInfinity(result))
-                            {
-                                break;
-                            }
-                        }
-                    }
-                    else if (total < Delta)
-                    {
-                        for (long i = Delta; i > total; i--)
+                        if (double.IsInfinity(result))
                         {
-                            result /= i;
-
-                            if (result == 0)
-                            {
-                                break;
-                            }
+                            break;
                         }
                     }
 
@@ -480,139 +342,28 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算从有限个元素中任取若干个元素的排列数。
-        /// </summary>
-        /// <param name="total">元素总数。</param>
-        /// <param name="selection">抽取的元素数量。</param>
-        public static double Arrangement(double total, double selection)
-        {
-            if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
-            {
-                double TruncTotal = Math.Truncate(total);
-                double TruncSelection = Math.Truncate(selection);
-
-                if ((total == TruncTotal && TruncTotal >= int.MinValue && TruncTotal <= int.MaxValue) && (selection == TruncSelection && TruncSelection >= int.MinValue && TruncSelection <= int.MaxValue))
-                {
-                    return Arrangement((int)TruncTotal, (int)TruncSelection);
-                }
-
-                if (total >= 0 || total != TruncTotal)
-                {
-                    double Delta = total - selection;
-                    double TruncDelta = Math.Truncate(Delta);
-
-                    if (Delta >= 0 || Delta != TruncDelta)
-                    {
-                        return (_Factorial(total) / _Factorial(Delta));
-                    }
-
-                    return 0;
-                }
-            }
-
-            return double.NaN;
-        }
-
-        /// <summary>
         /// 计算从有限个元素中任取若干个元素的组合数。
         /// </summary>
         /// <param name="total">元素总数。</param>
         /// <param name="selection">抽取的元素数量。</param>
         public static double Combination(int total, int selection)
         {
-            if (total >= 0)
+            double result = Arrangement(total, selection);
+
+            if (!InternalMethod.IsNaNOrInfinity(result) && result != 0)
             {
-                if (selection >= 0)
+                for (int i = selection; i > 1; i--)
                 {
-                    long Delta = total - selection;
+                    result /= i;
 
-                    if (Delta >= 0)
+                    if (result == 0)
                     {
-                        double result = 1;
-
-                        if (total > Delta)
-                        {
-                            for (long i = total; i > Delta; i--)
-                            {
-                                result *= i;
-
-                                if (double.IsInfinity(result))
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        else if (total < Delta)
-                        {
-                            for (long i = Delta; i > total; i--)
-                            {
-                                result /= i;
-
-                                if (result == 0)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (!double.IsInfinity(result) && result != 0)
-                        {
-                            for (long i = selection; i > 1; i--)
-                            {
-                                result /= i;
-
-                                if (result == 0)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
-                        return result;
+                        break;
                     }
-                }
-
-                return 0;
-            }
-
-            return double.NaN;
-        }
-
-        /// <summary>
-        /// 计算从有限个元素中任取若干个元素的组合数。
-        /// </summary>
-        /// <param name="total">元素总数。</param>
-        /// <param name="selection">抽取的元素数量。</param>
-        public static double Combination(double total, double selection)
-        {
-            if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
-            {
-                double TruncTotal = Math.Truncate(total);
-                double TruncSelection = Math.Truncate(selection);
-
-                if ((total == TruncTotal && TruncTotal >= int.MinValue && TruncTotal <= int.MaxValue) && (selection == TruncSelection && TruncSelection >= int.MinValue && TruncSelection <= int.MaxValue))
-                {
-                    return Combination((int)TruncTotal, (int)TruncSelection);
-                }
-
-                if (total >= 0 || total != TruncTotal)
-                {
-                    if (selection >= 0 || selection != TruncSelection)
-                    {
-                        double Delta = total - selection;
-                        double TruncDelta = Math.Truncate(Delta);
-
-                        if (Delta >= 0 || Delta != TruncDelta)
-                        {
-                            return (_Factorial(total) / _Factorial(selection) / _Factorial(Delta));
-                        }
-                    }
-
-                    return 0;
                 }
             }
 
-            return double.NaN;
+            return result;
         }
 
         #endregion
@@ -629,46 +380,6 @@ namespace Com
             try
             {
                 if (!InternalMethod.IsNaNOrInfinity(p))
-                {
-                    if (p >= 0 && p <= 1)
-                    {
-                        if (p == 1)
-                        {
-                            if (value > 0)
-                            {
-                                return 1;
-                            }
-                        }
-                        else if (p > 0)
-                        {
-                            if (value > 0)
-                            {
-                                return (p * Math.Pow(1 - p, value - 1));
-                            }
-                        }
-
-                        return 0;
-                    }
-                }
-
-                return double.NaN;
-            }
-            catch
-            {
-                return double.NaN;
-            }
-        }
-
-        /// <summary>
-        /// 计算服从几何分布的随机变量在指定分布参数的概率。
-        /// </summary>
-        /// <param name="p">单个样本满足某个条件的概率，等于数学期望的倒数。</param>
-        /// <param name="value">测试的样本数量。</param>
-        public static double GeometricDistributionProbability(double p, double value)
-        {
-            try
-            {
-                if (!InternalMethod.IsNaNOrInfinity(p) && !InternalMethod.IsNaNOrInfinity(value))
                 {
                     if (p >= 0 && p <= 1)
                     {
@@ -729,38 +440,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算服从超几何分布的随机变量在指定分布参数的概率。
-        /// </summary>
-        /// <param name="N">样本总量。</param>
-        /// <param name="M">满足某个条件的样本数量。</param>
-        /// <param name="n">测试的样本数量。</param>
-        /// <param name="value">测试的样本中满足某个条件的样本数量。</param>
-        public static double HypergeometricDistributionProbability(double N, double M, double n, double value)
-        {
-            try
-            {
-                if (!InternalMethod.IsNaNOrInfinity(N) && !InternalMethod.IsNaNOrInfinity(M) && !InternalMethod.IsNaNOrInfinity(n) && !InternalMethod.IsNaNOrInfinity(value))
-                {
-                    if (N > 0 && M < N)
-                    {
-                        if (M > 0 && n > 0 && value >= 0 && value <= n)
-                        {
-                            return (Combination(M, value) / Combination(N, n) * Combination(N - M, n - value));
-                        }
-
-                        return 0;
-                    }
-                }
-
-                return double.NaN;
-            }
-            catch
-            {
-                return double.NaN;
-            }
-        }
-
-        /// <summary>
         /// 计算服从二项分布的随机变量在指定分布参数的概率。
         /// </summary>
         /// <param name="n">样本总量。</param>
@@ -771,44 +450,6 @@ namespace Com
             try
             {
                 if (!InternalMethod.IsNaNOrInfinity(p))
-                {
-                    if (n > 0 && p >= 0 && p <= 1)
-                    {
-                        if (value >= 0 && value <= n)
-                        {
-                            if (p == 1)
-                            {
-                                return 1;
-                            }
-                            else if (p > 0)
-                            {
-                                return (Combination(n, value) * Math.Pow(p, value) * Math.Pow(1 - p, n - value));
-                            }
-                        }
-
-                        return 0;
-                    }
-                }
-
-                return double.NaN;
-            }
-            catch
-            {
-                return double.NaN;
-            }
-        }
-
-        /// <summary>
-        /// 计算服从二项分布的随机变量在指定分布参数的概率。
-        /// </summary>
-        /// <param name="n">样本总量。</param>
-        /// <param name="p">单个样本满足某个条件的概率，等于样本总量为 1 时的数学期望。</param>
-        /// <param name="value">测试的样本数量。</param>
-        public static double BinomialDistributionProbability(double n, double p, double value)
-        {
-            try
-            {
-                if (!InternalMethod.IsNaNOrInfinity(n) && !InternalMethod.IsNaNOrInfinity(p) && !InternalMethod.IsNaNOrInfinity(value))
                 {
                     if (n > 0 && p >= 0 && p <= 1)
                     {
@@ -866,35 +507,7 @@ namespace Com
             }
         }
 
-        /// <summary>
-        /// 计算服从泊松分布的随机变量在指定分布参数的概率。
-        /// </summary>
-        /// <param name="lambda">单位测度内满足某个条件的平均样本数量，等于数学期望或方差。</param>
-        /// <param name="value">单位测度内测试的样本数量。</param>
-        public static double PoissonDistributionProbability(double lambda, double value)
-        {
-            try
-            {
-                if (!InternalMethod.IsNaNOrInfinity(lambda) && !InternalMethod.IsNaNOrInfinity(value))
-                {
-                    if (lambda > 0)
-                    {
-                        if (value >= 0)
-                        {
-                            return (Math.Pow(lambda, value) * Math.Exp(-lambda) / _Factorial(value));
-                        }
-
-                        return 0;
-                    }
-                }
-
-                return double.NaN;
-            }
-            catch
-            {
-                return double.NaN;
-            }
-        }
+        //
 
         /// <summary>
         /// 计算服从指数分布的随机变量在指定分布参数的概率密度。
