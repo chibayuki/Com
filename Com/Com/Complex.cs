@@ -127,7 +127,7 @@ namespace Com
         {
             get
             {
-                return ((!double.IsNaN(_Real) && !double.IsNaN(_Imaginary)) && (double.IsInfinity(_Real) || double.IsInfinity(_Imaginary)));
+                return (!IsNaN && (double.IsInfinity(_Real) || double.IsInfinity(_Imaginary)));
             }
         }
 
@@ -138,7 +138,7 @@ namespace Com
         {
             get
             {
-                return ((double.IsNaN(_Real) || double.IsNaN(_Imaginary)) || (double.IsInfinity(_Real) || double.IsInfinity(_Imaginary)));
+                return (InternalMethod.IsNaNOrInfinity(_Real) || InternalMethod.IsNaNOrInfinity(_Imaginary));
             }
         }
 

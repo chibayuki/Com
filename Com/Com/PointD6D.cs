@@ -318,7 +318,7 @@ namespace Com
         {
             get
             {
-                return ((!double.IsNaN(_X) && !double.IsNaN(_Y) && !double.IsNaN(_Z) && !double.IsNaN(_U) && !double.IsNaN(_V) && !double.IsNaN(_W)) && (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z) || double.IsInfinity(_U) || double.IsInfinity(_V) || double.IsInfinity(_W)));
+                return (!IsNaN && (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z) || double.IsInfinity(_U) || double.IsInfinity(_V) || double.IsInfinity(_W)));
             }
         }
 
@@ -329,7 +329,7 @@ namespace Com
         {
             get
             {
-                return ((double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z) || double.IsNaN(_U) || double.IsNaN(_V) || double.IsNaN(_W)) || (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z) || double.IsInfinity(_U) || double.IsInfinity(_V) || double.IsInfinity(_W)));
+                return (InternalMethod.IsNaNOrInfinity(_X) || InternalMethod.IsNaNOrInfinity(_Y) || InternalMethod.IsNaNOrInfinity(_Z) || InternalMethod.IsNaNOrInfinity(_U) || InternalMethod.IsNaNOrInfinity(_V) || InternalMethod.IsNaNOrInfinity(_W));
             }
         }
 

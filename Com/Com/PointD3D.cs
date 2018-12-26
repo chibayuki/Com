@@ -240,7 +240,7 @@ namespace Com
         {
             get
             {
-                return ((!double.IsNaN(_X) && !double.IsNaN(_Y) && !double.IsNaN(_Z)) && (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z)));
+                return (!IsNaN && (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z)));
             }
         }
 
@@ -251,7 +251,7 @@ namespace Com
         {
             get
             {
-                return ((double.IsNaN(_X) || double.IsNaN(_Y) || double.IsNaN(_Z)) || (double.IsInfinity(_X) || double.IsInfinity(_Y) || double.IsInfinity(_Z)));
+                return (InternalMethod.IsNaNOrInfinity(_X) || InternalMethod.IsNaNOrInfinity(_Y) || InternalMethod.IsNaNOrInfinity(_Z));
             }
         }
 

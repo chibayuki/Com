@@ -379,23 +379,21 @@ namespace Com
             {
                 if (_Size > 0)
                 {
+                    bool result = false;
+
                     for (int i = 0; i < _Size; i++)
                     {
                         if (double.IsNaN(_VArray[i]))
                         {
                             return false;
                         }
-                    }
-
-                    for (int i = 0; i < _Size; i++)
-                    {
-                        if (double.IsInfinity(_VArray[i]))
+                        else if (double.IsInfinity(_VArray[i]))
                         {
-                            return true;
+                            result = true;
                         }
                     }
 
-                    return false;
+                    return result;
                 }
 
                 return false;
@@ -413,7 +411,7 @@ namespace Com
                 {
                     for (int i = 0; i < _Size; i++)
                     {
-                        if (double.IsNaN(_VArray[i]) || double.IsInfinity(_VArray[i]))
+                        if (InternalMethod.IsNaNOrInfinity(_VArray[i]))
                         {
                             return true;
                         }
