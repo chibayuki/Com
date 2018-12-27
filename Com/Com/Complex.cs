@@ -60,16 +60,6 @@ namespace Com
         /// </summary>
         public static readonly Complex ImaginaryOne = new Complex(0, 1);
 
-        /// <summary>
-        /// 表示圆周率 π 的 Complex 结构的实例。
-        /// </summary>
-        public static readonly Complex PI = new Complex(Math.PI, 0);
-
-        /// <summary>
-        /// 表示自然常数 e 的 Complex 结构的实例。
-        /// </summary>
-        public static readonly Complex E = new Complex(Math.E, 0);
-
         #endregion
 
         #region 构造函数

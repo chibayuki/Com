@@ -232,7 +232,7 @@ namespace Com
         /// <summary>
         /// 返回一个概率密度服从标准正态分布的随机 32 位整数。
         /// </summary>
-        public static int NormalRandomInteger()
+        public static int NormalDistributionRandomInteger()
         {
             try
             {
@@ -249,7 +249,7 @@ namespace Com
         /// </summary>
         /// <param name="ev">数学期望。</param>
         /// <param name="sd">标准差。</param>
-        public static int NormalRandomInteger(double ev, double sd)
+        public static int NormalDistributionRandomInteger(double ev, double sd)
         {
             try
             {
@@ -269,7 +269,7 @@ namespace Com
         /// <summary>
         /// 返回一个概率密度服从标准正态分布的随机双精度浮点数。
         /// </summary>
-        public static double NormalRandomDouble()
+        public static double NormalDistributionRandomDouble()
         {
             try
             {
@@ -286,7 +286,7 @@ namespace Com
         /// </summary>
         /// <param name="ev">数学期望。</param>
         /// <param name="sd">标准差。</param>
-        public static double NormalRandomDouble(double ev, double sd)
+        public static double NormalDistributionRandomDouble(double ev, double sd)
         {
             try
             {
