@@ -813,6 +813,16 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回将 Complex 结构的所有分量取符号数得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="comp">Complex 结构，用于转换的结构。</param>
+        /// <returns>Complex 结构，表示将 Complex 结构的所有分量取符号数得到的结果。</returns>
+        public static Complex Sign(Complex comp)
+        {
+            return new Complex((double.IsNaN(comp._Real) ? 0 : Math.Sign(comp._Real)), (double.IsNaN(comp._Imaginary) ? 0 : Math.Sign(comp._Imaginary)));
+        }
+
+        /// <summary>
         /// 返回将 Complex 结构的所有分量取绝对值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
@@ -820,16 +830,6 @@ namespace Com
         public static Complex Abs(Complex comp)
         {
             return new Complex(Math.Abs(comp._Real), Math.Abs(comp._Imaginary));
-        }
-
-        /// <summary>
-        /// 返回将 Complex 结构的所有分量取符号数得到的 Complex 结构的新实例。
-        /// </summary>
-        /// <param name="comp">Complex 结构，用于转换的结构。</param>
-        /// <returns>Complex 结构，表示将 Complex 结构的所有分量取符号数得到的结果。</returns>
-        public static Complex Sign(Complex comp)
-        {
-            return new Complex(Math.Sign(comp._Real), Math.Sign(comp._Imaginary));
         }
 
         /// <summary>

@@ -2301,6 +2301,27 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回将 Vector 对象的所有分量取符号数得到的 Vector 的新实例。
+        /// </summary>
+        /// <param name="vector">用于转换的 Vector 对象。</param>
+        public static Vector Sign(Vector vector)
+        {
+            if (!IsNullOrEmpty(vector))
+            {
+                Vector result = _GetZeroVector(vector._Type, vector._Size);
+
+                for (int i = 0; i < vector._Size; i++)
+                {
+                    result._VArray[i] = (double.IsNaN(vector._VArray[i]) ? 0 : Math.Sign(vector._VArray[i]));
+                }
+
+                return result;
+            }
+
+            return Empty;
+        }
+
+        /// <summary>
         /// 返回将 Vector 对象的所有分量取绝对值得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">用于转换的 Vector 对象。</param>
@@ -2313,27 +2334,6 @@ namespace Com
                 for (int i = 0; i < vector._Size; i++)
                 {
                     result._VArray[i] = Math.Abs(vector._VArray[i]);
-                }
-
-                return result;
-            }
-
-            return Empty;
-        }
-
-        /// <summary>
-        /// 返回将 Vector 对象的所有分量取符号数得到的 Vector 的新实例。
-        /// </summary>
-        /// <param name="vector">用于转换的 Vector 对象。</param>
-        public static Vector Sign(Vector vector)
-        {
-            if (!IsNullOrEmpty(vector))
-            {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
-
-                for (int i = 0; i < vector._Size; i++)
-                {
-                    result._VArray[i] = Math.Sign(vector._VArray[i]);
                 }
 
                 return result;

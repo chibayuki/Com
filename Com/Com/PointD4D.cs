@@ -1719,21 +1719,21 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回将 PointD4D 结构的所有分量取符号数得到的 PointD4D 结构的新实例。
+        /// </summary>
+        /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
+        public static PointD4D Sign(PointD4D pt)
+        {
+            return new PointD4D((double.IsNaN(pt._X) ? 0 : Math.Sign(pt._X)), (double.IsNaN(pt._Y) ? 0 : Math.Sign(pt._Y)), (double.IsNaN(pt._Z) ? 0 : Math.Sign(pt._Z)), (double.IsNaN(pt._U) ? 0 : Math.Sign(pt._U)));
+        }
+
+        /// <summary>
         /// 返回将 PointD4D 结构的所有分量取绝对值得到的 PointD4D 结构的新实例。
         /// </summary>
         /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
         public static PointD4D Abs(PointD4D pt)
         {
             return new PointD4D(Math.Abs(pt._X), Math.Abs(pt._Y), Math.Abs(pt._Z), Math.Abs(pt._U));
-        }
-
-        /// <summary>
-        /// 返回将 PointD4D 结构的所有分量取符号数得到的 PointD4D 结构的新实例。
-        /// </summary>
-        /// <param name="pt">PointD4D 结构，用于转换的结构。</param>
-        public static PointD4D Sign(PointD4D pt)
-        {
-            return new PointD4D(Math.Sign(pt._X), Math.Sign(pt._Y), Math.Sign(pt._Z), Math.Sign(pt._U));
         }
 
         /// <summary>

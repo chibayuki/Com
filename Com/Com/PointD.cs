@@ -1901,21 +1901,21 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回将 PointD 结构的所有分量取符号数得到的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="pt">PointD 结构，用于转换的结构。</param>
+        public static PointD Sign(PointD pt)
+        {
+            return new PointD((double.IsNaN(pt._X) ? 0 : Math.Sign(pt._X)), (double.IsNaN(pt._Y) ? 0 : Math.Sign(pt._Y)));
+        }
+
+        /// <summary>
         /// 返回将 PointD 结构的所有分量取绝对值得到的 PointD 结构的新实例。
         /// </summary>
         /// <param name="pt">PointD 结构，用于转换的结构。</param>
         public static PointD Abs(PointD pt)
         {
             return new PointD(Math.Abs(pt._X), Math.Abs(pt._Y));
-        }
-
-        /// <summary>
-        /// 返回将 PointD 结构的所有分量取符号数得到的 PointD 结构的新实例。
-        /// </summary>
-        /// <param name="pt">PointD 结构，用于转换的结构。</param>
-        public static PointD Sign(PointD pt)
-        {
-            return new PointD(Math.Sign(pt._X), Math.Sign(pt._Y));
         }
 
         /// <summary>
