@@ -29,6 +29,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 - Com.PointD4D 四维欧式空间中表示的坐标（向量） / Coordinate (vector) in 4D Euclidean space.
 - Com.PointD5D 五维欧式空间中表示的坐标（向量） / Coordinate (vector) in 5D Euclidean space.
 - Com.PointD6D 六维欧式空间中表示的坐标（向量） / Coordinate (vector) in 6D Euclidean space.
+- Com.Real 表示实数 / Real number.
 
 ### 公开的接口 / Public Interface
 - Com.IAffine 表示用于支持仿射变换的方法 / Method for affine transform.
