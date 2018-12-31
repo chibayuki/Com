@@ -80,6 +80,7 @@
     <Compile Include="Com\IVector.cs" />
     <Compile Include="Com\PointD5D.cs" />
     <Compile Include="Com\PointD6D.cs" />
+    <Compile Include="Com\Real.cs" />
     <Compile Include="Com\Vector.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
