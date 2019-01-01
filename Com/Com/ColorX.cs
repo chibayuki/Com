@@ -1710,15 +1710,6 @@ namespace Com
         /// <returns>布尔值，表示此 ColorX 结构是否与指定的 ColorX 结构相等。</returns>
         public bool Equals(ColorX color)
         {
-            if ((object)color == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, color))
-            {
-                return true;
-            }
-
             return (_Opacity.Equals(color._Opacity) && (_Alpha.Equals(color._Alpha) && _Red.Equals(color._Red) && _Green.Equals(color._Green) && _Blue.Equals(color._Blue)) && (_Hue_HSV.Equals(color._Hue_HSV) && _Saturation_HSV.Equals(color._Saturation_HSV) && _Brightness.Equals(color._Brightness)) && (_Hue_HSL.Equals(color._Hue_HSL) && _Saturation_HSL.Equals(color._Saturation_HSL) && _Lightness_HSL.Equals(color._Lightness_HSL)) && (_Cyan.Equals(color._Cyan) && _Magenta.Equals(color._Magenta) && _Yellow.Equals(color._Yellow) && _Black.Equals(color._Black)) && (_Lightness_LAB.Equals(color._Lightness_LAB) && _GreenRed.Equals(color._GreenRed) && _BlueYellow.Equals(color._BlueYellow)));
         }
 
@@ -2447,17 +2438,9 @@ namespace Com
         /// <returns>布尔值，表示两个 ColorX 结构是否表示相同的颜色。</returns>
         public static bool operator ==(ColorX left, ColorX right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (left.IsEmpty || right.IsEmpty)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
 
             return ((int)Math.Round(left.Alpha) == (int)Math.Round(right.Alpha) && ((int)Math.Round(left.Red) == (int)Math.Round(right.Red) && (int)Math.Round(left.Green) == (int)Math.Round(right.Green) && (int)Math.Round(left.Blue) == (int)Math.Round(right.Blue)));
@@ -2471,17 +2454,9 @@ namespace Com
         /// <returns>布尔值，表示两个 ColorX 结构是否表示不同的颜色。</returns>
         public static bool operator !=(ColorX left, ColorX right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return false;
-            }
-            else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (left.IsEmpty || right.IsEmpty)
             {
                 return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
             }
 
             return ((int)Math.Round(left.Alpha) != (int)Math.Round(right.Alpha) || ((int)Math.Round(left.Red) != (int)Math.Round(right.Red) || (int)Math.Round(left.Green) != (int)Math.Round(right.Green) || (int)Math.Round(left.Blue) != (int)Math.Round(right.Blue)));

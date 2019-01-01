@@ -119,7 +119,7 @@ namespace Com
                     {
                         if (_Value <= _LargeNegativeDichotomyValues[i] || _Value >= _LargePositiveDichotomyValues[i])
                         {
-                            if ((decimal)_Magnitude + _DichotomyMagnitudes[i] <= long.MaxValue)
+                            if (_Magnitude + _DichotomyMagnitudes[i] <= _MaxMagnitude)
                             {
                                 _Value /= _LargePositiveDichotomyValues[i];
                                 _Magnitude += _DichotomyMagnitudes[i];
@@ -140,7 +140,7 @@ namespace Com
                     {
                         if (_Value > _SmallNegativeDichotomyValues[i] && _Value < _SmallPositiveDichotomyValues[i])
                         {
-                            if ((decimal)_Magnitude - _DichotomyMagnitudes[i] >= long.MinValue)
+                            if (_Magnitude - _DichotomyMagnitudes[i] >= _MinMagnitude)
                             {
                                 _Value *= _LargePositiveDichotomyValues[i];
                                 _Magnitude -= _DichotomyMagnitudes[i];
@@ -187,11 +187,7 @@ namespace Com
 
         private Parity _GetParity() // 获取此 Real 结构的奇偶性。
         {
-            if (double.IsNaN(_Value))
-            {
-                return Parity.NonParity;
-            }
-            else if (double.IsInfinity(_Value))
+            if (InternalMethod.IsNaNOrInfinity(_Value))
             {
                 return Parity.NonParity;
             }
@@ -650,6 +646,8 @@ namespace Com
                 if (!InternalMethod.IsNaNOrInfinity(_Value) && _Value != 0)
                 {
                     _Magnitude = value;
+
+                    _Rectify();
                 }
             }
         }
@@ -741,16 +739,7 @@ namespace Com
         /// <returns>布尔值，表示此 Real 结构是否与指定的 Real 结构相等。</returns>
         public bool Equals(Real real)
         {
-            if ((object)real == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, real))
-            {
-                return true;
-            }
-
-            return (_Value.Equals(real._Value) && _Magnitude.Equals(real._Magnitude));
+            return (_Magnitude.Equals(real._Magnitude) && _Value.Equals(real._Value));
         }
 
         //
@@ -779,15 +768,6 @@ namespace Com
         /// <param name="real">用于比较的 Real 结构。</param>
         public int CompareTo(Real real)
         {
-            if ((object)real == null)
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, real))
-            {
-                return 0;
-            }
-
             if (IsNaN || real.IsNaN)
             {
                 if (IsNaN && real.IsNaN)
@@ -903,7 +883,7 @@ namespace Com
             }
             else
             {
-                decimal NewMag = (decimal)real._Magnitude * 2;
+                long NewMag = real._Magnitude * 2;
 
                 if (NewMag < _MinMagnitude)
                 {
@@ -924,7 +904,7 @@ namespace Com
                 }
                 else
                 {
-                    return new Real(real._Value * real._Value, real._Magnitude * 2);
+                    return new Real(real._Value * real._Value, NewMag);
                 }
             }
         }
@@ -1749,60 +1729,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否相等。</returns>
         public static bool operator ==(Real left, Real right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
-            if (left.IsNaN || right.IsNaN)
-            {
-                return false;
-            }
-            else if (left.IsInfinity || right.IsInfinity)
-            {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
-
-                if (LIsInf && RIsInf)
-                {
-                    if (LIsPosInf && RIsPosInf)
-                    {
-                        return true;
-                    }
-                    else if (LIsPosInf && RIsNegInf)
-                    {
-                        return false;
-                    }
-                    else if (LIsNegInf && RIsPosInf)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return (left._Value == right._Value && left._Magnitude == right._Magnitude);
-            }
+            return (left._Magnitude == right._Magnitude && left._Value == right._Value);
         }
 
         /// <summary>
@@ -1813,60 +1740,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否不相等。</returns>
         public static bool operator !=(Real left, Real right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return false;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
-
-            if (left.IsNaN || right.IsNaN)
-            {
-                return true;
-            }
-            else if (left.IsInfinity || right.IsInfinity)
-            {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
-
-                if (LIsInf && RIsInf)
-                {
-                    if (LIsPosInf && RIsPosInf)
-                    {
-                        return false;
-                    }
-                    else if (LIsPosInf && RIsNegInf)
-                    {
-                        return true;
-                    }
-                    else if (LIsNegInf && RIsPosInf)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return (left._Value != right._Value || left._Magnitude != right._Magnitude);
-            }
+            return (left._Magnitude != right._Magnitude || left._Value != right._Value);
         }
 
         /// <summary>
@@ -1877,11 +1751,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否前者小于后者。</returns>
         public static bool operator <(Real left, Real right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
             if (left.IsNaN || right.IsNaN)
             {
                 return false;
@@ -1981,11 +1850,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否前者大于后者。</returns>
         public static bool operator >(Real left, Real right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
             if (left.IsNaN || right.IsNaN)
             {
                 return false;
@@ -2085,11 +1949,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否前者小于或等于后者。</returns>
         public static bool operator <=(Real left, Real right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
             if (left.IsNaN || right.IsNaN)
             {
                 return false;
@@ -2189,11 +2048,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否前者大于或等于后者。</returns>
         public static bool operator >=(Real left, Real right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
             if (left.IsNaN || right.IsNaN)
             {
                 return false;
@@ -2498,7 +2352,7 @@ namespace Com
             {
                 if (left._Magnitude > right._Magnitude)
                 {
-                    if ((decimal)left._Magnitude - right._Magnitude < 16)
+                    if (left._Magnitude - right._Magnitude < 16)
                     {
                         return new Real(left._Value + right._Value / _LargePositiveGeometricValues[left._Magnitude - right._Magnitude], left._Magnitude);
                     }
@@ -2509,7 +2363,7 @@ namespace Com
                 }
                 else if (left._Magnitude < right._Magnitude)
                 {
-                    if ((decimal)right._Magnitude - left._Magnitude < 16)
+                    if (right._Magnitude - left._Magnitude < 16)
                     {
                         return new Real(left._Value / _LargePositiveGeometricValues[right._Magnitude - left._Magnitude] + right._Value, right._Magnitude);
                     }
@@ -2604,7 +2458,7 @@ namespace Com
             {
                 if (left._Magnitude > right._Magnitude)
                 {
-                    if ((decimal)left._Magnitude - right._Magnitude < 16)
+                    if (left._Magnitude - right._Magnitude < 16)
                     {
                         return new Real(left._Value - right._Value / _LargePositiveGeometricValues[left._Magnitude - right._Magnitude], left._Magnitude);
                     }
@@ -2615,7 +2469,7 @@ namespace Com
                 }
                 else if (left._Magnitude < right._Magnitude)
                 {
-                    if ((decimal)right._Magnitude - left._Magnitude < 16)
+                    if (right._Magnitude - left._Magnitude < 16)
                     {
                         return new Real(left._Value / _LargePositiveGeometricValues[right._Magnitude - left._Magnitude] - right._Value, right._Magnitude);
                     }
@@ -2778,7 +2632,7 @@ namespace Com
                 }
                 else
                 {
-                    decimal NewMag = (decimal)left._Magnitude + right._Magnitude;
+                    long NewMag = left._Magnitude + right._Magnitude;
 
                     if (NewMag < _MinMagnitude)
                     {
@@ -2806,7 +2660,7 @@ namespace Com
                     }
                     else
                     {
-                        return new Real(left._Value * right._Value, left._Magnitude + right._Magnitude);
+                        return new Real(left._Value * right._Value, NewMag);
                     }
                 }
             }
@@ -2928,7 +2782,7 @@ namespace Com
                 }
                 else
                 {
-                    decimal NewMag = (decimal)left._Magnitude - right._Magnitude;
+                    long NewMag = left._Magnitude - right._Magnitude;
 
                     if (NewMag < _MinMagnitude)
                     {
@@ -2956,7 +2810,7 @@ namespace Com
                     }
                     else
                     {
-                        return new Real(left._Value / right._Value, left._Magnitude - right._Magnitude);
+                        return new Real(left._Value / right._Value, NewMag);
                     }
                 }
             }

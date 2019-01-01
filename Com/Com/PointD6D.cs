@@ -778,15 +778,6 @@ namespace Com
         /// <param name="pt">用于比较的 PointD6D 结构。</param>
         public bool Equals(PointD6D pt)
         {
-            if ((object)pt == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, pt))
-            {
-                return true;
-            }
-
             return (_X.Equals(pt._X) && _Y.Equals(pt._Y) && _Z.Equals(pt._Z) && _U.Equals(pt._U) && _V.Equals(pt._V) && _W.Equals(pt._W));
         }
 
@@ -816,15 +807,6 @@ namespace Com
         /// <param name="pt">用于比较的 PointD6D 结构。</param>
         public int CompareTo(PointD6D pt)
         {
-            if ((object)pt == null)
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, pt))
-            {
-                return 0;
-            }
-
             return ModuleSquared.CompareTo(pt.ModuleSquared);
         }
 
@@ -2086,19 +2068,6 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
         public static bool operator ==(PointD6D left, PointD6D right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
             return (left._X == right._X && left._Y == right._Y && left._Z == right._Z && left._U == right._U && left._V == right._V && left._W == right._W);
         }
 
@@ -2109,19 +2078,6 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
         public static bool operator !=(PointD6D left, PointD6D right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return false;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
-
             return (left._X != right._X || left._Y != right._Y || left._Z != right._Z || left._U != right._U || left._V != right._V || left._W != right._W);
         }
 
@@ -2132,15 +2088,6 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
         public static bool operator <(PointD6D left, PointD6D right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
-
             return (left.ModuleSquared < right.ModuleSquared);
         }
 
@@ -2151,15 +2098,6 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
         public static bool operator >(PointD6D left, PointD6D right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
-
             return (left.ModuleSquared > right.ModuleSquared);
         }
 
@@ -2170,15 +2108,6 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
         public static bool operator <=(PointD6D left, PointD6D right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
             return (left.ModuleSquared <= right.ModuleSquared);
         }
 
@@ -2189,15 +2118,6 @@ namespace Com
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
         public static bool operator >=(PointD6D left, PointD6D right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
             return (left.ModuleSquared >= right.ModuleSquared);
         }
 

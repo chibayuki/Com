@@ -409,15 +409,6 @@ namespace Com
         /// <returns>布尔值，表示此 Complex 结构是否与指定的 Complex 结构相等。</returns>
         public bool Equals(Complex comp)
         {
-            if ((object)comp == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, comp))
-            {
-                return true;
-            }
-
             return (_Real.Equals(comp._Real) && _Imaginary.Equals(comp._Imaginary));
         }
 
@@ -920,19 +911,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构是否相等。</returns>
         public static bool operator ==(Complex left, Complex right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
             return (left._Real == right._Real && left._Imaginary == right._Imaginary);
         }
 
@@ -944,19 +922,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构是否不相等。</returns>
         public static bool operator !=(Complex left, Complex right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return false;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
-            }
-
             return (left._Real != right._Real || left._Imaginary != right._Imaginary);
         }
 
@@ -968,11 +933,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者小于后者。</returns>
         public static bool operator <(Complex left, Complex right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
             return (left.ModuleSquared < right.ModuleSquared);
         }
 
@@ -984,11 +944,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者大于后者。</returns>
         public static bool operator >(Complex left, Complex right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
             return (left.ModuleSquared > right.ModuleSquared);
         }
 
@@ -1000,11 +955,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者小于或等于后者。</returns>
         public static bool operator <=(Complex left, Complex right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
             return (left.ModuleSquared <= right.ModuleSquared);
         }
 
@@ -1016,11 +966,6 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者大于或等于后者。</returns>
         public static bool operator >=(Complex left, Complex right)
         {
-            if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-
             return (left.ModuleSquared >= right.ModuleSquared);
         }
 

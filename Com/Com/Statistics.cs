@@ -453,55 +453,6 @@ namespace Com
         /// </summary>
         /// <param name="total">元素总数。</param>
         /// <param name="selection">抽取的元素数量。</param>
-        public static double Arrangement(int total, int selection)
-        {
-            if (total >= 0)
-            {
-                long Delta = (long)total - selection;
-
-                if (Delta >= 0)
-                {
-                    double result = 1;
-
-                    if (total > Delta)
-                    {
-                        for (long i = total; i > Delta; i--)
-                        {
-                            result *= i;
-
-                            if (double.IsInfinity(result))
-                            {
-                                break;
-                            }
-                        }
-                    }
-                    else if (total < Delta)
-                    {
-                        for (long i = Delta; i > total; i--)
-                        {
-                            result /= i;
-
-                            if (result == 0)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    return result;
-                }
-
-                return 0;
-            }
-
-            return double.NaN;
-        }
-
-        /// <summary>
-        /// 计算从有限个元素中任取若干个元素的排列数。
-        /// </summary>
-        /// <param name="total">元素总数。</param>
-        /// <param name="selection">抽取的元素数量。</param>
         public static double Arrangement(double total, double selection)
         {
             if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
@@ -509,12 +460,47 @@ namespace Com
                 double TruncTotal = Math.Truncate(total);
                 double TruncSelection = Math.Truncate(selection);
 
-                if ((total == TruncTotal && TruncTotal >= int.MinValue && TruncTotal <= int.MaxValue) && (selection == TruncSelection && TruncSelection >= int.MinValue && TruncSelection <= int.MaxValue))
+                if ((total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15) && (selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15))
                 {
-                    return Arrangement((int)TruncTotal, (int)TruncSelection);
-                }
+                    long TotalI64 = (long)TruncTotal;
+                    long SelectionI64 = (long)TruncSelection;
+                    long Delta = TotalI64 - SelectionI64;
 
-                if (total >= 0 || total != TruncTotal)
+                    if (Delta >= 0)
+                    {
+                        double result = 1;
+
+                        if (TotalI64 > Delta)
+                        {
+                            for (long i = TotalI64; i > Delta; i--)
+                            {
+                                result *= i;
+
+                                if (double.IsInfinity(result))
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (TotalI64 < Delta)
+                        {
+                            for (long i = Delta; i > TotalI64; i--)
+                            {
+                                result /= i;
+
+                                if (result == 0)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        return result;
+                    }
+
+                    return 0;
+                }
+                else if (total >= 0 || total != TruncTotal)
                 {
                     double Delta = total - selection;
                     double TruncDelta = Math.Truncate(Delta);
@@ -536,71 +522,6 @@ namespace Com
         /// </summary>
         /// <param name="total">元素总数。</param>
         /// <param name="selection">抽取的元素数量。</param>
-        public static double Combination(int total, int selection)
-        {
-            if (total >= 0)
-            {
-                if (selection >= 0)
-                {
-                    long Delta = total - selection;
-
-                    if (Delta >= 0)
-                    {
-                        double result = 1;
-
-                        if (total > Delta)
-                        {
-                            for (long i = total; i > Delta; i--)
-                            {
-                                result *= i;
-
-                                if (double.IsInfinity(result))
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        else if (total < Delta)
-                        {
-                            for (long i = Delta; i > total; i--)
-                            {
-                                result /= i;
-
-                                if (result == 0)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (!double.IsInfinity(result) && result != 0)
-                        {
-                            for (long i = selection; i > 1; i--)
-                            {
-                                result /= i;
-
-                                if (result == 0)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
-                        return result;
-                    }
-                }
-
-                return 0;
-            }
-
-            return double.NaN;
-        }
-
-        /// <summary>
-        /// 计算从有限个元素中任取若干个元素的组合数。
-        /// </summary>
-        /// <param name="total">元素总数。</param>
-        /// <param name="selection">抽取的元素数量。</param>
         public static double Combination(double total, double selection)
         {
             if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
@@ -608,12 +529,64 @@ namespace Com
                 double TruncTotal = Math.Truncate(total);
                 double TruncSelection = Math.Truncate(selection);
 
-                if ((total == TruncTotal && TruncTotal >= int.MinValue && TruncTotal <= int.MaxValue) && (selection == TruncSelection && TruncSelection >= int.MinValue && TruncSelection <= int.MaxValue))
+                if ((total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15) && (selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15))
                 {
-                    return Combination((int)TruncTotal, (int)TruncSelection);
-                }
+                    long TotalI64 = (long)TruncTotal;
+                    long SelectionI64 = (long)TruncSelection;
 
-                if (total >= 0 || total != TruncTotal)
+                    if (SelectionI64 >= 0)
+                    {
+                        long Delta = TotalI64 - SelectionI64;
+
+                        if (Delta >= 0)
+                        {
+                            double result = 1;
+
+                            if (TotalI64 > Delta)
+                            {
+                                for (long i = TotalI64; i > Delta; i--)
+                                {
+                                    result *= i;
+
+                                    if (double.IsInfinity(result))
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            else if (TotalI64 < Delta)
+                            {
+                                for (long i = Delta; i > TotalI64; i--)
+                                {
+                                    result /= i;
+
+                                    if (result == 0)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (!double.IsInfinity(result) && result != 0)
+                            {
+                                for (long i = SelectionI64; i > 1; i--)
+                                {
+                                    result /= i;
+
+                                    if (result == 0)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+
+                            return result;
+                        }
+                    }
+
+                    return 0;
+                }
+                else if (total >= 0 || total != TruncTotal)
                 {
                     if (selection >= 0 || selection != TruncSelection)
                     {

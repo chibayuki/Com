@@ -1557,15 +1557,6 @@ namespace Com
         /// <returns>布尔值，表示此 DateTimeX 结构是否与指定的 DateTimeX 结构相等。</returns>
         public bool Equals(DateTimeX dateTime)
         {
-            if ((object)dateTime == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, dateTime))
-            {
-                return true;
-            }
-
             return (_UtcOffset.Equals(dateTime._UtcOffset) && _TotalMilliseconds == dateTime._TotalMilliseconds && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond);
         }
 
@@ -1597,15 +1588,6 @@ namespace Com
         /// <returns>32 位整数，表示将此 DateTimeX 结构与指定的 DateTimeX 结构进行次序比较得到的结果。</returns>
         public int CompareTo(DateTimeX dateTime)
         {
-            if ((object)dateTime == null)
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, dateTime))
-            {
-                return 0;
-            }
-
             return TotalMilliseconds.CompareTo(dateTime.TotalMilliseconds);
         }
 
@@ -2168,17 +2150,9 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex。</returns>
         public static bool operator ==(DateTimeX left, DateTimeX right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return true;
-            }
-            else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (left.IsEmpty || right.IsEmpty)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
 
             return (left.TotalMilliseconds == right.TotalMilliseconds);
@@ -2192,17 +2166,9 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否表示不同的时刻。</returns>
         public static bool operator !=(DateTimeX left, DateTimeX right)
         {
-            if ((object)left == null && (object)right == null)
-            {
-                return false;
-            }
-            else if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (left.IsEmpty || right.IsEmpty)
             {
                 return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
             }
 
             return (left.TotalMilliseconds != right.TotalMilliseconds);
@@ -2216,11 +2182,7 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于后者。</returns>
         public static bool operator <(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
+            if (left.IsEmpty || right.IsEmpty)
             {
                 return false;
             }
@@ -2236,11 +2198,7 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于后者。</returns>
         public static bool operator >(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
+            if (left.IsEmpty || right.IsEmpty)
             {
                 return false;
             }
@@ -2256,13 +2214,9 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于或等于后者。</returns>
         public static bool operator <=(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (left.IsEmpty || right.IsEmpty)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
 
             return (left.TotalMilliseconds <= right.TotalMilliseconds);
@@ -2276,13 +2230,9 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于或等于后者。</returns>
         public static bool operator >=(DateTimeX left, DateTimeX right)
         {
-            if (((object)left == null || left.IsEmpty) || ((object)right == null || right.IsEmpty))
+            if (left.IsEmpty || right.IsEmpty)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
 
             return (left.TotalMilliseconds >= right.TotalMilliseconds);
