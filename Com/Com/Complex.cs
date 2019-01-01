@@ -24,8 +24,7 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private double _Real; // 实部。
-        private double _Imaginary; // 虚部。
+        private static readonly double _Ln10 = 2.3025850929940457; // 表示 10 的自然对数。
 
         //
 
@@ -33,6 +32,11 @@ namespace Com
         {
             return new Complex(-comp._Imaginary, comp.Real);
         }
+
+        //
+
+        private double _Real; // 实部。
+        private double _Imaginary; // 虚部。
 
         #endregion
 
@@ -616,6 +620,16 @@ namespace Com
 
                 return FromPolarCoordinates(Mod, Arg);
             }
+        }
+
+        /// <summary>
+        /// 返回对 Complex 结构计算常用对数得到的 Complex 结构的新实例。
+        /// </summary>
+        /// <param name="comp">Complex 结构，表示幂。</param>
+        /// <returns>Complex 结构，表示对 Complex 结构计算常用对数得到的结果。</returns>
+        public static Complex Log10(Complex comp)
+        {
+            return (Log(comp) / _Ln10);
         }
 
         /// <summary>

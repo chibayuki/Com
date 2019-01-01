@@ -47,6 +47,61 @@ namespace Com
 
         //
 
+        private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的零向量。
+        {
+            if (dimension == 0)
+            {
+                return Empty;
+            }
+            else if (dimension > 0 && dimension <= _MaxSize)
+            {
+                Vector result = Empty;
+
+                result._Type = type;
+                result._Size = dimension;
+                result._VArray = new double[result._Size];
+
+                return result;
+            }
+            else
+            {
+                throw new OverflowException();
+            }
+        }
+
+        //
+
+        internal static Vector UnsafeCreateInstance(Type type, params double[] values) // 以不安全方式创建 Vector 的新实例。
+        {
+            Vector result = new Vector();
+
+            result._Type = type;
+
+            if (!InternalMethod.IsNullOrEmpty(values))
+            {
+                int length = values.Length;
+
+                if (length <= _MaxSize)
+                {
+                    result._Size = length;
+                    result._VArray = values;
+                }
+                else
+                {
+                    throw new OverflowException();
+                }
+            }
+            else
+            {
+                result._Size = 0;
+                result._VArray = new double[0];
+            }
+
+            return result;
+        }
+
+        //
+
         private Type _Type; // 此 Vector 的向量类型。
 
         private int _Size; // 此 Vector 存储的向量维度。
@@ -90,56 +145,6 @@ namespace Com
             return Matrix.Empty;
         }
 
-        //
-
-        private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的零向量。
-        {
-            if (dimension > 0)
-            {
-                Vector result = Empty;
-
-                result._Type = type;
-                result._Size = Math.Min(_MaxSize, dimension);
-                result._VArray = new double[result._Size];
-
-                return result;
-            }
-
-            return Empty;
-        }
-
-        //
-
-        internal static Vector UnsafeCreateInstance(Type type, params double[] values) // 以不安全方式创建 Vector 的新实例。
-        {
-            Vector result = new Vector();
-
-            result._Type = type;
-
-            if (!InternalMethod.IsNullOrEmpty(values))
-            {
-                int length = values.Length;
-
-                if (length <= _MaxSize)
-                {
-                    result._Size = length;
-                    result._VArray = values;
-                }
-                else
-                {
-                    result._Size = 0;
-                    result._VArray = new double[0];
-                }
-            }
-            else
-            {
-                result._Size = 0;
-                result._VArray = new double[0];
-            }
-
-            return result;
-        }
-
         #endregion
 
         #region 构造函数
@@ -171,8 +176,7 @@ namespace Com
                 }
                 else
                 {
-                    _Size = 0;
-                    _VArray = new double[0];
+                    throw new OverflowException();
                 }
             }
             else
@@ -203,8 +207,7 @@ namespace Com
                 }
                 else
                 {
-                    _Size = 0;
-                    _VArray = new double[0];
+                    throw new OverflowException();
                 }
             }
             else
@@ -230,8 +233,10 @@ namespace Com
                 {
                     return _VArray[index];
                 }
-
-                return double.NaN;
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
             }
 
             set
@@ -239,6 +244,10 @@ namespace Com
                 if (_Size > 0 && (index >= 0 && index < _Size))
                 {
                     _VArray[index] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
                 }
             }
         }
@@ -1250,6 +1259,10 @@ namespace Com
             {
                 _VArray[index] = -_VArray[index];
             }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -1266,8 +1279,10 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         //
@@ -1283,6 +1298,10 @@ namespace Com
             if (_Size >= 2 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
             {
                 _VArray[index1] += _VArray[index2] * Math.Tan(angle);
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
             }
         }
 
@@ -1302,8 +1321,10 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         //
@@ -1339,6 +1360,10 @@ namespace Com
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
             }
         }
 
@@ -1381,9 +1406,13 @@ namespace Com
                         return vector;
                     }
                 }
-            }
 
-            return Empty;
+                return Empty;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         //
@@ -1829,8 +1858,10 @@ namespace Com
 
                 return AngleFrom(_VArray[index] >= 0 ? Base(_Size, index) : Base(_Size, index).Negate);
             }
-
-            return double.NaN;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -1848,8 +1879,10 @@ namespace Com
 
                 return (Math.PI / 2 - AngleFromBase(index));
             }
-
-            return double.NaN;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         #endregion
@@ -1928,12 +1961,18 @@ namespace Com
         /// <param name="dimension">向量维度。</param>
         public static Vector Zero(Type type, int dimension)
         {
-            if (dimension > 0)
+            if (dimension == 0)
+            {
+                return Empty;
+            }
+            else if (dimension > 0)
             {
                 return _GetZeroVector(type, dimension);
             }
-
-            return Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>
@@ -1942,12 +1981,18 @@ namespace Com
         /// <param name="dimension">向量维度。</param>
         public static Vector Zero(int dimension)
         {
-            if (dimension > 0)
+            if (dimension == 0)
+            {
+                return Empty;
+            }
+            else if (dimension > 0)
             {
                 return _GetZeroVector(Type.ColumnVector, dimension);
             }
-
-            return Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>
@@ -1958,7 +2003,11 @@ namespace Com
         /// <param name="index">索引。</param>
         public static Vector Base(Type type, int dimension, int index)
         {
-            if (dimension > 0 && (index >= 0 && index < dimension))
+            if (dimension == 0)
+            {
+                return Empty;
+            }
+            else if (dimension > 0 && (index >= 0 && index < dimension))
             {
                 Vector result = _GetZeroVector(type, dimension);
 
@@ -1966,8 +2015,10 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -1977,7 +2028,11 @@ namespace Com
         /// <param name="index">索引。</param>
         public static Vector Base(int dimension, int index)
         {
-            if (dimension > 0 && (index >= 0 && index < dimension))
+            if (dimension == 0)
+            {
+                return Empty;
+            }
+            else if (dimension > 0 && (index >= 0 && index < dimension))
             {
                 Vector result = _GetZeroVector(Type.ColumnVector, dimension);
 
@@ -1985,8 +2040,10 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         //
@@ -1999,7 +2056,11 @@ namespace Com
         /// <param name="d">双精度浮点数表示的位移。</param>
         public static Matrix OffsetMatrix(Type type, int dimension, double d)
         {
-            if (dimension > 0)
+            if (dimension == 0)
+            {
+                return Matrix.Empty;
+            }
+            else if (dimension > 0)
             {
                 Matrix result = Matrix.Identity(dimension + 1);
 
@@ -2020,8 +2081,10 @@ namespace Com
 
                 return result;
             }
-
-            return Matrix.Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>
@@ -2065,7 +2128,11 @@ namespace Com
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
         public static Matrix ScaleMatrix(Type type, int dimension, double s)
         {
-            if (dimension > 0)
+            if (dimension == 0)
+            {
+                return Matrix.Empty;
+            }
+            else if (dimension > 0)
             {
                 Matrix result = Matrix.Identity(dimension + 1);
 
@@ -2076,8 +2143,10 @@ namespace Com
 
                 return result;
             }
-
-            return Matrix.Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>
@@ -2119,8 +2188,10 @@ namespace Com
 
                 return result;
             }
-
-            return Matrix.Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -2150,8 +2221,10 @@ namespace Com
 
                 return result;
             }
-
-            return Matrix.Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -2187,8 +2260,10 @@ namespace Com
 
                 return result;
             }
-
-            return Matrix.Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         //

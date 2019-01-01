@@ -125,7 +125,7 @@ namespace Com
                     case 3: return _U;
                     case 4: return _V;
                     case 5: return _W;
-                    default: return double.NaN;
+                    default: throw new IndexOutOfRangeException();
                 }
             }
 
@@ -139,6 +139,7 @@ namespace Com
                     case 3: _U = value; break;
                     case 4: _V = value; break;
                     case 5: _W = value; break;
+                    default: throw new IndexOutOfRangeException();
                 }
             }
         }

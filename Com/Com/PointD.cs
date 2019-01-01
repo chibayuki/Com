@@ -139,7 +139,7 @@ namespace Com
                 {
                     case 0: return _X;
                     case 1: return _Y;
-                    default: return double.NaN;
+                    default: throw new IndexOutOfRangeException();
                 }
             }
 
@@ -149,6 +149,7 @@ namespace Com
                 {
                     case 0: _X = value; break;
                     case 1: _Y = value; break;
+                    default: throw new IndexOutOfRangeException();
                 }
             }
         }

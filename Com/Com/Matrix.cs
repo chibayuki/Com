@@ -30,12 +30,6 @@ namespace Com
 
         //
 
-        private Size _Size; // 此 Matrix 存储的矩阵大小。
-
-        private double[,] _MArray; // 用于存储矩阵元素的数组。
-
-        //
-
         internal static Matrix UnsafeCreateInstance(double[,] values) // 以不安全方式创建 Matrix 的新实例。
         {
             Matrix result = new Matrix();
@@ -52,8 +46,7 @@ namespace Com
                 }
                 else
                 {
-                    result._Size = Size.Empty;
-                    result._MArray = new double[0, 0];
+                    throw new OverflowException();
                 }
             }
             else
@@ -64,6 +57,12 @@ namespace Com
 
             return result;
         }
+
+        //
+
+        private Size _Size; // 此 Matrix 存储的矩阵大小。
+
+        private double[,] _MArray; // 用于存储矩阵元素的数组。
 
         #endregion
 
@@ -80,15 +79,19 @@ namespace Com
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         public Matrix(Size size)
         {
-            if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= _MaxSize)
+            if (size.Width == 0 || size.Height == 0)
+            {
+                _Size = Size.Empty;
+                _MArray = new double[0, 0];
+            }
+            else if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= _MaxSize)
             {
                 _Size = size;
                 _MArray = new double[_Size.Width, _Size.Height];
             }
             else
             {
-                _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                throw new OverflowException();
             }
         }
 
@@ -99,7 +102,12 @@ namespace Com
         /// <param name="value">矩阵的所有元素的值。</param>
         public Matrix(Size size, double value)
         {
-            if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= _MaxSize)
+            if (size.Width == 0 || size.Height == 0)
+            {
+                _Size = Size.Empty;
+                _MArray = new double[0, 0];
+            }
+            else if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= _MaxSize)
             {
                 _Size = size;
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -114,8 +122,7 @@ namespace Com
             }
             else
             {
-                _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                throw new OverflowException();
             }
         }
 
@@ -126,15 +133,19 @@ namespace Com
         /// <param name="height">矩阵的高度（行数）。</param>
         public Matrix(int width, int height)
         {
-            if (width > 0 && height > 0 && (long)width * height <= _MaxSize)
+            if (width == 0 || height == 0)
+            {
+                _Size = Size.Empty;
+                _MArray = new double[0, 0];
+            }
+            else if (width > 0 && height > 0 && (long)width * height <= _MaxSize)
             {
                 _Size = new Size(width, height);
                 _MArray = new double[_Size.Width, _Size.Height];
             }
             else
             {
-                _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                throw new OverflowException();
             }
         }
 
@@ -146,7 +157,12 @@ namespace Com
         /// <param name="value">矩阵的所有元素的值。</param>
         public Matrix(int width, int height, double value)
         {
-            if (width > 0 && height > 0 && (long)width * height <= _MaxSize)
+            if (width == 0 || height == 0)
+            {
+                _Size = Size.Empty;
+                _MArray = new double[0, 0];
+            }
+            else if (width > 0 && height > 0 && (long)width * height <= _MaxSize)
             {
                 _Size = new Size(width, height);
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -161,8 +177,7 @@ namespace Com
             }
             else
             {
-                _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                throw new OverflowException();
             }
         }
 
@@ -214,8 +229,10 @@ namespace Com
                 {
                     return _MArray[x, y];
                 }
-
-                return double.NaN;
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
             }
 
             set
@@ -223,6 +240,10 @@ namespace Com
                 if (_Size.Width > 0 && _Size.Height > 0 && (x >= 0 && x < _Size.Width) && (y >= 0 && y < _Size.Height))
                 {
                     _MArray[x, y] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
                 }
             }
         }
@@ -239,8 +260,10 @@ namespace Com
                 {
                     return _MArray[index.X, index.Y];
                 }
-
-                return double.NaN;
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
             }
 
             set
@@ -248,6 +271,10 @@ namespace Com
                 if (_Size.Width > 0 && _Size.Height > 0 && (index.X >= 0 && index.X < _Size.Width) && (index.Y >= 0 && index.Y < _Size.Height))
                 {
                     _MArray[index.X, index.Y] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
                 }
             }
         }
@@ -722,8 +749,10 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -749,8 +778,10 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         //
@@ -772,8 +803,10 @@ namespace Com
 
                 return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, values);
             }
-
-            return Vector.Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -793,8 +826,10 @@ namespace Com
 
                 return Vector.UnsafeCreateInstance(Vector.Type.RowVector, values);
             }
-
-            return Vector.Empty;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         //
@@ -868,7 +903,11 @@ namespace Com
         /// <param name="order">矩阵的阶数。</param>
         public static Matrix Identity(int order)
         {
-            if (order > 0)
+            if (order == 0)
+            {
+                return Empty;
+            }
+            else if (order > 0)
             {
                 Matrix result = new Matrix(order, order);
 
@@ -879,8 +918,10 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>
@@ -889,12 +930,18 @@ namespace Com
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         public static Matrix Zeros(Size size)
         {
-            if (size.Width > 0 && size.Height > 0)
+            if (size.Width == 0 || size.Height == 0)
+            {
+                return Empty;
+            }
+            else if (size.Width > 0 && size.Height > 0)
             {
                 return new Matrix(size);
             }
-
-            return Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>
@@ -904,12 +951,18 @@ namespace Com
         /// <param name="height">矩阵的高度（行数）。</param>
         public static Matrix Zeros(int width, int height)
         {
-            if (width > 0 && height > 0)
+            if (width == 0 || height == 0)
+            {
+                return Empty;
+            }
+            else if (width > 0 && height > 0)
             {
                 return new Matrix(width, height);
             }
-
-            return Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>
@@ -918,12 +971,18 @@ namespace Com
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         public static Matrix Ones(Size size)
         {
-            if (size.Width > 0 && size.Height > 0)
+            if (size.Width == 0 || size.Height == 0)
+            {
+                return Empty;
+            }
+            else if (size.Width > 0 && size.Height > 0)
             {
                 return new Matrix(size, 1);
             }
-
-            return Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>
@@ -933,12 +992,18 @@ namespace Com
         /// <param name="height">矩阵的高度（行数）。</param>
         public static Matrix Ones(int width, int height)
         {
-            if (width > 0 && height > 0)
+            if (width == 0 || height == 0)
+            {
+                return Empty;
+            }
+            else if (width > 0 && height > 0)
             {
                 return new Matrix(width, height, 1);
             }
-
-            return Empty;
+            else
+            {
+                throw new OverflowException();
+            }
         }
 
         /// <summary>

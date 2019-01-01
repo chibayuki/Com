@@ -41,12 +41,6 @@ namespace Com
 
         //
 
-        private int _Size; // 此 BitSet 包含的元素数量。
-
-        private uint[] _UintArray; // 用于存储位值的 32 位无符号整数数组。
-
-        //
-
         private static int _GetUintNumOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数的数量。
         {
             if (bitNum > 0)
@@ -74,6 +68,12 @@ namespace Com
             return 0;
         }
 
+        //
+
+        private int _Size; // 此 BitSet 包含的元素数量。
+
+        private uint[] _UintArray; // 用于存储位值的 32 位无符号整数数组。
+
         #endregion
 
         #region 构造函数
@@ -96,8 +96,7 @@ namespace Com
             }
             else
             {
-                _Size = 0;
-                _UintArray = new uint[0];
+                throw new OverflowException();
             }
         }
 
@@ -130,8 +129,7 @@ namespace Com
             }
             else
             {
-                _Size = 0;
-                _UintArray = new uint[0];
+                throw new OverflowException();
             }
         }
 
@@ -382,48 +380,59 @@ namespace Com
                 {
                     if (_Size != value)
                     {
-                        int OldSize = _Size;
-
-                        _Size = Math.Min(_MaxSize, value);
-
-                        int Len = _GetUintNumOfBitNum(_Size);
-
-                        int NewArrayLength = _GetUintArrayLengthOfBitNum(_Size);
-
-                        if (NewArrayLength > _UintArray.Length || NewArrayLength < _UintArray.Length / 2 || NewArrayLength < _UintArray.Length - 256)
+                        if (_Size <= _MaxSize)
                         {
-                            uint[] NewUintArray = new uint[NewArrayLength];
+                            int OldSize = _Size;
 
-                            int LenMin = Math.Min(Len, _GetUintNumOfBitNum(OldSize));
+                            _Size = value;
 
-                            Array.Copy(_UintArray, NewUintArray, LenMin);
+                            int Len = _GetUintNumOfBitNum(_Size);
 
-                            _UintArray = NewUintArray;
-                        }
+                            int NewArrayLength = _GetUintArrayLengthOfBitNum(_Size);
 
-                        if (_Size < OldSize)
-                        {
-                            if (_Size % _BitsPerUint != 0)
+                            if (NewArrayLength > _UintArray.Length || NewArrayLength < _UintArray.Length / 2 || NewArrayLength < _UintArray.Length - 256)
                             {
-                                int Size = Len * _BitsPerUint;
+                                uint[] NewUintArray = new uint[NewArrayLength];
 
-                                for (int i = _Size; i < Size; i++)
+                                int LenMin = Math.Min(Len, _GetUintNumOfBitNum(OldSize));
+
+                                Array.Copy(_UintArray, NewUintArray, LenMin);
+
+                                _UintArray = NewUintArray;
+                            }
+
+                            if (_Size < OldSize)
+                            {
+                                if (_Size % _BitsPerUint != 0)
                                 {
-                                    Set(i, false);
+                                    int Size = Len * _BitsPerUint;
+
+                                    for (int i = _Size; i < Size; i++)
+                                    {
+                                        Set(i, false);
+                                    }
+                                }
+
+                                for (int i = Len; i < _UintArray.Length; i++)
+                                {
+                                    _UintArray[i] = _FalseUint;
                                 }
                             }
-
-                            for (int i = Len; i < _UintArray.Length; i++)
-                            {
-                                _UintArray[i] = _FalseUint;
-                            }
+                        }
+                        else
+                        {
+                            throw new OverflowException();
                         }
                     }
                 }
-                else
+                else if (value == 0)
                 {
                     _Size = 0;
                     _UintArray = new uint[0];
+                }
+                else
+                {
+                    throw new OverflowException();
                 }
             }
         }
@@ -1104,8 +1113,10 @@ namespace Com
             {
                 return ((_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0);
             }
-
-            return false;
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -1125,6 +1136,10 @@ namespace Com
                 {
                     _UintArray[index / _BitsPerUint] &= (~(((uint)1) << (index % _BitsPerUint)));
                 }
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
             }
         }
 
@@ -1172,6 +1187,10 @@ namespace Com
             {
                 Set(index, true);
             }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -1184,6 +1203,10 @@ namespace Com
             {
                 Set(index, false);
             }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -1195,6 +1218,10 @@ namespace Com
             if (_Size > 0 && (index >= 0 && index < _Size))
             {
                 _UintArray[index / _BitsPerUint] ^= (((uint)1) << (index % _BitsPerUint));
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
             }
         }
 
@@ -1897,6 +1924,10 @@ namespace Com
                 if (value != null && value is bool)
                 {
                     Set(index, (bool)value);
+                }
+                else
+                {
+                    throw new NullReferenceException();
                 }
             }
         }

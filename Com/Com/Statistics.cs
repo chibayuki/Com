@@ -58,6 +58,147 @@ namespace Com
 
         //
 
+        private static Real _Gamma(double n) // 计算指定双精度浮点数的伽马函数。
+        {
+            if (!InternalMethod.IsNaNOrInfinity(n))
+            {
+                Func<int, double> GammaTruncI32 = (trunc) =>
+                {
+                    double Fact = 1;
+
+                    for (int i = 2; i < trunc; i++)
+                    {
+                        Fact *= i;
+                    }
+
+                    return Fact;
+                };
+
+                Func<long, Real> GammaTruncI64 = (trunc) =>
+                {
+                    Real Fact = Real.One;
+
+                    for (long i = 2; i < trunc; i++)
+                    {
+                        Fact *= i;
+                    }
+
+                    return Fact;
+                };
+
+                Func<long, double, Real> GammaTruncModI64 = (trunc, mod) =>
+                {
+                    Real Fact = mod;
+
+                    for (long i = 1; i < trunc; i++)
+                    {
+                        Fact *= (i + mod);
+                    }
+
+                    return Fact;
+                };
+
+                Func<double, double> Gamma0To1 = (val) =>
+                {
+                    double[] Coeff = new double[]
+                    {
+                        0.99999999999980993,
+                        676.5203681218851,
+                        -1259.1392167224028,
+                        771.32342877765313,
+                        -176.61502916214059,
+                        12.507343278686905,
+                        -0.13857109526572012,
+                        9.9843695780195716E-6,
+                        1.5056327351493116E-7
+                    };
+
+                    double Sum = Coeff[0];
+
+                    for (int i = 1; i < Coeff.Length; i++)
+                    {
+                        Sum += Coeff[i] / (val + i - 1);
+                    }
+
+                    double Base = val + Coeff.Length - 2.5;
+
+                    return Math.Sqrt(2 * Math.PI) * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum;
+                };
+
+                Func<double, Real> GammaPositive = (val) =>
+                {
+                    long Trunc = (long)Math.Truncate(val);
+                    double Mod = val - Trunc;
+
+                    return GammaTruncModI64(Trunc, Mod) * Gamma0To1(Mod);
+                };
+
+                Func<double, Real> GammaNegative = (val) =>
+                {
+                    return (Math.PI / Math.Sin(Math.PI * val) / GammaPositive(1 - val));
+                };
+
+                if (n == Math.Truncate(n))
+                {
+                    if (n == 1 || n == 2)
+                    {
+                        return Real.One;
+                    }
+                    else if (n > 2 && n <= 171)
+                    {
+                        return GammaTruncI32((int)n);
+                    }
+                    else if (n > 171 && n <= 1E15)
+                    {
+                        return GammaTruncI64((long)n);
+                    }
+                    else if (n > 1E15)
+                    {
+                        return Real.PositiveInfinity;
+                    }
+                    else
+                    {
+                        return Real.NaN;
+                    }
+                }
+                else
+                {
+                    if (n > 0 && n <= 1)
+                    {
+                        return Gamma0To1(n);
+                    }
+                    else if (n > 1 && n <= 1E15)
+                    {
+                        return GammaPositive(n);
+                    }
+                    else if (n >= 1 - 1E15 && n <= 0)
+                    {
+                        return GammaNegative(n);
+                    }
+                    else if (n < 1 - 1E15)
+                    {
+                        return Real.Zero;
+                    }
+                    else
+                    {
+                        return Real.PositiveInfinity;
+                    }
+                }
+            }
+
+            return double.NaN;
+        }
+
+        private static Real _Factorial(double n) // 计算指定双精度浮点数的阶乘。
+        {
+            if (!InternalMethod.IsNaNOrInfinity(n))
+            {
+                return _Gamma(n + 1);
+            }
+
+            return Real.NaN;
+        }
+
         private static double _Factorial(int n) // 计算指定 32 位整数的阶乘。
         {
             if (n == 0 || n == 1)
@@ -316,19 +457,34 @@ namespace Com
         {
             if (total >= 0)
             {
-                if (selection >= 0 && selection <= total)
-                {
-                    int Delta = total - selection;
+                long Delta = (long)total - selection;
 
+                if (Delta >= 0)
+                {
                     double result = 1;
 
-                    for (int i = total; i > Delta; i--)
+                    if (total > Delta)
                     {
-                        result *= i;
-
-                        if (double.IsInfinity(result))
+                        for (long i = total; i > Delta; i--)
                         {
-                            break;
+                            result *= i;
+
+                            if (double.IsInfinity(result))
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    else if (total < Delta)
+                    {
+                        for (long i = Delta; i > total; i--)
+                        {
+                            result /= i;
+
+                            if (result == 0)
+                            {
+                                break;
+                            }
                         }
                     }
 
@@ -342,28 +498,139 @@ namespace Com
         }
 
         /// <summary>
+        /// 计算从有限个元素中任取若干个元素的排列数。
+        /// </summary>
+        /// <param name="total">元素总数。</param>
+        /// <param name="selection">抽取的元素数量。</param>
+        public static double Arrangement(double total, double selection)
+        {
+            if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
+            {
+                double TruncTotal = Math.Truncate(total);
+                double TruncSelection = Math.Truncate(selection);
+
+                if ((total == TruncTotal && TruncTotal >= int.MinValue && TruncTotal <= int.MaxValue) && (selection == TruncSelection && TruncSelection >= int.MinValue && TruncSelection <= int.MaxValue))
+                {
+                    return Arrangement((int)TruncTotal, (int)TruncSelection);
+                }
+
+                if (total >= 0 || total != TruncTotal)
+                {
+                    double Delta = total - selection;
+                    double TruncDelta = Math.Truncate(Delta);
+
+                    if (Delta >= 0 || Delta != TruncDelta)
+                    {
+                        return (double)(_Factorial(total) / _Factorial(Delta));
+                    }
+
+                    return 0;
+                }
+            }
+
+            return double.NaN;
+        }
+
+        /// <summary>
         /// 计算从有限个元素中任取若干个元素的组合数。
         /// </summary>
         /// <param name="total">元素总数。</param>
         /// <param name="selection">抽取的元素数量。</param>
         public static double Combination(int total, int selection)
         {
-            double result = Arrangement(total, selection);
-
-            if (!InternalMethod.IsNaNOrInfinity(result) && result != 0)
+            if (total >= 0)
             {
-                for (int i = selection; i > 1; i--)
+                if (selection >= 0)
                 {
-                    result /= i;
+                    long Delta = total - selection;
 
-                    if (result == 0)
+                    if (Delta >= 0)
                     {
-                        break;
+                        double result = 1;
+
+                        if (total > Delta)
+                        {
+                            for (long i = total; i > Delta; i--)
+                            {
+                                result *= i;
+
+                                if (double.IsInfinity(result))
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (total < Delta)
+                        {
+                            for (long i = Delta; i > total; i--)
+                            {
+                                result /= i;
+
+                                if (result == 0)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!double.IsInfinity(result) && result != 0)
+                        {
+                            for (long i = selection; i > 1; i--)
+                            {
+                                result /= i;
+
+                                if (result == 0)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        return result;
                     }
+                }
+
+                return 0;
+            }
+
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// 计算从有限个元素中任取若干个元素的组合数。
+        /// </summary>
+        /// <param name="total">元素总数。</param>
+        /// <param name="selection">抽取的元素数量。</param>
+        public static double Combination(double total, double selection)
+        {
+            if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
+            {
+                double TruncTotal = Math.Truncate(total);
+                double TruncSelection = Math.Truncate(selection);
+
+                if ((total == TruncTotal && TruncTotal >= int.MinValue && TruncTotal <= int.MaxValue) && (selection == TruncSelection && TruncSelection >= int.MinValue && TruncSelection <= int.MaxValue))
+                {
+                    return Combination((int)TruncTotal, (int)TruncSelection);
+                }
+
+                if (total >= 0 || total != TruncTotal)
+                {
+                    if (selection >= 0 || selection != TruncSelection)
+                    {
+                        double Delta = total - selection;
+                        double TruncDelta = Math.Truncate(Delta);
+
+                        if (Delta >= 0 || Delta != TruncDelta)
+                        {
+                            return (double)(_Factorial(total) / _Factorial(selection) / _Factorial(Delta));
+                        }
+                    }
+
+                    return 0;
                 }
             }
 
-            return result;
+            return double.NaN;
         }
 
         #endregion
