@@ -28,6 +28,10 @@ namespace Com
 
         //
 
+        private const double _Sqrt2Pi = 2.5066282746310004; // 表示圆周率 π 的 2 倍的平方根。
+
+        //
+
         private static double[] _StdNormalRandom() // 返回两个概率密度服从标准正态分布的随机双精度浮点数。
         {
             try
@@ -55,8 +59,6 @@ namespace Com
                 return null;
             }
         }
-
-        //
 
         private static Real _Gamma(double n) // 计算指定双精度浮点数的伽马函数。
         {
@@ -122,7 +124,7 @@ namespace Com
 
                     double Base = val + Coeff.Length - 2.5;
 
-                    return Math.Sqrt(2 * Math.PI) * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum;
+                    return (_Sqrt2Pi * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum);
                 };
 
                 Func<double, Real> GammaPositive = (val) =>
@@ -130,7 +132,7 @@ namespace Com
                     long Trunc = (long)Math.Truncate(val);
                     double Mod = val - Trunc;
 
-                    return GammaTruncModI64(Trunc, Mod) * Gamma0To1(Mod);
+                    return (GammaTruncModI64(Trunc, Mod) * Gamma0To1(Mod));
                 };
 
                 Func<double, Real> GammaNegative = (val) =>
@@ -186,7 +188,7 @@ namespace Com
                 }
             }
 
-            return double.NaN;
+            return Real.NaN;
         }
 
         private static Real _Factorial(double n) // 计算指定双精度浮点数的阶乘。
@@ -825,7 +827,7 @@ namespace Com
             {
                 if (!InternalMethod.IsNaNOrInfinity(value))
                 {
-                    return Math.Exp(-0.5 * value * value) / Math.Sqrt(2 * Math.PI);
+                    return Math.Exp(-0.5 * value * value) / _Sqrt2Pi;
                 }
 
                 return double.NaN;
@@ -850,7 +852,7 @@ namespace Com
                 {
                     double N = (value - ev) / sd;
 
-                    return Math.Exp(-0.5 * N * N) / Math.Sqrt(2 * Math.PI) / sd;
+                    return Math.Exp(-0.5 * N * N) / _Sqrt2Pi / sd;
                 }
 
                 return double.NaN;

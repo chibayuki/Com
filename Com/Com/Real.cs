@@ -119,7 +119,7 @@ namespace Com
                     {
                         if (_Value <= _LargeNegativeDichotomyValues[i] || _Value >= _LargePositiveDichotomyValues[i])
                         {
-                            if (_Magnitude + _DichotomyMagnitudes[i] <= _MaxMagnitude)
+                            if (_Magnitude <= _MaxMagnitude - _DichotomyMagnitudes[i])
                             {
                                 _Value /= _LargePositiveDichotomyValues[i];
                                 _Magnitude += _DichotomyMagnitudes[i];
@@ -140,7 +140,7 @@ namespace Com
                     {
                         if (_Value > _SmallNegativeDichotomyValues[i] && _Value < _SmallPositiveDichotomyValues[i])
                         {
-                            if (_Magnitude - _DichotomyMagnitudes[i] >= _MinMagnitude)
+                            if (_Magnitude >= _MinMagnitude + _DichotomyMagnitudes[i])
                             {
                                 _Value *= _LargePositiveDichotomyValues[i];
                                 _Magnitude -= _DichotomyMagnitudes[i];
@@ -2893,6 +2893,7 @@ namespace Com
                 }
 
                 Rem._Value *= ValSignL;
+                Rem._Rectify();
 
                 return Rem;
             }
@@ -3119,17 +3120,17 @@ namespace Com
                 }
                 else
                 {
-                    Func<Real, Real, Real> PowerNormal = (down, up) =>
+                    Func<Real, Real, Real> FastPower = (baseNum, expNum) =>
                     {
                         double Lg0;
 
-                        if (down._Value == 1)
+                        if (baseNum._Value == 1)
                         {
-                            Lg0 = down._Magnitude * up._Value;
+                            Lg0 = baseNum._Magnitude * expNum._Value;
                         }
                         else
                         {
-                            Lg0 = Math.Log10(Math.Pow(down._Value, up._Value)) + down._Magnitude * up._Value;
+                            Lg0 = Math.Log10(Math.Pow(baseNum._Value, expNum._Value)) + baseNum._Magnitude * expNum._Value;
                         }
 
                         long M0 = (long)Math.Truncate(Lg0);
@@ -3139,21 +3140,19 @@ namespace Com
 
                         if (!result.IsNaN && !result.IsInfinity && result._Value != 0)
                         {
-                            if (up._Magnitude != 0)
+                            if (expNum._Magnitude != 0)
                             {
                                 double Lgi;
-                                long Mi;
-                                double Vi;
 
-                                if (up._Magnitude > 0)
+                                if (expNum._Magnitude > 0)
                                 {
-                                    for (long i = 0; i < up._Magnitude; i++)
+                                    for (long i = 0; i < expNum._Magnitude; i++)
                                     {
                                         Lgi = Math.Log10(Math.Pow(result._Value, 10)) + 10 * result._Magnitude;
-                                        Mi = (long)Math.Truncate(Lgi);
-                                        Vi = Math.Pow(10, Lgi - Mi);
 
-                                        result = new Real(Vi, Mi);
+                                        result._Magnitude = (long)Math.Truncate(Lgi);
+                                        result._Value = Math.Pow(10, Lgi - result._Magnitude);
+                                        result._Rectify();
 
                                         if (result.IsNaN || result.IsInfinity || result._Value == 0)
                                         {
@@ -3163,13 +3162,13 @@ namespace Com
                                 }
                                 else
                                 {
-                                    for (long i = 0; i < -up._Magnitude; i++)
+                                    for (long i = 0; i < -expNum._Magnitude; i++)
                                     {
                                         Lgi = Math.Log10(Math.Pow(result._Value, 0.1)) + 0.1 * result._Magnitude;
-                                        Mi = (long)Math.Truncate(Lgi);
-                                        Vi = Math.Pow(10, Lgi - Mi);
 
-                                        result = new Real(Vi, Mi);
+                                        result._Magnitude = (long)Math.Truncate(Lgi);
+                                        result._Value = Math.Pow(10, Lgi - result._Magnitude);
+                                        result._Rectify();
 
                                         if (result.IsNaN || result.IsInfinity || result._Value == 0)
                                         {
@@ -3189,14 +3188,14 @@ namespace Com
                         {
                             switch (right._GetParity())
                             {
-                                case Parity.Even: return (One / PowerNormal(-left, -right));
-                                case Parity.Odd: return (MinusOne / PowerNormal(-left, -right));
+                                case Parity.Even: return (One / FastPower(-left, -right));
+                                case Parity.Odd: return (MinusOne / FastPower(-left, -right));
                                 default: return NaN;
                             }
                         }
                         else
                         {
-                            return (One / PowerNormal(left, -right));
+                            return (One / FastPower(left, -right));
                         }
                     }
                     else
@@ -3205,14 +3204,14 @@ namespace Com
                         {
                             switch (right._GetParity())
                             {
-                                case Parity.Even: return PowerNormal(-left, right);
-                                case Parity.Odd: return -PowerNormal(-left, right);
+                                case Parity.Even: return FastPower(-left, right);
+                                case Parity.Odd: return -FastPower(-left, right);
                                 default: return NaN;
                             }
                         }
                         else
                         {
-                            return PowerNormal(left, right);
+                            return FastPower(left, right);
                         }
                     }
                 }
