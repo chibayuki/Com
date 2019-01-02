@@ -66,38 +66,71 @@ namespace Com
             {
                 Func<int, double> GammaTruncI32 = (trunc) =>
                 {
-                    double Fact = 1;
+                    double result = 1;
 
-                    for (int i = 2; i < trunc; i++)
+                    int i = 2;
+
+                    while (i < trunc - 4)
                     {
-                        Fact *= i;
+                        result *= (i * (i + 1) * (i + 2) * (i + 3));
+
+                        i += 4;
                     }
 
-                    return Fact;
+                    while (i < trunc)
+                    {
+                        result *= i;
+
+                        i++;
+                    }
+
+                    return result;
                 };
 
                 Func<long, Real> GammaTruncI64 = (trunc) =>
                 {
-                    Real Fact = Real.One;
+                    Real result = Real.One;
 
-                    for (long i = 2; i < trunc; i++)
+                    long i = 2;
+
+                    while (i < trunc - 16)
                     {
-                        Fact *= i;
+                        result *= ((double)i * (i + 1) * (i + 2) * (i + 3) * (i + 4) * (i + 5) * (i + 6) * (i + 7) * (i + 8) * (i + 9) * (i + 10) * (i + 11) * (i + 12) * (i + 13) * (i + 14) * (i + 15));
+
+                        i += 16;
                     }
 
-                    return Fact;
+                    while (i < trunc)
+                    {
+                        result *= i;
+
+                        i++;
+                    }
+
+                    return result;
                 };
 
-                Func<long, double, Real> GammaTruncModI64 = (trunc, mod) =>
+                Func<long, double, Real> GammaTruncI64Mod = (trunc, mod) =>
                 {
-                    Real Fact = mod;
+                    Real result = mod;
 
-                    for (long i = 1; i < trunc; i++)
+                    long i = 1;
+
+                    while (i < trunc - 16)
                     {
-                        Fact *= (i + mod);
+                        result *= ((i + mod) * (i + 1 + mod) * (i + 2 + mod) * (i + 3 + mod) * (i + 4 + mod) * (i + 5 + mod) * (i + 6 + mod) * (i + 7 + mod) * (i + 8 + mod) * (i + 9 + mod) * (i + 10 + mod) * (i + 11 + mod) * (i + 12 + mod) * (i + 13 + mod) * (i + 14 + mod) * (i + 15 + mod));
+
+                        i += 16;
                     }
 
-                    return Fact;
+                    while (i < trunc)
+                    {
+                        result *= (i + mod);
+
+                        i++;
+                    }
+
+                    return result;
                 };
 
                 Func<double, double> Gamma0To1 = (val) =>
@@ -132,7 +165,7 @@ namespace Com
                     long Trunc = (long)Math.Truncate(val);
                     double Mod = val - Trunc;
 
-                    return (GammaTruncModI64(Trunc, Mod) * Gamma0To1(Mod));
+                    return (GammaTruncI64Mod(Trunc, Mod) * Gamma0To1(Mod));
                 };
 
                 Func<double, Real> GammaNegative = (val) =>
@@ -207,18 +240,29 @@ namespace Com
             {
                 return 1;
             }
-            else if (n > 1 && n < 171)
+            else if (n > 1 && n <= 170)
             {
                 double result = 1;
 
-                for (int i = 2; i <= n; i++)
+                int i = 2;
+
+                while (i < n - 4)
+                {
+                    result *= (i * (i + 1) * (i + 2) * (i + 3));
+
+                    i += 4;
+                }
+
+                while (i < n)
                 {
                     result *= i;
+
+                    i++;
                 }
 
                 return result;
             }
-            else if (n >= 171)
+            else if (n > 170)
             {
                 return double.PositiveInfinity;
             }

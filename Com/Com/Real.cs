@@ -24,67 +24,76 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private const int _DichotomyDepth = 9; // 二分法计算数量级的最大深度。
-
-        private static readonly long[] _DichotomyMagnitudes = new long[] // 用于二分法计算数量级的数量级数列。
+        private static readonly double[] _PositiveMagnitudeGeometricValues = new double[] // 用于在一定范围内进行类型转换的正数量级等比数列。
         {
-            256, 128, 64, 32,
-            16, 8, 4, 2,
-            1
+            1E+000, 1E+001, 1E+002, 1E+003, 1E+004, 1E+005, 1E+006, 1E+007, 1E+008, 1E+009,
+            1E+010, 1E+011, 1E+012, 1E+013, 1E+014, 1E+015, 1E+016, 1E+017, 1E+018, 1E+019,
+            1E+020, 1E+021, 1E+022, 1E+023, 1E+024, 1E+025, 1E+026, 1E+027, 1E+028, 1E+029,
+            1E+030, 1E+031, 1E+032, 1E+033, 1E+034, 1E+035, 1E+036, 1E+037, 1E+038, 1E+039,
+            1E+040, 1E+041, 1E+042, 1E+043, 1E+044, 1E+045, 1E+046, 1E+047, 1E+048, 1E+049,
+            1E+050, 1E+051, 1E+052, 1E+053, 1E+054, 1E+055, 1E+056, 1E+057, 1E+058, 1E+059,
+            1E+060, 1E+061, 1E+062, 1E+063, 1E+064, 1E+065, 1E+066, 1E+067, 1E+068, 1E+069,
+            1E+070, 1E+071, 1E+072, 1E+073, 1E+074, 1E+075, 1E+076, 1E+077, 1E+078, 1E+079,
+            1E+080, 1E+081, 1E+082, 1E+083, 1E+084, 1E+085, 1E+086, 1E+087, 1E+088, 1E+089,
+            1E+090, 1E+091, 1E+092, 1E+093, 1E+094, 1E+095, 1E+096, 1E+097, 1E+098, 1E+099,
+            1E+100, 1E+101, 1E+102, 1E+103, 1E+104, 1E+105, 1E+106, 1E+107, 1E+108, 1E+109,
+            1E+110, 1E+111, 1E+112, 1E+113, 1E+114, 1E+115, 1E+116, 1E+117, 1E+118, 1E+119,
+            1E+120, 1E+121, 1E+122, 1E+123, 1E+124, 1E+125, 1E+126, 1E+127, 1E+128, 1E+129,
+            1E+130, 1E+131, 1E+132, 1E+133, 1E+134, 1E+135, 1E+136, 1E+137, 1E+138, 1E+139,
+            1E+140, 1E+141, 1E+142, 1E+143, 1E+144, 1E+145, 1E+146, 1E+147, 1E+148, 1E+149,
+            1E+150, 1E+151, 1E+152, 1E+153, 1E+154, 1E+155, 1E+156, 1E+157, 1E+158, 1E+159,
+            1E+160, 1E+161, 1E+162, 1E+163, 1E+164, 1E+165, 1E+166, 1E+167, 1E+168, 1E+169,
+            1E+170, 1E+171, 1E+172, 1E+173, 1E+174, 1E+175, 1E+176, 1E+177, 1E+178, 1E+179,
+            1E+180, 1E+181, 1E+182, 1E+183, 1E+184, 1E+185, 1E+186, 1E+187, 1E+188, 1E+189,
+            1E+190, 1E+191, 1E+192, 1E+193, 1E+194, 1E+195, 1E+196, 1E+197, 1E+198, 1E+199,
+            1E+200, 1E+201, 1E+202, 1E+203, 1E+204, 1E+205, 1E+206, 1E+207, 1E+208, 1E+209,
+            1E+210, 1E+211, 1E+212, 1E+213, 1E+214, 1E+215, 1E+216, 1E+217, 1E+218, 1E+219,
+            1E+220, 1E+221, 1E+222, 1E+223, 1E+224, 1E+225, 1E+226, 1E+227, 1E+228, 1E+229,
+            1E+230, 1E+231, 1E+232, 1E+233, 1E+234, 1E+235, 1E+236, 1E+237, 1E+238, 1E+239,
+            1E+240, 1E+241, 1E+242, 1E+243, 1E+244, 1E+245, 1E+246, 1E+247, 1E+248, 1E+249,
+            1E+250, 1E+251, 1E+252, 1E+253, 1E+254, 1E+255, 1E+256, 1E+257, 1E+258, 1E+259,
+            1E+260, 1E+261, 1E+262, 1E+263, 1E+264, 1E+265, 1E+266, 1E+267, 1E+268, 1E+269,
+            1E+270, 1E+271, 1E+272, 1E+273, 1E+274, 1E+275, 1E+276, 1E+277, 1E+278, 1E+279,
+            1E+280, 1E+281, 1E+282, 1E+283, 1E+284, 1E+285, 1E+286, 1E+287, 1E+288, 1E+289,
+            1E+290, 1E+291, 1E+292, 1E+293, 1E+294, 1E+295, 1E+296, 1E+297, 1E+298, 1E+299,
+            1E+300, 1E+301, 1E+302, 1E+303, 1E+304, 1E+305, 1E+306, 1E+307, 1E+308
         };
 
-        private static readonly double[] _LargePositiveDichotomyValues = new double[] // 用于二分法计算数量级的值数列，数量级与值均为正。
+        private static readonly double[] _NegativeMagnitudeGeometricValues = new double[] // 用于在一定范围内进行类型转换的负数量级等比数列。
         {
-            1E+256, 1E+128, 1E+64, 1E+32,
-            1E+16, 1E+8, 1E+4, 1E+2,
-            1E+1
-        };
-
-        private static readonly double[] _LargeNegativeDichotomyValues = new double[] // 用于二分法计算数量级的值数列，数量级为正，值为负。
-        {
-            -1E+256, -1E+128, -1E+64, -1E+32,
-            -1E+16, -1E+8, -1E+4, -1E+2,
-            -1E+1
-        };
-
-        private static readonly double[] _SmallPositiveDichotomyValues = new double[] // 用于二分法计算数量级的值数列，数量级为负，值为正。
-        {
-            1E-255, 1E-127, 1E-63, 1E-31,
-            1E-15, 1E-7, 1E-3, 1E-1,
-            1E-0
-        };
-
-        private static readonly double[] _SmallNegativeDichotomyValues = new double[] // 用于二分法计算数量级的值数列，数量级与值均为负。
-        {
-            -1E-255, -1E-127, -1E-63, -1E-31,
-            -1E-15, -1E-7, -1E-3, -1E-1,
-            -1E-0
-        };
-
-        //
-
-        private static readonly double[] _LargePositiveGeometricValues = new double[] // 用于在一定范围内进行类型转换的值数列，数量级为正。
-        {
-            1E+0, 1E+1, 1E+2, 1E+3,
-            1E+4, 1E+5, 1E+6, 1E+7,
-            1E+8, 1E+9, 1E+10, 1E+11,
-            1E+12, 1E+13, 1E+14, 1E+15,
-            1E+16, 1E+17, 1E+18, 1E+19,
-            1E+20, 1E+21, 1E+22, 1E+23,
-            1E+24, 1E+25, 1E+26, 1E+27,
-            1E+28
-        };
-
-        private static readonly double[] _SmallPositiveGeometricValues = new double[] // 用于在一定范围内进行类型转换的值数列，数量级为负。
-        {
-            1E-0, 1E-1, 1E-2, 1E-3,
-            1E-4, 1E-5, 1E-6, 1E-7,
-            1E-8, 1E-9, 1E-10, 1E-11,
-            1E-12, 1E-13, 1E-14, 1E-15,
-            1E-16, 1E-17, 1E-18, 1E-19,
-            1E-20, 1E-21, 1E-22, 1E-23,
-            1E-24, 1E-25, 1E-26, 1E-27,
-            1E-28
+            1E-000, 1E-001, 1E-002, 1E-003, 1E-004, 1E-005, 1E-006, 1E-007, 1E-008, 1E-009,
+            1E-010, 1E-011, 1E-012, 1E-013, 1E-014, 1E-015, 1E-016, 1E-017, 1E-018, 1E-019,
+            1E-020, 1E-021, 1E-022, 1E-023, 1E-024, 1E-025, 1E-026, 1E-027, 1E-028, 1E-029,
+            1E-030, 1E-031, 1E-032, 1E-033, 1E-034, 1E-035, 1E-036, 1E-037, 1E-038, 1E-039,
+            1E-040, 1E-041, 1E-042, 1E-043, 1E-044, 1E-045, 1E-046, 1E-047, 1E-048, 1E-049,
+            1E-050, 1E-051, 1E-052, 1E-053, 1E-054, 1E-055, 1E-056, 1E-057, 1E-058, 1E-059,
+            1E-060, 1E-061, 1E-062, 1E-063, 1E-064, 1E-065, 1E-066, 1E-067, 1E-068, 1E-069,
+            1E-070, 1E-071, 1E-072, 1E-073, 1E-074, 1E-075, 1E-076, 1E-077, 1E-078, 1E-079,
+            1E-080, 1E-081, 1E-082, 1E-083, 1E-084, 1E-085, 1E-086, 1E-087, 1E-088, 1E-089,
+            1E-090, 1E-091, 1E-092, 1E-093, 1E-094, 1E-095, 1E-096, 1E-097, 1E-098, 1E-099,
+            1E-100, 1E-101, 1E-102, 1E-103, 1E-104, 1E-105, 1E-106, 1E-107, 1E-108, 1E-109,
+            1E-110, 1E-111, 1E-112, 1E-113, 1E-114, 1E-115, 1E-116, 1E-117, 1E-118, 1E-119,
+            1E-120, 1E-121, 1E-122, 1E-123, 1E-124, 1E-125, 1E-126, 1E-127, 1E-128, 1E-129,
+            1E-130, 1E-131, 1E-132, 1E-133, 1E-134, 1E-135, 1E-136, 1E-137, 1E-138, 1E-139,
+            1E-140, 1E-141, 1E-142, 1E-143, 1E-144, 1E-145, 1E-146, 1E-147, 1E-148, 1E-149,
+            1E-150, 1E-151, 1E-152, 1E-153, 1E-154, 1E-155, 1E-156, 1E-157, 1E-158, 1E-159,
+            1E-160, 1E-161, 1E-162, 1E-163, 1E-164, 1E-165, 1E-166, 1E-167, 1E-168, 1E-169,
+            1E-170, 1E-171, 1E-172, 1E-173, 1E-174, 1E-175, 1E-176, 1E-177, 1E-178, 1E-179,
+            1E-180, 1E-181, 1E-182, 1E-183, 1E-184, 1E-185, 1E-186, 1E-187, 1E-188, 1E-189,
+            1E-190, 1E-191, 1E-192, 1E-193, 1E-194, 1E-195, 1E-196, 1E-197, 1E-198, 1E-199,
+            1E-200, 1E-201, 1E-202, 1E-203, 1E-204, 1E-205, 1E-206, 1E-207, 1E-208, 1E-209,
+            1E-210, 1E-211, 1E-212, 1E-213, 1E-214, 1E-215, 1E-216, 1E-217, 1E-218, 1E-219,
+            1E-220, 1E-221, 1E-222, 1E-223, 1E-224, 1E-225, 1E-226, 1E-227, 1E-228, 1E-229,
+            1E-230, 1E-231, 1E-232, 1E-233, 1E-234, 1E-235, 1E-236, 1E-237, 1E-238, 1E-239,
+            1E-240, 1E-241, 1E-242, 1E-243, 1E-244, 1E-245, 1E-246, 1E-247, 1E-248, 1E-249,
+            1E-250, 1E-251, 1E-252, 1E-253, 1E-254, 1E-255, 1E-256, 1E-257, 1E-258, 1E-259,
+            1E-260, 1E-261, 1E-262, 1E-263, 1E-264, 1E-265, 1E-266, 1E-267, 1E-268, 1E-269,
+            1E-270, 1E-271, 1E-272, 1E-273, 1E-274, 1E-275, 1E-276, 1E-277, 1E-278, 1E-279,
+            1E-280, 1E-281, 1E-282, 1E-283, 1E-284, 1E-285, 1E-286, 1E-287, 1E-288, 1E-289,
+            1E-290, 1E-291, 1E-292, 1E-293, 1E-294, 1E-295, 1E-296, 1E-297, 1E-298, 1E-299,
+            1E-300, 1E-301, 1E-302, 1E-303, 1E-304, 1E-305, 1E-306, 1E-307, 1E-308, 1E-309,
+            1E-310, 1E-311, 1E-312, 1E-313, 1E-314, 1E-315, 1E-316, 1E-317, 1E-318, 1E-319,
+            1E-320, 1E-321, 1E-322, 1E-323, 1E-324
         };
 
         //
@@ -115,44 +124,44 @@ namespace Com
             {
                 if (_Value <= -10 || _Value >= 10)
                 {
-                    for (int i = 0; i < _DichotomyDepth; i++)
-                    {
-                        if (_Value <= _LargeNegativeDichotomyValues[i] || _Value >= _LargePositiveDichotomyValues[i])
-                        {
-                            if (_Magnitude <= _MaxMagnitude - _DichotomyMagnitudes[i])
-                            {
-                                _Value /= _LargePositiveDichotomyValues[i];
-                                _Magnitude += _DichotomyMagnitudes[i];
-                            }
-                            else
-                            {
-                                _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
-                                _Magnitude = 0;
+                    long MagShift = (long)Math.Truncate(Math.Log10(_Value));
 
-                                break;
-                            }
+                    if (_Magnitude <= _MaxMagnitude - MagShift)
+                    {
+                        _Value /= _PositiveMagnitudeGeometricValues[MagShift];
+                        _Magnitude += MagShift;
+
+                        if (_Value > -1 && _Value < 1)
+                        {
+                            _Value /= 10;
+                            _Magnitude++;
                         }
+                    }
+                    else
+                    {
+                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                        _Magnitude = 0;
                     }
                 }
                 else if (_Value > -1 && _Value < 1)
                 {
-                    for (int i = 0; i < _DichotomyDepth; i++)
-                    {
-                        if (_Value > _SmallNegativeDichotomyValues[i] && _Value < _SmallPositiveDichotomyValues[i])
-                        {
-                            if (_Magnitude >= _MinMagnitude + _DichotomyMagnitudes[i])
-                            {
-                                _Value *= _LargePositiveDichotomyValues[i];
-                                _Magnitude -= _DichotomyMagnitudes[i];
-                            }
-                            else
-                            {
-                                _Value = 0;
-                                _Magnitude = 0;
+                    long MagShift = -(long)Math.Truncate(Math.Log10(_Value));
 
-                                break;
-                            }
+                    if (_Magnitude >= _MinMagnitude + MagShift)
+                    {
+                        _Value /= _NegativeMagnitudeGeometricValues[MagShift];
+                        _Magnitude -= MagShift;
+
+                        if (_Value > -1 && _Value < 1)
+                        {
+                            _Value /= 10;
+                            _Magnitude++;
                         }
+                    }
+                    else
+                    {
+                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                        _Magnitude = 0;
                     }
                 }
 
@@ -264,7 +273,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = _Value * _LargePositiveGeometricValues[_Magnitude];
+                    double Val = _Value * _PositiveMagnitudeGeometricValues[_Magnitude];
                     double Trunc = Math.Truncate(Val);
 
                     if (Val == Trunc)
@@ -580,7 +589,7 @@ namespace Com
                     }
                     else
                     {
-                        double Val = _Value * _LargePositiveGeometricValues[_Magnitude];
+                        double Val = _Value * _PositiveMagnitudeGeometricValues[_Magnitude];
                         double Trunc = Math.Truncate(Val);
 
                         return (Val == Trunc);
@@ -717,11 +726,11 @@ namespace Com
                 }
                 else if (_Magnitude > -5 && _Magnitude < 0)
                 {
-                    return (_Value * _SmallPositiveGeometricValues[-_Magnitude]).ToString();
+                    return (_Value * _NegativeMagnitudeGeometricValues[-_Magnitude]).ToString();
                 }
                 else if (_Magnitude > 0 && _Magnitude < 15)
                 {
-                    return (_Value * _LargePositiveGeometricValues[_Magnitude]).ToString();
+                    return (_Value * _PositiveMagnitudeGeometricValues[_Magnitude]).ToString();
                 }
                 else
                 {
@@ -1497,7 +1506,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     return new Real(Math.Ceiling(Val));
                 }
@@ -1549,7 +1558,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     return new Real(Math.Floor(Val));
                 }
@@ -1615,7 +1624,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     return new Real(Math.Round(Val));
                 }
@@ -1660,7 +1669,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     return new Real(Val);
                 }
@@ -2352,9 +2361,9 @@ namespace Com
             {
                 if (left._Magnitude > right._Magnitude)
                 {
-                    if (left._Magnitude - right._Magnitude < 16)
+                    if (left._Magnitude - right._Magnitude <= 16)
                     {
-                        return new Real(left._Value + right._Value / _LargePositiveGeometricValues[left._Magnitude - right._Magnitude], left._Magnitude);
+                        return new Real(left._Value + right._Value / _PositiveMagnitudeGeometricValues[left._Magnitude - right._Magnitude], left._Magnitude);
                     }
                     else
                     {
@@ -2363,9 +2372,9 @@ namespace Com
                 }
                 else if (left._Magnitude < right._Magnitude)
                 {
-                    if (right._Magnitude - left._Magnitude < 16)
+                    if (right._Magnitude - left._Magnitude <= 16)
                     {
-                        return new Real(left._Value / _LargePositiveGeometricValues[right._Magnitude - left._Magnitude] + right._Value, right._Magnitude);
+                        return new Real(left._Value / _PositiveMagnitudeGeometricValues[right._Magnitude - left._Magnitude] + right._Value, right._Magnitude);
                     }
                     else
                     {
@@ -2458,9 +2467,9 @@ namespace Com
             {
                 if (left._Magnitude > right._Magnitude)
                 {
-                    if (left._Magnitude - right._Magnitude < 16)
+                    if (left._Magnitude - right._Magnitude <= 16)
                     {
-                        return new Real(left._Value - right._Value / _LargePositiveGeometricValues[left._Magnitude - right._Magnitude], left._Magnitude);
+                        return new Real(left._Value - right._Value / _PositiveMagnitudeGeometricValues[left._Magnitude - right._Magnitude], left._Magnitude);
                     }
                     else
                     {
@@ -2469,9 +2478,9 @@ namespace Com
                 }
                 else if (left._Magnitude < right._Magnitude)
                 {
-                    if (right._Magnitude - left._Magnitude < 16)
+                    if (right._Magnitude - left._Magnitude <= 16)
                     {
-                        return new Real(left._Value / _LargePositiveGeometricValues[right._Magnitude - left._Magnitude] - right._Value, right._Magnitude);
+                        return new Real(left._Value / _PositiveMagnitudeGeometricValues[right._Magnitude - left._Magnitude] - right._Value, right._Magnitude);
                     }
                     else
                     {
@@ -2871,31 +2880,31 @@ namespace Com
                 int ValSignL = Math.Sign(left._Value);
                 double ValAbsR = Math.Abs(right._Value);
 
-                Real Rem = Abs(left);
+                Real result = Abs(left);
 
-                while (Rem._Value > 0 && (Rem._Magnitude > right._Magnitude || (Rem._Magnitude == right._Magnitude && Rem._Value > ValAbsR)))
+                while (result._Value > 0 && (result._Magnitude > right._Magnitude || (result._Magnitude == right._Magnitude && result._Value > ValAbsR)))
                 {
-                    if (Rem._Value > ValAbsR)
+                    if (result._Value > ValAbsR)
                     {
-                        Rem._Value -= Math.Truncate(Rem._Value / ValAbsR) * ValAbsR;
+                        result._Value -= Math.Truncate(result._Value / ValAbsR) * ValAbsR;
                     }
                     else
                     {
-                        Rem._Value = Rem._Value * 10 - Math.Truncate(Rem._Value * 10 / ValAbsR) * ValAbsR;
-                        Rem._Magnitude--;
+                        result._Value = result._Value * 10 - Math.Truncate(result._Value * 10 / ValAbsR) * ValAbsR;
+                        result._Magnitude--;
                     }
 
-                    if (Rem._Value < 1)
+                    if (result._Value < 1)
                     {
-                        Rem._Value *= 10;
-                        Rem._Magnitude--;
+                        result._Value *= 10;
+                        result._Magnitude--;
                     }
                 }
 
-                Rem._Value *= ValSignL;
-                Rem._Rectify();
+                result._Value *= ValSignL;
+                result._Rectify();
 
-                return Rem;
+                return result;
             }
         }
 
@@ -3268,7 +3277,7 @@ namespace Com
                     }
                     else
                     {
-                        return real._Value * Math.Pow(10, real._Magnitude);
+                        return (real._Value * (real._Magnitude > 0 ? _PositiveMagnitudeGeometricValues[real._Magnitude] : _NegativeMagnitudeGeometricValues[-real._Magnitude]));
                     }
                 }
             }
@@ -3316,7 +3325,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * Math.Pow(10, real._Magnitude);
+                    double Val = real._Value * (real._Magnitude > 0 ? _PositiveMagnitudeGeometricValues[real._Magnitude] : _NegativeMagnitudeGeometricValues[-real._Magnitude]);
 
                     if (Val < float.MinValue || Val > float.MaxValue)
                     {
@@ -3365,7 +3374,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * (real._Magnitude > 0 ? _LargePositiveGeometricValues[real._Magnitude] : _SmallPositiveGeometricValues[-real._Magnitude]);
+                    double Val = real._Value * (real._Magnitude > 0 ? _PositiveMagnitudeGeometricValues[real._Magnitude] : _NegativeMagnitudeGeometricValues[-real._Magnitude]);
 
                     if (Val < (double)decimal.MinValue || Val > (double)decimal.MaxValue)
                     {
@@ -3414,7 +3423,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     if (Val < ulong.MinValue || Val > ulong.MaxValue)
                     {
@@ -3463,7 +3472,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     if (Val < long.MinValue || Val > long.MaxValue)
                     {
@@ -3512,7 +3521,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     if (Val < uint.MinValue || Val > uint.MaxValue)
                     {
@@ -3561,7 +3570,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     if (Val < int.MinValue || Val > int.MaxValue)
                     {
@@ -3610,7 +3619,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     if (Val < ushort.MinValue || Val > ushort.MaxValue)
                     {
@@ -3659,7 +3668,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     if (Val < short.MinValue || Val > short.MaxValue)
                     {
@@ -3708,7 +3717,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     if (Val < byte.MinValue || Val > byte.MaxValue)
                     {
@@ -3757,7 +3766,7 @@ namespace Com
                 }
                 else
                 {
-                    double Val = real._Value * _LargePositiveGeometricValues[real._Magnitude];
+                    double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
                     if (Val < sbyte.MinValue || Val > sbyte.MaxValue)
                     {
