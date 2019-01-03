@@ -70,11 +70,11 @@ namespace Com
 
                     int i = 2;
 
-                    while (i < trunc - 4)
+                    while (i < trunc - 8)
                     {
-                        result *= (i * (i + 1) * (i + 2) * (i + 3));
+                        result *= ((long)(i * (i + 1) * (i + 2) * (i + 3)) * ((i + 4) * (i + 5) * (i + 6) * (i + 7)));
 
-                        i += 4;
+                        i += 8;
                     }
 
                     while (i < trunc)
@@ -246,11 +246,11 @@ namespace Com
 
                 int i = 2;
 
-                while (i < n - 4)
+                while (i < n - 8)
                 {
-                    result *= (i * (i + 1) * (i + 2) * (i + 3));
+                    result *= ((long)(i * (i + 1) * (i + 2) * (i + 3)) * ((i + 4) * (i + 5) * (i + 6) * (i + 7)));
 
-                    i += 4;
+                    i += 8;
                 }
 
                 while (i < n)
