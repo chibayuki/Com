@@ -60,6 +60,8 @@ namespace Com
             }
         }
 
+        //
+
         private static Real _Gamma(double n) // 计算指定双精度浮点数的伽马函数。
         {
             if (!InternalMethod.IsNaNOrInfinity(n))
@@ -234,42 +236,182 @@ namespace Com
             return Real.NaN;
         }
 
-        private static double _Factorial(int n) // 计算指定 32 位整数的阶乘。
+        private static Real _Arrangement(double total, double selection) // 计算从有限个元素中任取若干个元素的排列数。
         {
-            if (n == 0 || n == 1)
+            if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
             {
-                return 1;
-            }
-            else if (n > 1 && n <= 170)
-            {
-                double result = 1;
+                double TruncTotal = Math.Truncate(total);
+                double TruncSelection = Math.Truncate(selection);
 
-                int i = 2;
-
-                while (i < n - 8)
+                if ((total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15) && (selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15))
                 {
-                    result *= ((long)(i * (i + 1) * (i + 2) * (i + 3)) * ((i + 4) * (i + 5) * (i + 6) * (i + 7)));
+                    long TotalI64 = (long)TruncTotal;
+                    long SelectionI64 = (long)TruncSelection;
+                    long Delta = TotalI64 - SelectionI64;
 
-                    i += 8;
+                    if (Delta >= 0)
+                    {
+                        Real result = Real.One;
+
+                        if (TotalI64 > Delta)
+                        {
+                            long i = TotalI64;
+
+                            while (i > Delta + 16)
+                            {
+                                result *= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+
+                                i -= 16;
+                            }
+
+                            while (i > Delta)
+                            {
+                                result *= i;
+
+                                i--;
+                            }
+                        }
+                        else if (TotalI64 < Delta)
+                        {
+                            long i = Delta;
+
+                            while (i > TotalI64 + 16)
+                            {
+                                result /= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+
+                                i -= 16;
+                            }
+
+                            while (i > TotalI64)
+                            {
+                                result /= i;
+
+                                i--;
+                            }
+                        }
+
+                        return result;
+                    }
+
+                    return Real.Zero;
                 }
-
-                while (i < n)
+                else if (total >= 0 || total != TruncTotal)
                 {
-                    result *= i;
+                    double Delta = total - selection;
+                    double TruncDelta = Math.Truncate(Delta);
 
-                    i++;
+                    if (Delta >= 0 || Delta != TruncDelta)
+                    {
+                        return (_Factorial(total) / _Factorial(Delta));
+                    }
+
+                    return Real.Zero;
                 }
+            }
 
-                return result;
-            }
-            else if (n > 170)
+            return Real.NaN;
+        }
+
+        private static Real _Combination(double total, double selection) // 计算从有限个元素中任取若干个元素的组合数。
+        {
+            if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
             {
-                return double.PositiveInfinity;
+                double TruncTotal = Math.Truncate(total);
+                double TruncSelection = Math.Truncate(selection);
+
+                if ((total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15) && (selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15))
+                {
+                    long TotalI64 = (long)TruncTotal;
+                    long SelectionI64 = (long)TruncSelection;
+
+                    if (SelectionI64 >= 0)
+                    {
+                        long Delta = TotalI64 - SelectionI64;
+
+                        if (Delta >= 0)
+                        {
+                            Real result = Real.One;
+
+                            if (TotalI64 > Delta)
+                            {
+                                long i = TotalI64;
+
+                                while (i > Delta + 16)
+                                {
+                                    result *= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+
+                                    i -= 16;
+                                }
+
+                                while (i > Delta)
+                                {
+                                    result *= i;
+
+                                    i--;
+                                }
+                            }
+                            else if (TotalI64 < Delta)
+                            {
+                                long i = Delta;
+
+                                while (i > TotalI64 + 16)
+                                {
+                                    result /= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+
+                                    i -= 16;
+                                }
+
+                                while (i > TotalI64)
+                                {
+                                    result /= i;
+
+                                    i--;
+                                }
+                            }
+
+                            if (!result.IsInfinity && result != Real.Zero)
+                            {
+                                long i = SelectionI64;
+
+                                while (i > 1 + 16)
+                                {
+                                    result /= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+
+                                    i -= 16;
+                                }
+
+                                while (i > 1)
+                                {
+                                    result /= i;
+
+                                    i--;
+                                }
+                            }
+
+                            return result;
+                        }
+                    }
+
+                    return Real.Zero;
+                }
+                else if (total >= 0 || total != TruncTotal)
+                {
+                    if (selection >= 0 || selection != TruncSelection)
+                    {
+                        double Delta = total - selection;
+                        double TruncDelta = Math.Truncate(Delta);
+
+                        if (Delta >= 0 || Delta != TruncDelta)
+                        {
+                            return (_Factorial(total) / _Factorial(selection) / _Factorial(Delta));
+                        }
+                    }
+
+                    return Real.Zero;
+                }
             }
-            else
-            {
-                return double.NaN;
-            }
+
+            return Real.NaN;
         }
 
         #endregion
@@ -503,61 +645,7 @@ namespace Com
         {
             if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
             {
-                double TruncTotal = Math.Truncate(total);
-                double TruncSelection = Math.Truncate(selection);
-
-                if ((total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15) && (selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15))
-                {
-                    long TotalI64 = (long)TruncTotal;
-                    long SelectionI64 = (long)TruncSelection;
-                    long Delta = TotalI64 - SelectionI64;
-
-                    if (Delta >= 0)
-                    {
-                        double result = 1;
-
-                        if (TotalI64 > Delta)
-                        {
-                            for (long i = TotalI64; i > Delta; i--)
-                            {
-                                result *= i;
-
-                                if (double.IsInfinity(result))
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        else if (TotalI64 < Delta)
-                        {
-                            for (long i = Delta; i > TotalI64; i--)
-                            {
-                                result /= i;
-
-                                if (result == 0)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
-                        return result;
-                    }
-
-                    return 0;
-                }
-                else if (total >= 0 || total != TruncTotal)
-                {
-                    double Delta = total - selection;
-                    double TruncDelta = Math.Truncate(Delta);
-
-                    if (Delta >= 0 || Delta != TruncDelta)
-                    {
-                        return (double)(_Factorial(total) / _Factorial(Delta));
-                    }
-
-                    return 0;
-                }
+                return (double)_Arrangement(total, selection);
             }
 
             return double.NaN;
@@ -572,81 +660,7 @@ namespace Com
         {
             if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
             {
-                double TruncTotal = Math.Truncate(total);
-                double TruncSelection = Math.Truncate(selection);
-
-                if ((total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15) && (selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15))
-                {
-                    long TotalI64 = (long)TruncTotal;
-                    long SelectionI64 = (long)TruncSelection;
-
-                    if (SelectionI64 >= 0)
-                    {
-                        long Delta = TotalI64 - SelectionI64;
-
-                        if (Delta >= 0)
-                        {
-                            double result = 1;
-
-                            if (TotalI64 > Delta)
-                            {
-                                for (long i = TotalI64; i > Delta; i--)
-                                {
-                                    result *= i;
-
-                                    if (double.IsInfinity(result))
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-                            else if (TotalI64 < Delta)
-                            {
-                                for (long i = Delta; i > TotalI64; i--)
-                                {
-                                    result /= i;
-
-                                    if (result == 0)
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (!double.IsInfinity(result) && result != 0)
-                            {
-                                for (long i = SelectionI64; i > 1; i--)
-                                {
-                                    result /= i;
-
-                                    if (result == 0)
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
-
-                            return result;
-                        }
-                    }
-
-                    return 0;
-                }
-                else if (total >= 0 || total != TruncTotal)
-                {
-                    if (selection >= 0 || selection != TruncSelection)
-                    {
-                        double Delta = total - selection;
-                        double TruncDelta = Math.Truncate(Delta);
-
-                        if (Delta >= 0 || Delta != TruncDelta)
-                        {
-                            return (double)(_Factorial(total) / _Factorial(selection) / _Factorial(Delta));
-                        }
-                    }
-
-                    return 0;
-                }
+                return (double)_Combination(total, selection);
             }
 
             return double.NaN;
@@ -711,7 +725,7 @@ namespace Com
                 {
                     if (M > 0 && n > 0 && value >= 0 && value <= n)
                     {
-                        return (Combination(M, value) / Combination(N, n) * Combination(N - M, n - value));
+                        return (double)(_Combination(M, value) / _Combination(N, n) * _Combination(N - M, n - value));
                     }
 
                     return 0;
@@ -747,7 +761,7 @@ namespace Com
                             }
                             else if (p > 0)
                             {
-                                return (Combination(n, value) * Math.Pow(p, value) * Math.Pow(1 - p, n - value));
+                                return (double)(_Combination(n, value) * Math.Pow(p, value) * Math.Pow(1 - p, n - value));
                             }
                         }
 
@@ -778,7 +792,7 @@ namespace Com
                     {
                         if (value >= 0)
                         {
-                            return (Math.Pow(lambda, value) * Math.Exp(-lambda) / _Factorial(value));
+                            return (double)((Real)Math.Pow(lambda, value) * Math.Exp(-lambda) / _Factorial(value));
                         }
 
                         return 0;

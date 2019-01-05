@@ -124,7 +124,7 @@ namespace Com
             {
                 if (_Value <= -10 || _Value >= 10)
                 {
-                    long MagShift = (long)Math.Truncate(Math.Log10(_Value));
+                    long MagShift = (long)Math.Truncate(Math.Log10(Math.Abs(_Value)));
 
                     if (_Magnitude <= _MaxMagnitude - MagShift)
                     {
@@ -145,7 +145,7 @@ namespace Com
                 }
                 else if (_Value > -1 && _Value < 1)
                 {
-                    long MagShift = -(long)Math.Truncate(Math.Log10(_Value));
+                    long MagShift = -(long)Math.Truncate(Math.Log10(Math.Abs(_Value)));
 
                     if (_Magnitude >= _MinMagnitude + MagShift)
                     {
