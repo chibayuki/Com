@@ -2713,14 +2713,7 @@ namespace Com
         {
             if (!IsNullOrEmpty(vector))
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
-
-                for (int i = 0; i < vector._Size; i++)
-                {
-                    result._VArray[i] = +vector._VArray[i];
-                }
-
-                return result;
+                return vector.Copy();
             }
 
             return Empty;

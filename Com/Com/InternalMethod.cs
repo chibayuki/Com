@@ -43,6 +43,8 @@ namespace Com
             }
         }
 
+        //
+
         public static bool IsNullOrEmpty(Array array) // 判断数组是否为 null 或不包含任何元素。
         {
             try

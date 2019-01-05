@@ -44,6 +44,7 @@ namespace Com
         /// <summary>
         /// 将向量转换为矩阵。
         /// </summary>
+        /// <returns>Matrix 对象，表示转换的结果。</returns>
         Matrix ToMatrix();
     }
 

@@ -1987,7 +1987,7 @@ namespace Com
         /// <param name="pt">运算符右侧的 PointD5D 结构。</param>
         public static PointD5D operator +(PointD5D pt)
         {
-            return new PointD5D(+pt._X, +pt._Y, +pt._Z, +pt._U, +pt._V);
+            return pt;
         }
 
         /// <summary>

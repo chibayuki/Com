@@ -53,11 +53,13 @@ namespace Com
         /// <summary>
         /// 将向量转换为数组。
         /// </summary>
+        /// <returns>T 数组，表示转换的结果。</returns>
         T[] ToArray();
 
         /// <summary>
         /// 将向量转换为列表。
         /// </summary>
+        /// <returns>T 列表，表示转换的结果。</returns>
         List<T> ToList();
     }
 }

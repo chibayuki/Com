@@ -37,6 +37,7 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLine(Bitmap bmp, PointD pt1, PointD pt2, Color color, float width, bool antiAlias)
         {
             try
@@ -110,6 +111,7 @@ namespace Com
         /// <param name="normalIncreasePeriod">法线数量增加周期。</param>
         /// <param name="color">线条颜色。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintPolarGrid(Bitmap bmp, PointD offset, double radius, double deltaRadius, int normalIncreasePeriod, Color color, bool antiAlias)
         {
             try
@@ -176,6 +178,7 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintCircle(Bitmap bmp, PointD offset, double radius, Color color, float width, bool antiAlias)
         {
             try
@@ -243,6 +246,7 @@ namespace Com
         /// <param name="minDiv">在绘图位图的可见范围内将圆周按相位等分的最小数量。</param>
         /// <param name="maxDiv">在绘图位图的可见范围内将圆周按相位等分的最大数量。</param>
         /// <param name="divArc">圆周的任何等分的近似长度（像素）。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias, int minDiv, int maxDiv, double divArc)
         {
             try
@@ -646,6 +650,7 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias)
         {
             try
@@ -678,6 +683,7 @@ namespace Com
         /// <param name="minDiv">在绘图位图的可见范围内将椭圆周按相位等分的最小数量。</param>
         /// <param name="maxDiv">在绘图位图的可见范围内将椭圆周按相位等分的最大数量。</param>
         /// <param name="divArc">椭圆周的任何等分的近似长度（像素）。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias, int minDiv, int maxDiv, double divArc)
         {
             try
@@ -1152,6 +1158,7 @@ namespace Com
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias)
         {
             try
@@ -1180,6 +1187,7 @@ namespace Com
         /// <param name="pt">文本左上角坐标。</param>
         /// <param name="offset">阴影偏移相对于文本字体大小的比例。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintTextWithShadow(Bitmap bmp, string text, Font font, Color frontColor, Color backColor, PointF pt, float offset, bool antiAlias)
         {
             try
@@ -1236,6 +1244,7 @@ namespace Com
         /// <param name="form">绘制图像的窗口。</param>
         /// <param name="bmp">绘制的图像。</param>
         /// <param name="opacity">绘制图像的不透明度。</param>
+        /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintImageOnTransparentForm(Form form, Bitmap bmp, double opacity)
         {
             try

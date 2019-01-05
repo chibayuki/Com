@@ -2029,7 +2029,7 @@ namespace Com
         /// <param name="pt">运算符右侧的 PointD 结构。</param>
         public static PointD operator +(PointD pt)
         {
-            return new PointD(+pt._X, +pt._Y);
+            return pt;
         }
 
         /// <summary>

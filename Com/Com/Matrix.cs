@@ -633,6 +633,7 @@ namespace Com
         /// 判断此 Matrix 是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 Matrix 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || !(obj is Matrix))
@@ -650,6 +651,7 @@ namespace Com
         /// <summary>
         /// 返回此 Matrix 的哈希代码。
         /// </summary>
+        /// <returns>32 位整数，表示此 Matrix 的哈希代码。</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -658,6 +660,7 @@ namespace Com
         /// <summary>
         /// 将此 Matrix 转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 Matrix 的字符串形式。</returns>
         public override string ToString()
         {
             string Str = string.Empty;
@@ -680,6 +683,7 @@ namespace Com
         /// 判断此 Matrix 是否与指定的 Matrix 对象相等。
         /// </summary>
         /// <param name="matrix">用于比较的 Matrix 对象。</param>
+        /// <returns>布尔值，表示此 Matrix 是否与指定的 Matrix 对象相等。</returns>
         public bool Equals(Matrix matrix)
         {
             if ((object)matrix == null)
@@ -714,6 +718,7 @@ namespace Com
         /// <summary>
         /// 获取此 Matrix 的副本。
         /// </summary>
+        /// <returns>Matrix 对象，表示此 Matrix 的副本。</returns>
         public Matrix Copy()
         {
             if (_Size.Width > 0 && _Size.Height > 0)
@@ -733,6 +738,7 @@ namespace Com
         /// </summary>
         /// <param name="index">子矩阵首列与首行在此 Matrix 的宽度方向（列）与高度方向（行）的索引。</param>
         /// <param name="size">子矩阵的宽度（列数）与高度（行数）。</param>
+        /// <returns>Matrix 对象，表示此 Matrix 的子矩阵。</returns>
         public Matrix SubMatrix(Point index, Size size)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (size.Width > 0 && size.Height > 0) && (index.X >= 0 && index.X + size.Width <= _Size.Width) && (index.Y >= 0 && index.Y + size.Height <= _Size.Height))
@@ -762,6 +768,7 @@ namespace Com
         /// <param name="y">子矩阵首行在此 Matrix 的高度方向（行）的索引。</param>
         /// <param name="width">子矩阵的宽度（列数）。</param>
         /// <param name="height">子矩阵的高度（行数）。</param>
+        /// <returns>Matrix 对象，表示此 Matrix 的子矩阵。</returns>
         public Matrix SubMatrix(int x, int y, int width, int height)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (width > 0 && height > 0) && (x >= 0 && x + width <= _Size.Width) && (y >= 0 && y + height <= _Size.Height))
@@ -790,6 +797,7 @@ namespace Com
         /// 获取表示此 Matrix 的指定列的 Vector 的新实例。
         /// </summary>
         /// <param name="x">指定列在此 Matrix 的宽度方向（列）的索引。</param>
+        /// <returns>Vector 对象，表示此 Matrix 的指定列。</returns>
         public Vector GetColumn(int x)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (x >= 0 && x < _Size.Width))
@@ -813,6 +821,7 @@ namespace Com
         /// 获取表示此 Matrix 的指定行的 Vector 的新实例。
         /// </summary>
         /// <param name="y">指定行在此 Matrix 的高度方向（行）的索引。</param>
+        /// <returns>Vector 对象，表示此 Matrix 的指定行。</returns>
         public Vector GetRow(int y)
         {
             if ((_Size.Width > 0 && _Size.Height > 0) && (y >= 0 && y < _Size.Height))
@@ -837,6 +846,7 @@ namespace Com
         /// <summary>
         /// 将此 Matrix 转换为双精度浮点数二维数组。
         /// </summary>
+        /// <returns>双精度浮点数二维数组，表示转换的结果。</returns>
         public double[,] ToArray()
         {
             if (_Size.Width > 0 && _Size.Height > 0)
@@ -865,6 +875,7 @@ namespace Com
         /// 判断指定的 Matrix 是否为 null 或表示空矩阵。
         /// </summary>
         /// <param name="matrix">用于判断的 Matrix 对象。</param>
+        /// <returns>布尔值，表示指定的 Matrix 是否为 null 或表示空矩阵。</returns>
         public static bool IsNullOrEmpty(Matrix matrix)
         {
             return ((object)matrix == null || matrix._Size.Width <= 0 || matrix._Size.Height <= 0);
@@ -877,6 +888,7 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 Matrix 对象。</param>
         /// <param name="right">用于比较的第二个 Matrix 对象。</param>
+        /// <returns>布尔值，表示两个 Matrix 对象是否相等。</returns>
         public static bool Equals(Matrix left, Matrix right)
         {
             if ((object)left == null && (object)right == null)
@@ -901,6 +913,7 @@ namespace Com
         /// 返回表示单位矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="order">矩阵的阶数。</param>
+        /// <returns>Matrix 对象，表示单位矩阵。</returns>
         public static Matrix Identity(int order)
         {
             if (order == 0)
@@ -928,6 +941,7 @@ namespace Com
         /// 返回表示零矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
+        /// <returns>Matrix 对象，表示零矩阵。</returns>
         public static Matrix Zeros(Size size)
         {
             if (size.Width == 0 || size.Height == 0)
@@ -949,6 +963,7 @@ namespace Com
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
+        /// <returns>Matrix 对象，表示零矩阵。</returns>
         public static Matrix Zeros(int width, int height)
         {
             if (width == 0 || height == 0)
@@ -969,6 +984,7 @@ namespace Com
         /// 返回表示一矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
+        /// <returns>Matrix 对象，表示一矩阵。</returns>
         public static Matrix Ones(Size size)
         {
             if (size.Width == 0 || size.Height == 0)
@@ -990,6 +1006,7 @@ namespace Com
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
+        /// <returns>Matrix 对象，表示一矩阵。</returns>
         public static Matrix Ones(int width, int height)
         {
             if (width == 0 || height == 0)
@@ -1011,6 +1028,7 @@ namespace Com
         /// </summary>
         /// <param name="array">包含对角元素的数组。</param>
         /// <param name="rowsUponMainDiag">对角元素在矩阵中位于主对角线上方的行数。</param>
+        /// <returns>Matrix 对象，表示对角矩阵。</returns>
         public static Matrix Diagonal(double[] array, int rowsUponMainDiag)
         {
             if (!InternalMethod.IsNullOrEmpty(array))
@@ -1034,6 +1052,7 @@ namespace Com
         /// 返回表示对角矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="array">包含对角元素的数组。</param>
+        /// <returns>Matrix 对象，表示对角矩阵。</returns>
         public static Matrix Diagonal(double[] array)
         {
             if (!InternalMethod.IsNullOrEmpty(array))
@@ -1060,6 +1079,7 @@ namespace Com
         /// </summary>
         /// <param name="left">左矩阵。</param>
         /// <param name="right">右矩阵。</param>
+        /// <returns>Matrix 对象，表示由 2 个 Matrix 对象组成的增广矩阵。</returns>
         public static Matrix Augment(Matrix left, Matrix right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
@@ -1095,6 +1115,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象，表示被加数。</param>
         /// <param name="n">双精度浮点数，表示加数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与双精度浮点数相加得到的结果。</returns>
         public static Matrix Add(Matrix matrix, double n)
         {
             if (!IsNullOrEmpty(matrix))
@@ -1122,6 +1143,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被加数。</param>
         /// <param name="matrix">Matrix 对象，表示加数。</param>
+        /// <returns>Matrix 对象，表示将双精度浮点数与 Matrix 对象相加得到的结果。</returns>
         public static Matrix Add(double n, Matrix matrix)
         {
             if (!IsNullOrEmpty(matrix))
@@ -1149,6 +1171,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Matrix 对象，表示被加数。</param>
         /// <param name="right">Matrix 对象，表示加数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相加得到的结果。</returns>
         public static Matrix Add(Matrix left, Matrix right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
@@ -1182,6 +1205,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象，表示被减数。</param>
         /// <param name="n">双精度浮点数，表示减数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与双精度浮点数相减得到的结果。</returns>
         public static Matrix Subtract(Matrix matrix, double n)
         {
             if (!IsNullOrEmpty(matrix))
@@ -1209,6 +1233,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被减数。</param>
         /// <param name="matrix">Matrix 对象，表示减数。</param>
+        /// <returns>Matrix 对象，表示将双精度浮点数与 Matrix 对象相减得到的结果。</returns>
         public static Matrix Subtract(double n, Matrix matrix)
         {
             if (!IsNullOrEmpty(matrix))
@@ -1236,6 +1261,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Matrix 对象，表示被减数。</param>
         /// <param name="right">Matrix 对象，表示减数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相减得到的结果。</returns>
         public static Matrix Subtract(Matrix left, Matrix right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
@@ -1269,6 +1295,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象，表示被乘数。</param>
         /// <param name="n">双精度浮点数，表示乘数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与双精度浮点数相乘得到的结果。</returns>
         public static Matrix Multiply(Matrix matrix, double n)
         {
             if (!IsNullOrEmpty(matrix))
@@ -1296,6 +1323,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被乘数。</param>
         /// <param name="matrix">Matrix 对象，表示乘数。</param>
+        /// <returns>Matrix 对象，表示将双精度浮点数与 Matrix 对象相乘得到的结果。</returns>
         public static Matrix Multiply(double n, Matrix matrix)
         {
             if (!IsNullOrEmpty(matrix))
@@ -1323,6 +1351,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Matrix 对象，表示被乘数。</param>
         /// <param name="right">Matrix 对象，表示乘数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相乘得到的结果。</returns>
         public static Matrix Multiply(Matrix left, Matrix right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
@@ -1362,6 +1391,7 @@ namespace Com
         /// 返回将列表中所有 Matrix 对象依次左乘得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="list">左矩阵列表。</param>
+        /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次左乘得到的结果。</returns>
         public static Matrix MultiplyLeft(List<Matrix> list)
         {
             if (list.Count > 0)
@@ -1405,6 +1435,7 @@ namespace Com
         /// 返回将列表中所有 Matrix 对象依次右乘得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="list">右矩阵列表。</param>
+        /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次右乘得到的结果。</returns>
         public static Matrix MultiplyRight(List<Matrix> list)
         {
             if (list.Count > 0)
@@ -1449,6 +1480,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象，表示被除数。</param>
         /// <param name="n">双精度浮点数，表示除数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与双精度浮点数相除得到的结果。</returns>
         public static Matrix Divide(Matrix matrix, double n)
         {
             if (!IsNullOrEmpty(matrix))
@@ -1476,6 +1508,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被除数。</param>
         /// <param name="matrix">Matrix 对象，表示除数。</param>
+        /// <returns>Matrix 对象，表示将双精度浮点数与 Matrix 对象相除得到的结果。</returns>
         public static Matrix Divide(double n, Matrix matrix)
         {
             if (!IsNullOrEmpty(matrix))
@@ -1503,6 +1536,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Matrix 对象，表示被除数。</param>
         /// <param name="right">Matrix 对象，表示除数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象左除得到的结果。</returns>
         public static Matrix DivideLeft(Matrix left, Matrix right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
@@ -1529,6 +1563,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Matrix 对象，表示被除数。</param>
         /// <param name="right">Matrix 对象，表示除数。</param>
+        /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象右除得到的结果。</returns>
         public static Matrix DivideRight(Matrix left, Matrix right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
@@ -1557,6 +1592,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象，表示系数矩阵。</param>
         /// <param name="vector">Vector 对象，表示常数项。</param>
+        /// <returns>Vector 对象，表示由 Matrix 对象与 Vector 对象指定的非齐次线性方程组的解向量。</returns>
         public static Vector SolveLinearEquation(Matrix matrix, Vector vector)
         {
             if (!IsNullOrEmpty(matrix) && !Vector.IsNullOrEmpty(vector) && vector.IsColumnVector)
@@ -1591,6 +1627,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Matrix 对象。</param>
         /// <param name="right">运算符右侧比较的 Matrix 对象。</param>
+        /// <returns>布尔值，表示两个 Matrix 对象表示的整数是否相等。</returns>
         public static bool operator ==(Matrix left, Matrix right)
         {
             if ((object)left == null && (object)right == null)
@@ -1625,6 +1662,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Matrix 对象。</param>
         /// <param name="right">运算符右侧比较的 Matrix 对象。</param>
+        /// <returns>布尔值，表示两个 Matrix 对象表示的整数是否不相等。</returns>
         public static bool operator !=(Matrix left, Matrix right)
         {
             if ((object)left == null && (object)right == null)

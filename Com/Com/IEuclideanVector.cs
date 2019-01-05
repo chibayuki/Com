@@ -67,11 +67,13 @@ namespace Com
         /// <summary>
         /// 返回将向量由直角坐标系转换到极坐标系、球坐标系或超球坐标系得到的向量。
         /// </summary>
+        /// <returns>T，表示将向量由直角坐标系转换到极坐标系、球坐标系或超球坐标系得到的向量。</returns>
         T ToSpherical();
 
         /// <summary>
         /// 返回将向量由极坐标系、球坐标系或超球坐标系转换到直角坐标系得到的向量。
         /// </summary>
+        /// <returns>T，表示将向量由极坐标系、球坐标系或超球坐标系转换到直角坐标系得到的向量。</returns>
         T ToCartesian();
 
         //
@@ -80,12 +82,14 @@ namespace Com
         /// 返回与指定向量之间的距离。
         /// </summary>
         /// <param name="vector">表示起始向量。</param>
+        /// <returns>双精度浮点数，表示与指定向量之间的距离。</returns>
         double DistanceFrom(T vector);
 
         /// <summary>
         /// 返回与指定向量之间的夹角（弧度）。
         /// </summary>
         /// <param name="vector">表示起始向量。</param>
+        /// <returns>双精度浮点数，表示与指定向量之间的夹角（弧度）。</returns>
         double AngleFrom(T vector);
     }
 }

@@ -2129,7 +2129,7 @@ namespace Com
         /// <param name="pt">运算符右侧的 PointD6D 结构。</param>
         public static PointD6D operator +(PointD6D pt)
         {
-            return new PointD6D(+pt._X, +pt._Y, +pt._Z, +pt._U, +pt._V, +pt._W);
+            return pt;
         }
 
         /// <summary>

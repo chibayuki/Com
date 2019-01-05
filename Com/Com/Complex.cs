@@ -728,7 +728,7 @@ namespace Com
         /// <summary>
         /// 返回对 Complex 结构计算反正弦得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="comp">Complex 结构，表示正弦值的复数。</param>
+        /// <param name="comp">Complex 结构，表示正弦值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反正弦得到的结果。</returns>
         public static Complex Asin(Complex comp)
         {
@@ -738,7 +738,7 @@ namespace Com
         /// <summary>
         /// 返回对 Complex 结构计算反余弦得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="comp">Complex 结构，表示余弦值的复数。</param>
+        /// <param name="comp">Complex 结构，表示余弦值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反余弦得到的结果。</returns>
         public static Complex Acos(Complex comp)
         {
@@ -748,7 +748,7 @@ namespace Com
         /// <summary>
         /// 返回对 Complex 结构计算反正切得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="comp">Complex 结构，表示正切值的复数。</param>
+        /// <param name="comp">Complex 结构，表示正切值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反正切得到的结果。</returns>
         public static Complex Atan(Complex comp)
         {
@@ -788,7 +788,7 @@ namespace Com
         /// <summary>
         /// 返回对 Complex 结构计算反双曲正弦得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="comp">Complex 结构，表示双曲正弦值的复数。</param>
+        /// <param name="comp">Complex 结构，表示双曲正弦值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反双曲正弦得到的结果。</returns>
         public static Complex Asinh(Complex comp)
         {
@@ -798,7 +798,7 @@ namespace Com
         /// <summary>
         /// 返回对 Complex 结构计算反双曲余弦得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="comp">Complex 结构，表示双曲余弦值的复数。</param>
+        /// <param name="comp">Complex 结构，表示双曲余弦值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反双曲余弦得到的结果。</returns>
         public static Complex Acosh(Complex comp)
         {
@@ -808,7 +808,7 @@ namespace Com
         /// <summary>
         /// 返回对 Complex 结构计算反双曲正切得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="comp">Complex 结构，表示双曲正切值的复数。</param>
+        /// <param name="comp">Complex 结构，表示双曲正切值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反双曲正切得到的结果。</returns>
         public static Complex Atanh(Complex comp)
         {
@@ -978,7 +978,7 @@ namespace Com
         /// <returns>Complex 结构，表示在 Complex 结构的所有分量前添加正号得到的结果。</returns>
         public static Complex operator +(Complex comp)
         {
-            return new Complex(+comp._Real, +comp._Imaginary);
+            return comp;
         }
 
         /// <summary>

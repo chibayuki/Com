@@ -24,6 +24,21 @@ namespace Com
     {
         #region 私有成员与内部成员
 
+        private const long _MinMagnitude = -999999999999999; // 数量级的最小值。
+        private const long _MaxMagnitude = 999999999999999; // 数量级的最大值。
+
+        //
+
+        private static readonly Real _Pi = new Real(3.1415926535897932); // 表示圆周率 π 的 Real 结构的实例。
+        private static readonly Real _2Pi = new Real(6.2831853071795865); // 表示圆周率 π 的 2 倍的 Real 结构的实例。
+        private static readonly Real _HalfPi = new Real(1.5707963267948966); // 表示圆周率 π 的 1/2 的 Real 结构的实例。
+        private static readonly Real _MinusHalfPi = new Real(-1.5707963267948966); // 表示圆周率 π 的 -1/2 的 Real 结构的实例。
+
+        private static readonly Real _E = new Real(2.7182818284590451); // 表示自然常数 E 的 Real 结构的实例。
+        private static readonly Real _LgE = new Real(0.43429448190325183); // 表示自然常数 E 的常用对数的 Real 结构的实例。
+
+        //
+
         private static readonly double[] _PositiveMagnitudeGeometricValues = new double[] // 用于在一定范围内进行类型转换的正数量级等比数列。
         {
             1E+000, 1E+001, 1E+002, 1E+003, 1E+004, 1E+005, 1E+006, 1E+007, 1E+008, 1E+009,
@@ -95,21 +110,6 @@ namespace Com
             1E-310, 1E-311, 1E-312, 1E-313, 1E-314, 1E-315, 1E-316, 1E-317, 1E-318, 1E-319,
             1E-320, 1E-321, 1E-322, 1E-323, 1E-324
         };
-
-        //
-
-        private static readonly Real _Pi = new Real(3.1415926535897932); // 表示圆周率 π 的 Real 结构的实例。
-        private static readonly Real _2Pi = new Real(6.2831853071795865); // 表示圆周率 π 的 2 倍的 Real 结构的实例。
-        private static readonly Real _HalfPi = new Real(1.5707963267948966); // 表示圆周率 π 的 1/2 的 Real 结构的实例。
-        private static readonly Real _MinusHalfPi = new Real(-1.5707963267948966); // 表示圆周率 π 的 -1/2 的 Real 结构的实例。
-
-        private static readonly Real _E = new Real(2.7182818284590451); // 表示自然常数 E 的 Real 结构的实例。
-        private static readonly Real _LgE = new Real(0.43429448190325183); // 表示自然常数 E 的常用对数的 Real 结构的实例。
-
-        //
-
-        private const long _MinMagnitude = -999999999999999; // 数量级的最小值。
-        private const long _MaxMagnitude = 999999999999999; // 数量级的最大值。
 
         //
 
@@ -757,6 +757,7 @@ namespace Com
         /// 将此 Real 结构与指定的对象进行次序比较。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>32 位整数，表示此 Real 与指定的对象进行次序比较的结果。</returns>
         public int CompareTo(object obj)
         {
             if (obj == null || !(obj is Real))
@@ -775,6 +776,7 @@ namespace Com
         /// 将此 Real 结构与指定的 Real 结构进行次序比较。
         /// </summary>
         /// <param name="real">用于比较的 Real 结构。</param>
+        /// <returns>32 位整数，表示此 Real 与指定的 Real 对象进行次序比较的结果。</returns>
         public int CompareTo(Real real)
         {
             if (IsNaN || real.IsNaN)
@@ -847,6 +849,7 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 Real 结构。</param>
         /// <param name="right">用于比较的第二个 Real 结构。</param>
+        /// <returns>32 位整数，表示对两个 Real 对象进行次序比较的结果。</returns>
         public static int Compare(Real left, Real right)
         {
             if ((object)left == null && (object)right == null)
@@ -997,11 +1000,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Real 结构计算复幂得到的 Real 结构的新实例。
+        /// 返回对 Real 结构计算幂得到的 Real 结构的新实例。
         /// </summary>
         /// <param name="left">Real 结构，表示底数。</param>
         /// <param name="right">Real 结构，表示指数。</param>
-        /// <returns>Real 结构，表示对 Real 结构计算复幂得到的结果。</returns>
+        /// <returns>Real 结构，表示对 Real 结构计算幂得到的结果。</returns>
         public static Real Pow(Real left, Real right)
         {
             return (left ^ right);
@@ -1057,11 +1060,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Real 结构计算复对数得到的 Real 结构的新实例。
+        /// 返回对 Real 结构计算对数得到的 Real 结构的新实例。
         /// </summary>
         /// <param name="left">Real 结构，表示基数。</param>
         /// <param name="right">Real 结构，表示幂。</param>
-        /// <returns>Real 结构，表示对 Real 结构计算复对数得到的结果。</returns>
+        /// <returns>Real 结构，表示对 Real 结构计算对数得到的结果。</returns>
         public static Real Log(Real left, Real right)
         {
             return (Log10(right) / Log10(left));
@@ -1147,7 +1150,7 @@ namespace Com
         /// <summary>
         /// 返回对 Real 结构计算反正弦得到的 Real 结构的新实例。
         /// </summary>
-        /// <param name="real">Real 结构，表示正弦值的复数。</param>
+        /// <param name="real">Real 结构，表示正弦值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反正弦得到的结果。</returns>
         public static Real Asin(Real real)
         {
@@ -1179,7 +1182,7 @@ namespace Com
         /// <summary>
         /// 返回对 Real 结构计算反余弦得到的 Real 结构的新实例。
         /// </summary>
-        /// <param name="real">Real 结构，表示余弦值的复数。</param>
+        /// <param name="real">Real 结构，表示余弦值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反余弦得到的结果。</returns>
         public static Real Acos(Real real)
         {
@@ -1211,7 +1214,7 @@ namespace Com
         /// <summary>
         /// 返回对 Real 结构计算反正切得到的 Real 结构的新实例。
         /// </summary>
-        /// <param name="real">Real 结构，表示正切值的复数。</param>
+        /// <param name="real">Real 结构，表示正切值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反正切得到的结果。</returns>
         public static Real Atan(Real real)
         {
@@ -1368,7 +1371,7 @@ namespace Com
         /// <summary>
         /// 返回对 Real 结构计算反双曲正弦得到的 Real 结构的新实例。
         /// </summary>
-        /// <param name="real">Real 结构，表示双曲正弦值的复数。</param>
+        /// <param name="real">Real 结构，表示双曲正弦值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反双曲正弦得到的结果。</returns>
         public static Real Asinh(Real real)
         {
@@ -1378,7 +1381,7 @@ namespace Com
         /// <summary>
         /// 返回对 Real 结构计算反双曲余弦得到的 Real 结构的新实例。
         /// </summary>
-        /// <param name="real">Real 结构，表示双曲余弦值的复数。</param>
+        /// <param name="real">Real 结构，表示双曲余弦值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反双曲余弦得到的结果。</returns>
         public static Real Acosh(Real real)
         {
@@ -1388,7 +1391,7 @@ namespace Com
         /// <summary>
         /// 返回对 Real 结构计算反双曲正切得到的 Real 结构的新实例。
         /// </summary>
-        /// <param name="real">Real 结构，表示双曲正切值的复数。</param>
+        /// <param name="real">Real 结构，表示双曲正切值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反双曲正切得到的结果。</returns>
         public static Real Atanh(Real real)
         {
@@ -2157,29 +2160,7 @@ namespace Com
         /// <returns>Real 结构，表示在 Real 结构前添加正号得到的结果。</returns>
         public static Real operator +(Real real)
         {
-            if (real.IsNaN)
-            {
-                return NaN;
-            }
-            else if (real.IsInfinity)
-            {
-                if (real.IsPositiveInfinity)
-                {
-                    return PositiveInfinity;
-                }
-                else
-                {
-                    return NegativeInfinity;
-                }
-            }
-            else if (real._Value == 0)
-            {
-                return Zero;
-            }
-            else
-            {
-                return new Real(+real._Value, real._Magnitude);
-            }
+            return real;
         }
 
         /// <summary>

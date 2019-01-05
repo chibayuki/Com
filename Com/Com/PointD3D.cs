@@ -2061,7 +2061,7 @@ namespace Com
         /// <param name="pt">运算符右侧的 PointD3D 结构。</param>
         public static PointD3D operator +(PointD3D pt)
         {
-            return new PointD3D(+pt._X, +pt._Y, +pt._Z);
+            return pt;
         }
 
         /// <summary>

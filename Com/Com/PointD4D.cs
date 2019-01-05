@@ -1847,7 +1847,7 @@ namespace Com
         /// <param name="pt">运算符右侧的 PointD4D 结构。</param>
         public static PointD4D operator +(PointD4D pt)
         {
-            return new PointD4D(+pt._X, +pt._Y, +pt._Z, +pt._U);
+            return pt;
         }
 
         /// <summary>

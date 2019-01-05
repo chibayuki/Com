@@ -24,11 +24,11 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private static readonly Random _Rand = new Random(); // 用于生成随机数的 Random 类的实例。
+        private const double _Sqrt2Pi = 2.5066282746310004; // 表示圆周率 π 的 2 倍的平方根。
 
         //
 
-        private const double _Sqrt2Pi = 2.5066282746310004; // 表示圆周率 π 的 2 倍的平方根。
+        private static readonly Random _Rand = new Random(); // 用于生成随机数的 Random 类的实例。
 
         //
 
