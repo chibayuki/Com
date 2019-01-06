@@ -757,7 +757,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -787,7 +787,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -813,7 +813,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -837,7 +837,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 

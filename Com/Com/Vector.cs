@@ -760,8 +760,10 @@ namespace Com
             {
                 return Array.IndexOf(_VArray, item, startIndex, _Size - startIndex);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -778,8 +780,10 @@ namespace Com
 
                 return Array.IndexOf(_VArray, item, startIndex, count);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -807,8 +811,10 @@ namespace Com
             {
                 return Array.LastIndexOf(_VArray, item, startIndex, startIndex + 1);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -825,8 +831,10 @@ namespace Com
 
                 return Array.LastIndexOf(_VArray, item, startIndex, count);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -1261,7 +1269,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1281,7 +1289,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1301,7 +1309,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1323,7 +1331,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1363,7 +1371,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1411,7 +1419,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1860,7 +1868,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -1881,7 +1889,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -2017,7 +2025,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -2042,7 +2050,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -2190,7 +2198,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -2223,7 +2231,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -2262,7 +2270,7 @@ namespace Com
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 

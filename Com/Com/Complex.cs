@@ -417,7 +417,7 @@ namespace Com
         /// <summary>
         /// 返回将此 Complex 结构转换为 PointD 结构的新实例。
         /// </summary>
-        /// <returns>PointD 结构，表示将此 Complex 结构转换为 PointD 结构的新实例。</returns>
+        /// <returns>PointD 结构，表示将此 Complex 结构转换为 PointD 结构得到的结果。</returns>
         public PointD ToPointD()
         {
             return new PointD(_Real, _Imaginary);
@@ -457,7 +457,7 @@ namespace Com
         /// 返回将 PointD 结构转换为 Complex 结构的新实例。
         /// </summary>
         /// <param name="pt">Point 结构。</param>
-        /// <returns>Complex 结构，表示将 PointD 结构转换为 Complex 结构的新实例。</returns>
+        /// <returns>Complex 结构，表示将 PointD 结构转换为 Complex 结构得到的结果。</returns>
         public static Complex FromPointD(PointD pt)
         {
             return new Complex(pt);
@@ -470,7 +470,7 @@ namespace Com
         /// </summary>
         /// <param name="module">表示 Complex 结构的模。</param>
         /// <param name="argument">表示 Complex 结构的辐角（弧度）。</param>
-        /// <returns>Complex 结构，表示将 Complex 结构的极坐标分量模与辐角（弧度）转换为 Complex 结构的新实例。</returns>
+        /// <returns>Complex 结构，表示将 Complex 结构的极坐标分量模与辐角（弧度）转换为 Complex 结构得到的结果。</returns>
         public static Complex FromPolarCoordinates(double module, double argument)
         {
             return new Complex(module * Math.Cos(argument), module * Math.Sin(argument));

@@ -1970,7 +1970,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构转换为以本地时区表示的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以本地时区表示的 DateTimeX 结构的新实例。</returns>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以本地时区表示的 DateTimeX 结构得到的结果。</returns>
         public DateTimeX ToLocalTime()
         {
             return new DateTimeX(TotalMilliseconds, _LocalUtcOffset);
@@ -1979,7 +1979,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构转换为以协调世界时（UTC）表示的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以协调世界时（UTC）表示的 DateTimeX 结构的新实例。</returns>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以协调世界时（UTC）表示的 DateTimeX 结构得到的结果。</returns>
         public DateTimeX ToUniversalTime()
         {
             return new DateTimeX(TotalMilliseconds, _Utc);
@@ -2147,7 +2147,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
-        /// <returns>布尔值，表示两个 Complex。</returns>
+        /// <returns>布尔值，表示两个 DateTimeX 结构是否表示相同的时刻。</returns>
         public static bool operator ==(DateTimeX left, DateTimeX right)
         {
             if (left.IsEmpty || right.IsEmpty)
