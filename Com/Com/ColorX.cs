@@ -2443,7 +2443,7 @@ namespace Com
                 return false;
             }
 
-            return ((int)Math.Round(left.Alpha) == (int)Math.Round(right.Alpha) && ((int)Math.Round(left.Red) == (int)Math.Round(right.Red) && (int)Math.Round(left.Green) == (int)Math.Round(right.Green) && (int)Math.Round(left.Blue) == (int)Math.Round(right.Blue)));
+            return (left.Alpha == right.Alpha && left.Red == right.Red && left.Green == right.Green && left.Blue == right.Blue);
         }
 
         /// <summary>
@@ -2459,7 +2459,7 @@ namespace Com
                 return true;
             }
 
-            return ((int)Math.Round(left.Alpha) != (int)Math.Round(right.Alpha) || ((int)Math.Round(left.Red) != (int)Math.Round(right.Red) || (int)Math.Round(left.Green) != (int)Math.Round(right.Green) || (int)Math.Round(left.Blue) != (int)Math.Round(right.Blue)));
+            return (left.Alpha != right.Alpha || left.Red != right.Red || left.Green != right.Green || left.Blue != right.Blue);
         }
 
         //

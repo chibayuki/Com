@@ -29,13 +29,13 @@ namespace Com
 
         //
 
-        private static readonly Real _Pi = new Real(3.1415926535897932); // 表示圆周率 π 的 Real 结构的实例。
-        private static readonly Real _2Pi = new Real(6.2831853071795865); // 表示圆周率 π 的 2 倍的 Real 结构的实例。
-        private static readonly Real _HalfPi = new Real(1.5707963267948966); // 表示圆周率 π 的 1/2 的 Real 结构的实例。
-        private static readonly Real _MinusHalfPi = new Real(-1.5707963267948966); // 表示圆周率 π 的 -1/2 的 Real 结构的实例。
+        private static readonly Real _Pi = new Real(Constant.Pi); // 表示圆周率 π 的 Real 结构的实例。
+        private static readonly Real _DoublePi = new Real(Constant.DoublePi); // 表示圆周率 π 的 2 倍的 Real 结构的实例。
+        private static readonly Real _HalfPi = new Real(Constant.HalfPi); // 表示圆周率 π 的 1/2 的 Real 结构的实例。
+        private static readonly Real _MinusHalfPi = new Real(Constant.MinusHalfPi); // 表示圆周率 π 的 -1/2 的 Real 结构的实例。
 
-        private static readonly Real _E = new Real(2.7182818284590451); // 表示自然常数 E 的 Real 结构的实例。
-        private static readonly Real _LgE = new Real(0.43429448190325183); // 表示自然常数 E 的常用对数的 Real 结构的实例。
+        private static readonly Real _E = new Real(Constant.E); // 表示自然常数 E 的 Real 结构的实例。
+        private static readonly Real _LgE = new Real(Constant.LgE); // 表示自然常数 E 的常用对数的 Real 结构的实例。
 
         //
 
@@ -1093,7 +1093,7 @@ namespace Com
             }
             else
             {
-                return new Real(Math.Sin((real % _2Pi)._Value));
+                return new Real(Math.Sin((real % _DoublePi)._Value));
             }
         }
 
@@ -1118,7 +1118,7 @@ namespace Com
             }
             else
             {
-                return new Real(Math.Cos((real % _2Pi)._Value));
+                return new Real(Math.Cos((real % _DoublePi)._Value));
             }
         }
 

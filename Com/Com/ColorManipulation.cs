@@ -27,28 +27,21 @@ namespace Com
     {
         private static string _GetColorName(int argb, string hexCode) // 根据 32 位 ARGB 值与 16 进制 ARGB 码获取颜色的名称。
         {
-            try
-            {
-                PropertyInfo[] PInfo = typeof(Color).GetProperties();
+            PropertyInfo[] PInfo = typeof(Color).GetProperties();
 
-                foreach (PropertyInfo PropInfo in PInfo)
+            foreach (PropertyInfo PropInfo in PInfo)
+            {
+                string Name = PropInfo.Name;
+                Color Cr = Color.FromName(Name);
+                KnownColor KC = Cr.ToKnownColor();
+
+                if ((KC >= KnownColor.Transparent && KC <= KnownColor.YellowGreen) && argb == Cr.ToArgb())
                 {
-                    string Name = PropInfo.Name;
-                    Color Cr = Color.FromName(Name);
-                    KnownColor KC = Cr.ToKnownColor();
-
-                    if ((KC >= KnownColor.Transparent && KC <= KnownColor.YellowGreen) && argb == Cr.ToArgb())
-                    {
-                        return string.Concat(Name, " (", hexCode, ")");
-                    }
+                    return string.Concat(Name, " (", hexCode, ")");
                 }
+            }
 
-                return hexCode;
-            }
-            catch
-            {
-                return string.Empty;
-            }
+            return hexCode;
         }
 
         /// <summary>
@@ -58,14 +51,7 @@ namespace Com
         /// <returns>字符串，表示指定颜色的名称。</returns>
         public static string GetColorName(ColorX color)
         {
-            try
-            {
-                return _GetColorName(color.ToARGB(), color.ARGBHexCode);
-            }
-            catch
-            {
-                return string.Empty;
-            }
+            return _GetColorName(color.ToARGB(), color.ARGBHexCode);
         }
 
         /// <summary>
@@ -75,14 +61,7 @@ namespace Com
         /// <returns>字符串，表示指定颜色的名称。</returns>
         public static string GetColorName(Color color)
         {
-            try
-            {
-                return GetColorName((ColorX)color);
-            }
-            catch
-            {
-                return string.Empty;
-            }
+            return GetColorName((ColorX)color);
         }
 
         //
@@ -93,14 +72,7 @@ namespace Com
         /// <returns>ColorX 结构，表示随机颜色。</returns>
         public static ColorX GetRandomColorX()
         {
-            try
-            {
-                return ColorX.RandomColor();
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return ColorX.RandomColor();
         }
 
         /// <summary>
@@ -109,14 +81,7 @@ namespace Com
         /// <returns>Color 结构，表示随机颜色。</returns>
         public static Color GetRandomColor()
         {
-            try
-            {
-                return GetRandomColorX().ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return GetRandomColorX().ToColor();
         }
 
         //
@@ -128,14 +93,7 @@ namespace Com
         /// <returns>ColorX 结构，表示指定颜色的互补色。</returns>
         public static ColorX GetComplementaryColor(ColorX color)
         {
-            try
-            {
-                return color.ComplementaryColor;
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return color.ComplementaryColor;
         }
 
         /// <summary>
@@ -145,14 +103,7 @@ namespace Com
         /// <returns>Color 结构，表示指定颜色的互补色。</returns>
         public static Color GetComplementaryColor(Color color)
         {
-            try
-            {
-                return GetComplementaryColor((ColorX)color).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return GetComplementaryColor((ColorX)color).ToColor();
         }
 
         /// <summary>
@@ -162,14 +113,7 @@ namespace Com
         /// <returns>ColorX 结构，表示指定颜色的灰度颜色。</returns>
         public static ColorX GetGrayscaleColor(ColorX color)
         {
-            try
-            {
-                return color.GrayscaleColor;
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return color.GrayscaleColor;
         }
 
         /// <summary>
@@ -179,14 +123,7 @@ namespace Com
         /// <returns>Color 结构，表示指定颜色的灰度颜色。</returns>
         public static Color GetGrayscaleColor(Color color)
         {
-            try
-            {
-                return GetGrayscaleColor((ColorX)color).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return GetGrayscaleColor((ColorX)color).ToColor();
         }
 
         //
@@ -219,16 +156,9 @@ namespace Com
         /// <returns>ColorX 结构，表示将两种颜色在 RGB 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByRGB(ColorX color1, ColorX color2, double proportion)
         {
-            try
-            {
-                proportion = _CheckProportion(proportion);
+            proportion = _CheckProportion(proportion);
 
-                return ColorX.FromRGB(color1.Alpha * proportion + color2.Alpha * (1 - proportion), color1.RGB * proportion + color2.RGB * (1 - proportion));
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return ColorX.FromRGB(color1.Alpha * proportion + color2.Alpha * (1 - proportion), color1.RGB * proportion + color2.RGB * (1 - proportion));
         }
 
         /// <summary>
@@ -240,14 +170,7 @@ namespace Com
         /// <returns>Color 结构，表示将两种颜色在 RGB 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByRGB(Color color1, Color color2, double proportion)
         {
-            try
-            {
-                return BlendByRGB((ColorX)color1, (ColorX)color2, proportion).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return BlendByRGB((ColorX)color1, (ColorX)color2, proportion).ToColor();
         }
 
         /// <summary>
@@ -259,16 +182,9 @@ namespace Com
         /// <returns>ColorX 结构，表示将两种颜色在 HSV 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByHSV(ColorX color1, ColorX color2, double proportion)
         {
-            try
-            {
-                proportion = _CheckProportion(proportion);
+            proportion = _CheckProportion(proportion);
 
-                return ColorX.FromHSV(color1.HSV * proportion + color2.HSV * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return ColorX.FromHSV(color1.HSV * proportion + color2.HSV * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
         }
 
         /// <summary>
@@ -280,14 +196,7 @@ namespace Com
         /// <returns>Color 结构，表示将两种颜色在 HSV 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByHSV(Color color1, Color color2, double proportion)
         {
-            try
-            {
-                return BlendByHSV((ColorX)color1, (ColorX)color2, proportion).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return BlendByHSV((ColorX)color1, (ColorX)color2, proportion).ToColor();
         }
 
         /// <summary>
@@ -299,16 +208,9 @@ namespace Com
         /// <returns>ColorX 结构，表示将两种颜色在 HSL 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByHSL(ColorX color1, ColorX color2, double proportion)
         {
-            try
-            {
-                proportion = _CheckProportion(proportion);
+            proportion = _CheckProportion(proportion);
 
-                return ColorX.FromHSL(color1.HSL * proportion + color2.HSL * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return ColorX.FromHSL(color1.HSL * proportion + color2.HSL * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
         }
 
         /// <summary>
@@ -320,14 +222,7 @@ namespace Com
         /// <returns>Color 结构，表示将两种颜色在 HSL 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByHSL(Color color1, Color color2, double proportion)
         {
-            try
-            {
-                return BlendByHSL((ColorX)color1, (ColorX)color2, proportion).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return BlendByHSL((ColorX)color1, (ColorX)color2, proportion).ToColor();
         }
 
         /// <summary>
@@ -339,16 +234,9 @@ namespace Com
         /// <returns>ColorX 结构，表示将两种颜色在 CMYK 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByCMYK(ColorX color1, ColorX color2, double proportion)
         {
-            try
-            {
-                proportion = _CheckProportion(proportion);
+            proportion = _CheckProportion(proportion);
 
-                return ColorX.FromCMYK(color1.CMYK * proportion + color2.CMYK * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return ColorX.FromCMYK(color1.CMYK * proportion + color2.CMYK * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
         }
 
         /// <summary>
@@ -360,14 +248,7 @@ namespace Com
         /// <returns>Color 结构，表示将两种颜色在 CMYK 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByCMYK(Color color1, Color color2, double proportion)
         {
-            try
-            {
-                return BlendByCMYK((ColorX)color1, (ColorX)color2, proportion).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return BlendByCMYK((ColorX)color1, (ColorX)color2, proportion).ToColor();
         }
 
         /// <summary>
@@ -379,16 +260,9 @@ namespace Com
         /// <returns>ColorX 结构，表示将两种颜色在 LAB 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static ColorX BlendByLAB(ColorX color1, ColorX color2, double proportion)
         {
-            try
-            {
-                proportion = _CheckProportion(proportion);
+            proportion = _CheckProportion(proportion);
 
-                return ColorX.FromLAB(color1.LAB * proportion + color2.LAB * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return ColorX.FromLAB(color1.LAB * proportion + color2.LAB * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
         }
 
         /// <summary>
@@ -400,14 +274,7 @@ namespace Com
         /// <returns>Color 结构，表示将两种颜色在 LAB 色彩空间按指定比例线性混合得到的颜色。</returns>
         public static Color BlendByLAB(Color color1, Color color2, double proportion)
         {
-            try
-            {
-                return BlendByLAB((ColorX)color1, (ColorX)color2, proportion).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return BlendByLAB((ColorX)color1, (ColorX)color2, proportion).ToColor();
         }
 
         //
@@ -439,28 +306,21 @@ namespace Com
         /// <returns>ColorX 结构，表示将指定颜色在 HSV 色彩空间调整明度得到的颜色。</returns>
         public static ColorX ShiftLightnessByHSV(ColorX color, double level)
         {
-            try
-            {
-                level = _CheckLevel(level);
+            level = _CheckLevel(level);
 
-                if (level != 0)
+            if (level != 0)
+            {
+                if (level < 0)
                 {
-                    if (level < 0)
-                    {
-                        return color.AtBrightness(color.Brightness * (1 + level));
-                    }
-                    else
-                    {
-                        return color.AtBrightness(100 - (100 - color.Brightness) * (1 - level));
-                    }
+                    return color.AtBrightness(color.Brightness * (1 + level));
                 }
+                else
+                {
+                    return color.AtBrightness(100 - (100 - color.Brightness) * (1 - level));
+                }
+            }
 
-                return color;
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return color;
         }
 
         /// <summary>
@@ -471,14 +331,7 @@ namespace Com
         /// <returns>Color 结构，表示将指定颜色在 HSV 色彩空间调整明度得到的颜色。</returns>
         public static Color ShiftLightnessByHSV(Color color, double level)
         {
-            try
-            {
-                return ShiftLightnessByHSV((ColorX)color, level).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return ShiftLightnessByHSV((ColorX)color, level).ToColor();
         }
 
         /// <summary>
@@ -489,28 +342,21 @@ namespace Com
         /// <returns>ColorX 结构，表示将指定颜色在 HSL 色彩空间调整明度得到的颜色。</returns>
         public static ColorX ShiftLightnessByHSL(ColorX color, double level)
         {
-            try
-            {
-                level = _CheckLevel(level);
+            level = _CheckLevel(level);
 
-                if (level != 0)
+            if (level != 0)
+            {
+                if (level < 0)
                 {
-                    if (level < 0)
-                    {
-                        return color.AtLightness_HSL(color.Lightness_HSL * (1 + level));
-                    }
-                    else
-                    {
-                        return color.AtLightness_HSL(100 - (100 - color.Lightness_HSL) * (1 - level));
-                    }
+                    return color.AtLightness_HSL(color.Lightness_HSL * (1 + level));
                 }
+                else
+                {
+                    return color.AtLightness_HSL(100 - (100 - color.Lightness_HSL) * (1 - level));
+                }
+            }
 
-                return color;
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return color;
         }
 
         /// <summary>
@@ -521,14 +367,7 @@ namespace Com
         /// <returns>Color 结构，表示将指定颜色在 HSL 色彩空间调整明度得到的颜色。</returns>
         public static Color ShiftLightnessByHSL(Color color, double level)
         {
-            try
-            {
-                return ShiftLightnessByHSL((ColorX)color, level).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return ShiftLightnessByHSL((ColorX)color, level).ToColor();
         }
 
         /// <summary>
@@ -539,28 +378,21 @@ namespace Com
         /// <returns>ColorX 结构，表示将指定颜色在 LAB 色彩空间调整明度得到的颜色。</returns>
         public static ColorX ShiftLightnessByLAB(ColorX color, double level)
         {
-            try
-            {
-                level = _CheckLevel(level);
+            level = _CheckLevel(level);
 
-                if (level != 0)
+            if (level != 0)
+            {
+                if (level < 0)
                 {
-                    if (level < 0)
-                    {
-                        return color.AtLightness_LAB(color.Lightness_LAB * (1 + level));
-                    }
-                    else
-                    {
-                        return color.AtLightness_LAB(100 - (100 - color.Lightness_LAB) * (1 - level));
-                    }
+                    return color.AtLightness_LAB(color.Lightness_LAB * (1 + level));
                 }
+                else
+                {
+                    return color.AtLightness_LAB(100 - (100 - color.Lightness_LAB) * (1 - level));
+                }
+            }
 
-                return color;
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return color;
         }
 
         /// <summary>
@@ -571,14 +403,7 @@ namespace Com
         /// <returns>Color 结构，表示将指定颜色在 LAB 色彩空间调整明度得到的颜色。</returns>
         public static Color ShiftLightnessByLAB(Color color, double level)
         {
-            try
-            {
-                return ShiftLightnessByLAB((ColorX)color, level).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return ShiftLightnessByLAB((ColorX)color, level).ToColor();
         }
 
         /// <summary>
@@ -589,28 +414,21 @@ namespace Com
         /// <returns>ColorX 结构，表示将指定颜色在 HSV 色彩空间调整饱和度得到的颜色。</returns>
         public static ColorX ShiftSaturationByHSV(ColorX color, double level)
         {
-            try
-            {
-                level = _CheckLevel(level);
+            level = _CheckLevel(level);
 
-                if (level != 0)
+            if (level != 0)
+            {
+                if (level < 0)
                 {
-                    if (level < 0)
-                    {
-                        return color.AtSaturation_HSV(color.Saturation_HSV * (1 + level));
-                    }
-                    else
-                    {
-                        return color.AtSaturation_HSV(100 - (100 - color.Saturation_HSV) * (1 - level));
-                    }
+                    return color.AtSaturation_HSV(color.Saturation_HSV * (1 + level));
                 }
+                else
+                {
+                    return color.AtSaturation_HSV(100 - (100 - color.Saturation_HSV) * (1 - level));
+                }
+            }
 
-                return color;
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return color;
         }
 
         /// <summary>
@@ -621,14 +439,7 @@ namespace Com
         /// <returns>Color 结构，表示将指定颜色在 HSV 色彩空间调整饱和度得到的颜色。</returns>
         public static Color ShiftSaturationByHSV(Color color, double level)
         {
-            try
-            {
-                return ShiftSaturationByHSV((ColorX)color, level).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return ShiftSaturationByHSV((ColorX)color, level).ToColor();
         }
 
         /// <summary>
@@ -639,28 +450,21 @@ namespace Com
         /// <returns>ColorX 结构，表示将指定颜色在 HSL 色彩空间调整饱和度得到的颜色。</returns>
         public static ColorX ShiftSaturationByHSL(ColorX color, double level)
         {
-            try
-            {
-                level = _CheckLevel(level);
+            level = _CheckLevel(level);
 
-                if (level != 0)
+            if (level != 0)
+            {
+                if (level < 0)
                 {
-                    if (level < 0)
-                    {
-                        return color.AtSaturation_HSL(color.Saturation_HSL * (1 + level));
-                    }
-                    else
-                    {
-                        return color.AtSaturation_HSL(100 - (100 - color.Saturation_HSL) * (1 - level));
-                    }
+                    return color.AtSaturation_HSL(color.Saturation_HSL * (1 + level));
                 }
+                else
+                {
+                    return color.AtSaturation_HSL(100 - (100 - color.Saturation_HSL) * (1 - level));
+                }
+            }
 
-                return color;
-            }
-            catch
-            {
-                return ColorX.Empty;
-            }
+            return color;
         }
 
         /// <summary>
@@ -671,14 +475,7 @@ namespace Com
         /// <returns>Color 结构，表示将指定颜色在 HSL 色彩空间调整饱和度得到的颜色。</returns>
         public static Color ShiftSaturationByHSL(Color color, double level)
         {
-            try
-            {
-                return ShiftSaturationByHSL((ColorX)color, level).ToColor();
-            }
-            catch
-            {
-                return Color.Empty;
-            }
+            return ShiftSaturationByHSL((ColorX)color, level).ToColor();
         }
     }
 }

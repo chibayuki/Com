@@ -24,10 +24,6 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private static readonly double _Ln10 = 2.3025850929940457; // 表示 10 的自然对数。
-
-        //
-
         private static Complex _MultiplyByImaginaryOne(Complex comp) // 返回将虚数单位 i 与 Complex 结构的相乘得到的 Complex 结构的新实例。
         {
             return new Complex(-comp._Imaginary, comp.Real);
@@ -620,7 +616,7 @@ namespace Com
         /// <returns>Complex 结构，表示对 Complex 结构计算常用对数得到的结果。</returns>
         public static Complex Log10(Complex comp)
         {
-            return (Log(comp) / _Ln10);
+            return (Log(comp) / Constant.Ln10);
         }
 
         /// <summary>

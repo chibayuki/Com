@@ -24,40 +24,29 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private const double _Sqrt2Pi = 2.5066282746310004; // 表示圆周率 π 的 2 倍的平方根。
-
-        //
-
         private static readonly Random _Rand = new Random(); // 用于生成随机数的 Random 类的实例。
 
         //
 
         private static double[] _StdNormalRandom() // 返回两个概率密度服从标准正态分布的随机双精度浮点数。
         {
-            try
+            double r0 = 0, r1 = 0, v0 = 0, v1 = 0, sum = 0;
+
+            while (sum > 1 || sum == 0)
             {
-                double r0 = 0, r1 = 0, v0 = 0, v1 = 0, sum = 0;
+                r0 = _Rand.NextDouble();
+                r1 = _Rand.NextDouble();
 
-                while (sum > 1 || sum == 0)
-                {
-                    r0 = _Rand.NextDouble();
-                    r1 = _Rand.NextDouble();
+                v0 = 2 * r0 - 1;
+                v1 = 2 * r1 - 1;
 
-                    v0 = 2 * r0 - 1;
-                    v1 = 2 * r1 - 1;
-
-                    sum = v0 * v0 + v1 * v1;
-                }
-
-                double gr0 = Math.Sqrt(-2 * Math.Log(sum) / sum) * v0;
-                double gr1 = Math.Sqrt(-2 * Math.Log(sum) / sum) * v1;
-
-                return new double[2] { gr0, gr1 };
+                sum = v0 * v0 + v1 * v1;
             }
-            catch
-            {
-                return null;
-            }
+
+            double gr0 = Math.Sqrt(-2 * Math.Log(sum) / sum) * v0;
+            double gr1 = Math.Sqrt(-2 * Math.Log(sum) / sum) * v1;
+
+            return new double[2] { gr0, gr1 };
         }
 
         //
@@ -159,7 +148,7 @@ namespace Com
 
                     double Base = val + Coeff.Length - 2.5;
 
-                    return (_Sqrt2Pi * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum);
+                    return (Constant.Sqrt2Pi * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum);
                 };
 
                 Func<double, Real> GammaPositive = (val) =>
@@ -421,41 +410,31 @@ namespace Com
         /// <summary>
         /// 返回一个概率密度平均分布的非负随机 32 位整数。
         /// </summary>
+        /// <returns>32 位整数，表示概率密度平均分布的非负随机数。</returns>
         public static int RandomInteger()
         {
-            try
-            {
-                return _Rand.Next();
-            }
-            catch
-            {
-                return int.MinValue;
-            }
+            return _Rand.Next();
         }
 
         /// <summary>
         /// 返回一个在 0 与右端点指定的区间内概率密度平均分布的非负随机 32 位整数。
         /// </summary>
         /// <param name="right">区间右端点（不含）。</param>
+        /// <returns>32 位整数，表示概率密度平均分布的非负随机数。</returns>
         public static int RandomInteger(int right)
         {
-            try
+            if (right >= 0)
             {
-                if (right >= 0)
+                if (right == 0)
                 {
-                    if (right == 0)
-                    {
-                        return 0;
-                    }
-
-                    return _Rand.Next(right);
+                    return 0;
                 }
 
-                return int.MinValue;
+                return _Rand.Next(right);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -464,25 +443,21 @@ namespace Com
         /// </summary>
         /// <param name="left">区间左端点（含）。</param>
         /// <param name="right">区间右端点（不含）。</param>
+        /// <returns>32 位整数，表示概率密度平均分布的随机数。</returns>
         public static int RandomInteger(int left, int right)
         {
-            try
+            if (left <= right)
             {
-                if (left <= right)
+                if (left == right)
                 {
-                    if (left == right)
-                    {
-                        return left;
-                    }
-
-                    return _Rand.Next(left, right);
+                    return left;
                 }
 
-                return int.MinValue;
+                return _Rand.Next(left, right);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -491,41 +466,31 @@ namespace Com
         /// <summary>
         /// 返回一个小于 1 的概率密度平均分布的非负随机双精度浮点数。
         /// </summary>
+        /// <returns>双精度浮点数，表示概率密度平均分布的非负随机数。</returns>
         public static double RandomDouble()
         {
-            try
-            {
-                return _Rand.NextDouble();
-            }
-            catch
-            {
-                return double.NaN;
-            }
+            return _Rand.NextDouble();
         }
 
         /// <summary>
         /// 返回一个在 0 与右端点指定的区间内概率密度平均分布的非负随机双精度浮点数。
         /// </summary>
         /// <param name="right">区间右端点（不含）。</param>
+        /// <returns>双精度浮点数，表示概率密度平均分布的非负随机数。</returns>
         public static double RandomDouble(double right)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(right) && right >= 0)
             {
-                if (!InternalMethod.IsNaNOrInfinity(right) && right >= 0)
+                if (right == 0)
                 {
-                    if (right == 0)
-                    {
-                        return 0;
-                    }
-
-                    return right * _Rand.NextDouble();
+                    return 0;
                 }
 
-                return double.NaN;
+                return right * _Rand.NextDouble();
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -534,25 +499,21 @@ namespace Com
         /// </summary>
         /// <param name="left">区间左端点（含）。</param>
         /// <param name="right">区间右端点（不含）。</param>
+        /// <returns>双精度浮点数，表示概率密度平均分布的随机数。</returns>
         public static double RandomDouble(double left, double right)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(left) && !InternalMethod.IsNaNOrInfinity(right) && left <= right)
             {
-                if (!InternalMethod.IsNaNOrInfinity(left) && !InternalMethod.IsNaNOrInfinity(right) && left <= right)
+                if (left == right)
                 {
-                    if (left == right)
-                    {
-                        return left;
-                    }
-
-                    return left + (right - left) * _Rand.NextDouble();
+                    return left;
                 }
 
-                return double.NaN;
+                return left + (right - left) * _Rand.NextDouble();
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -561,16 +522,10 @@ namespace Com
         /// <summary>
         /// 返回一个概率密度服从标准正态分布的随机 32 位整数。
         /// </summary>
+        /// <returns>32 位整数，表示概率密度服从标准正态分布的随机数。</returns>
         public static int NormalDistributionRandomInteger()
         {
-            try
-            {
-                return (int)Math.Round(_StdNormalRandom()[0]);
-            }
-            catch
-            {
-                return int.MinValue;
-            }
+            return (int)Math.Round(_StdNormalRandom()[0]);
         }
 
         /// <summary>
@@ -578,36 +533,26 @@ namespace Com
         /// </summary>
         /// <param name="ev">数学期望。</param>
         /// <param name="sd">标准差。</param>
+        /// <returns>32 位整数，表示概率密度服从正态分布的随机数。</returns>
         public static int NormalDistributionRandomInteger(double ev, double sd)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(ev) && !InternalMethod.IsNaNOrInfinity(sd))
             {
-                if (!InternalMethod.IsNaNOrInfinity(ev) && !InternalMethod.IsNaNOrInfinity(sd))
-                {
-                    return (int)Math.Round(_StdNormalRandom()[0] * sd * sd + ev);
-                }
-
-                return int.MinValue;
+                return (int)Math.Round(_StdNormalRandom()[0] * sd * sd + ev);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
         /// <summary>
         /// 返回一个概率密度服从标准正态分布的随机双精度浮点数。
         /// </summary>
+        /// <returns>双精度浮点数，表示概率密度服从标准正态分布的随机数。</returns>
         public static double NormalDistributionRandomDouble()
         {
-            try
-            {
-                return _StdNormalRandom()[0];
-            }
-            catch
-            {
-                return double.NaN;
-            }
+            return _StdNormalRandom()[0];
         }
 
         /// <summary>
@@ -615,20 +560,16 @@ namespace Com
         /// </summary>
         /// <param name="ev">数学期望。</param>
         /// <param name="sd">标准差。</param>
+        /// <returns>双精度浮点数，表示概率密度服从正态分布的随机数。</returns>
         public static double NormalDistributionRandomDouble(double ev, double sd)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(ev) && !InternalMethod.IsNaNOrInfinity(sd))
             {
-                if (!InternalMethod.IsNaNOrInfinity(ev) && !InternalMethod.IsNaNOrInfinity(sd))
-                {
-                    return _StdNormalRandom()[0] * sd * sd + ev;
-                }
-
-                return double.NaN;
+                return _StdNormalRandom()[0] * sd * sd + ev;
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -641,6 +582,7 @@ namespace Com
         /// </summary>
         /// <param name="total">元素总数。</param>
         /// <param name="selection">抽取的元素数量。</param>
+        /// <returns>双精度浮点数，表示从有限个元素中任取若干个元素的排列数。</returns>
         public static double Arrangement(double total, double selection)
         {
             if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
@@ -656,6 +598,7 @@ namespace Com
         /// </summary>
         /// <param name="total">元素总数。</param>
         /// <param name="selection">抽取的元素数量。</param>
+        /// <returns>双精度浮点数，表示从有限个元素中任取若干个元素的组合数。</returns>
         public static double Combination(double total, double selection)
         {
             if (!InternalMethod.IsNaNOrInfinity(total) && !InternalMethod.IsNaNOrInfinity(selection))
@@ -675,39 +618,33 @@ namespace Com
         /// </summary>
         /// <param name="p">单个样本满足某个条件的概率，等于数学期望的倒数。</param>
         /// <param name="value">测试的样本数量。</param>
+        /// <returns>双精度浮点数，表示服从几何分布的随机变量在指定分布参数的概率。</returns>
         public static double GeometricDistributionProbability(double p, int value)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(p))
             {
-                if (!InternalMethod.IsNaNOrInfinity(p))
+                if (p >= 0 && p <= 1)
                 {
-                    if (p >= 0 && p <= 1)
+                    if (p == 1)
                     {
-                        if (p == 1)
+                        if (value > 0)
                         {
-                            if (value > 0)
-                            {
-                                return 1;
-                            }
+                            return 1;
                         }
-                        else if (p > 0)
-                        {
-                            if (value > 0)
-                            {
-                                return (p * Math.Pow(1 - p, value - 1));
-                            }
-                        }
-
-                        return 0;
                     }
-                }
+                    else if (p > 0)
+                    {
+                        if (value > 0)
+                        {
+                            return (p * Math.Pow(1 - p, value - 1));
+                        }
+                    }
 
-                return double.NaN;
+                    return 0;
+                }
             }
-            catch
-            {
-                return double.NaN;
-            }
+
+            return double.NaN;
         }
 
         /// <summary>
@@ -717,26 +654,20 @@ namespace Com
         /// <param name="M">满足某个条件的样本数量。</param>
         /// <param name="n">测试的样本数量。</param>
         /// <param name="value">测试的样本中满足某个条件的样本数量。</param>
+        /// <returns>双精度浮点数，表示服从超几何分布的随机变量在指定分布参数的概率。</returns>
         public static double HypergeometricDistributionProbability(int N, int M, int n, int value)
         {
-            try
+            if (N > 0 && M < N)
             {
-                if (N > 0 && M < N)
+                if (M > 0 && n > 0 && value >= 0 && value <= n)
                 {
-                    if (M > 0 && n > 0 && value >= 0 && value <= n)
-                    {
-                        return (double)(_Combination(M, value) / _Combination(N, n) * _Combination(N - M, n - value));
-                    }
-
-                    return 0;
+                    return (double)(_Combination(M, value) / _Combination(N, n) * _Combination(N - M, n - value));
                 }
 
-                return double.NaN;
+                return 0;
             }
-            catch
-            {
-                return double.NaN;
-            }
+
+            return double.NaN;
         }
 
         /// <summary>
@@ -745,36 +676,30 @@ namespace Com
         /// <param name="n">样本总量。</param>
         /// <param name="p">单个样本满足某个条件的概率，等于样本总量为 1 时的数学期望。</param>
         /// <param name="value">测试的样本数量。</param>
+        /// <returns>双精度浮点数，表示服从二项分布的随机变量在指定分布参数的概率。</returns>
         public static double BinomialDistributionProbability(int n, double p, int value)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(p))
             {
-                if (!InternalMethod.IsNaNOrInfinity(p))
+                if (n > 0 && p >= 0 && p <= 1)
                 {
-                    if (n > 0 && p >= 0 && p <= 1)
+                    if (value >= 0 && value <= n)
                     {
-                        if (value >= 0 && value <= n)
+                        if (p == 1)
                         {
-                            if (p == 1)
-                            {
-                                return 1;
-                            }
-                            else if (p > 0)
-                            {
-                                return (double)(_Combination(n, value) * Math.Pow(p, value) * Math.Pow(1 - p, n - value));
-                            }
+                            return 1;
                         }
-
-                        return 0;
+                        else if (p > 0)
+                        {
+                            return (double)(_Combination(n, value) * Math.Pow(p, value) * Math.Pow(1 - p, n - value));
+                        }
                     }
-                }
 
-                return double.NaN;
+                    return 0;
+                }
             }
-            catch
-            {
-                return double.NaN;
-            }
+
+            return double.NaN;
         }
 
         /// <summary>
@@ -782,29 +707,23 @@ namespace Com
         /// </summary>
         /// <param name="lambda">单位测度内满足某个条件的平均样本数量，等于数学期望或方差。</param>
         /// <param name="value">单位测度内测试的样本数量。</param>
+        /// <returns>双精度浮点数，表示服从泊松分布的随机变量在指定分布参数的概率。</returns>
         public static double PoissonDistributionProbability(double lambda, int value)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(lambda))
             {
-                if (!InternalMethod.IsNaNOrInfinity(lambda))
+                if (lambda > 0)
                 {
-                    if (lambda > 0)
+                    if (value >= 0)
                     {
-                        if (value >= 0)
-                        {
-                            return (double)((Real)Math.Pow(lambda, value) * Math.Exp(-lambda) / _Factorial(value));
-                        }
-
-                        return 0;
+                        return (double)((Real)Math.Pow(lambda, value) * Math.Exp(-lambda) / _Factorial(value));
                     }
-                }
 
-                return double.NaN;
+                    return 0;
+                }
             }
-            catch
-            {
-                return double.NaN;
-            }
+
+            return double.NaN;
         }
 
         //
@@ -814,29 +733,23 @@ namespace Com
         /// </summary>
         /// <param name="lambda">率参数，等于数学期望的倒数或标准差的倒数。</param>
         /// <param name="value">样本值。</param>
+        /// <returns>双精度浮点数，表示服从指数分布的随机变量在指定分布参数的概率密度。</returns>
         public static double ExponentialDistributionProbabilityDensity(double lambda, double value)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(lambda) && !InternalMethod.IsNaNOrInfinity(value))
             {
-                if (!InternalMethod.IsNaNOrInfinity(lambda) && !InternalMethod.IsNaNOrInfinity(value))
+                if (lambda > 0)
                 {
-                    if (lambda > 0)
+                    if (value >= 0)
                     {
-                        if (value >= 0)
-                        {
-                            return (lambda * Math.Exp(-lambda * value));
-                        }
-
-                        return 0;
+                        return (lambda * Math.Exp(-lambda * value));
                     }
-                }
 
-                return double.NaN;
+                    return 0;
+                }
             }
-            catch
-            {
-                return double.NaN;
-            }
+
+            return double.NaN;
         }
 
         /// <summary>
@@ -845,55 +758,43 @@ namespace Com
         /// <param name="lambda">率参数，等于数学期望的倒数或标准差的倒数。</param>
         /// <param name="left">区间左端点。</param>
         /// <param name="right">区间右端点。</param>
+        /// <returns>双精度浮点数，表示服从指数分布的随机变量在指定分布参数的在指定区间的概率。</returns>
         public static double ExponentialDistributionProbability(double lambda, double left, double right)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(lambda) && !InternalMethod.IsNaNOrInfinity(left) && !InternalMethod.IsNaNOrInfinity(right) && left <= right)
             {
-                if (!InternalMethod.IsNaNOrInfinity(lambda) && !InternalMethod.IsNaNOrInfinity(left) && !InternalMethod.IsNaNOrInfinity(right) && left <= right)
+                if (lambda > 0)
                 {
-                    if (lambda > 0)
+                    Func<double, double> Prim = (val) =>
                     {
-                        Func<double, double> Prim = (val) =>
+                        if (val > 0)
                         {
-                            if (val > 0)
-                            {
-                                return (-Math.Exp(-lambda * val));
-                            }
+                            return (-Math.Exp(-lambda * val));
+                        }
 
-                            return -1;
-                        };
+                        return -1;
+                    };
 
-                        return (Prim(right) - Prim(left));
-                    }
+                    return (Prim(right) - Prim(left));
                 }
+            }
 
-                return double.NaN;
-            }
-            catch
-            {
-                return double.NaN;
-            }
+            return double.NaN;
         }
 
         /// <summary>
         /// 计算服从标准正态分布的随机变量在指定分布参数的概率密度。
         /// </summary>
         /// <param name="value">样本值。</param>
-        public static double StandardNormalDistributionProbabilityDensity(double value)
+        /// <returns>双精度浮点数，表示服从标准正态分布的随机变量在指定分布参数的概率密度。</returns>
+        public static double NormalDistributionProbabilityDensity(double value)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(value))
             {
-                if (!InternalMethod.IsNaNOrInfinity(value))
-                {
-                    return Math.Exp(-0.5 * value * value) / _Sqrt2Pi;
-                }
+                return Math.Exp(-0.5 * value * value) / Constant.Sqrt2Pi;
+            }
 
-                return double.NaN;
-            }
-            catch
-            {
-                return double.NaN;
-            }
+            return double.NaN;
         }
 
         /// <summary>
@@ -902,23 +803,17 @@ namespace Com
         /// <param name="ev">数学期望。</param>
         /// <param name="sd">标准差。</param>
         /// <param name="value">样本值。</param>
+        /// <returns>双精度浮点数，表示服从正态分布的随机变量在指定分布参数的概率密度。</returns>
         public static double NormalDistributionProbabilityDensity(double ev, double sd, double value)
         {
-            try
+            if (!InternalMethod.IsNaNOrInfinity(ev) && !InternalMethod.IsNaNOrInfinity(sd) && !InternalMethod.IsNaNOrInfinity(value))
             {
-                if (!InternalMethod.IsNaNOrInfinity(ev) && !InternalMethod.IsNaNOrInfinity(sd) && !InternalMethod.IsNaNOrInfinity(value))
-                {
-                    double N = (value - ev) / sd;
+                double N = (value - ev) / sd;
 
-                    return Math.Exp(-0.5 * N * N) / _Sqrt2Pi / sd;
-                }
+                return Math.Exp(-0.5 * N * N) / Constant.Sqrt2Pi / sd;
+            }
 
-                return double.NaN;
-            }
-            catch
-            {
-                return double.NaN;
-            }
+            return double.NaN;
         }
 
         #endregion
@@ -929,40 +824,36 @@ namespace Com
         /// 计算一组可排序对象的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>IComparable 对象，表示一组可排序对象的最大值。</returns>
         public static IComparable Max(params IComparable[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    IComparable result = values[0];
+                IComparable result = values[0];
 
-                    for (int i = 1; i < values.Length; i++)
+                for (int i = 1; i < values.Length; i++)
+                {
+                    if (values[i] != null)
                     {
-                        if (values[i] != null)
+                        if (values[i].CompareTo(result) > 0)
                         {
-                            if (values[i].CompareTo(result) > 0)
-                            {
-                                result = values[i];
-                            }
-                        }
-                        else if (result != null)
-                        {
-                            if (result.CompareTo(values[i]) < 0)
-                            {
-                                result = values[i];
-                            }
+                            result = values[i];
                         }
                     }
-
-                    return result;
+                    else if (result != null)
+                    {
+                        if (result.CompareTo(values[i]) < 0)
+                        {
+                            result = values[i];
+                        }
+                    }
                 }
 
-                return null;
+                return result;
             }
-            catch
+            else
             {
-                return null;
+                throw new ArgumentNullException();
             }
         }
 
@@ -970,27 +861,26 @@ namespace Com
         /// 计算一组 8 位整数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>8 位整数，表示一组 8 位整数的最大值。</returns>
         public static sbyte Max(params sbyte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                sbyte result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    sbyte result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return sbyte.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -998,27 +888,26 @@ namespace Com
         /// 计算一组 8 位无符号整数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>8 位无符号整数，表示一组 8 位无符号整数的最大值。</returns>
         public static byte Max(params byte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                byte result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    byte result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return byte.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1026,27 +915,26 @@ namespace Com
         /// 计算一组 16 位整数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>16 位整数，表示一组 16 位整数的最大值。</returns>
         public static short Max(params short[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                short result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    short result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return short.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1054,27 +942,26 @@ namespace Com
         /// 计算一组 16 位无符号整数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>16 位无符号整数，表示一组 16 位无符号整数的最大值。</returns>
         public static ushort Max(params ushort[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                ushort result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    ushort result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return ushort.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1082,27 +969,26 @@ namespace Com
         /// 计算一组 32 位整数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 32 位整数的最大值。</returns>
         public static int Max(params int[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                int result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    int result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1110,27 +996,26 @@ namespace Com
         /// 计算一组 32 位无符号整数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位无符号整数，表示一组 32 位无符号整数的最大值。</returns>
         public static uint Max(params uint[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                uint result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    uint result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return uint.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1138,27 +1023,26 @@ namespace Com
         /// 计算一组 64 位整数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>64 位整数，表示一组 64 位整数的最大值。</returns>
         public static long Max(params long[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                long result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    long result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return long.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1166,27 +1050,26 @@ namespace Com
         /// 计算一组 64 位无符号整数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>64 位无符号整数，表示一组 64 位无符号整数的最大值。</returns>
         public static ulong Max(params ulong[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                ulong result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    ulong result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return ulong.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1194,27 +1077,26 @@ namespace Com
         /// 计算一组单精度浮点数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>单精度浮点数，表示一组单精度浮点数的最大值。</returns>
         public static float Max(params float[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                float result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    float result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return float.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1222,27 +1104,26 @@ namespace Com
         /// 计算一组双精度浮点数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的最大值。</returns>
         public static double Max(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                double result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    double result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1250,27 +1131,26 @@ namespace Com
         /// 计算一组十进制数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的最大值。</returns>
         public static decimal Max(params decimal[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                decimal result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    decimal result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result < values[i])
                     {
-                        result = Math.Max(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return decimal.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1280,40 +1160,36 @@ namespace Com
         /// 计算一组可排序对象的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>IComparable 对象，表示一组可排序对象的最小值。</returns>
         public static IComparable Min(params IComparable[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    IComparable result = values[0];
+                IComparable result = values[0];
 
-                    for (int i = 1; i < values.Length; i++)
+                for (int i = 1; i < values.Length; i++)
+                {
+                    if (values[i] != null)
                     {
-                        if (values[i] != null)
+                        if (values[i].CompareTo(result) < 0)
                         {
-                            if (values[i].CompareTo(result) < 0)
-                            {
-                                result = values[i];
-                            }
-                        }
-                        else if (result != null)
-                        {
-                            if (result.CompareTo(values[i]) > 0)
-                            {
-                                result = values[i];
-                            }
+                            result = values[i];
                         }
                     }
-
-                    return result;
+                    else if (result != null)
+                    {
+                        if (result.CompareTo(values[i]) > 0)
+                        {
+                            result = values[i];
+                        }
+                    }
                 }
 
-                return null;
+                return result;
             }
-            catch
+            else
             {
-                return null;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1321,27 +1197,26 @@ namespace Com
         /// 计算一组 8 位整数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>8 位整数，表示一组 8 位整数的最小值。</returns>
         public static sbyte Min(params sbyte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                sbyte result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    sbyte result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return sbyte.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1349,27 +1224,26 @@ namespace Com
         /// 计算一组 8 位无符号整数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>8 位无符号整数，表示一组 8 位无符号整数的最小值。</returns>
         public static byte Min(params byte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                byte result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    byte result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return byte.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1377,27 +1251,26 @@ namespace Com
         /// 计算一组 16 位整数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>16 位整数，表示一组 16 位整数的最小值。</returns>
         public static short Min(params short[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                short result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    short result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return short.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1405,27 +1278,26 @@ namespace Com
         /// 计算一组 16 位无符号整数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>16 位无符号整数，表示一组 16 位无符号整数的最小值。</returns>
         public static ushort Min(params ushort[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                ushort result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    ushort result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return ushort.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1433,27 +1305,26 @@ namespace Com
         /// 计算一组 32 位整数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 32 位整数的最小值。</returns>
         public static int Min(params int[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                int result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    int result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1461,27 +1332,26 @@ namespace Com
         /// 计算一组 32 位无符号整数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位无符号整数，表示一组 32 位无符号整数的最小值。</returns>
         public static uint Min(params uint[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                uint result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    uint result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return uint.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1489,27 +1359,26 @@ namespace Com
         /// 计算一组 64 位整数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>64 位整数，表示一组 64 位整数的最小值。</returns>
         public static long Min(params long[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                long result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    long result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return long.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1517,27 +1386,26 @@ namespace Com
         /// 计算一组 64 位无符号整数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>64 位无符号整数，表示一组 64 位无符号整数的最小值。</returns>
         public static ulong Min(params ulong[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                ulong result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    ulong result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return ulong.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1545,27 +1413,26 @@ namespace Com
         /// 计算一组单精度浮点数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>单精度浮点数，表示一组单精度浮点数的最小值。</returns>
         public static float Min(params float[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                float result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    float result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return float.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1573,27 +1440,26 @@ namespace Com
         /// 计算一组双精度浮点数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的最小值。</returns>
         public static double Min(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                double result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    double result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -1601,417 +1467,445 @@ namespace Com
         /// 计算一组十进制数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的最小值。</returns>
         public static decimal Min(params decimal[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                decimal result = values[0];
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    decimal result = values[0];
-
-                    for (int i = 0; i < values.Length; i++)
+                    if (result > values[i])
                     {
-                        result = Math.Min(result, values[i]);
+                        result = values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return decimal.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
         //
 
         /// <summary>
-        /// 计算一组可排序对象的最小值与最大值。
+        /// 计算一组可排序对象的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(IComparable, IComparable) 元组，表示一组可排序对象的最小值与最大值。</returns>
         public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    IComparable Min = values[0];
-                    IComparable Max = values[0];
+                IComparable Min = values[0];
+                IComparable Max = values[0];
 
-                    for (int i = 1; i < values.Length; i++)
+                for (int i = 1; i < values.Length; i++)
+                {
+                    if (values[i] != null)
                     {
-                        if (values[i] != null)
+                        if (values[i].CompareTo(Min) < 0)
                         {
-                            if (values[i].CompareTo(Min) < 0)
+                            Min = values[i];
+                        }
+
+                        if (values[i].CompareTo(Max) > 0)
+                        {
+                            Max = values[i];
+                        }
+                    }
+                    else
+                    {
+                        if (Min != null)
+                        {
+                            if (Min.CompareTo(values[i]) > 0)
                             {
                                 Min = values[i];
                             }
+                        }
 
-                            if (values[i].CompareTo(Max) > 0)
+                        if (Max != null)
+                        {
+                            if (Max.CompareTo(values[i]) < 0)
                             {
                                 Max = values[i];
                             }
                         }
-                        else
-                        {
-                            if (Min != null)
-                            {
-                                if (Min.CompareTo(values[i]) > 0)
-                                {
-                                    Min = values[i];
-                                }
-                            }
-
-                            if (Max != null)
-                            {
-                                if (Max.CompareTo(values[i]) < 0)
-                                {
-                                    Max = values[i];
-                                }
-                            }
-                        }
                     }
-
-                    return (Min, Max);
                 }
 
-                return (null, null);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (null, null);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组 8 位整数的最小值与最大值。
+        /// 计算一组 8 位整数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(sbyte, sbyte) 元组，表示一组 8 位整数的最小值与最大值。</returns>
         public static (sbyte Min, sbyte Max) MinMax(params sbyte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    sbyte Min = values[0];
-                    sbyte Max = values[0];
+                sbyte Min = values[0];
+                sbyte Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (sbyte.MinValue, sbyte.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组 8 位无符号整数的最小值与最大值。
+        /// 计算一组 8 位无符号整数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(byte, byte) 元组，表示一组 8 位无符号整数的最小值与最大值。</returns>
         public static (byte Min, byte Max) MinMax(params byte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    byte Min = values[0];
-                    byte Max = values[0];
+                byte Min = values[0];
+                byte Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (byte.MinValue, byte.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组 16 位整数的最小值与最大值。
+        /// 计算一组 16 位整数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(short, short) 元组，表示一组 16 位整数的最小值与最大值。</returns>
         public static (short Min, short Max) MinMax(params short[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    short Min = values[0];
-                    short Max = values[0];
+                short Min = values[0];
+                short Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (short.MinValue, short.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组 16 位无符号整数的最小值与最大值。
+        /// 计算一组 16 位无符号整数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(ushort, ushort) 元组，表示一组 16 位无符号整数的最小值与最大值。</returns>
         public static (ushort Min, ushort Max) MinMax(params ushort[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    ushort Min = values[0];
-                    ushort Max = values[0];
+                ushort Min = values[0];
+                ushort Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (ushort.MinValue, ushort.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组 32 位整数的最小值与最大值。
+        /// 计算一组 32 位整数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(int, int) 元组，表示一组 32 位整数的最小值与最大值。</returns>
         public static (int Min, int Max) MinMax(params int[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    int Min = values[0];
-                    int Max = values[0];
+                int Min = values[0];
+                int Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (int.MinValue, int.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组 32 位无符号整数的最小值与最大值。
+        /// 计算一组 32 位无符号整数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(uint, uint) 元组，表示一组 32 位无符号整数的最小值与最大值。</returns>
         public static (uint Min, uint Max) MinMax(params uint[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    uint Min = values[0];
-                    uint Max = values[0];
+                uint Min = values[0];
+                uint Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (uint.MinValue, uint.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组 64 位整数的最小值与最大值。
+        /// 计算一组 64 位整数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(long, long) 元组，表示一组 64 位整数的最小值与最大值。</returns>
         public static (long Min, long Max) MinMax(params long[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    long Min = values[0];
-                    long Max = values[0];
+                long Min = values[0];
+                long Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (long.MinValue, long.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组 64 位无符号整数的最小值与最大值。
+        /// 计算一组 64 位无符号整数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(ulong, ulong) 元组，表示一组 64 位无符号整数的最小值与最大值。</returns>
         public static (ulong Min, ulong Max) MinMax(params ulong[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    ulong Min = values[0];
-                    ulong Max = values[0];
+                ulong Min = values[0];
+                ulong Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (ulong.MinValue, ulong.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组单精度浮点数的最小值与最大值。
+        /// 计算一组单精度浮点数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(float, float) 元组，表示一组单精度浮点数的最小值与最大值。</returns>
         public static (float Min, float Max) MinMax(params float[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    float Min = values[0];
-                    float Max = values[0];
+                float Min = values[0];
+                float Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (float.NaN, float.NaN);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组双精度浮点数的最小值与最大值。
+        /// 计算一组双精度浮点数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(double, double) 元组，表示一组双精度浮点数的最小值与最大值。</returns>
         public static (double Min, double Max) MinMax(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    double Min = values[0];
-                    double Max = values[0];
+                double Min = values[0];
+                double Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (double.NaN, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
         /// <summary>
-        /// 计算一组十进制数的最小值与最大值。
+        /// 计算一组十进制数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(decimal, decimal) 元组，表示一组十进制数的最小值与最大值。</returns>
         public static (decimal Min, decimal Max) MinMax(params decimal[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    decimal Min = values[0];
-                    decimal Max = values[0];
+                decimal Min = values[0];
+                decimal Max = values[0];
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
+                        Min = values[i];
                     }
 
-                    return (Min, Max);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
                 }
 
-                return (0, 0);
+                return (Min, Max);
             }
-            catch
+            else
             {
-                return (decimal.MinValue, decimal.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
@@ -2021,22 +1915,18 @@ namespace Com
         /// 计算一组 8 位整数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 8 位整数的极差。</returns>
         public static int Range(params sbyte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (int Min, int Max) = MinMax(values);
+                (int Min, int Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2044,22 +1934,18 @@ namespace Com
         /// 计算一组 8 位无符号整数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 8 位无符号整数的极差。</returns>
         public static int Range(params byte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (int Min, int Max) = MinMax(values);
+                (int Min, int Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2067,22 +1953,18 @@ namespace Com
         /// 计算一组 16 位整数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 16 位整数的极差。</returns>
         public static int Range(params short[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (int Min, int Max) = MinMax(values);
+                (int Min, int Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2090,22 +1972,18 @@ namespace Com
         /// 计算一组 16 位无符号整数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 16 位无符号整数的极差。</returns>
         public static int Range(params ushort[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (int Min, int Max) = MinMax(values);
+                (int Min, int Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2113,22 +1991,27 @@ namespace Com
         /// 计算一组 32 位整数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 32 位整数的极差。</returns>
         public static int Range(params int[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                (long Min, long Max) = MinMax(values);
+
+                long result = Max - Min;
+
+                if (result >= int.MinValue && result <= int.MaxValue)
                 {
-                    (int Min, int Max) = MinMax(values);
-
-                    return (Max - Min);
+                    return (int)result;
                 }
-
-                return 0;
+                else
+                {
+                    throw new OverflowException();
+                }
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2136,22 +2019,18 @@ namespace Com
         /// 计算一组 32 位无符号整数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>64 位整数，表示一组 32 位无符号整数的极差。</returns>
         public static long Range(params uint[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (long Min, long Max) = MinMax(values);
+                (long Min, long Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2159,22 +2038,27 @@ namespace Com
         /// 计算一组 64 位整数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>64 位整数，表示一组 64 位整数的极差。</returns>
         public static long Range(params long[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                (decimal Min, decimal Max) = MinMax(values);
+
+                decimal result = Max - Min;
+
+                if (result >= long.MinValue && result <= long.MaxValue)
                 {
-                    (long Min, long Max) = MinMax(values);
-
-                    return (Max - Min);
+                    return (long)result;
                 }
-
-                return 0;
+                else
+                {
+                    throw new OverflowException();
+                }
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2182,22 +2066,18 @@ namespace Com
         /// 计算一组 64 位无符号整数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 64 位无符号整数的极差。</returns>
         public static double Range(params ulong[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (double Min, double Max) = MinMax(values);
+                (double Min, double Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2205,22 +2085,18 @@ namespace Com
         /// 计算一组单精度浮点数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>单精度浮点数，表示一组单精度浮点数的极差。</returns>
         public static float Range(params float[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (float Min, float Max) = MinMax(values);
+                (float Min, float Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2228,22 +2104,18 @@ namespace Com
         /// 计算一组双精度浮点数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的极差。</returns>
         public static double Range(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (double Min, double Max) = MinMax(values);
+                (double Min, double Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2251,22 +2123,18 @@ namespace Com
         /// 计算一组十进制数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的极差。</returns>
         public static decimal Range(params decimal[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    (decimal Min, decimal Max) = MinMax(values);
+                (decimal Min, decimal Max) = MinMax(values);
 
-                    return (Max - Min);
-                }
-
-                return 0;
+                return (Max - Min);
             }
-            catch
+            else
             {
-                return decimal.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2278,27 +2146,26 @@ namespace Com
         /// 计算一组 8 位整数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 8 位整数的求和。</returns>
         public static int Sum(params sbyte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    int result = 0;
+                int result = 0;
 
+                checked
+                {
                     for (int i = 0; i < values.Length; i++)
                     {
                         result += values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2306,27 +2173,26 @@ namespace Com
         /// 计算一组 8 位无符号整数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 8 位无符号整数的求和。</returns>
         public static int Sum(params byte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    int result = 0;
+                int result = 0;
 
+                checked
+                {
                     for (int i = 0; i < values.Length; i++)
                     {
                         result += values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2334,27 +2200,26 @@ namespace Com
         /// 计算一组 16 位整数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 16 位整数的求和。</returns>
         public static int Sum(params short[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    int result = 0;
+                int result = 0;
 
+                checked
+                {
                     for (int i = 0; i < values.Length; i++)
                     {
                         result += values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2362,27 +2227,26 @@ namespace Com
         /// 计算一组 16 位无符号整数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 16 位无符号整数的求和。</returns>
         public static int Sum(params ushort[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    int result = 0;
+                int result = 0;
 
+                checked
+                {
                     for (int i = 0; i < values.Length; i++)
                     {
                         result += values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2390,27 +2254,26 @@ namespace Com
         /// 计算一组 32 位整数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>32 位整数，表示一组 32 位整数的求和。</returns>
         public static int Sum(params int[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    int result = 0;
+                int result = 0;
 
+                checked
+                {
                     for (int i = 0; i < values.Length; i++)
                     {
                         result += values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2418,27 +2281,26 @@ namespace Com
         /// 计算一组 32 位无符号整数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>64 位整数，表示一组 32 位无符号整数的求和。</returns>
         public static long Sum(params uint[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    long result = 0;
+                long result = 0;
 
+                checked
+                {
                     for (int i = 0; i < values.Length; i++)
                     {
                         result += values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2446,27 +2308,26 @@ namespace Com
         /// 计算一组 64 位整数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>64 位整数，表示一组 64 位整数的求和。</returns>
         public static long Sum(params long[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    long result = 0;
+                long result = 0;
 
+                checked
+                {
                     for (int i = 0; i < values.Length; i++)
                     {
                         result += values[i];
                     }
-
-                    return result;
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2474,27 +2335,23 @@ namespace Com
         /// 计算一组 64 位无符号整数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 64 位无符号整数的求和。</returns>
         public static double Sum(params ulong[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                double result = 0;
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    double result = 0;
-
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        result += values[i];
-                    }
-
-                    return result;
+                    result += values[i];
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2502,27 +2359,23 @@ namespace Com
         /// 计算一组单精度浮点数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>单精度浮点数，表示一组单精度浮点数的求和。</returns>
         public static float Sum(params float[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                float result = 0;
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    float result = 0;
-
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        result += values[i];
-                    }
-
-                    return result;
+                    result += values[i];
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return int.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2530,27 +2383,23 @@ namespace Com
         /// 计算一组双精度浮点数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的求和。</returns>
         public static double Sum(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                double result = 0;
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    double result = 0;
-
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        result += values[i];
-                    }
-
-                    return result;
+                    result += values[i];
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2558,27 +2407,23 @@ namespace Com
         /// 计算一组十进制数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的求和。</returns>
         public static decimal Sum(params decimal[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                decimal result = 0;
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    decimal result = 0;
-
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        result += values[i];
-                    }
-
-                    return result;
+                    result += values[i];
                 }
 
-                return 0;
+                return result;
             }
-            catch
+            else
             {
-                return decimal.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2588,20 +2433,16 @@ namespace Com
         /// 计算一组 8 位整数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 8 位整数的平均值。</returns>
         public static double Average(params sbyte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return ((double)Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2609,20 +2450,16 @@ namespace Com
         /// 计算一组 8 位无符号整数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 8 位无符号整数的平均值。</returns>
         public static double Average(params byte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return ((double)Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2630,20 +2467,16 @@ namespace Com
         /// 计算一组 16 位整数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 16 位整数的平均值。</returns>
         public static double Average(params short[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return ((double)Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2651,20 +2484,16 @@ namespace Com
         /// 计算一组 16 位无符号整数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 16 位无符号整数的平均值。</returns>
         public static double Average(params ushort[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return ((double)Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2672,20 +2501,16 @@ namespace Com
         /// 计算一组 32 位整数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 32 位整数的平均值。</returns>
         public static double Average(params int[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return ((double)Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2693,20 +2518,16 @@ namespace Com
         /// 计算一组 32 位无符号整数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 32 位无符号整数的平均值。</returns>
         public static double Average(params uint[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return ((double)Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2714,20 +2535,16 @@ namespace Com
         /// 计算一组 64 位整数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 64 位整数的平均值。</returns>
         public static double Average(params long[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return ((double)Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2735,20 +2552,16 @@ namespace Com
         /// 计算一组 64 位无符号整数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组 64 位无符号整数的平均值。</returns>
         public static double Average(params ulong[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return (Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2756,20 +2569,16 @@ namespace Com
         /// 计算一组单精度浮点数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>单精度浮点数，表示一组单精度浮点数的平均值。</returns>
         public static float Average(params float[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return (Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return float.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2777,20 +2586,16 @@ namespace Com
         /// 计算一组双精度浮点数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的平均值。</returns>
         public static double Average(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return (Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2798,20 +2603,16 @@ namespace Com
         /// 计算一组十进制数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的平均值。</returns>
         public static decimal Average(params decimal[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    return (Sum(values) / values.Length);
-                }
-
-                return 0;
+                return (Sum(values) / values.Length);
             }
-            catch
+            else
             {
-                return decimal.MinValue;
+                throw new ArgumentNullException();
             }
         }
 
@@ -2821,31 +2622,35 @@ namespace Com
         /// 计算一组 8 位整数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(sbyte, sbyte, double) 元组，表示一组 8 位整数的最小值、最大值与平均值。</returns>
         public static (sbyte Min, sbyte Max, double Average) MinMaxAverage(params sbyte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    sbyte Min = values[0];
-                    sbyte Max = values[0];
-                    double Sum = 0;
+                sbyte Min = values[0];
+                sbyte Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (sbyte.MinValue, sbyte.MinValue, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -2853,31 +2658,35 @@ namespace Com
         /// 计算一组 8 位无符号整数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(byte, byte, double) 元组，表示一组 8 位无符号整数的最小值、最大值与平均值。</returns>
         public static (byte Min, byte Max, double Average) MinMaxAverage(params byte[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    byte Min = values[0];
-                    byte Max = values[0];
-                    double Sum = 0;
+                byte Min = values[0];
+                byte Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (byte.MinValue, byte.MinValue, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -2885,31 +2694,35 @@ namespace Com
         /// 计算一组 16 位整数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(short, short, double) 元组，表示一组 16 位整数的最小值、最大值与平均值。</returns>
         public static (short Min, short Max, double Average) MinMaxAverage(params short[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    short Min = values[0];
-                    short Max = values[0];
-                    double Sum = 0;
+                short Min = values[0];
+                short Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (short.MinValue, short.MinValue, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -2917,31 +2730,35 @@ namespace Com
         /// 计算一组 16 位无符号整数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(ushort, ushort, double) 元组，表示一组 16 位无符号整数的最小值、最大值与平均值。</returns>
         public static (ushort Min, ushort Max, double Average) MinMaxAverage(params ushort[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    ushort Min = values[0];
-                    ushort Max = values[0];
-                    double Sum = 0;
+                ushort Min = values[0];
+                ushort Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (ushort.MinValue, ushort.MinValue, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -2949,31 +2766,35 @@ namespace Com
         /// 计算一组 32 位整数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(int, int, double) 元组，表示一组 32 位整数的最小值、最大值与平均值。</returns>
         public static (int Min, int Max, double Average) MinMaxAverage(params int[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    int Min = values[0];
-                    int Max = values[0];
-                    double Sum = 0;
+                int Min = values[0];
+                int Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (int.MinValue, int.MinValue, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -2981,31 +2802,35 @@ namespace Com
         /// 计算一组 32 位无符号整数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(uint, uint, double) 元组，表示一组 32 位无符号整数的最小值、最大值与平均值。</returns>
         public static (uint Min, uint Max, double Average) MinMaxAverage(params uint[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    uint Min = values[0];
-                    uint Max = values[0];
-                    double Sum = 0;
+                uint Min = values[0];
+                uint Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (uint.MinValue, uint.MinValue, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -3013,31 +2838,35 @@ namespace Com
         /// 计算一组 64 位整数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(long, long, double) 元组，表示一组 64 位整数的最小值、最大值与平均值。</returns>
         public static (long Min, long Max, double Average) MinMaxAverage(params long[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    long Min = values[0];
-                    long Max = values[0];
-                    double Sum = 0;
+                long Min = values[0];
+                long Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (long.MinValue, long.MinValue, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -3045,31 +2874,35 @@ namespace Com
         /// 计算一组 64 位无符号整数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(ulong, ulong, double) 元组，表示一组 64 位无符号整数的最小值、最大值与平均值。</returns>
         public static (ulong Min, ulong Max, double Average) MinMaxAverage(params ulong[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    ulong Min = values[0];
-                    ulong Max = values[0];
-                    double Sum = 0;
+                ulong Min = values[0];
+                ulong Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (ulong.MinValue, ulong.MinValue, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -3077,31 +2910,35 @@ namespace Com
         /// 计算一组单精度浮点数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(float, float, double) 元组，表示一组单精度浮点数的最小值、最大值与平均值。</returns>
         public static (float Min, float Max, float Average) MinMaxAverage(params float[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    float Min = values[0];
-                    float Max = values[0];
-                    float Sum = 0;
+                float Min = values[0];
+                float Max = values[0];
+                float Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (float.NaN, float.NaN, float.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -3109,31 +2946,35 @@ namespace Com
         /// 计算一组双精度浮点数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(double, double, double) 元组，表示一组双精度浮点数的最小值、最大值与平均值。</returns>
         public static (double Min, double Max, double Average) MinMaxAverage(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    double Min = values[0];
-                    double Max = values[0];
-                    double Sum = 0;
+                double Min = values[0];
+                double Max = values[0];
+                double Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (double.NaN, double.NaN, double.NaN);
+                throw new ArgumentNullException();
             }
         }
 
@@ -3141,31 +2982,35 @@ namespace Com
         /// 计算一组十进制数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>(decimal, decimal, double) 元组，表示一组十进制数的最小值、最大值与平均值。</returns>
         public static (decimal Min, decimal Max, decimal Average) MinMaxAverage(params decimal[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
-                {
-                    decimal Min = values[0];
-                    decimal Max = values[0];
-                    decimal Sum = 0;
+                decimal Min = values[0];
+                decimal Max = values[0];
+                decimal Sum = 0;
 
-                    for (int i = 0; i < values.Length; i++)
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (Min > values[i])
                     {
-                        Min = Math.Min(Min, values[i]);
-                        Max = Math.Max(Max, values[i]);
-                        Sum += values[i];
+                        Min = values[i];
                     }
 
-                    return (Min, Max, Sum / values.Length);
+                    if (Max < values[i])
+                    {
+                        Max = values[i];
+                    }
+
+                    Sum += values[i];
                 }
 
-                return (0, 0, 0);
+                return (Min, Max, Sum / values.Length);
             }
-            catch
+            else
             {
-                return (decimal.MinValue, decimal.MinValue, decimal.MinValue);
+                throw new ArgumentNullException();
             }
         }
 
@@ -3177,30 +3022,26 @@ namespace Com
         /// 计算一组双精度浮点数的方差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的方差。</returns>
         public static double Deviation(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                double Avg = Average(values);
+                double SqrSum = 0;
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    double Avg = Average(values);
-                    double SqrSum = 0;
+                    double Delta = values[i] - Avg;
 
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        double Delta = values[i] - Avg;
-
-                        SqrSum += Delta * Delta;
-                    }
-
-                    return (SqrSum / values.Length);
+                    SqrSum += Delta * Delta;
                 }
 
-                return 0;
+                return (SqrSum / values.Length);
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -3208,30 +3049,26 @@ namespace Com
         /// 计算一组双精度浮点数的样本方差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的样本方差。</returns>
         public static double SampleDeviation(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                double Avg = Average(values);
+                double SqrSum = 0;
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    double Avg = Average(values);
-                    double SqrSum = 0;
+                    double Delta = values[i] - Avg;
 
-                    for (int i = 0; i < values.Length; i++)
-                    {
-                        double Delta = values[i] - Avg;
-
-                        SqrSum += Delta * Delta;
-                    }
-
-                    return (SqrSum / (values.Length - 1));
+                    SqrSum += Delta * Delta;
                 }
 
-                return 0;
+                return (SqrSum / (values.Length - 1));
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -3239,41 +3076,37 @@ namespace Com
         /// 计算一组双精度浮点数的标准差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的标准差。</returns>
         public static double StandardDeviation(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                int Len = values.Length;
+
+                double Sum = 0;
+                double AbsMax = 0;
+
+                for (int i = 0; i < Len; i++)
                 {
-                    int Len = values.Length;
-
-                    double Sum = 0;
-                    double AbsMax = 0;
-
-                    for (int i = 0; i < Len; i++)
-                    {
-                        Sum += values[i];
-                        AbsMax = Math.Max(AbsMax, Math.Abs(values[i]));
-                    }
-
-                    double Avg = Sum / Len;
-                    double SqrSum = 0;
-
-                    for (int i = 0; i < Len; i++)
-                    {
-                        double Delta = (values[i] - Avg) / AbsMax;
-
-                        SqrSum += Delta * Delta;
-                    }
-
-                    return (AbsMax * Math.Sqrt(SqrSum / Len));
+                    Sum += values[i];
+                    AbsMax = Math.Max(AbsMax, Math.Abs(values[i]));
                 }
 
-                return 0;
+                double Avg = Sum / Len;
+                double SqrSum = 0;
+
+                for (int i = 0; i < Len; i++)
+                {
+                    double Delta = (values[i] - Avg) / AbsMax;
+
+                    SqrSum += Delta * Delta;
+                }
+
+                return (AbsMax * Math.Sqrt(SqrSum / Len));
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 
@@ -3281,41 +3114,37 @@ namespace Com
         /// 计算一组双精度浮点数的样本标准差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
+        /// <returns>双精度浮点数，表示一组双精度浮点数的样本标准差。</returns>
         public static double SampleStandardDeviation(params double[] values)
         {
-            try
+            if (!InternalMethod.IsNullOrEmpty(values))
             {
-                if (!InternalMethod.IsNullOrEmpty(values))
+                int Len = values.Length;
+
+                double Sum = 0;
+                double AbsMax = 0;
+
+                for (int i = 0; i < Len; i++)
                 {
-                    int Len = values.Length;
-
-                    double Sum = 0;
-                    double AbsMax = 0;
-
-                    for (int i = 0; i < Len; i++)
-                    {
-                        Sum += values[i];
-                        AbsMax = Math.Max(AbsMax, Math.Abs(values[i]));
-                    }
-
-                    double Avg = Sum / Len;
-                    double SqrSum = 0;
-
-                    for (int i = 0; i < Len; i++)
-                    {
-                        double Delta = (values[i] - Avg) / AbsMax;
-
-                        SqrSum += Delta * Delta;
-                    }
-
-                    return (AbsMax * Math.Sqrt(SqrSum / (Len - 1)));
+                    Sum += values[i];
+                    AbsMax = Math.Max(AbsMax, Math.Abs(values[i]));
                 }
 
-                return 0;
+                double Avg = Sum / Len;
+                double SqrSum = 0;
+
+                for (int i = 0; i < Len; i++)
+                {
+                    double Delta = (values[i] - Avg) / AbsMax;
+
+                    SqrSum += Delta * Delta;
+                }
+
+                return (AbsMax * Math.Sqrt(SqrSum / (Len - 1)));
             }
-            catch
+            else
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
         }
 

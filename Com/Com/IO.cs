@@ -95,14 +95,7 @@ namespace Com
         /// <returns>布尔值，表示此操作是否成功。</returns>
         public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive, bool merge)
         {
-            try
-            {
-                return CopyFolder(sourceFolder, destFolder, recursive, merge, false);
-            }
-            catch
-            {
-                return false;
-            }
+            return CopyFolder(sourceFolder, destFolder, recursive, merge, false);
         }
 
         /// <summary>
@@ -114,14 +107,7 @@ namespace Com
         /// <returns>布尔值，表示此操作是否成功。</returns>
         public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive)
         {
-            try
-            {
-                return CopyFolder(sourceFolder, destFolder, recursive, false, false);
-            }
-            catch
-            {
-                return false;
-            }
+            return CopyFolder(sourceFolder, destFolder, recursive, false, false);
         }
 
         /// <summary>
@@ -132,14 +118,7 @@ namespace Com
         /// <returns>布尔值，表示此操作是否成功。</returns>
         public static bool CopyFolder(string sourceFolder, string destFolder)
         {
-            try
-            {
-                return CopyFolder(sourceFolder, destFolder, false, false, false);
-            }
-            catch
-            {
-                return false;
-            }
+            return CopyFolder(sourceFolder, destFolder, false, false, false);
         }
     }
 }

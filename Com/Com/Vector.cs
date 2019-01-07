@@ -1885,7 +1885,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleFromBase(index));
+                return (Constant.HalfPi - AngleFromBase(index));
             }
             else
             {
@@ -3069,6 +3069,10 @@ namespace Com
                 {
                     this[index] = (double)value;
                 }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
             }
         }
 
@@ -3153,9 +3157,24 @@ namespace Com
 
         void ICollection.CopyTo(Array array, int index)
         {
-            if (_Size > 0 && (array != null && array.Rank == 1 && array.Length >= _Size))
+            if (_Size > 0)
             {
-                _VArray.CopyTo(array, index);
+                if (array == null)
+                {
+                    throw new ArgumentNullException();
+                }
+                else if (array.Rank != 1)
+                {
+                    throw new RankException();
+                }
+                else if (array.Length < _Size)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    _VArray.CopyTo(array, index);
+                }
             }
         }
 

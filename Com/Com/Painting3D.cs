@@ -211,7 +211,7 @@ namespace Com
 
                             for (int i = 6; i < Element3D.Count; i++)
                             {
-                                IlluminationIntensity.Add((Math.Sqrt(2) / 2) * (Exposure + 1) + (Exposure - 1));
+                                IlluminationIntensity.Add(Constant.HalfSqrt2 * (Exposure + 1) + (Exposure - 1));
                             }
                         }
                         else
@@ -254,13 +254,13 @@ namespace Com
                                 double CosA = Math.Cos(A);
                                 double CosSqrA = CosA * CosA;
 
-                                double _IlluminationIntensity = (A < Math.PI / 2 ? -CosSqrA : (A > Math.PI / 2 ? CosSqrA : 0));
+                                double _IlluminationIntensity = (A < Constant.HalfPi ? -CosSqrA : (A > Constant.HalfPi ? CosSqrA : 0));
 
-                                if (color.A < 255 && A != Math.PI / 2)
+                                if (color.A < 255 && A != Constant.HalfPi)
                                 {
                                     double Transmittance = 1 - (double)color.A / 255;
 
-                                    if (A < Math.PI / 2)
+                                    if (A < Constant.HalfPi)
                                     {
                                         _IlluminationIntensity += (Transmittance * Math.Abs(CosA) * CosSqrA);
                                     }
@@ -303,7 +303,7 @@ namespace Com
                                     }
                                 }
 
-                                _IlluminationIntensity = (Math.Sqrt(2) / 2) * (_IlluminationIntensity / Num + 1) + (Exposure - 1);
+                                _IlluminationIntensity = Constant.HalfSqrt2 * (_IlluminationIntensity / Num + 1) + (Exposure - 1);
 
                                 IlluminationIntensity.Add(_IlluminationIntensity);
                             }

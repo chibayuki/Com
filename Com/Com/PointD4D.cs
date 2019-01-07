@@ -512,7 +512,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleFromU);
+                return (Constant.HalfPi - AngleFromU);
             }
         }
 
@@ -528,7 +528,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleFromX);
+                return (Constant.HalfPi - AngleFromX);
             }
         }
 
@@ -544,7 +544,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleFromY);
+                return (Constant.HalfPi - AngleFromY);
             }
         }
 
@@ -560,7 +560,7 @@ namespace Com
                     return 0;
                 }
 
-                return (Math.PI / 2 - AngleFromZ);
+                return (Constant.HalfPi - AngleFromZ);
             }
         }
 
@@ -2128,6 +2128,10 @@ namespace Com
                 {
                     this[index] = (double)value;
                 }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
             }
         }
 
@@ -2206,7 +2210,19 @@ namespace Com
 
         void ICollection.CopyTo(Array array, int index)
         {
-            if (array != null && array.Rank == 1 && array.Length >= Dimension)
+            if (array == null)
+            {
+                throw new ArgumentNullException();
+            }
+            else if (array.Rank != 1)
+            {
+                throw new RankException();
+            }
+            else if (array.Length < Dimension)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else
             {
                 ToArray().CopyTo(array, index);
             }

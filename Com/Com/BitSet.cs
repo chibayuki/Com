@@ -699,8 +699,10 @@ namespace Com
             {
                 return IndexOf(item, startIndex, _Size - startIndex);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -816,9 +818,13 @@ namespace Com
                         }
                     }
                 }
-            }
 
-            return -1;
+                return -1;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -848,8 +854,10 @@ namespace Com
             {
                 return LastIndexOf(item, startIndex, startIndex + 1);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -965,9 +973,13 @@ namespace Com
                         }
                     }
                 }
-            }
 
-            return -1;
+                return -1;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -1927,7 +1939,7 @@ namespace Com
                 }
                 else
                 {
-                    throw new NullReferenceException();
+                    throw new ArgumentNullException();
                 }
             }
         }

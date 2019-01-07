@@ -44,7 +44,15 @@ namespace Com
         {
             try
             {
-                if (frame != null && frameCount > 0 && msPerFrame > 0)
+                if (frame == null)
+                {
+                    throw new ArgumentNullException();
+                }
+                else if (frameCount <= 0 || msPerFrame <= 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
                 {
                     if (keyFrameList == null)
                     {
@@ -162,14 +170,7 @@ namespace Com
         /// <param name="keyFrameDensity">表示自动画的第一帧起，每连续若干帧中的第一帧为关键帧。</param>
         public static void Show(Frame frame, int frameCount, int msPerFrame, int keyFrameDensity)
         {
-            try
-            {
-                if (frame != null)
-                {
-                    Show(frame, frameCount, msPerFrame, keyFrameDensity, null);
-                }
-            }
-            catch { }
+            Show(frame, frameCount, msPerFrame, keyFrameDensity, null);
         }
 
         /// <summary>
@@ -181,14 +182,7 @@ namespace Com
         /// <param name="keyFrameList">包含所有关键帧次序数的列表。</param>
         public static void Show(Frame frame, int frameCount, int msPerFrame, List<int> keyFrameList)
         {
-            try
-            {
-                if (frame != null)
-                {
-                    Show(frame, frameCount, msPerFrame, 0, keyFrameList);
-                }
-            }
-            catch { }
+            Show(frame, frameCount, msPerFrame, 0, keyFrameList);
         }
 
         /// <summary>
@@ -199,14 +193,7 @@ namespace Com
         /// <param name="msPerFrame">动画每帧持续的毫秒数。</param>
         public static void Show(Frame frame, int frameCount, int msPerFrame)
         {
-            try
-            {
-                if (frame != null)
-                {
-                    Show(frame, frameCount, msPerFrame, 0, null);
-                }
-            }
-            catch { }
+            Show(frame, frameCount, msPerFrame, 0, null);
         }
     }
 }

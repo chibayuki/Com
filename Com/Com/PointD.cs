@@ -529,8 +529,10 @@ namespace Com
             {
                 return Array.IndexOf(ToArray(), item, startIndex, Dimension - startIndex);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -548,8 +550,10 @@ namespace Com
 
                 return Array.IndexOf(ToArray(), item, startIndex, count);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -574,8 +578,10 @@ namespace Com
             {
                 return Array.LastIndexOf(ToArray(), item, startIndex, startIndex + 1);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -593,8 +599,10 @@ namespace Com
 
                 return Array.LastIndexOf(ToArray(), item, startIndex, count);
             }
-
-            return -1;
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -2779,6 +2787,10 @@ namespace Com
                 {
                     this[index] = (double)value;
                 }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
             }
         }
 
@@ -2857,7 +2869,19 @@ namespace Com
 
         void ICollection.CopyTo(Array array, int index)
         {
-            if (array != null && array.Rank == 1 && array.Length >= Dimension)
+            if (array == null )
+            {
+                throw new ArgumentNullException();
+            }
+            else if (array.Rank != 1)
+            {
+                throw new RankException();
+            }
+            else if (array.Length < Dimension)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else
             {
                 ToArray().CopyTo(array, index);
             }

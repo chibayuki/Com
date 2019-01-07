@@ -31,18 +31,13 @@ namespace Com
         /// <returns>8 位无符号整数，该 8 位无符号整数仅指定二进制位为 1。</returns>
         public static byte GetBinary8WithSingleBit1(int bit)
         {
-            try
+            if (bit >= 0 && bit < 8)
             {
-                if (bit >= 0 && bit < 8)
-                {
-                    return (byte)(((uint)1) << bit);
-                }
-
-                return byte.MinValue;
+                return (byte)(((uint)1) << bit);
             }
-            catch
+            else
             {
-                return byte.MinValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -53,18 +48,13 @@ namespace Com
         /// <returns>8 位无符号整数，该 8 位无符号整数仅指定二进制位为 0。</returns>
         public static byte GetBinary8WithSingleBit0(int bit)
         {
-            try
+            if (bit >= 0 && bit < 8)
             {
-                if (bit >= 0 && bit < 8)
-                {
-                    return (byte)(~(((uint)1) << bit));
-                }
-
-                return byte.MaxValue;
+                return (byte)(~(((uint)1) << bit));
             }
-            catch
+            else
             {
-                return byte.MaxValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -75,14 +65,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void AddBitToBinary(ref byte bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 8)
             {
-                if (bit >= 0 && bit < 8)
-                {
-                    bin |= (byte)(((uint)1) << bit);
-                }
+                bin |= (byte)(((uint)1) << bit);
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -92,14 +82,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void RemoveBitFromBinary(ref byte bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 8)
             {
-                if (bit >= 0 && bit < 8)
-                {
-                    bin &= (byte)(~(((uint)1) << bit));
-                }
+                bin &= (byte)(~(((uint)1) << bit));
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -109,14 +99,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void InverseBitOfBinary(ref byte bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 8)
             {
-                if (bit >= 0 && bit < 8)
-                {
-                    bin ^= (byte)(((uint)1) << bit);
-                }
+                bin ^= (byte)(((uint)1) << bit);
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -127,18 +117,13 @@ namespace Com
         /// <returns>布尔值，表示 8 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(byte bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 8)
             {
-                if (bit >= 0 && bit < 8)
-                {
-                    return ((bin & (((uint)1) << bit)) != 0);
-                }
-
-                return false;
+                return ((bin & (((uint)1) << bit)) != 0);
             }
-            catch
+            else
             {
-                return false;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -149,23 +134,16 @@ namespace Com
         /// <returns>8 位无符号整数的值为 1 的二进制位的数量。</returns>
         public static int GetBit1CountOfBinary(byte bin)
         {
-            try
+            int Count = 0;
+
+            while (bin > 0)
             {
-                int Count = 0;
+                bin &= (byte)(bin - ((uint)1));
 
-                while (bin > 0)
-                {
-                    bin &= (byte)(bin - ((uint)1));
-
-                    Count++;
-                }
-
-                return Count;
+                Count++;
             }
-            catch
-            {
-                return -1;
-            }
+
+            return Count;
         }
 
         /// <summary>
@@ -175,14 +153,7 @@ namespace Com
         /// <returns>8 位无符号整数的值为 0 的二进制位的数量。</returns>
         public static int GetBit0CountOfBinary(byte bin)
         {
-            try
-            {
-                return (8 - GetBit1CountOfBinary(bin));
-            }
-            catch
-            {
-                return -1;
-            }
+            return (8 - GetBit1CountOfBinary(bin));
         }
 
         /// <summary>
@@ -192,26 +163,19 @@ namespace Com
         /// <returns>32 位整数列表，列表元素表示 8 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit1IndexOfBinary(byte bin)
         {
-            try
+            List<int> result = new List<int>(8);
+
+            for (int i = 0; i < 8; i++)
             {
-                List<int> result = new List<int>(8);
-
-                for (int i = 0; i < 8; i++)
+                if ((bin & ((uint)1)) != 0)
                 {
-                    if ((bin & ((uint)1)) != 0)
-                    {
-                        result.Add(i);
-                    }
-
-                    bin >>= 1;
+                    result.Add(i);
                 }
 
-                return result;
+                bin >>= 1;
             }
-            catch
-            {
-                return new List<int>(0);
-            }
+
+            return result;
         }
 
         /// <summary>
@@ -221,26 +185,19 @@ namespace Com
         /// <returns>32 位整数列表，列表元素表示 8 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit0IndexOfBinary(byte bin)
         {
-            try
+            List<int> result = new List<int>(8);
+
+            for (int i = 0; i < 8; i++)
             {
-                List<int> result = new List<int>(8);
-
-                for (int i = 0; i < 8; i++)
+                if ((bin & ((uint)1)) == 0)
                 {
-                    if ((bin & ((uint)1)) == 0)
-                    {
-                        result.Add(i);
-                    }
-
-                    bin >>= 1;
+                    result.Add(i);
                 }
 
-                return result;
+                bin >>= 1;
             }
-            catch
-            {
-                return new List<int>(0);
-            }
+
+            return result;
         }
 
         #endregion
@@ -254,18 +211,13 @@ namespace Com
         /// <returns>16 位无符号整数，该 16 位无符号整数仅指定二进制位为 1。</returns>
         public static ushort GetBinary16WithSingleBit1(int bit)
         {
-            try
+            if (bit >= 0 && bit < 16)
             {
-                if (bit >= 0 && bit < 16)
-                {
-                    return (ushort)(((uint)1) << bit);
-                }
-
-                return ushort.MinValue;
+                return (ushort)(((uint)1) << bit);
             }
-            catch
+            else
             {
-                return ushort.MinValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -276,18 +228,13 @@ namespace Com
         /// <returns>16 位无符号整数，该 16 位无符号整数仅指定二进制位为 0。</returns>
         public static ushort GetBinary16WithSingleBit0(int bit)
         {
-            try
+            if (bit >= 0 && bit < 16)
             {
-                if (bit >= 0 && bit < 16)
-                {
-                    return (ushort)(~(((uint)1) << bit));
-                }
-
-                return ushort.MaxValue;
+                return (ushort)(~(((uint)1) << bit));
             }
-            catch
+            else
             {
-                return ushort.MaxValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -298,14 +245,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void AddBitToBinary(ref ushort bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 16)
             {
-                if (bit >= 0 && bit < 16)
-                {
-                    bin |= (ushort)(((uint)1) << bit);
-                }
+                bin |= (ushort)(((uint)1) << bit);
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -315,14 +262,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void RemoveBitFromBinary(ref ushort bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 16)
             {
-                if (bit >= 0 && bit < 16)
-                {
-                    bin &= (ushort)(~(((uint)1) << bit));
-                }
+                bin &= (ushort)(~(((uint)1) << bit));
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -332,14 +279,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void InverseBitOfBinary(ref ushort bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 16)
             {
-                if (bit >= 0 && bit < 16)
-                {
-                    bin ^= (ushort)(((uint)1) << bit);
-                }
+                bin ^= (ushort)(((uint)1) << bit);
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -350,18 +297,13 @@ namespace Com
         /// <returns>布尔值，表示 16 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(ushort bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 16)
             {
-                if (bit >= 0 && bit < 16)
-                {
-                    return ((bin & (((uint)1) << bit)) != 0);
-                }
-
-                return false;
+                return ((bin & (((uint)1) << bit)) != 0);
             }
-            catch
+            else
             {
-                return false;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -372,23 +314,16 @@ namespace Com
         /// <returns>16 位无符号整数的值为 1 的二进制位的数量。</returns>
         public static int GetBit1CountOfBinary(ushort bin)
         {
-            try
+            int Count = 0;
+
+            while (bin > 0)
             {
-                int Count = 0;
+                bin &= (ushort)(bin - ((uint)1));
 
-                while (bin > 0)
-                {
-                    bin &= (ushort)(bin - ((uint)1));
-
-                    Count++;
-                }
-
-                return Count;
+                Count++;
             }
-            catch
-            {
-                return -1;
-            }
+
+            return Count;
         }
 
         /// <summary>
@@ -398,14 +333,7 @@ namespace Com
         /// <returns>16 位无符号整数的值为 0 的二进制位的数量。</returns>
         public static int GetBit0CountOfBinary(ushort bin)
         {
-            try
-            {
-                return (16 - GetBit1CountOfBinary(bin));
-            }
-            catch
-            {
-                return -1;
-            }
+            return (16 - GetBit1CountOfBinary(bin));
         }
 
         /// <summary>
@@ -415,26 +343,19 @@ namespace Com
         /// <returns>32 位整数列表，列表元素表示 16 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit1IndexOfBinary(ushort bin)
         {
-            try
+            List<int> result = new List<int>(16);
+
+            for (int i = 0; i < 16; i++)
             {
-                List<int> result = new List<int>(16);
-
-                for (int i = 0; i < 16; i++)
+                if ((bin & ((uint)1)) != 0)
                 {
-                    if ((bin & ((uint)1)) != 0)
-                    {
-                        result.Add(i);
-                    }
-
-                    bin >>= 1;
+                    result.Add(i);
                 }
 
-                return result;
+                bin >>= 1;
             }
-            catch
-            {
-                return new List<int>(0);
-            }
+
+            return result;
         }
 
         /// <summary>
@@ -444,26 +365,19 @@ namespace Com
         /// <returns>32 位整数列表，列表元素表示 16 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit0IndexOfBinary(ushort bin)
         {
-            try
+            List<int> result = new List<int>(16);
+
+            for (int i = 0; i < 16; i++)
             {
-                List<int> result = new List<int>(16);
-
-                for (int i = 0; i < 16; i++)
+                if ((bin & ((uint)1)) == 0)
                 {
-                    if ((bin & ((uint)1)) == 0)
-                    {
-                        result.Add(i);
-                    }
-
-                    bin >>= 1;
+                    result.Add(i);
                 }
 
-                return result;
+                bin >>= 1;
             }
-            catch
-            {
-                return new List<int>(0);
-            }
+
+            return result;
         }
 
         #endregion
@@ -477,18 +391,13 @@ namespace Com
         /// <returns>32 位无符号整数，该 32 位无符号整数仅指定二进制位为 1。</returns>
         public static uint GetBinary32WithSingleBit1(int bit)
         {
-            try
+            if (bit >= 0 && bit < 32)
             {
-                if (bit >= 0 && bit < 32)
-                {
-                    return (((uint)1) << bit);
-                }
-
-                return uint.MinValue;
+                return (((uint)1) << bit);
             }
-            catch
+            else
             {
-                return uint.MinValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -499,18 +408,13 @@ namespace Com
         /// <returns>32 位无符号整数，该 32 位无符号整数仅指定二进制位为 0。</returns>
         public static uint GetBinary32WithSingleBit0(int bit)
         {
-            try
+            if (bit >= 0 && bit < 32)
             {
-                if (bit >= 0 && bit < 32)
-                {
-                    return (~(((uint)1) << bit));
-                }
-
-                return uint.MaxValue;
+                return (~(((uint)1) << bit));
             }
-            catch
+            else
             {
-                return uint.MaxValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -521,14 +425,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void AddBitToBinary(ref uint bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 32)
             {
-                if (bit >= 0 && bit < 32)
-                {
-                    bin |= (((uint)1) << bit);
-                }
+                bin |= (((uint)1) << bit);
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -538,14 +442,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void RemoveBitFromBinary(ref uint bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 32)
             {
-                if (bit >= 0 && bit < 32)
-                {
-                    bin &= (~(((uint)1) << bit));
-                }
+                bin &= (~(((uint)1) << bit));
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -555,14 +459,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void InverseBitOfBinary(ref uint bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 32)
             {
-                if (bit >= 0 && bit < 32)
-                {
-                    bin ^= (((uint)1) << bit);
-                }
+                bin ^= (((uint)1) << bit);
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -573,18 +477,13 @@ namespace Com
         /// <returns>布尔值，表示 32 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(uint bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 32)
             {
-                if (bit >= 0 && bit < 32)
-                {
-                    return ((bin & (((uint)1) << bit)) != 0);
-                }
-
-                return false;
+                return ((bin & (((uint)1) << bit)) != 0);
             }
-            catch
+            else
             {
-                return false;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -595,23 +494,16 @@ namespace Com
         /// <returns>32 位无符号整数的值为 1 的二进制位的数量。</returns>
         public static int GetBit1CountOfBinary(uint bin)
         {
-            try
+            int Count = 0;
+
+            while (bin > 0)
             {
-                int Count = 0;
+                bin &= (bin - 1);
 
-                while (bin > 0)
-                {
-                    bin &= (bin - 1);
-
-                    Count++;
-                }
-
-                return Count;
+                Count++;
             }
-            catch
-            {
-                return -1;
-            }
+
+            return Count;
         }
 
         /// <summary>
@@ -621,14 +513,7 @@ namespace Com
         /// <returns>32 位无符号整数的值为 0 的二进制位的数量。</returns>
         public static int GetBit0CountOfBinary(uint bin)
         {
-            try
-            {
-                return (32 - GetBit1CountOfBinary(bin));
-            }
-            catch
-            {
-                return -1;
-            }
+            return (32 - GetBit1CountOfBinary(bin));
         }
 
         /// <summary>
@@ -638,26 +523,19 @@ namespace Com
         /// <returns>32 位整数列表，列表元素表示 32 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit1IndexOfBinary(uint bin)
         {
-            try
+            List<int> result = new List<int>(32);
+
+            for (int i = 0; i < 32; i++)
             {
-                List<int> result = new List<int>(32);
-
-                for (int i = 0; i < 32; i++)
+                if ((bin & 1) != 0)
                 {
-                    if ((bin & 1) != 0)
-                    {
-                        result.Add(i);
-                    }
-
-                    bin >>= 1;
+                    result.Add(i);
                 }
 
-                return result;
+                bin >>= 1;
             }
-            catch
-            {
-                return new List<int>(0);
-            }
+
+            return result;
         }
 
         /// <summary>
@@ -667,26 +545,19 @@ namespace Com
         /// <returns>32 位整数列表，列表元素表示 32 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit0IndexOfBinary(uint bin)
         {
-            try
+            List<int> result = new List<int>(32);
+
+            for (int i = 0; i < 32; i++)
             {
-                List<int> result = new List<int>(32);
-
-                for (int i = 0; i < 32; i++)
+                if ((bin & 1) == 0)
                 {
-                    if ((bin & 1) == 0)
-                    {
-                        result.Add(i);
-                    }
-
-                    bin >>= 1;
+                    result.Add(i);
                 }
 
-                return result;
+                bin >>= 1;
             }
-            catch
-            {
-                return new List<int>(0);
-            }
+
+            return result;
         }
 
         #endregion
@@ -700,18 +571,13 @@ namespace Com
         /// <returns>64 位无符号整数，该 64 位无符号整数仅指定二进制位为 1。</returns>
         public static ulong GetBinary64WithSingleBit1(int bit)
         {
-            try
+            if (bit >= 0 && bit < 64)
             {
-                if (bit >= 0 && bit < 64)
-                {
-                    return (((ulong)1) << bit);
-                }
-
-                return ulong.MinValue;
+                return (((ulong)1) << bit);
             }
-            catch
+            else
             {
-                return ulong.MinValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -722,18 +588,13 @@ namespace Com
         /// <returns>64 位无符号整数，该 64 位无符号整数仅指定二进制位为 0。</returns>
         public static ulong GetBinary64WithSingleBit0(int bit)
         {
-            try
+            if (bit >= 0 && bit < 64)
             {
-                if (bit >= 0 && bit < 64)
-                {
-                    return (~(((ulong)1) << bit));
-                }
-
-                return ulong.MaxValue;
+                return (~(((ulong)1) << bit));
             }
-            catch
+            else
             {
-                return ulong.MaxValue;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -744,14 +605,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void AddBitToBinary(ref ulong bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 64)
             {
-                if (bit >= 0 && bit < 64)
-                {
-                    bin |= (((ulong)1) << bit);
-                }
+                bin |= (((ulong)1) << bit);
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -761,14 +622,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void RemoveBitFromBinary(ref ulong bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 64)
             {
-                if (bit >= 0 && bit < 64)
-                {
-                    bin &= (~(((ulong)1) << bit));
-                }
+                bin &= (~(((ulong)1) << bit));
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -778,14 +639,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void InverseBitOfBinary(ref ulong bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 64)
             {
-                if (bit >= 0 && bit < 64)
-                {
-                    bin ^= (((ulong)1) << bit);
-                }
+                bin ^= (((ulong)1) << bit);
             }
-            catch { }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -796,18 +657,13 @@ namespace Com
         /// <returns>布尔值，表示 64 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(ulong bin, int bit)
         {
-            try
+            if (bit >= 0 && bit < 64)
             {
-                if (bit >= 0 && bit < 64)
-                {
-                    return ((bin & (((ulong)1) << bit)) != 0);
-                }
-
-                return false;
+                return ((bin & (((ulong)1) << bit)) != 0);
             }
-            catch
+            else
             {
-                return false;
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -818,23 +674,16 @@ namespace Com
         /// <returns>64 位无符号整数的值为 1 的二进制位的数量。</returns>
         public static int GetBit1CountOfBinary(ulong bin)
         {
-            try
+            int Count = 0;
+
+            while (bin > 0)
             {
-                int Count = 0;
+                bin &= (bin - 1);
 
-                while (bin > 0)
-                {
-                    bin &= (bin - 1);
-
-                    Count++;
-                }
-
-                return Count;
+                Count++;
             }
-            catch
-            {
-                return -1;
-            }
+
+            return Count;
         }
 
         /// <summary>
@@ -844,14 +693,7 @@ namespace Com
         /// <returns>64 位无符号整数的值为 0 的二进制位的数量。</returns>
         public static int GetBit0CountOfBinary(ulong bin)
         {
-            try
-            {
-                return (64 - GetBit1CountOfBinary(bin));
-            }
-            catch
-            {
-                return -1;
-            }
+            return (64 - GetBit1CountOfBinary(bin));
         }
 
         /// <summary>
@@ -861,26 +703,19 @@ namespace Com
         /// <returns>32 位整数列表，列表元素表示 64 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit1IndexOfBinary(ulong bin)
         {
-            try
+            List<int> result = new List<int>(64);
+
+            for (int i = 0; i < 64; i++)
             {
-                List<int> result = new List<int>(64);
-
-                for (int i = 0; i < 64; i++)
+                if ((bin & 1) != 0)
                 {
-                    if ((bin & 1) != 0)
-                    {
-                        result.Add(i);
-                    }
-
-                    bin >>= 1;
+                    result.Add(i);
                 }
 
-                return result;
+                bin >>= 1;
             }
-            catch
-            {
-                return new List<int>(0);
-            }
+
+            return result;
         }
 
         /// <summary>
@@ -890,26 +725,19 @@ namespace Com
         /// <returns>32 位整数列表，列表元素表示 64 位无符号整数值为 0 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。</returns>
         public static List<int> GetBit0IndexOfBinary(ulong bin)
         {
-            try
+            List<int> result = new List<int>(64);
+
+            for (int i = 0; i < 64; i++)
             {
-                List<int> result = new List<int>(64);
-
-                for (int i = 0; i < 64; i++)
+                if ((bin & 1) == 0)
                 {
-                    if ((bin & 1) == 0)
-                    {
-                        result.Add(i);
-                    }
-
-                    bin >>= 1;
+                    result.Add(i);
                 }
 
-                return result;
+                bin >>= 1;
             }
-            catch
-            {
-                return new List<int>(0);
-            }
+
+            return result;
         }
 
         #endregion

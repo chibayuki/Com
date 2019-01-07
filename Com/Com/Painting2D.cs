@@ -701,7 +701,7 @@ namespace Com
 
                     if (width > 0)
                     {
-                        if (Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, Math.Sqrt(2) * semiMajorAxis + RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), Math.Sqrt(2) * semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) + RectRadius, rotateAngle) && !Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, semiMajorAxis - RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) - RectRadius, rotateAngle))
+                        if (Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, Constant.Sqrt2 * semiMajorAxis + RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), Constant.Sqrt2 * semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) + RectRadius, rotateAngle) && !Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, semiMajorAxis - RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) - RectRadius, rotateAngle))
                         {
                             using (Graphics Grph = Graphics.FromImage(bmp))
                             {
@@ -902,7 +902,7 @@ namespace Com
                     }
                     else
                     {
-                        if (Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, Math.Sqrt(2) * semiMajorAxis + RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), Math.Sqrt(2) * semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) + RectRadius, rotateAngle))
+                        if (Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, Constant.Sqrt2 * semiMajorAxis + RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), Constant.Sqrt2 * semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) + RectRadius, rotateAngle))
                         {
                             using (Graphics Grph = Graphics.FromImage(bmp))
                             {
