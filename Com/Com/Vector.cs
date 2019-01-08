@@ -952,11 +952,11 @@ namespace Com
 
                             if (x < 0)
                             {
-                                return (Angle + Math.PI);
+                                return (Angle + Constant.Pi);
                             }
                             else if (y < 0)
                             {
-                                return (Angle + 2 * Math.PI);
+                                return (Angle + Constant.DoublePi);
                             }
                             else
                             {
@@ -981,7 +981,7 @@ namespace Com
 
                                 if (x < 0)
                                 {
-                                    return (Angle + Math.PI);
+                                    return (Angle + Constant.Pi);
                                 }
                                 else
                                 {

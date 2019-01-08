@@ -26,8 +26,8 @@ namespace Com
         public const double DoublePi = 6.2831853071795865; // 表示圆周率 π 的 2 倍。
         public const double HalfPi = 1.5707963267948966; // 表示圆周率 π 的 1/2。
         public const double MinusHalfPi = -1.5707963267948966; // 表示圆周率 π 的 -1/2。
-        public const double DegOfPiRad = 57.295779513082321; // 表示 180 与圆周率 π 的比值。
         public const double Sqrt2Pi = 2.5066282746310004; // 表示圆周率 π 的 2 倍的平方根。
+        public const double DegOf1Rad = 57.295779513082321; // 表示 1 弧度对应的角度值，即 180 与圆周率 π 的比值。
 
         public const double E = 2.7182818284590451; // 表示自然常数 E。
         public const double LgE = 0.43429448190325183; // 表示自然常数 E 的常用对数。

@@ -259,11 +259,11 @@ namespace Com
 
                     if (_Real < 0)
                     {
-                        return (Angle + Math.PI);
+                        return (Angle + Constant.Pi);
                     }
                     else if (_Imaginary < 0)
                     {
-                        return (Angle + 2 * Math.PI);
+                        return (Angle + Constant.DoublePi);
                     }
                     else
                     {

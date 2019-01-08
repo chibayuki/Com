@@ -136,7 +136,7 @@ namespace Com
 
                                 for (int j = 1; j <= 2 * Tx - 1; j += 2)
                                 {
-                                    Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X + Rx * Math.Cos(Math.PI / Tx * j)), (float)(offset.Y + Rx * Math.Sin(Math.PI / Tx * j))), new PointF((float)(offset.X + radius * Math.Cos(Math.PI / Tx * j)), (float)(offset.Y + radius * Math.Sin(Math.PI / Tx * j))));
+                                    Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X + Rx * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + Rx * Math.Sin(Constant.Pi / Tx * j))), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + radius * Math.Sin(Constant.Pi / Tx * j))));
                                 }
                             }
 
@@ -144,7 +144,7 @@ namespace Com
 
                             for (int i = 0; i < 12; i++)
                             {
-                                Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X), (float)(offset.Y)), new PointF((float)(offset.X + radius * Math.Cos(Math.PI * i / 6)), (float)(offset.Y + radius * Math.Sin(Math.PI * i / 6))));
+                                Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X), (float)(offset.Y)), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi * i / 6)), (float)(offset.Y + radius * Math.Sin(Constant.Pi * i / 6))));
                             }
 
                             // 绘制同心圆：
@@ -276,12 +276,12 @@ namespace Com
 
                                 PointD RefPoint = new PointD(offset.X + radius * Math.Cos(refPhase), offset.Y + radius * Math.Sin(refPhase));
 
-                                int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, 2 * Math.PI * radius / divArc));
+                                int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, Constant.DoublePi * radius / divArc));
                                 double DivPhase = 0;
 
                                 if (Geometry.PointIsVisibleInCircle(offset, RectCenter, RectRadius))
                                 {
-                                    DivPhase = 2 * Math.PI / DivCount;
+                                    DivPhase = Constant.DoublePi / DivCount;
 
                                     List<PointF> L_PF = new List<PointF>(DivCount + 2);
 
@@ -329,14 +329,14 @@ namespace Com
 
                                     if (Phase_Min > Phase_Max)
                                     {
-                                        Phase_Max += 2 * Math.PI;
+                                        Phase_Max += Constant.DoublePi;
                                     }
 
                                     if (!(refPhase >= Phase_Min && refPhase <= Phase_Max))
                                     {
-                                        if (refPhase + 2 * Math.PI >= Phase_Min && refPhase + 2 * Math.PI <= Phase_Max)
+                                        if (refPhase + Constant.DoublePi >= Phase_Min && refPhase + Constant.DoublePi <= Phase_Max)
                                         {
-                                            refPhase += 2 * Math.PI;
+                                            refPhase += Constant.DoublePi;
                                         }
                                         else
                                         {
@@ -450,12 +450,12 @@ namespace Com
 
                                     PointD RefPoint = new PointD(offset.X + radius * Math.Cos(refPhase), offset.Y + radius * Math.Sin(refPhase));
 
-                                    int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, 2 * Math.PI * radius / divArc));
+                                    int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, Constant.DoublePi * radius / divArc));
                                     double DivPhase = 0;
 
                                     if (Geometry.PointIsVisibleInCircle(offset, RectCenter, RectRadius))
                                     {
-                                        DivPhase = 2 * Math.PI / DivCount;
+                                        DivPhase = Constant.DoublePi / DivCount;
 
                                         List<PointF> L_PF = new List<PointF>(DivCount + 2);
 
@@ -503,14 +503,14 @@ namespace Com
 
                                         if (Phase_Min > Phase_Max)
                                         {
-                                            Phase_Max += 2 * Math.PI;
+                                            Phase_Max += Constant.DoublePi;
                                         }
 
                                         if (!(refPhase >= Phase_Min && refPhase <= Phase_Max))
                                         {
-                                            if (refPhase + 2 * Math.PI >= Phase_Min && refPhase + 2 * Math.PI <= Phase_Max)
+                                            if (refPhase + Constant.DoublePi >= Phase_Min && refPhase + Constant.DoublePi <= Phase_Max)
                                             {
-                                                refPhase += 2 * Math.PI;
+                                                refPhase += Constant.DoublePi;
                                             }
                                             else
                                             {
@@ -727,12 +727,12 @@ namespace Com
                                     RefPoint += offset;
                                 }
 
-                                int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, 2 * Math.PI * semiMajorAxis / divArc));
+                                int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, Constant.DoublePi * semiMajorAxis / divArc));
                                 double DivPhase = 0;
 
                                 if (Geometry.PointIsVisibleInCircle(EllipseCenter, RectCenter, RectRadius))
                                 {
-                                    DivPhase = 2 * Math.PI / DivCount;
+                                    DivPhase = Constant.DoublePi / DivCount;
 
                                     List<PointF> L_PF = new List<PointF>(DivCount + 2);
 
@@ -791,14 +791,14 @@ namespace Com
 
                                     if (Phase_Min > Phase_Max)
                                     {
-                                        Phase_Max += 2 * Math.PI;
+                                        Phase_Max += Constant.DoublePi;
                                     }
 
                                     if (!(refPhase >= Phase_Min && refPhase <= Phase_Max))
                                     {
-                                        if (refPhase + 2 * Math.PI >= Phase_Min && refPhase + 2 * Math.PI <= Phase_Max)
+                                        if (refPhase + Constant.DoublePi >= Phase_Min && refPhase + Constant.DoublePi <= Phase_Max)
                                         {
-                                            refPhase += 2 * Math.PI;
+                                            refPhase += Constant.DoublePi;
                                         }
                                         else
                                         {
@@ -934,12 +934,12 @@ namespace Com
                                         RefPoint += offset;
                                     }
 
-                                    int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, 2 * Math.PI * semiMajorAxis / divArc));
+                                    int DivCount = (int)Math.Min(maxDiv, Math.Max(minDiv, Constant.DoublePi * semiMajorAxis / divArc));
                                     double DivPhase = 0;
 
                                     if (Geometry.PointIsVisibleInCircle(EllipseCenter, RectCenter, RectRadius))
                                     {
-                                        DivPhase = 2 * Math.PI / DivCount;
+                                        DivPhase = Constant.DoublePi / DivCount;
 
                                         List<PointF> L_PF = new List<PointF>(DivCount + 2);
 
@@ -998,14 +998,14 @@ namespace Com
 
                                         if (Phase_Min > Phase_Max)
                                         {
-                                            Phase_Max += 2 * Math.PI;
+                                            Phase_Max += Constant.DoublePi;
                                         }
 
                                         if (!(refPhase >= Phase_Min && refPhase <= Phase_Max))
                                         {
-                                            if (refPhase + 2 * Math.PI >= Phase_Min && refPhase + 2 * Math.PI <= Phase_Max)
+                                            if (refPhase + Constant.DoublePi >= Phase_Min && refPhase + Constant.DoublePi <= Phase_Max)
                                             {
-                                                refPhase += 2 * Math.PI;
+                                                refPhase += Constant.DoublePi;
                                             }
                                             else
                                             {

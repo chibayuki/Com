@@ -696,7 +696,7 @@ namespace Com
             }
             else
             {
-                return (Math.Atan(Math.Tan(centralAngle) / Math.Sqrt(1 - Math.Pow(eccentricity, 2))) + Math.Round(centralAngle / Math.PI) * Math.PI);
+                return (Math.Atan(Math.Tan(centralAngle) / Math.Sqrt(1 - Math.Pow(eccentricity, 2))) + Math.Round(centralAngle / Constant.Pi) * Constant.Pi);
             }
         }
 
@@ -743,7 +743,7 @@ namespace Com
                         Path.AddRectangle(new RectangleF(0, 0, W, H));
 
                         System.Drawing.Drawing2D.Matrix Mtrx = new System.Drawing.Drawing2D.Matrix();
-                        Mtrx.Rotate((float)(rotateAngle * Constant.DegOfPiRad));
+                        Mtrx.Rotate((float)(rotateAngle * Constant.DegOf1Rad));
 
                         Rect = Path.GetBounds(Mtrx);
                     }
@@ -760,7 +760,7 @@ namespace Com
                         //
 
                         Grph.TranslateTransform(-Rect.X, -Rect.Y);
-                        Grph.RotateTransform((float)(rotateAngle * Constant.DegOfPiRad));
+                        Grph.RotateTransform((float)(rotateAngle * Constant.DegOf1Rad));
                         Grph.InterpolationMode = InterpolationMode.HighQualityBilinear;
                         Grph.DrawImage(Bmp, new Point(0, 0));
                     }

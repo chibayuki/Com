@@ -161,7 +161,7 @@ namespace Com
 
                 Func<double, Real> GammaNegative = (val) =>
                 {
-                    return (Math.PI / Math.Sin(Math.PI * val) / GammaPositive(1 - val));
+                    return (Constant.Pi / Math.Sin(Constant.Pi * val) / GammaPositive(1 - val));
                 };
 
                 if (n == Math.Truncate(n))
@@ -2438,7 +2438,17 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return ((double)Sum(values) / values.Length);
+                long Sum = 0;
+
+                checked
+                {
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        Sum += values[i];
+                    }
+                }
+
+                return ((double)Sum / values.Length);
             }
             else
             {
@@ -2455,7 +2465,17 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return ((double)Sum(values) / values.Length);
+                long Sum = 0;
+
+                checked
+                {
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        Sum += values[i];
+                    }
+                }
+
+                return ((double)Sum / values.Length);
             }
             else
             {
@@ -2472,7 +2492,17 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return ((double)Sum(values) / values.Length);
+                long Sum = 0;
+
+                checked
+                {
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        Sum += values[i];
+                    }
+                }
+
+                return ((double)Sum / values.Length);
             }
             else
             {
@@ -2489,7 +2519,17 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return ((double)Sum(values) / values.Length);
+                long Sum = 0;
+
+                checked
+                {
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        Sum += values[i];
+                    }
+                }
+
+                return ((double)Sum / values.Length);
             }
             else
             {
@@ -2506,7 +2546,17 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return ((double)Sum(values) / values.Length);
+                long Sum = 0;
+
+                checked
+                {
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        Sum += values[i];
+                    }
+                }
+
+                return ((double)Sum / values.Length);
             }
             else
             {
@@ -2523,7 +2573,17 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return ((double)Sum(values) / values.Length);
+                long Sum = 0;
+
+                checked
+                {
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        Sum += values[i];
+                    }
+                }
+
+                return ((double)Sum / values.Length);
             }
             else
             {
@@ -2540,7 +2600,17 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return ((double)Sum(values) / values.Length);
+                long Sum = 0;
+
+                checked
+                {
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        Sum += values[i];
+                    }
+                }
+
+                return ((double)Sum / values.Length);
             }
             else
             {
@@ -2557,7 +2627,14 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return (Sum(values) / values.Length);
+                double Sum = 0;
+
+                for (int i = 0; i < values.Length; i++)
+                {
+                    Sum += values[i];
+                }
+
+                return (Sum / values.Length);
             }
             else
             {
@@ -2574,7 +2651,14 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return (Sum(values) / values.Length);
+                double Sum = 0;
+
+                for (int i = 0; i < values.Length; i++)
+                {
+                    Sum += values[i];
+                }
+
+                return (float)(Sum / values.Length);
             }
             else
             {
@@ -2591,7 +2675,14 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return (Sum(values) / values.Length);
+                double Sum = 0;
+
+                for (int i = 0; i < values.Length; i++)
+                {
+                    Sum += values[i];
+                }
+
+                return (Sum / values.Length);
             }
             else
             {
@@ -2608,7 +2699,14 @@ namespace Com
         {
             if (!InternalMethod.IsNullOrEmpty(values))
             {
-                return (Sum(values) / values.Length);
+                decimal Sum = 0;
+
+                for (int i = 0; i < values.Length; i++)
+                {
+                    Sum += values[i];
+                }
+
+                return (Sum / values.Length);
             }
             else
             {
@@ -2629,24 +2727,27 @@ namespace Com
             {
                 sbyte Min = values[0];
                 sbyte Max = values[0];
-                double Sum = 0;
+                long Sum = 0;
 
-                for (int i = 0; i < values.Length; i++)
+                checked
                 {
-                    if (Min > values[i])
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        Min = values[i];
-                    }
+                        if (Min > values[i])
+                        {
+                            Min = values[i];
+                        }
 
-                    if (Max < values[i])
-                    {
-                        Max = values[i];
-                    }
+                        if (Max < values[i])
+                        {
+                            Max = values[i];
+                        }
 
-                    Sum += values[i];
+                        Sum += values[i];
+                    }
                 }
 
-                return (Min, Max, Sum / values.Length);
+                return (Min, Max, (double)Sum / values.Length);
             }
             else
             {
@@ -2665,24 +2766,27 @@ namespace Com
             {
                 byte Min = values[0];
                 byte Max = values[0];
-                double Sum = 0;
+                long Sum = 0;
 
-                for (int i = 0; i < values.Length; i++)
+                checked
                 {
-                    if (Min > values[i])
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        Min = values[i];
-                    }
+                        if (Min > values[i])
+                        {
+                            Min = values[i];
+                        }
 
-                    if (Max < values[i])
-                    {
-                        Max = values[i];
-                    }
+                        if (Max < values[i])
+                        {
+                            Max = values[i];
+                        }
 
-                    Sum += values[i];
+                        Sum += values[i];
+                    }
                 }
 
-                return (Min, Max, Sum / values.Length);
+                return (Min, Max, (double)Sum / values.Length);
             }
             else
             {
@@ -2701,24 +2805,27 @@ namespace Com
             {
                 short Min = values[0];
                 short Max = values[0];
-                double Sum = 0;
+                long Sum = 0;
 
-                for (int i = 0; i < values.Length; i++)
+                checked
                 {
-                    if (Min > values[i])
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        Min = values[i];
-                    }
+                        if (Min > values[i])
+                        {
+                            Min = values[i];
+                        }
 
-                    if (Max < values[i])
-                    {
-                        Max = values[i];
-                    }
+                        if (Max < values[i])
+                        {
+                            Max = values[i];
+                        }
 
-                    Sum += values[i];
+                        Sum += values[i];
+                    }
                 }
 
-                return (Min, Max, Sum / values.Length);
+                return (Min, Max, (double)Sum / values.Length);
             }
             else
             {
@@ -2737,24 +2844,27 @@ namespace Com
             {
                 ushort Min = values[0];
                 ushort Max = values[0];
-                double Sum = 0;
+                long Sum = 0;
 
-                for (int i = 0; i < values.Length; i++)
+                checked
                 {
-                    if (Min > values[i])
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        Min = values[i];
-                    }
+                        if (Min > values[i])
+                        {
+                            Min = values[i];
+                        }
 
-                    if (Max < values[i])
-                    {
-                        Max = values[i];
-                    }
+                        if (Max < values[i])
+                        {
+                            Max = values[i];
+                        }
 
-                    Sum += values[i];
+                        Sum += values[i];
+                    }
                 }
 
-                return (Min, Max, Sum / values.Length);
+                return (Min, Max, (double)Sum / values.Length);
             }
             else
             {
@@ -2773,24 +2883,27 @@ namespace Com
             {
                 int Min = values[0];
                 int Max = values[0];
-                double Sum = 0;
+                long Sum = 0;
 
-                for (int i = 0; i < values.Length; i++)
+                checked
                 {
-                    if (Min > values[i])
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        Min = values[i];
-                    }
+                        if (Min > values[i])
+                        {
+                            Min = values[i];
+                        }
 
-                    if (Max < values[i])
-                    {
-                        Max = values[i];
-                    }
+                        if (Max < values[i])
+                        {
+                            Max = values[i];
+                        }
 
-                    Sum += values[i];
+                        Sum += values[i];
+                    }
                 }
 
-                return (Min, Max, Sum / values.Length);
+                return (Min, Max, (double)Sum / values.Length);
             }
             else
             {
@@ -2809,24 +2922,27 @@ namespace Com
             {
                 uint Min = values[0];
                 uint Max = values[0];
-                double Sum = 0;
+                long Sum = 0;
 
-                for (int i = 0; i < values.Length; i++)
+                checked
                 {
-                    if (Min > values[i])
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        Min = values[i];
-                    }
+                        if (Min > values[i])
+                        {
+                            Min = values[i];
+                        }
 
-                    if (Max < values[i])
-                    {
-                        Max = values[i];
-                    }
+                        if (Max < values[i])
+                        {
+                            Max = values[i];
+                        }
 
-                    Sum += values[i];
+                        Sum += values[i];
+                    }
                 }
 
-                return (Min, Max, Sum / values.Length);
+                return (Min, Max, (double)Sum / values.Length);
             }
             else
             {
@@ -2845,24 +2961,27 @@ namespace Com
             {
                 long Min = values[0];
                 long Max = values[0];
-                double Sum = 0;
+                long Sum = 0;
 
-                for (int i = 0; i < values.Length; i++)
+                checked
                 {
-                    if (Min > values[i])
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        Min = values[i];
-                    }
+                        if (Min > values[i])
+                        {
+                            Min = values[i];
+                        }
 
-                    if (Max < values[i])
-                    {
-                        Max = values[i];
-                    }
+                        if (Max < values[i])
+                        {
+                            Max = values[i];
+                        }
 
-                    Sum += values[i];
+                        Sum += values[i];
+                    }
                 }
 
-                return (Min, Max, Sum / values.Length);
+                return (Min, Max, (double)Sum / values.Length);
             }
             else
             {
@@ -2917,7 +3036,7 @@ namespace Com
             {
                 float Min = values[0];
                 float Max = values[0];
-                float Sum = 0;
+                double Sum = 0;
 
                 for (int i = 0; i < values.Length; i++)
                 {
@@ -2934,7 +3053,7 @@ namespace Com
                     Sum += values[i];
                 }
 
-                return (Min, Max, Sum / values.Length);
+                return (Min, Max, (float)(Sum / values.Length));
             }
             else
             {
