@@ -14,7 +14,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 - Com.WinForm.ControlSubstitution 提供控件的替代使用方案 / Scheme of substitution of control.
 
 ### 公开的类 / Public Class
-- Com.BitSet 管理位（Bit）的集合（至多2146434944位），提供基本的位运算功能 / Managing set of bits (up to 2147483520 bits) and providing basic bit operations.
+- Com.BitSet 管理位（Bit）的集合（至多2146434944位），提供基本的位运算功能 / Managing set of bits (up to 2146434944 bits) and providing basic bit operations.
 - Com.Matrix 表示矩阵，并为所有线性变换提供实现 / Matrix, supporting all linear transformations.
 - Com.Vector 表示任意维度的列向量或行向量，并为PointDnD的线性变换提供实现 / Column or row vector of any dimensions, supporting linear transformations of PointDnD.
 - Com.WinForm.FormManager 窗口管理器 / Window manager of winform.
@@ -29,7 +29,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 - Com.PointD4D 四维欧式空间中表示的坐标（向量） / Coordinate (vector) in 4D Euclidean space.
 - Com.PointD5D 五维欧式空间中表示的坐标（向量） / Coordinate (vector) in 5D Euclidean space.
 - Com.PointD6D 六维欧式空间中表示的坐标（向量） / Coordinate (vector) in 6D Euclidean space.
-- Com.Real 表示实数 / Real number.
+- Com.Real 表示实数（数量级介于±999999999999999的浮点数） / Real number (floating-point number in the order of magnitude between ±999999999999999).
 
 ### 公开的接口 / Public Interface
 - Com.IAffine 表示用于支持仿射变换的方法 / Method for affine transform.
