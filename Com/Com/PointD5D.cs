@@ -1321,7 +1321,7 @@ namespace Com
         /// 返回按 Matrix 对象表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行仿射变换的 PointD5D 结构的新实例。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 6x6 仿射矩阵（左矩阵）。</param>
-        /// <returns>PointD5D 结构，表示按 Matrix 对象列表表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行仿射变换得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示按 Matrix 对象表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行仿射变换得到的结果。</returns>
         public PointD5D AffineTransformCopy(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(6, 6))
@@ -1468,7 +1468,7 @@ namespace Com
         /// 返回按 Matrix 对象表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行逆仿射变换的 PointD5D 结构的新实例。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 6x6 仿射矩阵（左矩阵）。</param>
-        /// <returns>PointD5D 结构，表示按 Matrix 对象列表表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行逆仿射变换得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示按 Matrix 对象表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行逆仿射变换得到的结果。</returns>
         public PointD5D InverseAffineTransformCopy(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(6, 6))
@@ -1887,7 +1887,7 @@ namespace Com
         /// </summary>
         /// <param name="left">第一个 PointD5D 结构。</param>
         /// <param name="right">第二个 PointD5D 结构。</param>
-        /// <returns>Vector 对象，表示两个 PointD5D 结构的数量积。</returns>
+        /// <returns>双精度浮点数，表示两个 PointD5D 结构的数量积。</returns>
         public static double DotProduct(PointD5D left, PointD5D right)
         {
             return Vector.DotProduct(left.ToColumnVector(), right.ToColumnVector());

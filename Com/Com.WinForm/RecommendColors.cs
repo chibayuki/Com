@@ -846,9 +846,10 @@ namespace Com.WinForm
         #region 方法
 
         /// <summary>
-        /// 判断此 RecommendColors 对象是否与指定的对象相等。
+        /// 判断此 RecommendColors 是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 RecommendColors 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || !(obj is RecommendColors))
@@ -864,16 +865,18 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 返回此 RecommendColors 对象的哈希代码。
+        /// 返回此 RecommendColors 的哈希代码。
         /// </summary>
+        /// <returns>32 位整数，表示此 RecommendColors 的哈希代码。</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
 
         /// <summary>
-        /// 将此 RecommendColors 对象转换为字符串。
+        /// 将此 RecommendColors 转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 RecommendColors 的字符串形式。</returns>
         public override string ToString()
         {
             return base.GetType().Name;
@@ -882,9 +885,10 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 判断此 RecommendColors 对象是否与指定的 RecommendColors 对象相等。
+        /// 判断此 RecommendColors 是否与指定的 RecommendColors 对象相等。
         /// </summary>
         /// <param name="recommendColors">用于比较的 RecommendColors 对象。</param>
+        /// <returns>布尔值，表示此 RecommendColors 是否与指定的 RecommendColors 对象相等。</returns>
         public bool Equals(RecommendColors recommendColors)
         {
             if ((object)recommendColors == null)
@@ -908,6 +912,7 @@ namespace Com.WinForm
         /// </summary>
         /// <param name="left">用于比较的第一个 RecommendColors 对象。</param>
         /// <param name="right">用于比较的第二个 RecommendColors 对象。</param>
+        /// <returns>布尔值，表示两个 RecommendColors 对象是否相等。</returns>
         public static bool Equals(RecommendColors left, RecommendColors right)
         {
             if ((object)left == null && (object)right == null)
@@ -935,6 +940,7 @@ namespace Com.WinForm
         /// </summary>
         /// <param name="left">运算符左侧比较的 RecommendColors 对象。</param>
         /// <param name="right">运算符右侧比较的 RecommendColors 对象。</param>
+        /// <returns>布尔值，表示两个 RecommendColors 对象是否相等。</returns>
         public static bool operator ==(RecommendColors left, RecommendColors right)
         {
             if ((object)left == null && (object)right == null)
@@ -958,6 +964,7 @@ namespace Com.WinForm
         /// </summary>
         /// <param name="left">运算符左侧比较的 RecommendColors 对象。</param>
         /// <param name="right">运算符右侧比较的 RecommendColors 对象。</param>
+        /// <returns>布尔值，表示两个 RecommendColors 对象是否不相等。</returns>
         public static bool operator !=(RecommendColors left, RecommendColors right)
         {
             if ((object)left == null && (object)right == null)

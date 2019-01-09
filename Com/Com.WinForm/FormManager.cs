@@ -46,10 +46,10 @@ namespace Com.WinForm
 
         //
 
-        private bool _Initialized = false; // 表示此 FormManager 对象是否已完成初始化的布尔值。
+        private bool _Initialized = false; // 表示此 FormManager 是否已完成初始化的布尔值。
 
-        private bool _LoadingNow = false; // 表示此 FormManager 对象是否正在执行 Loading 事件或 Loaded 事件的布尔值。
-        private bool _ClosingNow = false; // 表示此 FormManager 对象是否正在执行 Closing 事件或 Closed 事件的布尔值。
+        private bool _LoadingNow = false; // 表示此 FormManager 是否正在执行 Loading 事件或 Loaded 事件的布尔值。
+        private bool _ClosingNow = false; // 表示此 FormManager 是否正在执行 Closing 事件或 Closed 事件的布尔值。
 
         //
 
@@ -4136,9 +4136,10 @@ namespace Com.WinForm
         #region 方法
 
         /// <summary>
-        /// 判断此 FormManager 对象是否与指定的对象相等。
+        /// 判断此 FormManager 是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 FormManager 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || !(obj is FormManager))
@@ -4154,16 +4155,18 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 返回此 FormManager 对象的哈希代码。
+        /// 返回此 FormManager 的哈希代码。
         /// </summary>
+        /// <returns>32 位整数，表示此 FormManager 的哈希代码。</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
         }
 
         /// <summary>
-        /// 将此 FormManager 对象转换为字符串。
+        /// 将此 FormManager 转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 FormManager 的字符串形式。</returns>
         public override string ToString()
         {
             string Str = base.ToString();
@@ -4179,9 +4182,10 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 判断此 FormManager 对象是否与指定的 FormManager 对象相等。
+        /// 判断此 FormManager 是否与指定的 FormManager 对象相等。
         /// </summary>
         /// <param name="formManager">用于比较的 FormManager 对象。</param>
+        /// <returns>布尔值，表示此 FormManager 是否与指定的 FormManager 对象相等。</returns>
         public bool Equals(FormManager formManager)
         {
             if ((object)formManager == null)
@@ -4201,6 +4205,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口还原至普通大小。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool Return()
         {
             Func<bool> InvokeMethod = () =>
@@ -4236,6 +4241,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口最小化至任务栏。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool Minimize()
         {
             Func<bool> InvokeMethod = () =>
@@ -4256,6 +4262,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口最大化。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool Maximize()
         {
             Func<bool> InvokeMethod = () =>
@@ -4276,6 +4283,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口进入全屏幕模式。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool EnterFullScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4296,6 +4304,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口退出全屏幕模式。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool ExitFullScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4316,6 +4325,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口占据桌面的左半区域。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool LeftHalfScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4336,6 +4346,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口占据桌面的右半区域。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool RightHalfScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4356,6 +4367,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口与桌面的高度相同。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool HighAsScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4376,6 +4388,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口占据桌面的左上四分之一区域。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool TopLeftQuarterScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4396,6 +4409,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口占据桌面的右上四分之一区域。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool TopRightQuarterScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4416,6 +4430,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口占据桌面的左下四分之一区域。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool BottomLeftQuarterScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4436,6 +4451,7 @@ namespace Com.WinForm
         /// <summary>
         /// 使窗口占据桌面的右下四分之一区域。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool BottomRightQuarterScreen()
         {
             Func<bool> InvokeMethod = () =>
@@ -4456,6 +4472,7 @@ namespace Com.WinForm
         /// <summary>
         /// 关闭窗口。
         /// </summary>
+        /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool Close()
         {
             Func<bool> InvokeMethod = () =>
@@ -4679,6 +4696,7 @@ namespace Com.WinForm
         /// </summary>
         /// <param name="left">用于比较的第一个 FormManager 对象。</param>
         /// <param name="right">用于比较的第二个 FormManager 对象。</param>
+        /// <returns>布尔值，表示此 FormManager 是否与指定的 FormManager 对象相等。</returns>
         public static bool Equals(FormManager left, FormManager right)
         {
             if ((object)left == null && (object)right == null)
@@ -4706,6 +4724,7 @@ namespace Com.WinForm
         /// </summary>
         /// <param name="left">运算符左侧比较的 FormManager 对象。</param>
         /// <param name="right">运算符右侧比较的 FormManager 对象。</param>
+        /// <returns>布尔值，表示两个 FormManager 对象是否相等。</returns>
         public static bool operator ==(FormManager left, FormManager right)
         {
             if ((object)left == null && (object)right == null)
@@ -4729,6 +4748,7 @@ namespace Com.WinForm
         /// </summary>
         /// <param name="left">运算符左侧比较的 FormManager 对象。</param>
         /// <param name="right">运算符右侧比较的 FormManager 对象。</param>
+        /// <returns>布尔值，表示两个 FormManager 对象是否不相等。</returns>
         public static bool operator !=(FormManager left, FormManager right)
         {
             if ((object)left == null && (object)right == null)

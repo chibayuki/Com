@@ -1315,10 +1315,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Matrix 对象列表表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行仿射变换的 PointD 结构的新实例。
+        /// 返回按 Matrix 对象表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行仿射变换的 PointD 结构的新实例。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象列表，表示 3x3 仿射矩阵（左矩阵）。</param>
-        /// <returns>PointD 结构，表示按 Matrix 对象列表表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行仿射变换得到的结果。</returns>
+        /// <returns>PointD 结构，表示按 Matrix 对象表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行仿射变换得到的结果。</returns>
         public PointD AffineTransformCopy(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(3, 3))
@@ -1379,7 +1379,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 Matrix 对象列表表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行逆仿射变换。
+        /// 按 Matrix 对象表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象列表，表示 3x3 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix matrixLeft)
@@ -1441,10 +1441,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Matrix 对象列表表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行逆仿射变换的 PointD 结构的新实例。
+        /// 返回按 Matrix 对象表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行逆仿射变换的 PointD 结构的新实例。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象列表，表示 3x3 仿射矩阵（左矩阵）。</param>
-        /// <returns>PointD 结构，表示按 Matrix 对象列表表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行逆仿射变换得到的结果。</returns>
+        /// <returns>PointD 结构，表示按 Matrix 对象表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行逆仿射变换得到的结果。</returns>
         public PointD InverseAffineTransformCopy(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(3, 3))

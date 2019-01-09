@@ -1373,7 +1373,7 @@ namespace Com
         /// 返回按 Matrix 对象表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行仿射变换的 PointD3D 结构的新实例。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
-        /// <returns>PointD3D 结构，表示按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行仿射变换得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示按 Matrix 对象表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行仿射变换得到的结果。</returns>
         public PointD3D AffineTransformCopy(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
@@ -1506,7 +1506,7 @@ namespace Com
         /// 返回按 Matrix 对象表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行逆仿射变换的 PointD3D 结构的新实例。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 4x4 仿射矩阵（左矩阵）。</param>
-        /// <returns>PointD3D 结构，表示按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行逆仿射变换得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示按 Matrix 对象表示的 4x4 仿射矩阵（左矩阵）将此 PointD3D 结构进行逆仿射变换得到的结果。</returns>
         public PointD3D InverseAffineTransformCopy(Matrix matrixLeft)
         {
             if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(4, 4))
@@ -1982,7 +1982,7 @@ namespace Com
         /// </summary>
         /// <param name="left">第一个 PointD3D 结构。</param>
         /// <param name="right">第二个 PointD3D 结构。</param>
-        /// <returns>Vector 对象，表示两个 PointD3D 结构的数量积。</returns>
+        /// <returns>双精度浮点数，表示两个 PointD3D 结构的数量积。</returns>
         public static double DotProduct(PointD3D left, PointD3D right)
         {
             return (left._X * right._X + left._Y * right._Y + left._Z * right._Z);

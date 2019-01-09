@@ -594,6 +594,7 @@ namespace Com
         /// 判断此 Vector 是否与指定的对象相等。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 Vector 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || !(obj is Vector))
@@ -611,6 +612,7 @@ namespace Com
         /// <summary>
         /// 返回此 Vector 的哈希代码。
         /// </summary>
+        /// <returns>32 位整数，表示此 Vector 的哈希代码。</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -619,6 +621,7 @@ namespace Com
         /// <summary>
         /// 将此 Vector 转换为字符串。
         /// </summary>
+        /// <returns>字符串，表示此 Vector 的字符串形式。</returns>
         public override string ToString()
         {
             string Str = string.Empty;
@@ -641,6 +644,7 @@ namespace Com
         /// 判断此 Vector 是否与指定的 Vector 对象相等。
         /// </summary>
         /// <param name="vector">用于比较的 Vector 对象。</param>
+        /// <returns>布尔值，表示此 Vector 是否与指定的 Vector 对象相等。</returns>
         public bool Equals(Vector vector)
         {
             if ((object)vector == null)
@@ -673,6 +677,7 @@ namespace Com
         /// 将此 Vector 与指定的对象进行次序比较。
         /// </summary>
         /// <param name="obj">用于比较的对象。</param>
+        /// <returns>32 位整数，表示将此 Vector 与指定的对象进行次序比较得到的结果。</returns>
         public int CompareTo(object obj)
         {
             if (obj == null || !(obj is Vector))
@@ -691,6 +696,7 @@ namespace Com
         /// 将此 Vector 与指定的 Vector 对象进行次序比较。
         /// </summary>
         /// <param name="vector">用于比较的 Vector 对象。</param>
+        /// <returns>32 位整数，表示将此 Vector 与指定的 Vector 对象进行次序比较得到的结果。</returns>
         public int CompareTo(Vector vector)
         {
             if ((object)vector == null)
@@ -721,6 +727,7 @@ namespace Com
         /// <summary>
         /// 获取此 Vector 的副本。
         /// </summary>
+        /// <returns>Vector 对象，表示此 Vector 的副本。</returns>
         public Vector Copy()
         {
             if (_Size > 0)
@@ -739,6 +746,7 @@ namespace Com
         /// 遍历此 Vector 的所有分量并返回第一个与指定值相等的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int IndexOf(double item)
         {
             if (_Size > 0)
@@ -754,6 +762,7 @@ namespace Com
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int IndexOf(double item, int startIndex)
         {
             if (_Size > 0 && (startIndex >= 0 && startIndex < _Size))
@@ -772,6 +781,7 @@ namespace Com
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
         /// <param name="count">遍历的分量数量。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int IndexOf(double item, int startIndex, int count)
         {
             if (_Size > 0 && (startIndex >= 0 && startIndex < _Size) && count > 0)
@@ -790,6 +800,7 @@ namespace Com
         /// 逆序遍历此 Vector 的所有分量并返回第一个与指定值相等的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(double item)
         {
             if (_Size > 0)
@@ -805,6 +816,7 @@ namespace Com
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(double item, int startIndex)
         {
             if (_Size > 0 && (startIndex >= 0 && startIndex < _Size))
@@ -823,6 +835,7 @@ namespace Com
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
         /// <param name="count">遍历的分量数量。</param>
+        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(double item, int startIndex, int count)
         {
             if (_Size > 0 && (startIndex >= 0 && startIndex < _Size) && count > 0)
@@ -841,6 +854,7 @@ namespace Com
         /// 遍历此 Vector 的所有分量并返回表示是否存在与指定值相等的分量的布尔值。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
+        /// <returns>布尔值，表示是否存在与指定值相等的分量。</returns>
         public bool Contains(double item)
         {
             if (_Size > 0)
@@ -862,6 +876,7 @@ namespace Com
         /// <summary>
         /// 将此 Vector 转换为双精度浮点数数组。
         /// </summary>
+        /// <returns>双精度浮点数数组，数组元素表示此 Vector 的分量。</returns>
         public double[] ToArray()
         {
             if (_Size > 0)
@@ -879,6 +894,7 @@ namespace Com
         /// <summary>
         /// 将此 Vector 转换为双精度浮点数列表。
         /// </summary>
+        /// <returns>双精度浮点数列表，列表元素表示此 Vector 的分量。</returns>
         public List<double> ToList()
         {
             if (_Size > 0)
@@ -894,6 +910,7 @@ namespace Com
         /// <summary>
         /// 返回将此 Vector 转换为矩阵的 Matrix 的新实例。
         /// </summary>
+        /// <returns>Matrix 对象，表示将此 Vector 转换为矩阵的结果。</returns>
         public Matrix ToMatrix()
         {
             if (_Size > 0)
@@ -930,6 +947,7 @@ namespace Com
         /// <summary>
         /// 返回将此 Vector 表示的直角坐标系坐标转换为极坐标系、球坐标系或超球坐标系坐标的新实例。
         /// </summary>
+        /// <returns>Vector 对象，表示将此 Vector 表示的直角坐标系坐标转换为极坐标系坐标得到的结果。</returns>
         public Vector ToSpherical()
         {
             if (_Size > 0)
@@ -1013,6 +1031,7 @@ namespace Com
         /// <summary>
         /// 返回将此 Vector 表示的极坐标系、球坐标系或超球坐标系坐标转换为直角坐标系坐标的新实例。
         /// </summary>
+        /// <returns>Vector 对象，表示将此 Vector 表示的极坐标系坐标转换为直角坐标系坐标得到的结果。</returns>
         public Vector ToCartesian()
         {
             if (_Size > 0)
@@ -1064,6 +1083,7 @@ namespace Com
         /// 返回此 Vector 与指定的 Vector 对象之间的距离。
         /// </summary>
         /// <param name="vector">Vector 对象，表示起始向量。</param>
+        /// <returns>双精度浮点数，表示此 Vector 与指定的 Vector 对象之间的距离。</returns>
         public double DistanceFrom(Vector vector)
         {
             if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
@@ -1085,6 +1105,7 @@ namespace Com
         /// 返回此 Vector 与指定的 Vector 对象之间的夹角（弧度）。
         /// </summary>
         /// <param name="vector">Vector 对象，表示起始向量。</param>
+        /// <returns>双精度浮点数，表示此 Vector 与指定的 Vector 对象之间的夹角（弧度）。</returns>
         public double AngleFrom(Vector vector)
         {
             if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
@@ -1140,9 +1161,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的位移将此 Vector 的副本的所有分量平移指定的量的新实例。
+        /// 返回按双精度浮点数表示的位移将此 Vector 的所有分量平移指定的量的新实例。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的位移将此 Vector 的所有分量平移指定的量得到的结果。</returns>
         public Vector OffsetCopy(double d)
         {
             if (_Size > 0)
@@ -1161,9 +1183,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Vector 对象表示的位移将此 Vector 的副本平移指定的量的新实例。
+        /// 返回按 Vector 对象表示的位移将此 Vector 平移指定的量的新实例。
         /// </summary>
         /// <param name="vector">Vector 对象表示的位移。</param>
+        /// <returns>Vector 对象，表示按 Vector 对象将此 Vector 平移指定的量得到的结果。</returns>
         public Vector OffsetCopy(Vector vector)
         {
             if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
@@ -1214,9 +1237,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的缩放因数将此 Vector 的副本的所有分量缩放指定的倍数的新实例。
+        /// 返回按双精度浮点数表示的缩放因数将此 Vector 的所有分量缩放指定的倍数的新实例。
         /// </summary>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的缩放因数将此 Vector 的所有分量缩放指定的倍数得到的结果。</returns>
         public Vector ScaleCopy(double s)
         {
             if (_Size > 0)
@@ -1235,9 +1259,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Vector 对象将此 Vector 的副本缩放指定的倍数的新实例。
+        /// 返回按 Vector 对象将此 Vector 缩放指定的倍数的新实例。
         /// </summary>
         /// <param name="vector">Vector 对象，用于缩放此 Vector。</param>
+        /// <returns>Vector 对象，表示按 Vector 对象将此 Vector 缩放指定的倍数得到的结果。</returns>
         public Vector ScaleCopy(Vector vector)
         {
             if (_Size > 0 && !IsNullOrEmpty(vector) && _Size == vector._Size)
@@ -1274,9 +1299,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将此 Vector 的副本的由指定的基向量方向的分量翻转的新实例。
+        /// 返回将此 Vector 的由指定的基向量方向的分量翻转的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
+        /// <returns>Vector 对象，表示将此 Vector 的由指定的基向量方向的分量翻转得到的结果。</returns>
         public Vector ReflectCopy(int index)
         {
             if (_Size > 0 && (index >= 0 && index < _Size))
@@ -1300,7 +1326,7 @@ namespace Com
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
         /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 的副本沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
             if (_Size >= 2 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
@@ -1314,11 +1340,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 Vector 的副本剪切指定的角度的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 Vector 剪切指定的角度的新实例。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
         /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 的副本沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的弧度将此 Vector 剪切指定的角度得到的结果。</returns>
         public Vector ShearCopy(int index1, int index2, double angle)
         {
             if (_Size >= 2 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
@@ -1376,11 +1403,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 Vector 的副本旋转指定的角度的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 Vector 旋转指定的角度的新实例。
         /// </summary>
         /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
         /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 的副本绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的弧度将此 Vector 旋转指定的角度得到的结果。</returns>
         public Vector RotateCopy(int index1, int index2, double angle)
         {
             if (_Size >= 2 && (index1 >= 0 && index1 < _Size) && (index2 >= 0 && index2 < _Size) && index1 != index2)
@@ -1459,7 +1487,7 @@ namespace Com
         /// <summary>
         /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public void AffineTransform(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
@@ -1522,9 +1550,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 的副本进行仿射变换的新实例。
+        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换的新实例。
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换得到的结果。</returns>
         public Vector AffineTransformCopy(Matrix matrix)
         {
             if (_Size > 0 && !Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
@@ -1563,9 +1592,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 的副本进行仿射变换的新实例。
+        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换得到的结果。</returns>
         public Vector AffineTransformCopy(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
@@ -1671,7 +1701,7 @@ namespace Com
         /// <summary>
         /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public void InverseAffineTransform(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
@@ -1734,9 +1764,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 的副本进行逆仿射变换的新实例。
+        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 进行逆仿射变换的新实例。
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行逆仿射变换得到的结果。</returns>
         public Vector InverseAffineTransformCopy(Matrix matrix)
         {
             if (_Size > 0 && !Matrix.IsNullOrEmpty(matrix) && matrix.Size == new Size(_Size + 1, _Size + 1))
@@ -1775,9 +1806,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 的副本进行逆仿射变换的新实例。
+        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表表示的仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换得到的结果。</returns>
         public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
         {
             if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
@@ -1855,6 +1887,7 @@ namespace Com
         /// 返回此 Vector 与指定索引的基向量之间的夹角（弧度）。
         /// </summary>
         /// <param name="index">索引。</param>
+        /// <returns>双精度浮点数，表示此 Vector 与指定索引的基向量之间的夹角（弧度）。</returns>
         public double AngleFromBase(int index)
         {
             if (_Size > 0 && (index >= 0 && index < _Size))
@@ -1876,6 +1909,7 @@ namespace Com
         /// 返回此 Vector 与垂直于指定索引的基向量的子空间之间的夹角（弧度）。
         /// </summary>
         /// <param name="index">索引。</param>
+        /// <returns>双精度浮点数，表示此 Vector 与垂直于指定索引的基向量的子空间之间的夹角（弧度）。</returns>
         public double AngleFromSpace(int index)
         {
             if (_Size > 0 && (index >= 0 && index < _Size))
@@ -1901,6 +1935,7 @@ namespace Com
         /// 判断指定的 Vector 是否为 null 或表示空向量。
         /// </summary>
         /// <param name="vector">用于判断的 Vector 对象。</param>
+        /// <returns>布尔值，表示指定的 Vector 是否为 null 或表示空向量。</returns>
         public static bool IsNullOrEmpty(Vector vector)
         {
             return ((object)vector == null || vector._Size <= 0);
@@ -1913,6 +1948,7 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 Vector 对象。</param>
         /// <param name="right">用于比较的第二个 Vector 对象。</param>
+        /// <returns>布尔值，表示两个 Vector 对象是否相等。</returns>
         public static bool Equals(Vector left, Vector right)
         {
             if ((object)left == null && (object)right == null)
@@ -1938,6 +1974,7 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 Vector 对象。</param>
         /// <param name="right">用于比较的第二个 Vector 对象。</param>
+        /// <returns>32 位整数，表示将两个 Vector 对象进行次序比较得到的结果。</returns>
         public static int Compare(Vector left, Vector right)
         {
             if ((object)left == null && (object)right == null)
@@ -1967,6 +2004,7 @@ namespace Com
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
+        /// <returns>Vector 对象，表示零向量。</returns>
         public static Vector Zero(Type type, int dimension)
         {
             if (dimension == 0)
@@ -1987,6 +2025,7 @@ namespace Com
         /// 返回表示零向量的 Vector 的新实例。
         /// </summary>
         /// <param name="dimension">向量维度。</param>
+        /// <returns>Vector 对象，表示零向量。</returns>
         public static Vector Zero(int dimension)
         {
             if (dimension == 0)
@@ -2009,6 +2048,7 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引。</param>
+        /// <returns>Vector 对象，表示指定索引的基向量。</returns>
         public static Vector Base(Type type, int dimension, int index)
         {
             if (dimension == 0)
@@ -2034,6 +2074,7 @@ namespace Com
         /// </summary>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引。</param>
+        /// <returns>Vector 对象，表示指定索引的基向量。</returns>
         public static Vector Base(int dimension, int index)
         {
             if (dimension == 0)
@@ -2062,6 +2103,7 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示用于平移 Vector 对象的仿射矩阵。</returns>
         public static Matrix OffsetMatrix(Type type, int dimension, double d)
         {
             if (dimension == 0)
@@ -2099,6 +2141,7 @@ namespace Com
         /// 返回表示用于平移 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="vector">Vector 对象表示的位移。</param>
+        /// <returns>Matrix 对象，表示用于平移 Vector 对象的仿射矩阵。</returns>
         public static Matrix OffsetMatrix(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2134,6 +2177,7 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示用于缩放 Vector 对象的仿射矩阵。</returns>
         public static Matrix ScaleMatrix(Type type, int dimension, double s)
         {
             if (dimension == 0)
@@ -2161,6 +2205,7 @@ namespace Com
         /// 返回表示用于缩放 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="vector">Vector 对象表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示用于缩放 Vector 对象的仿射矩阵。</returns>
         public static Matrix ScaleMatrix(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2186,6 +2231,7 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
+        /// <returns>Matrix 对象，表示用于翻转 Vector 对象的仿射矩阵。</returns>
         public static Matrix ReflectMatrix(Type type, int dimension, int index)
         {
             if (dimension > 0 && (index >= 0 && index < dimension))
@@ -2210,6 +2256,7 @@ namespace Com
         /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
         /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
         /// <param name="angle">双精度浮点数，表示 Vector 对象沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示用于剪切 Vector 对象的仿射矩阵。</returns>
         public static Matrix ShearMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
             if (dimension >= 2 && (index1 >= 0 && index1 < dimension) && (index2 >= 0 && index2 < dimension) && index1 != index2)
@@ -2243,6 +2290,7 @@ namespace Com
         /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
         /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
         /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        /// <returns>Matrix 对象，表示用于旋转 Vector 对象的仿射矩阵。</returns>
         public static Matrix RotateMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
             if (dimension >= 2 && (index1 >= 0 && index1 < dimension) && (index2 >= 0 && index2 < dimension) && index1 != index2)
@@ -2281,6 +2329,7 @@ namespace Com
         /// </summary>
         /// <param name="left">第一个 Vector 对象。</param>
         /// <param name="right">第二个 Vector 对象。</param>
+        /// <returns>双精度浮点数，表示两个 Vector 对象之间的距离。</returns>
         public static double DistanceBetween(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
@@ -2303,6 +2352,7 @@ namespace Com
         /// </summary>
         /// <param name="left">第一个 Vector 对象。</param>
         /// <param name="right">第二个 Vector 对象。</param>
+        /// <returns>双精度浮点数，表示两个 Vector 对象之间的夹角（弧度）。</returns>
         public static double AngleBetween(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
@@ -2332,6 +2382,7 @@ namespace Com
         /// </summary>
         /// <param name="left">第一个 Vector 对象。</param>
         /// <param name="right">第二个 Vector 对象。</param>
+        /// <returns>双精度浮点数，表示两个 Vector 对象的数量积。</returns>
         public static double DotProduct(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
@@ -2354,6 +2405,7 @@ namespace Com
         /// </summary>
         /// <param name="left">第一个 Vector 对象。</param>
         /// <param name="right">第二个 Vector 对象。</param>
+        /// <returns>Vector 对象，表示两个 Vector 对象的向量积。</returns>
         public static Vector CrossProduct(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
@@ -2387,6 +2439,7 @@ namespace Com
         /// 返回将 Vector 对象的所有分量取符号数得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">用于转换的 Vector 对象。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量取符号数得到的结果</returns>
         public static Vector Sign(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2408,6 +2461,7 @@ namespace Com
         /// 返回将 Vector 对象的所有分量取绝对值得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">用于转换的 Vector 对象。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量取绝对值得到的结果</returns>
         public static Vector Abs(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2429,6 +2483,7 @@ namespace Com
         /// 返回将 Vector 对象的所有分量舍入到较大的整数值得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">用于转换的 Vector 对象。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量舍入到较大的整数值得到的结果</returns>
         public static Vector Ceiling(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2450,6 +2505,7 @@ namespace Com
         /// 返回将 Vector 对象的所有分量舍入到较小的整数值得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">用于转换的 Vector 对象。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量舍入到较小的整数值得到的结果</returns>
         public static Vector Floor(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2471,6 +2527,7 @@ namespace Com
         /// 返回将 Vector 对象的所有分量舍入到最接近的整数值得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">用于转换的 Vector 对象。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量舍入到最接近的整数值得到的结果</returns>
         public static Vector Round(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2492,6 +2549,7 @@ namespace Com
         /// 返回将 Vector 对象的所有分量截断小数部分取整得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">用于转换的 Vector 对象。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量截断小数部分取整得到的结果</returns>
         public static Vector Truncate(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2514,6 +2572,7 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 Vector 对象。</param>
         /// <param name="right">用于比较的第二个 Vector 对象。</param>
+        /// <returns>Vector 对象，表示将两个 Vector 对象的所有分量分别取最大值得到的结果</returns>
         public static Vector Max(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
@@ -2536,6 +2595,7 @@ namespace Com
         /// </summary>
         /// <param name="left">用于比较的第一个 Vector 对象。</param>
         /// <param name="right">用于比较的第二个 Vector 对象。</param>
+        /// <returns>Vector 对象，表示将两个 Vector 对象的所有分量分别取最小值得到的结果</returns>
         public static Vector Min(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
@@ -2562,6 +2622,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        /// <returns>布尔值，表示两个 Vector 对象是否相等。</returns>
         public static bool operator ==(Vector left, Vector right)
         {
             if ((object)left == null && (object)right == null)
@@ -2593,6 +2654,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        /// <returns>布尔值，表示两个 Vector 对象是否不相等。</returns>
         public static bool operator !=(Vector left, Vector right)
         {
             if ((object)left == null && (object)right == null)
@@ -2624,6 +2686,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        /// <returns>布尔值，表示两个 Vector 对象的模平方是否前者小于后者。</returns>
         public static bool operator <(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2647,6 +2710,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        /// <returns>布尔值，表示两个 Vector 对象的模平方是否前者大于后者。</returns>
         public static bool operator >(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2670,6 +2734,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        /// <returns>布尔值，表示两个 Vector 对象的模平方是否前者小于或等于后者。</returns>
         public static bool operator <=(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2693,6 +2758,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
+        /// <returns>布尔值，表示两个 Vector 对象的模平方是否前者大于或等于后者。</returns>
         public static bool operator >=(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2717,6 +2783,7 @@ namespace Com
         /// 返回在 Vector 对象的所有分量前添加正号得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">运算符右侧的 Vector 对象。</param>
+        /// <returns>Vector 对象，表示在 Vector 对象的所有分量前添加正号得到的结果。</returns>
         public static Vector operator +(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2731,6 +2798,7 @@ namespace Com
         /// 返回在 Vector 对象的所有分量前添加负号得到的 Vector 的新实例。
         /// </summary>
         /// <param name="vector">运算符右侧的 Vector 对象。</param>
+        /// <returns>Vector 对象，表示在 Vector 对象的所有分量前添加负号得到的结果。</returns>
         public static Vector operator -(Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2755,6 +2823,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">Vector 对象，表示被加数。</param>
         /// <param name="n">双精度浮点数，表示加数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与双精度浮点数的相加得到的结果。</returns>
         public static Vector operator +(Vector vector, double n)
         {
             if (!IsNullOrEmpty(vector))
@@ -2777,6 +2846,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被加数。</param>
         /// <param name="vector">Vector 对象，表示加数。</param>
+        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的相加得到的结果。</returns>
         public static Vector operator +(double n, Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2799,6 +2869,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Vector 对象，表示被加数。</param>
         /// <param name="right">Vector 对象，表示加数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的相加得到的结果。</returns>
         public static Vector operator +(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
@@ -2823,6 +2894,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">Vector 对象，表示被减数。</param>
         /// <param name="n">双精度浮点数，表示减数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与双精度浮点数的相减得到的结果。</returns>
         public static Vector operator -(Vector vector, double n)
         {
             if (!IsNullOrEmpty(vector))
@@ -2845,6 +2917,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被减数。</param>
         /// <param name="vector">Vector 对象，表示减数。</param>
+        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的相减得到的结果。</returns>
         public static Vector operator -(double n, Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2867,6 +2940,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Vector 对象，表示被减数。</param>
         /// <param name="right">Vector 对象，表示减数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的相减得到的结果。</returns>
         public static Vector operator -(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
@@ -2891,6 +2965,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">Vector 对象，表示被乘数。</param>
         /// <param name="n">双精度浮点数，表示乘数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与双精度浮点数的相乘得到的结果。</returns>
         public static Vector operator *(Vector vector, double n)
         {
             if (!IsNullOrEmpty(vector))
@@ -2913,6 +2988,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被乘数。</param>
         /// <param name="vector">Vector 对象，表示乘数。</param>
+        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的相乘得到的结果。</returns>
         public static Vector operator *(double n, Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -2935,6 +3011,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Vector 对象，表示被乘数。</param>
         /// <param name="right">Vector 对象，表示乘数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的相乘得到的结果。</returns>
         public static Vector operator *(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
@@ -2959,6 +3036,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">Vector 对象，表示被除数。</param>
         /// <param name="n">双精度浮点数，表示除数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与双精度浮点数的相除得到的结果。</returns>
         public static Vector operator /(Vector vector, double n)
         {
             if (!IsNullOrEmpty(vector))
@@ -2981,6 +3059,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被除数。</param>
         /// <param name="vector">Vector 对象，表示除数。</param>
+        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的相除得到的结果。</returns>
         public static Vector operator /(double n, Vector vector)
         {
             if (!IsNullOrEmpty(vector))
@@ -3003,6 +3082,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Vector 对象，表示被除数。</param>
         /// <param name="right">Vector 对象，表示除数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的相除得到的结果。</returns>
         public static Vector operator /(Vector left, Vector right)
         {
             if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Type == right._Type && left._Size == right._Size)
