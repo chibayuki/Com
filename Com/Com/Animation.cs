@@ -48,112 +48,113 @@ namespace Com
                 {
                     throw new ArgumentNullException();
                 }
-                else if (frameCount <= 0 || msPerFrame <= 0)
+
+                if (frameCount <= 0 || msPerFrame <= 0)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                else
+
+                //
+
+                if (keyFrameList == null)
                 {
-                    if (keyFrameList == null)
+                    keyFrameList = new List<int>(0);
+                }
+
+                if (keyFrameList.Count > 0)
+                {
+                    for (int i = keyFrameList.Count - 1; i >= 0; i--)
                     {
-                        keyFrameList = new List<int>(0);
+                        if (keyFrameList[i] <= 1 || keyFrameList[i] >= frameCount)
+                        {
+                            keyFrameList.RemoveAt(i);
+                        }
                     }
+                }
+
+                if (keyFrameDensity > 0)
+                {
+                    keyFrameList.Capacity = keyFrameList.Count + (frameCount - 1) / keyFrameDensity;
+
+                    for (int frameId = 1 + keyFrameDensity; frameId < frameCount; frameId += keyFrameDensity)
+                    {
+                        if (!keyFrameList.Contains(frameId))
+                        {
+                            keyFrameList.Add(frameId);
+                        }
+                    }
+                }
+
+                if (keyFrameList.Count > 0)
+                {
+                    keyFrameList.Sort();
+                    keyFrameList.Reverse();
+
+                    for (int i = keyFrameList.Count - 1; i > 0; i--)
+                    {
+                        if (keyFrameList[i] == keyFrameList[i - 1])
+                        {
+                            keyFrameList.RemoveAt(i);
+                        }
+                    }
+                }
+
+                //
+
+                int MSTotal = 0;
+
+                for (int frameId = 1; frameId <= frameCount; frameId++)
+                {
+                    DateTime DTFrame = DateTime.Now;
+
+                    frame(frameId, frameCount, msPerFrame);
 
                     if (keyFrameList.Count > 0)
                     {
-                        for (int i = keyFrameList.Count - 1; i >= 0; i--)
+                        if (keyFrameList[keyFrameList.Count - 1] == frameId)
                         {
-                            if (keyFrameList[i] <= 1 || keyFrameList[i] >= frameCount)
-                            {
-                                keyFrameList.RemoveAt(i);
-                            }
+                            keyFrameList.RemoveAt(keyFrameList.Count - 1);
                         }
-                    }
-
-                    if (keyFrameDensity > 0)
-                    {
-                        keyFrameList.Capacity = keyFrameList.Count + (frameCount - 1) / keyFrameDensity;
-
-                        for (int frameId = 1 + keyFrameDensity; frameId < frameCount; frameId += keyFrameDensity)
+                        else
                         {
-                            if (!keyFrameList.Contains(frameId))
-                            {
-                                keyFrameList.Add(frameId);
-                            }
-                        }
-                    }
-
-                    if (keyFrameList.Count > 0)
-                    {
-                        keyFrameList.Sort();
-                        keyFrameList.Reverse();
-
-                        for (int i = keyFrameList.Count - 1; i > 0; i--)
-                        {
-                            if (keyFrameList[i] == keyFrameList[i - 1])
-                            {
-                                keyFrameList.RemoveAt(i);
-                            }
-                        }
-                    }
-
-                    //
-
-                    int MSTotal = 0;
-
-                    for (int frameId = 1; frameId <= frameCount; frameId++)
-                    {
-                        DateTime DTFrame = DateTime.Now;
-
-                        frame(frameId, frameCount, msPerFrame);
-
-                        if (keyFrameList.Count > 0)
-                        {
-                            if (keyFrameList[keyFrameList.Count - 1] == frameId)
+                            while (keyFrameList.Count > 0 && keyFrameList[keyFrameList.Count - 1] <= frameId)
                             {
                                 keyFrameList.RemoveAt(keyFrameList.Count - 1);
                             }
-                            else
-                            {
-                                while (keyFrameList.Count > 0 && keyFrameList[keyFrameList.Count - 1] <= frameId)
-                                {
-                                    keyFrameList.RemoveAt(keyFrameList.Count - 1);
-                                }
-                            }
                         }
+                    }
 
-                        if (frameId < frameCount)
+                    if (frameId < frameCount)
+                    {
+                        int MSFrame = Math.Max(1, (int)Math.Round((DateTime.Now - DTFrame).TotalMilliseconds));
+
+                        MSTotal += MSFrame;
+
+                        if (MSTotal < (frameId - 0.5) * msPerFrame)
                         {
-                            int MSFrame = Math.Max(1, (int)Math.Round((DateTime.Now - DTFrame).TotalMilliseconds));
+                            DateTime DTSleep = DateTime.Now;
 
-                            MSTotal += MSFrame;
+                            Thread.Sleep(Math.Max(1, frameId * msPerFrame - MSTotal));
 
-                            if (MSTotal < (frameId - 0.5) * msPerFrame)
+                            int MSSleep = Math.Max(1, (int)Math.Round((DateTime.Now - DTSleep).TotalMilliseconds));
+
+                            MSTotal += MSSleep;
+                        }
+                        else if (frameId < frameCount - 1 && MSTotal > (frameId + 0.5) * msPerFrame)
+                        {
+                            int frameIdNew = Math.Min(frameCount, Math.Max((int)Math.Round((double)MSTotal / msPerFrame) + 1, frameId + 1));
+
+                            if (keyFrameList.Count > 0)
                             {
-                                DateTime DTSleep = DateTime.Now;
+                                int NextKeyFrame = Math.Min(frameCount, Math.Max(keyFrameList[keyFrameList.Count - 1], frameId + 1));
 
-                                Thread.Sleep(Math.Max(1, frameId * msPerFrame - MSTotal));
-
-                                int MSSleep = Math.Max(1, (int)Math.Round((DateTime.Now - DTSleep).TotalMilliseconds));
-
-                                MSTotal += MSSleep;
-                            }
-                            else if (frameId < frameCount - 1 && MSTotal > (frameId + 0.5) * msPerFrame)
-                            {
-                                int frameIdNew = Math.Min(frameCount, Math.Max((int)Math.Round((double)MSTotal / msPerFrame) + 1, frameId + 1));
-
-                                if (keyFrameList.Count > 0)
+                                if (frameIdNew >= NextKeyFrame)
                                 {
-                                    int NextKeyFrame = Math.Min(frameCount, Math.Max(keyFrameList[keyFrameList.Count - 1], frameId + 1));
-
-                                    if (frameIdNew >= NextKeyFrame)
-                                    {
-                                        frameIdNew = NextKeyFrame;
-                                    }
+                                    frameIdNew = NextKeyFrame;
                                 }
-
-                                frameId = frameIdNew - 1;
                             }
+
+                            frameId = frameIdNew - 1;
                         }
                     }
                 }

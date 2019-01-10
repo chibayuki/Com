@@ -89,14 +89,22 @@ namespace Com
         /// <param name="length">元素数量。</param>
         public BitSet(int length)
         {
-            if (length > 0 && length <= _MaxSize)
+            if (length < 0 || length > _MaxSize)
             {
-                _Size = length;
-                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+                throw new OverflowException();
+            }
+
+            //
+
+            if (length == 0)
+            {
+                _Size = 0;
+                _UintArray = new uint[0];
             }
             else
             {
-                throw new OverflowException();
+                _Size = length;
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
             }
         }
 
@@ -107,7 +115,19 @@ namespace Com
         /// <param name="bitValue">位值。</param>
         public BitSet(int length, bool bitValue)
         {
-            if (length > 0 && length <= _MaxSize)
+            if (length < 0 || length > _MaxSize)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
+            if (length == 0)
+            {
+                _Size = 0;
+                _UintArray = new uint[0];
+            }
+            else
             {
                 _Size = length;
                 _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
@@ -127,10 +147,6 @@ namespace Com
                     }
                 }
             }
-            else
-            {
-                throw new OverflowException();
-            }
         }
 
         /// <summary>
@@ -139,33 +155,32 @@ namespace Com
         /// <param name="values">表示位值的布尔值数组。</param>
         public BitSet(params bool[] values)
         {
-            if (!InternalMethod.IsNullOrEmpty(values))
-            {
-                int length = values.Length;
-
-                if (length <= _MaxSize)
-                {
-                    _Size = length;
-                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
-
-                    for (int i = 0; i < length; i++)
-                    {
-                        if (values[i])
-                        {
-                            Set(i, true);
-                        }
-                    }
-                }
-                else
-                {
-                    _Size = 0;
-                    _UintArray = new uint[0];
-                }
-            }
-            else
+            if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
                 _UintArray = new uint[0];
+            }
+            else
+            {
+                int length = values.Length;
+
+                if (length > _MaxSize)
+                {
+                    throw new OverflowException();
+                }
+
+                //
+
+                _Size = length;
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                for (int i = 0; i < length; i++)
+                {
+                    if (values[i])
+                    {
+                        Set(i, true);
+                    }
+                }
             }
         }
 
@@ -175,30 +190,29 @@ namespace Com
         /// <param name="values">8 位无符号整数数组。</param>
         public BitSet(params byte[] values)
         {
-            if (!InternalMethod.IsNullOrEmpty(values))
-            {
-                int length = values.Length;
-
-                if ((long)length * _BitsPerByte <= _MaxSize)
-                {
-                    _Size = length * _BitsPerByte;
-                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
-
-                    for (int i = 0; i < length; i++)
-                    {
-                        _UintArray[i / _BytesPerUint] |= (((uint)values[i]) << (_BitsPerByte * (i % _BytesPerUint)));
-                    }
-                }
-                else
-                {
-                    _Size = 0;
-                    _UintArray = new uint[0];
-                }
-            }
-            else
+            if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
                 _UintArray = new uint[0];
+            }
+            else
+            {
+                int length = values.Length;
+
+                if ((long)length * _BitsPerByte > _MaxSize)
+                {
+                    throw new OverflowException();
+                }
+
+                //
+
+                _Size = length * _BitsPerByte;
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                for (int i = 0; i < length; i++)
+                {
+                    _UintArray[i / _BytesPerUint] |= (((uint)values[i]) << (_BitsPerByte * (i % _BytesPerUint)));
+                }
             }
         }
 
@@ -208,30 +222,29 @@ namespace Com
         /// <param name="values">16 位无符号整数数组。</param>
         public BitSet(params ushort[] values)
         {
-            if (!InternalMethod.IsNullOrEmpty(values))
-            {
-                int length = values.Length;
-
-                if ((long)length * _BitsPerUshort <= _MaxSize)
-                {
-                    _Size = length * _BitsPerUshort;
-                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
-
-                    for (int i = 0; i < length; i++)
-                    {
-                        _UintArray[i / _UshortsPerUint] |= (((uint)values[i]) << (_BitsPerUshort * (i % _UshortsPerUint)));
-                    }
-                }
-                else
-                {
-                    _Size = 0;
-                    _UintArray = new uint[0];
-                }
-            }
-            else
+            if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
                 _UintArray = new uint[0];
+            }
+            else
+            {
+                int length = values.Length;
+
+                if ((long)length * _BitsPerUshort > _MaxSize)
+                {
+                    throw new OverflowException();
+                }
+
+                //
+
+                _Size = length * _BitsPerUshort;
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                for (int i = 0; i < length; i++)
+                {
+                    _UintArray[i / _UshortsPerUint] |= (((uint)values[i]) << (_BitsPerUshort * (i % _UshortsPerUint)));
+                }
             }
         }
 
@@ -241,29 +254,28 @@ namespace Com
         /// <param name="values">32 位无符号整数数组。</param>
         public BitSet(params uint[] values)
         {
-            if (!InternalMethod.IsNullOrEmpty(values))
-            {
-                int length = values.Length;
-
-                if ((long)length * _BitsPerUint <= _MaxSize)
-                {
-                    _Size = length * _BitsPerUint;
-                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
-
-                    int Len = _GetUintNumOfBitNum(_Size);
-
-                    Array.Copy(values, _UintArray, Len);
-                }
-                else
-                {
-                    _Size = 0;
-                    _UintArray = new uint[0];
-                }
-            }
-            else
+            if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
                 _UintArray = new uint[0];
+            }
+            else
+            {
+                int length = values.Length;
+
+                if ((long)length * _BitsPerUint > _MaxSize)
+                {
+                    throw new OverflowException();
+                }
+
+                //
+
+                _Size = length * _BitsPerUint;
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                int Len = _GetUintNumOfBitNum(_Size);
+
+                Array.Copy(values, _UintArray, Len);
             }
         }
 
@@ -273,31 +285,30 @@ namespace Com
         /// <param name="values">64 位无符号整数数组。</param>
         public BitSet(params ulong[] values)
         {
-            if (!InternalMethod.IsNullOrEmpty(values))
-            {
-                int length = values.Length;
-
-                if ((long)length * _BitsPerUlong <= _MaxSize)
-                {
-                    _Size = length * _BitsPerUlong;
-                    _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
-
-                    for (int i = 0; i < length; i++)
-                    {
-                        _UintArray[i * _UintsPerUlong] = (uint)values[i];
-                        _UintArray[i * _UintsPerUlong + 1] = (uint)(values[i] >> _BitsPerUint);
-                    }
-                }
-                else
-                {
-                    _Size = 0;
-                    _UintArray = new uint[0];
-                }
-            }
-            else
+            if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
                 _UintArray = new uint[0];
+            }
+            else
+            {
+                int length = values.Length;
+
+                if ((long)length * _BitsPerUlong > _MaxSize)
+                {
+                    throw new OverflowException();
+                }
+
+                //
+
+                _Size = length * _BitsPerUlong;
+                _UintArray = new uint[_GetUintArrayLengthOfBitNum(_Size)];
+
+                for (int i = 0; i < length; i++)
+                {
+                    _UintArray[i * _UintsPerUlong] = (uint)values[i];
+                    _UintArray[i * _UintsPerUlong + 1] = (uint)(values[i] >> _BitsPerUint);
+                }
             }
         }
 
@@ -366,73 +377,76 @@ namespace Com
         {
             get
             {
-                if (_Size > 0)
+                if (_Size < 0)
                 {
-                    return _Size;
+                    return 0;
                 }
 
-                return 0;
+                return _Size;
             }
 
             set
             {
-                if (value > 0)
+                if (value < 0)
                 {
-                    if (_Size != value)
-                    {
-                        if (_Size <= _MaxSize)
-                        {
-                            int OldSize = _Size;
-
-                            _Size = value;
-
-                            int Len = _GetUintNumOfBitNum(_Size);
-
-                            int NewArrayLength = _GetUintArrayLengthOfBitNum(_Size);
-
-                            if (NewArrayLength > _UintArray.Length || NewArrayLength < _UintArray.Length / 2 || NewArrayLength < _UintArray.Length - 256)
-                            {
-                                uint[] NewUintArray = new uint[NewArrayLength];
-
-                                int LenMin = Math.Min(Len, _GetUintNumOfBitNum(OldSize));
-
-                                Array.Copy(_UintArray, NewUintArray, LenMin);
-
-                                _UintArray = NewUintArray;
-                            }
-
-                            if (_Size < OldSize)
-                            {
-                                if (_Size % _BitsPerUint != 0)
-                                {
-                                    int Size = Len * _BitsPerUint;
-
-                                    for (int i = _Size; i < Size; i++)
-                                    {
-                                        Set(i, false);
-                                    }
-                                }
-
-                                for (int i = Len; i < _UintArray.Length; i++)
-                                {
-                                    _UintArray[i] = _FalseUint;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            throw new OverflowException();
-                        }
-                    }
+                    throw new OverflowException();
                 }
-                else if (value == 0)
+
+                //
+
+                if (value == 0)
                 {
                     _Size = 0;
                     _UintArray = new uint[0];
                 }
                 else
                 {
-                    throw new OverflowException();
+                    if (_Size != value)
+                    {
+                        if (_Size > _MaxSize)
+                        {
+                            throw new OverflowException();
+                        }
+
+                        //
+
+                        int OldSize = _Size;
+
+                        _Size = value;
+
+                        int Len = _GetUintNumOfBitNum(_Size);
+
+                        int NewArrayLength = _GetUintArrayLengthOfBitNum(_Size);
+
+                        if (NewArrayLength > _UintArray.Length || NewArrayLength < _UintArray.Length / 2 || NewArrayLength < _UintArray.Length - 256)
+                        {
+                            uint[] NewUintArray = new uint[NewArrayLength];
+
+                            int LenMin = Math.Min(Len, _GetUintNumOfBitNum(OldSize));
+
+                            Array.Copy(_UintArray, NewUintArray, LenMin);
+
+                            _UintArray = NewUintArray;
+                        }
+
+                        if (_Size < OldSize)
+                        {
+                            if (_Size % _BitsPerUint != 0)
+                            {
+                                int Size = Len * _BitsPerUint;
+
+                                for (int i = _Size; i < Size; i++)
+                                {
+                                    Set(i, false);
+                                }
+                            }
+
+                            for (int i = Len; i < _UintArray.Length; i++)
+                            {
+                                _UintArray[i] = _FalseUint;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -455,12 +469,12 @@ namespace Com
         {
             get
             {
-                if (_UintArray != null)
+                if (_UintArray == null)
                 {
-                    return (_UintArray.Length * _BitsPerUint);
+                    return 0;
                 }
 
-                return 0;
+                return (_UintArray.Length * _BitsPerUint);
             }
         }
 
@@ -523,13 +537,13 @@ namespace Com
         {
             string Str = string.Empty;
 
-            if (_Size > 0)
+            if (_Size <= 0)
             {
-                Str = string.Concat("Count=", _Size);
+                Str = "Empty";
             }
             else
             {
-                Str = "Empty";
+                Str = string.Concat("Count=", _Size);
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");
@@ -656,7 +670,11 @@ namespace Com
         /// <returns>BitSet 对象，表示此 BitSet 的副本。</returns>
         public BitSet Copy()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return Empty;
+            }
+            else
             {
                 BitSet result = new BitSet(_Size);
 
@@ -666,8 +684,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         //
@@ -679,12 +695,12 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int IndexOf(bool item)
         {
-            if (_Size > 0)
+            if (_Size <= 0)
             {
-                return IndexOf(item, 0, _Size);
+                return -1;
             }
 
-            return -1;
+            return IndexOf(item, 0, _Size);
         }
 
         /// <summary>
@@ -695,14 +711,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int IndexOf(bool item, int startIndex)
         {
-            if (_Size > 0 && (startIndex >= 0 && startIndex < _Size))
-            {
-                return IndexOf(item, startIndex, _Size - startIndex);
-            }
-            else
+            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return IndexOf(item, startIndex, _Size - startIndex);
         }
 
         /// <summary>
@@ -714,117 +730,117 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int IndexOf(bool item, int startIndex, int count)
         {
-            if (_Size > 0 && (startIndex >= 0 && startIndex < _Size) && count > 0)
+            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size) || count <= 0)
             {
-                count = Math.Min(_Size - startIndex, count);
+                throw new ArgumentOutOfRangeException();
+            }
 
-                int _Left = startIndex / _BitsPerUint, _Right = (startIndex + count - 1) / _BitsPerUint;
+            //
 
-                if (item)
+            count = Math.Min(_Size - startIndex, count);
+
+            int _Left = startIndex / _BitsPerUint, _Right = (startIndex + count - 1) / _BitsPerUint;
+
+            if (item)
+            {
+                if (_Left == _Right)
                 {
-                    if (_Left == _Right)
+                    for (int j = startIndex; j < startIndex + count; j++)
                     {
-                        for (int j = startIndex; j < startIndex + count; j++)
+                        if (Get(j))
                         {
-                            if (Get(j))
-                            {
-                                return j;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = _Left; i <= _Right; i++)
-                        {
-                            if (i == _Left)
-                            {
-                                for (int j = startIndex; j < (_Left + 1) * _BitsPerUint; j++)
-                                {
-                                    if (Get(j))
-                                    {
-                                        return j;
-                                    }
-                                }
-                            }
-                            else if (i == _Right)
-                            {
-                                for (int j = _Right * _BitsPerUint; j < startIndex + count; j++)
-                                {
-                                    if (Get(j))
-                                    {
-                                        return j;
-                                    }
-                                }
-                            }
-                            else if (_UintArray[i] != _FalseUint)
-                            {
-                                for (int j = i * _BitsPerUint; j < (i + 1) * _BitsPerUint; j++)
-                                {
-                                    if (Get(j))
-                                    {
-                                        return j;
-                                    }
-                                }
-                            }
+                            return j;
                         }
                     }
                 }
                 else
                 {
-                    if (_Left == _Right)
+                    for (int i = _Left; i <= _Right; i++)
                     {
-                        for (int j = startIndex; j < startIndex + count; j++)
+                        if (i == _Left)
                         {
-                            if (!Get(j))
+                            for (int j = startIndex; j < (_Left + 1) * _BitsPerUint; j++)
                             {
-                                return j;
+                                if (Get(j))
+                                {
+                                    return j;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        for (int i = _Left; i <= _Right; i++)
+                        else if (i == _Right)
                         {
-                            if (i == _Left)
+                            for (int j = _Right * _BitsPerUint; j < startIndex + count; j++)
                             {
-                                for (int j = startIndex; j < (_Left + 1) * _BitsPerUint; j++)
+                                if (Get(j))
                                 {
-                                    if (!Get(j))
-                                    {
-                                        return j;
-                                    }
+                                    return j;
                                 }
                             }
-                            else if (i == _Right)
+                        }
+                        else if (_UintArray[i] != _FalseUint)
+                        {
+                            for (int j = i * _BitsPerUint; j < (i + 1) * _BitsPerUint; j++)
                             {
-                                for (int j = _Right * _BitsPerUint; j < startIndex + count; j++)
+                                if (Get(j))
                                 {
-                                    if (!Get(j))
-                                    {
-                                        return j;
-                                    }
-                                }
-                            }
-                            else if (_UintArray[i] != _TrueUint)
-                            {
-                                for (int j = i * _BitsPerUint; j < (i + 1) * _BitsPerUint; j++)
-                                {
-                                    if (!Get(j))
-                                    {
-                                        return j;
-                                    }
+                                    return j;
                                 }
                             }
                         }
                     }
                 }
-
-                return -1;
             }
             else
             {
-                throw new ArgumentOutOfRangeException();
+                if (_Left == _Right)
+                {
+                    for (int j = startIndex; j < startIndex + count; j++)
+                    {
+                        if (!Get(j))
+                        {
+                            return j;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = _Left; i <= _Right; i++)
+                    {
+                        if (i == _Left)
+                        {
+                            for (int j = startIndex; j < (_Left + 1) * _BitsPerUint; j++)
+                            {
+                                if (!Get(j))
+                                {
+                                    return j;
+                                }
+                            }
+                        }
+                        else if (i == _Right)
+                        {
+                            for (int j = _Right * _BitsPerUint; j < startIndex + count; j++)
+                            {
+                                if (!Get(j))
+                                {
+                                    return j;
+                                }
+                            }
+                        }
+                        else if (_UintArray[i] != _TrueUint)
+                        {
+                            for (int j = i * _BitsPerUint; j < (i + 1) * _BitsPerUint; j++)
+                            {
+                                if (!Get(j))
+                                {
+                                    return j;
+                                }
+                            }
+                        }
+                    }
+                }
             }
+
+            return -1;
         }
 
         /// <summary>
@@ -834,12 +850,12 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(bool item)
         {
-            if (_Size > 0)
+            if (_Size <= 0)
             {
-                return LastIndexOf(item, _Size - 1, _Size);
+                return -1;
             }
 
-            return -1;
+            return LastIndexOf(item, _Size - 1, _Size);
         }
 
         /// <summary>
@@ -850,14 +866,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(bool item, int startIndex)
         {
-            if (_Size > 0 && (startIndex >= 0 && startIndex < _Size))
-            {
-                return LastIndexOf(item, startIndex, startIndex + 1);
-            }
-            else
+            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return LastIndexOf(item, startIndex, startIndex + 1);
         }
 
         /// <summary>
@@ -869,117 +885,117 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(bool item, int startIndex, int count)
         {
-            if (_Size > 0 && (startIndex >= 0 && startIndex < _Size) && count > 0)
+            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size) || count <= 0)
             {
-                count = Math.Min(startIndex + 1, count);
+                throw new ArgumentOutOfRangeException();
+            }
 
-                int _Right = startIndex / _BitsPerUint, _Left = (startIndex - count + 1) / _BitsPerUint;
+            //
 
-                if (item)
+            count = Math.Min(startIndex + 1, count);
+
+            int _Right = startIndex / _BitsPerUint, _Left = (startIndex - count + 1) / _BitsPerUint;
+
+            if (item)
+            {
+                if (_Left == _Right)
                 {
-                    if (_Left == _Right)
+                    for (int j = startIndex; j > startIndex - count; j--)
                     {
-                        for (int j = startIndex; j > startIndex - count; j--)
+                        if (Get(j))
                         {
-                            if (Get(j))
-                            {
-                                return j;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = _Right; i >= _Left; i--)
-                        {
-                            if (i == _Right)
-                            {
-                                for (int j = startIndex; j >= _Right * _BitsPerUint; j--)
-                                {
-                                    if (Get(j))
-                                    {
-                                        return j;
-                                    }
-                                }
-                            }
-                            else if (i == _Left)
-                            {
-                                for (int j = (_Left + 1) * _BitsPerUint - 1; j > startIndex - count; j--)
-                                {
-                                    if (Get(j))
-                                    {
-                                        return j;
-                                    }
-                                }
-                            }
-                            else if (_UintArray[i] != _FalseUint)
-                            {
-                                for (int j = (i + 1) * _BitsPerUint - 1; j >= i * _BitsPerUint; j--)
-                                {
-                                    if (Get(j))
-                                    {
-                                        return j;
-                                    }
-                                }
-                            }
+                            return j;
                         }
                     }
                 }
                 else
                 {
-                    if (_Left == _Right)
+                    for (int i = _Right; i >= _Left; i--)
                     {
-                        for (int j = startIndex; j > startIndex - count; j--)
+                        if (i == _Right)
                         {
-                            if (!Get(j))
+                            for (int j = startIndex; j >= _Right * _BitsPerUint; j--)
                             {
-                                return j;
+                                if (Get(j))
+                                {
+                                    return j;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        for (int i = _Right; i >= _Left; i--)
+                        else if (i == _Left)
                         {
-                            if (i == _Right)
+                            for (int j = (_Left + 1) * _BitsPerUint - 1; j > startIndex - count; j--)
                             {
-                                for (int j = startIndex; j >= _Right * _BitsPerUint; j--)
+                                if (Get(j))
                                 {
-                                    if (!Get(j))
-                                    {
-                                        return j;
-                                    }
+                                    return j;
                                 }
                             }
-                            else if (i == _Left)
+                        }
+                        else if (_UintArray[i] != _FalseUint)
+                        {
+                            for (int j = (i + 1) * _BitsPerUint - 1; j >= i * _BitsPerUint; j--)
                             {
-                                for (int j = (_Left + 1) * _BitsPerUint - 1; j > startIndex - count; j--)
+                                if (Get(j))
                                 {
-                                    if (!Get(j))
-                                    {
-                                        return j;
-                                    }
-                                }
-                            }
-                            else if (_UintArray[i] != _TrueUint)
-                            {
-                                for (int j = (i + 1) * _BitsPerUint - 1; j >= i * _BitsPerUint; j--)
-                                {
-                                    if (!Get(j))
-                                    {
-                                        return j;
-                                    }
+                                    return j;
                                 }
                             }
                         }
                     }
                 }
-
-                return -1;
             }
             else
             {
-                throw new ArgumentOutOfRangeException();
+                if (_Left == _Right)
+                {
+                    for (int j = startIndex; j > startIndex - count; j--)
+                    {
+                        if (!Get(j))
+                        {
+                            return j;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = _Right; i >= _Left; i--)
+                    {
+                        if (i == _Right)
+                        {
+                            for (int j = startIndex; j >= _Right * _BitsPerUint; j--)
+                            {
+                                if (!Get(j))
+                                {
+                                    return j;
+                                }
+                            }
+                        }
+                        else if (i == _Left)
+                        {
+                            for (int j = (_Left + 1) * _BitsPerUint - 1; j > startIndex - count; j--)
+                            {
+                                if (!Get(j))
+                                {
+                                    return j;
+                                }
+                            }
+                        }
+                        else if (_UintArray[i] != _TrueUint)
+                        {
+                            for (int j = (i + 1) * _BitsPerUint - 1; j >= i * _BitsPerUint; j--)
+                            {
+                                if (!Get(j))
+                                {
+                                    return j;
+                                }
+                            }
+                        }
+                    }
+                }
             }
+
+            return -1;
         }
 
         /// <summary>
@@ -989,7 +1005,11 @@ namespace Com
         /// <returns>布尔值，表示是否存在与指定值相等的位值。</returns>
         public bool Contains(bool item)
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return false;
+            }
+            else
             {
                 int Len = _GetUintNumOfBitNum(_Size);
 
@@ -1039,9 +1059,9 @@ namespace Com
                         }
                     }
                 }
-            }
 
-            return false;
+                return false;
+            }
         }
 
         //
@@ -1052,7 +1072,11 @@ namespace Com
         /// <returns>布尔值数组，数组元素表示此 BitSet 的位值的布尔值形式。</returns>
         public bool[] ToArray()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return new bool[0];
+            }
+            else
             {
                 bool[] result = new bool[_Size];
 
@@ -1063,8 +1087,6 @@ namespace Com
 
                 return result;
             }
-
-            return new bool[0];
         }
 
         /// <summary>
@@ -1073,7 +1095,11 @@ namespace Com
         /// <returns>布尔值列表，列表元素表示此 BitSet 的位值的布尔值形式。</returns>
         public List<bool> ToList()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return new List<bool>(0);
+            }
+            else
             {
                 List<bool> result = new List<bool>(_Size);
 
@@ -1084,8 +1110,6 @@ namespace Com
 
                 return result;
             }
-
-            return new List<bool>(0);
         }
 
         //
@@ -1121,14 +1145,14 @@ namespace Com
         /// <returns>布尔值，表示此 BitSet 指定索引位置的位值。</returns>
         public bool Get(int index)
         {
-            if (_Size > 0 && (index >= 0 && index < _Size))
-            {
-                return ((_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0);
-            }
-            else
+            if (_Size <= 0 || (index < 0 || index >= _Size))
             {
                 throw new IndexOutOfRangeException();
             }
+
+            //
+
+            return ((_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0);
         }
 
         /// <summary>
@@ -1138,20 +1162,20 @@ namespace Com
         /// <param name="bitValue">位值。</param>
         public void Set(int index, bool bitValue)
         {
-            if (_Size > 0 && (index >= 0 && index < _Size))
+            if (_Size <= 0 || (index < 0 || index >= _Size))
             {
-                if (bitValue)
-                {
-                    _UintArray[index / _BitsPerUint] |= (((uint)1) << (index % _BitsPerUint));
-                }
-                else
-                {
-                    _UintArray[index / _BitsPerUint] &= (~(((uint)1) << (index % _BitsPerUint)));
-                }
+                throw new IndexOutOfRangeException();
+            }
+
+            //
+
+            if (bitValue)
+            {
+                _UintArray[index / _BitsPerUint] |= (((uint)1) << (index % _BitsPerUint));
             }
             else
             {
-                throw new IndexOutOfRangeException();
+                _UintArray[index / _BitsPerUint] &= (~(((uint)1) << (index % _BitsPerUint)));
             }
         }
 
@@ -1195,14 +1219,14 @@ namespace Com
         /// <param name="index">索引。</param>
         public void TrueForBit(int index)
         {
-            if (_Size > 0 && (index >= 0 && index < _Size))
-            {
-                Set(index, true);
-            }
-            else
+            if (_Size <= 0 || (index < 0 || index >= _Size))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            Set(index, true);
         }
 
         /// <summary>
@@ -1211,14 +1235,14 @@ namespace Com
         /// <param name="index">索引。</param>
         public void FalseForBit(int index)
         {
-            if (_Size > 0 && (index >= 0 && index < _Size))
-            {
-                Set(index, false);
-            }
-            else
+            if (_Size <= 0 || (index < 0 || index >= _Size))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            Set(index, false);
         }
 
         /// <summary>
@@ -1227,14 +1251,14 @@ namespace Com
         /// <param name="index">索引。</param>
         public void InverseBit(int index)
         {
-            if (_Size > 0 && (index >= 0 && index < _Size))
-            {
-                _UintArray[index / _BitsPerUint] ^= (((uint)1) << (index % _BitsPerUint));
-            }
-            else
+            if (_Size <= 0 || (index < 0 || index >= _Size))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            _UintArray[index / _BitsPerUint] ^= (((uint)1) << (index % _BitsPerUint));
         }
 
         /// <summary>
@@ -1293,7 +1317,11 @@ namespace Com
         /// <returns>32 位整数，表示此 BitSet 值为 true 的位值的数量。</returns>
         public int TrueBitCount()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return 0;
+            }
+            else
             {
                 int Count = 0;
 
@@ -1313,8 +1341,6 @@ namespace Com
 
                 return Count;
             }
-
-            return 0;
         }
 
         /// <summary>
@@ -1323,12 +1349,12 @@ namespace Com
         /// <returns>32 位整数，表示此 BitSet 值为 false 的位值的数量。</returns>
         public int FalseBitCount()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
             {
-                return (_Size - TrueBitCount());
+                return 0;
             }
 
-            return 0;
+            return (_Size - TrueBitCount());
         }
 
         /// <summary>
@@ -1337,7 +1363,11 @@ namespace Com
         /// <returns>32 位整数数组，该数组包含此 BitSet 值为 true 的位值的索引。</returns>
         public int[] TrueBitIndex()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return new int[0];
+            }
+            else
             {
                 List<int> result = new List<int>(_Size);
 
@@ -1365,8 +1395,6 @@ namespace Com
 
                 return result.ToArray();
             }
-
-            return new int[0];
         }
 
         /// <summary>
@@ -1375,7 +1403,11 @@ namespace Com
         /// <returns>32 位整数数组，该数组包含此 BitSet 值为 false 的位值的索引。</returns>
         public int[] FalseBitIndex()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return new int[0];
+            }
+            else
             {
                 List<int> result = new List<int>(_Size);
 
@@ -1403,8 +1435,6 @@ namespace Com
 
                 return result.ToArray();
             }
-
-            return new int[0];
         }
 
         //
@@ -1416,7 +1446,11 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位与得到的结果。</returns>
         public BitSet And(BitSet bitSet)
         {
-            if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
+            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size)
+            {
+                return Empty;
+            }
+            else
             {
                 BitSet result = new BitSet(_Size);
 
@@ -1429,8 +1463,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1440,7 +1472,11 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位或得到的结果。</returns>
         public BitSet Or(BitSet bitSet)
         {
-            if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
+            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size)
+            {
+                return Empty;
+            }
+            else
             {
                 BitSet result = new BitSet(_Size);
 
@@ -1453,8 +1489,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1464,7 +1498,11 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位异或得到的结果。</returns>
         public BitSet Xor(BitSet bitSet)
         {
-            if (_Size > 0 && !IsNullOrEmpty(bitSet) && _Size == bitSet._Size)
+            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size)
+            {
+                return Empty;
+            }
+            else
             {
                 BitSet result = new BitSet(_Size);
 
@@ -1477,8 +1515,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1487,7 +1523,11 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 按位取反得到的结果。</returns>
         public BitSet Not()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return Empty;
+            }
+            else
             {
                 BitSet result = new BitSet(_Size);
 
@@ -1510,8 +1550,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         //
@@ -1522,7 +1560,11 @@ namespace Com
         /// <returns>字符串，表示此 BitSet 的二进制形式。</returns>
         public string ToBinaryString()
         {
-            if (_Size > 0)
+            if (_Size <= 0)
+            {
+                return string.Empty;
+            }
+            else
             {
                 char[] BitCharArray = new char[_Size];
 
@@ -1533,8 +1575,6 @@ namespace Com
 
                 return new string(BitCharArray);
             }
-
-            return string.Empty;
         }
 
         #endregion
@@ -1863,12 +1903,12 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位与得到的结果。</returns>
         public static BitSet operator &(BitSet left, BitSet right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
-                return left.And(right);
+                return Empty;
             }
 
-            return Empty;
+            return left.And(right);
         }
 
         /// <summary>
@@ -1879,12 +1919,12 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位或得到的结果。</returns>
         public static BitSet operator |(BitSet left, BitSet right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
-                return left.Or(right);
+                return Empty;
             }
 
-            return Empty;
+            return left.Or(right);
         }
 
         /// <summary>
@@ -1895,12 +1935,12 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位异或得到的结果。</returns>
         public static BitSet operator ^(BitSet left, BitSet right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right) && left._Size == right._Size)
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
             {
-                return left.Xor(right);
+                return Empty;
             }
 
-            return Empty;
+            return left.Xor(right);
         }
 
         /// <summary>
@@ -1910,12 +1950,12 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象按位取反得到的结果。</returns>
         public static BitSet operator ~(BitSet bitSet)
         {
-            if (!IsNullOrEmpty(bitSet))
+            if (IsNullOrEmpty(bitSet))
             {
-                return bitSet.Not();
+                return Empty;
             }
 
-            return Empty;
+            return bitSet.Not();
         }
 
         #endregion
@@ -1933,14 +1973,14 @@ namespace Com
 
             set
             {
-                if (value != null && value is bool)
-                {
-                    Set(index, (bool)value);
-                }
-                else
+                if (value == null || !(value is bool))
                 {
                     throw new ArgumentNullException();
                 }
+
+                //
+
+                Set(index, (bool)value);
             }
         }
 
@@ -1960,22 +2000,22 @@ namespace Com
 
         bool IList.Contains(object item)
         {
-            if (item != null && item is bool)
+            if (item == null || !(item is bool))
             {
-                return Contains((bool)item);
+                return false;
             }
 
-            return false;
+            return Contains((bool)item);
         }
 
         int IList.IndexOf(object item)
         {
-            if (item != null && item is bool)
+            if (item == null || !(item is bool))
             {
-                return IndexOf((bool)item);
+                return -1;
             }
 
-            return -1;
+            return IndexOf((bool)item);
         }
 
         void IList.Insert(int index, object item)
@@ -2050,25 +2090,29 @@ namespace Com
             {
                 get
                 {
-                    if (!IsNullOrEmpty(_BitSet) && (_Index >= 0 && _Index < _BitSet._Size))
+                    if (IsNullOrEmpty(_BitSet) || (_Index < 0 || _Index >= _BitSet._Size))
                     {
-                        return _BitSet.Get(_Index);
+                        throw new IndexOutOfRangeException();
                     }
 
-                    return null;
+                    //
+
+                    return _BitSet.Get(_Index);
                 }
             }
 
             bool IEnumerator.MoveNext()
             {
-                if (!IsNullOrEmpty(_BitSet) && _Index < _BitSet._Size - 1)
+                if (IsNullOrEmpty(_BitSet) || _Index >= _BitSet._Size - 1)
+                {
+                    return false;
+                }
+                else
                 {
                     _Index++;
 
                     return true;
                 }
-
-                return false;
             }
 
             void IEnumerator.Reset()
@@ -2156,25 +2200,29 @@ namespace Com
             {
                 get
                 {
-                    if (!IsNullOrEmpty(_BitSet) && (_Index >= 0 && _Index < _BitSet._Size))
+                    if (IsNullOrEmpty(_BitSet) || (_Index < 0 || _Index >= _BitSet._Size))
                     {
-                        return _BitSet.Get(_Index);
+                        throw new IndexOutOfRangeException();
                     }
 
-                    return null;
+                    //
+
+                    return _BitSet.Get(_Index);
                 }
             }
 
             bool IEnumerator.MoveNext()
             {
-                if (!IsNullOrEmpty(_BitSet) && _Index < _BitSet._Size - 1)
+                if (IsNullOrEmpty(_BitSet) || _Index >= _BitSet._Size - 1)
+                {
+                    return false;
+                }
+                else
                 {
                     _Index++;
 
                     return true;
                 }
-
-                return false;
             }
 
             void IEnumerator.Reset()
@@ -2186,12 +2234,14 @@ namespace Com
             {
                 get
                 {
-                    if (!IsNullOrEmpty(_BitSet) && (_Index >= 0 && _Index < _BitSet._Size))
+                    if (IsNullOrEmpty(_BitSet) || (_Index < 0 || _Index >= _BitSet._Size))
                     {
-                        return _BitSet.Get(_Index);
+                        throw new IndexOutOfRangeException();
                     }
 
-                    return default(bool);
+                    //
+
+                    return _BitSet.Get(_Index);
                 }
             }
         }

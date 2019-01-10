@@ -2394,7 +2394,11 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色的 16 进制 ARGB 码或 RGB 码转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHexCode(string hexCode)
         {
-            if (!string.IsNullOrEmpty(hexCode))
+            if (string.IsNullOrEmpty(hexCode))
+            {
+                return Empty;
+            }
+            else
             {
                 string HexCode = new Regex(@"[^A-Fa-f\d]").Replace(hexCode, string.Empty).ToUpper();
 
@@ -2410,9 +2414,9 @@ namespace Com
 
                     return FromRGB(_HexStringToByte(R), _HexStringToByte(G), _HexStringToByte(B));
                 }
-            }
 
-            return Empty;
+                return Empty;
+            }
         }
 
         //

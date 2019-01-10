@@ -245,10 +245,8 @@ namespace Com
             {
                 return false;
             }
-            else
-            {
-                return (pt.X >= 0 && pt.X < ctrl.Width && pt.Y >= 0 && pt.Y < ctrl.Height);
-            }
+
+            return (pt.X >= 0 && pt.X < ctrl.Width && pt.Y >= 0 && pt.Y < ctrl.Height);
         }
 
         /// <summary>
@@ -315,10 +313,8 @@ namespace Com
             {
                 return Rectangle.Empty;
             }
-            else
-            {
-                return GetMinimumBoundingRectangleOfControls(ctrls, 0);
-            }
+
+            return GetMinimumBoundingRectangleOfControls(ctrls, 0);
         }
 
         #endregion
@@ -657,10 +653,8 @@ namespace Com
             {
                 return double.NaN;
             }
-            else
-            {
-                return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase), 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
-            }
+
+            return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase), 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
         }
 
         /// <summary>
@@ -676,10 +670,8 @@ namespace Com
             {
                 return double.NaN;
             }
-            else
-            {
-                return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase) - eccentricity, 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
-            }
+
+            return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase) - eccentricity, 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
         }
 
         /// <summary>
@@ -694,10 +686,8 @@ namespace Com
             {
                 return double.NaN;
             }
-            else
-            {
-                return (Math.Atan(Math.Tan(centralAngle) / Math.Sqrt(1 - Math.Pow(eccentricity, 2))) + Math.Round(centralAngle / Constant.Pi) * Constant.Pi);
-            }
+
+            return (Math.Atan(Math.Tan(centralAngle) / Math.Sqrt(1 - Math.Pow(eccentricity, 2))) + Math.Round(centralAngle / Constant.Pi) * Constant.Pi);
         }
 
         #endregion

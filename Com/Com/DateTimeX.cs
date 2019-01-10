@@ -24,13 +24,13 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private const double _MinUtcOffset = -24D, _MaxUtcOffset = 24D, _Utc = 0D; // 所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的最小值、最大值与表示与协调世界时（UTC）之间为零时差的值。
+        private const double _MinUtcOffset = -24, _MaxUtcOffset = 24, _Utc = 0; // 所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的最小值、最大值与表示与协调世界时（UTC）之间为零时差的值。
 
         private static double _LocalUtcOffset => TimeZoneInfo.Local.BaseUtcOffset.TotalHours; // 本地时区的标准时间与协调世界时（UTC）之间的时差的小时数。
 
         private const decimal _MinTotalMilliseconds = -796899343984252546694400000M, _MaxTotalMilliseconds = 796899343984252578143999999M, _ChristianTotalMilliseconds = 0M; // 自公元时刻以来的总毫秒数的最小值、最大值与公元时刻的值。
 
-        private const long _MinYear = -25252756133808173L, _MaxYear = 25252756133808174L, _ChristianYear = 1L; // 年的最小值、最大值与公元时刻的值。
+        private const long _MinYear = -25252756133808173, _MaxYear = 25252756133808174, _ChristianYear = 1; // 年的最小值、最大值与公元时刻的值。
         private const int _MinMonth = 1, _MaxMonth = 12; // 月的最小值与最大值。
         private const int _MinDay = 1, _MaxDay = 31; // 日的最小值与最大值。
         private const int _MinHour = 0, _MaxHour = 23; // 时的最小值与最大值。

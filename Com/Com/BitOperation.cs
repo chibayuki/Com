@@ -31,14 +31,14 @@ namespace Com
         /// <returns>8 位无符号整数，该 8 位无符号整数仅指定二进制位为 1。</returns>
         public static byte GetBinary8WithSingleBit1(int bit)
         {
-            if (bit >= 0 && bit < 8)
-            {
-                return (byte)(((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 8)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return (byte)(1U << bit);
         }
 
         /// <summary>
@@ -48,14 +48,14 @@ namespace Com
         /// <returns>8 位无符号整数，该 8 位无符号整数仅指定二进制位为 0。</returns>
         public static byte GetBinary8WithSingleBit0(int bit)
         {
-            if (bit >= 0 && bit < 8)
-            {
-                return (byte)(~(((uint)1) << bit));
-            }
-            else
+            if (bit < 0 || bit >= 8)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return (byte)(~(1U << bit));
         }
 
         /// <summary>
@@ -65,14 +65,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void AddBitToBinary(ref byte bin, int bit)
         {
-            if (bit >= 0 && bit < 8)
-            {
-                bin |= (byte)(((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 8)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin |= (byte)(1U << bit);
         }
 
         /// <summary>
@@ -82,14 +82,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void RemoveBitFromBinary(ref byte bin, int bit)
         {
-            if (bit >= 0 && bit < 8)
-            {
-                bin &= (byte)(~(((uint)1) << bit));
-            }
-            else
+            if (bit < 0 || bit >= 8)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin &= (byte)(~(1U << bit));
         }
 
         /// <summary>
@@ -99,14 +99,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void InverseBitOfBinary(ref byte bin, int bit)
         {
-            if (bit >= 0 && bit < 8)
-            {
-                bin ^= (byte)(((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 8)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin ^= (byte)(1U << bit);
         }
 
         /// <summary>
@@ -117,14 +117,14 @@ namespace Com
         /// <returns>布尔值，表示 8 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(byte bin, int bit)
         {
-            if (bit >= 0 && bit < 8)
-            {
-                return ((bin & (((uint)1) << bit)) != 0);
-            }
-            else
+            if (bit < 0 || bit >= 8)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return ((bin & (1U << bit)) != 0);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Com
 
             while (bin > 0)
             {
-                bin &= (byte)(bin - ((uint)1));
+                bin &= (byte)(bin - 1U);
 
                 Count++;
             }
@@ -167,7 +167,7 @@ namespace Com
 
             for (int i = 0; i < 8; i++)
             {
-                if ((bin & ((uint)1)) != 0)
+                if ((bin & 1U) != 0)
                 {
                     result.Add(i);
                 }
@@ -189,7 +189,7 @@ namespace Com
 
             for (int i = 0; i < 8; i++)
             {
-                if ((bin & ((uint)1)) == 0)
+                if ((bin & 1U) == 0)
                 {
                     result.Add(i);
                 }
@@ -211,14 +211,14 @@ namespace Com
         /// <returns>16 位无符号整数，该 16 位无符号整数仅指定二进制位为 1。</returns>
         public static ushort GetBinary16WithSingleBit1(int bit)
         {
-            if (bit >= 0 && bit < 16)
-            {
-                return (ushort)(((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 16)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return (ushort)(1U << bit);
         }
 
         /// <summary>
@@ -228,14 +228,14 @@ namespace Com
         /// <returns>16 位无符号整数，该 16 位无符号整数仅指定二进制位为 0。</returns>
         public static ushort GetBinary16WithSingleBit0(int bit)
         {
-            if (bit >= 0 && bit < 16)
-            {
-                return (ushort)(~(((uint)1) << bit));
-            }
-            else
+            if (bit < 0 || bit >= 16)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return (ushort)(~(1U << bit));
         }
 
         /// <summary>
@@ -245,14 +245,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void AddBitToBinary(ref ushort bin, int bit)
         {
-            if (bit >= 0 && bit < 16)
-            {
-                bin |= (ushort)(((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 16)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin |= (ushort)(1U << bit);
         }
 
         /// <summary>
@@ -262,14 +262,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void RemoveBitFromBinary(ref ushort bin, int bit)
         {
-            if (bit >= 0 && bit < 16)
-            {
-                bin &= (ushort)(~(((uint)1) << bit));
-            }
-            else
+            if (bit < 0 || bit >= 16)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin &= (ushort)(~(1U << bit));
         }
 
         /// <summary>
@@ -279,14 +279,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void InverseBitOfBinary(ref ushort bin, int bit)
         {
-            if (bit >= 0 && bit < 16)
-            {
-                bin ^= (ushort)(((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 16)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin ^= (ushort)(1U << bit);
         }
 
         /// <summary>
@@ -297,14 +297,14 @@ namespace Com
         /// <returns>布尔值，表示 16 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(ushort bin, int bit)
         {
-            if (bit >= 0 && bit < 16)
-            {
-                return ((bin & (((uint)1) << bit)) != 0);
-            }
-            else
+            if (bit < 0 || bit >= 16)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return ((bin & (1U << bit)) != 0);
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Com
 
             while (bin > 0)
             {
-                bin &= (ushort)(bin - ((uint)1));
+                bin &= (ushort)(bin - 1U);
 
                 Count++;
             }
@@ -347,7 +347,7 @@ namespace Com
 
             for (int i = 0; i < 16; i++)
             {
-                if ((bin & ((uint)1)) != 0)
+                if ((bin & 1U) != 0)
                 {
                     result.Add(i);
                 }
@@ -369,7 +369,7 @@ namespace Com
 
             for (int i = 0; i < 16; i++)
             {
-                if ((bin & ((uint)1)) == 0)
+                if ((bin & 1U) == 0)
                 {
                     result.Add(i);
                 }
@@ -391,14 +391,14 @@ namespace Com
         /// <returns>32 位无符号整数，该 32 位无符号整数仅指定二进制位为 1。</returns>
         public static uint GetBinary32WithSingleBit1(int bit)
         {
-            if (bit >= 0 && bit < 32)
-            {
-                return (((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 32)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return (1U << bit);
         }
 
         /// <summary>
@@ -408,14 +408,14 @@ namespace Com
         /// <returns>32 位无符号整数，该 32 位无符号整数仅指定二进制位为 0。</returns>
         public static uint GetBinary32WithSingleBit0(int bit)
         {
-            if (bit >= 0 && bit < 32)
-            {
-                return (~(((uint)1) << bit));
-            }
-            else
+            if (bit < 0 || bit >= 32)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return (~(1U << bit));
         }
 
         /// <summary>
@@ -425,14 +425,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void AddBitToBinary(ref uint bin, int bit)
         {
-            if (bit >= 0 && bit < 32)
-            {
-                bin |= (((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 32)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin |= (1U << bit);
         }
 
         /// <summary>
@@ -442,14 +442,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void RemoveBitFromBinary(ref uint bin, int bit)
         {
-            if (bit >= 0 && bit < 32)
-            {
-                bin &= (~(((uint)1) << bit));
-            }
-            else
+            if (bit < 0 || bit >= 32)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin &= (~(1U << bit));
         }
 
         /// <summary>
@@ -459,14 +459,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void InverseBitOfBinary(ref uint bin, int bit)
         {
-            if (bit >= 0 && bit < 32)
-            {
-                bin ^= (((uint)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 32)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin ^= (1U << bit);
         }
 
         /// <summary>
@@ -477,14 +477,14 @@ namespace Com
         /// <returns>布尔值，表示 32 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(uint bin, int bit)
         {
-            if (bit >= 0 && bit < 32)
-            {
-                return ((bin & (((uint)1) << bit)) != 0);
-            }
-            else
+            if (bit < 0 || bit >= 32)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return ((bin & (1U << bit)) != 0);
         }
 
         /// <summary>
@@ -571,14 +571,14 @@ namespace Com
         /// <returns>64 位无符号整数，该 64 位无符号整数仅指定二进制位为 1。</returns>
         public static ulong GetBinary64WithSingleBit1(int bit)
         {
-            if (bit >= 0 && bit < 64)
-            {
-                return (((ulong)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 64)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return (1UL << bit);
         }
 
         /// <summary>
@@ -588,14 +588,14 @@ namespace Com
         /// <returns>64 位无符号整数，该 64 位无符号整数仅指定二进制位为 0。</returns>
         public static ulong GetBinary64WithSingleBit0(int bit)
         {
-            if (bit >= 0 && bit < 64)
-            {
-                return (~(((ulong)1) << bit));
-            }
-            else
+            if (bit < 0 || bit >= 64)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return (~(1UL << bit));
         }
 
         /// <summary>
@@ -605,14 +605,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void AddBitToBinary(ref ulong bin, int bit)
         {
-            if (bit >= 0 && bit < 64)
-            {
-                bin |= (((ulong)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 64)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin |= (1UL << bit);
         }
 
         /// <summary>
@@ -622,14 +622,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void RemoveBitFromBinary(ref ulong bin, int bit)
         {
-            if (bit >= 0 && bit < 64)
-            {
-                bin &= (~(((ulong)1) << bit));
-            }
-            else
+            if (bit < 0 || bit >= 64)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin &= (~(1UL << bit));
         }
 
         /// <summary>
@@ -639,14 +639,14 @@ namespace Com
         /// <param name="bit">需要处理的二进制位。</param>
         public static void InverseBitOfBinary(ref ulong bin, int bit)
         {
-            if (bit >= 0 && bit < 64)
-            {
-                bin ^= (((ulong)1) << bit);
-            }
-            else
+            if (bit < 0 || bit >= 64)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            bin ^= (1UL << bit);
         }
 
         /// <summary>
@@ -657,14 +657,14 @@ namespace Com
         /// <returns>布尔值，表示 64 位无符号整数的指定二进制位是否为 1。</returns>
         public static bool BinaryHasBit(ulong bin, int bit)
         {
-            if (bit >= 0 && bit < 64)
-            {
-                return ((bin & (((ulong)1) << bit)) != 0);
-            }
-            else
+            if (bit < 0 || bit >= 64)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return ((bin & (1UL << bit)) != 0);
         }
 
         /// <summary>

@@ -34,7 +34,12 @@ namespace Com
         {
             Matrix result = new Matrix();
 
-            if (!InternalMethod.IsNullOrEmpty(values))
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                result._Size = Size.Empty;
+                result._MArray = new double[0, 0];
+            }
+            else
             {
                 int width = values.GetLength(0);
                 int height = values.GetLength(1);
@@ -48,11 +53,6 @@ namespace Com
                 {
                     throw new OverflowException();
                 }
-            }
-            else
-            {
-                result._Size = Size.Empty;
-                result._MArray = new double[0, 0];
             }
 
             return result;
@@ -79,19 +79,22 @@ namespace Com
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
         public Matrix(Size size)
         {
+            if (size.Width < 0 || size.Height < 0 || (long)size.Width * size.Height > _MaxSize)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (size.Width == 0 || size.Height == 0)
             {
                 _Size = Size.Empty;
                 _MArray = new double[0, 0];
             }
-            else if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= _MaxSize)
+            else
             {
                 _Size = size;
                 _MArray = new double[_Size.Width, _Size.Height];
-            }
-            else
-            {
-                throw new OverflowException();
             }
         }
 
@@ -102,12 +105,19 @@ namespace Com
         /// <param name="value">矩阵的所有元素的值。</param>
         public Matrix(Size size, double value)
         {
+            if (size.Width < 0 || size.Height < 0 || (long)size.Width * size.Height > _MaxSize)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (size.Width == 0 || size.Height == 0)
             {
                 _Size = Size.Empty;
                 _MArray = new double[0, 0];
             }
-            else if (size.Width > 0 && size.Height > 0 && (long)size.Width * size.Height <= _MaxSize)
+            else
             {
                 _Size = size;
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -120,10 +130,6 @@ namespace Com
                     }
                 }
             }
-            else
-            {
-                throw new OverflowException();
-            }
         }
 
         /// <summary>
@@ -133,19 +139,22 @@ namespace Com
         /// <param name="height">矩阵的高度（行数）。</param>
         public Matrix(int width, int height)
         {
+            if (width < 0 || height < 0 || (long)width * height > _MaxSize)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (width == 0 || height == 0)
             {
                 _Size = Size.Empty;
                 _MArray = new double[0, 0];
             }
-            else if (width > 0 && height > 0 && (long)width * height <= _MaxSize)
+            else
             {
                 _Size = new Size(width, height);
                 _MArray = new double[_Size.Width, _Size.Height];
-            }
-            else
-            {
-                throw new OverflowException();
             }
         }
 
@@ -157,12 +166,19 @@ namespace Com
         /// <param name="value">矩阵的所有元素的值。</param>
         public Matrix(int width, int height, double value)
         {
+            if (width < 0 || height < 0 || (long)width * height > _MaxSize)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (width == 0 || height == 0)
             {
                 _Size = Size.Empty;
                 _MArray = new double[0, 0];
             }
-            else if (width > 0 && height > 0 && (long)width * height <= _MaxSize)
+            else
             {
                 _Size = new Size(width, height);
                 _MArray = new double[_Size.Width, _Size.Height];
@@ -175,10 +191,6 @@ namespace Com
                     }
                 }
             }
-            else
-            {
-                throw new OverflowException();
-            }
         }
 
         /// <summary>
@@ -187,28 +199,27 @@ namespace Com
         /// <param name="values">二维数组表示的矩阵元素。</param>
         public Matrix(double[,] values)
         {
-            if (!InternalMethod.IsNullOrEmpty(values))
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                _Size = Size.Empty;
+                _MArray = new double[0, 0];
+            }
+            else
             {
                 int width = values.GetLength(0);
                 int height = values.GetLength(1);
 
-                if ((long)width * height <= _MaxSize)
+                if ((long)width * height > _MaxSize)
+                {
+                    throw new OverflowException();
+                }
+                else
                 {
                     _Size = new Size(width, height);
                     _MArray = new double[_Size.Width, _Size.Height];
 
                     Array.Copy(values, _MArray, _Size.Width * _Size.Height);
                 }
-                else
-                {
-                    _Size = Size.Empty;
-                    _MArray = new double[0, 0];
-                }
-            }
-            else
-            {
-                _Size = Size.Empty;
-                _MArray = new double[0, 0];
             }
         }
 
@@ -225,26 +236,22 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0 && (x >= 0 && x < _Size.Width) && (y >= 0 && y < _Size.Height))
-                {
-                    return _MArray[x, y];
-                }
-                else
+                if ((_Size.Width <= 0 || _Size.Height <= 0) || (x < 0 || x >= _Size.Width) || (y < 0 || y >= _Size.Height))
                 {
                     throw new IndexOutOfRangeException();
                 }
+
+                return _MArray[x, y];
             }
 
             set
             {
-                if (_Size.Width > 0 && _Size.Height > 0 && (x >= 0 && x < _Size.Width) && (y >= 0 && y < _Size.Height))
-                {
-                    _MArray[x, y] = value;
-                }
-                else
+                if ((_Size.Width <= 0 || _Size.Height <= 0) || (x < 0 || x >= _Size.Width) || (y < 0 || y >= _Size.Height))
                 {
                     throw new IndexOutOfRangeException();
                 }
+
+                _MArray[x, y] = value;
             }
         }
 
@@ -256,26 +263,22 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0 && (index.X >= 0 && index.X < _Size.Width) && (index.Y >= 0 && index.Y < _Size.Height))
-                {
-                    return _MArray[index.X, index.Y];
-                }
-                else
+                if ((_Size.Width <= 0 || _Size.Height <= 0) || (index.X < 0 || index.X >= _Size.Width) || (index.Y < 0 || index.Y >= _Size.Height))
                 {
                     throw new IndexOutOfRangeException();
                 }
+
+                return _MArray[index.X, index.Y];
             }
 
             set
             {
-                if (_Size.Width > 0 && _Size.Height > 0 && (index.X >= 0 && index.X < _Size.Width) && (index.Y >= 0 && index.Y < _Size.Height))
-                {
-                    _MArray[index.X, index.Y] = value;
-                }
-                else
+                if ((_Size.Width <= 0 || _Size.Height <= 0) || (index.X < 0 || index.X >= _Size.Width) || (index.Y < 0 || index.Y >= _Size.Height))
                 {
                     throw new IndexOutOfRangeException();
                 }
+
+                _MArray[index.X, index.Y] = value;
             }
         }
 
@@ -301,12 +304,12 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0)
+                if (_Size.Width <= 0 || _Size.Height <= 0)
                 {
-                    return _Size;
+                    return Size.Empty;
                 }
 
-                return Size.Empty;
+                return _Size;
             }
         }
 
@@ -361,12 +364,12 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0)
+                if (_Size.Width <= 0 || _Size.Height <= 0)
                 {
-                    return (_Size.Width * _Size.Height);
+                    return 0;
                 }
 
-                return 0;
+                return (_Size.Width * _Size.Height);
             }
         }
 
@@ -379,7 +382,11 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0 && _Size.Width == _Size.Height)
+                if (_Size.Width <= 0 || _Size.Height <= 0 || _Size.Width != _Size.Height)
+                {
+                    return double.NaN;
+                }
+                else
                 {
                     int order = _Size.Width;
 
@@ -428,8 +435,6 @@ namespace Com
                         return det;
                     }
                 }
-
-                return double.NaN;
             }
         }
 
@@ -440,7 +445,11 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0)
+                if (_Size.Width <= 0 || _Size.Height <= 0)
+                {
+                    return -1;
+                }
+                else
                 {
                     int order = Math.Min(_Size.Width, _Size.Height);
 
@@ -494,8 +503,6 @@ namespace Com
 
                     return result;
                 }
-
-                return -1;
             }
         }
 
@@ -506,7 +513,11 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0)
+                if (_Size.Width <= 0 || _Size.Height <= 0)
+                {
+                    return Empty;
+                }
+                else
                 {
                     Matrix result = new Matrix(_Size.Height, _Size.Width);
 
@@ -520,8 +531,6 @@ namespace Com
 
                     return result;
                 }
-
-                return Empty;
             }
         }
 
@@ -532,7 +541,11 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0 && _Size.Width == _Size.Height)
+                if (_Size.Width <= 0 || _Size.Height <= 0 || _Size.Width != _Size.Height)
+                {
+                    return Empty;
+                }
+                else
                 {
                     Matrix result = new Matrix(_Size);
 
@@ -560,8 +573,6 @@ namespace Com
 
                     return result;
                 }
-
-                return Empty;
             }
         }
 
@@ -572,11 +583,19 @@ namespace Com
         {
             get
             {
-                if (_Size.Width > 0 && _Size.Height > 0 && _Size.Width == _Size.Height)
+                if (_Size.Width <= 0 || _Size.Height <= 0 || _Size.Width != _Size.Height)
+                {
+                    return Empty;
+                }
+                else
                 {
                     Matrix result = Adjoint;
 
-                    if (!IsNullOrEmpty(result))
+                    if (IsNullOrEmpty(result))
+                    {
+                        return Empty;
+                    }
+                    else
                     {
                         double det = Determinant;
 
@@ -601,8 +620,6 @@ namespace Com
                         return result;
                     }
                 }
-
-                return Empty;
             }
         }
 
@@ -665,13 +682,13 @@ namespace Com
         {
             string Str = string.Empty;
 
-            if (_Size.Width > 0 && _Size.Height > 0)
+            if (_Size.Width <= 0 || _Size.Height <= 0)
             {
-                Str = string.Concat("Column=", _Size.Width, ", Row=", _Size.Height);
+                Str = "Empty";
             }
             else
             {
-                Str = "Empty";
+                Str = string.Concat("Column=", _Size.Width, ", Row=", _Size.Height);
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");
@@ -721,14 +738,16 @@ namespace Com
         /// <returns>Matrix 对象，表示此 Matrix 的副本。</returns>
         public Matrix Copy()
         {
-            if (_Size.Width > 0 && _Size.Height > 0)
+            if (_Size.Width <= 0 || _Size.Height <= 0)
+            {
+                return Empty;
+            }
+            else
             {
                 Matrix result = new Matrix(_MArray);
 
                 return result;
             }
-
-            return Empty;
         }
 
         //
@@ -741,24 +760,24 @@ namespace Com
         /// <returns>Matrix 对象，表示此 Matrix 的子矩阵。</returns>
         public Matrix SubMatrix(Point index, Size size)
         {
-            if ((_Size.Width > 0 && _Size.Height > 0) && (size.Width > 0 && size.Height > 0) && (index.X >= 0 && index.X + size.Width <= _Size.Width) && (index.Y >= 0 && index.Y + size.Height <= _Size.Height))
-            {
-                Matrix result = new Matrix(size);
-
-                for (int x = 0; x < size.Width; x++)
-                {
-                    for (int y = 0; y < size.Height; y++)
-                    {
-                        result._MArray[x, y] = _MArray[index.X + x, index.Y + y];
-                    }
-                }
-
-                return result;
-            }
-            else
+            if ((_Size.Width <= 0 || _Size.Height <= 0) || (size.Width <= 0 || size.Height <= 0) || (index.X < 0 || index.X + size.Width > _Size.Width) || (index.Y < 0 || index.Y + size.Height > _Size.Height))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            Matrix result = new Matrix(size);
+
+            for (int x = 0; x < size.Width; x++)
+            {
+                for (int y = 0; y < size.Height; y++)
+                {
+                    result._MArray[x, y] = _MArray[index.X + x, index.Y + y];
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -771,24 +790,24 @@ namespace Com
         /// <returns>Matrix 对象，表示此 Matrix 的子矩阵。</returns>
         public Matrix SubMatrix(int x, int y, int width, int height)
         {
-            if ((_Size.Width > 0 && _Size.Height > 0) && (width > 0 && height > 0) && (x >= 0 && x + width <= _Size.Width) && (y >= 0 && y + height <= _Size.Height))
-            {
-                Matrix result = new Matrix(width, height);
-
-                for (int _x = 0; _x < width; _x++)
-                {
-                    for (int _y = 0; _y < height; _y++)
-                    {
-                        result._MArray[_x, _y] = _MArray[x + _x, y + _y];
-                    }
-                }
-
-                return result;
-            }
-            else
+            if ((_Size.Width <= 0 || _Size.Height <= 0) || (width <= 0 || height <= 0) || (x < 0 || x + width > _Size.Width) || (y < 0 || y + height > _Size.Height))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            Matrix result = new Matrix(width, height);
+
+            for (int _x = 0; _x < width; _x++)
+            {
+                for (int _y = 0; _y < height; _y++)
+                {
+                    result._MArray[_x, _y] = _MArray[x + _x, y + _y];
+                }
+            }
+
+            return result;
         }
 
         //
@@ -800,21 +819,21 @@ namespace Com
         /// <returns>Vector 对象，表示此 Matrix 的指定列。</returns>
         public Vector GetColumn(int x)
         {
-            if ((_Size.Width > 0 && _Size.Height > 0) && (x >= 0 && x < _Size.Width))
-            {
-                double[] values = new double[_Size.Height];
-
-                for (int i = 0; i < _Size.Height; i++)
-                {
-                    values[i] = _MArray[x, i];
-                }
-
-                return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, values);
-            }
-            else
+            if ((_Size.Width <= 0 || _Size.Height <= 0) || (x < 0 || x >= _Size.Width))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            double[] values = new double[_Size.Height];
+
+            for (int i = 0; i < _Size.Height; i++)
+            {
+                values[i] = _MArray[x, i];
+            }
+
+            return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, values);
         }
 
         /// <summary>
@@ -824,21 +843,21 @@ namespace Com
         /// <returns>Vector 对象，表示此 Matrix 的指定行。</returns>
         public Vector GetRow(int y)
         {
-            if ((_Size.Width > 0 && _Size.Height > 0) && (y >= 0 && y < _Size.Height))
-            {
-                double[] values = new double[_Size.Width];
-
-                for (int i = 0; i < _Size.Width; i++)
-                {
-                    values[i] = _MArray[i, y];
-                }
-
-                return Vector.UnsafeCreateInstance(Vector.Type.RowVector, values);
-            }
-            else
+            if ((_Size.Width <= 0 || _Size.Height <= 0) || (y < 0 || y >= _Size.Height))
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            double[] values = new double[_Size.Width];
+
+            for (int i = 0; i < _Size.Width; i++)
+            {
+                values[i] = _MArray[i, y];
+            }
+
+            return Vector.UnsafeCreateInstance(Vector.Type.RowVector, values);
         }
 
         //
@@ -849,7 +868,11 @@ namespace Com
         /// <returns>双精度浮点数二维数组，表示转换的结果。</returns>
         public double[,] ToArray()
         {
-            if (_Size.Width > 0 && _Size.Height > 0)
+            if (_Size.Width <= 0 || _Size.Height <= 0)
+            {
+                return new double[0, 0];
+            }
+            else
             {
                 double[,] result = new double[_Size.Width, _Size.Height];
 
@@ -863,8 +886,6 @@ namespace Com
 
                 return result;
             }
-
-            return new double[0, 0];
         }
 
         #endregion
@@ -916,11 +937,18 @@ namespace Com
         /// <returns>Matrix 对象，表示单位矩阵。</returns>
         public static Matrix Identity(int order)
         {
+            if (order < 0)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (order == 0)
             {
                 return Empty;
             }
-            else if (order > 0)
+            else
             {
                 Matrix result = new Matrix(order, order);
 
@@ -931,10 +959,6 @@ namespace Com
 
                 return result;
             }
-            else
-            {
-                throw new OverflowException();
-            }
         }
 
         /// <summary>
@@ -944,17 +968,20 @@ namespace Com
         /// <returns>Matrix 对象，表示零矩阵。</returns>
         public static Matrix Zeros(Size size)
         {
+            if (size.Width < 0 || size.Height < 0)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (size.Width == 0 || size.Height == 0)
             {
                 return Empty;
             }
-            else if (size.Width > 0 && size.Height > 0)
-            {
-                return new Matrix(size);
-            }
             else
             {
-                throw new OverflowException();
+                return new Matrix(size);
             }
         }
 
@@ -966,17 +993,20 @@ namespace Com
         /// <returns>Matrix 对象，表示零矩阵。</returns>
         public static Matrix Zeros(int width, int height)
         {
+            if (width < 0 || height < 0)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (width == 0 || height == 0)
             {
                 return Empty;
             }
-            else if (width > 0 && height > 0)
-            {
-                return new Matrix(width, height);
-            }
             else
             {
-                throw new OverflowException();
+                return new Matrix(width, height);
             }
         }
 
@@ -987,17 +1017,20 @@ namespace Com
         /// <returns>Matrix 对象，表示一矩阵。</returns>
         public static Matrix Ones(Size size)
         {
+            if (size.Width < 0 || size.Height < 0)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (size.Width == 0 || size.Height == 0)
             {
                 return Empty;
             }
-            else if (size.Width > 0 && size.Height > 0)
-            {
-                return new Matrix(size, 1);
-            }
             else
             {
-                throw new OverflowException();
+                return new Matrix(size, 1);
             }
         }
 
@@ -1009,17 +1042,20 @@ namespace Com
         /// <returns>Matrix 对象，表示一矩阵。</returns>
         public static Matrix Ones(int width, int height)
         {
+            if (width < 0 || height < 0)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (width == 0 || height == 0)
             {
                 return Empty;
             }
-            else if (width > 0 && height > 0)
-            {
-                return new Matrix(width, height, 1);
-            }
             else
             {
-                throw new OverflowException();
+                return new Matrix(width, height, 1);
             }
         }
 
@@ -1031,7 +1067,11 @@ namespace Com
         /// <returns>Matrix 对象，表示对角矩阵。</returns>
         public static Matrix Diagonal(double[] array, int rowsUponMainDiag)
         {
-            if (!InternalMethod.IsNullOrEmpty(array))
+            if (InternalMethod.IsNullOrEmpty(array))
+            {
+                return Empty;
+            }
+            else
             {
                 int order = array.Length + Math.Abs(rowsUponMainDiag);
 
@@ -1044,8 +1084,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1055,7 +1093,11 @@ namespace Com
         /// <returns>Matrix 对象，表示对角矩阵。</returns>
         public static Matrix Diagonal(double[] array)
         {
-            if (!InternalMethod.IsNullOrEmpty(array))
+            if (InternalMethod.IsNullOrEmpty(array))
+            {
+                return Empty;
+            }
+            else
             {
                 int order = array.Length;
 
@@ -1068,8 +1110,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         //
@@ -1082,12 +1122,20 @@ namespace Com
         /// <returns>Matrix 对象，表示由 2 个 Matrix 对象组成的增广矩阵。</returns>
         public static Matrix Augment(Matrix left, Matrix right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return Empty;
+            }
+            else
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
 
-                if (sizeLeft == sizeRight)
+                if (sizeLeft != sizeRight)
+                {
+                    return Empty;
+                }
+                else
                 {
                     Size size = new Size(sizeLeft.Width + sizeRight.Width, sizeLeft.Height);
 
@@ -1104,8 +1152,6 @@ namespace Com
                     return result;
                 }
             }
-
-            return Empty;
         }
 
         //
@@ -1118,7 +1164,11 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与双精度浮点数相加得到的结果。</returns>
         public static Matrix Add(Matrix matrix, double n)
         {
-            if (!IsNullOrEmpty(matrix))
+            if (IsNullOrEmpty(matrix))
+            {
+                return Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
@@ -1134,8 +1184,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1146,7 +1194,11 @@ namespace Com
         /// <returns>Matrix 对象，表示将双精度浮点数与 Matrix 对象相加得到的结果。</returns>
         public static Matrix Add(double n, Matrix matrix)
         {
-            if (!IsNullOrEmpty(matrix))
+            if (IsNullOrEmpty(matrix))
+            {
+                return Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
@@ -1162,8 +1214,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1174,12 +1224,20 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相加得到的结果。</returns>
         public static Matrix Add(Matrix left, Matrix right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return Empty;
+            }
+            else
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
 
-                if (sizeLeft == sizeRight)
+                if (sizeLeft != sizeRight)
+                {
+                    return Empty;
+                }
+                else
                 {
                     Size size = sizeLeft;
 
@@ -1196,8 +1254,6 @@ namespace Com
                     return result;
                 }
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1208,7 +1264,11 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与双精度浮点数相减得到的结果。</returns>
         public static Matrix Subtract(Matrix matrix, double n)
         {
-            if (!IsNullOrEmpty(matrix))
+            if (IsNullOrEmpty(matrix))
+            {
+                return Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
@@ -1224,8 +1284,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1236,7 +1294,11 @@ namespace Com
         /// <returns>Matrix 对象，表示将双精度浮点数与 Matrix 对象相减得到的结果。</returns>
         public static Matrix Subtract(double n, Matrix matrix)
         {
-            if (!IsNullOrEmpty(matrix))
+            if (IsNullOrEmpty(matrix))
+            {
+                return Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
@@ -1252,8 +1314,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1264,12 +1324,20 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相减得到的结果。</returns>
         public static Matrix Subtract(Matrix left, Matrix right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return Empty;
+            }
+            else
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
 
-                if (sizeLeft == sizeRight)
+                if (sizeLeft != sizeRight)
+                {
+                    return Empty;
+                }
+                else
                 {
                     Size size = sizeLeft;
 
@@ -1286,8 +1354,6 @@ namespace Com
                     return result;
                 }
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1298,7 +1364,11 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与双精度浮点数相乘得到的结果。</returns>
         public static Matrix Multiply(Matrix matrix, double n)
         {
-            if (!IsNullOrEmpty(matrix))
+            if (IsNullOrEmpty(matrix))
+            {
+                return Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
@@ -1314,8 +1384,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1326,7 +1394,11 @@ namespace Com
         /// <returns>Matrix 对象，表示将双精度浮点数与 Matrix 对象相乘得到的结果。</returns>
         public static Matrix Multiply(double n, Matrix matrix)
         {
-            if (!IsNullOrEmpty(matrix))
+            if (IsNullOrEmpty(matrix))
+            {
+                return Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
@@ -1342,8 +1414,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1354,12 +1424,20 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相乘得到的结果。</returns>
         public static Matrix Multiply(Matrix left, Matrix right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return Empty;
+            }
+            else
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
 
-                if (sizeLeft.Width == sizeRight.Height)
+                if (sizeLeft.Width != sizeRight.Height)
+                {
+                    return Empty;
+                }
+                else
                 {
                     int height = sizeLeft.Width;
 
@@ -1383,8 +1461,6 @@ namespace Com
                     return result;
                 }
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1394,9 +1470,17 @@ namespace Com
         /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次左乘得到的结果。</returns>
         public static Matrix MultiplyLeft(List<Matrix> list)
         {
-            if (list.Count > 0)
+            if (InternalMethod.IsNullOrEmpty(list))
             {
-                if (!IsNullOrEmpty(list[0]))
+                return Empty;
+            }
+            else
+            {
+                if (IsNullOrEmpty(list[0]))
+                {
+                    return Empty;
+                }
+                else
                 {
                     Matrix result = list[0].Copy();
 
@@ -1427,8 +1511,6 @@ namespace Com
                     }
                 }
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1438,9 +1520,17 @@ namespace Com
         /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次右乘得到的结果。</returns>
         public static Matrix MultiplyRight(List<Matrix> list)
         {
-            if (list.Count > 0)
+            if (InternalMethod.IsNullOrEmpty(list))
             {
-                if (!IsNullOrEmpty(list[0]))
+                return Empty;
+            }
+            else
+            {
+                if (IsNullOrEmpty(list[0]))
+                {
+                    return Empty;
+                }
+                else
                 {
                     Matrix result = list[0].Copy();
 
@@ -1471,8 +1561,6 @@ namespace Com
                     }
                 }
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1483,7 +1571,11 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与双精度浮点数相除得到的结果。</returns>
         public static Matrix Divide(Matrix matrix, double n)
         {
-            if (!IsNullOrEmpty(matrix))
+            if (IsNullOrEmpty(matrix))
+            {
+                return Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
@@ -1499,8 +1591,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1511,7 +1601,11 @@ namespace Com
         /// <returns>Matrix 对象，表示将双精度浮点数与 Matrix 对象相除得到的结果。</returns>
         public static Matrix Divide(double n, Matrix matrix)
         {
-            if (!IsNullOrEmpty(matrix))
+            if (IsNullOrEmpty(matrix))
+            {
+                return Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
@@ -1527,8 +1621,6 @@ namespace Com
 
                 return result;
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1539,23 +1631,31 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象左除得到的结果。</returns>
         public static Matrix DivideLeft(Matrix left, Matrix right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return Empty;
+            }
+            else
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
 
-                if (sizeLeft.Width == sizeLeft.Height && sizeLeft.Width == sizeRight.Height)
+                if (sizeLeft.Width != sizeLeft.Height || sizeLeft.Width != sizeRight.Height)
+                {
+                    return Empty;
+                }
+                else
                 {
                     Matrix invLeft = left.Invert;
 
-                    if (!IsNullOrEmpty(invLeft))
+                    if (IsNullOrEmpty(invLeft))
                     {
-                        return Multiply(invLeft, right);
+                        return Empty;
                     }
+
+                    return Multiply(invLeft, right);
                 }
             }
-
-            return Empty;
         }
 
         /// <summary>
@@ -1566,23 +1666,31 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象右除得到的结果。</returns>
         public static Matrix DivideRight(Matrix left, Matrix right)
         {
-            if (!IsNullOrEmpty(left) && !IsNullOrEmpty(right))
+            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return Empty;
+            }
+            else
             {
                 Size sizeLeft = left.Size;
                 Size sizeRight = right.Size;
 
-                if (sizeRight.Width == sizeRight.Height && sizeLeft.Width == sizeRight.Height)
+                if (sizeRight.Width != sizeRight.Height || sizeLeft.Width != sizeRight.Height)
+                {
+                    return Empty;
+                }
+                else
                 {
                     Matrix invRight = right.Invert;
 
-                    if (!IsNullOrEmpty(invRight))
+                    if (IsNullOrEmpty(invRight))
                     {
-                        return Multiply(left, invRight);
+                        return Empty;
                     }
+
+                    return Multiply(left, invRight);
                 }
             }
-
-            return Empty;
         }
 
         //
@@ -1595,27 +1703,39 @@ namespace Com
         /// <returns>Vector 对象，表示由 Matrix 对象与 Vector 对象指定的非齐次线性方程组的解向量。</returns>
         public static Vector SolveLinearEquation(Matrix matrix, Vector vector)
         {
-            if (!IsNullOrEmpty(matrix) && !Vector.IsNullOrEmpty(vector) && vector.IsColumnVector)
+            if (IsNullOrEmpty(matrix) || Vector.IsNullOrEmpty(vector) || !vector.IsColumnVector)
+            {
+                return Vector.Empty;
+            }
+            else
             {
                 Size size = matrix.Size;
 
-                if (size.Width == size.Height)
+                if (size.Width != size.Height)
+                {
+                    return Vector.Empty;
+                }
+                else
                 {
                     int order = vector.Dimension;
 
-                    if (order == size.Height)
+                    if (order != size.Height)
+                    {
+                        return Vector.Empty;
+                    }
+                    else
                     {
                         Matrix solution = DivideLeft(matrix, vector.ToMatrix());
 
-                        if (!IsNullOrEmpty(solution) && solution.Size == new Size(1, order))
+                        if (IsNullOrEmpty(solution) || solution.Size != new Size(1, order))
                         {
-                            return solution.GetColumn(0);
+                            return Vector.Empty;
                         }
+
+                        return solution.GetColumn(0);
                     }
                 }
             }
-
-            return Vector.Empty;
         }
 
         #endregion
