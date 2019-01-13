@@ -752,7 +752,7 @@ namespace Com
         /// <returns>32 位整数，表示将此 PointD5D 结构与指定的 PointD5D 结构进行次序比较得到的结果。</returns>
         public int CompareTo(PointD5D pt)
         {
-            return ModuleSquared.CompareTo(pt.ModuleSquared);
+            return Module.CompareTo(pt.Module);
         }
 
         //
@@ -939,9 +939,30 @@ namespace Com
         /// <returns>双精度浮点数，表示此 PointD5D 结构与指定的 PointD5D 结构之间的距离。</returns>
         public double DistanceFrom(PointD5D pt)
         {
-            double dx = _X - pt._X, dy = _Y - pt._Y, dz = _Z - pt._Z, du = _U - pt._U, dv = _V - pt._V;
+            double AbsDx = Math.Abs(_X - pt._X);
+            double AbsDy = Math.Abs(_Y - pt._Y);
+            double AbsDz = Math.Abs(_Z - pt._Z);
+            double AbsDu = Math.Abs(_U - pt._U);
+            double AbsDv = Math.Abs(_V - pt._V);
 
-            return Math.Sqrt(dx * dx + dy * dy + dz * dz + du * du + dv * dv);
+            double AbsMax = Math.Max(Math.Max(Math.Max(Math.Max(AbsDx, AbsDy), AbsDz), AbsDu), AbsDv);
+
+            if (AbsMax == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                AbsDx /= AbsMax;
+                AbsDy /= AbsMax;
+                AbsDz /= AbsMax;
+                AbsDu /= AbsMax;
+                AbsDv /= AbsMax;
+
+                double SqrSum = AbsDx * AbsDx + AbsDy * AbsDy + AbsDz * AbsDz + AbsDu * AbsDu + AbsDv * AbsDv;
+
+                return (AbsMax * Math.Sqrt(SqrSum));
+            }
         }
 
         /// <summary>
@@ -957,9 +978,10 @@ namespace Com
             }
             else
             {
-                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z + _U * pt._U + _V * pt._V;
+                double ModProduct = Module * pt.Module;
+                double CosA = _X * pt._X / ModProduct + _Y * pt._Y / ModProduct + _Z * pt._Z / ModProduct + _U * pt._U / ModProduct + _V * pt._V / ModProduct;
 
-                return Math.Acos(DotProduct / Module / pt.Module);
+                return Math.Acos(CosA);
             }
         }
 
@@ -1955,9 +1977,30 @@ namespace Com
         /// <returns>双精度浮点数，表示两个 PointD5D 结构之间的距离。</returns>
         public static double DistanceBetween(PointD5D left, PointD5D right)
         {
-            double dx = left._X - right._X, dy = left._Y - right._Y, dz = left._Z - right._Z, du = left._U - right._U, dv = left._V - right._V;
+            double AbsDx = Math.Abs(left._X - right._X);
+            double AbsDy = Math.Abs(left._Y - right._Y);
+            double AbsDz = Math.Abs(left._Z - right._Z);
+            double AbsDu = Math.Abs(left._U - right._U);
+            double AbsDv = Math.Abs(left._V - right._V);
 
-            return Math.Sqrt(dx * dx + dy * dy + dz * dz + du * du + dv * dv);
+            double AbsMax = Math.Max(Math.Max(Math.Max(Math.Max(AbsDx, AbsDy), AbsDz), AbsDu), AbsDv);
+
+            if (AbsMax == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                AbsDx /= AbsMax;
+                AbsDy /= AbsMax;
+                AbsDz /= AbsMax;
+                AbsDu /= AbsMax;
+                AbsDv /= AbsMax;
+
+                double SqrSum = AbsDx * AbsDx + AbsDy * AbsDy + AbsDz * AbsDz + AbsDu * AbsDu + AbsDv * AbsDv;
+
+                return (AbsMax * Math.Sqrt(SqrSum));
+            }
         }
 
         /// <summary>
@@ -1974,9 +2017,10 @@ namespace Com
             }
             else
             {
-                double DotProduct = left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U + left._V * right._V;
+                double ModProduct = left.Module * right.Module;
+                double CosA = left._X * right._X / ModProduct + left._Y * right._Y / ModProduct + left._Z * right._Z / ModProduct + left._U * right._U / ModProduct + left._V * right._V / ModProduct;
 
-                return Math.Acos(DotProduct / left.Module / right.Module);
+                return Math.Acos(CosA);
             }
         }
 
@@ -2115,47 +2159,47 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 PointD5D 结构的模平方是否前者小于后者。
+        /// 判断两个 PointD5D 结构的模是否前者小于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD5D 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD5D 结构。</param>
-        /// <returns>布尔值，表示两个 PointD5D 结构的模平方是否前者小于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD5D 结构的模是否前者小于后者。</returns>
         public static bool operator <(PointD5D left, PointD5D right)
         {
-            return (left.ModuleSquared < right.ModuleSquared);
+            return (left.Module < right.Module);
         }
 
         /// <summary>
-        /// 判断两个 PointD5D 结构的模平方是否前者大于后者。
+        /// 判断两个 PointD5D 结构的模是否前者大于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD5D 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD5D 结构。</param>
-        /// <returns>布尔值，表示两个 PointD5D 结构的模平方是否前者大于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD5D 结构的模是否前者大于后者。</returns>
         public static bool operator >(PointD5D left, PointD5D right)
         {
-            return (left.ModuleSquared > right.ModuleSquared);
+            return (left.Module > right.Module);
         }
 
         /// <summary>
-        /// 判断两个 PointD5D 结构的模平方是否前者小于或等于后者。
+        /// 判断两个 PointD5D 结构的模是否前者小于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD5D 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD5D 结构。</param>
-        /// <returns>布尔值，表示两个 PointD5D 结构的模平方是否前者小于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD5D 结构的模是否前者小于或等于后者。</returns>
         public static bool operator <=(PointD5D left, PointD5D right)
         {
-            return (left.ModuleSquared <= right.ModuleSquared);
+            return (left.Module <= right.Module);
         }
 
         /// <summary>
-        /// 判断两个 PointD5D 结构的模平方是否前者大于或等于后者。
+        /// 判断两个 PointD5D 结构的模是否前者大于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD5D 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD5D 结构。</param>
-        /// <returns>布尔值，表示两个 PointD5D 结构的模平方是否前者大于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD5D 结构的模是否前者大于或等于后者。</returns>
         public static bool operator >=(PointD5D left, PointD5D right)
         {
-            return (left.ModuleSquared >= right.ModuleSquared);
+            return (left.Module >= right.Module);
         }
 
         //

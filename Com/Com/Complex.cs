@@ -20,7 +20,7 @@ namespace Com
     /// <summary>
     /// 以一组有序的双精度浮点数表示的直角坐标形式的二元复数。
     /// </summary>
-    public struct Complex : IEquatable<Complex>
+    public struct Complex : IEquatable<Complex>, IComparable, IComparable<Complex>
     {
         #region 私有成员与内部成员
 
@@ -413,6 +413,39 @@ namespace Com
         //
 
         /// <summary>
+        /// 将此 Complex 结构与指定的对象进行次序比较。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        /// <returns>32 位整数，表示将此 Complex 结构与指定的对象进行次序比较得到的结果。</returns>
+        public int CompareTo(object obj)
+        {
+            if (obj == null || !(obj is Complex))
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(this, obj))
+            {
+                return 0;
+            }
+            else
+            {
+                return CompareTo((Complex)obj);
+            }
+        }
+
+        /// <summary>
+        /// 将此 Complex 结构与指定的 Complex 结构进行次序比较。
+        /// </summary>
+        /// <param name="comp">用于比较的 Complex 结构。</param>
+        /// <returns>32 位整数，表示将此 Complex 结构与指定的 Complex 结构进行次序比较得到的结果。</returns>
+        public int CompareTo(Complex comp)
+        {
+            return Module.CompareTo(comp.Module);
+        }
+
+        //
+
+        /// <summary>
         /// 返回将此 Complex 结构转换为 PointD 结构的新实例。
         /// </summary>
         /// <returns>PointD 结构，表示将此 Complex 结构转换为 PointD 结构得到的结果。</returns>
@@ -448,6 +481,38 @@ namespace Com
             else
             {
                 return left.Equals(right);
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 比较两个 Complex 结构的次序。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 Complex 结构。</param>
+        /// <param name="right">用于比较的第二个 Complex 结构。</param>
+        /// <returns>32 位整数，表示将两个 Complex 结构进行次序比较得到的结果。</returns>
+        public static int Compare(Complex left, Complex right)
+        {
+            if ((object)left == null && (object)right == null)
+            {
+                return 0;
+            }
+            else if ((object)left == null)
+            {
+                return -1;
+            }
+            else if ((object)right == null)
+            {
+                return 1;
+            }
+            else if (object.ReferenceEquals(left, right))
+            {
+                return 0;
+            }
+            else
+            {
+                return left.CompareTo(right);
             }
         }
 
@@ -926,47 +991,47 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 Complex 结构的模平方是否前者小于后者。
+        /// 判断两个 Complex 结构的模是否前者小于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者小于后者。</returns>
+        /// <returns>布尔值，表示两个 Complex 结构的模是否前者小于后者。</returns>
         public static bool operator <(Complex left, Complex right)
         {
-            return (left.ModuleSquared < right.ModuleSquared);
+            return (left.Module < right.Module);
         }
 
         /// <summary>
-        /// 判断两个 Complex 结构的模平方是否前者大于后者。
+        /// 判断两个 Complex 结构的模是否前者大于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者大于后者。</returns>
+        /// <returns>布尔值，表示两个 Complex 结构的模是否前者大于后者。</returns>
         public static bool operator >(Complex left, Complex right)
         {
-            return (left.ModuleSquared > right.ModuleSquared);
+            return (left.Module > right.Module);
         }
 
         /// <summary>
-        /// 判断两个 Complex 结构的模平方是否前者小于或等于后者。
+        /// 判断两个 Complex 结构的模是否前者小于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者小于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 Complex 结构的模是否前者小于或等于后者。</returns>
         public static bool operator <=(Complex left, Complex right)
         {
-            return (left.ModuleSquared <= right.ModuleSquared);
+            return (left.Module <= right.Module);
         }
 
         /// <summary>
-        /// 判断两个 Complex 结构的模平方是否前者大于或等于后者。
+        /// 判断两个 Complex 结构的模是否前者大于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Complex 结构。</param>
         /// <param name="right">运算符右侧比较的 Complex 结构。</param>
-        /// <returns>布尔值，表示两个 Complex 结构的模平方是否前者大于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 Complex 结构的模是否前者大于或等于后者。</returns>
         public static bool operator >=(Complex left, Complex right)
         {
-            return (left.ModuleSquared >= right.ModuleSquared);
+            return (left.Module >= right.Module);
         }
 
         //

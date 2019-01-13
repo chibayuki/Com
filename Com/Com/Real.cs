@@ -29,16 +29,6 @@ namespace Com
 
         //
 
-        private static readonly Real _Pi = new Real(Constant.Pi); // 表示圆周率 π 的 Real 结构的实例。
-        private static readonly Real _DoublePi = new Real(Constant.DoublePi); // 表示圆周率 π 的 2 倍的 Real 结构的实例。
-        private static readonly Real _HalfPi = new Real(Constant.HalfPi); // 表示圆周率 π 的 1/2 的 Real 结构的实例。
-        private static readonly Real _MinusHalfPi = new Real(Constant.MinusHalfPi); // 表示圆周率 π 的 -1/2 的 Real 结构的实例。
-
-        private static readonly Real _E = new Real(Constant.E); // 表示自然常数 E 的 Real 结构的实例。
-        private static readonly Real _LgE = new Real(Constant.LgE); // 表示自然常数 E 的常用对数的 Real 结构的实例。
-
-        //
-
         private static readonly double[] _PositiveMagnitudeGeometricValues = new double[] // 用于在一定范围内进行类型转换的正数量级等比数列。
         {
             1E+000, 1E+001, 1E+002, 1E+003, 1E+004, 1E+005, 1E+006, 1E+007, 1E+008, 1E+009,
@@ -110,6 +100,16 @@ namespace Com
             1E-310, 1E-311, 1E-312, 1E-313, 1E-314, 1E-315, 1E-316, 1E-317, 1E-318, 1E-319,
             1E-320, 1E-321, 1E-322, 1E-323, 1E-324
         };
+
+        //
+
+        private static readonly Real _Pi = new Real(Constant.Pi); // 表示圆周率 π 的 Real 结构的实例。
+        private static readonly Real _DoublePi = new Real(Constant.DoublePi); // 表示圆周率 π 的 2 倍的 Real 结构的实例。
+        private static readonly Real _HalfPi = new Real(Constant.HalfPi); // 表示圆周率 π 的 1/2 的 Real 结构的实例。
+        private static readonly Real _MinusHalfPi = new Real(Constant.MinusHalfPi); // 表示圆周率 π 的 -1/2 的 Real 结构的实例。
+
+        private static readonly Real _E = new Real(Constant.E); // 表示自然常数 E 的 Real 结构的实例。
+        private static readonly Real _LgE = new Real(Constant.LgE); // 表示自然常数 E 的常用对数的 Real 结构的实例。
 
         //
 
@@ -736,7 +736,26 @@ namespace Com
                 }
                 else
                 {
-                    return string.Concat(_Value, "×10^", _Magnitude);
+                    string Part1 = _Value.ToString();
+                    string Part2 = "×10^";
+                    string Part3 = string.Empty;
+
+                    if (Part1 == "10")
+                    {
+                        Part1 = "1";
+                        Part3 = (_Magnitude + 1).ToString();
+                    }
+                    else if (Part1 == "-10")
+                    {
+                        Part1 = "-1";
+                        Part3 = (_Magnitude + 1).ToString();
+                    }
+                    else
+                    {
+                        Part3 = _Magnitude.ToString();
+                    }
+
+                    return string.Concat(Part1, Part2, Part3);
                 }
             }
         }
@@ -783,15 +802,18 @@ namespace Com
         /// <returns>32 位整数，表示此 Real 与指定的 Real 对象进行次序比较的结果。</returns>
         public int CompareTo(Real real)
         {
-            if (IsNaN || real.IsNaN)
+            bool ThisIsNaN = IsNaN;
+            bool OtherIsNaN = real.IsNaN;
+
+            if (ThisIsNaN || OtherIsNaN)
             {
-                if (IsNaN && real.IsNaN)
+                if (ThisIsNaN && OtherIsNaN)
                 {
                     return 0;
                 }
                 else
                 {
-                    if (IsNaN)
+                    if (ThisIsNaN)
                     {
                         return -1;
                     }

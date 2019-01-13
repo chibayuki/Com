@@ -510,7 +510,7 @@ namespace Com
         /// <returns>32 位整数，表示将此 PointD 结构与指定的 PointD 结构进行次序比较得到的结果。</returns>
         public int CompareTo(PointD pt)
         {
-            return ModuleSquared.CompareTo(pt.ModuleSquared);
+            return Module.CompareTo(pt.Module);
         }
 
         //
@@ -679,9 +679,24 @@ namespace Com
         /// <returns>双精度浮点数，表示此 PointD 结构与指定的 PointD 结构之间的距离。</returns>
         public double DistanceFrom(PointD pt)
         {
-            double dx = _X - pt._X, dy = _Y - pt._Y;
+            double AbsDx = Math.Abs(_X - pt._X);
+            double AbsDy = Math.Abs(_Y - pt._Y);
 
-            return Math.Sqrt(dx * dx + dy * dy);
+            double AbsMax = Math.Max(AbsDx, AbsDy);
+
+            if (AbsMax == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                AbsDx /= AbsMax;
+                AbsDy /= AbsMax;
+
+                double SqrSum = AbsDx * AbsDx + AbsDy * AbsDy;
+
+                return (AbsMax * Math.Sqrt(SqrSum));
+            }
         }
 
         /// <summary>
@@ -697,9 +712,10 @@ namespace Com
             }
             else
             {
-                double DotProduct = _X * pt._X + _Y * pt._Y;
+                double ModProduct = Module * pt.Module;
+                double CosA = _X * pt._X / ModProduct + _Y * pt._Y / ModProduct;
 
-                return Math.Acos(DotProduct / Module / pt.Module);
+                return Math.Acos(CosA);
             }
         }
 
@@ -1981,9 +1997,24 @@ namespace Com
         /// <returns>双精度浮点数，表示两个 PointD 结构之间的距离。</returns>
         public static double DistanceBetween(PointD left, PointD right)
         {
-            double dx = left._X - right._X, dy = left._Y - right._Y;
+            double AbsDx = Math.Abs(left._X - right._X);
+            double AbsDy = Math.Abs(left._Y - right._Y);
 
-            return Math.Sqrt(dx * dx + dy * dy);
+            double AbsMax = Math.Max(AbsDx, AbsDy);
+
+            if (AbsMax == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                AbsDx /= AbsMax;
+                AbsDy /= AbsMax;
+
+                double SqrSum = AbsDx * AbsDx + AbsDy * AbsDy;
+
+                return (AbsMax * Math.Sqrt(SqrSum));
+            }
         }
 
         /// <summary>
@@ -2000,9 +2031,10 @@ namespace Com
             }
             else
             {
-                double DotProduct = left._X * right._X + left._Y * right._Y;
+                double ModProduct = left.Module * right.Module;
+                double CosA = left._X * right._X / ModProduct + left._Y * right._Y / ModProduct;
 
-                return Math.Acos(DotProduct / left.Module / right.Module);
+                return Math.Acos(CosA);
             }
         }
 
@@ -2141,47 +2173,47 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 PointD 结构的模平方是否前者小于后者。
+        /// 判断两个 PointD 结构的模是否前者小于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        /// <returns>布尔值，表示两个 PointD 结构的模平方是否前者小于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD 结构的模是否前者小于后者。</returns>
         public static bool operator <(PointD left, PointD right)
         {
-            return (left.ModuleSquared < right.ModuleSquared);
+            return (left.Module < right.Module);
         }
 
         /// <summary>
-        /// 判断两个 PointD 结构的模平方是否前者大于后者。
+        /// 判断两个 PointD 结构的模是否前者大于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        /// <returns>布尔值，表示两个 PointD 结构的模平方是否前者大于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD 结构的模是否前者大于后者。</returns>
         public static bool operator >(PointD left, PointD right)
         {
-            return (left.ModuleSquared > right.ModuleSquared);
+            return (left.Module > right.Module);
         }
 
         /// <summary>
-        /// 判断两个 PointD 结构的模平方是否前者小于或等于后者。
+        /// 判断两个 PointD 结构的模是否前者小于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        /// <returns>布尔值，表示两个 PointD 结构的模平方是否前者小于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD 结构的模是否前者小于或等于后者。</returns>
         public static bool operator <=(PointD left, PointD right)
         {
-            return (left.ModuleSquared <= right.ModuleSquared);
+            return (left.Module <= right.Module);
         }
 
         /// <summary>
-        /// 判断两个 PointD 结构的模平方是否前者大于或等于后者。
+        /// 判断两个 PointD 结构的模是否前者大于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD 结构。</param>
-        /// <returns>布尔值，表示两个 PointD 结构的模平方是否前者大于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD 结构的模是否前者大于或等于后者。</returns>
         public static bool operator >=(PointD left, PointD right)
         {
-            return (left.ModuleSquared >= right.ModuleSquared);
+            return (left.Module >= right.Module);
         }
 
         //

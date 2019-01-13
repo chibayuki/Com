@@ -464,7 +464,7 @@ namespace Com
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        AbsMax = Math.Max(AbsMax, _VArray[i]);
+                        AbsMax = Math.Max(AbsMax, Math.Abs(_VArray[i]));
                     }
 
                     if (AbsMax == 0)
@@ -752,7 +752,7 @@ namespace Com
             }
             else
             {
-                return ModuleSquared.CompareTo(vector.ModuleSquared);
+                return Module.CompareTo(vector.Module);
             }
         }
 
@@ -1146,14 +1146,32 @@ namespace Com
             }
             else
             {
-                double SqrSum = 0;
+                double[] Delta = new double[_Size];
+                double AbsMax = 0;
 
-                for (int i = 0; i < _Size; i++)
+                for (int i = 0; i < Delta.Length; i++)
                 {
-                    SqrSum += (_VArray[i] - vector._VArray[i]) * (_VArray[i] - vector._VArray[i]);
+                    Delta[i] = _VArray[i] - vector._VArray[i];
+                    AbsMax = Math.Max(AbsMax, Math.Abs(Delta[i]));
                 }
 
-                return Math.Sqrt(SqrSum);
+                if (AbsMax == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double SqrSum = 0;
+
+                    for (int i = 0; i < Delta.Length; i++)
+                    {
+                        double Factor = Delta[i] / AbsMax;
+
+                        SqrSum += Factor * Factor;
+                    }
+
+                    return (AbsMax * Math.Sqrt(SqrSum));
+                }
             }
         }
 
@@ -1176,14 +1194,15 @@ namespace Com
                 }
                 else
                 {
-                    double DotProduct = 0;
+                    double ModProduct = Module * vector.Module;
+                    double CosA = 0;
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        DotProduct += _VArray[i] * vector._VArray[i];
+                        CosA += _VArray[i] * vector._VArray[i] / ModProduct;
                     }
 
-                    return Math.Acos(DotProduct / Module / vector.Module);
+                    return Math.Acos(CosA);
                 }
             }
         }
@@ -2479,14 +2498,32 @@ namespace Com
             }
             else
             {
-                double SqrSum = 0;
+                double[] Delta = new double[left._Size];
+                double AbsMax = 0;
 
-                for (int i = 0; i < left._Size; i++)
+                for (int i = 0; i < Delta.Length; i++)
                 {
-                    SqrSum += (left._VArray[i] - right._VArray[i]) * (left._VArray[i] - right._VArray[i]);
+                    Delta[i] = left._VArray[i] - right._VArray[i];
+                    AbsMax = Math.Max(AbsMax, Math.Abs(Delta[i]));
                 }
 
-                return Math.Sqrt(SqrSum);
+                if (AbsMax == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    double SqrSum = 0;
+
+                    for (int i = 0; i < Delta.Length; i++)
+                    {
+                        double Factor = Delta[i] / AbsMax;
+
+                        SqrSum += Factor * Factor;
+                    }
+
+                    return (AbsMax * Math.Sqrt(SqrSum));
+                }
             }
         }
 
@@ -2510,14 +2547,15 @@ namespace Com
                 }
                 else
                 {
-                    double DotProduct = 0;
+                    double ModProduct = left.Module * right.Module;
+                    double CosA = 0;
 
                     for (int i = 0; i < left._Size; i++)
                     {
-                        DotProduct += left._VArray[i] * right._VArray[i];
+                        CosA += left._VArray[i] * right._VArray[i] / ModProduct;
                     }
 
-                    return Math.Acos(DotProduct / left.Module / right.Module);
+                    return Math.Acos(CosA);
                 }
             }
         }
@@ -2538,14 +2576,14 @@ namespace Com
             }
             else
             {
-                double SqrSum = 0;
+                double result = 0;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    SqrSum += left._VArray[i] * right._VArray[i];
+                    result += left._VArray[i] * right._VArray[i];
                 }
 
-                return SqrSum;
+                return result;
             }
         }
 
@@ -2857,11 +2895,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的维度与模平方是否前者小于后者。
+        /// 判断两个 Vector 对象的维度与模是否前者小于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        /// <returns>布尔值，表示两个 Vector 对象的模平方是否前者小于后者。</returns>
+        /// <returns>布尔值，表示两个 Vector 对象的模是否前者小于后者。</returns>
         public static bool operator <(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2878,16 +2916,16 @@ namespace Com
             }
             else
             {
-                return (left.ModuleSquared < right.ModuleSquared);
+                return (left.Module < right.Module);
             }
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的维度与模平方是否前者大于后者。
+        /// 判断两个 Vector 对象的维度与模是否前者大于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        /// <returns>布尔值，表示两个 Vector 对象的模平方是否前者大于后者。</returns>
+        /// <returns>布尔值，表示两个 Vector 对象的模是否前者大于后者。</returns>
         public static bool operator >(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2904,16 +2942,16 @@ namespace Com
             }
             else
             {
-                return (left.ModuleSquared > right.ModuleSquared);
+                return (left.Module > right.Module);
             }
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的维度与模平方是否前者小于或等于后者。
+        /// 判断两个 Vector 对象的维度与模是否前者小于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        /// <returns>布尔值，表示两个 Vector 对象的模平方是否前者小于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 Vector 对象的模是否前者小于或等于后者。</returns>
         public static bool operator <=(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2930,16 +2968,16 @@ namespace Com
             }
             else
             {
-                return (left.ModuleSquared <= right.ModuleSquared);
+                return (left.Module <= right.Module);
             }
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的维度与模平方是否前者大于或等于后者。
+        /// 判断两个 Vector 对象的维度与模是否前者大于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        /// <returns>布尔值，表示两个 Vector 对象的模平方是否前者大于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 Vector 对象的模是否前者大于或等于后者。</returns>
         public static bool operator >=(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2956,7 +2994,7 @@ namespace Com
             }
             else
             {
-                return (left.ModuleSquared >= right.ModuleSquared);
+                return (left.Module >= right.Module);
             }
         }
 
