@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.Painting3D
 Version 18.9.28.2200
@@ -44,7 +44,11 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !center.IsNaNOrInfinity && (!size.IsNaNOrInfinity && !size.IsZero) && (!color.IsEmpty && color.A > 0) && !InternalMethod.IsNaNOrInfinity(edgeWidth) && !InternalMethod.IsNullOrEmpty(affineMatrixList) && (!InternalMethod.IsNaNOrInfinity(trueLenDist) && trueLenDist >= 0) && !illuminationDirection.IsNaNOrInfinity && !InternalMethod.IsNaNOrInfinity(exposure))
+                if (bmp == null || center.IsNaNOrInfinity || (size.IsNaNOrInfinity || size.IsZero) || (color.IsEmpty || color.A == 0) || InternalMethod.IsNaNOrInfinity(edgeWidth) || InternalMethod.IsNullOrEmpty(affineMatrixList) || (InternalMethod.IsNaNOrInfinity(trueLenDist) || trueLenDist < 0) || illuminationDirection.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(exposure))
+                {
+                    return false;
+                }
+                else
                 {
                     PointD3D P3D_000 = new PointD3D(0, 0, 0);
                     PointD3D P3D_100 = new PointD3D(1, 0, 0);
@@ -196,7 +200,11 @@ namespace Com
                         }
                     }
 
-                    if (CuboidIsVisible)
+                    if (!CuboidIsVisible)
+                    {
+                        return false;
+                    }
+                    else
                     {
                         List<double> IlluminationIntensity = new List<double>(Element3D.Count);
 
@@ -491,8 +499,6 @@ namespace Com
                         return true;
                     }
                 }
-
-                return false;
             }
             catch
             {
@@ -517,21 +523,7 @@ namespace Com
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double trueLenDist, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
         {
-            try
-            {
-                if (bmp != null && affineMatrix != null)
-                {
-                    List<Matrix> affineMatrixList = new List<Matrix>(1) { affineMatrix };
-
-                    return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrixList, trueLenDist, illuminationDirection, illuminationDirectionIsAfterAffineTransform, exposure, antiAlias);
-                }
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            return PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, trueLenDist, illuminationDirection, illuminationDirectionIsAfterAffineTransform, exposure, antiAlias);
         }
 
         /// <summary>
@@ -548,19 +540,7 @@ namespace Com
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrixList, double trueLenDist, bool antiAlias)
         {
-            try
-            {
-                if (bmp != null && affineMatrixList != null)
-                {
-                    return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrixList, trueLenDist, PointD3D.Zero, false, 0, antiAlias);
-                }
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrixList, trueLenDist, PointD3D.Zero, false, 0, antiAlias);
         }
 
         /// <summary>
@@ -577,21 +557,7 @@ namespace Com
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double trueLenDist, bool antiAlias)
         {
-            try
-            {
-                if (bmp != null && affineMatrix != null)
-                {
-                    List<Matrix> affineMatrixList = new List<Matrix>(1) { affineMatrix };
-
-                    return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrixList, trueLenDist, PointD3D.Zero, false, 0, antiAlias);
-                }
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            return PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, trueLenDist, PointD3D.Zero, false, 0, antiAlias);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.Geometry
 Version 18.9.28.2200
@@ -73,8 +73,10 @@ namespace Com
                 {
                     return double.NaN;
                 }
-
-                return ((A * pt.X + B * pt.Y + C) / Math.Sqrt(A * A + B * B));
+                else
+                {
+                    return ((A * pt.X + B * pt.Y + C) / Math.Sqrt(A * A + B * B));
+                }
             }
         }
 
@@ -186,12 +188,14 @@ namespace Com
             }
             else
             {
-                if (angle < 0 || angle >= Constant.DoublePi)
+                if (angle >= 0 && angle < Constant.DoublePi)
+                {
+                    return angle;
+                }
+                else
                 {
                     return (angle - Math.Floor(angle / Constant.DoublePi) * Constant.DoublePi);
                 }
-
-                return angle;
             }
         }
 
@@ -210,8 +214,10 @@ namespace Com
             {
                 return Point.Empty;
             }
-
-            return ctrl.PointToClient(Cursor.Position);
+            else
+            {
+                return ctrl.PointToClient(Cursor.Position);
+            }
         }
 
         /// <summary>
@@ -245,8 +251,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (pt.X >= 0 && pt.X < ctrl.Width && pt.Y >= 0 && pt.Y < ctrl.Height);
+            else
+            {
+                return (pt.X >= 0 && pt.X < ctrl.Width && pt.Y >= 0 && pt.Y < ctrl.Height);
+            }
         }
 
         /// <summary>
@@ -313,8 +321,10 @@ namespace Com
             {
                 return Rectangle.Empty;
             }
-
-            return GetMinimumBoundingRectangleOfControls(ctrls, 0);
+            else
+            {
+                return GetMinimumBoundingRectangleOfControls(ctrls, 0);
+            }
         }
 
         #endregion
@@ -333,8 +343,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (pt.X >= rect.X && pt.X < rect.Right && pt.Y >= rect.Y && pt.Y < rect.Bottom);
+            else
+            {
+                return (pt.X >= rect.X && pt.X < rect.Right && pt.Y >= rect.Y && pt.Y < rect.Bottom);
+            }
         }
 
         /// <summary>
@@ -350,8 +362,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (pt.DistanceFrom(offset) < radius);
+            else
+            {
+                return (pt.DistanceFrom(offset) < radius);
+            }
         }
 
         /// <summary>
@@ -446,8 +460,10 @@ namespace Com
                         {
                             return false;
                         }
-
-                        return true;
+                        else
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -494,8 +510,10 @@ namespace Com
                         {
                             return false;
                         }
-
-                        return true;
+                        else
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -522,8 +540,10 @@ namespace Com
                     {
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else if (offset.X > rect.Right && offset.Y < rect.Y)
                 {
@@ -531,8 +551,10 @@ namespace Com
                     {
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else if (offset.X < rect.X && offset.Y > rect.Bottom)
                 {
@@ -540,8 +562,10 @@ namespace Com
                     {
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else if (offset.X > rect.Right && offset.Y > rect.Bottom)
                 {
@@ -549,15 +573,19 @@ namespace Com
                     {
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else if (offset.X >= rect.X - radius && offset.X <= rect.Right + radius && offset.Y >= rect.Y - radius && offset.Y <= rect.Bottom + radius)
                 {
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             }
         }
 
@@ -582,8 +610,10 @@ namespace Com
                     {
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else if (offset.X > rect.Right && offset.Y < rect.Y)
                 {
@@ -591,8 +621,10 @@ namespace Com
                     {
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else if (offset.X < rect.X && offset.Y > rect.Bottom)
                 {
@@ -600,8 +632,10 @@ namespace Com
                     {
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else if (offset.X > rect.Right && offset.Y > rect.Bottom)
                 {
@@ -609,8 +643,10 @@ namespace Com
                     {
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
@@ -620,8 +656,10 @@ namespace Com
                         {
                             return true;
                         }
-
-                        return false;
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
@@ -629,8 +667,10 @@ namespace Com
                         {
                             return true;
                         }
-
-                        return false;
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
@@ -653,8 +693,10 @@ namespace Com
             {
                 return double.NaN;
             }
-
-            return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase), 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
+            else
+            {
+                return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase), 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
+            }
         }
 
         /// <summary>
@@ -670,8 +712,10 @@ namespace Com
             {
                 return double.NaN;
             }
-
-            return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase) - eccentricity, 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
+            else
+            {
+                return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase) - eccentricity, 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
+            }
         }
 
         /// <summary>
@@ -686,8 +730,10 @@ namespace Com
             {
                 return double.NaN;
             }
-
-            return (Math.Atan(Math.Tan(centralAngle) / Math.Sqrt(1 - Math.Pow(eccentricity, 2))) + Math.Round(centralAngle / Constant.Pi) * Constant.Pi);
+            else
+            {
+                return (Math.Atan(Math.Tan(centralAngle) / Math.Sqrt(1 - Math.Pow(eccentricity, 2))) + Math.Round(centralAngle / Constant.Pi) * Constant.Pi);
+            }
         }
 
         #endregion

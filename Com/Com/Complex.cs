@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.Complex
 Version 18.9.28.2200
@@ -323,8 +323,10 @@ namespace Com
             {
                 return true;
             }
-
-            return Equals((Complex)obj);
+            else
+            {
+                return Equals((Complex)obj);
+            }
         }
 
         /// <summary>
@@ -443,8 +445,10 @@ namespace Com
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         //

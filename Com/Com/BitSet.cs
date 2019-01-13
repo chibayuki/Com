@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.BitSet
 Version 18.9.28.2200
@@ -43,17 +43,23 @@ namespace Com
 
         private static int _GetUintNumOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数的数量。
         {
-            if (bitNum > 0)
+            if (bitNum <= 0)
+            {
+                return 0;
+            }
+            else
             {
                 return ((bitNum - 1) / _BitsPerUint + 1);
             }
-
-            return 0;
         }
 
         private static int _GetUintArrayLengthOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数数组的长度。
         {
-            if (bitNum > 0)
+            if (bitNum <= 0)
+            {
+                return 0;
+            }
+            else
             {
                 int ArrayLength = _GetUintNumOfBitNum(bitNum);
 
@@ -64,8 +70,6 @@ namespace Com
 
                 return ArrayLength;
             }
-
-            return 0;
         }
 
         //
@@ -381,8 +385,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return _Size;
+                else
+                {
+                    return _Size;
+                }
             }
 
             set
@@ -473,8 +479,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return (_UintArray.Length * _BitsPerUint);
+                else
+                {
+                    return (_UintArray.Length * _BitsPerUint);
+                }
             }
         }
 
@@ -516,8 +524,10 @@ namespace Com
             {
                 return true;
             }
-
-            return Equals((BitSet)obj);
+            else
+            {
+                return Equals((BitSet)obj);
+            }
         }
 
         /// <summary>
@@ -570,16 +580,18 @@ namespace Com
             {
                 return false;
             }
-
-            for (int i = 0; i < _UintArray.Length; i++)
+            else
             {
-                if (_UintArray[i] != bitSet._UintArray[i])
+                for (int i = 0; i < _UintArray.Length; i++)
                 {
-                    return false;
+                    if (_UintArray[i] != bitSet._UintArray[i])
+                    {
+                        return false;
+                    }
                 }
-            }
 
-            return true;
+                return true;
+            }
         }
 
         //
@@ -599,8 +611,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return CompareTo((BitSet)obj);
+            else
+            {
+                return CompareTo((BitSet)obj);
+            }
         }
 
         /// <summary>
@@ -618,37 +632,13 @@ namespace Com
             {
                 return 0;
             }
-
-            int Last1L = LastIndexOf(true), Last1R = bitSet.LastIndexOf(true);
-
-            if (Last1L != Last1R)
-            {
-                if (Last1L < Last1R)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 1;
-                }
-            }
             else
             {
-                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+                int Last1L = LastIndexOf(true), Last1R = bitSet.LastIndexOf(true);
 
-                for (int i = Len - 1; i >= 0; i--)
+                if (Last1L != Last1R)
                 {
-                    int result = _UintArray[i].CompareTo(bitSet._UintArray[i]);
-
-                    if (result != 0)
-                    {
-                        return result;
-                    }
-                }
-
-                if (_Size != bitSet._Size)
-                {
-                    if (_Size < bitSet._Size)
+                    if (Last1L < Last1R)
                     {
                         return -1;
                     }
@@ -657,9 +647,37 @@ namespace Com
                         return 1;
                     }
                 }
-            }
+                else
+                {
+                    int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
-            return 0;
+                    for (int i = Len - 1; i >= 0; i--)
+                    {
+                        int result = _UintArray[i].CompareTo(bitSet._UintArray[i]);
+
+                        if (result != 0)
+                        {
+                            return result;
+                        }
+                    }
+
+                    if (_Size == bitSet._Size)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        if (_Size < bitSet._Size)
+                        {
+                            return -1;
+                        }
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+                }
+            }
         }
 
         //
@@ -699,8 +717,10 @@ namespace Com
             {
                 return -1;
             }
-
-            return IndexOf(item, 0, _Size);
+            else
+            {
+                return IndexOf(item, 0, _Size);
+            }
         }
 
         /// <summary>
@@ -854,8 +874,10 @@ namespace Com
             {
                 return -1;
             }
-
-            return LastIndexOf(item, _Size - 1, _Size);
+            else
+            {
+                return LastIndexOf(item, _Size - 1, _Size);
+            }
         }
 
         /// <summary>
@@ -1353,8 +1375,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return (_Size - TrueBitCount());
+            else
+            {
+                return (_Size - TrueBitCount());
+            }
         }
 
         /// <summary>
@@ -1613,8 +1637,10 @@ namespace Com
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         //
@@ -1643,8 +1669,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return left.CompareTo(right);
+            else
+            {
+                return left.CompareTo(right);
+            }
         }
 
         #endregion
@@ -1671,27 +1699,29 @@ namespace Com
             {
                 return true;
             }
-
-            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
-
-            if (Last1L != Last1R)
-            {
-                return false;
-            }
             else
             {
-                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+                int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
 
-                for (int i = 0; i < Len; i++)
+                if (Last1L != Last1R)
                 {
-                    if (left._UintArray[i] != right._UintArray[i])
+                    return false;
+                }
+                else
+                {
+                    int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                    for (int i = 0; i < Len; i++)
                     {
-                        return false;
+                        if (left._UintArray[i] != right._UintArray[i])
+                        {
+                            return false;
+                        }
                     }
+
+                    return true;
                 }
             }
-
-            return true;
         }
 
         /// <summary>
@@ -1714,27 +1744,29 @@ namespace Com
             {
                 return false;
             }
-
-            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
-
-            if (Last1L != Last1R)
-            {
-                return true;
-            }
             else
             {
-                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+                int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
 
-                for (int i = 0; i < Len; i++)
+                if (Last1L != Last1R)
                 {
-                    if (left._UintArray[i] != right._UintArray[i])
+                    return true;
+                }
+                else
+                {
+                    int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                    for (int i = 0; i < Len; i++)
                     {
-                        return true;
+                        if (left._UintArray[i] != right._UintArray[i])
+                        {
+                            return true;
+                        }
                     }
+
+                    return false;
                 }
             }
-
-            return false;
         }
 
         /// <summary>
@@ -1753,27 +1785,29 @@ namespace Com
             {
                 return false;
             }
-
-            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
-
-            if (Last1L != Last1R)
-            {
-                return (Last1L < Last1R);
-            }
             else
             {
-                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+                int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
 
-                for (int i = Len - 1; i >= 0; i--)
+                if (Last1L != Last1R)
                 {
-                    if (left._UintArray[i] != right._UintArray[i])
+                    return (Last1L < Last1R);
+                }
+                else
+                {
+                    int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                    for (int i = Len - 1; i >= 0; i--)
                     {
-                        return (left._UintArray[i] < right._UintArray[i]);
+                        if (left._UintArray[i] != right._UintArray[i])
+                        {
+                            return (left._UintArray[i] < right._UintArray[i]);
+                        }
                     }
+
+                    return false;
                 }
             }
-
-            return false;
         }
 
         /// <summary>
@@ -1792,27 +1826,29 @@ namespace Com
             {
                 return false;
             }
-
-            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
-
-            if (Last1L != Last1R)
-            {
-                return (Last1L > Last1R);
-            }
             else
             {
-                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+                int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
 
-                for (int i = Len - 1; i >= 0; i--)
+                if (Last1L != Last1R)
                 {
-                    if (left._UintArray[i] != right._UintArray[i])
+                    return (Last1L > Last1R);
+                }
+                else
+                {
+                    int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                    for (int i = Len - 1; i >= 0; i--)
                     {
-                        return (left._UintArray[i] > right._UintArray[i]);
+                        if (left._UintArray[i] != right._UintArray[i])
+                        {
+                            return (left._UintArray[i] > right._UintArray[i]);
+                        }
                     }
+
+                    return false;
                 }
             }
-
-            return false;
         }
 
         /// <summary>
@@ -1831,27 +1867,29 @@ namespace Com
             {
                 return true;
             }
-
-            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
-
-            if (Last1L != Last1R)
-            {
-                return (Last1L < Last1R);
-            }
             else
             {
-                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+                int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
 
-                for (int i = Len - 1; i >= 0; i--)
+                if (Last1L != Last1R)
                 {
-                    if (left._UintArray[i] != right._UintArray[i])
+                    return (Last1L < Last1R);
+                }
+                else
+                {
+                    int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                    for (int i = Len - 1; i >= 0; i--)
                     {
-                        return (left._UintArray[i] < right._UintArray[i]);
+                        if (left._UintArray[i] != right._UintArray[i])
+                        {
+                            return (left._UintArray[i] < right._UintArray[i]);
+                        }
                     }
+
+                    return true;
                 }
             }
-
-            return true;
         }
 
         /// <summary>
@@ -1870,27 +1908,29 @@ namespace Com
             {
                 return true;
             }
-
-            int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
-
-            if (Last1L != Last1R)
-            {
-                return (Last1L > Last1R);
-            }
             else
             {
-                int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+                int Last1L = left.LastIndexOf(true), Last1R = right.LastIndexOf(true);
 
-                for (int i = Len - 1; i >= 0; i--)
+                if (Last1L != Last1R)
                 {
-                    if (left._UintArray[i] != right._UintArray[i])
+                    return (Last1L > Last1R);
+                }
+                else
+                {
+                    int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
+
+                    for (int i = Len - 1; i >= 0; i--)
                     {
-                        return (left._UintArray[i] > right._UintArray[i]);
+                        if (left._UintArray[i] != right._UintArray[i])
+                        {
+                            return (left._UintArray[i] > right._UintArray[i]);
+                        }
                     }
+
+                    return true;
                 }
             }
-
-            return true;
         }
 
         //
@@ -1907,8 +1947,10 @@ namespace Com
             {
                 return Empty;
             }
-
-            return left.And(right);
+            else
+            {
+                return left.And(right);
+            }
         }
 
         /// <summary>
@@ -1923,8 +1965,10 @@ namespace Com
             {
                 return Empty;
             }
-
-            return left.Or(right);
+            else
+            {
+                return left.Or(right);
+            }
         }
 
         /// <summary>
@@ -1939,8 +1983,10 @@ namespace Com
             {
                 return Empty;
             }
-
-            return left.Xor(right);
+            else
+            {
+                return left.Xor(right);
+            }
         }
 
         /// <summary>
@@ -1954,8 +2000,10 @@ namespace Com
             {
                 return Empty;
             }
-
-            return bitSet.Not();
+            else
+            {
+                return bitSet.Not();
+            }
         }
 
         #endregion
@@ -2004,8 +2052,10 @@ namespace Com
             {
                 return false;
             }
-
-            return Contains((bool)item);
+            else
+            {
+                return Contains((bool)item);
+            }
         }
 
         int IList.IndexOf(object item)
@@ -2014,8 +2064,10 @@ namespace Com
             {
                 return -1;
             }
-
-            return IndexOf((bool)item);
+            else
+            {
+                return IndexOf((bool)item);
+            }
         }
 
         void IList.Insert(int index, object item)

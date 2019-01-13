@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.Matrix
 Version 18.9.28.2200
@@ -44,14 +44,14 @@ namespace Com
                 int width = values.GetLength(0);
                 int height = values.GetLength(1);
 
-                if ((long)width * height <= _MaxSize)
+                if ((long)width * height > _MaxSize)
                 {
-                    result._Size = new Size(width, height);
-                    result._MArray = values;
+                    throw new OverflowException();
                 }
                 else
                 {
-                    throw new OverflowException();
+                    result._Size = new Size(width, height);
+                    result._MArray = values;
                 }
             }
 
@@ -241,6 +241,8 @@ namespace Com
                     throw new IndexOutOfRangeException();
                 }
 
+                //
+
                 return _MArray[x, y];
             }
 
@@ -250,6 +252,8 @@ namespace Com
                 {
                     throw new IndexOutOfRangeException();
                 }
+
+                //
 
                 _MArray[x, y] = value;
             }
@@ -268,6 +272,8 @@ namespace Com
                     throw new IndexOutOfRangeException();
                 }
 
+                //
+
                 return _MArray[index.X, index.Y];
             }
 
@@ -277,6 +283,8 @@ namespace Com
                 {
                     throw new IndexOutOfRangeException();
                 }
+
+                //
 
                 _MArray[index.X, index.Y] = value;
             }
@@ -308,8 +316,10 @@ namespace Com
                 {
                     return Size.Empty;
                 }
-
-                return _Size;
+                else
+                {
+                    return _Size;
+                }
             }
         }
 
@@ -368,8 +378,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return (_Size.Width * _Size.Height);
+                else
+                {
+                    return (_Size.Width * _Size.Height);
+                }
             }
         }
 
@@ -427,9 +439,11 @@ namespace Com
                             {
                                 return double.NaN;
                             }
-
-                            det += (_MArray[0, i] * detSign * detTemp);
-                            detSign = -detSign;
+                            else
+                            {
+                                det += (_MArray[0, i] * detSign * detTemp);
+                                detSign = -detSign;
+                            }
                         }
 
                         return det;
@@ -661,8 +675,10 @@ namespace Com
             {
                 return true;
             }
-
-            return Equals((Matrix)obj);
+            else
+            {
+                return Equals((Matrix)obj);
+            }
         }
 
         /// <summary>
@@ -924,8 +940,10 @@ namespace Com
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         //
@@ -1652,8 +1670,10 @@ namespace Com
                     {
                         return Empty;
                     }
-
-                    return Multiply(invLeft, right);
+                    else
+                    {
+                        return Multiply(invLeft, right);
+                    }
                 }
             }
         }
@@ -1687,8 +1707,10 @@ namespace Com
                     {
                         return Empty;
                     }
-
-                    return Multiply(left, invRight);
+                    else
+                    {
+                        return Multiply(left, invRight);
+                    }
                 }
             }
         }
@@ -1731,8 +1753,10 @@ namespace Com
                         {
                             return Vector.Empty;
                         }
-
-                        return solution.GetColumn(0);
+                        else
+                        {
+                            return solution.GetColumn(0);
+                        }
                     }
                 }
             }

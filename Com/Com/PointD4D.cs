@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD4D
 Version 18.9.28.2200
@@ -349,13 +349,13 @@ namespace Com
             {
                 double Mod = Module;
 
-                if (Mod > 0)
+                if (Mod <= 0)
                 {
-                    return new PointD4D(_X / Mod, _Y / Mod, _Z / Mod, _U / Mod);
+                    return Ex;
                 }
                 else
                 {
-                    return Ex;
+                    return new PointD4D(_X / Mod, _Y / Mod, _Z / Mod, _U / Mod);
                 }
             }
         }
@@ -447,8 +447,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return AngleFrom(_X >= 0 ? Ex : -Ex);
+                else
+                {
+                    return AngleFrom(_X >= 0 ? Ex : -Ex);
+                }
             }
         }
 
@@ -463,8 +465,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return AngleFrom(_Y >= 0 ? Ey : -Ey);
+                else
+                {
+                    return AngleFrom(_Y >= 0 ? Ey : -Ey);
+                }
             }
         }
 
@@ -479,8 +483,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return AngleFrom(_Z >= 0 ? Ez : -Ez);
+                else
+                {
+                    return AngleFrom(_Z >= 0 ? Ez : -Ez);
+                }
             }
         }
 
@@ -495,8 +501,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return AngleFrom(_U >= 0 ? Eu : -Eu);
+                else
+                {
+                    return AngleFrom(_U >= 0 ? Eu : -Eu);
+                }
             }
         }
 
@@ -511,8 +519,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return (Constant.HalfPi - AngleFromU);
+                else
+                {
+                    return (Constant.HalfPi - AngleFromU);
+                }
             }
         }
 
@@ -527,8 +537,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return (Constant.HalfPi - AngleFromX);
+                else
+                {
+                    return (Constant.HalfPi - AngleFromX);
+                }
             }
         }
 
@@ -543,8 +555,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return (Constant.HalfPi - AngleFromY);
+                else
+                {
+                    return (Constant.HalfPi - AngleFromY);
+                }
             }
         }
 
@@ -559,8 +573,10 @@ namespace Com
                 {
                     return 0;
                 }
-
-                return (Constant.HalfPi - AngleFromZ);
+                else
+                {
+                    return (Constant.HalfPi - AngleFromZ);
+                }
             }
         }
 
@@ -583,8 +599,10 @@ namespace Com
             {
                 return true;
             }
-
-            return Equals((PointD4D)obj);
+            else
+            {
+                return Equals((PointD4D)obj);
+            }
         }
 
         /// <summary>
@@ -634,8 +652,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return CompareTo((PointD4D)obj);
+            else
+            {
+                return CompareTo((PointD4D)obj);
+            }
         }
 
         /// <summary>
@@ -668,14 +688,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int IndexOf(double item, int startIndex)
         {
-            if (startIndex >= 0 && startIndex < Dimension)
-            {
-                return Array.IndexOf(ToArray(), item, startIndex, Dimension - startIndex);
-            }
-            else
+            if (startIndex < 0 || startIndex >= Dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return Array.IndexOf(ToArray(), item, startIndex, Dimension - startIndex);
         }
 
         /// <summary>
@@ -687,16 +707,16 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int IndexOf(double item, int startIndex, int count)
         {
-            if ((startIndex >= 0 && startIndex < Dimension) && count > 0)
-            {
-                count = Math.Min(Dimension - startIndex, count);
-
-                return Array.IndexOf(ToArray(), item, startIndex, count);
-            }
-            else
+            if ((startIndex < 0 || startIndex >= Dimension) || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            count = Math.Min(Dimension - startIndex, count);
+
+            return Array.IndexOf(ToArray(), item, startIndex, count);
         }
 
         /// <summary>
@@ -717,14 +737,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(double item, int startIndex)
         {
-            if (startIndex >= 0 && startIndex < Dimension)
-            {
-                return Array.LastIndexOf(ToArray(), item, startIndex, startIndex + 1);
-            }
-            else
+            if (startIndex < 0 || startIndex >= Dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            return Array.LastIndexOf(ToArray(), item, startIndex, startIndex + 1);
         }
 
         /// <summary>
@@ -736,16 +756,16 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
         public int LastIndexOf(double item, int startIndex, int count)
         {
-            if ((startIndex >= 0 && startIndex < Dimension) && count > 0)
-            {
-                count = Math.Min(startIndex + 1, count);
-
-                return Array.LastIndexOf(ToArray(), item, startIndex, count);
-            }
-            else
+            if ((startIndex < 0 || startIndex >= Dimension) || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            //
+
+            count = Math.Min(startIndex + 1, count);
+
+            return Array.LastIndexOf(ToArray(), item, startIndex, count);
         }
 
         /// <summary>
@@ -759,8 +779,10 @@ namespace Com
             {
                 return true;
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         //
@@ -793,12 +815,14 @@ namespace Com
         {
             Vector result = ToColumnVector().ToSpherical();
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                return NaN;
+            }
+            else
             {
                 return new PointD4D(result[0], result[1], result[2], result[3]);
             }
-
-            return NaN;
         }
 
         /// <summary>
@@ -809,12 +833,14 @@ namespace Com
         {
             Vector result = ToColumnVector().ToCartesian();
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                return NaN;
+            }
+            else
             {
                 return new PointD4D(result[0], result[1], result[2], result[3]);
             }
-
-            return NaN;
         }
 
         //
@@ -842,10 +868,12 @@ namespace Com
             {
                 return 0;
             }
+            else
+            {
+                double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z + _U * pt._U;
 
-            double DotProduct = _X * pt._X + _Y * pt._Y + _Z * pt._Z + _U * pt._U;
-
-            return Math.Acos(DotProduct / Module / pt.Module);
+                return Math.Acos(DotProduct / Module / pt.Module);
+            }
         }
 
         //
@@ -1063,12 +1091,14 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                return NaN;
+            }
+            else
             {
                 return new PointD4D(result[0], result[1], result[2], result[3]);
             }
-
-            return NaN;
         }
 
         //
@@ -1103,12 +1133,14 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                return NaN;
+            }
+            else
             {
                 return new PointD4D(result[0], result[1], result[2], result[3]);
             }
-
-            return NaN;
         }
 
         //
@@ -1205,12 +1237,14 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                return NaN;
+            }
+            else
             {
                 return new PointD4D(result[0], result[1], result[2], result[3]);
             }
-
-            return NaN;
         }
 
         /// <summary>
@@ -1220,17 +1254,23 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行仿射变换得到的结果。</returns>
         public PointD4D AffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(5, 5))
+            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(5, 5))
+            {
+                return NaN;
+            }
+            else
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+                {
+                    return NaN;
+                }
+                else
                 {
                     return new PointD4D(result[0], result[1], result[2], result[3]);
                 }
             }
-
-            return NaN;
         }
 
         /// <summary>
@@ -1240,17 +1280,23 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象列表表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD4D 结构进行仿射变换得到的结果。</returns>
         public PointD4D AffineTransformCopy(List<Matrix> matrixLeftList)
         {
-            if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
+            if (InternalMethod.IsNullOrEmpty(matrixLeftList))
+            {
+                return NaN;
+            }
+            else
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+                {
+                    return NaN;
+                }
+                else
                 {
                     return new PointD4D(result[0], result[1], result[2], result[3]);
                 }
             }
-
-            return NaN;
         }
 
         /// <summary>
@@ -1345,12 +1391,14 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                return NaN;
+            }
+            else
             {
                 return new PointD4D(result[0], result[1], result[2], result[3]);
             }
-
-            return NaN;
         }
 
         /// <summary>
@@ -1360,17 +1408,23 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
         public PointD4D InverseAffineTransformCopy(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(5, 5))
+            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(5, 5))
+            {
+                return NaN;
+            }
+            else
             {
                 Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+                {
+                    return NaN;
+                }
+                else
                 {
                     return new PointD4D(result[0], result[1], result[2], result[3]);
                 }
             }
-
-            return NaN;
         }
 
         /// <summary>
@@ -1380,17 +1434,23 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象列表表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
         public PointD4D InverseAffineTransformCopy(List<Matrix> matrixLeftList)
         {
-            if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
+            if (InternalMethod.IsNullOrEmpty(matrixLeftList))
+            {
+                return NaN;
+            }
+            else
             {
                 Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+                {
+                    return NaN;
+                }
+                else
                 {
                     return new PointD4D(result[0], result[1], result[2], result[3]);
                 }
             }
-
-            return NaN;
         }
 
         //
@@ -1409,18 +1469,24 @@ namespace Com
             }
             else
             {
-                if (_U != prjCenter._U)
+                if (_U == prjCenter._U)
+                {
+                    return PointD3D.NaN;
+                }
+                else
                 {
                     double Scale = trueLenDist / (_U - prjCenter._U);
 
-                    if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
+                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    {
+                        return PointD3D.NaN;
+                    }
+                    else
                     {
                         return (Scale * XYZ + (1 - Scale) * prjCenter.XYZ);
                     }
                 }
             }
-
-            return PointD3D.NaN;
         }
 
         /// <summary>
@@ -1437,18 +1503,24 @@ namespace Com
             }
             else
             {
-                if (_X != prjCenter._X)
+                if (_X == prjCenter._X)
+                {
+                    return PointD3D.NaN;
+                }
+                else
                 {
                     double Scale = trueLenDist / (_X - prjCenter._X);
 
-                    if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
+                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    {
+                        return PointD3D.NaN;
+                    }
+                    else
                     {
                         return (Scale * YZU + (1 - Scale) * prjCenter.YZU);
                     }
                 }
             }
-
-            return PointD3D.NaN;
         }
 
         /// <summary>
@@ -1465,18 +1537,24 @@ namespace Com
             }
             else
             {
-                if (_Y != prjCenter._Y)
+                if (_Y == prjCenter._Y)
+                {
+                    return PointD3D.NaN;
+                }
+                else
                 {
                     double Scale = trueLenDist / (_Y - prjCenter._Y);
 
-                    if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
+                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    {
+                        return PointD3D.NaN;
+                    }
+                    else
                     {
                         return (Scale * ZUX + (1 - Scale) * prjCenter.ZUX);
                     }
                 }
             }
-
-            return PointD3D.NaN;
         }
 
         /// <summary>
@@ -1493,18 +1571,24 @@ namespace Com
             }
             else
             {
-                if (_Z != prjCenter._Z)
+                if (_Z == prjCenter._Z)
+                {
+                    return PointD3D.NaN;
+                }
+                else
                 {
                     double Scale = trueLenDist / (_Z - prjCenter._Z);
 
-                    if ((!InternalMethod.IsNaNOrInfinity(Scale)) && Scale > 0)
+                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    {
+                        return PointD3D.NaN;
+                    }
+                    else
                     {
                         return (Scale * UXY + (1 - Scale) * prjCenter.UXY);
                     }
                 }
             }
-
-            return PointD3D.NaN;
         }
 
         //
@@ -1551,8 +1635,10 @@ namespace Com
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         //
@@ -1581,8 +1667,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return left.CompareTo(right);
+            else
+            {
+                return left.CompareTo(right);
+            }
         }
 
         //
@@ -1733,10 +1821,12 @@ namespace Com
             {
                 return 0;
             }
+            else
+            {
+                double DotProduct = left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U;
 
-            double DotProduct = left._X * right._X + left._Y * right._Y + left._Z * right._Z + left._U * right._U;
-
-            return Math.Acos(DotProduct / left.Module / right.Module);
+                return Math.Acos(DotProduct / left.Module / right.Module);
+            }
         }
 
         //
@@ -2124,14 +2214,14 @@ namespace Com
 
             set
             {
-                if (value != null && value is double)
-                {
-                    this[index] = (double)value;
-                }
-                else
+                if (value == null || !(value is double))
                 {
                     throw new ArgumentNullException();
                 }
+
+                //
+
+                this[index] = (double)value;
             }
         }
 
@@ -2147,22 +2237,26 @@ namespace Com
 
         bool IList.Contains(object item)
         {
-            if (item != null && item is double)
+            if (item == null || !(item is double))
+            {
+                return false;
+            }
+            else
             {
                 return Contains((double)item);
             }
-
-            return false;
         }
 
         int IList.IndexOf(object item)
         {
-            if (item != null && item is double)
+            if (item == null || !(item is double))
+            {
+                return -1;
+            }
+            else
             {
                 return IndexOf((double)item);
             }
-
-            return -1;
         }
 
         void IList.Insert(int index, object item)
@@ -2214,18 +2308,20 @@ namespace Com
             {
                 throw new ArgumentNullException();
             }
-            else if (array.Rank != 1)
+
+            if (array.Rank != 1)
             {
                 throw new RankException();
             }
-            else if (array.Length < Dimension)
+
+            if (array.Length < Dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else
-            {
-                ToArray().CopyTo(array, index);
-            }
+
+            //
+
+            ToArray().CopyTo(array, index);
         }
 
         #endregion
@@ -2252,25 +2348,29 @@ namespace Com
             {
                 get
                 {
-                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    if (_Index < 0 || _Index >= _Pt.Dimension)
                     {
-                        return _Pt[_Index];
+                        throw new IndexOutOfRangeException();
                     }
 
-                    return null;
+                    //
+
+                    return _Pt[_Index];
                 }
             }
 
             bool IEnumerator.MoveNext()
             {
-                if (_Index < _Pt.Dimension - 1)
+                if (_Index >= _Pt.Dimension - 1)
+                {
+                    return false;
+                }
+                else
                 {
                     _Index++;
 
                     return true;
                 }
-
-                return false;
             }
 
             void IEnumerator.Reset()
@@ -2357,25 +2457,29 @@ namespace Com
             {
                 get
                 {
-                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    if (_Index < 0 || _Index >= _Pt.Dimension)
                     {
-                        return _Pt[_Index];
+                        throw new IndexOutOfRangeException();
                     }
 
-                    return null;
+                    //
+
+                    return _Pt[_Index];
                 }
             }
 
             bool IEnumerator.MoveNext()
             {
-                if (_Index < _Pt.Dimension - 1)
+                if (_Index >= _Pt.Dimension - 1)
+                {
+                    return false;
+                }
+                else
                 {
                     _Index++;
 
                     return true;
                 }
-
-                return false;
             }
 
             void IEnumerator.Reset()
@@ -2387,12 +2491,14 @@ namespace Com
             {
                 get
                 {
-                    if (_Index >= 0 && _Index < _Pt.Dimension)
+                    if (_Index < 0 || _Index >= _Pt.Dimension)
                     {
-                        return _Pt[_Index];
+                        throw new IndexOutOfRangeException();
                     }
 
-                    return default(double);
+                    //
+
+                    return _Pt[_Index];
                 }
             }
         }

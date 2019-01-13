@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorX
 Version 18.9.28.2200
@@ -68,8 +68,10 @@ namespace Com
             {
                 return _MaxOpacity;
             }
-
-            return opacity;
+            else
+            {
+                return opacity;
+            }
         }
 
         private static double _CheckAlpha(double alpha) // 对颜色在 RGB 色彩空间中的 Alpha 通道（A）的值进行合法性检查，返回合法的值。
@@ -87,8 +89,10 @@ namespace Com
             {
                 return _MaxAlpha;
             }
-
-            return alpha;
+            else
+            {
+                return alpha;
+            }
         }
 
         private static double _CheckRed(double red) // 对颜色在 RGB 色彩空间中的红色通道（R）的值进行合法性检查，返回合法的值。
@@ -106,8 +110,10 @@ namespace Com
             {
                 return _MaxRed;
             }
-
-            return red;
+            else
+            {
+                return red;
+            }
         }
 
         private static double _CheckGreen(double green) // 对颜色在 RGB 色彩空间中的绿色通道（G）的值进行合法性检查，返回合法的值。
@@ -125,8 +131,10 @@ namespace Com
             {
                 return _MaxGreen;
             }
-
-            return green;
+            else
+            {
+                return green;
+            }
         }
 
         private static double _CheckBlue(double blue) // 对颜色在 RGB 色彩空间中的蓝色通道（B）的值进行合法性检查，返回合法的值。
@@ -144,8 +152,10 @@ namespace Com
             {
                 return _MaxBlue;
             }
-
-            return blue;
+            else
+            {
+                return blue;
+            }
         }
 
         private static double _CheckHue_HSV(double hue) // 对颜色在 HSV 色彩空间中的色相（H）的值进行合法性检查，返回合法的值。
@@ -163,8 +173,10 @@ namespace Com
             {
                 return _MaxHue_HSV;
             }
-
-            return hue;
+            else
+            {
+                return hue;
+            }
         }
 
         private static double _CheckSaturation_HSV(double saturation) // 对颜色在 HSV 色彩空间中的饱和度（S）的值进行合法性检查，返回合法的值。
@@ -182,8 +194,10 @@ namespace Com
             {
                 return _MaxSaturation_HSV;
             }
-
-            return saturation;
+            else
+            {
+                return saturation;
+            }
         }
 
         private static double _CheckBrightness(double brightness) // 对颜色在 HSV 色彩空间中的明度（V）的值进行合法性检查，返回合法的值。
@@ -201,8 +215,10 @@ namespace Com
             {
                 return _MaxBrightness;
             }
-
-            return brightness;
+            else
+            {
+                return brightness;
+            }
         }
 
         private static double _CheckHue_HSL(double hue) // 对颜色在 HSL 色彩空间中的色相（H）的值进行合法性检查，返回合法的值。
@@ -220,8 +236,10 @@ namespace Com
             {
                 return _MaxHue_HSL;
             }
-
-            return hue;
+            else
+            {
+                return hue;
+            }
         }
 
         private static double _CheckSaturation_HSL(double saturation) // 对颜色在 HSL 色彩空间中的饱和度（S）的值进行合法性检查，返回合法的值。
@@ -239,8 +257,10 @@ namespace Com
             {
                 return _MaxSaturation_HSL;
             }
-
-            return saturation;
+            else
+            {
+                return saturation;
+            }
         }
 
         private static double _CheckLightness_HSL(double lightness) // 对颜色在 HSL 色彩空间中的明度（L）的值进行合法性检查，返回合法的值。
@@ -258,8 +278,10 @@ namespace Com
             {
                 return _MaxLightness_HSL;
             }
-
-            return lightness;
+            else
+            {
+                return lightness;
+            }
         }
 
         private static double _CheckCyan(double cyan) // 对颜色在 CMYK 色彩空间中的青色通道（C）的值进行合法性检查，返回合法的值。
@@ -277,8 +299,10 @@ namespace Com
             {
                 return _MaxCyan;
             }
-
-            return cyan;
+            else
+            {
+                return cyan;
+            }
         }
 
         private static double _CheckMagenta(double magenta) // 对颜色在 CMYK 色彩空间中的洋红色通道（M）的值进行合法性检查，返回合法的值。
@@ -296,8 +320,10 @@ namespace Com
             {
                 return _MaxMagenta;
             }
-
-            return magenta;
+            else
+            {
+                return magenta;
+            }
         }
 
         private static double _CheckYellow(double yellow) // 对颜色在 CMYK 色彩空间中的黄色通道（Y）的值进行合法性检查，返回合法的值。
@@ -315,8 +341,10 @@ namespace Com
             {
                 return _MaxYellow;
             }
-
-            return yellow;
+            else
+            {
+                return yellow;
+            }
         }
 
         private static double _CheckBlack(double black) // 对颜色在 CMYK 色彩空间中的黑色通道（K）的值进行合法性检查，返回合法的值。
@@ -334,8 +362,10 @@ namespace Com
             {
                 return _MaxBlack;
             }
-
-            return black;
+            else
+            {
+                return black;
+            }
         }
 
         private static double _CheckLightness_LAB(double lightness) // 对颜色在 LAB 色彩空间中的明度（L）的值进行合法性检查，返回合法的值。
@@ -353,8 +383,10 @@ namespace Com
             {
                 return _MaxLightness_LAB;
             }
-
-            return lightness;
+            else
+            {
+                return lightness;
+            }
         }
 
         private static double _CheckGreenRed(double greenRed) // 对颜色在 LAB 色彩空间中的绿色-红色通道（A）的值进行合法性检查，返回合法的值。
@@ -372,8 +404,10 @@ namespace Com
             {
                 return _MaxGreenRed;
             }
-
-            return greenRed;
+            else
+            {
+                return greenRed;
+            }
         }
 
         private static double _CheckBlueYellow(double blueYellow) // 对颜色在 LAB 色彩空间中的蓝色-黄色通道（B）的值进行合法性检查，返回合法的值。
@@ -391,8 +425,10 @@ namespace Com
             {
                 return _MaxBlueYellow;
             }
-
-            return blueYellow;
+            else
+            {
+                return blueYellow;
+            }
         }
 
         //
@@ -903,8 +939,10 @@ namespace Com
                 {
                     return (char)('A' + dec - 10);
                 }
-
-                return '\0';
+                else
+                {
+                    return '\0';
+                }
             };
 
             return string.Concat(DecToHexChar(High), DecToHexChar(Low));
@@ -912,7 +950,11 @@ namespace Com
 
         private static byte _HexStringToByte(string str) // 将 16 进制字符串转换为 10 进制无符号整数。
         {
-            if (!string.IsNullOrEmpty(str) && str.Length == 2)
+            if (string.IsNullOrEmpty(str) || str.Length != 2)
+            {
+                return 0;
+            }
+            else
             {
                 char High = str[0], Low = str[1];
 
@@ -930,14 +972,14 @@ namespace Com
                     {
                         return (hex - 'a' + 10);
                     }
-
-                    return 0;
+                    else
+                    {
+                        return 0;
+                    }
                 };
 
                 return (byte)(HexCharToDec(High) * 16 + HexCharToDec(Low));
             }
-
-            return 0;
         }
 
         //
@@ -1449,8 +1491,10 @@ namespace Com
                 {
                     return _MaxBlack;
                 }
-
-                return _CheckBlack(_Black);
+                else
+                {
+                    return _CheckBlack(_Black);
+                }
             }
 
             set
@@ -1668,8 +1712,10 @@ namespace Com
             {
                 return true;
             }
-
-            return Equals((ColorX)obj);
+            else
+            {
+                return Equals((ColorX)obj);
+            }
         }
 
         /// <summary>
@@ -1725,8 +1771,10 @@ namespace Com
             {
                 return Color.Empty;
             }
-
-            return Color.FromArgb((int)Math.Round(_CheckAlpha(_Alpha)), (int)Math.Round(_CheckRed(_Red)), (int)Math.Round(_CheckGreen(_Green)), (int)Math.Round(_CheckBlue(_Blue)));
+            else
+            {
+                return Color.FromArgb((int)Math.Round(_CheckAlpha(_Alpha)), (int)Math.Round(_CheckRed(_Red)), (int)Math.Round(_CheckGreen(_Green)), (int)Math.Round(_CheckBlue(_Blue)));
+            }
         }
 
         /// <summary>
@@ -2026,8 +2074,10 @@ namespace Com
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         //
@@ -2414,8 +2464,10 @@ namespace Com
 
                     return FromRGB(_HexStringToByte(R), _HexStringToByte(G), _HexStringToByte(B));
                 }
-
-                return Empty;
+                else
+                {
+                    return Empty;
+                }
             }
         }
 
@@ -2446,8 +2498,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (left.Alpha == right.Alpha && left.Red == right.Red && left.Green == right.Green && left.Blue == right.Blue);
+            else
+            {
+                return (left.Alpha == right.Alpha && left.Red == right.Red && left.Green == right.Green && left.Blue == right.Blue);
+            }
         }
 
         /// <summary>
@@ -2462,8 +2516,10 @@ namespace Com
             {
                 return true;
             }
-
-            return (left.Alpha != right.Alpha || left.Red != right.Red || left.Green != right.Green || left.Blue != right.Blue);
+            else
+            {
+                return (left.Alpha != right.Alpha || left.Red != right.Red || left.Green != right.Green || left.Blue != right.Blue);
+            }
         }
 
         //

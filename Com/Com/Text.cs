@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.Text
 Version 18.9.28.2200
@@ -41,7 +41,11 @@ namespace Com
         /// <returns>字符串，表示以科学记数法表示的数值。</returns>
         public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression, bool useMagnitudeOrderCode, string unit)
         {
-            if (!InternalMethod.IsNaNOrInfinity(value))
+            if (InternalMethod.IsNaNOrInfinity(value))
+            {
+                return "N/A";
+            }
+            else
             {
                 string part1 = string.Empty, part2 = string.Empty, part3 = string.Empty, part4 = string.Empty;
 
@@ -139,8 +143,6 @@ namespace Com
 
                 return string.Concat(part1, part2, part3, part4);
             }
-
-            return "N/A";
         }
 
         /// <summary>
@@ -288,21 +290,31 @@ namespace Com
         /// <returns>字符串，表示源字符串中位于两个指定字符串之间的部分。</returns>
         public static string GetIntervalString(string sourceString, string startString, string endString, bool includeStartString, bool includeEndString)
         {
-            if (!string.IsNullOrEmpty(sourceString) && !string.IsNullOrEmpty(startString) && !string.IsNullOrEmpty(endString))
+            if (string.IsNullOrEmpty(sourceString) || string.IsNullOrEmpty(startString) || string.IsNullOrEmpty(endString))
             {
-                if (sourceString.Contains(startString) && sourceString.Contains(endString))
+                return string.Empty;
+            }
+            else
+            {
+                if (!sourceString.Contains(startString) || !sourceString.Contains(endString))
+                {
+                    return string.Empty;
+                }
+                else
                 {
                     int StartIndex = sourceString.IndexOf(startString) + (includeStartString ? 0 : startString.Length);
                     int EndIndex = sourceString.IndexOf(endString) + (includeEndString ? endString.Length : 0);
 
-                    if (StartIndex < EndIndex)
+                    if (StartIndex >= EndIndex)
+                    {
+                        return string.Empty;
+                    }
+                    else
                     {
                         return sourceString.Substring(StartIndex, EndIndex - StartIndex);
                     }
                 }
             }
-
-            return string.Empty;
         }
 
         /// <summary>
@@ -314,7 +326,11 @@ namespace Com
         /// <returns>字符串，表示按照指定字体与绘图宽度截取后的字符串。</returns>
         public static string StringIntercept(string text, Font font, int width)
         {
-            if (!string.IsNullOrEmpty(text) && font != null)
+            if (string.IsNullOrEmpty(text) || font == null)
+            {
+                return string.Empty;
+            }
+            else
             {
                 SizeF StrSz = TextRenderer.MeasureText(text, font);
 
@@ -337,8 +353,6 @@ namespace Com
 
                 return text;
             }
-
-            return string.Empty;
         }
 
         /// <summary>
@@ -350,7 +364,11 @@ namespace Com
         /// <returns>Font 对象，表示使字符串的绘图区域不超过指定大小的字体。</returns>
         public static Font GetSuitableFont(string text, Font font, SizeF size)
         {
-            if (!string.IsNullOrEmpty(text) && font != null)
+            if (string.IsNullOrEmpty(text) || font == null)
+            {
+                return font;
+            }
+            else
             {
                 Font Ft = font;
                 SizeF Sz = TextRenderer.MeasureText(text, Ft);
@@ -374,8 +392,6 @@ namespace Com
 
                 return Ft;
             }
-
-            return font;
         }
 
         #endregion
@@ -475,7 +491,11 @@ namespace Com
             }
             else
             {
-                if (seconds != 0)
+                if (seconds == 0)
+                {
+                    return "0";
+                }
+                else
                 {
                     int Sign = Math.Sign(seconds);
 
@@ -483,8 +503,6 @@ namespace Com
 
                     return string.Concat((Sign == -1 ? "-" : string.Empty), (seconds >= 31557600E12 ? string.Concat(seconds / (31557600E12), " Ta") : (seconds >= 31557600E9 ? string.Concat(seconds / (31557600E9), " Ga") : (seconds >= 31557600E6 ? string.Concat(seconds / (31557600E6), " Ma") : (seconds >= 31557600E3 ? string.Concat(seconds / (31557600E3), " ka") : (seconds >= 31557600.0 ? string.Concat(seconds / 31557600.0, " a") : (seconds >= 86400.0 ? string.Concat(seconds / 86400.0, " d") : (seconds >= 3600.0 ? string.Concat(seconds / 3600.0, " h") : (seconds >= 60 ? string.Concat(seconds / 60.0, " min") : (seconds >= 1 ? string.Concat(seconds, " s") : string.Concat(seconds * 1000.0, " ms")))))))))));
                 }
-
-                return "0";
             }
         }
 
@@ -553,7 +571,11 @@ namespace Com
             }
             else
             {
-                if (meters != 0)
+                if (meters == 0)
+                {
+                    return "0";
+                }
+                else
                 {
                     int Sign = Math.Sign(meters);
 
@@ -561,8 +583,6 @@ namespace Com
 
                     return string.Concat((Sign == -1 ? "-" : string.Empty), (meters >= 9460730472580800E12 ? string.Concat(meters / 9460730472580800E12, " Tly") : (meters >= 9460730472580800E9 ? string.Concat(meters / 9460730472580800E9, " Gly") : (meters >= 9460730472580800E6 ? string.Concat(meters / 9460730472580800E6, " Mly") : (meters >= 9460730472580800E3 ? string.Concat(meters / 9460730472580800E3, " kly") : (meters >= 9460730472580800.0 ? string.Concat(meters / 9460730472580800.0, " ly") : (meters >= 149597870700.0 ? string.Concat(meters / 149597870700.0, " AU") : (meters >= 1000.0 ? string.Concat(meters / 1000.0, " km") : string.Concat(meters, " m")))))))));
                 }
-
-                return "0";
             }
         }
 
@@ -669,8 +689,10 @@ namespace Com
             {
                 return string.Concat((bytes / Math.Pow(2, 60)).ToString("N1"), " EB");
             }
-
-            return string.Empty;
+            else
+            {
+                return string.Empty;
+            }
         }
 
         #endregion

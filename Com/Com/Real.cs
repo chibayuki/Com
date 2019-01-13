@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.Real
 Version 18.12.25.0000
@@ -680,8 +680,10 @@ namespace Com
             {
                 return true;
             }
-
-            return Equals((Real)obj);
+            else
+            {
+                return Equals((Real)obj);
+            }
         }
 
         /// <summary>
@@ -768,8 +770,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return CompareTo((Real)obj);
+            else
+            {
+                return CompareTo((Real)obj);
+            }
         }
 
         /// <summary>
@@ -838,8 +842,10 @@ namespace Com
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         //
@@ -868,8 +874,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return left.CompareTo(right);
+            else
+            {
+                return left.CompareTo(right);
+            }
         }
 
         //

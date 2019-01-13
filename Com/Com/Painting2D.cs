@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.Painting2D
 Version 18.9.28.2200
@@ -42,58 +42,61 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !pt1.IsNaNOrInfinity && !pt2.IsNaNOrInfinity && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width > 0))
+                if (bmp == null || (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width <= 0))
                 {
-                    if (Geometry.LineIsVisibleInRectangle(pt1, pt2, new RectangleF(new Point(0, 0), bmp.Size)))
+                    return false;
+                }
+                else if (!Geometry.LineIsVisibleInRectangle(pt1, pt2, new RectangleF(new Point(0, 0), bmp.Size)))
+                {
+                    return false;
+                }
+                else
+                {
+                    using (Graphics Grph = Graphics.FromImage(bmp))
                     {
-                        using (Graphics Grph = Graphics.FromImage(bmp))
+                        if (antiAlias)
                         {
-                            if (antiAlias)
-                            {
-                                Grph.SmoothingMode = SmoothingMode.AntiAlias;
-                            }
-
-                            //
-
-                            PointD RectCenter = new PointD(bmp.Width / 2, bmp.Height / 2);
-
-                            double RectRadius = Math.Sqrt(Math.Pow(bmp.Width, 2) + Math.Pow(bmp.Height, 2)) / 2;
-
-                            double Dist_RC_P1 = RectCenter.DistanceFrom(pt1);
-                            double Dist_RC_P2 = RectCenter.DistanceFrom(pt2);
-
-                            if (Dist_RC_P1 > RectRadius || Dist_RC_P2 > RectRadius)
-                            {
-                                PointD FootPoint = Geometry.GetFootPoint(RectCenter, pt1, pt2);
-
-                                double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
-                                double Dist_FP_P12 = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
-
-                                if (Dist_RC_P1 > RectRadius)
-                                {
-                                    double Angle_FP_P1 = Geometry.GetAngleOfTwoPoints(FootPoint, pt1);
-
-                                    pt1.X = FootPoint.X + Dist_FP_P12 * Math.Cos(Angle_FP_P1);
-                                    pt1.Y = FootPoint.Y + Dist_FP_P12 * Math.Sin(Angle_FP_P1);
-                                }
-
-                                if (Dist_RC_P2 > RectRadius)
-                                {
-                                    double Angle_FP_P2 = Geometry.GetAngleOfTwoPoints(FootPoint, pt2);
-
-                                    pt2.X = FootPoint.X + Dist_FP_P12 * Math.Cos(Angle_FP_P2);
-                                    pt2.Y = FootPoint.Y + Dist_FP_P12 * Math.Sin(Angle_FP_P2);
-                                }
-                            }
-
-                            Grph.DrawLine(new Pen(new SolidBrush(color), width), pt1.ToPointF(), pt2.ToPointF());
+                            Grph.SmoothingMode = SmoothingMode.AntiAlias;
                         }
 
-                        return true;
-                    }
-                }
+                        //
 
-                return false;
+                        PointD RectCenter = new PointD(bmp.Width / 2, bmp.Height / 2);
+
+                        double RectRadius = Math.Sqrt(Math.Pow(bmp.Width, 2) + Math.Pow(bmp.Height, 2)) / 2;
+
+                        double Dist_RC_P1 = RectCenter.DistanceFrom(pt1);
+                        double Dist_RC_P2 = RectCenter.DistanceFrom(pt2);
+
+                        if (Dist_RC_P1 > RectRadius || Dist_RC_P2 > RectRadius)
+                        {
+                            PointD FootPoint = Geometry.GetFootPoint(RectCenter, pt1, pt2);
+
+                            double Dist_RC_FP = RectCenter.DistanceFrom(FootPoint);
+                            double Dist_FP_P12 = Math.Sqrt(Math.Pow(RectRadius, 2) - Math.Pow(Dist_RC_FP, 2));
+
+                            if (Dist_RC_P1 > RectRadius)
+                            {
+                                double Angle_FP_P1 = Geometry.GetAngleOfTwoPoints(FootPoint, pt1);
+
+                                pt1.X = FootPoint.X + Dist_FP_P12 * Math.Cos(Angle_FP_P1);
+                                pt1.Y = FootPoint.Y + Dist_FP_P12 * Math.Sin(Angle_FP_P1);
+                            }
+
+                            if (Dist_RC_P2 > RectRadius)
+                            {
+                                double Angle_FP_P2 = Geometry.GetAngleOfTwoPoints(FootPoint, pt2);
+
+                                pt2.X = FootPoint.X + Dist_FP_P12 * Math.Cos(Angle_FP_P2);
+                                pt2.Y = FootPoint.Y + Dist_FP_P12 * Math.Sin(Angle_FP_P2);
+                            }
+                        }
+
+                        Grph.DrawLine(new Pen(new SolidBrush(color), width), pt1.ToPointF(), pt2.ToPointF());
+                    }
+
+                    return true;
+                }
             }
             catch
             {
@@ -116,52 +119,55 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && (!InternalMethod.IsNaNOrInfinity(deltaRadius) && deltaRadius > 0) && normalIncreasePeriod > 0 && (!color.IsEmpty && color.A > 0))
+                if (bmp == null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || (InternalMethod.IsNaNOrInfinity(deltaRadius) || deltaRadius <= 0) || normalIncreasePeriod <= 0 || (color.IsEmpty || color.A == 0))
                 {
-                    if (Geometry.CircleInnerIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                    return false;
+                }
+                else if (!Geometry.CircleInnerIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                {
+                    return false;
+                }
+                else
+                {
+                    using (Graphics Grph = Graphics.FromImage(bmp))
                     {
-                        using (Graphics Grph = Graphics.FromImage(bmp))
+                        if (antiAlias)
                         {
-                            if (antiAlias)
-                            {
-                                Grph.SmoothingMode = SmoothingMode.AntiAlias;
-                            }
-
-                            // 绘制等差 15 / Pow(2, n) 度法向直线系（半径从 deltaRadius * normalIncreasePeriod 像素起，每扩大 2 倍，相邻法线之间的圆心角减小 1/2）：
-
-                            for (int i = 0; i < Math.Log(radius / (deltaRadius * normalIncreasePeriod)) / Math.Log(2); i++)
-                            {
-                                double Rx = deltaRadius * normalIncreasePeriod * Math.Pow(2, i); // 起点的半径。
-                                double Tx = 12 * Math.Pow(2, i); // 等分线的圆心角等于 PI / Tx * (2 * n + 1)，n = 1, 2, …, 2 * Tx - 1。
-
-                                for (int j = 1; j <= 2 * Tx - 1; j += 2)
-                                {
-                                    Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X + Rx * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + Rx * Math.Sin(Constant.Pi / Tx * j))), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + radius * Math.Sin(Constant.Pi / Tx * j))));
-                                }
-                            }
-
-                            // 绘制等差 30 度法向直线系：
-
-                            for (int i = 0; i < 12; i++)
-                            {
-                                Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X), (float)(offset.Y)), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi * i / 6)), (float)(offset.Y + radius * Math.Sin(Constant.Pi * i / 6))));
-                            }
-
-                            // 绘制同心圆：
-
-                            for (int i = 1; i < radius / deltaRadius; i++)
-                            {
-                                Grph.DrawEllipse(new Pen(color, 1F), new RectangleF((float)(offset.X - deltaRadius * i), (float)(offset.Y - deltaRadius * i), (float)(2 * deltaRadius * i), (float)(2 * deltaRadius * i)));
-                            }
-
-                            Grph.DrawEllipse(new Pen(color, 1F), new RectangleF((float)(offset.X - radius), (float)(offset.Y - radius), (float)(2 * radius), (float)(2 * radius)));
+                            Grph.SmoothingMode = SmoothingMode.AntiAlias;
                         }
 
-                        return true;
-                    }
-                }
+                        // 绘制等差 15 / Pow(2, n) 度法向直线系（半径从 deltaRadius * normalIncreasePeriod 像素起，每扩大 2 倍，相邻法线之间的圆心角减小 1/2）：
 
-                return false;
+                        for (int i = 0; i < Math.Log(radius / (deltaRadius * normalIncreasePeriod)) / Math.Log(2); i++)
+                        {
+                            double Rx = deltaRadius * normalIncreasePeriod * Math.Pow(2, i); // 起点的半径。
+                            double Tx = 12 * Math.Pow(2, i); // 等分线的圆心角等于 PI / Tx * (2 * n + 1)，n = 1, 2, …, 2 * Tx - 1。
+
+                            for (int j = 1; j <= 2 * Tx - 1; j += 2)
+                            {
+                                Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X + Rx * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + Rx * Math.Sin(Constant.Pi / Tx * j))), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + radius * Math.Sin(Constant.Pi / Tx * j))));
+                            }
+                        }
+
+                        // 绘制等差 30 度法向直线系：
+
+                        for (int i = 0; i < 12; i++)
+                        {
+                            Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X), (float)(offset.Y)), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi * i / 6)), (float)(offset.Y + radius * Math.Sin(Constant.Pi * i / 6))));
+                        }
+
+                        // 绘制同心圆：
+
+                        for (int i = 1; i < radius / deltaRadius; i++)
+                        {
+                            Grph.DrawEllipse(new Pen(color, 1F), new RectangleF((float)(offset.X - deltaRadius * i), (float)(offset.Y - deltaRadius * i), (float)(2 * deltaRadius * i), (float)(2 * deltaRadius * i)));
+                        }
+
+                        Grph.DrawEllipse(new Pen(color, 1F), new RectangleF((float)(offset.X - radius), (float)(offset.Y - radius), (float)(2 * radius), (float)(2 * radius)));
+                    }
+
+                    return true;
+                }
             }
             catch
             {
@@ -183,11 +189,19 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0))
+                if (bmp == null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0))
+                {
+                    return false;
+                }
+                else
                 {
                     if (width > 0)
                     {
-                        if (Geometry.CircumferenceIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                        if (!Geometry.CircumferenceIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                        {
+                            return false;
+                        }
+                        else
                         {
                             using (Graphics Grph = Graphics.FromImage(bmp))
                             {
@@ -206,7 +220,11 @@ namespace Com
                     }
                     else
                     {
-                        if (Geometry.CircleInnerIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                        if (!Geometry.CircleInnerIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                        {
+                            return false;
+                        }
+                        else
                         {
                             using (Graphics Grph = Graphics.FromImage(bmp))
                             {
@@ -224,8 +242,6 @@ namespace Com
                         }
                     }
                 }
-
-                return false;
             }
             catch
             {
@@ -251,7 +267,11 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(radius) && radius > 0) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0) && (minDiv > 0 && maxDiv > 0 && minDiv <= maxDiv) && (!InternalMethod.IsNaNOrInfinity(divArc) && divArc > 0))
+                if (bmp == null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || InternalMethod.IsNaNOrInfinity(refPhase) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0) || (minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv) || (InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0))
+                {
+                    return false;
+                }
+                else
                 {
                     PointD RectCenter = new PointD(bmp.Width / 2, bmp.Height / 2);
 
@@ -261,7 +281,11 @@ namespace Com
 
                     if (width > 0)
                     {
-                        if (Geometry.CircumferenceIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                        if (!Geometry.CircumferenceIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                        {
+                            return false;
+                        }
+                        else
                         {
                             using (Graphics Grph = Graphics.FromImage(bmp))
                             {
@@ -429,7 +453,11 @@ namespace Com
                     }
                     else
                     {
-                        if (Geometry.CircleInnerIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                        if (!Geometry.CircleInnerIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
+                        {
+                            return false;
+                        }
+                        else
                         {
                             using (Graphics Grph = Graphics.FromImage(bmp))
                             {
@@ -631,8 +659,6 @@ namespace Com
                         }
                     }
                 }
-
-                return false;
             }
             catch
             {
@@ -653,19 +679,7 @@ namespace Com
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias)
         {
-            try
-            {
-                if (bmp != null)
-                {
-                    return PaintLargeCircle(bmp, offset, radius, refPhase, color, width, antiAlias, 32, 256, 4);
-                }
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            return PaintLargeCircle(bmp, offset, radius, refPhase, color, width, antiAlias, 32, 256, 4);
         }
 
         /// <summary>
@@ -688,7 +702,11 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !offset.IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(semiMajorAxis) && semiMajorAxis > 0) && (!InternalMethod.IsNaNOrInfinity(eccentricity) && eccentricity >= 0) && !InternalMethod.IsNaNOrInfinity(rotateAngle) && !InternalMethod.IsNaNOrInfinity(refPhase) && (!color.IsEmpty && color.A > 0) && (!InternalMethod.IsNaNOrInfinity(width) && width >= 0) && (minDiv > 0 && maxDiv > 0 && minDiv <= maxDiv) && (!InternalMethod.IsNaNOrInfinity(divArc) && divArc > 0))
+                if (bmp == null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0) || InternalMethod.IsNaNOrInfinity(rotateAngle) || InternalMethod.IsNaNOrInfinity(refPhase) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0) || (minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv) || (InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0))
+                {
+                    return false;
+                }
+                else
                 {
                     PointD RectCenter = new PointD(bmp.Width / 2, bmp.Height / 2);
 
@@ -701,7 +719,11 @@ namespace Com
 
                     if (width > 0)
                     {
-                        if (Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, Constant.Sqrt2 * semiMajorAxis + RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), Constant.Sqrt2 * semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) + RectRadius, rotateAngle) && !Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, semiMajorAxis - RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) - RectRadius, rotateAngle))
+                        if (!Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, Constant.Sqrt2 * semiMajorAxis + RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), Constant.Sqrt2 * semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) + RectRadius, rotateAngle) || Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, semiMajorAxis - RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) - RectRadius, rotateAngle))
+                        {
+                            return false;
+                        }
+                        else
                         {
                             using (Graphics Grph = Graphics.FromImage(bmp))
                             {
@@ -902,7 +924,11 @@ namespace Com
                     }
                     else
                     {
-                        if (Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, Constant.Sqrt2 * semiMajorAxis + RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), Constant.Sqrt2 * semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) + RectRadius, rotateAngle))
+                        if (!Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, Constant.Sqrt2 * semiMajorAxis + RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), Constant.Sqrt2 * semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) + RectRadius, rotateAngle))
+                        {
+                            return false;
+                        }
+                        else
                         {
                             using (Graphics Grph = Graphics.FromImage(bmp))
                             {
@@ -1137,8 +1163,6 @@ namespace Com
                         }
                     }
                 }
-
-                return false;
             }
             catch
             {
@@ -1161,19 +1185,7 @@ namespace Com
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias)
         {
-            try
-            {
-                if (bmp != null)
-                {
-                    return PaintLargeEllipse(bmp, offset, semiMajorAxis, eccentricity, rotateAngle, refPhase, color, width, antiAlias, 32, 256, 4);
-                }
-
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            return PaintLargeEllipse(bmp, offset, semiMajorAxis, eccentricity, rotateAngle, refPhase, color, width, antiAlias, 32, 256, 4);
         }
 
         /// <summary>
@@ -1192,7 +1204,11 @@ namespace Com
         {
             try
             {
-                if (bmp != null && !string.IsNullOrWhiteSpace(text) && font != null && (!frontColor.IsEmpty && frontColor.A > 0) && !((PointD)pt).IsNaNOrInfinity && (!InternalMethod.IsNaNOrInfinity(offset) && offset >= 0))
+                if (bmp == null || string.IsNullOrWhiteSpace(text) || font == null || (frontColor.IsEmpty || frontColor.A == 0) || ((PointD)pt).IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(offset) || offset < 0))
+                {
+                    return false;
+                }
+                else
                 {
                     using (Graphics Grph = Graphics.FromImage(bmp))
                     {
@@ -1229,8 +1245,6 @@ namespace Com
 
                     return true;
                 }
-
-                return false;
             }
             catch
             {
@@ -1249,7 +1263,11 @@ namespace Com
         {
             try
             {
-                if (form != null && bmp != null && (!InternalMethod.IsNaNOrInfinity(opacity) && opacity > 0))
+                if (form == null || bmp == null || InternalMethod.IsNaNOrInfinity(opacity) || opacity <= 0)
+                {
+                    return false;
+                }
+                else
                 {
                     opacity = Math.Max(0, Math.Min(opacity, 100));
 
@@ -1266,7 +1284,11 @@ namespace Com
                     }
                     catch { }
 
-                    if (bmp.PixelFormat == PixelFormat.Format32bppArgb)
+                    if (bmp.PixelFormat != PixelFormat.Format32bppArgb)
+                    {
+                        return false;
+                    }
+                    else
                     {
                         IntPtr HDcDst = User32.GetDC(IntPtr.Zero);
                         IntPtr HDcSrc = Gdi32.CreateCompatibleDC(HDcDst);
@@ -1311,8 +1333,6 @@ namespace Com
                         return true;
                     }
                 }
-
-                return false;
             }
             catch
             {

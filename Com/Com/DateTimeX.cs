@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.DateTimeX
 Version 18.9.28.2200
@@ -69,17 +69,21 @@ namespace Com
             {
                 return _LocalUtcOffset;
             }
-
-            if (utcOffset < _MinUtcOffset)
+            else
             {
-                return _MinUtcOffset;
+                if (utcOffset < _MinUtcOffset)
+                {
+                    return _MinUtcOffset;
+                }
+                else if (utcOffset > _MaxUtcOffset)
+                {
+                    return _MaxUtcOffset;
+                }
+                else
+                {
+                    return utcOffset;
+                }
             }
-            else if (utcOffset > _MaxUtcOffset)
-            {
-                return _MaxUtcOffset;
-            }
-
-            return utcOffset;
         }
 
         private static decimal _CheckTotalMilliseconds(decimal totalMilliseconds) // 对自公元时刻以来的总毫秒数的值进行合法性检查，返回合法的值。
@@ -94,8 +98,10 @@ namespace Com
             {
                 return _MaxTotalMilliseconds;
             }
-
-            return _totalMilliseconds;
+            else
+            {
+                return _totalMilliseconds;
+            }
         }
 
         private static long _CheckYear(long year, double utcOffset) // 对年的值进行合法性检查，返回合法的值。
@@ -119,9 +125,11 @@ namespace Com
                 {
                     return MaxYear;
                 }
+                else
+                {
+                    return year;
+                }
             }
-
-            return year;
         }
 
         private static int _CheckMonth(int month) // 对月的值进行合法性检查，返回合法的值。
@@ -134,8 +142,10 @@ namespace Com
             {
                 return _MaxMonth;
             }
-
-            return month;
+            else
+            {
+                return month;
+            }
         }
 
         private static int _CheckDay(long year, int month, int day) // 对日的值进行合法性检查，返回合法的值。
@@ -152,9 +162,11 @@ namespace Com
                 {
                     return _DaysInMonth;
                 }
+                else
+                {
+                    return day;
+                }
             }
-
-            return day;
         }
 
         private static int _CheckHour(int hour) // 对时的值进行合法性检查，返回合法的值。
@@ -167,8 +179,10 @@ namespace Com
             {
                 return _MaxHour;
             }
-
-            return hour;
+            else
+            {
+                return hour;
+            }
         }
 
         private static int _CheckMinute(int minute) // 对分的值进行合法性检查，返回合法的值。
@@ -181,8 +195,10 @@ namespace Com
             {
                 return _MaxMinute;
             }
-
-            return minute;
+            else
+            {
+                return minute;
+            }
         }
 
         private static int _CheckSecond(int second) // 对秒的值进行合法性检查，返回合法的值。
@@ -195,8 +211,10 @@ namespace Com
             {
                 return _MaxSecond;
             }
-
-            return second;
+            else
+            {
+                return second;
+            }
         }
 
         private static int _CheckMillisecond(int millisecond) // 对毫秒的值进行合法性检查，返回合法的值。
@@ -209,8 +227,10 @@ namespace Com
             {
                 return _MaxMillisecond;
             }
-
-            return millisecond;
+            else
+            {
+                return millisecond;
+            }
         }
 
         //
@@ -1526,8 +1546,10 @@ namespace Com
             {
                 return true;
             }
-
-            return Equals((DateTimeX)obj);
+            else
+            {
+                return Equals((DateTimeX)obj);
+            }
         }
 
         /// <summary>
@@ -1577,8 +1599,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return CompareTo((DateTimeX)obj);
+            else
+            {
+                return CompareTo((DateTimeX)obj);
+            }
         }
 
         /// <summary>
@@ -1645,9 +1669,11 @@ namespace Com
                     {
                         return ThisMaxValue;
                     }
+                    else
+                    {
+                        return new DateTimeX(NewYear, Month, Day, Hour, Minute, Second, Millisecond, UtcOffset);
+                    }
                 }
-
-                return new DateTimeX(NewYear, Month, Day, Hour, Minute, Second, Millisecond, UtcOffset);
             }
         }
 
@@ -1705,9 +1731,11 @@ namespace Com
                     {
                         return ThisMaxValue;
                     }
+                    else
+                    {
+                        return new DateTimeX(NewYear, NewMonth, Day, Hour, Minute, Second, Millisecond, UtcOffset);
+                    }
                 }
-
-                return new DateTimeX(NewYear, NewMonth, Day, Hour, Minute, Second, Millisecond, UtcOffset);
             }
         }
 
@@ -1743,8 +1771,10 @@ namespace Com
                 {
                     return _ThisMaxValue;
                 }
-
-                return new DateTimeX(NewTotalMS, UtcOffset);
+                else
+                {
+                    return new DateTimeX(NewTotalMS, UtcOffset);
+                }
             }
         }
 
@@ -1780,8 +1810,10 @@ namespace Com
                 {
                     return _ThisMaxValue;
                 }
-
-                return new DateTimeX(NewTotalMS, UtcOffset);
+                else
+                {
+                    return new DateTimeX(NewTotalMS, UtcOffset);
+                }
             }
         }
 
@@ -1817,8 +1849,10 @@ namespace Com
                 {
                     return _ThisMaxValue;
                 }
-
-                return new DateTimeX(NewTotalMS, UtcOffset);
+                else
+                {
+                    return new DateTimeX(NewTotalMS, UtcOffset);
+                }
             }
         }
 
@@ -1854,8 +1888,10 @@ namespace Com
                 {
                     return _ThisMaxValue;
                 }
-
-                return new DateTimeX(NewTotalMS, UtcOffset);
+                else
+                {
+                    return new DateTimeX(NewTotalMS, UtcOffset);
+                }
             }
         }
 
@@ -1891,8 +1927,10 @@ namespace Com
                 {
                     return _ThisMaxValue;
                 }
-
-                return new DateTimeX(NewTotalMS, UtcOffset);
+                else
+                {
+                    return new DateTimeX(NewTotalMS, UtcOffset);
+                }
             }
         }
 
@@ -1923,8 +1961,10 @@ namespace Com
                 {
                     return _ThisMaxValue;
                 }
-
-                return new DateTimeX(NewTotalMS, UtcOffset);
+                else
+                {
+                    return new DateTimeX(NewTotalMS, UtcOffset);
+                }
             }
         }
 
@@ -1960,8 +2000,10 @@ namespace Com
                 {
                     return _ThisMaxValue;
                 }
-
-                return new DateTimeX(NewTotalMS, UtcOffset);
+                else
+                {
+                    return new DateTimeX(NewTotalMS, UtcOffset);
+                }
             }
         }
 
@@ -2047,8 +2089,10 @@ namespace Com
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         //
@@ -2077,8 +2121,10 @@ namespace Com
             {
                 return 0;
             }
-
-            return left.CompareTo(right);
+            else
+            {
+                return left.CompareTo(right);
+            }
         }
 
         //
@@ -2094,13 +2140,15 @@ namespace Com
             {
                 return false;
             }
-
-            if (year < 0)
+            else
             {
-                year = -year - 1;
-            }
+                if (year < 0)
+                {
+                    year = -year - 1;
+                }
 
-            return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) && (year % 3200 != 0 || year % 172800 == 0));
+                return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) && (year % 3200 != 0 || year % 172800 == 0));
+            }
         }
 
         //
@@ -2112,12 +2160,14 @@ namespace Com
         /// <returns>32 位整数，表示指定年的天数。</returns>
         public static int DaysInYear(long year)
         {
-            if (year != 0)
+            if (year == 0)
+            {
+                return -1;
+            }
+            else
             {
                 return (IsLeapYear(year) ? 366 : 365);
             }
-
-            return -1;
         }
 
         /// <summary>
@@ -2128,14 +2178,16 @@ namespace Com
         /// <returns>32 位整数，表示指定年的指定月的天数。</returns>
         public static int DaysInMonth(long year, int month)
         {
-            if (year != 0 && (month >= _MinMonth && month <= _MaxMonth))
+            if (year == 0 || (month < _MinMonth || month > _MaxMonth))
+            {
+                return -1;
+            }
+            else
             {
                 int[] DaysToMonth = (IsLeapYear(year) ? _DaysToMonth366 : _DaysToMonth365);
 
                 return (DaysToMonth[month] - DaysToMonth[month - 1]);
             }
-
-            return -1;
         }
 
         #endregion
@@ -2154,8 +2206,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (left.TotalMilliseconds == right.TotalMilliseconds);
+            else
+            {
+                return (left.TotalMilliseconds == right.TotalMilliseconds);
+            }
         }
 
         /// <summary>
@@ -2170,8 +2224,10 @@ namespace Com
             {
                 return true;
             }
-
-            return (left.TotalMilliseconds != right.TotalMilliseconds);
+            else
+            {
+                return (left.TotalMilliseconds != right.TotalMilliseconds);
+            }
         }
 
         /// <summary>
@@ -2186,8 +2242,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (left.TotalMilliseconds < right.TotalMilliseconds);
+            else
+            {
+                return (left.TotalMilliseconds < right.TotalMilliseconds);
+            }
         }
 
         /// <summary>
@@ -2202,8 +2260,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (left.TotalMilliseconds > right.TotalMilliseconds);
+            else
+            {
+                return (left.TotalMilliseconds > right.TotalMilliseconds);
+            }
         }
 
         /// <summary>
@@ -2218,8 +2278,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (left.TotalMilliseconds <= right.TotalMilliseconds);
+            else
+            {
+                return (left.TotalMilliseconds <= right.TotalMilliseconds);
+            }
         }
 
         /// <summary>
@@ -2234,8 +2296,10 @@ namespace Com
             {
                 return false;
             }
-
-            return (left.TotalMilliseconds >= right.TotalMilliseconds);
+            else
+            {
+                return (left.TotalMilliseconds >= right.TotalMilliseconds);
+            }
         }
 
         //

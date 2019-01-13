@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2018 chibayuki@foxmail.com
+Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
 Version 18.9.28.2200
@@ -3213,8 +3213,10 @@ namespace Com.WinForm
                 {
                     return FormState.Minimized;
                 }
-
-                return _FormState;
+                else
+                {
+                    return _FormState;
+                }
             }
 
             set
@@ -4150,8 +4152,10 @@ namespace Com.WinForm
             {
                 return true;
             }
-
-            return Equals((FormManager)obj);
+            else
+            {
+                return Equals((FormManager)obj);
+            }
         }
 
         /// <summary>
@@ -4171,12 +4175,14 @@ namespace Com.WinForm
         {
             string Str = base.ToString();
 
-            if (!string.IsNullOrEmpty(_Caption))
+            if (string.IsNullOrEmpty(_Caption))
+            {
+                return Str;
+            }
+            else
             {
                 return string.Concat(Str, ", Caption: ", _Caption);
             }
-
-            return Str;
         }
 
         //
@@ -4196,8 +4202,10 @@ namespace Com.WinForm
             {
                 return true;
             }
-
-            return base.Equals(formManager);
+            else
+            {
+                return base.Equals(formManager);
+            }
         }
 
         //
@@ -4230,8 +4238,10 @@ namespace Com.WinForm
 
                         return true;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
             };
 
@@ -4252,8 +4262,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4273,8 +4285,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4294,8 +4308,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4315,8 +4331,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4336,8 +4354,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4357,8 +4377,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4378,8 +4400,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4399,8 +4423,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4420,8 +4446,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4441,8 +4469,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4462,8 +4492,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4483,8 +4515,10 @@ namespace Com.WinForm
 
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             };
 
             return (bool)_Client.Invoke(InvokeMethod);
@@ -4711,8 +4745,10 @@ namespace Com.WinForm
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         #endregion
@@ -4739,8 +4775,10 @@ namespace Com.WinForm
             {
                 return true;
             }
-
-            return left.Equals(right);
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         /// <summary>
@@ -4763,8 +4801,10 @@ namespace Com.WinForm
             {
                 return false;
             }
-
-            return !left.Equals(right);
+            else
+            {
+                return (!left.Equals(right));
+            }
         }
 
         #endregion
