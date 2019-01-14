@@ -475,7 +475,7 @@ namespace Com
 
         #endregion
 
-        #region 常量与只读字段
+        #region 字段
 
         /// <summary>
         /// 表示所有属性为其数据类型的默认值的 DateTimeX 结构的实例。

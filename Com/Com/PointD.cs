@@ -32,7 +32,7 @@ namespace Com
 
         #endregion
 
-        #region 常量与只读字段
+        #region 字段
 
         /// <summary>
         /// 表示零向量的 PointD 结构的实例。

@@ -36,7 +36,7 @@ namespace Com
 
         #endregion
 
-        #region 常量与只读字段
+        #region 字段
 
         /// <summary>
         /// 表示非数字的 Complex 结构的实例。
