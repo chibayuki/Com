@@ -36,32 +36,6 @@ namespace Com
 
         #endregion
 
-        #region 字段
-
-        /// <summary>
-        /// 表示非数字的 Complex 结构的实例。
-        /// </summary>
-        public static readonly Complex NaN = new Complex(double.NaN, double.NaN);
-
-        //
-
-        /// <summary>
-        /// 表示 0 的 Complex 结构的实例。
-        /// </summary>
-        public static readonly Complex Zero = new Complex(0, 0);
-
-        /// <summary>
-        /// 表示实数单位 1 的 Complex 结构的实例。
-        /// </summary>
-        public static readonly Complex One = new Complex(1, 0);
-
-        /// <summary>
-        /// 表示虚数单位 i 的 Complex 结构的实例。
-        /// </summary>
-        public static readonly Complex ImaginaryOne = new Complex(0, 1);
-
-        #endregion
-
         #region 构造函数
 
         /// <summary>
@@ -94,6 +68,32 @@ namespace Com
             _Real = pt.X;
             _Imaginary = pt.Y;
         }
+
+        #endregion
+
+        #region 字段
+
+        /// <summary>
+        /// 表示非数字的 Complex 结构的实例。
+        /// </summary>
+        public static readonly Complex NaN = new Complex(double.NaN, double.NaN);
+
+        //
+
+        /// <summary>
+        /// 表示 0 的 Complex 结构的实例。
+        /// </summary>
+        public static readonly Complex Zero = new Complex(0, 0);
+
+        /// <summary>
+        /// 表示实数单位 1 的 Complex 结构的实例。
+        /// </summary>
+        public static readonly Complex One = new Complex(1, 0);
+
+        /// <summary>
+        /// 表示虚数单位 i 的 Complex 结构的实例。
+        /// </summary>
+        public static readonly Complex ImaginaryOne = new Complex(0, 1);
 
         #endregion
 

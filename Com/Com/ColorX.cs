@@ -1172,20 +1172,6 @@ namespace Com
 
         #endregion
 
-        #region 字段
-
-        /// <summary>
-        /// 表示所有属性为其数据类型的默认值的 ColorX 结构的实例。
-        /// </summary>
-        public static readonly ColorX Empty = default(ColorX);
-
-        /// <summary>
-        /// 表示透明色的 ColorX 结构的实例。
-        /// </summary>
-        public static readonly ColorX Transparent = FromRGB(_MinAlpha, _MaxRed, _MaxGreen, _MaxBlue);
-
-        #endregion
-
         #region 构造函数
 
         /// <summary>
@@ -1211,6 +1197,20 @@ namespace Com
 
             _CtorRGB(color.A, color.R, color.G, color.B);
         }
+
+        #endregion
+
+        #region 字段
+
+        /// <summary>
+        /// 表示所有属性为其数据类型的默认值的 ColorX 结构的实例。
+        /// </summary>
+        public static readonly ColorX Empty = default(ColorX);
+
+        /// <summary>
+        /// 表示透明色的 ColorX 结构的实例。
+        /// </summary>
+        public static readonly ColorX Transparent = FromRGB(_MinAlpha, _MaxRed, _MaxGreen, _MaxBlue);
 
         #endregion
 

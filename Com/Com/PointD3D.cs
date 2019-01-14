@@ -33,6 +33,23 @@ namespace Com
 
         #endregion
 
+        #region 构造函数
+
+        /// <summary>
+        /// 使用双精度浮点数表示的 X 坐标、Y 坐标与 Z 坐标初始化 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="x">双精度浮点数表示的 X 坐标。</param>
+        /// <param name="y">双精度浮点数表示的 Y 坐标。</param>
+        /// <param name="z">双精度浮点数表示的 Z 坐标。</param>
+        public PointD3D(double x, double y, double z)
+        {
+            _X = x;
+            _Y = y;
+            _Z = z;
+        }
+
+        #endregion
+
         #region 字段
 
         /// <summary>
@@ -63,23 +80,6 @@ namespace Com
         /// 表示 Z 基向量的 PointD3D 结构的实例。
         /// </summary>
         public static readonly PointD3D Ez = new PointD3D(0, 0, 1);
-
-        #endregion
-
-        #region 构造函数
-
-        /// <summary>
-        /// 使用双精度浮点数表示的 X 坐标、Y 坐标与 Z 坐标初始化 PointD3D 结构的新实例。
-        /// </summary>
-        /// <param name="x">双精度浮点数表示的 X 坐标。</param>
-        /// <param name="y">双精度浮点数表示的 Y 坐标。</param>
-        /// <param name="z">双精度浮点数表示的 Z 坐标。</param>
-        public PointD3D(double x, double y, double z)
-        {
-            _X = x;
-            _Y = y;
-            _Z = z;
-        }
 
         #endregion
 

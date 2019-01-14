@@ -34,6 +34,25 @@ namespace Com
 
         #endregion
 
+        #region 构造函数
+
+        /// <summary>
+        /// 使用双精度浮点数表示的 X 坐标、Y 坐标、Z 坐标与 U 坐标初始化 PointD4D 结构的新实例。
+        /// </summary>
+        /// <param name="x">双精度浮点数表示的 X 坐标。</param>
+        /// <param name="y">双精度浮点数表示的 Y 坐标。</param>
+        /// <param name="z">双精度浮点数表示的 Z 坐标。</param>
+        /// <param name="u">双精度浮点数表示的 U 坐标。</param>
+        public PointD4D(double x, double y, double z, double u)
+        {
+            _X = x;
+            _Y = y;
+            _Z = z;
+            _U = u;
+        }
+
+        #endregion
+
         #region 字段
 
         /// <summary>
@@ -69,25 +88,6 @@ namespace Com
         /// 表示 U 基向量的 PointD4D 结构的实例。
         /// </summary>
         public static readonly PointD4D Eu = new PointD4D(0, 0, 0, 1);
-
-        #endregion
-
-        #region 构造函数
-
-        /// <summary>
-        /// 使用双精度浮点数表示的 X 坐标、Y 坐标、Z 坐标与 U 坐标初始化 PointD4D 结构的新实例。
-        /// </summary>
-        /// <param name="x">双精度浮点数表示的 X 坐标。</param>
-        /// <param name="y">双精度浮点数表示的 Y 坐标。</param>
-        /// <param name="z">双精度浮点数表示的 Z 坐标。</param>
-        /// <param name="u">双精度浮点数表示的 U 坐标。</param>
-        public PointD4D(double x, double y, double z, double u)
-        {
-            _X = x;
-            _Y = y;
-            _Z = z;
-            _U = u;
-        }
 
         #endregion
 

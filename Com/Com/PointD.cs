@@ -32,34 +32,6 @@ namespace Com
 
         #endregion
 
-        #region 字段
-
-        /// <summary>
-        /// 表示零向量的 PointD 结构的实例。
-        /// </summary>
-        public static readonly PointD Zero = new PointD(0, 0);
-
-        //
-
-        /// <summary>
-        /// 表示所有分量为非数字的 PointD 结构的实例。
-        /// </summary>
-        public static readonly PointD NaN = new PointD(double.NaN, double.NaN);
-
-        //
-
-        /// <summary>
-        /// 表示 X 基向量的 PointD 结构的实例。
-        /// </summary>
-        public static readonly PointD Ex = new PointD(1, 0);
-
-        /// <summary>
-        /// 表示 Y 基向量的 PointD 结构的实例。
-        /// </summary>
-        public static readonly PointD Ey = new PointD(0, 1);
-
-        #endregion
-
         #region 构造函数
 
         /// <summary>
@@ -122,6 +94,34 @@ namespace Com
             _X = comp.Real;
             _Y = comp.Imaginary;
         }
+
+        #endregion
+
+        #region 字段
+
+        /// <summary>
+        /// 表示零向量的 PointD 结构的实例。
+        /// </summary>
+        public static readonly PointD Zero = new PointD(0, 0);
+
+        //
+
+        /// <summary>
+        /// 表示所有分量为非数字的 PointD 结构的实例。
+        /// </summary>
+        public static readonly PointD NaN = new PointD(double.NaN, double.NaN);
+
+        //
+
+        /// <summary>
+        /// 表示 X 基向量的 PointD 结构的实例。
+        /// </summary>
+        public static readonly PointD Ex = new PointD(1, 0);
+
+        /// <summary>
+        /// 表示 Y 基向量的 PointD 结构的实例。
+        /// </summary>
+        public static readonly PointD Ey = new PointD(0, 1);
 
         #endregion
 

@@ -475,32 +475,6 @@ namespace Com
 
         #endregion
 
-        #region 字段
-
-        /// <summary>
-        /// 表示所有属性为其数据类型的默认值的 DateTimeX 结构的实例。
-        /// </summary>
-        public static readonly DateTimeX Empty = default(DateTimeX);
-
-        //
-
-        /// <summary>
-        /// 表示公元时刻的 DateTimeX 结构的实例。
-        /// </summary>
-        public static readonly DateTimeX ChristianEra = new DateTimeX(_ChristianTotalMilliseconds, _Utc);
-
-        /// <summary>
-        /// 表示时刻的最小可能值的 DateTimeX 结构的实例。
-        /// </summary>
-        public static readonly DateTimeX MinValue = new DateTimeX(_MinTotalMilliseconds, _Utc);
-
-        /// <summary>
-        /// 表示时刻的最大可能值的 DateTimeX 结构的实例。
-        /// </summary>
-        public static readonly DateTimeX MaxValue = new DateTimeX(_MaxTotalMilliseconds, _Utc);
-
-        #endregion
-
         #region 构造函数
 
         /// <summary>
@@ -774,6 +748,32 @@ namespace Com
 
             _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, _LocalUtcOffset);
         }
+
+        #endregion
+
+        #region 字段
+
+        /// <summary>
+        /// 表示所有属性为其数据类型的默认值的 DateTimeX 结构的实例。
+        /// </summary>
+        public static readonly DateTimeX Empty = default(DateTimeX);
+
+        //
+
+        /// <summary>
+        /// 表示公元时刻的 DateTimeX 结构的实例。
+        /// </summary>
+        public static readonly DateTimeX ChristianEra = new DateTimeX(_ChristianTotalMilliseconds, _Utc);
+
+        /// <summary>
+        /// 表示时刻的最小可能值的 DateTimeX 结构的实例。
+        /// </summary>
+        public static readonly DateTimeX MinValue = new DateTimeX(_MinTotalMilliseconds, _Utc);
+
+        /// <summary>
+        /// 表示时刻的最大可能值的 DateTimeX 结构的实例。
+        /// </summary>
+        public static readonly DateTimeX MaxValue = new DateTimeX(_MaxTotalMilliseconds, _Utc);
 
         #endregion
 

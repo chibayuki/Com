@@ -297,59 +297,6 @@ namespace Com
 
         #endregion
 
-        #region 字段
-
-        /// <summary>
-        /// 表示数字 0 的 Real 结构的实例。
-        /// </summary>
-        public static readonly Real Zero = new Real(0, 0);
-
-        /// <summary>
-        /// 表示数字 1 的 Real 结构的实例。
-        /// </summary>
-        public static readonly Real One = new Real(1, 0);
-
-        /// <summary>
-        /// 表示数字 -1 的 Real 结构的实例。
-        /// </summary>
-        public static readonly Real MinusOne = new Real(-1, 0);
-
-        //
-
-        /// <summary>
-        /// 表示 Real 结构的最小可能值。
-        /// </summary>
-        public static readonly Real MinValue = new Real(-9.999999999999999, _MaxMagnitude);
-
-        /// <summary>
-        /// 表示 Real 结构的最大可能值。
-        /// </summary>
-        public static readonly Real MaxValue = new Real(9.999999999999999, _MaxMagnitude);
-
-        /// <summary>
-        /// 表示 Real 结构的大于零的最小可能值。
-        /// </summary>
-        public static readonly Real Epsilon = new Real(1, _MinMagnitude);
-
-        //
-
-        /// <summary>
-        /// 表示正无穷大的 Real 结构的实例。
-        /// </summary>
-        public static readonly Real PositiveInfinity = new Real(double.PositiveInfinity, 0);
-
-        /// <summary>
-        /// 表示负无穷大的 Real 结构的实例。
-        /// </summary>
-        public static readonly Real NegativeInfinity = new Real(double.NegativeInfinity, 0);
-
-        /// <summary>
-        /// 表示非数字的 Real 结构的实例。
-        /// </summary>
-        public static readonly Real NaN = new Real(double.NaN, 0);
-
-        #endregion
-
         #region 构造函数
 
         /// <summary>
@@ -496,6 +443,59 @@ namespace Com
 
             _Rectify();
         }
+
+        #endregion
+
+        #region 字段
+
+        /// <summary>
+        /// 表示数字 0 的 Real 结构的实例。
+        /// </summary>
+        public static readonly Real Zero = new Real(0, 0);
+
+        /// <summary>
+        /// 表示数字 1 的 Real 结构的实例。
+        /// </summary>
+        public static readonly Real One = new Real(1, 0);
+
+        /// <summary>
+        /// 表示数字 -1 的 Real 结构的实例。
+        /// </summary>
+        public static readonly Real MinusOne = new Real(-1, 0);
+
+        //
+
+        /// <summary>
+        /// 表示 Real 结构的最小可能值。
+        /// </summary>
+        public static readonly Real MinValue = new Real(-9.999999999999999, _MaxMagnitude);
+
+        /// <summary>
+        /// 表示 Real 结构的最大可能值。
+        /// </summary>
+        public static readonly Real MaxValue = new Real(9.999999999999999, _MaxMagnitude);
+
+        /// <summary>
+        /// 表示 Real 结构的大于零的最小可能值。
+        /// </summary>
+        public static readonly Real Epsilon = new Real(1, _MinMagnitude);
+
+        //
+
+        /// <summary>
+        /// 表示正无穷大的 Real 结构的实例。
+        /// </summary>
+        public static readonly Real PositiveInfinity = new Real(double.PositiveInfinity, 0);
+
+        /// <summary>
+        /// 表示负无穷大的 Real 结构的实例。
+        /// </summary>
+        public static readonly Real NegativeInfinity = new Real(double.NegativeInfinity, 0);
+
+        /// <summary>
+        /// 表示非数字的 Real 结构的实例。
+        /// </summary>
+        public static readonly Real NaN = new Real(double.NaN, 0);
 
         #endregion
 

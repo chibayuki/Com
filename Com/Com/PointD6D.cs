@@ -36,6 +36,29 @@ namespace Com
 
         #endregion
 
+        #region 构造函数
+
+        /// <summary>
+        /// 使用双精度浮点数表示的 X 坐标、Y 坐标、Z 坐标与 U 坐标初始化 PointD6D 结构的新实例。
+        /// </summary>
+        /// <param name="x">双精度浮点数表示的 X 坐标。</param>
+        /// <param name="y">双精度浮点数表示的 Y 坐标。</param>
+        /// <param name="z">双精度浮点数表示的 Z 坐标。</param>
+        /// <param name="u">双精度浮点数表示的 U 坐标。</param>
+        /// <param name="v">双精度浮点数表示的 V 坐标。</param>
+        /// <param name="w">双精度浮点数表示的 W 坐标。</param>
+        public PointD6D(double x, double y, double z, double u, double v, double w)
+        {
+            _X = x;
+            _Y = y;
+            _Z = z;
+            _U = u;
+            _V = v;
+            _W = w;
+        }
+
+        #endregion
+
         #region 字段
 
         /// <summary>
@@ -81,29 +104,6 @@ namespace Com
         /// 表示 W 基向量的 PointD6D 结构的实例。
         /// </summary>
         public static readonly PointD6D Ew = new PointD6D(0, 0, 0, 0, 0, 1);
-
-        #endregion
-
-        #region 构造函数
-
-        /// <summary>
-        /// 使用双精度浮点数表示的 X 坐标、Y 坐标、Z 坐标与 U 坐标初始化 PointD6D 结构的新实例。
-        /// </summary>
-        /// <param name="x">双精度浮点数表示的 X 坐标。</param>
-        /// <param name="y">双精度浮点数表示的 Y 坐标。</param>
-        /// <param name="z">双精度浮点数表示的 Z 坐标。</param>
-        /// <param name="u">双精度浮点数表示的 U 坐标。</param>
-        /// <param name="v">双精度浮点数表示的 V 坐标。</param>
-        /// <param name="w">双精度浮点数表示的 W 坐标。</param>
-        public PointD6D(double x, double y, double z, double u, double v, double w)
-        {
-            _X = x;
-            _Y = y;
-            _Z = z;
-            _U = u;
-            _V = v;
-            _W = w;
-        }
 
         #endregion
 
