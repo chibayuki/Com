@@ -48,11 +48,11 @@ namespace Com
                 {
                     throw new OverflowException();
                 }
-                else
-                {
-                    result._Size = new Size(width, height);
-                    result._MArray = values;
-                }
+
+                //
+
+                result._Size = new Size(width, height);
+                result._MArray = values;
             }
 
             return result;
@@ -213,13 +213,13 @@ namespace Com
                 {
                     throw new OverflowException();
                 }
-                else
-                {
-                    _Size = new Size(width, height);
-                    _MArray = new double[_Size.Width, _Size.Height];
 
-                    Array.Copy(values, _MArray, _Size.Width * _Size.Height);
-                }
+                //
+
+                _Size = new Size(width, height);
+                _MArray = new double[_Size.Width, _Size.Height];
+
+                Array.Copy(values, _MArray, _Size.Width * _Size.Height);
             }
         }
 

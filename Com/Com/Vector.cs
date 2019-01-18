@@ -49,11 +49,18 @@ namespace Com
 
         private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的零向量。
         {
+            if (dimension < 0 || dimension > _MaxSize)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (dimension == 0)
             {
                 return Empty;
             }
-            else if (dimension > 0 && dimension <= _MaxSize)
+            else
             {
                 Vector result = Empty;
 
@@ -62,10 +69,6 @@ namespace Com
                 result._VArray = new double[result._Size];
 
                 return result;
-            }
-            else
-            {
-                throw new OverflowException();
             }
         }
 
@@ -90,11 +93,11 @@ namespace Com
                 {
                     throw new OverflowException();
                 }
-                else
-                {
-                    result._Size = length;
-                    result._VArray = values;
-                }
+
+                //
+
+                result._Size = length;
+                result._VArray = values;
             }
 
             return result;
@@ -169,17 +172,17 @@ namespace Com
             {
                 int length = values.Length;
 
-                if (length <= _MaxSize)
-                {
-                    _Size = length;
-                    _VArray = new double[_Size];
-
-                    Array.Copy(values, _VArray, _Size);
-                }
-                else
+                if (length > _MaxSize)
                 {
                     throw new OverflowException();
                 }
+
+                //
+
+                _Size = length;
+                _VArray = new double[_Size];
+
+                Array.Copy(values, _VArray, _Size);
             }
             else
             {
@@ -200,17 +203,17 @@ namespace Com
             {
                 int length = values.Length;
 
-                if (length <= _MaxSize)
-                {
-                    _Size = length;
-                    _VArray = new double[_Size];
-
-                    Array.Copy(values, _VArray, _Size);
-                }
-                else
+                if (length > _MaxSize)
                 {
                     throw new OverflowException();
                 }
+
+                //
+
+                _Size = length;
+                _VArray = new double[_Size];
+
+                Array.Copy(values, _VArray, _Size);
             }
             else
             {
@@ -231,26 +234,26 @@ namespace Com
         {
             get
             {
-                if (_Size > 0 && (index >= 0 && index < _Size))
-                {
-                    return _VArray[index];
-                }
-                else
+                if (_Size <= 0 || (index < 0 || index >= _Size))
                 {
                     throw new IndexOutOfRangeException();
                 }
+
+                //
+
+                return _VArray[index];
             }
 
             set
             {
-                if (_Size > 0 && (index >= 0 && index < _Size))
-                {
-                    _VArray[index] = value;
-                }
-                else
+                if (_Size <= 0 || (index < 0 || index >= _Size))
                 {
                     throw new IndexOutOfRangeException();
                 }
+
+                //
+
+                _VArray[index] = value;
             }
         }
 
@@ -2148,17 +2151,20 @@ namespace Com
         /// <returns>Vector 对象，表示零向量。</returns>
         public static Vector Zero(Type type, int dimension)
         {
+            if (dimension < 0)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
             if (dimension == 0)
             {
                 return Empty;
             }
-            else if (dimension > 0)
-            {
-                return _GetZeroVector(type, dimension);
-            }
             else
             {
-                throw new OverflowException();
+                return _GetZeroVector(type, dimension);
             }
         }
 

@@ -515,20 +515,20 @@ namespace Com
         /// <returns>双精度浮点数，表示概率密度平均分布的非负随机数。</returns>
         public static double RandomDouble(double right)
         {
-            if (!InternalMethod.IsNaNOrInfinity(right) && right >= 0)
+            if (InternalMethod.IsNaNOrInfinity(right) || right < 0)
             {
-                if (right == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return (right * _Rand.NextDouble());
-                }
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            if (right == 0)
+            {
+                return 0;
             }
             else
             {
-                throw new ArgumentOutOfRangeException();
+                return (right * _Rand.NextDouble());
             }
         }
 

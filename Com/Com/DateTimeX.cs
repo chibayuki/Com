@@ -28,7 +28,7 @@ namespace Com
 
         private static double _LocalUtcOffset => TimeZoneInfo.Local.BaseUtcOffset.TotalHours; // 本地时区的标准时间与协调世界时（UTC）之间的时差的小时数。
 
-        private const decimal _MinTotalMilliseconds = -796899343984252546694400000M, _MaxTotalMilliseconds = 796899343984252578143999999M, _ChristianTotalMilliseconds = 0M; // 自公元时刻以来的总毫秒数的最小值、最大值与公元时刻的值。
+        private const decimal _MinTotalMilliseconds = -796899343984252546694400000M, _MaxTotalMilliseconds = 796899343984252578143999999M, _ChristianTotalMilliseconds = 0M; // 自公元时刻以来的总毫秒数的最小值、最大值与公元时刻的值，最小值与最大值由 System.Int64 的最小值或最大值表示的天数的总毫秒数与时区偏移的最小值或最大值对应的毫秒数之和舍入到最小或最大的完整的年得出。
 
         private const long _MinYear = -25252756133808173, _MaxYear = 25252756133808174, _ChristianYear = 1; // 年的最小值、最大值与公元时刻的值。
         private const int _MinMonth = 1, _MaxMonth = 12; // 月的最小值与最大值。
@@ -780,7 +780,7 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取表示此 DateTimeX 结构是否为 Empty 的布尔值。
+        /// 获取表示此 DateTimeX 结构是否未初始化的布尔值。
         /// </summary>
         public bool IsEmpty
         {

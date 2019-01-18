@@ -598,6 +598,8 @@ namespace Com
             }
         }
 
+        //
+
         /// <summary>
         /// 获取表示此 Real 结构是否为奇数的布尔值。
         /// </summary>
