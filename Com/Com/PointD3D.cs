@@ -522,27 +522,7 @@ namespace Com
         {
             get
             {
-                if (_X == 0 && _Y == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_Y / _X);
-
-                    if (_X < 0)
-                    {
-                        return (Angle + Constant.Pi);
-                    }
-                    else if (_Y < 0)
-                    {
-                        return (Angle + Constant.DoublePi);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
+                return Math.Atan2(_Y, _X);
             }
         }
 

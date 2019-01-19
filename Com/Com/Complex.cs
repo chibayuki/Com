@@ -243,35 +243,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Complex 结构的辐角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。
+        /// 获取此 Complex 结构的辐角（弧度）（以实轴正方向为 0 弧度，从实轴正方向指向虚轴正方向的方向为正方向）。
         /// </summary>
         public double Argument
         {
             get
             {
-                if (_Real == 0 && _Imaginary == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    double Angle = Math.Atan(_Imaginary / _Real);
-
-                    if (_Real < 0)
-                    {
-                        return (Angle + Constant.Pi);
-                    }
-                    else if (_Imaginary < 0)
-                    {
-                        return (Angle + Constant.DoublePi);
-                    }
-                    else
-                    {
-                        return Angle;
-                    }
-                }
+                return Math.Atan2(_Imaginary, _Real);
             }
         }
+
+        //
 
         /// <summary>
         /// 获取此 Complex 结构的共轭复数。
@@ -701,54 +683,54 @@ namespace Com
         /// <summary>
         /// 返回对 Complex 结构计算复对数得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="left">Complex 结构，表示基数。</param>
-        /// <param name="right">Complex 结构，表示幂。</param>
+        /// <param name="left">Complex 结构，表示幂。</param>
+        /// <param name="right">Complex 结构，表示基数。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算复对数得到的结果。</returns>
         public static Complex Log(Complex left, Complex right)
         {
-            if (left.IsZero && right.IsOne)
+            if (left.IsOne && right.IsZero)
             {
                 return Zero;
             }
             else
             {
-                return (Log(right) / Log(left));
+                return (Log(left) / Log(right));
             }
         }
 
         /// <summary>
         /// 返回对双精度浮点数计算复对数得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="left">Complex 结构，表示基数。</param>
-        /// <param name="right">双精度浮点数，表示幂。</param>
+        /// <param name="left">Complex 结构，表示幂。</param>
+        /// <param name="right">双精度浮点数，表示基数。</param>
         /// <returns>Complex 结构，表示对双精度浮点数计算复对数得到的结果。</returns>
         public static Complex Log(Complex left, double right)
         {
-            if (left.IsZero && right == 1)
+            if (left.IsOne && right == 0)
             {
                 return Zero;
             }
             else
             {
-                return (Math.Log(right) / Log(left));
+                return (Log(left) / Math.Log(right));
             }
         }
 
         /// <summary>
         /// 返回对 Complex 结构计算实对数得到的 Complex 结构的新实例。
         /// </summary>
-        /// <param name="left">双精度浮点数，表示基数。</param>
-        /// <param name="right">Complex 结构，表示幂。</param>
+        /// <param name="left">双精度浮点数，表示幂。</param>
+        /// <param name="right">Complex 结构，表示基数。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算实对数得到的结果。</returns>
         public static Complex Log(double left, Complex right)
         {
-            if (left == 0 && right.IsOne)
+            if (left == 1 && right.IsZero)
             {
                 return Zero;
             }
             else
             {
-                return (Log(right) / Math.Log(left));
+                return (Math.Log(left) / Log(right));
             }
         }
 

@@ -28,9 +28,9 @@ namespace Com
 
         private static double _LocalUtcOffset => TimeZoneInfo.Local.BaseUtcOffset.TotalHours; // 本地时区的标准时间与协调世界时（UTC）之间的时差的小时数。
 
-        private const decimal _MinTotalMilliseconds = -796899343984252546694400000M, _MaxTotalMilliseconds = 796899343984252578143999999M, _ChristianTotalMilliseconds = 0M; // 自公元时刻以来的总毫秒数的最小值、最大值与公元时刻的值，最小值与最大值由 System.Int64 的最小值或最大值表示的天数的总毫秒数与时区偏移的最小值或最大值对应的毫秒数之和舍入到最小或最大的完整的年得出。
+        private const decimal _MinTotalMilliseconds = -796899343984252546694400000M, _MaxTotalMilliseconds = 796899343984252578143999999M, _ChristianTotalMilliseconds = 0M; // 自公元时刻以来的总毫秒数的最小值、最大值与公元时刻的值，最小值等于由 System.Int64.MinValue 表示的自公元时刻以来的总天数所在年份加 2 所得年份的元旦午夜对应的毫秒数，最大值等于由 System.Int64.MaxValue 表示的自公元时刻以来的总天数所在年份减 1 所得年份的元旦午夜对应的毫秒数减 1。
 
-        private const long _MinYear = -25252756133808173, _MaxYear = 25252756133808174, _ChristianYear = 1; // 年的最小值、最大值与公元时刻的值。
+        private const long _MinYear = -25252756133808173, _MaxYear = 25252756133808174, _ChristianYear = 1; // 年的最小值、最大值与公元时刻的值，最小值等于由 System.Int64.MinValue 表示的自公元时刻以来的总天数所在年份加 2，最大值等于由 System.Int64.MaxValue 表示的自公元时刻以来的总天数所在年份减 2。
         private const int _MinMonth = 1, _MaxMonth = 12; // 月的最小值与最大值。
         private const int _MinDay = 1, _MaxDay = 31; // 日的最小值与最大值。
         private const int _MinHour = 0, _MaxHour = 23; // 时的最小值与最大值。
@@ -402,12 +402,6 @@ namespace Com
 
         //
 
-        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, UtcOffset); // 表示所在时区时刻的最小可能值的 DateTimeX 结构的实例。
-
-        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, UtcOffset); // 表示所在时区时刻的最大可能值的 DateTimeX 结构的实例。
-
-        //
-
         private double _UtcOffset; // 所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。
 
         private decimal _TotalMilliseconds; // 自公元时刻以来的总毫秒数。
@@ -419,6 +413,12 @@ namespace Com
         private int _Minute; // 分。
         private int _Second; // 秒。
         private int _Millisecond; // 毫秒。
+
+        //
+
+        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, UtcOffset); // 表示所在时区时刻的最小可能值的 DateTimeX 结构的实例。
+
+        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, UtcOffset); // 表示所在时区时刻的最大可能值的 DateTimeX 结构的实例。
 
         //
 

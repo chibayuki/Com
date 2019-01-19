@@ -120,13 +120,24 @@ namespace Com
 
         private void _Rectify() // 校正此 Real 结构的值与数量级。
         {
-            if (!InternalMethod.IsNaNOrInfinity(_Value) && _Value != 0)
+            if (InternalMethod.IsNaNOrInfinity(_Value) || _Value == 0)
+            {
+                _Magnitude = 0;
+            }
+            else
             {
                 if (_Value <= -10 || _Value >= 10)
                 {
-                    long MagShift = (long)Math.Truncate(Math.Log10(Math.Abs(_Value)));
+                    long MagShift = (long)Math.Floor(Math.Log10(Math.Abs(_Value)));
 
-                    if (_Magnitude <= _MaxMagnitude - MagShift)
+                    if (_Magnitude > _MaxMagnitude - MagShift)
+                    {
+                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                        _Magnitude = 0;
+
+                        return;
+                    }
+                    else
                     {
                         _Value /= _PositiveMagnitudeGeometricValues[MagShift];
                         _Magnitude += MagShift;
@@ -137,17 +148,19 @@ namespace Com
                             _Magnitude++;
                         }
                     }
-                    else
-                    {
-                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
-                        _Magnitude = 0;
-                    }
                 }
                 else if (_Value > -1 && _Value < 1)
                 {
-                    long MagShift = -(long)Math.Truncate(Math.Log10(Math.Abs(_Value)));
+                    long MagShift = -(long)Math.Floor(Math.Log10(Math.Abs(_Value)));
 
-                    if (_Magnitude >= _MinMagnitude + MagShift)
+                    if (_Magnitude < _MinMagnitude + MagShift)
+                    {
+                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                        _Magnitude = 0;
+
+                        return;
+                    }
+                    else
                     {
                         _Value /= _NegativeMagnitudeGeometricValues[MagShift];
                         _Magnitude -= MagShift;
@@ -157,11 +170,6 @@ namespace Com
                             _Value /= 10;
                             _Magnitude++;
                         }
-                    }
-                    else
-                    {
-                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
-                        _Magnitude = 0;
                     }
                 }
 
@@ -179,34 +187,30 @@ namespace Com
                     }
                 }
             }
-            else
-            {
-                _Magnitude = 0;
-            }
         }
 
         //
 
-        private enum Parity // 奇偶性。
+        private enum _Parity // 奇偶性。
         {
-            NonParity = -1, // 非奇非偶。
-            Even, // 偶。
-            Odd // 奇。
+            NonParity = -1, // 非奇非偶，表示既约分数的分母能够被 2 整除的有理数以及其他不满足下述偶数或奇数定义的数值。
+            Even, // 偶，表示既约分数的分母不能被 2 整除且分子能够被 2 整除的有理数。
+            Odd // 奇，表示既约分数的分母与分子均不能被 2 整除的有理数。
         }
 
-        private Parity _GetParity() // 获取此 Real 结构的奇偶性。
+        private _Parity _GetParity() // 获取此 Real 结构的奇偶性。
         {
             if (InternalMethod.IsNaNOrInfinity(_Value))
             {
-                return Parity.NonParity;
+                return _Parity.NonParity;
             }
             else if (_Value == 0)
             {
-                return Parity.Even;
+                return _Parity.Even;
             }
             else
             {
-                Func<double, Parity> GetParityOfDecimal = (val) =>
+                Func<double, _Parity> GetParityOfDecimal = (val) =>
                 {
                     long Numerator = 0;
                     long Denominator = 1;
@@ -251,15 +255,15 @@ namespace Com
 
                     if (RemN == 0 && RemD != 0)
                     {
-                        return Parity.Even;
+                        return _Parity.Even;
                     }
                     else if (RemN != 0 && RemD != 0)
                     {
-                        return Parity.Odd;
+                        return _Parity.Odd;
                     }
                     else
                     {
-                        return Parity.NonParity;
+                        return _Parity.NonParity;
                     }
                 };
 
@@ -269,7 +273,7 @@ namespace Com
                 }
                 else if (_Magnitude > 15)
                 {
-                    return Parity.Even;
+                    return _Parity.Even;
                 }
                 else
                 {
@@ -280,11 +284,11 @@ namespace Com
                     {
                         if (((long)Trunc) % 2 == 0)
                         {
-                            return Parity.Even;
+                            return _Parity.Even;
                         }
                         else
                         {
-                            return Parity.Odd;
+                            return _Parity.Odd;
                         }
                     }
                     else
@@ -607,7 +611,7 @@ namespace Com
         {
             get
             {
-                return (_GetParity() == Parity.Odd);
+                return (_GetParity() == _Parity.Odd);
             }
         }
 
@@ -618,7 +622,7 @@ namespace Com
         {
             get
             {
-                return (_GetParity() == Parity.Even);
+                return (_GetParity() == _Parity.Even);
             }
         }
 
@@ -1094,12 +1098,12 @@ namespace Com
         /// <summary>
         /// 返回对 Real 结构计算对数得到的 Real 结构的新实例。
         /// </summary>
-        /// <param name="left">Real 结构，表示基数。</param>
-        /// <param name="right">Real 结构，表示幂。</param>
+        /// <param name="left">Real 结构，表示幂。</param>
+        /// <param name="right">Real 结构，表示基数。</param>
         /// <returns>Real 结构，表示对 Real 结构计算对数得到的结果。</returns>
         public static Real Log(Real left, Real right)
         {
-            return (Log10(right) / Log10(left));
+            return (Log10(left) / Log10(right));
         }
 
         //
@@ -1125,7 +1129,7 @@ namespace Com
             }
             else
             {
-                return new Real(Math.Sin((real % _DoublePi)._Value));
+                return new Real(Math.Sin((double)(real % _DoublePi)));
             }
         }
 
@@ -1150,7 +1154,7 @@ namespace Com
             }
             else
             {
-                return new Real(Math.Cos((real % _DoublePi)._Value));
+                return new Real(Math.Cos((double)(real % _DoublePi)));
             }
         }
 
@@ -1175,7 +1179,7 @@ namespace Com
             }
             else
             {
-                return new Real(Math.Tan((real % _Pi)._Value));
+                return new Real(Math.Tan((double)(real % _Pi)));
             }
         }
 
@@ -1202,7 +1206,7 @@ namespace Com
             {
                 if (real >= MinusOne && real <= One)
                 {
-                    return new Real(Math.Asin(real._Value));
+                    return new Real(Math.Asin((double)real));
                 }
                 else
                 {
@@ -1234,7 +1238,7 @@ namespace Com
             {
                 if (real >= MinusOne && real <= One)
                 {
-                    return new Real(Math.Acos(real._Value));
+                    return new Real(Math.Acos((double)real));
                 }
                 else
                 {
@@ -2994,8 +2998,8 @@ namespace Com
                         {
                             switch (right._GetParity())
                             {
-                                case Parity.Even: return PositiveInfinity;
-                                case Parity.Odd: return NegativeInfinity;
+                                case _Parity.Even: return PositiveInfinity;
+                                case _Parity.Odd: return NegativeInfinity;
                                 default: return NaN;
                             }
                         }
@@ -3130,8 +3134,8 @@ namespace Com
                     {
                         switch (right._GetParity())
                         {
-                            case Parity.Even: return One;
-                            case Parity.Odd: return MinusOne;
+                            case _Parity.Even: return One;
+                            case _Parity.Odd: return MinusOne;
                             default: return NaN;
                         }
                     }
@@ -3210,8 +3214,8 @@ namespace Com
                         {
                             switch (right._GetParity())
                             {
-                                case Parity.Even: return (One / FastPower(-left, -right));
-                                case Parity.Odd: return (MinusOne / FastPower(-left, -right));
+                                case _Parity.Even: return (One / FastPower(-left, -right));
+                                case _Parity.Odd: return (MinusOne / FastPower(-left, -right));
                                 default: return NaN;
                             }
                         }
@@ -3226,8 +3230,8 @@ namespace Com
                         {
                             switch (right._GetParity())
                             {
-                                case Parity.Even: return FastPower(-left, right);
-                                case Parity.Odd: return -FastPower(-left, right);
+                                case _Parity.Even: return FastPower(-left, right);
+                                case _Parity.Odd: return -FastPower(-left, right);
                                 default: return NaN;
                             }
                         }
