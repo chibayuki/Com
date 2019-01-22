@@ -210,7 +210,7 @@ namespace Com
             }
             else
             {
-                Func<double, _Parity> GetParityOfDecimal = (val) =>
+                Func<double, _Parity> GetParityOfRational = (val) =>
                 {
                     long Numerator = 0;
                     long Denominator = 1;
@@ -267,13 +267,17 @@ namespace Com
                     }
                 };
 
-                if (_Magnitude < 0)
-                {
-                    return GetParityOfDecimal(_Value);
-                }
-                else if (_Magnitude > 15)
+                if (_Magnitude > 15)
                 {
                     return _Parity.Even;
+                }
+                else if (_Magnitude < -15)
+                {
+                    return _Parity.NonParity;
+                }
+                else if (_Magnitude < 0)
+                {
+                    return GetParityOfRational(_Value * _NegativeMagnitudeGeometricValues[-_Magnitude]);
                 }
                 else
                 {
@@ -293,7 +297,7 @@ namespace Com
                     }
                     else
                     {
-                        return GetParityOfDecimal(_Value);
+                        return GetParityOfRational(Val);
                     }
                 }
             }
