@@ -152,7 +152,7 @@ namespace Com
 
                     double Base = val + Coeff.Length - 2.5;
 
-                    return (Constant.Sqrt2Pi * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum);
+                    return (Constant.SqrtDoublePi * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum);
                 };
 
                 Func<double, Real> GammaPositive = (val) =>
@@ -895,7 +895,7 @@ namespace Com
             }
             else
             {
-                return (Math.Exp(-0.5 * value * value) / Constant.Sqrt2Pi);
+                return (Math.Exp(-0.5 * value * value) / Constant.SqrtDoublePi);
             }
         }
 
@@ -916,7 +916,7 @@ namespace Com
             {
                 double N = (value - ev) / sd;
 
-                return (Math.Exp(-0.5 * N * N) / Constant.Sqrt2Pi / sd);
+                return (Math.Exp(-0.5 * N * N) / Constant.SqrtDoublePi / sd);
             }
         }
 

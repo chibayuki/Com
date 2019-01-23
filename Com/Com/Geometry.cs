@@ -779,7 +779,7 @@ namespace Com
                         Path.AddRectangle(new RectangleF(0, 0, W, H));
 
                         System.Drawing.Drawing2D.Matrix Mtrx = new System.Drawing.Drawing2D.Matrix();
-                        Mtrx.Rotate((float)(rotateAngle * Constant.DegOf1Rad));
+                        Mtrx.Rotate((float)(rotateAngle * Constant.DegOfRad));
 
                         Rect = Path.GetBounds(Mtrx);
                     }
@@ -796,7 +796,7 @@ namespace Com
                         //
 
                         Grph.TranslateTransform(-Rect.X, -Rect.Y);
-                        Grph.RotateTransform((float)(rotateAngle * Constant.DegOf1Rad));
+                        Grph.RotateTransform((float)(rotateAngle * Constant.DegOfRad));
                         Grph.InterpolationMode = InterpolationMode.HighQualityBilinear;
                         Grph.DrawImage(Bmp, new Point(0, 0));
                     }

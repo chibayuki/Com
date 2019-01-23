@@ -106,7 +106,7 @@ namespace Com
         private static readonly Real _Pi = new Real(Constant.Pi); // 表示圆周率 π 的 Real 结构的实例。
         private static readonly Real _DoublePi = new Real(Constant.DoublePi); // 表示圆周率 π 的 2 倍的 Real 结构的实例。
         private static readonly Real _HalfPi = new Real(Constant.HalfPi); // 表示圆周率 π 的 1/2 的 Real 结构的实例。
-        private static readonly Real _MinusHalfPi = new Real(Constant.MinusHalfPi); // 表示圆周率 π 的 -1/2 的 Real 结构的实例。
+        private static readonly Real _MinusHalfPi = new Real(-Constant.HalfPi); // 表示圆周率 π 的 -1/2 的 Real 结构的实例。
 
         private static readonly Real _E = new Real(Constant.E); // 表示自然常数 E 的 Real 结构的实例。
         private static readonly Real _LgE = new Real(Constant.LgE); // 表示自然常数 E 的常用对数的 Real 结构的实例。
@@ -193,7 +193,7 @@ namespace Com
 
         private enum _Parity // 奇偶性。
         {
-            NonParity = -1, // 非奇非偶，表示既约分数的分母能够被 2 整除的有理数以及其他不满足下述偶数或奇数定义的数值。
+            NonParity = -1, // 非奇非偶，表示既约分数的分母能够被 2 整除的有理数以及其他不满足下述偶或奇的定义的数。
             Even, // 偶，表示既约分数的分母不能被 2 整除且分子能够被 2 整除的有理数。
             Odd // 奇，表示既约分数的分母与分子均不能被 2 整除的有理数。
         }
@@ -567,6 +567,65 @@ namespace Com
         //
 
         /// <summary>
+        /// 获取表示此 Real 结构是否为 0 的布尔值。
+        /// </summary>
+        public bool IsZero
+        {
+            get
+            {
+                return (_Value == 0);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Real 结构是否为 1 的布尔值。
+        /// </summary>
+        public bool IsOne
+        {
+            get
+            {
+                return (_Value == 1 && _Magnitude == 0);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Real 结构是否为 -1 的布尔值。
+        /// </summary>
+        public bool IsMinusOne
+        {
+            get
+            {
+                return (_Value == -1 && _Magnitude == 0);
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取表示此 Real 结构是否为正数的布尔值。
+        /// </summary>
+        public bool IsPositive
+        {
+            get
+            {
+                return (_Value > 0);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Real 结构是否为负数的布尔值。
+        /// </summary>
+        public bool IsNegative
+        {
+            get
+            {
+                return (_Value < 0);
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 获取表示此 Real 结构是否为整数的布尔值。
         /// </summary>
         public bool IsInteger
@@ -606,18 +665,47 @@ namespace Com
             }
         }
 
-        //
-
         /// <summary>
-        /// 获取表示此 Real 结构是否为奇数的布尔值。
+        /// 获取表示此 Real 结构是否为小数的布尔值。
         /// </summary>
-        public bool IsOdd
+        public bool IsDecimal
         {
             get
             {
-                return (_GetParity() == _Parity.Odd);
+                if (double.IsNaN(_Value))
+                {
+                    return false;
+                }
+                else if (double.IsInfinity(_Value))
+                {
+                    return false;
+                }
+                else if (_Value == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (_Magnitude < 0)
+                    {
+                        return true;
+                    }
+                    else if (_Magnitude > 15)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        double Val = _Value * _PositiveMagnitudeGeometricValues[_Magnitude];
+                        double Trunc = Math.Truncate(Val);
+
+                        return (Val != Trunc);
+                    }
+                }
             }
         }
+
+        //
 
         /// <summary>
         /// 获取表示此 Real 结构是否为偶数的布尔值。
@@ -627,6 +715,17 @@ namespace Com
             get
             {
                 return (_GetParity() == _Parity.Even);
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 Real 结构是否为奇数的布尔值。
+        /// </summary>
+        public bool IsOdd
+        {
+            get
+            {
+                return (_GetParity() == _Parity.Odd);
             }
         }
 
