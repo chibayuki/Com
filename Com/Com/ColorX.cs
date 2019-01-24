@@ -272,17 +272,17 @@ namespace Com
 
         //
 
-        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为在 RGB 色彩空间的 Alpha 通道（A）的值。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为在 RGB 色彩空间的 Alpha 通道（A）的值。此函数不对参数进行合法性检查。
         {
             alpha = opacity / _MaxOpacity * _MaxAlpha;
         }
 
-        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色在 RGB 色彩空间的 Alpha 通道（A）的值转换为不透明度。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色在 RGB 色彩空间的 Alpha 通道（A）的值转换为不透明度。此函数不对参数进行合法性检查。
         {
             opacity = alpha / _MaxAlpha * _MaxOpacity;
         }
 
-        private static void _RGBToHSV(double red, double green, double blue, out double hue, out double saturation, out double brightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSV 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _RGBToHSV(double red, double green, double blue, out double hue, out double saturation, out double brightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSV 色彩空间的各分量。此函数不对参数进行合法性检查。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -353,7 +353,7 @@ namespace Com
             brightness *= _MaxBrightness;
         }
 
-        private static void _HSVToRGB(double hue, double saturation, double brightness, out double red, out double green, out double blue) // 将颜色在 HSV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _HSVToRGB(double hue, double saturation, double brightness, out double red, out double green, out double blue) // 将颜色在 HSV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
         {
             hue /= _MaxHue_HSV;
             saturation /= _MaxSaturation_HSV;
@@ -436,7 +436,7 @@ namespace Com
             blue *= _MaxBlue;
         }
 
-        private static void _RGBToHSL(double red, double green, double blue, out double hue, out double saturation, out double lightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSL 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _RGBToHSL(double red, double green, double blue, out double hue, out double saturation, out double lightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSL 色彩空间的各分量。此函数不对参数进行合法性检查。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -507,7 +507,7 @@ namespace Com
             lightness *= _MaxLightness_HSL;
         }
 
-        private static void _HSLToRGB(double hue, double saturation, double lightness, out double red, out double green, out double blue) // 将颜色在 HSL 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _HSLToRGB(double hue, double saturation, double lightness, out double red, out double green, out double blue) // 将颜色在 HSL 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
         {
             hue /= _MaxHue_HSL;
             saturation /= _MaxSaturation_HSL;
@@ -590,7 +590,7 @@ namespace Com
             blue *= _MaxBlue;
         }
 
-        private static void _RGBToCMYK(double red, double green, double blue, out double cyan, out double magenta, out double yellow, out double black) // 将颜色在 RGB 色彩空间的各分量转换为在 CMYK 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _RGBToCMYK(double red, double green, double blue, out double cyan, out double magenta, out double yellow, out double black) // 将颜色在 RGB 色彩空间的各分量转换为在 CMYK 色彩空间的各分量。此函数不对参数进行合法性检查。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -639,7 +639,7 @@ namespace Com
             black *= _MaxBlack;
         }
 
-        private static void _CMYKToRGB(double cyan, double magenta, double yellow, double black, out double red, out double green, out double blue) // 将颜色在 CMYK 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _CMYKToRGB(double cyan, double magenta, double yellow, double black, out double red, out double green, out double blue) // 将颜色在 CMYK 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
         {
             cyan /= _MaxCyan;
             magenta /= _MaxMagenta;
@@ -664,7 +664,7 @@ namespace Com
             blue *= _MaxBlue;
         }
 
-        private static void _RGBToLAB(double red, double green, double blue, out double lightness, out double greenRed, out double blueYellow) // 将颜色在 RGB 色彩空间的各分量转换为在 LAB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _RGBToLAB(double red, double green, double blue, out double lightness, out double greenRed, out double blueYellow) // 将颜色在 RGB 色彩空间的各分量转换为在 LAB 色彩空间的各分量。此函数不对参数进行合法性检查。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -713,7 +713,7 @@ namespace Com
             blueYellow = 200 * (Fy - Fz);
         }
 
-        private static void _LABToRGB(double lightness, double greenRed, double blueYellow, out double red, out double green, out double blue) // 将颜色在 LAB 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
+        private static void _LABToRGB(double lightness, double greenRed, double blueYellow, out double red, out double green, out double blue) // 将颜色在 LAB 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
         {
             double L = (lightness + 16) / 116;
             double a = greenRed / 500;
