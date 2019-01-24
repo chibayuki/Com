@@ -65,102 +65,79 @@ namespace Com
 
         private static double _CheckUtcOffset(double utcOffset) // 对所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(utcOffset))
+            if (InternalMethod.IsNaNOrInfinity(utcOffset) || (utcOffset < _MinUtcOffset || utcOffset > _MaxUtcOffset))
             {
-                return _LocalUtcOffset;
+                throw new ArgumentOutOfRangeException();
             }
-            else
-            {
-                if (utcOffset < _MinUtcOffset)
-                {
-                    return _MinUtcOffset;
-                }
-                else if (utcOffset > _MaxUtcOffset)
-                {
-                    return _MaxUtcOffset;
-                }
-                else
-                {
-                    return utcOffset;
-                }
-            }
+
+            //
+
+            return utcOffset;
         }
 
         private static decimal _CheckTotalMilliseconds(decimal totalMilliseconds) // 对自公元时刻以来的总毫秒数的值进行合法性检查，返回合法的值。
         {
             decimal _totalMilliseconds = Math.Round(totalMilliseconds);
 
-            if (_totalMilliseconds < _MinTotalMilliseconds)
+            if (_totalMilliseconds < _MinTotalMilliseconds || _totalMilliseconds > _MaxTotalMilliseconds)
             {
-                return _MinTotalMilliseconds;
+                throw new ArgumentOutOfRangeException();
             }
-            else if (_totalMilliseconds > _MaxTotalMilliseconds)
-            {
-                return _MaxTotalMilliseconds;
-            }
-            else
-            {
-                return _totalMilliseconds;
-            }
+
+            //
+
+            return _totalMilliseconds;
         }
 
         private static long _CheckYear(long year, double utcOffset) // 对年的值进行合法性检查，返回合法的值。
         {
             if (year == 0)
             {
-                return _ChristianYear;
-            }
-
-            long MinYear = _MinYear - (utcOffset < 0 ? 1 : 0);
-
-            if (year < MinYear)
-            {
-                return MinYear;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
-                long MaxYear = _MaxYear + (utcOffset > 0 ? 1 : 0);
-
-                if (year > MaxYear)
+                if (year < _MinYear - (utcOffset < 0 ? 1 : 0))
                 {
-                    return MaxYear;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    return year;
+                    if (year > _MaxYear + (utcOffset > 0 ? 1 : 0))
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return year;
+                    }
                 }
             }
         }
 
         private static int _CheckMonth(int month) // 对月的值进行合法性检查，返回合法的值。
         {
-            if (month < _MinMonth)
+            if (month < _MinMonth || month > _MaxMonth)
             {
-                return _MinMonth;
+                throw new ArgumentOutOfRangeException();
             }
-            else if (month > _MaxMonth)
-            {
-                return _MaxMonth;
-            }
-            else
-            {
-                return month;
-            }
+
+            //
+
+            return month;
         }
 
         private static int _CheckDay(long year, int month, int day) // 对日的值进行合法性检查，返回合法的值。
         {
             if (day < _MinDay)
             {
-                return _MinDay;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
-                int _DaysInMonth = DaysInMonth(year, month);
-
-                if (day > _DaysInMonth)
+                if (day > DaysInMonth(year, month))
                 {
-                    return _DaysInMonth;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -171,66 +148,50 @@ namespace Com
 
         private static int _CheckHour(int hour) // 对时的值进行合法性检查，返回合法的值。
         {
-            if (hour < _MinHour)
+            if (hour < _MinHour || hour > _MaxHour)
             {
-                return _MinHour;
+                throw new ArgumentOutOfRangeException();
             }
-            else if (hour > _MaxHour)
-            {
-                return _MaxHour;
-            }
-            else
-            {
-                return hour;
-            }
+
+            //
+
+            return hour;
         }
 
         private static int _CheckMinute(int minute) // 对分的值进行合法性检查，返回合法的值。
         {
-            if (minute < _MinMinute)
+            if (minute < _MinMinute || minute > _MaxMinute)
             {
-                return _MinMinute;
+                throw new ArgumentOutOfRangeException();
             }
-            else if (minute > _MaxMinute)
-            {
-                return _MaxMinute;
-            }
-            else
-            {
-                return minute;
-            }
+
+            //
+
+            return minute;
         }
 
         private static int _CheckSecond(int second) // 对秒的值进行合法性检查，返回合法的值。
         {
-            if (second < _MinSecond)
+            if (second < _MinSecond || second > _MaxSecond)
             {
-                return _MinSecond;
+                throw new ArgumentOutOfRangeException();
             }
-            else if (second > _MaxSecond)
-            {
-                return _MaxSecond;
-            }
-            else
-            {
-                return second;
-            }
+
+            //
+
+            return second;
         }
 
         private static int _CheckMillisecond(int millisecond) // 对毫秒的值进行合法性检查，返回合法的值。
         {
-            if (millisecond < _MinMillisecond)
+            if (millisecond < _MinMillisecond || millisecond > _MaxMillisecond)
             {
-                return _MinMillisecond;
+                throw new ArgumentOutOfRangeException();
             }
-            else if (millisecond > _MaxMillisecond)
-            {
-                return _MaxMillisecond;
-            }
-            else
-            {
-                return millisecond;
-            }
+
+            //
+
+            return millisecond;
         }
 
         //
@@ -867,7 +828,7 @@ namespace Com
         {
             get
             {
-                return _CheckUtcOffset(_UtcOffset);
+                return _UtcOffset;
             }
 
             set
@@ -883,7 +844,7 @@ namespace Com
         {
             get
             {
-                return _CheckTotalMilliseconds(_TotalMilliseconds);
+                return _TotalMilliseconds;
             }
 
             set
@@ -899,7 +860,7 @@ namespace Com
         {
             get
             {
-                return _CheckYear(_Year, _CheckUtcOffset(_UtcOffset));
+                return _Year;
             }
 
             set
@@ -915,7 +876,7 @@ namespace Com
         {
             get
             {
-                return _CheckMonth(_Month);
+                return _Month;
             }
 
             set
@@ -931,7 +892,7 @@ namespace Com
         {
             get
             {
-                return _CheckDay(_CheckYear(_Year, _CheckUtcOffset(_UtcOffset)), _CheckMonth(_Month), _Day);
+                return _Day;
             }
 
             set
@@ -947,7 +908,7 @@ namespace Com
         {
             get
             {
-                return _CheckHour(_Hour);
+                return _Hour;
             }
 
             set
@@ -963,7 +924,7 @@ namespace Com
         {
             get
             {
-                return _CheckMinute(_Minute);
+                return _Minute;
             }
 
             set
@@ -979,7 +940,7 @@ namespace Com
         {
             get
             {
-                return _CheckSecond(_Second);
+                return _Second;
             }
 
             set
@@ -995,7 +956,7 @@ namespace Com
         {
             get
             {
-                return _CheckMillisecond(_Millisecond);
+                return _Millisecond;
             }
 
             set
@@ -1636,11 +1597,11 @@ namespace Com
         {
             if ((double)Year + years - 1 < long.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)Year + years + 1 > long.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1655,19 +1616,15 @@ namespace Com
                     NewYear -= 1;
                 }
 
-                DateTimeX ThisMinValue = _ThisMinValue;
-
-                if (NewYear < ThisMinValue.Year)
+                if (NewYear < _ThisMinValue.Year)
                 {
-                    return ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    DateTimeX ThisMaxValue = _ThisMaxValue;
-
-                    if (NewYear > ThisMaxValue.Year)
+                    if (NewYear > _ThisMaxValue.Year)
                     {
-                        return ThisMaxValue;
+                        throw new ArgumentOutOfRangeException();
                     }
                     else
                     {
@@ -1686,11 +1643,11 @@ namespace Com
         {
             if ((double)Year + (months / _MonthsPerYear) - 2 < long.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)Year + (months / _MonthsPerYear) + 2 > long.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1721,7 +1678,7 @@ namespace Com
 
                 if (NewYear < ThisMinValue.Year || (NewYear == ThisMinValue.Year && NewMonth < ThisMinValue.Month))
                 {
-                    return ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -1729,7 +1686,7 @@ namespace Com
 
                     if (NewYear > ThisMaxValue.Year || (NewYear == ThisMaxValue.Year && NewMonth > ThisMaxValue.Month))
                     {
-                        return ThisMaxValue;
+                        throw new ArgumentOutOfRangeException();
                     }
                     else
                     {
@@ -1748,16 +1705,18 @@ namespace Com
         {
             if (InternalMethod.IsNaNOrInfinity(weeks))
             {
-                return this;
+                throw new ArgumentOutOfRangeException();
             }
+
+            //
 
             if ((double)TotalMilliseconds + weeks * _MillisecondsPerWeek < (double)decimal.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)TotalMilliseconds + weeks * _MillisecondsPerWeek > (double)decimal.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1765,11 +1724,11 @@ namespace Com
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
-                    return _ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else if (NewTotalMS > _MaxTotalMilliseconds)
                 {
-                    return _ThisMaxValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -1787,16 +1746,18 @@ namespace Com
         {
             if (InternalMethod.IsNaNOrInfinity(days))
             {
-                return this;
+                throw new ArgumentOutOfRangeException();
             }
+
+            //
 
             if ((double)TotalMilliseconds + days * _MillisecondsPerDay < (double)decimal.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)TotalMilliseconds + days * _MillisecondsPerDay > (double)decimal.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1804,11 +1765,11 @@ namespace Com
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
-                    return _ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else if (NewTotalMS > _MaxTotalMilliseconds)
                 {
-                    return _ThisMaxValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -1826,16 +1787,18 @@ namespace Com
         {
             if (InternalMethod.IsNaNOrInfinity(hours))
             {
-                return this;
+                throw new ArgumentOutOfRangeException();
             }
+
+            //
 
             if ((double)TotalMilliseconds + hours * _MillisecondsPerHour < (double)decimal.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)TotalMilliseconds + hours * _MillisecondsPerHour > (double)decimal.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1843,11 +1806,11 @@ namespace Com
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
-                    return _ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else if (NewTotalMS > _MaxTotalMilliseconds)
                 {
-                    return _ThisMaxValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -1865,16 +1828,18 @@ namespace Com
         {
             if (InternalMethod.IsNaNOrInfinity(minutes))
             {
-                return this;
+                throw new ArgumentOutOfRangeException();
             }
+
+            //
 
             if ((double)TotalMilliseconds + minutes * _MillisecondsPerMinute < (double)decimal.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)TotalMilliseconds + minutes * _MillisecondsPerMinute > (double)decimal.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1882,11 +1847,11 @@ namespace Com
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
-                    return _ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else if (NewTotalMS > _MaxTotalMilliseconds)
                 {
-                    return _ThisMaxValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -1904,16 +1869,18 @@ namespace Com
         {
             if (InternalMethod.IsNaNOrInfinity(seconds))
             {
-                return this;
+                throw new ArgumentOutOfRangeException();
             }
+
+            //
 
             if ((double)TotalMilliseconds + seconds * _MillisecondsPerSecond < (double)decimal.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)TotalMilliseconds + seconds * _MillisecondsPerSecond > (double)decimal.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1921,11 +1888,11 @@ namespace Com
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
-                    return _ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else if (NewTotalMS > _MaxTotalMilliseconds)
                 {
-                    return _ThisMaxValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -1943,11 +1910,11 @@ namespace Com
         {
             if ((double)TotalMilliseconds + (double)milliseconds < (double)decimal.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)TotalMilliseconds + (double)milliseconds > (double)decimal.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1955,11 +1922,11 @@ namespace Com
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
-                    return _ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else if (NewTotalMS > _MaxTotalMilliseconds)
                 {
-                    return _ThisMaxValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -1977,16 +1944,18 @@ namespace Com
         {
             if (InternalMethod.IsNaNOrInfinity(milliseconds))
             {
-                return this;
+                throw new ArgumentOutOfRangeException();
             }
+
+            //
 
             if ((double)TotalMilliseconds + milliseconds < (double)decimal.MinValue)
             {
-                return _ThisMinValue;
+                throw new ArgumentOutOfRangeException();
             }
             else if ((double)TotalMilliseconds + milliseconds > (double)decimal.MaxValue)
             {
-                return _ThisMaxValue;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
@@ -1994,11 +1963,11 @@ namespace Com
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
-                    return _ThisMinValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else if (NewTotalMS > _MaxTotalMilliseconds)
                 {
-                    return _ThisMaxValue;
+                    throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
@@ -2138,17 +2107,17 @@ namespace Com
         {
             if (year == 0)
             {
-                return false;
+                throw new ArgumentOutOfRangeException();
             }
-            else
-            {
-                if (year < 0)
-                {
-                    year = -year - 1;
-                }
 
-                return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) && (year % 3200 != 0 || year % 172800 == 0));
+            //
+
+            if (year < 0)
+            {
+                year = -year - 1;
             }
+
+            return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) && (year % 3200 != 0 || year % 172800 == 0));
         }
 
         //
@@ -2162,12 +2131,12 @@ namespace Com
         {
             if (year == 0)
             {
-                return -1;
+                throw new ArgumentOutOfRangeException();
             }
-            else
-            {
-                return (IsLeapYear(year) ? 366 : 365);
-            }
+
+            //
+
+            return (IsLeapYear(year) ? 366 : 365);
         }
 
         /// <summary>
@@ -2180,14 +2149,14 @@ namespace Com
         {
             if (year == 0 || (month < _MinMonth || month > _MaxMonth))
             {
-                return -1;
+                throw new ArgumentOutOfRangeException();
             }
-            else
-            {
-                int[] DaysToMonth = (IsLeapYear(year) ? _DaysToMonth366 : _DaysToMonth365);
 
-                return (DaysToMonth[month] - DaysToMonth[month - 1]);
-            }
+            //
+
+            int[] DaysToMonth = (IsLeapYear(year) ? _DaysToMonth366 : _DaysToMonth365);
+
+            return (DaysToMonth[month] - DaysToMonth[month - 1]);
         }
 
         #endregion

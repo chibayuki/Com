@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Drawing;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Com
@@ -27,423 +28,261 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private const double _MinOpacity = 0D, _MaxOpacity = 100D; // 颜色的不透明度的最小值与最大值。
+        private const double _MinOpacity = 0, _MaxOpacity = 100; // 不透明度的最小值与最大值。
 
-        private const double _MinAlpha = 0D, _MaxAlpha = 255D; // 颜色在 RGB 色彩空间的 Alpha 通道（A）的最小值与最大值。
-        private const double _MinRed = 0D, _MaxRed = 255D; // 颜色在 RGB 色彩空间的红色通道（R）的最小值与最大值。
-        private const double _MinGreen = 0D, _MaxGreen = 255D; // 颜色在 RGB 色彩空间的绿色通道（G）的最小值与最大值。
-        private const double _MinBlue = 0D, _MaxBlue = 255D; // 颜色在 RGB 色彩空间的蓝色通道（B）的最小值与最大值。
+        private const double _MinAlpha = 0, _MaxAlpha = 255; // RGB 色彩空间的 Alpha 通道（A）的最小值与最大值。
+        private const double _MinRed = 0, _MaxRed = 255; // RGB 色彩空间的红色通道（R）的最小值与最大值。
+        private const double _MinGreen = 0, _MaxGreen = 255; // RGB 色彩空间的绿色通道（G）的最小值与最大值。
+        private const double _MinBlue = 0, _MaxBlue = 255; // RGB 色彩空间的蓝色通道（B）的最小值与最大值。
 
-        private const double _MinHue_HSV = 0D, _MaxHue_HSV = 360D; // 颜色在 HSV 色彩空间的色相（H）的最小值与最大值。
-        private const double _MinSaturation_HSV = 0D, _MaxSaturation_HSV = 100D; // 颜色在 HSV 色彩空间的饱和度（S）的最小值与最大值。
-        private const double _MinBrightness = 0D, _MaxBrightness = 100D; // 颜色在 HSV 色彩空间的明度（V）的最小值与最大值。
+        private const double _MinHue_HSV = 0, _MaxHue_HSV = 360; // HSV 色彩空间的色相（H）的最小值与最大值。
+        private const double _MinSaturation_HSV = 0, _MaxSaturation_HSV = 100; // HSV 色彩空间的饱和度（S）的最小值与最大值。
+        private const double _MinBrightness = 0, _MaxBrightness = 100; // HSV 色彩空间的明度（V）的最小值与最大值。
 
-        private const double _MinHue_HSL = 0D, _MaxHue_HSL = 360D; // 颜色在 HSL 色彩空间的色相（H）的最小值与最大值。
-        private const double _MinSaturation_HSL = 0D, _MaxSaturation_HSL = 100D; // 颜色在 HSL 色彩空间的饱和度（S）的最小值与最大值。
-        private const double _MinLightness_HSL = 0D, _MaxLightness_HSL = 100D; // 颜色在 HSL 色彩空间的明度（L）的最小值与最大值。
+        private const double _MinHue_HSL = 0, _MaxHue_HSL = 360; // HSL 色彩空间的色相（H）的最小值与最大值。
+        private const double _MinSaturation_HSL = 0, _MaxSaturation_HSL = 100; // HSL 色彩空间的饱和度（S）的最小值与最大值。
+        private const double _MinLightness_HSL = 0, _MaxLightness_HSL = 100; // HSL 色彩空间的明度（L）的最小值与最大值。
 
-        private const double _MinCyan = 0D, _MaxCyan = 100D; // 颜色在 CMYK 色彩空间的青色通道（C）的最小值与最大值。
-        private const double _MinMagenta = 0D, _MaxMagenta = 100D; // 颜色在 CMYK 色彩空间的洋红色通道（M）的最小值与最大值。
-        private const double _MinYellow = 0D, _MaxYellow = 100D; // 颜色在 CMYK 色彩空间的黄色通道（Y）的最小值与最大值。
-        private const double _MinBlack = 0D, _MaxBlack = 100D; // 颜色在 CMYK 色彩空间的黑色通道（K）的最小值与最大值。
+        private const double _MinCyan = 0, _MaxCyan = 100; // CMYK 色彩空间的青色通道（C）的最小值与最大值。
+        private const double _MinMagenta = 0, _MaxMagenta = 100; // CMYK 色彩空间的洋红色通道（M）的最小值与最大值。
+        private const double _MinYellow = 0, _MaxYellow = 100; // CMYK 色彩空间的黄色通道（Y）的最小值与最大值。
+        private const double _MinBlack = 0, _MaxBlack = 100; // CMYK 色彩空间的黑色通道（K）的最小值与最大值。
 
-        private const double _MinLightness_LAB = 0D, _MaxLightness_LAB = 100D; // 颜色在 LAB 色彩空间的明度（L）的最小值与最大值。
-        private const double _MinGreenRed = -128D, _MaxGreenRed = 128D; // 颜色在 LAB 色彩空间的绿色-红色通道（A）的最小值与最大值。
-        private const double _MinBlueYellow = -128D, _MaxBlueYellow = 128D; // 颜色在 LAB 色彩空间的蓝色-黄色通道（B）的最小值与最大值。
+        private const double _MinLightness_LAB = 0, _MaxLightness_LAB = 100; // LAB 色彩空间的明度（L）的最小值与最大值。
+        private const double _MinGreenRed = -128, _MaxGreenRed = 128; // LAB 色彩空间的绿色-红色通道（A）的最小值与最大值。
+        private const double _MinBlueYellow = -128, _MaxBlueYellow = 128; // LAB 色彩空间的蓝色-黄色通道（B）的最小值与最大值。
 
         //
 
         private static double _CheckOpacity(double opacity) // 对颜色的不透明度的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(opacity))
+            if (InternalMethod.IsNaNOrInfinity(opacity) || (opacity < _MinOpacity || opacity > _MaxOpacity))
             {
-                return _MinOpacity;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (opacity < _MinOpacity)
-            {
-                return _MinOpacity;
-            }
-            else if (opacity > _MaxOpacity)
-            {
-                return _MaxOpacity;
-            }
-            else
-            {
-                return opacity;
-            }
+            //
+
+            return opacity;
         }
 
         private static double _CheckAlpha(double alpha) // 对颜色在 RGB 色彩空间的 Alpha 通道（A）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(alpha))
+            if (InternalMethod.IsNaNOrInfinity(alpha) || (alpha < _MinAlpha || alpha > _MaxAlpha))
             {
-                return _MinAlpha;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (alpha < _MinAlpha)
-            {
-                return _MinAlpha;
-            }
-            else if (alpha > _MaxAlpha)
-            {
-                return _MaxAlpha;
-            }
-            else
-            {
-                return alpha;
-            }
+            //
+
+            return alpha;
         }
 
         private static double _CheckRed(double red) // 对颜色在 RGB 色彩空间的红色通道（R）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(red))
+            if (InternalMethod.IsNaNOrInfinity(red) || (red < _MinRed || red > _MaxRed))
             {
-                return _MinRed;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (red < _MinRed)
-            {
-                return _MinRed;
-            }
-            else if (red > _MaxRed)
-            {
-                return _MaxRed;
-            }
-            else
-            {
-                return red;
-            }
+            //
+
+            return red;
         }
 
         private static double _CheckGreen(double green) // 对颜色在 RGB 色彩空间的绿色通道（G）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(green))
+            if (InternalMethod.IsNaNOrInfinity(green) || (green < _MinGreen || green > _MaxGreen))
             {
-                return _MinGreen;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (green < _MinGreen)
-            {
-                return _MinGreen;
-            }
-            else if (green > _MaxGreen)
-            {
-                return _MaxGreen;
-            }
-            else
-            {
-                return green;
-            }
+            //
+
+            return green;
         }
 
         private static double _CheckBlue(double blue) // 对颜色在 RGB 色彩空间的蓝色通道（B）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(blue))
+            if (InternalMethod.IsNaNOrInfinity(blue) || (blue < _MinBlue || blue > _MaxBlue))
             {
-                return _MinBlue;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (blue < _MinBlue)
-            {
-                return _MinBlue;
-            }
-            else if (blue > _MaxBlue)
-            {
-                return _MaxBlue;
-            }
-            else
-            {
-                return blue;
-            }
+            //
+
+            return blue;
         }
 
         private static double _CheckHue_HSV(double hue) // 对颜色在 HSV 色彩空间的色相（H）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(hue))
+            if (InternalMethod.IsNaNOrInfinity(hue) || (hue < _MinHue_HSV || hue > _MaxHue_HSV))
             {
-                return _MinHue_HSV;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (hue < _MinHue_HSV)
-            {
-                return _MinHue_HSV;
-            }
-            else if (hue > _MaxHue_HSV)
-            {
-                return _MaxHue_HSV;
-            }
-            else
-            {
-                return hue;
-            }
+            //
+
+            return hue;
         }
 
         private static double _CheckSaturation_HSV(double saturation) // 对颜色在 HSV 色彩空间的饱和度（S）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(saturation))
+            if (InternalMethod.IsNaNOrInfinity(saturation) || (saturation < _MinSaturation_HSV || saturation > _MaxSaturation_HSV))
             {
-                return _MinSaturation_HSV;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (saturation < _MinSaturation_HSV)
-            {
-                return _MinSaturation_HSV;
-            }
-            else if (saturation > _MaxSaturation_HSV)
-            {
-                return _MaxSaturation_HSV;
-            }
-            else
-            {
-                return saturation;
-            }
+            //
+
+            return saturation;
         }
 
         private static double _CheckBrightness(double brightness) // 对颜色在 HSV 色彩空间的明度（V）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(brightness))
+            if (InternalMethod.IsNaNOrInfinity(brightness) || (brightness < _MinBrightness || brightness > _MaxBrightness))
             {
-                return _MinBrightness;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (brightness < _MinBrightness)
-            {
-                return _MinBrightness;
-            }
-            else if (brightness > _MaxBrightness)
-            {
-                return _MaxBrightness;
-            }
-            else
-            {
-                return brightness;
-            }
+            //
+
+            return brightness;
         }
 
         private static double _CheckHue_HSL(double hue) // 对颜色在 HSL 色彩空间的色相（H）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(hue))
+            if (InternalMethod.IsNaNOrInfinity(hue) || (hue < _MinHue_HSL || hue > _MaxHue_HSL))
             {
-                return _MinHue_HSL;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (hue < _MinHue_HSL)
-            {
-                return _MinHue_HSL;
-            }
-            else if (hue > _MaxHue_HSL)
-            {
-                return _MaxHue_HSL;
-            }
-            else
-            {
-                return hue;
-            }
+            //
+
+            return hue;
         }
 
         private static double _CheckSaturation_HSL(double saturation) // 对颜色在 HSL 色彩空间的饱和度（S）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(saturation))
+            if (InternalMethod.IsNaNOrInfinity(saturation) || (saturation < _MinSaturation_HSL || saturation > _MaxSaturation_HSL))
             {
-                return _MinSaturation_HSL;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (saturation < _MinSaturation_HSL)
-            {
-                return _MinSaturation_HSL;
-            }
-            else if (saturation > _MaxSaturation_HSL)
-            {
-                return _MaxSaturation_HSL;
-            }
-            else
-            {
-                return saturation;
-            }
+            //
+
+            return saturation;
         }
 
         private static double _CheckLightness_HSL(double lightness) // 对颜色在 HSL 色彩空间的明度（L）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(lightness))
+            if (InternalMethod.IsNaNOrInfinity(lightness) || (lightness < _MinLightness_HSL || lightness > _MaxLightness_HSL))
             {
-                return _MinLightness_HSL;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (lightness < _MinLightness_HSL)
-            {
-                return _MinLightness_HSL;
-            }
-            else if (lightness > _MaxLightness_HSL)
-            {
-                return _MaxLightness_HSL;
-            }
-            else
-            {
-                return lightness;
-            }
+            //
+
+            return lightness;
         }
 
         private static double _CheckCyan(double cyan) // 对颜色在 CMYK 色彩空间的青色通道（C）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(cyan))
+            if (InternalMethod.IsNaNOrInfinity(cyan) || (cyan < _MinCyan || cyan > _MaxCyan))
             {
-                return _MinCyan;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (cyan < _MinCyan)
-            {
-                return _MinCyan;
-            }
-            else if (cyan > _MaxCyan)
-            {
-                return _MaxCyan;
-            }
-            else
-            {
-                return cyan;
-            }
+            //
+
+            return cyan;
         }
 
         private static double _CheckMagenta(double magenta) // 对颜色在 CMYK 色彩空间的洋红色通道（M）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(magenta))
+            if (InternalMethod.IsNaNOrInfinity(magenta) || (magenta < _MinMagenta || magenta > _MaxMagenta))
             {
-                return _MinMagenta;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (magenta < _MinMagenta)
-            {
-                return _MinMagenta;
-            }
-            else if (magenta > _MaxMagenta)
-            {
-                return _MaxMagenta;
-            }
-            else
-            {
-                return magenta;
-            }
+            //
+
+            return magenta;
         }
 
         private static double _CheckYellow(double yellow) // 对颜色在 CMYK 色彩空间的黄色通道（Y）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(yellow))
+            if (InternalMethod.IsNaNOrInfinity(yellow) || (yellow < _MinYellow || yellow > _MaxYellow))
             {
-                return _MinYellow;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (yellow < _MinYellow)
-            {
-                return _MinYellow;
-            }
-            else if (yellow > _MaxYellow)
-            {
-                return _MaxYellow;
-            }
-            else
-            {
-                return yellow;
-            }
+            //
+
+            return yellow;
         }
 
         private static double _CheckBlack(double black) // 对颜色在 CMYK 色彩空间的黑色通道（K）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(black))
+            if (InternalMethod.IsNaNOrInfinity(black) || (black < _MinBlack || black > _MaxBlack))
             {
-                return _MaxBlack;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (black < _MinBlack)
-            {
-                return _MinBlack;
-            }
-            else if (black > _MaxBlack)
-            {
-                return _MaxBlack;
-            }
-            else
-            {
-                return black;
-            }
+            //
+
+            return black;
         }
 
         private static double _CheckLightness_LAB(double lightness) // 对颜色在 LAB 色彩空间的明度（L）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(lightness))
+            if (InternalMethod.IsNaNOrInfinity(lightness) || (lightness < _MinLightness_LAB || lightness > _MaxLightness_LAB))
             {
-                return _MinLightness_LAB;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (lightness < _MinLightness_LAB)
-            {
-                return _MinLightness_LAB;
-            }
-            else if (lightness > _MaxLightness_LAB)
-            {
-                return _MaxLightness_LAB;
-            }
-            else
-            {
-                return lightness;
-            }
+            //
+
+            return lightness;
         }
 
         private static double _CheckGreenRed(double greenRed) // 对颜色在 LAB 色彩空间的绿色-红色通道（A）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(greenRed))
+            if (InternalMethod.IsNaNOrInfinity(greenRed) || (greenRed < _MinGreenRed || greenRed > _MaxGreenRed))
             {
-                return 0;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (greenRed < _MinGreenRed)
-            {
-                return _MinGreenRed;
-            }
-            else if (greenRed > _MaxGreenRed)
-            {
-                return _MaxGreenRed;
-            }
-            else
-            {
-                return greenRed;
-            }
+            //
+
+            return greenRed;
         }
 
         private static double _CheckBlueYellow(double blueYellow) // 对颜色在 LAB 色彩空间的蓝色-黄色通道（B）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(blueYellow))
+            if (InternalMethod.IsNaNOrInfinity(blueYellow) || (blueYellow < _MinBlueYellow || blueYellow > _MaxBlueYellow))
             {
-                return 0;
+                throw new ArgumentOutOfRangeException();
             }
 
-            if (blueYellow < _MinBlueYellow)
-            {
-                return _MinBlueYellow;
-            }
-            else if (blueYellow > _MaxBlueYellow)
-            {
-                return _MaxBlueYellow;
-            }
-            else
-            {
-                return blueYellow;
-            }
+            //
+
+            return blueYellow;
         }
 
         //
 
-        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为在 RGB 色彩空间的 Alpha 通道（A）的值。此函数不对参数进行合法性检查。
+        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为在 RGB 色彩空间的 Alpha 通道（A）的值。此函数不对参数进行合法性检查，返回合法的值。
         {
             alpha = opacity / _MaxOpacity * _MaxAlpha;
         }
 
-        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色在 RGB 色彩空间的 Alpha 通道（A）的值转换为不透明度。此函数不对参数进行合法性检查。
+        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色在 RGB 色彩空间的 Alpha 通道（A）的值转换为不透明度。此函数不对参数进行合法性检查，返回合法的值。
         {
             opacity = alpha / _MaxAlpha * _MaxOpacity;
         }
 
-        private static void _RGBToHSV(double red, double green, double blue, out double hue, out double saturation, out double brightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSV 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _RGBToHSV(double red, double green, double blue, out double hue, out double saturation, out double brightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSV 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -514,7 +353,7 @@ namespace Com
             brightness *= _MaxBrightness;
         }
 
-        private static void _HSVToRGB(double hue, double saturation, double brightness, out double red, out double green, out double blue) // 将颜色在 HSV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _HSVToRGB(double hue, double saturation, double brightness, out double red, out double green, out double blue) // 将颜色在 HSV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
         {
             hue /= _MaxHue_HSV;
             saturation /= _MaxSaturation_HSV;
@@ -597,7 +436,7 @@ namespace Com
             blue *= _MaxBlue;
         }
 
-        private static void _RGBToHSL(double red, double green, double blue, out double hue, out double saturation, out double lightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSL 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _RGBToHSL(double red, double green, double blue, out double hue, out double saturation, out double lightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSL 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -668,7 +507,7 @@ namespace Com
             lightness *= _MaxLightness_HSL;
         }
 
-        private static void _HSLToRGB(double hue, double saturation, double lightness, out double red, out double green, out double blue) // 将颜色在 HSL 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _HSLToRGB(double hue, double saturation, double lightness, out double red, out double green, out double blue) // 将颜色在 HSL 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
         {
             hue /= _MaxHue_HSL;
             saturation /= _MaxSaturation_HSL;
@@ -751,7 +590,7 @@ namespace Com
             blue *= _MaxBlue;
         }
 
-        private static void _RGBToCMYK(double red, double green, double blue, out double cyan, out double magenta, out double yellow, out double black) // 将颜色在 RGB 色彩空间的各分量转换为在 CMYK 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _RGBToCMYK(double red, double green, double blue, out double cyan, out double magenta, out double yellow, out double black) // 将颜色在 RGB 色彩空间的各分量转换为在 CMYK 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -800,7 +639,7 @@ namespace Com
             black *= _MaxBlack;
         }
 
-        private static void _CMYKToRGB(double cyan, double magenta, double yellow, double black, out double red, out double green, out double blue) // 将颜色在 CMYK 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _CMYKToRGB(double cyan, double magenta, double yellow, double black, out double red, out double green, out double blue) // 将颜色在 CMYK 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
         {
             cyan /= _MaxCyan;
             magenta /= _MaxMagenta;
@@ -825,7 +664,7 @@ namespace Com
             blue *= _MaxBlue;
         }
 
-        private static void _RGBToLAB(double red, double green, double blue, out double lightness, out double greenRed, out double blueYellow) // 将颜色在 RGB 色彩空间的各分量转换为在 LAB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _RGBToLAB(double red, double green, double blue, out double lightness, out double greenRed, out double blueYellow) // 将颜色在 RGB 色彩空间的各分量转换为在 LAB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -874,7 +713,7 @@ namespace Com
             blueYellow = 200 * (Fy - Fz);
         }
 
-        private static void _LABToRGB(double lightness, double greenRed, double blueYellow, out double red, out double green, out double blue) // 将颜色在 LAB 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _LABToRGB(double lightness, double greenRed, double blueYellow, out double red, out double green, out double blue) // 将颜色在 LAB 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查，返回合法的值。
         {
             double L = (lightness + 16) / 116;
             double a = greenRed / 500;
@@ -921,65 +760,6 @@ namespace Com
             red *= _MaxRed;
             green *= _MaxGreen;
             blue *= _MaxBlue;
-        }
-
-        //
-
-        private static string _ByteToHexString(byte num) // 将 8 位无符号整数转换为 16 进制字符串。
-        {
-            int High = num / 16, Low = num % 16;
-
-            Func<int, char> DecToHexCode = (dec) =>
-            {
-                if (dec >= 0 && dec <= 9)
-                {
-                    return (char)('0' + dec);
-                }
-                else if (dec >= 10 && dec <= 15)
-                {
-                    return (char)('A' + dec - 10);
-                }
-                else
-                {
-                    return '\0';
-                }
-            };
-
-            return string.Concat(DecToHexCode(High), DecToHexCode(Low));
-        }
-
-        private static byte _HexStringToByte(string str) // 将 16 进制字符串转换为 8 位无符号整数。
-        {
-            if (string.IsNullOrEmpty(str) || str.Length != 2)
-            {
-                return 0;
-            }
-            else
-            {
-                char High = str[0], Low = str[1];
-
-                Func<char, int> HexCodeToDec = (hex) =>
-                {
-                    if (hex >= '0' && hex <= '9')
-                    {
-                        return (hex - '0');
-                    }
-                    else if (hex >= 'A' && hex <= 'F')
-                    {
-                        return (hex - 'A' + 10);
-                    }
-                    else if (hex >= 'a' && hex <= 'f')
-                    {
-                        return (hex - 'a' + 10);
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                };
-
-                return (byte)(HexCodeToDec(High) * 16 + HexCodeToDec(Low));
-            }
         }
 
         //
@@ -1198,6 +978,38 @@ namespace Com
             _CtorRGB(color.A, color.R, color.G, color.B);
         }
 
+        /// <summary>
+        /// 使用颜色的 16 进制 ARGB 码或 RGB 码初始化 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="hexCode">颜色的 16 进制 ARGB 码或 RGB 码。</param>
+        public ColorX(string hexCode)
+        {
+            if (string.IsNullOrEmpty(hexCode))
+            {
+                throw new ArgumentNullException();
+            }
+
+            string HexCode = new Regex(@"[^A-Fa-f\d]").Replace(hexCode, string.Empty);
+
+            if (string.IsNullOrEmpty(HexCode))
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (HexCode.Length > 8)
+            {
+                throw new OverflowException();
+            }
+
+            //
+
+            this = default(ColorX);
+
+            Color color = Color.FromArgb(int.Parse(HexCode, NumberStyles.HexNumber));
+
+            _CtorRGB(color.A, color.R, color.G, color.B);
+        }
+
         #endregion
 
         #region 字段
@@ -1247,7 +1059,7 @@ namespace Com
         {
             get
             {
-                return _CheckOpacity(_Opacity);
+                return _Opacity;
             }
 
             set
@@ -1269,7 +1081,7 @@ namespace Com
         {
             get
             {
-                return _CheckAlpha(_Alpha);
+                return _Alpha;
             }
 
             set
@@ -1289,7 +1101,7 @@ namespace Com
         {
             get
             {
-                return _CheckRed(_Red);
+                return _Red;
             }
 
             set
@@ -1305,7 +1117,7 @@ namespace Com
         {
             get
             {
-                return _CheckGreen(_Green);
+                return _Green;
             }
 
             set
@@ -1321,7 +1133,7 @@ namespace Com
         {
             get
             {
-                return _CheckBlue(_Blue);
+                return _Blue;
             }
 
             set
@@ -1339,7 +1151,7 @@ namespace Com
         {
             get
             {
-                return _CheckHue_HSV(_Hue_HSV);
+                return _Hue_HSV;
             }
 
             set
@@ -1355,7 +1167,7 @@ namespace Com
         {
             get
             {
-                return _CheckSaturation_HSV(_Saturation_HSV);
+                return _Saturation_HSV;
             }
 
             set
@@ -1371,7 +1183,7 @@ namespace Com
         {
             get
             {
-                return _CheckBrightness(_Brightness);
+                return _Brightness;
             }
 
             set
@@ -1389,7 +1201,7 @@ namespace Com
         {
             get
             {
-                return _CheckHue_HSL(_Hue_HSL);
+                return _Hue_HSL;
             }
 
             set
@@ -1405,7 +1217,7 @@ namespace Com
         {
             get
             {
-                return _CheckSaturation_HSL(_Saturation_HSL);
+                return _Saturation_HSL;
             }
 
             set
@@ -1421,7 +1233,7 @@ namespace Com
         {
             get
             {
-                return _CheckLightness_HSL(_Lightness_HSL);
+                return _Lightness_HSL;
             }
 
             set
@@ -1439,7 +1251,7 @@ namespace Com
         {
             get
             {
-                return _CheckCyan(_Cyan);
+                return _Cyan;
             }
 
             set
@@ -1455,7 +1267,7 @@ namespace Com
         {
             get
             {
-                return _CheckMagenta(_Magenta);
+                return _Magenta;
             }
 
             set
@@ -1471,7 +1283,7 @@ namespace Com
         {
             get
             {
-                return _CheckYellow(_Yellow);
+                return _Yellow;
             }
 
             set
@@ -1487,14 +1299,7 @@ namespace Com
         {
             get
             {
-                if (_CheckRed(_Red) == 0 && _CheckGreen(_Green) == 0 && _CheckBlue(_Blue) == 0)
-                {
-                    return _MaxBlack;
-                }
-                else
-                {
-                    return _CheckBlack(_Black);
-                }
+                return _Black;
             }
 
             set
@@ -1512,7 +1317,7 @@ namespace Com
         {
             get
             {
-                return _CheckLightness_LAB(_Lightness_LAB);
+                return _Lightness_LAB;
             }
 
             set
@@ -1528,7 +1333,7 @@ namespace Com
         {
             get
             {
-                return _CheckGreenRed(_GreenRed);
+                return _GreenRed;
             }
 
             set
@@ -1544,7 +1349,7 @@ namespace Com
         {
             get
             {
-                return _CheckBlueYellow(_BlueYellow);
+                return _BlueYellow;
             }
 
             set
@@ -1562,7 +1367,7 @@ namespace Com
         {
             get
             {
-                return new PointD3D(_CheckRed(_Red), _CheckGreen(_Green), _CheckBlue(_Blue));
+                return new PointD3D(_Red, _Green, _Blue);
             }
 
             set
@@ -1578,7 +1383,7 @@ namespace Com
         {
             get
             {
-                return new PointD3D(_CheckHue_HSV(_Hue_HSV), _CheckSaturation_HSV(_Saturation_HSV), _CheckBrightness(_Brightness));
+                return new PointD3D(_Hue_HSV, _Saturation_HSV, _Brightness);
             }
 
             set
@@ -1594,7 +1399,7 @@ namespace Com
         {
             get
             {
-                return new PointD3D(_CheckHue_HSL(_Hue_HSL), _CheckSaturation_HSL(_Saturation_HSL), _CheckLightness_HSL(_Lightness_HSL));
+                return new PointD3D(_Hue_HSL, _Saturation_HSL, _Lightness_HSL);
             }
 
             set
@@ -1610,7 +1415,7 @@ namespace Com
         {
             get
             {
-                return new PointD4D(_CheckCyan(_Cyan), _CheckMagenta(_Magenta), _CheckYellow(_Yellow), _CheckBlack(_Black));
+                return new PointD4D(_Cyan, _Magenta, _Yellow, _Black);
             }
 
             set
@@ -1626,7 +1431,7 @@ namespace Com
         {
             get
             {
-                return new PointD3D(_CheckLightness_LAB(_Lightness_LAB), _CheckGreenRed(_GreenRed), _CheckBlueYellow(_BlueYellow));
+                return new PointD3D(_Lightness_LAB, _GreenRed, _BlueYellow);
             }
 
             set
@@ -1661,7 +1466,7 @@ namespace Com
             {
                 ColorX color = default(ColorX);
 
-                double Y = 0.2126 * _CheckRed(_Red) + 0.7152 * _CheckGreen(_Green) + 0.0722 * _CheckBlue(_Blue);
+                double Y = 0.2126 * _Red + 0.7152 * _Green + 0.0722 * _Blue;
 
                 color._CtorRGB(_Alpha, Y, Y, Y);
 
@@ -1678,7 +1483,20 @@ namespace Com
         {
             get
             {
-                return string.Concat("#", _ByteToHexString((byte)Math.Round(_CheckAlpha(_Alpha))), _ByteToHexString((byte)Math.Round(_CheckRed(_Red))), _ByteToHexString((byte)Math.Round(_CheckGreen(_Green))), _ByteToHexString((byte)Math.Round(_CheckBlue(_Blue))));
+                int Argb = (int)Math.Round(_Alpha) * 16777216 + (int)Math.Round(_Red) * 65536 + (int)Math.Round(_Green) * 256 + (int)Math.Round(_Blue);
+
+                string HexCode = Convert.ToString(Argb, 16).ToUpper();
+
+                int Len = HexCode.Length;
+
+                if (Len < 8)
+                {
+                    return ("#" + HexCode.PadLeft(8, '0'));
+                }
+                else
+                {
+                    return ("#" + HexCode);
+                }
             }
         }
 
@@ -1689,7 +1507,20 @@ namespace Com
         {
             get
             {
-                return string.Concat("#", _ByteToHexString((byte)Math.Round(_CheckRed(_Red))), _ByteToHexString((byte)Math.Round(_CheckGreen(_Green))), _ByteToHexString((byte)Math.Round(_CheckBlue(_Blue))));
+                int Rgb = (int)Math.Round(_Red) * 65536 + (int)Math.Round(_Green) * 256 + (int)Math.Round(_Blue);
+
+                string HexCode = Convert.ToString(Rgb, 16).ToUpper();
+
+                int Len = HexCode.Length;
+
+                if (Len < 6)
+                {
+                    return ("#" + HexCode.PadLeft(6, '0'));
+                }
+                else
+                {
+                    return ("#" + HexCode);
+                }
             }
         }
 
@@ -1773,7 +1604,7 @@ namespace Com
             }
             else
             {
-                return Color.FromArgb((int)Math.Round(_CheckAlpha(_Alpha)), (int)Math.Round(_CheckRed(_Red)), (int)Math.Round(_CheckGreen(_Green)), (int)Math.Round(_CheckBlue(_Blue)));
+                return Color.FromArgb((int)Math.Round(_Alpha), (int)Math.Round(_Red), (int)Math.Round(_Green), (int)Math.Round(_Blue));
             }
         }
 
@@ -2090,7 +1921,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将 Color 结构转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromColor(int alpha, Color color)
         {
-            return new ColorX(Color.FromArgb((int)Math.Round(_CheckAlpha(alpha)), color));
+            return new ColorX(Color.FromArgb(alpha, color));
         }
 
         /// <summary>
@@ -2440,35 +2271,11 @@ namespace Com
         /// <summary>
         /// 返回将颜色的 16 进制 ARGB 码或 RGB 码转换为 ColorX 结构的新实例。
         /// </summary>
-        /// <param name="hexCode">表示颜色的 16 进制 ARGB 码或 RGB 码的字符串。</param>
+        /// <param name="hexCode">颜色的 16 进制 ARGB 码或 RGB 码。</param>
         /// <returns>ColorX 结构，表示将颜色的 16 进制 ARGB 码或 RGB 码转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHexCode(string hexCode)
         {
-            if (string.IsNullOrEmpty(hexCode))
-            {
-                return Empty;
-            }
-            else
-            {
-                string HexCode = new Regex(@"[^A-Fa-f\d]").Replace(hexCode, string.Empty).ToUpper();
-
-                if (HexCode.Length == 8)
-                {
-                    string A = HexCode.Substring(0, 2), R = HexCode.Substring(2, 2), G = HexCode.Substring(4, 2), B = HexCode.Substring(6, 2);
-
-                    return FromRGB(_HexStringToByte(A), _HexStringToByte(R), _HexStringToByte(G), _HexStringToByte(B));
-                }
-                else if (HexCode.Length == 6)
-                {
-                    string R = HexCode.Substring(0, 2), G = HexCode.Substring(2, 2), B = HexCode.Substring(4, 2);
-
-                    return FromRGB(_HexStringToByte(R), _HexStringToByte(G), _HexStringToByte(B));
-                }
-                else
-                {
-                    return Empty;
-                }
-            }
+            return new ColorX(hexCode);
         }
 
         //
