@@ -54,220 +54,444 @@ namespace Com
 
         //
 
+        private const double _MinOpacity_FloDev = _MinOpacity - 5E-13, _MaxOpacity_FloDev = _MaxOpacity + 5E-11; // 不透明度的最小值与最大值，包含浮点偏差。
+
+        private const double _MinAlpha_FloDev = _MinAlpha - 5E-13, _MaxAlpha_FloDev = _MaxAlpha + 5E-11; // RGB 色彩空间的 Alpha 通道（A）的最小值与最大值，包含浮点偏差。
+        private const double _MinRed_FloDev = _MinRed - 5E-13, _MaxRed_FloDev = _MaxRed + 5E-11; // RGB 色彩空间的红色通道（R）的最小值与最大值，包含浮点偏差。
+        private const double _MinGreen_FloDev = _MinGreen - 5E-13, _MaxGreen_FloDev = _MaxGreen + 5E-11; // RGB 色彩空间的绿色通道（G）的最小值与最大值，包含浮点偏差。
+        private const double _MinBlue_FloDev = _MinBlue - 5E-13, _MaxBlue_FloDev = _MaxBlue + 5E-11; // RGB 色彩空间的蓝色通道（B）的最小值与最大值，包含浮点偏差。
+
+        private const double _MinHue_HSV_FloDev = _MinHue_HSV - 5E-13, _MaxHue_HSV_FloDev = _MaxHue_HSV + 5E-11; // HSV 色彩空间的色相（H）的最小值与最大值，包含浮点偏差。
+        private const double _MinSaturation_HSV_FloDev = _MinSaturation_HSV - 5E-13, _MaxSaturation_HSV_FloDev = _MaxSaturation_HSV + 5E-11; // HSV 色彩空间的饱和度（S）的最小值与最大值，包含浮点偏差。
+        private const double _MinBrightness_FloDev = _MinBrightness - 5E-13, _MaxBrightness_FloDev = _MaxBrightness + 5E-11; // HSV 色彩空间的明度（V）的最小值与最大值，包含浮点偏差。
+
+        private const double _MinHue_HSL_FloDev = _MinHue_HSL - 5E-13, _MaxHue_HSL_FloDev = _MaxHue_HSL + 5E-11; // HSL 色彩空间的色相（H）的最小值与最大值，包含浮点偏差。
+        private const double _MinSaturation_HSL_FloDev = _MinSaturation_HSL - 5E-13, _MaxSaturation_HSL_FloDev = _MaxSaturation_HSL + 5E-11; // HSL 色彩空间的饱和度（S）的最小值与最大值，包含浮点偏差。
+        private const double _MinLightness_HSL_FloDev = _MinLightness_HSL - 5E-13, _MaxLightness_HSL_FloDev = _MaxLightness_HSL + 5E-11; // HSL 色彩空间的明度（L）的最小值与最大值，包含浮点偏差。
+
+        private const double _MinCyan_FloDev = _MinCyan - 5E-13, _MaxCyan_FloDev = _MaxCyan + 5E-11; // CMYK 色彩空间的青色通道（C）的最小值与最大值，包含浮点偏差。
+        private const double _MinMagenta_FloDev = _MinMagenta - 5E-13, _MaxMagenta_FloDev = _MaxMagenta + 5E-11; // CMYK 色彩空间的洋红色通道（M）的最小值与最大值，包含浮点偏差。
+        private const double _MinYellow_FloDev = _MinYellow - 5E-13, _MaxYellow_FloDev = _MaxYellow + 5E-11; // CMYK 色彩空间的黄色通道（Y）的最小值与最大值，包含浮点偏差。
+        private const double _MinBlack_FloDev = _MinBlack - 5E-13, _MaxBlack_FloDev = _MaxBlack + 5E-11; // CMYK 色彩空间的黑色通道（K）的最小值与最大值，包含浮点偏差。
+
+        private const double _MinLightness_LAB_FloDev = _MinLightness_LAB - 5E-13, _MaxLightness_LAB_FloDev = _MaxLightness_LAB + 5E-11; // LAB 色彩空间的明度（L）的最小值与最大值，包含浮点偏差。
+        private const double _MinGreenRed_FloDev = _MinGreenRed - 5E-11, _MaxGreenRed_FloDev = _MaxGreenRed + 5E-11; // LAB 色彩空间的绿色-红色通道（A）的最小值与最大值，包含浮点偏差。
+        private const double _MinBlueYellow_FloDev = _MinBlueYellow - 5E-11, _MaxBlueYellow_FloDev = _MaxBlueYellow + 5E-11; // LAB 色彩空间的蓝色-黄色通道（B）的最小值与最大值，包含浮点偏差。
+
+        //
+
         private static double _CheckOpacity(double opacity) // 对颜色的不透明度的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(opacity) || (opacity < _MinOpacity || opacity > _MaxOpacity))
+            if (InternalMethod.IsNaNOrInfinity(opacity) || (opacity < _MinOpacity_FloDev || opacity > _MaxOpacity_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return opacity;
+            if (opacity < _MinOpacity)
+            {
+                return _MinOpacity;
+            }
+            else if (opacity > _MaxOpacity)
+            {
+                return _MaxOpacity;
+            }
+            else
+            {
+                return opacity;
+            }
         }
 
         private static double _CheckAlpha(double alpha) // 对颜色在 RGB 色彩空间的 Alpha 通道（A）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(alpha) || (alpha < _MinAlpha || alpha > _MaxAlpha))
+            if (InternalMethod.IsNaNOrInfinity(alpha) || (alpha < _MinAlpha_FloDev || alpha > _MaxAlpha_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return alpha;
+            if (alpha < _MinAlpha)
+            {
+                return _MinAlpha;
+            }
+            else if (alpha > _MaxAlpha)
+            {
+                return _MaxAlpha;
+            }
+            else
+            {
+                return alpha;
+            }
         }
 
         private static double _CheckRed(double red) // 对颜色在 RGB 色彩空间的红色通道（R）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(red) || (red < _MinRed || red > _MaxRed))
+            if (InternalMethod.IsNaNOrInfinity(red) || (red < _MinRed_FloDev || red > _MaxRed_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return red;
+            if (red < _MinRed)
+            {
+                return _MinRed;
+            }
+            else if (red > _MaxRed)
+            {
+                return _MaxRed;
+            }
+            else
+            {
+                return red;
+            }
         }
 
         private static double _CheckGreen(double green) // 对颜色在 RGB 色彩空间的绿色通道（G）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(green) || (green < _MinGreen || green > _MaxGreen))
+            if (InternalMethod.IsNaNOrInfinity(green) || (green < _MinGreen_FloDev || green > _MaxGreen_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return green;
+            if (green < _MinGreen)
+            {
+                return _MinGreen;
+            }
+            else if (green > _MaxGreen)
+            {
+                return _MaxGreen;
+            }
+            else
+            {
+                return green;
+            }
         }
 
         private static double _CheckBlue(double blue) // 对颜色在 RGB 色彩空间的蓝色通道（B）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(blue) || (blue < _MinBlue || blue > _MaxBlue))
+            if (InternalMethod.IsNaNOrInfinity(blue) || (blue < _MinBlue_FloDev || blue > _MaxBlue_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return blue;
+            if (blue < _MinBlue)
+            {
+                return _MinBlue;
+            }
+            else if (blue > _MaxBlue)
+            {
+                return _MaxBlue;
+            }
+            else
+            {
+                return blue;
+            }
         }
 
         private static double _CheckHue_HSV(double hue) // 对颜色在 HSV 色彩空间的色相（H）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(hue) || (hue < _MinHue_HSV || hue > _MaxHue_HSV))
+            if (InternalMethod.IsNaNOrInfinity(hue) || (hue < _MinHue_HSV_FloDev || hue > _MaxHue_HSV_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return hue;
+            if (hue < _MinHue_HSV)
+            {
+                return _MinHue_HSV;
+            }
+            else if (hue > _MaxHue_HSV)
+            {
+                return _MaxHue_HSV;
+            }
+            else
+            {
+                return hue;
+            }
         }
 
         private static double _CheckSaturation_HSV(double saturation) // 对颜色在 HSV 色彩空间的饱和度（S）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(saturation) || (saturation < _MinSaturation_HSV || saturation > _MaxSaturation_HSV))
+            if (InternalMethod.IsNaNOrInfinity(saturation) || (saturation < _MinSaturation_HSV_FloDev || saturation > _MaxSaturation_HSV_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return saturation;
+            if (saturation < _MinSaturation_HSV)
+            {
+                return _MinSaturation_HSV;
+            }
+            else if (saturation > _MaxSaturation_HSV)
+            {
+                return _MaxSaturation_HSV;
+            }
+            else
+            {
+                return saturation;
+            }
         }
 
         private static double _CheckBrightness(double brightness) // 对颜色在 HSV 色彩空间的明度（V）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(brightness) || (brightness < _MinBrightness || brightness > _MaxBrightness))
+            if (InternalMethod.IsNaNOrInfinity(brightness) || (brightness < _MinBrightness_FloDev || brightness > _MaxBrightness_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return brightness;
+            if (brightness < _MinBrightness)
+            {
+                return _MinBrightness;
+            }
+            else if (brightness > _MaxBrightness)
+            {
+                return _MaxBrightness;
+            }
+            else
+            {
+                return brightness;
+            }
         }
 
         private static double _CheckHue_HSL(double hue) // 对颜色在 HSL 色彩空间的色相（H）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(hue) || (hue < _MinHue_HSL || hue > _MaxHue_HSL))
+            if (InternalMethod.IsNaNOrInfinity(hue) || (hue < _MinHue_HSL_FloDev || hue > _MaxHue_HSL_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return hue;
+            if (hue < _MinHue_HSL)
+            {
+                return _MinHue_HSL;
+            }
+            else if (hue > _MaxHue_HSL)
+            {
+                return _MaxHue_HSL;
+            }
+            else
+            {
+                return hue;
+            }
         }
 
         private static double _CheckSaturation_HSL(double saturation) // 对颜色在 HSL 色彩空间的饱和度（S）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(saturation) || (saturation < _MinSaturation_HSL || saturation > _MaxSaturation_HSL))
+            if (InternalMethod.IsNaNOrInfinity(saturation) || (saturation < _MinSaturation_HSL_FloDev || saturation > _MaxSaturation_HSL_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return saturation;
+            if (saturation < _MinSaturation_HSL)
+            {
+                return _MinSaturation_HSL;
+            }
+            else if (saturation > _MaxSaturation_HSL)
+            {
+                return _MaxSaturation_HSL;
+            }
+            else
+            {
+                return saturation;
+            }
         }
 
         private static double _CheckLightness_HSL(double lightness) // 对颜色在 HSL 色彩空间的明度（L）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(lightness) || (lightness < _MinLightness_HSL || lightness > _MaxLightness_HSL))
+            if (InternalMethod.IsNaNOrInfinity(lightness) || (lightness < _MinLightness_HSL_FloDev || lightness > _MaxLightness_HSL_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return lightness;
+            if (lightness < _MinLightness_HSL)
+            {
+                return _MinLightness_HSL;
+            }
+            else if (lightness > _MaxLightness_HSL)
+            {
+                return _MaxLightness_HSL;
+            }
+            else
+            {
+                return lightness;
+            }
         }
 
         private static double _CheckCyan(double cyan) // 对颜色在 CMYK 色彩空间的青色通道（C）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(cyan) || (cyan < _MinCyan || cyan > _MaxCyan))
+            if (InternalMethod.IsNaNOrInfinity(cyan) || (cyan < _MinCyan_FloDev || cyan > _MaxCyan_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return cyan;
+            if (cyan < _MinCyan)
+            {
+                return _MinCyan;
+            }
+            else if (cyan > _MaxCyan)
+            {
+                return _MaxCyan;
+            }
+            else
+            {
+                return cyan;
+            }
         }
 
         private static double _CheckMagenta(double magenta) // 对颜色在 CMYK 色彩空间的洋红色通道（M）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(magenta) || (magenta < _MinMagenta || magenta > _MaxMagenta))
+            if (InternalMethod.IsNaNOrInfinity(magenta) || (magenta < _MinMagenta_FloDev || magenta > _MaxMagenta_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return magenta;
+            if (magenta < _MinMagenta)
+            {
+                return _MinMagenta;
+            }
+            else if (magenta > _MaxMagenta)
+            {
+                return _MaxMagenta;
+            }
+            else
+            {
+                return magenta;
+            }
         }
 
         private static double _CheckYellow(double yellow) // 对颜色在 CMYK 色彩空间的黄色通道（Y）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(yellow) || (yellow < _MinYellow || yellow > _MaxYellow))
+            if (InternalMethod.IsNaNOrInfinity(yellow) || (yellow < _MinYellow_FloDev || yellow > _MaxYellow_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return yellow;
+            if (yellow < _MinYellow)
+            {
+                return _MinYellow;
+            }
+            else if (yellow > _MaxYellow)
+            {
+                return _MaxYellow;
+            }
+            else
+            {
+                return yellow;
+            }
         }
 
         private static double _CheckBlack(double black) // 对颜色在 CMYK 色彩空间的黑色通道（K）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(black) || (black < _MinBlack || black > _MaxBlack))
+            if (InternalMethod.IsNaNOrInfinity(black) || (black < _MinBlack_FloDev || black > _MaxBlack_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return black;
+            if (black < _MinBlack)
+            {
+                return _MinBlack;
+            }
+            else if (black > _MaxBlack)
+            {
+                return _MaxBlack;
+            }
+            else
+            {
+                return black;
+            }
         }
 
         private static double _CheckLightness_LAB(double lightness) // 对颜色在 LAB 色彩空间的明度（L）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(lightness) || (lightness < _MinLightness_LAB || lightness > _MaxLightness_LAB))
+            if (InternalMethod.IsNaNOrInfinity(lightness) || (lightness < _MinLightness_LAB_FloDev || lightness > _MaxLightness_LAB_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return lightness;
+            if (lightness < _MinLightness_LAB)
+            {
+                return _MinLightness_LAB;
+            }
+            else if (lightness > _MaxLightness_LAB)
+            {
+                return _MaxLightness_LAB;
+            }
+            else
+            {
+                return lightness;
+            }
         }
 
         private static double _CheckGreenRed(double greenRed) // 对颜色在 LAB 色彩空间的绿色-红色通道（A）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(greenRed) || (greenRed < _MinGreenRed || greenRed > _MaxGreenRed))
+            if (InternalMethod.IsNaNOrInfinity(greenRed) || (greenRed < _MinGreenRed_FloDev || greenRed > _MaxGreenRed_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return greenRed;
+            if (greenRed < _MinGreenRed)
+            {
+                return _MinGreenRed;
+            }
+            else if (greenRed > _MaxGreenRed)
+            {
+                return _MaxGreenRed;
+            }
+            else
+            {
+                return greenRed;
+            }
         }
 
         private static double _CheckBlueYellow(double blueYellow) // 对颜色在 LAB 色彩空间的蓝色-黄色通道（B）的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(blueYellow) || (blueYellow < _MinBlueYellow || blueYellow > _MaxBlueYellow))
+            if (InternalMethod.IsNaNOrInfinity(blueYellow) || (blueYellow < _MinBlueYellow_FloDev || blueYellow > _MaxBlueYellow_FloDev))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return blueYellow;
+            if (blueYellow < _MinBlueYellow)
+            {
+                return _MinBlueYellow;
+            }
+            else if (blueYellow > _MaxBlueYellow)
+            {
+                return _MaxBlueYellow;
+            }
+            else
+            {
+                return blueYellow;
+            }
         }
 
         //
@@ -929,9 +1153,9 @@ namespace Com
             _Alpha = _CheckAlpha(_Alpha);
 
             _LABToRGB(_Lightness_LAB, _GreenRed, _BlueYellow, out _Red, out _Green, out _Blue);
-            _Red = _CheckRed(_Red);
-            _Green = _CheckGreen(_Green);
-            _Blue = _CheckBlue(_Blue);
+            _Red = _CheckRed(Math.Max(_MinRed, Math.Min(_Red, _MaxRed)));
+            _Green = _CheckGreen(Math.Max(_MinGreen, Math.Min(_Green, _MaxGreen)));
+            _Blue = _CheckBlue(Math.Max(_MinBlue, Math.Min(_Blue, _MaxBlue)));
 
             _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
             _Hue_HSV = _CheckHue_HSV(_Hue_HSV);
@@ -1483,7 +1707,7 @@ namespace Com
         {
             get
             {
-                int Argb = (int)Math.Round(_Alpha) * 16777216 + (int)Math.Round(_Red) * 65536 + (int)Math.Round(_Green) * 256 + (int)Math.Round(_Blue);
+                long Argb = ((uint)Math.Round(_Alpha) << 24) | ((uint)Math.Round(_Red) << 16) | ((uint)Math.Round(_Green) << 8) | (uint)Math.Round(_Blue);
 
                 string HexCode = Convert.ToString(Argb, 16).ToUpper();
 
@@ -1507,7 +1731,7 @@ namespace Com
         {
             get
             {
-                int Rgb = (int)Math.Round(_Red) * 65536 + (int)Math.Round(_Green) * 256 + (int)Math.Round(_Blue);
+                long Rgb = ((uint)Math.Round(_Red) << 16) | ((uint)Math.Round(_Green) << 8) | (uint)Math.Round(_Blue);
 
                 string HexCode = Convert.ToString(Rgb, 16).ToUpper();
 

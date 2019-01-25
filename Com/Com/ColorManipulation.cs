@@ -130,20 +130,31 @@ namespace Com
 
         private static double _CheckProportion(double proportion) // 对双精度浮点数表示的比例的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(proportion) || (proportion < 0 || proportion > 100))
+            if (InternalMethod.IsNaNOrInfinity(proportion) || (proportion < -5E-13 || proportion > 100 + 5E-11))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            if (proportion > 1)
+            if (proportion < 0)
             {
-                return (proportion / 100);
+                return 0;
+            }
+            else if (proportion > 100)
+            {
+                return 1;
             }
             else
             {
-                return proportion;
+                if (proportion > 1)
+                {
+                    return (proportion / 100);
+                }
+                else
+                {
+                    return proportion;
+                }
             }
         }
 
@@ -281,20 +292,31 @@ namespace Com
 
         private static double _CheckLevel(double level) // 对双精度浮点数表示的调整程度的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(level) || (level < -100 || level > 100))
+            if (InternalMethod.IsNaNOrInfinity(level) || (level < -100 - 5E-11 || level > 100 + 5E-11))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            if (level < -1 || level > 1)
+            if (level < -100)
             {
-                return (level / 100);
+                return -1;
+            }
+            else if (level > 100)
+            {
+                return 1;
             }
             else
             {
-                return level;
+                if (level < -1 || level > 1)
+                {
+                    return (level / 100);
+                }
+                else
+                {
+                    return level;
+                }
             }
         }
 

@@ -65,14 +65,25 @@ namespace Com
 
         private static double _CheckUtcOffset(double utcOffset) // 对所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(utcOffset) || (utcOffset < _MinUtcOffset || utcOffset > _MaxUtcOffset))
+            if (InternalMethod.IsNaNOrInfinity(utcOffset) || (utcOffset < _MinUtcOffset - 5E-12 || utcOffset > _MaxUtcOffset + 5E-12))
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return utcOffset;
+            if (utcOffset < _MinUtcOffset)
+            {
+                return _MinUtcOffset;
+            }
+            else if (utcOffset > _MaxUtcOffset)
+            {
+                return _MaxUtcOffset;
+            }
+            else
+            {
+                return utcOffset;
+            }
         }
 
         private static decimal _CheckTotalMilliseconds(decimal totalMilliseconds) // 对自公元时刻以来的总毫秒数的值进行合法性检查，返回合法的值。
