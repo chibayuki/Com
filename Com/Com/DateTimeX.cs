@@ -791,7 +791,7 @@ namespace Com
         {
             get
             {
-                return (_Initialized && _TotalMilliseconds == _ChristianTotalMilliseconds);
+                return (_TotalMilliseconds == _ChristianTotalMilliseconds);
             }
         }
 
@@ -802,7 +802,7 @@ namespace Com
         {
             get
             {
-                return (_Initialized && _TotalMilliseconds == _MinTotalMilliseconds);
+                return (_TotalMilliseconds == _MinTotalMilliseconds);
             }
         }
 
@@ -813,7 +813,7 @@ namespace Com
         {
             get
             {
-                return (_Initialized && _TotalMilliseconds == _MaxTotalMilliseconds);
+                return (_TotalMilliseconds == _MaxTotalMilliseconds);
             }
         }
 
@@ -824,7 +824,7 @@ namespace Com
         {
             get
             {
-                return (_Initialized && _TotalMilliseconds >= _ChristianTotalMilliseconds);
+                return (_TotalMilliseconds >= _ChristianTotalMilliseconds);
             }
         }
 
@@ -835,7 +835,7 @@ namespace Com
         {
             get
             {
-                return (_Initialized && _TotalMilliseconds < _ChristianTotalMilliseconds);
+                return (_TotalMilliseconds < _ChristianTotalMilliseconds);
             }
         }
 
@@ -846,7 +846,7 @@ namespace Com
         {
             get
             {
-                return (_Initialized && IsLeapYear(Year));
+                return (IsLeapYear(Year));
             }
         }
 
@@ -1118,22 +1118,15 @@ namespace Com
         {
             get
             {
-                if (!_Initialized)
+                long TotalDays = (long)(Math.Floor((_TotalMilliseconds + (decimal)_UtcOffset * _MillisecondsPerHour) / _MillisecondsPerDay));
+
+                if (TotalDays >= 0)
                 {
-                    return 1;
+                    return (1 + (int)(TotalDays % 7));
                 }
                 else
                 {
-                    long TotalDays = (long)(Math.Floor((_TotalMilliseconds + (decimal)_UtcOffset * _MillisecondsPerHour) / _MillisecondsPerDay));
-
-                    if (TotalDays >= 0)
-                    {
-                        return (1 + (int)(TotalDays % 7));
-                    }
-                    else
-                    {
-                        return (7 - (int)((-TotalDays - 1) % 7));
-                    }
+                    return (7 - (int)((-TotalDays - 1) % 7));
                 }
             }
         }
@@ -1587,7 +1580,14 @@ namespace Com
         /// <returns>字符串，表示此 DateTimeX 结构的字符串形式。</returns>
         public override string ToString()
         {
-            return string.Concat((Year < 0 ? "BC" + (-Year) : Year.ToString()), "/", Month, "/", Day, " ", _Hour, ":", _Minute.ToString("D2"), ":", _Second.ToString("D2"));
+            if (!_Initialized)
+            {
+                return string.Concat(base.GetType().Name, " [Empty]");
+            }
+            else
+            {
+                return string.Concat((Year < 0 ? "BC" + (-Year) : Year.ToString()), "/", Month, "/", Day, " ", _Hour, ":", _Minute.ToString("D2"), ":", _Second.ToString("D2"));
+            }
         }
 
         //

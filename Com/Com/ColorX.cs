@@ -28,6 +28,13 @@ namespace Com
     {
         #region 私有成员与内部成员
 
+        private const int _32BitRGBAlphaShift = 24; // 32 位 RGB 色彩空间的 Alpha 通道（A）的位值偏移量。
+        private const int _32BitRGBRedShift = 16; // 32 位 RGB 色彩空间的红色通道（R）的位值偏移量。
+        private const int _32BitRGBGreenShift = 8; // 32 位 RGB 色彩空间的绿色通道（G）的位值偏移量。
+        private const int _32BitRGBBlueShift = 0; // 32 位 RGB 色彩空间的蓝色通道（B）的位值偏移量。
+
+        //
+
         private const double _MinOpacity = 0, _MaxOpacity = 100; // 不透明度的最小值与最大值。
 
         private const double _MinAlpha = 0, _MaxAlpha = 255; // RGB 色彩空间的 Alpha 通道（A）的最小值与最大值。
@@ -1389,9 +1396,7 @@ namespace Com
         {
             this = default(ColorX);
 
-            Color color = Color.FromArgb(argb);
-
-            _CtorRGB(color.A, color.R, color.G, color.B);
+            _CtorRGB(((uint)argb >> _32BitRGBAlphaShift) & 0xFFU, ((uint)argb >> _32BitRGBRedShift) & 0xFFU, ((uint)argb >> _32BitRGBGreenShift) & 0xFFU, ((uint)argb >> _32BitRGBBlueShift) & 0xFFU);
         }
 
         /// <summary>
@@ -1421,9 +1426,9 @@ namespace Com
 
             this = default(ColorX);
 
-            Color color = Color.FromArgb(int.Parse(HexCode, NumberStyles.HexNumber));
+            int Argb = int.Parse(HexCode, NumberStyles.HexNumber);
 
-            _CtorRGB(color.A, color.R, color.G, color.B);
+            _CtorRGB(((uint)Argb >> _32BitRGBAlphaShift) & 0xFFU, ((uint)Argb >> _32BitRGBRedShift) & 0xFFU, ((uint)Argb >> _32BitRGBGreenShift) & 0xFFU, ((uint)Argb >> _32BitRGBBlueShift) & 0xFFU);
         }
 
         #endregion
@@ -1462,7 +1467,7 @@ namespace Com
         {
             get
             {
-                return (_Opacity == Transparent._Opacity);
+                return (_Opacity == _MinOpacity);
             }
         }
 
@@ -1485,6 +1490,15 @@ namespace Com
                 _OpacityToAlpha(_Opacity, out _Alpha);
 
                 _Alpha = _CheckAlpha(_Alpha);
+
+                //
+
+                if (!_Initialized)
+                {
+                    _Black = _MaxBlack;
+
+                    _Initialized = true;
+                }
             }
         }
 
@@ -1507,6 +1521,15 @@ namespace Com
                 _AlphaToOpacity(_Alpha, out _Opacity);
 
                 _Opacity = _CheckOpacity(_Opacity);
+
+                //
+
+                if (!_Initialized)
+                {
+                    _Black = _MaxBlack;
+
+                    _Initialized = true;
+                }
             }
         }
 
@@ -1906,7 +1929,7 @@ namespace Com
         {
             get
             {
-                long Argb = ((uint)Math.Round(_Alpha) << 24) | ((uint)Math.Round(_Red) << 16) | ((uint)Math.Round(_Green) << 8) | (uint)Math.Round(_Blue);
+                int Argb = (int)(((uint)Math.Round(_Alpha) << _32BitRGBAlphaShift) | ((uint)Math.Round(_Red) << _32BitRGBRedShift) | ((uint)Math.Round(_Green) << _32BitRGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitRGBBlueShift));
 
                 string HexCode = Convert.ToString(Argb, 16).ToUpper();
 
@@ -1930,7 +1953,7 @@ namespace Com
         {
             get
             {
-                long Rgb = ((uint)Math.Round(_Red) << 16) | ((uint)Math.Round(_Green) << 8) | (uint)Math.Round(_Blue);
+                int Rgb = (int)(((uint)Math.Round(_Red) << _32BitRGBRedShift) | ((uint)Math.Round(_Green) << _32BitRGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitRGBBlueShift));
 
                 string HexCode = Convert.ToString(Rgb, 16).ToUpper();
 
@@ -2037,7 +2060,7 @@ namespace Com
         /// <returns>32 位整数，表示将此 ColorX 结构转换为 Color 结构的 32 位 ARGB 值。</returns>
         public int ToARGB()
         {
-            return ToColor().ToArgb();
+            return (int)(((uint)Math.Round(_Alpha) << _32BitRGBAlphaShift) | ((uint)Math.Round(_Red) << _32BitRGBRedShift) | ((uint)Math.Round(_Green) << _32BitRGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitRGBBlueShift));
         }
 
         //
