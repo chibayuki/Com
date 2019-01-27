@@ -130,7 +130,7 @@ namespace Com
 
         private static double _CheckProportion(double proportion) // 对双精度浮点数表示的比例的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(proportion) || (proportion < -5E-13 || proportion > 100 + 5E-11))
+            if (InternalMethod.IsNaNOrInfinity(proportion))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -139,10 +139,20 @@ namespace Com
 
             if (proportion < 0)
             {
+                if (proportion <= -5E-13)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
                 return 0;
             }
             else if (proportion > 100)
             {
+                if (proportion >= 100 + 5E-11)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
                 return 1;
             }
             else
@@ -292,7 +302,7 @@ namespace Com
 
         private static double _CheckLevel(double level) // 对双精度浮点数表示的调整程度的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(level) || (level < -100 - 5E-11 || level > 100 + 5E-11))
+            if (InternalMethod.IsNaNOrInfinity(level))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -301,10 +311,20 @@ namespace Com
 
             if (level < -100)
             {
+                if (level <= -100 - 5E-11)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
                 return -1;
             }
             else if (level > 100)
             {
+                if (level >= 100 + 5E-11)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
                 return 1;
             }
             else

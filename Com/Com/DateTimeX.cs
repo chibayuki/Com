@@ -65,7 +65,7 @@ namespace Com
 
         private static double _CheckUtcOffset(double utcOffset) // 对所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的值进行合法性检查，返回合法的值。
         {
-            if (InternalMethod.IsNaNOrInfinity(utcOffset) || (utcOffset < _MinUtcOffset - 5E-12 || utcOffset > _MaxUtcOffset + 5E-12))
+            if (InternalMethod.IsNaNOrInfinity(utcOffset))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -74,10 +74,20 @@ namespace Com
 
             if (utcOffset < _MinUtcOffset)
             {
+                if (utcOffset <= _MinUtcOffset - 5E-12)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
                 return _MinUtcOffset;
             }
             else if (utcOffset > _MaxUtcOffset)
             {
+                if (utcOffset >= _MaxUtcOffset + 5E-12)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
                 return _MaxUtcOffset;
             }
             else
@@ -374,6 +384,8 @@ namespace Com
 
         //
 
+        private bool _Initialized; // 表示此 DateTimeX 结构是否已初始化。
+
         private double _UtcOffset; // 所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。
 
         private decimal _TotalMilliseconds; // 自公元时刻以来的总毫秒数。
@@ -388,9 +400,9 @@ namespace Com
 
         //
 
-        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, UtcOffset); // 表示所在时区时刻的最小可能值的 DateTimeX 结构的实例。
+        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, _UtcOffset); // 表示所在时区时刻的最小可能值的 DateTimeX 结构的实例。
 
-        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, UtcOffset); // 表示所在时区时刻的最大可能值的 DateTimeX 结构的实例。
+        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, _UtcOffset); // 表示所在时区时刻的最大可能值的 DateTimeX 结构的实例。
 
         //
 
@@ -411,6 +423,10 @@ namespace Com
             _Minute = _CheckMinute(_Minute);
             _Second = _CheckSecond(_Second);
             _Millisecond = _CheckMillisecond(_Millisecond);
+
+            //
+
+            _Initialized = true;
         }
 
         private void _CtorDateTime(long year, int month, int day, int hour, int minute, int second, int millisecond, double utcOffset) // 为以年、月、日、时、分、秒与毫秒为参数的构造函数提供实现。
@@ -443,6 +459,10 @@ namespace Com
                 _Second = _CheckSecond(_Second);
                 _Millisecond = _CheckMillisecond(_Millisecond);
             }
+
+            //
+
+            _Initialized = true;
         }
 
         #endregion
@@ -684,7 +704,7 @@ namespace Com
         {
             this = default(DateTimeX);
 
-            _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, utcOffset);
+            _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime._Hour, dateTime._Minute, dateTime._Second, dateTime._Millisecond, utcOffset);
         }
 
         /// <summary>
@@ -695,7 +715,7 @@ namespace Com
         {
             this = default(DateTimeX);
 
-            _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, _LocalUtcOffset);
+            _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime._Hour, dateTime._Minute, dateTime._Second, dateTime._Millisecond, _LocalUtcOffset);
         }
 
         /// <summary>
@@ -758,7 +778,7 @@ namespace Com
         {
             get
             {
-                return (_UtcOffset == Empty._UtcOffset && _TotalMilliseconds == Empty._TotalMilliseconds && _Year == Empty._Year && _Month == Empty._Month && _Day == Empty._Day && _Hour == Empty._Hour && _Minute == Empty._Minute && _Second == Empty._Second && _Millisecond == Empty._Millisecond);
+                return (!_Initialized);
             }
         }
 
@@ -771,7 +791,7 @@ namespace Com
         {
             get
             {
-                return (!IsEmpty && _TotalMilliseconds == _ChristianTotalMilliseconds);
+                return (_Initialized && _TotalMilliseconds == _ChristianTotalMilliseconds);
             }
         }
 
@@ -782,7 +802,7 @@ namespace Com
         {
             get
             {
-                return (!IsEmpty && _TotalMilliseconds == _MinTotalMilliseconds);
+                return (_Initialized && _TotalMilliseconds == _MinTotalMilliseconds);
             }
         }
 
@@ -793,7 +813,7 @@ namespace Com
         {
             get
             {
-                return (!IsEmpty && _TotalMilliseconds == _MaxTotalMilliseconds);
+                return (_Initialized && _TotalMilliseconds == _MaxTotalMilliseconds);
             }
         }
 
@@ -804,7 +824,7 @@ namespace Com
         {
             get
             {
-                return (!IsEmpty && _TotalMilliseconds >= _ChristianTotalMilliseconds);
+                return (_Initialized && _TotalMilliseconds >= _ChristianTotalMilliseconds);
             }
         }
 
@@ -815,7 +835,7 @@ namespace Com
         {
             get
             {
-                return (!IsEmpty && _TotalMilliseconds < _ChristianTotalMilliseconds);
+                return (_Initialized && _TotalMilliseconds < _ChristianTotalMilliseconds);
             }
         }
 
@@ -826,7 +846,7 @@ namespace Com
         {
             get
             {
-                return (!IsEmpty && IsLeapYear(_CheckYear(_Year, _CheckUtcOffset(_UtcOffset))));
+                return (_Initialized && IsLeapYear(Year));
             }
         }
 
@@ -871,12 +891,19 @@ namespace Com
         {
             get
             {
-                return _Year;
+                if (!_Initialized)
+                {
+                    return _ChristianYear;
+                }
+                else
+                {
+                    return _Year;
+                }
             }
 
             set
             {
-                _CtorDateTime(value, _Month, _Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
+                _CtorDateTime(value, Month, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
             }
         }
 
@@ -887,12 +914,19 @@ namespace Com
         {
             get
             {
-                return _Month;
+                if (!_Initialized)
+                {
+                    return _MinMonth;
+                }
+                else
+                {
+                    return _Month;
+                }
             }
 
             set
             {
-                _CtorDateTime(_Year, value, _Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
+                _CtorDateTime(Year, value, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
             }
         }
 
@@ -903,12 +937,19 @@ namespace Com
         {
             get
             {
-                return _Day;
+                if (!_Initialized)
+                {
+                    return _MinDay;
+                }
+                else
+                {
+                    return _Day;
+                }
             }
 
             set
             {
-                _CtorDateTime(_Year, _Month, value, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
+                _CtorDateTime(Year, Month, value, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
             }
         }
 
@@ -924,7 +965,7 @@ namespace Com
 
             set
             {
-                _CtorDateTime(_Year, _Month, _Day, value, _Minute, _Second, _Millisecond, _UtcOffset);
+                _CtorDateTime(Year, Month, Day, value, _Minute, _Second, _Millisecond, _UtcOffset);
             }
         }
 
@@ -940,7 +981,7 @@ namespace Com
 
             set
             {
-                _CtorDateTime(_Year, _Month, _Day, _Hour, value, _Second, _Millisecond, _UtcOffset);
+                _CtorDateTime(Year, Month, Day, _Hour, value, _Second, _Millisecond, _UtcOffset);
             }
         }
 
@@ -956,7 +997,7 @@ namespace Com
 
             set
             {
-                _CtorDateTime(_Year, _Month, _Day, _Hour, _Minute, value, _Millisecond, _UtcOffset);
+                _CtorDateTime(Year, Month, Day, _Hour, _Minute, value, _Millisecond, _UtcOffset);
             }
         }
 
@@ -972,7 +1013,7 @@ namespace Com
 
             set
             {
-                _CtorDateTime(_Year, _Month, _Day, _Hour, _Minute, _Second, value, _UtcOffset);
+                _CtorDateTime(Year, Month, Day, _Hour, _Minute, _Second, value, _UtcOffset);
             }
         }
 
@@ -985,7 +1026,7 @@ namespace Com
         {
             get
             {
-                return new DateTimeX(Year, Month, Day, UtcOffset);
+                return new DateTimeX(Year, Month, Day, _UtcOffset);
             }
         }
 
@@ -996,7 +1037,7 @@ namespace Com
         {
             get
             {
-                return new TimeSpan(0, Hour, Minute, Second, Millisecond);
+                return new TimeSpan(0, _Hour, _Minute, _Second, _Millisecond);
             }
         }
 
@@ -1009,7 +1050,7 @@ namespace Com
         {
             get
             {
-                return ((DayOfYear - (2 - new DateTimeX(Year, UtcOffset).DayOfThisWeek)) / 7 + 1);
+                return ((DayOfYear - (2 - new DateTimeX(Year, _UtcOffset).DayOfThisWeek)) / 7 + 1);
             }
         }
 
@@ -1033,7 +1074,7 @@ namespace Com
         {
             get
             {
-                return ((DayOfYear - 1) * _HoursPerDay + Hour + 1);
+                return ((DayOfYear - 1) * _HoursPerDay + _Hour + 1);
             }
         }
 
@@ -1044,7 +1085,7 @@ namespace Com
         {
             get
             {
-                return ((DayOfYear - 1) * _MinutesPerDay + Hour * _MinutesPerHour + Minute + 1);
+                return ((DayOfYear - 1) * _MinutesPerDay + _Hour * _MinutesPerHour + _Minute + 1);
             }
         }
 
@@ -1055,7 +1096,7 @@ namespace Com
         {
             get
             {
-                return ((DayOfYear - 1) * _SecondsPerDay + Hour * _SecondsPerHour + Minute * _SecondsPerMinute + Second + 1);
+                return ((DayOfYear - 1) * _SecondsPerDay + _Hour * _SecondsPerHour + _Minute * _SecondsPerMinute + _Second + 1);
             }
         }
 
@@ -1066,7 +1107,7 @@ namespace Com
         {
             get
             {
-                return ((long)(DayOfYear - 1) * _MillisecondsPerDay + Hour * _MillisecondsPerHour + Minute * _MillisecondsPerMinute + Second * _MillisecondsPerSecond + Millisecond + 1);
+                return ((long)(DayOfYear - 1) * _MillisecondsPerDay + _Hour * _MillisecondsPerHour + _Minute * _MillisecondsPerMinute + _Second * _MillisecondsPerSecond + _Millisecond + 1);
             }
         }
 
@@ -1077,15 +1118,22 @@ namespace Com
         {
             get
             {
-                long TotalDays = (long)(Math.Floor((TotalMilliseconds + (decimal)UtcOffset * _MillisecondsPerHour) / _MillisecondsPerDay));
-
-                if (TotalDays >= 0)
+                if (!_Initialized)
                 {
-                    return (1 + (int)(TotalDays % 7));
+                    return 1;
                 }
                 else
                 {
-                    return (7 - (int)((-TotalDays - 1) % 7));
+                    long TotalDays = (long)(Math.Floor((_TotalMilliseconds + (decimal)_UtcOffset * _MillisecondsPerHour) / _MillisecondsPerDay));
+
+                    if (TotalDays >= 0)
+                    {
+                        return (1 + (int)(TotalDays % 7));
+                    }
+                    else
+                    {
+                        return (7 - (int)((-TotalDays - 1) % 7));
+                    }
                 }
             }
         }
@@ -1108,7 +1156,7 @@ namespace Com
         {
             get
             {
-                return (Hour + 1);
+                return (_Hour + 1);
             }
         }
 
@@ -1119,7 +1167,7 @@ namespace Com
         {
             get
             {
-                return (Hour * _MinutesPerHour + Minute + 1);
+                return (_Hour * _MinutesPerHour + _Minute + 1);
             }
         }
 
@@ -1130,7 +1178,7 @@ namespace Com
         {
             get
             {
-                return (Hour * _SecondsPerHour + Minute * _SecondsPerMinute + Second + 1);
+                return (_Hour * _SecondsPerHour + _Minute * _SecondsPerMinute + _Second + 1);
             }
         }
 
@@ -1141,7 +1189,7 @@ namespace Com
         {
             get
             {
-                return (Hour * _MillisecondsPerHour + Minute * _MillisecondsPerMinute + Second * _MillisecondsPerSecond + Millisecond + 1);
+                return (_Hour * _MillisecondsPerHour + _Minute * _MillisecondsPerMinute + _Second * _MillisecondsPerSecond + _Millisecond + 1);
             }
         }
 
@@ -1168,7 +1216,7 @@ namespace Com
                     case 10: return "十月";
                     case 11: return "十一月";
                     case 12: return "十二月";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1194,7 +1242,7 @@ namespace Com
                     case 10: return "October";
                     case 11: return "November";
                     case 12: return "December";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1220,7 +1268,7 @@ namespace Com
                     case 10: return "Oct";
                     case 11: return "Nov";
                     case 12: return "Dec";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1246,7 +1294,7 @@ namespace Com
                     case 10: return "神無月";
                     case 11: return "霜月";
                     case 12: return "師走";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1272,7 +1320,7 @@ namespace Com
                     case 10: return "かんなづき";
                     case 11: return "しもつき";
                     case 12: return "しわす";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1295,7 +1343,7 @@ namespace Com
                     case 5: return "星期五";
                     case 6: return "星期六";
                     case 7: return "星期日";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1316,7 +1364,7 @@ namespace Com
                     case 5: return "周五";
                     case 6: return "周六";
                     case 7: return "周日";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1337,7 +1385,7 @@ namespace Com
                     case 5: return "Friday";
                     case 6: return "Saturday";
                     case 7: return "Sunday";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1358,7 +1406,7 @@ namespace Com
                     case 5: return "Fri";
                     case 6: return "Sat";
                     case 7: return "Sun";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1379,7 +1427,7 @@ namespace Com
                     case 5: return "金曜日";
                     case 6: return "土曜日";
                     case 7: return "日曜日";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1400,7 +1448,7 @@ namespace Com
                     case 5: return "金";
                     case 6: return "土";
                     case 7: return "日";
-                    default: return string.Empty;
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -1414,7 +1462,7 @@ namespace Com
         {
             get
             {
-                return string.Concat((Year < 0 ? string.Concat("公元前", (-Year)) : Year.ToString()), "年", Month, "月", Day, "日");
+                return string.Concat((Year < 0 ? "公元前" + (-Year) : Year.ToString()), "年", Month, "月", Day, "日");
             }
         }
 
@@ -1425,7 +1473,7 @@ namespace Com
         {
             get
             {
-                return string.Concat((Year < 0 ? string.Concat("BC", (-Year)) : Year.ToString()), "/" + Month, "/" + Day);
+                return string.Concat((Year < 0 ? "BC" + (-Year) : Year.ToString()), "/" + Month, "/" + Day);
             }
         }
 
@@ -1436,7 +1484,7 @@ namespace Com
         {
             get
             {
-                return string.Concat(Hour, ":", Minute.ToString("D2"), ":", Second.ToString("D2"), ".", Millisecond.ToString("D3"));
+                return string.Concat(_Hour, ":", _Minute.ToString("D2"), ":", _Second.ToString("D2"), ".", _Millisecond.ToString("D3"));
             }
         }
 
@@ -1447,7 +1495,7 @@ namespace Com
         {
             get
             {
-                return string.Concat(Hour, ":", Minute.ToString("D2"));
+                return string.Concat(_Hour, ":", _Minute.ToString("D2"));
             }
         }
 
@@ -1539,7 +1587,7 @@ namespace Com
         /// <returns>字符串，表示此 DateTimeX 结构的字符串形式。</returns>
         public override string ToString()
         {
-            return string.Concat((Year < 0 ? string.Concat("BC", (-Year)) : Year.ToString()), "/", Month, "/", Day, " ", Hour, ":", Minute.ToString("D2"), ":", Second.ToString("D2"));
+            return string.Concat((Year < 0 ? "BC" + (-Year) : Year.ToString()), "/", Month, "/", Day, " ", _Hour, ":", _Minute.ToString("D2"), ":", _Second.ToString("D2"));
         }
 
         //
@@ -1584,7 +1632,7 @@ namespace Com
         /// <returns>32 位整数，表示将此 DateTimeX 结构与指定的 DateTimeX 结构进行次序比较得到的结果。</returns>
         public int CompareTo(DateTimeX dateTime)
         {
-            return TotalMilliseconds.CompareTo(dateTime.TotalMilliseconds);
+            return _TotalMilliseconds.CompareTo(dateTime._TotalMilliseconds);
         }
 
         //
@@ -1639,7 +1687,7 @@ namespace Com
                     }
                     else
                     {
-                        return new DateTimeX(NewYear, Month, Day, Hour, Minute, Second, Millisecond, UtcOffset);
+                        return new DateTimeX(NewYear, Month, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
                     }
                 }
             }
@@ -1687,7 +1735,7 @@ namespace Com
 
                 DateTimeX ThisMinValue = _ThisMinValue;
 
-                if (NewYear < ThisMinValue.Year || (NewYear == ThisMinValue.Year && NewMonth < ThisMinValue.Month))
+                if (NewYear < ThisMinValue._Year || (NewYear == ThisMinValue._Year && NewMonth < ThisMinValue._Month))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -1695,13 +1743,13 @@ namespace Com
                 {
                     DateTimeX ThisMaxValue = _ThisMaxValue;
 
-                    if (NewYear > ThisMaxValue.Year || (NewYear == ThisMaxValue.Year && NewMonth > ThisMaxValue.Month))
+                    if (NewYear > ThisMaxValue._Year || (NewYear == ThisMaxValue._Year && NewMonth > ThisMaxValue._Month))
                     {
                         throw new ArgumentOutOfRangeException();
                     }
                     else
                     {
-                        return new DateTimeX(NewYear, NewMonth, Day, Hour, Minute, Second, Millisecond, UtcOffset);
+                        return new DateTimeX(NewYear, NewMonth, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
                     }
                 }
             }
@@ -1721,17 +1769,17 @@ namespace Com
 
             //
 
-            if ((double)TotalMilliseconds + weeks * _MillisecondsPerWeek < (double)decimal.MinValue)
+            if ((double)_TotalMilliseconds + weeks * _MillisecondsPerWeek < (double)decimal.MinValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if ((double)TotalMilliseconds + weeks * _MillisecondsPerWeek > (double)decimal.MaxValue)
+            else if ((double)_TotalMilliseconds + weeks * _MillisecondsPerWeek > (double)decimal.MaxValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
             else
             {
-                decimal NewTotalMS = TotalMilliseconds + (decimal)weeks * _MillisecondsPerWeek;
+                decimal NewTotalMS = _TotalMilliseconds + (decimal)weeks * _MillisecondsPerWeek;
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
@@ -1743,7 +1791,7 @@ namespace Com
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, UtcOffset);
+                    return new DateTimeX(NewTotalMS, _UtcOffset);
                 }
             }
         }
@@ -1762,17 +1810,17 @@ namespace Com
 
             //
 
-            if ((double)TotalMilliseconds + days * _MillisecondsPerDay < (double)decimal.MinValue)
+            if ((double)_TotalMilliseconds + days * _MillisecondsPerDay < (double)decimal.MinValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if ((double)TotalMilliseconds + days * _MillisecondsPerDay > (double)decimal.MaxValue)
+            else if ((double)_TotalMilliseconds + days * _MillisecondsPerDay > (double)decimal.MaxValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
             else
             {
-                decimal NewTotalMS = TotalMilliseconds + (decimal)days * _MillisecondsPerDay;
+                decimal NewTotalMS = _TotalMilliseconds + (decimal)days * _MillisecondsPerDay;
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
@@ -1784,7 +1832,7 @@ namespace Com
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, UtcOffset);
+                    return new DateTimeX(NewTotalMS, _UtcOffset);
                 }
             }
         }
@@ -1803,17 +1851,17 @@ namespace Com
 
             //
 
-            if ((double)TotalMilliseconds + hours * _MillisecondsPerHour < (double)decimal.MinValue)
+            if ((double)_TotalMilliseconds + hours * _MillisecondsPerHour < (double)decimal.MinValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if ((double)TotalMilliseconds + hours * _MillisecondsPerHour > (double)decimal.MaxValue)
+            else if ((double)_TotalMilliseconds + hours * _MillisecondsPerHour > (double)decimal.MaxValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
             else
             {
-                decimal NewTotalMS = TotalMilliseconds + (decimal)hours * _MillisecondsPerHour;
+                decimal NewTotalMS = _TotalMilliseconds + (decimal)hours * _MillisecondsPerHour;
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
@@ -1825,7 +1873,7 @@ namespace Com
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, UtcOffset);
+                    return new DateTimeX(NewTotalMS, _UtcOffset);
                 }
             }
         }
@@ -1844,17 +1892,17 @@ namespace Com
 
             //
 
-            if ((double)TotalMilliseconds + minutes * _MillisecondsPerMinute < (double)decimal.MinValue)
+            if ((double)_TotalMilliseconds + minutes * _MillisecondsPerMinute < (double)decimal.MinValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if ((double)TotalMilliseconds + minutes * _MillisecondsPerMinute > (double)decimal.MaxValue)
+            else if ((double)_TotalMilliseconds + minutes * _MillisecondsPerMinute > (double)decimal.MaxValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
             else
             {
-                decimal NewTotalMS = TotalMilliseconds + (decimal)minutes * _MillisecondsPerMinute;
+                decimal NewTotalMS = _TotalMilliseconds + (decimal)minutes * _MillisecondsPerMinute;
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
@@ -1866,7 +1914,7 @@ namespace Com
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, UtcOffset);
+                    return new DateTimeX(NewTotalMS, _UtcOffset);
                 }
             }
         }
@@ -1885,17 +1933,17 @@ namespace Com
 
             //
 
-            if ((double)TotalMilliseconds + seconds * _MillisecondsPerSecond < (double)decimal.MinValue)
+            if ((double)_TotalMilliseconds + seconds * _MillisecondsPerSecond < (double)decimal.MinValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if ((double)TotalMilliseconds + seconds * _MillisecondsPerSecond > (double)decimal.MaxValue)
+            else if ((double)_TotalMilliseconds + seconds * _MillisecondsPerSecond > (double)decimal.MaxValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
             else
             {
-                decimal NewTotalMS = TotalMilliseconds + (decimal)seconds * _MillisecondsPerSecond;
+                decimal NewTotalMS = _TotalMilliseconds + (decimal)seconds * _MillisecondsPerSecond;
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
@@ -1907,7 +1955,7 @@ namespace Com
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, UtcOffset);
+                    return new DateTimeX(NewTotalMS, _UtcOffset);
                 }
             }
         }
@@ -1919,17 +1967,17 @@ namespace Com
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干毫秒得到的结果。</returns>
         public DateTimeX AddMilliseconds(decimal milliseconds)
         {
-            if ((double)TotalMilliseconds + (double)milliseconds < (double)decimal.MinValue)
+            if ((double)_TotalMilliseconds + (double)milliseconds < (double)decimal.MinValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if ((double)TotalMilliseconds + (double)milliseconds > (double)decimal.MaxValue)
+            else if ((double)_TotalMilliseconds + (double)milliseconds > (double)decimal.MaxValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
             else
             {
-                decimal NewTotalMS = TotalMilliseconds + milliseconds;
+                decimal NewTotalMS = _TotalMilliseconds + milliseconds;
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
@@ -1941,7 +1989,7 @@ namespace Com
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, UtcOffset);
+                    return new DateTimeX(NewTotalMS, _UtcOffset);
                 }
             }
         }
@@ -1960,17 +2008,17 @@ namespace Com
 
             //
 
-            if ((double)TotalMilliseconds + milliseconds < (double)decimal.MinValue)
+            if ((double)_TotalMilliseconds + milliseconds < (double)decimal.MinValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if ((double)TotalMilliseconds + milliseconds > (double)decimal.MaxValue)
+            else if ((double)_TotalMilliseconds + milliseconds > (double)decimal.MaxValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
             else
             {
-                decimal NewTotalMS = TotalMilliseconds + (decimal)milliseconds;
+                decimal NewTotalMS = _TotalMilliseconds + (decimal)milliseconds;
 
                 if (NewTotalMS < _MinTotalMilliseconds)
                 {
@@ -1982,7 +2030,7 @@ namespace Com
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, UtcOffset);
+                    return new DateTimeX(NewTotalMS, _UtcOffset);
                 }
             }
         }
@@ -1995,7 +2043,7 @@ namespace Com
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以本地时区表示的 DateTimeX 结构得到的结果。</returns>
         public DateTimeX ToLocalTime()
         {
-            return new DateTimeX(TotalMilliseconds, _LocalUtcOffset);
+            return new DateTimeX(_TotalMilliseconds, _LocalUtcOffset);
         }
 
         /// <summary>
@@ -2004,7 +2052,7 @@ namespace Com
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以协调世界时（UTC）表示的 DateTimeX 结构得到的结果。</returns>
         public DateTimeX ToUniversalTime()
         {
-            return new DateTimeX(TotalMilliseconds, _Utc);
+            return new DateTimeX(_TotalMilliseconds, _Utc);
         }
 
         //
@@ -2182,13 +2230,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否表示相同的时刻。</returns>
         public static bool operator ==(DateTimeX left, DateTimeX right)
         {
-            if (left.IsEmpty || right.IsEmpty)
+            if (!left._Initialized || !right._Initialized)
             {
                 return false;
             }
             else
             {
-                return (left.TotalMilliseconds == right.TotalMilliseconds);
+                return (left._TotalMilliseconds == right._TotalMilliseconds);
             }
         }
 
@@ -2200,13 +2248,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否表示不同的时刻。</returns>
         public static bool operator !=(DateTimeX left, DateTimeX right)
         {
-            if (left.IsEmpty || right.IsEmpty)
+            if (!left._Initialized || !right._Initialized)
             {
                 return true;
             }
             else
             {
-                return (left.TotalMilliseconds != right.TotalMilliseconds);
+                return (left._TotalMilliseconds != right._TotalMilliseconds);
             }
         }
 
@@ -2218,13 +2266,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于后者。</returns>
         public static bool operator <(DateTimeX left, DateTimeX right)
         {
-            if (left.IsEmpty || right.IsEmpty)
+            if (!left._Initialized || !right._Initialized)
             {
                 return false;
             }
             else
             {
-                return (left.TotalMilliseconds < right.TotalMilliseconds);
+                return (left._TotalMilliseconds < right._TotalMilliseconds);
             }
         }
 
@@ -2236,13 +2284,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于后者。</returns>
         public static bool operator >(DateTimeX left, DateTimeX right)
         {
-            if (left.IsEmpty || right.IsEmpty)
+            if (!left._Initialized || !right._Initialized)
             {
                 return false;
             }
             else
             {
-                return (left.TotalMilliseconds > right.TotalMilliseconds);
+                return (left._TotalMilliseconds > right._TotalMilliseconds);
             }
         }
 
@@ -2254,13 +2302,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于或等于后者。</returns>
         public static bool operator <=(DateTimeX left, DateTimeX right)
         {
-            if (left.IsEmpty || right.IsEmpty)
+            if (!left._Initialized || !right._Initialized)
             {
                 return false;
             }
             else
             {
-                return (left.TotalMilliseconds <= right.TotalMilliseconds);
+                return (left._TotalMilliseconds <= right._TotalMilliseconds);
             }
         }
 
@@ -2272,13 +2320,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于或等于后者。</returns>
         public static bool operator >=(DateTimeX left, DateTimeX right)
         {
-            if (left.IsEmpty || right.IsEmpty)
+            if (!left._Initialized || !right._Initialized)
             {
                 return false;
             }
             else
             {
-                return (left.TotalMilliseconds >= right.TotalMilliseconds);
+                return (left._TotalMilliseconds >= right._TotalMilliseconds);
             }
         }
 
