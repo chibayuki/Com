@@ -3316,17 +3316,24 @@ namespace Com
                 AbsMax = Math.Max(AbsMax, Math.Abs(values[i]));
             }
 
-            double Avg = Sum / Len;
-            double SqrSum = 0;
-
-            for (int i = 0; i < Len; i++)
+            if (AbsMax == 0)
             {
-                double Delta = (values[i] - Avg) / AbsMax;
-
-                SqrSum += Delta * Delta;
+                return 0;
             }
+            else
+            {
+                double Avg = Sum / Len;
+                double SqrSum = 0;
 
-            return (AbsMax * Math.Sqrt(SqrSum / Len));
+                for (int i = 0; i < Len; i++)
+                {
+                    double Delta = (values[i] - Avg) / AbsMax;
+
+                    SqrSum += Delta * Delta;
+                }
+
+                return (AbsMax * Math.Sqrt(SqrSum / Len));
+            }
         }
 
         /// <summary>
@@ -3354,17 +3361,24 @@ namespace Com
                 AbsMax = Math.Max(AbsMax, Math.Abs(values[i]));
             }
 
-            double Avg = Sum / Len;
-            double SqrSum = 0;
-
-            for (int i = 0; i < Len; i++)
+            if (AbsMax == 0)
             {
-                double Delta = (values[i] - Avg) / AbsMax;
-
-                SqrSum += Delta * Delta;
+                return 0;
             }
+            else
+            {
+                double Avg = Sum / Len;
+                double SqrSum = 0;
 
-            return (AbsMax * Math.Sqrt(SqrSum / (Len - 1)));
+                for (int i = 0; i < Len; i++)
+                {
+                    double Delta = (values[i] - Avg) / AbsMax;
+
+                    SqrSum += Delta * Delta;
+                }
+
+                return (AbsMax * Math.Sqrt(SqrSum / (Len - 1)));
+            }
         }
 
         #endregion
