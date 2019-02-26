@@ -340,11 +340,11 @@ namespace Com
                     {
                         text = text.Substring(0, i);
 
-                        StrSz = TextRenderer.MeasureText(string.Concat(text, "..."), font);
+                        StrSz = TextRenderer.MeasureText(text + "...", font);
 
                         if (StrSz.Width <= width)
                         {
-                            text = string.Concat(text, "...");
+                            text += "...";
 
                             break;
                         }
@@ -415,7 +415,7 @@ namespace Com
         /// <returns>字符串，表示以 "h 小时 m 分 s 秒" 格式表示的时间间隔。</returns>
         public static string GetTimeStringFromTimeSpan(TimeSpan timeSpan)
         {
-            return (timeSpan.TotalHours >= 1 ? string.Concat(Math.Floor(timeSpan.TotalHours), " 小时 ", timeSpan.Minutes, " 分 ", timeSpan.Seconds, " 秒") : (timeSpan.TotalMinutes >= 1 ? string.Concat(timeSpan.Minutes, " 分 ", timeSpan.Seconds, " 秒") : string.Concat(timeSpan.Seconds, (timeSpan.TotalSeconds > 0 ? string.Concat(".", timeSpan.Milliseconds.ToString("D3").Substring(0, timeSpan.Seconds >= 10 ? 1 : (timeSpan.Seconds >= 1 ? 2 : 3))) : string.Empty), " 秒")));
+            return (timeSpan.TotalHours >= 1 ? string.Concat(Math.Floor(timeSpan.TotalHours), " 小时 ", timeSpan.Minutes, " 分 ", timeSpan.Seconds, " 秒") : (timeSpan.TotalMinutes >= 1 ? string.Concat(timeSpan.Minutes, " 分 ", timeSpan.Seconds, " 秒") : string.Concat(timeSpan.Seconds, (timeSpan.TotalSeconds > 0 ? "." + timeSpan.Milliseconds.ToString("D3").Substring(0, timeSpan.Seconds >= 10 ? 1 : (timeSpan.Seconds >= 1 ? 2 : 3)) : string.Empty), " 秒")));
         }
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace Com
 
                     seconds = Math.Abs(seconds);
 
-                    return string.Concat((Sign == -1 ? "-" : string.Empty), (seconds >= 31557600E12 ? string.Concat(seconds / (31557600E12), " Ta") : (seconds >= 31557600E9 ? string.Concat(seconds / (31557600E9), " Ga") : (seconds >= 31557600E6 ? string.Concat(seconds / (31557600E6), " Ma") : (seconds >= 31557600E3 ? string.Concat(seconds / (31557600E3), " ka") : (seconds >= 31557600.0 ? string.Concat(seconds / 31557600.0, " a") : (seconds >= 86400.0 ? string.Concat(seconds / 86400.0, " d") : (seconds >= 3600.0 ? string.Concat(seconds / 3600.0, " h") : (seconds >= 60 ? string.Concat(seconds / 60.0, " min") : (seconds >= 1 ? string.Concat(seconds, " s") : string.Concat(seconds * 1000.0, " ms")))))))))));
+                    return ((Sign == -1 ? "-" : string.Empty) + (seconds >= 31557600E12 ? seconds / (31557600E12) + " Ta" : (seconds >= 31557600E9 ? seconds / (31557600E9) + " Ga" : (seconds >= 31557600E6 ? seconds / (31557600E6) + " Ma" : (seconds >= 31557600E3 ? seconds / (31557600E3) + " ka" : (seconds >= 31557600.0 ? seconds / 31557600.0 + " a" : (seconds >= 86400.0 ? seconds / 86400.0 + " d" : (seconds >= 3600.0 ? seconds / 3600.0 + " h" : (seconds >= 60 ? seconds / 60.0 + " min" : (seconds >= 1 ? seconds + " s" : seconds * 1000.0 + " ms"))))))))));
                 }
             }
         }
@@ -581,7 +581,7 @@ namespace Com
 
                     meters = Math.Abs(meters);
 
-                    return string.Concat((Sign == -1 ? "-" : string.Empty), (meters >= 9460730472580800E12 ? string.Concat(meters / 9460730472580800E12, " Tly") : (meters >= 9460730472580800E9 ? string.Concat(meters / 9460730472580800E9, " Gly") : (meters >= 9460730472580800E6 ? string.Concat(meters / 9460730472580800E6, " Mly") : (meters >= 9460730472580800E3 ? string.Concat(meters / 9460730472580800E3, " kly") : (meters >= 9460730472580800.0 ? string.Concat(meters / 9460730472580800.0, " ly") : (meters >= 149597870700.0 ? string.Concat(meters / 149597870700.0, " AU") : (meters >= 1000.0 ? string.Concat(meters / 1000.0, " km") : string.Concat(meters, " m")))))))));
+                    return ((Sign == -1 ? "-" : string.Empty) + (meters >= 9460730472580800E12 ? meters / 9460730472580800E12 + " Tly" : (meters >= 9460730472580800E9 ? meters / 9460730472580800E9 + " Gly" : (meters >= 9460730472580800E6 ? meters / 9460730472580800E6 + " Mly" : (meters >= 9460730472580800E3 ? meters / 9460730472580800E3 + " kly" : (meters >= 9460730472580800.0 ? meters / 9460730472580800.0 + " ly" : (meters >= 149597870700.0 ? meters / 149597870700.0 + " AU" : (meters >= 1000.0 ? meters / 1000.0 + " km" : meters + " m"))))))));
                 }
             }
         }
@@ -610,9 +610,9 @@ namespace Com
                 double MinD = Math.Floor(MinF);
                 double SecF = (MinF - MinD) * 60;
 
-                string DegStr = string.Concat(DegD, "° ");
-                string MinStr = string.Concat(MinD, "′ ");
-                string SecStr = string.Concat(SecF.ToString(decimalDigits >= 0 ? string.Concat("N", Math.Min(16, decimalDigits)) : string.Empty), "″ ");
+                string DegStr = DegD + "° ";
+                string MinStr = MinD + "′ ";
+                string SecStr = SecF.ToString(decimalDigits >= 0 ? "N" + Math.Min(16, decimalDigits) : string.Empty) + "″ ";
 
                 if (cutdownIdleZeros)
                 {
@@ -663,31 +663,31 @@ namespace Com
 
             if (bytes < 1E3)
             {
-                return string.Concat(bytes, " B");
+                return (bytes + " B");
             }
             else if (bytes < 1E6)
             {
-                return string.Concat((bytes / Math.Pow(2, 10)).ToString("N1"), " KB");
+                return ((bytes / Math.Pow(2, 10)).ToString("N1") + " KB");
             }
             else if (bytes < 1E9)
             {
-                return string.Concat((bytes / Math.Pow(2, 20)).ToString("N1"), " MB");
+                return ((bytes / Math.Pow(2, 20)).ToString("N1") + " MB");
             }
             else if (bytes < 1E12)
             {
-                return string.Concat((bytes / Math.Pow(2, 30)).ToString("N1"), " GB");
+                return ((bytes / Math.Pow(2, 30)).ToString("N1") + " GB");
             }
             else if (bytes < 1E15)
             {
-                return string.Concat((bytes / Math.Pow(2, 40)).ToString("N1"), " TB");
+                return ((bytes / Math.Pow(2, 40)).ToString("N1") + " TB");
             }
             else if (bytes < 1E18)
             {
-                return string.Concat((bytes / Math.Pow(2, 50)).ToString("N1"), " PB");
+                return ((bytes / Math.Pow(2, 50)).ToString("N1") + " PB");
             }
             else if (bytes < 1E21)
             {
-                return string.Concat((bytes / Math.Pow(2, 60)).ToString("N1"), " EB");
+                return ((bytes / Math.Pow(2, 60)).ToString("N1") + " EB");
             }
             else
             {

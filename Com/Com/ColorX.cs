@@ -1381,10 +1381,8 @@ namespace Com
         /// 使用 Color 结构初始化 ColorX 结构的新实例。
         /// </summary>
         /// <param name="color">Color 结构。</param>
-        public ColorX(Color color)
+        public ColorX(Color color) : this()
         {
-            this = default(ColorX);
-
             _CtorRGB(color.A, color.R, color.G, color.B);
         }
 
@@ -1392,10 +1390,8 @@ namespace Com
         /// 使用颜色在 RGB 色彩空间的 32 位 ARGB 值初始化 ColorX 结构的新实例。
         /// </summary>
         /// <param name="argb">颜色在 RGB 色彩空间的 32 位 ARGB 值。</param>
-        public ColorX(int argb)
+        public ColorX(int argb) : this()
         {
-            this = default(ColorX);
-
             _CtorRGB(((uint)argb >> _32BitRGBAlphaShift) & 0xFFU, ((uint)argb >> _32BitRGBRedShift) & 0xFFU, ((uint)argb >> _32BitRGBGreenShift) & 0xFFU, ((uint)argb >> _32BitRGBBlueShift) & 0xFFU);
         }
 
@@ -1403,7 +1399,7 @@ namespace Com
         /// 使用颜色的 16 进制 ARGB 码或 RGB 码初始化 ColorX 结构的新实例。
         /// </summary>
         /// <param name="hexCode">颜色的 16 进制 ARGB 码或 RGB 码。</param>
-        public ColorX(string hexCode)
+        public ColorX(string hexCode) : this()
         {
             if (string.IsNullOrEmpty(hexCode))
             {
@@ -1424,8 +1420,6 @@ namespace Com
 
             //
 
-            this = default(ColorX);
-
             int Argb = int.Parse(HexCode, NumberStyles.HexNumber);
 
             _CtorRGB(((uint)Argb >> _32BitRGBAlphaShift) & 0xFFU, ((uint)Argb >> _32BitRGBRedShift) & 0xFFU, ((uint)Argb >> _32BitRGBGreenShift) & 0xFFU, ((uint)Argb >> _32BitRGBBlueShift) & 0xFFU);
@@ -1438,7 +1432,7 @@ namespace Com
         /// <summary>
         /// 表示所有属性为其数据类型的默认值的 ColorX 结构的实例。
         /// </summary>
-        public static readonly ColorX Empty = default(ColorX);
+        public static readonly ColorX Empty = new ColorX();
 
         /// <summary>
         /// 表示透明色的 ColorX 结构的实例。
@@ -1895,7 +1889,7 @@ namespace Com
         {
             get
             {
-                ColorX color = default(ColorX);
+                ColorX color = new ColorX();
 
                 color._CtorRGB(_Alpha, _MaxRed - _Red, _MaxGreen - _Green, _MaxBlue - _Blue);
 
@@ -1910,9 +1904,9 @@ namespace Com
         {
             get
             {
-                ColorX color = default(ColorX);
+                ColorX color = new ColorX();
 
-                double Y = 0.2126 * _Red + 0.7152 * _Green + 0.0722 * _Blue;
+                double Y = 0.299 * _Red + 0.587 * _Green + 0.114 * _Blue;
 
                 color._CtorRGB(_Alpha, Y, Y, Y);
 
@@ -2392,7 +2386,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromRGB(double alpha, double red, double green, double blue)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorRGB(alpha, red, green, blue);
 
@@ -2408,7 +2402,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromRGB(double red, double green, double blue)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorRGB(_MaxAlpha, red, green, blue);
 
@@ -2423,7 +2417,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromRGB(double alpha, PointD3D rgb)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorRGB(alpha, rgb.X, rgb.Y, rgb.Z);
 
@@ -2437,7 +2431,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromRGB(PointD3D rgb)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorRGB(_MaxAlpha, rgb.X, rgb.Y, rgb.Z);
 
@@ -2466,7 +2460,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSV(double hue, double saturation, double brightness, double opacity)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorHSV(hue, saturation, brightness, opacity);
 
@@ -2482,7 +2476,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSV(double hue, double saturation, double brightness)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorHSV(hue, saturation, brightness, _MaxOpacity);
 
@@ -2497,7 +2491,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSV(PointD3D hsv, double opacity)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorHSV(hsv.X, hsv.Y, hsv.Z, opacity);
 
@@ -2511,7 +2505,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSV(PointD3D hsv)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorHSV(hsv.X, hsv.Y, hsv.Z, _MaxOpacity);
 
@@ -2530,7 +2524,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 HSL 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSL(double hue, double saturation, double lightness, double opacity)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorHSL(hue, saturation, lightness, opacity);
 
@@ -2546,7 +2540,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 HSL 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSL(double hue, double saturation, double lightness)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorHSL(hue, saturation, lightness, _MaxOpacity);
 
@@ -2561,7 +2555,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 HSL 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSL(PointD3D hsl, double opacity)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorHSL(hsl.X, hsl.Y, hsl.Z, opacity);
 
@@ -2575,7 +2569,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 HSL 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSL(PointD3D hsl)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorHSL(hsl.X, hsl.Y, hsl.Z, _MaxOpacity);
 
@@ -2595,7 +2589,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 CMYK 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromCMYK(double cyan, double magenta, double yellow, double black, double opacity)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorCMYK(cyan, magenta, yellow, black, opacity);
 
@@ -2612,7 +2606,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 CMYK 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromCMYK(double cyan, double magenta, double yellow, double black)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorCMYK(cyan, magenta, yellow, black, _MaxOpacity);
 
@@ -2627,7 +2621,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 CMYK 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromCMYK(PointD4D cmyk, double opacity)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorCMYK(cmyk.X, cmyk.Y, cmyk.Z, cmyk.U, opacity);
 
@@ -2641,7 +2635,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 CMYK 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromCMYK(PointD4D cmyk)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorCMYK(cmyk.X, cmyk.Y, cmyk.Z, cmyk.U, _MaxOpacity);
 
@@ -2660,7 +2654,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 LAB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromLAB(double lightness, double greenRed, double blueYellow, double opacity)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorLAB(lightness, greenRed, blueYellow, opacity);
 
@@ -2676,7 +2670,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 LAB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromLAB(double lightness, double greenRed, double blueYellow)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorLAB(lightness, greenRed, blueYellow, _MaxOpacity);
 
@@ -2691,7 +2685,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 LAB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromLAB(PointD3D lab, double opacity)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorLAB(lab.X, lab.Y, lab.Z, opacity);
 
@@ -2705,7 +2699,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色在 LAB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromLAB(PointD3D lab)
         {
-            ColorX color = default(ColorX);
+            ColorX color = new ColorX();
 
             color._CtorLAB(lab.X, lab.Y, lab.Z, _MaxOpacity);
 
@@ -2729,7 +2723,7 @@ namespace Com
         /// <summary>
         /// 返回一个不透明度为 100%，其他分量为随机数的 ColorX 结构的新实例。
         /// </summary>
-        /// <returns>ColorX 结构，表示不透明度为 100%，其他分量为随机数的 ColorX 结构得到的结果。</returns>
+        /// <returns>ColorX 结构，表示不透明度为 100%，其他分量为随机数的 ColorX 结构。</returns>
         public static ColorX RandomColor()
         {
             return FromRGB(Statistics.RandomDouble(_MinRed, _MaxRed), Statistics.RandomDouble(_MinGreen, _MaxGreen), Statistics.RandomDouble(_MinBlue, _MaxBlue));

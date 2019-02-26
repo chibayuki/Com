@@ -553,7 +553,7 @@ namespace Com
             }
             else
             {
-                Str = string.Concat("Count=", _Size);
+                Str = "Count=" + _Size;
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");

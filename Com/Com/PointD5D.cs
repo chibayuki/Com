@@ -2427,7 +2427,7 @@ namespace Com
 
         void IList.Clear()
         {
-            this = default(PointD5D);
+            this = new PointD5D();
         }
 
         bool IList.Contains(object item)
@@ -2607,7 +2607,7 @@ namespace Com
 
         void ICollection<double>.Clear()
         {
-            this = default(PointD5D);
+            this = new PointD5D();
         }
 
         void ICollection<double>.CopyTo(double[] array, int index)

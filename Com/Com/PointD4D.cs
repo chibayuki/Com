@@ -2272,7 +2272,7 @@ namespace Com
 
         void IList.Clear()
         {
-            this = default(PointD4D);
+            this = new PointD4D();
         }
 
         bool IList.Contains(object item)
@@ -2452,7 +2452,7 @@ namespace Com
 
         void ICollection<double>.Clear()
         {
-            this = default(PointD4D);
+            this = new PointD4D();
         }
 
         void ICollection<double>.CopyTo(double[] array, int index)

@@ -354,18 +354,18 @@ namespace Com
                         }
                         else
                         {
-                            return string.Concat(_Imaginary, " i");
+                            return (_Imaginary + " i");
                         }
                     }
                     else
                     {
                         if (_Imaginary == 1)
                         {
-                            return string.Concat(_Real, " + i");
+                            return (_Real + " + i");
                         }
                         else if (_Imaginary == -1)
                         {
-                            return string.Concat(_Real, " - i");
+                            return (_Real + " - i");
                         }
                         else if (_Imaginary > 0)
                         {

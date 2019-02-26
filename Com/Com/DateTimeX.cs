@@ -474,10 +474,8 @@ namespace Com
         /// </summary>
         /// <param name="totalMilliseconds">十进制数表示的自公元时刻以来的总毫秒数。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(decimal totalMilliseconds, double utcOffset)
+        public DateTimeX(decimal totalMilliseconds, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorTotalMilliseconds(totalMilliseconds, utcOffset);
         }
 
@@ -485,10 +483,8 @@ namespace Com
         /// 使用十进制数表示的自公元时刻以来的总毫秒数初始化以本地时区表示的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="totalMilliseconds">十进制数表示的自公元时刻以来的总毫秒数。</param>
-        public DateTimeX(decimal totalMilliseconds)
+        public DateTimeX(decimal totalMilliseconds) : this()
         {
-            this = default(DateTimeX);
-
             _CtorTotalMilliseconds(totalMilliseconds, _LocalUtcOffset);
         }
 
@@ -503,10 +499,8 @@ namespace Com
         /// <param name="second">32 位整数表示的秒。</param>
         /// <param name="millisecond">32 位整数表示的毫秒。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, int day, int hour, int minute, int second, int millisecond, double utcOffset)
+        public DateTimeX(long year, int month, int day, int hour, int minute, int second, int millisecond, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, hour, minute, second, millisecond, utcOffset);
         }
 
@@ -520,10 +514,8 @@ namespace Com
         /// <param name="minute">32 位整数表示的分。</param>
         /// <param name="second">32 位整数表示的秒。</param>
         /// <param name="millisecond">32 位整数表示的毫秒。</param>
-        public DateTimeX(long year, int month, int day, int hour, int minute, int second, int millisecond)
+        public DateTimeX(long year, int month, int day, int hour, int minute, int second, int millisecond) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, hour, minute, second, millisecond, _LocalUtcOffset);
         }
 
@@ -537,10 +529,8 @@ namespace Com
         /// <param name="minute">32 位整数表示的分。</param>
         /// <param name="second">32 位整数表示的秒。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, int day, int hour, int minute, int second, double utcOffset)
+        public DateTimeX(long year, int month, int day, int hour, int minute, int second, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, hour, minute, second, _MinMillisecond, utcOffset);
         }
 
@@ -553,10 +543,8 @@ namespace Com
         /// <param name="hour">32 位整数表示的时。</param>
         /// <param name="minute">32 位整数表示的分。</param>
         /// <param name="second">32 位整数表示的秒。</param>
-        public DateTimeX(long year, int month, int day, int hour, int minute, int second)
+        public DateTimeX(long year, int month, int day, int hour, int minute, int second) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, hour, minute, second, _MinMillisecond, _LocalUtcOffset);
         }
 
@@ -569,10 +557,8 @@ namespace Com
         /// <param name="hour">32 位整数表示的时。</param>
         /// <param name="minute">32 位整数表示的分。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, int day, int hour, int minute, double utcOffset)
+        public DateTimeX(long year, int month, int day, int hour, int minute, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, hour, minute, _MinSecond, _MinMillisecond, utcOffset);
         }
 
@@ -584,10 +570,8 @@ namespace Com
         /// <param name="day">32 位整数表示的日。</param>
         /// <param name="hour">32 位整数表示的时。</param>
         /// <param name="minute">32 位整数表示的分。</param>
-        public DateTimeX(long year, int month, int day, int hour, int minute)
+        public DateTimeX(long year, int month, int day, int hour, int minute) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, hour, minute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
         }
 
@@ -599,10 +583,8 @@ namespace Com
         /// <param name="day">32 位整数表示的日。</param>
         /// <param name="hour">32 位整数表示的时。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, int day, int hour, double utcOffset)
+        public DateTimeX(long year, int month, int day, int hour, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, hour, _MinMinute, _MinSecond, _MinMillisecond, utcOffset);
         }
 
@@ -613,10 +595,8 @@ namespace Com
         /// <param name="month">32 位整数表示的月。</param>
         /// <param name="day">32 位整数表示的日。</param>
         /// <param name="hour">32 位整数表示的时。</param>
-        public DateTimeX(long year, int month, int day, int hour)
+        public DateTimeX(long year, int month, int day, int hour) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, hour, _MinMinute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
         }
 
@@ -627,10 +607,8 @@ namespace Com
         /// <param name="month">32 位整数表示的月。</param>
         /// <param name="day">32 位整数表示的日。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, int day, double utcOffset)
+        public DateTimeX(long year, int month, int day, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, utcOffset);
         }
 
@@ -640,10 +618,8 @@ namespace Com
         /// <param name="year">64 位整数表示的年。</param>
         /// <param name="month">32 位整数表示的月。</param>
         /// <param name="day">32 位整数表示的日。</param>
-        public DateTimeX(long year, int month, int day)
+        public DateTimeX(long year, int month, int day) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, day, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
         }
 
@@ -653,10 +629,8 @@ namespace Com
         /// <param name="year">64 位整数表示的年。</param>
         /// <param name="month">32 位整数表示的月。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, double utcOffset)
+        public DateTimeX(long year, int month, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, _MinDay, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, utcOffset);
         }
 
@@ -665,10 +639,8 @@ namespace Com
         /// </summary>
         /// <param name="year">64 位整数表示的年。</param>
         /// <param name="month">32 位整数表示的月。</param>
-        public DateTimeX(long year, int month)
+        public DateTimeX(long year, int month) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, month, _MinDay, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
         }
 
@@ -677,10 +649,8 @@ namespace Com
         /// </summary>
         /// <param name="year">64 位整数表示的年。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, double utcOffset)
+        public DateTimeX(long year, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, _MinMonth, _MinDay, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, utcOffset);
         }
 
@@ -688,10 +658,8 @@ namespace Com
         /// 使用指定的年初始化以本地时区表示的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="year">64 位整数表示的年。</param>
-        public DateTimeX(long year)
+        public DateTimeX(long year) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(year, _MinMonth, _MinDay, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
         }
 
@@ -700,10 +668,8 @@ namespace Com
         /// </summary>
         /// <param name="dateTime">DateTimeX 结构。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(DateTimeX dateTime, double utcOffset)
+        public DateTimeX(DateTimeX dateTime, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime._Hour, dateTime._Minute, dateTime._Second, dateTime._Millisecond, utcOffset);
         }
 
@@ -711,10 +677,8 @@ namespace Com
         /// 使用 DateTimeX 结构初始化以本地时区表示的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="dateTime">DateTimeX 结构。</param>
-        public DateTimeX(DateTimeX dateTime)
+        public DateTimeX(DateTimeX dateTime) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime._Hour, dateTime._Minute, dateTime._Second, dateTime._Millisecond, _LocalUtcOffset);
         }
 
@@ -723,10 +687,8 @@ namespace Com
         /// </summary>
         /// <param name="dateTime">DateTime 结构。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(DateTime dateTime, double utcOffset)
+        public DateTimeX(DateTime dateTime, double utcOffset) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, utcOffset);
         }
 
@@ -734,10 +696,8 @@ namespace Com
         /// 使用 DateTime 结构初始化以本地时区表示的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="dateTime">DateTime 结构。</param>
-        public DateTimeX(DateTime dateTime)
+        public DateTimeX(DateTime dateTime) : this()
         {
-            this = default(DateTimeX);
-
             _CtorDateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond, _LocalUtcOffset);
         }
 
@@ -748,7 +708,7 @@ namespace Com
         /// <summary>
         /// 表示所有属性为其数据类型的默认值的 DateTimeX 结构的实例。
         /// </summary>
-        public static readonly DateTimeX Empty = default(DateTimeX);
+        public static readonly DateTimeX Empty = new DateTimeX();
 
         //
 
@@ -1582,7 +1542,7 @@ namespace Com
         {
             if (!_Initialized)
             {
-                return string.Concat(base.GetType().Name, " [Empty]");
+                return (base.GetType().Name + " [Empty]");
             }
             else
             {
