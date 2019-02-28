@@ -28,16 +28,16 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private const int _32BitRGBAlphaShift = 24; // 32 位 RGB 色彩空间的 Alpha 通道（A）的位值偏移量。
-        private const int _32BitRGBRedShift = 16; // 32 位 RGB 色彩空间的红色通道（R）的位值偏移量。
-        private const int _32BitRGBGreenShift = 8; // 32 位 RGB 色彩空间的绿色通道（G）的位值偏移量。
-        private const int _32BitRGBBlueShift = 0; // 32 位 RGB 色彩空间的蓝色通道（B）的位值偏移量。
+        private const int _32BitARGBAlphaShift = 24; // 32 位 ARGB 颜色的 Alpha 分量（A）的位偏移量。
+        private const int _32BitARGBRedShift = 16; // 32 位 ARGB 颜色的红色分量（R）的位偏移量。
+        private const int _32BitARGBGreenShift = 8; // 32 位 ARGB 颜色的绿色分量（G）的位偏移量。
+        private const int _32BitARGBBlueShift = 0; // 32 位 ARGB 颜色的蓝色分量（B）的位偏移量。
 
         //
 
         private const double _MinOpacity = 0, _MaxOpacity = 100; // 不透明度的最小值与最大值。
+        private const double _MinAlpha = 0, _MaxAlpha = 255; // Alpha 通道（A）的最小值与最大值。
 
-        private const double _MinAlpha = 0, _MaxAlpha = 255; // RGB 色彩空间的 Alpha 通道（A）的最小值与最大值。
         private const double _MinRed = 0, _MaxRed = 255; // RGB 色彩空间的红色通道（R）的最小值与最大值。
         private const double _MinGreen = 0, _MaxGreen = 255; // RGB 色彩空间的绿色通道（G）的最小值与最大值。
         private const double _MinBlue = 0, _MaxBlue = 255; // RGB 色彩空间的蓝色通道（B）的最小值与最大值。
@@ -62,8 +62,8 @@ namespace Com
         //
 
         private const double _MinOpacity_FloDev = _MinOpacity - 5E-13, _MaxOpacity_FloDev = _MaxOpacity + 5E-11; // 不透明度的最小值与最大值，包含浮点偏差。
+        private const double _MinAlpha_FloDev = _MinAlpha - 5E-13, _MaxAlpha_FloDev = _MaxAlpha + 5E-11; // Alpha 通道（A）的最小值与最大值，包含浮点偏差。
 
-        private const double _MinAlpha_FloDev = _MinAlpha - 5E-13, _MaxAlpha_FloDev = _MaxAlpha + 5E-11; // RGB 色彩空间的 Alpha 通道（A）的最小值与最大值，包含浮点偏差。
         private const double _MinRed_FloDev = _MinRed - 5E-13, _MaxRed_FloDev = _MaxRed + 5E-11; // RGB 色彩空间的红色通道（R）的最小值与最大值，包含浮点偏差。
         private const double _MinGreen_FloDev = _MinGreen - 5E-13, _MaxGreen_FloDev = _MaxGreen + 5E-11; // RGB 色彩空间的绿色通道（G）的最小值与最大值，包含浮点偏差。
         private const double _MinBlue_FloDev = _MinBlue - 5E-13, _MaxBlue_FloDev = _MaxBlue + 5E-11; // RGB 色彩空间的蓝色通道（B）的最小值与最大值，包含浮点偏差。
@@ -120,7 +120,7 @@ namespace Com
             }
         }
 
-        private static double _CheckAlpha(double alpha) // 对颜色在 RGB 色彩空间的 Alpha 通道（A）的值进行合法性检查，返回合法的值。
+        private static double _CheckAlpha(double alpha) // 对颜色的 Alpha 通道（A）的值进行合法性检查，返回合法的值。
         {
             if (InternalMethod.IsNaNOrInfinity(alpha))
             {
@@ -683,12 +683,12 @@ namespace Com
 
         //
 
-        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为在 RGB 色彩空间的 Alpha 通道（A）的值。此函数不对参数进行合法性检查。
+        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为 Alpha 通道（A）的值。此函数不对参数进行合法性检查。
         {
             alpha = opacity / _MaxOpacity * _MaxAlpha;
         }
 
-        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色在 RGB 色彩空间的 Alpha 通道（A）的值转换为不透明度。此函数不对参数进行合法性检查。
+        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色的 Alpha 通道（A）的值转换为不透明度。此函数不对参数进行合法性检查。
         {
             opacity = alpha / _MaxAlpha * _MaxOpacity;
         }
@@ -1168,8 +1168,8 @@ namespace Com
         private bool _Initialized; // 表示此 ColorX 结构是否已初始化。
 
         private double _Opacity; // 颜色的不透明度。
+        private double _Alpha; // 颜色的 Alpha 通道（A）的值。
 
-        private double _Alpha; // 颜色在 RGB 色彩空间的 Alpha 通道（A）的值。
         private double _Red; // 颜色在 RGB 色彩空间的红色通道（R）的值。
         private double _Green; // 颜色在 RGB 色彩空间的绿色通道（G）的值。
         private double _Blue; // 颜色在 RGB 色彩空间的蓝色通道（B）的值。
@@ -1392,7 +1392,7 @@ namespace Com
         /// <param name="argb">颜色在 RGB 色彩空间的 32 位 ARGB 值。</param>
         public ColorX(int argb) : this()
         {
-            _CtorRGB(((uint)argb >> _32BitRGBAlphaShift) & 0xFFU, ((uint)argb >> _32BitRGBRedShift) & 0xFFU, ((uint)argb >> _32BitRGBGreenShift) & 0xFFU, ((uint)argb >> _32BitRGBBlueShift) & 0xFFU);
+            _CtorRGB(((uint)argb >> _32BitARGBAlphaShift) & 0xFFU, ((uint)argb >> _32BitARGBRedShift) & 0xFFU, ((uint)argb >> _32BitARGBGreenShift) & 0xFFU, ((uint)argb >> _32BitARGBBlueShift) & 0xFFU);
         }
 
         /// <summary>
@@ -1422,7 +1422,7 @@ namespace Com
 
             int Argb = int.Parse(HexCode, NumberStyles.HexNumber);
 
-            _CtorRGB(((uint)Argb >> _32BitRGBAlphaShift) & 0xFFU, ((uint)Argb >> _32BitRGBRedShift) & 0xFFU, ((uint)Argb >> _32BitRGBGreenShift) & 0xFFU, ((uint)Argb >> _32BitRGBBlueShift) & 0xFFU);
+            _CtorRGB(((uint)Argb >> _32BitARGBAlphaShift) & 0xFFU, ((uint)Argb >> _32BitARGBRedShift) & 0xFFU, ((uint)Argb >> _32BitARGBGreenShift) & 0xFFU, ((uint)Argb >> _32BitARGBBlueShift) & 0xFFU);
         }
 
         #endregion
@@ -1496,10 +1496,8 @@ namespace Com
             }
         }
 
-        //
-
         /// <summary>
-        /// 获取或设置此 ColorX 结构在 RGB 色彩空间的 Alpha 通道（A）的值。
+        /// 获取或设置此 ColorX 结构的 Alpha 通道（A）的值。
         /// </summary>
         public double Alpha
         {
@@ -1526,6 +1524,8 @@ namespace Com
                 }
             }
         }
+
+        //
 
         /// <summary>
         /// 获取或设置此 ColorX 结构在 RGB 色彩空间的红色通道（R）的值。
@@ -1923,7 +1923,7 @@ namespace Com
         {
             get
             {
-                int Argb = (int)(((uint)Math.Round(_Alpha) << _32BitRGBAlphaShift) | ((uint)Math.Round(_Red) << _32BitRGBRedShift) | ((uint)Math.Round(_Green) << _32BitRGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitRGBBlueShift));
+                int Argb = (int)(((uint)Math.Round(_Alpha) << _32BitARGBAlphaShift) | ((uint)Math.Round(_Red) << _32BitARGBRedShift) | ((uint)Math.Round(_Green) << _32BitARGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitARGBBlueShift));
 
                 string HexCode = Convert.ToString(Argb, 16).ToUpper();
 
@@ -1947,7 +1947,7 @@ namespace Com
         {
             get
             {
-                int Rgb = (int)(((uint)Math.Round(_Red) << _32BitRGBRedShift) | ((uint)Math.Round(_Green) << _32BitRGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitRGBBlueShift));
+                int Rgb = (int)(((uint)Math.Round(_Red) << _32BitARGBRedShift) | ((uint)Math.Round(_Green) << _32BitARGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitARGBBlueShift));
 
                 string HexCode = Convert.ToString(Rgb, 16).ToUpper();
 
@@ -2054,7 +2054,7 @@ namespace Com
         /// <returns>32 位整数，表示将此 ColorX 结构转换为 Color 结构的 32 位 ARGB 值。</returns>
         public int ToARGB()
         {
-            return (int)(((uint)Math.Round(_Alpha) << _32BitRGBAlphaShift) | ((uint)Math.Round(_Red) << _32BitRGBRedShift) | ((uint)Math.Round(_Green) << _32BitRGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitRGBBlueShift));
+            return (int)(((uint)Math.Round(_Alpha) << _32BitARGBAlphaShift) | ((uint)Math.Round(_Red) << _32BitARGBRedShift) | ((uint)Math.Round(_Green) << _32BitARGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitARGBBlueShift));
         }
 
         //
@@ -2073,13 +2073,11 @@ namespace Com
             return color;
         }
 
-        //
-
         /// <summary>
-        /// 返回将此 ColorX 结构在 RGB 色彩空间的 Alpha 通道（A）的值更改为指定值的 ColorX 结构的新实例。
+        /// 返回将此 ColorX 结构的 Alpha 通道（A）的值更改为指定值的 ColorX 结构的新实例。
         /// </summary>
-        /// <param name="alpha">颜色在 RGB 色彩空间的 Alpha 通道（A）的值。</param>
-        /// <returns>ColorX 结构，表示将此 ColorX 结构在 RGB 色彩空间的 Alpha 通道（A）的值更改为指定值得到的结果。</returns>
+        /// <param name="alpha">颜色的 Alpha 通道（A）的值。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构的 Alpha 通道（A）的值更改为指定值得到的结果。</returns>
         public ColorX AtAlpha(double alpha)
         {
             ColorX color = this;
@@ -2088,6 +2086,8 @@ namespace Com
 
             return color;
         }
+
+        //
 
         /// <summary>
         /// 返回将此 ColorX 结构在 RGB 色彩空间的红色通道（R）的值更改为指定值的 ColorX 结构的新实例。
@@ -2379,7 +2379,7 @@ namespace Com
         /// <summary>
         /// 返回将颜色在 RGB 色彩空间的各分量转换为 ColorX 结构的新实例。
         /// </summary>
-        /// <param name="alpha">颜色在 RGB 色彩空间的 Alpha 通道（A）的值。</param>
+        /// <param name="alpha">颜色的 Alpha 通道（A）的值。</param>
         /// <param name="red">颜色在 RGB 色彩空间的红色通道（R）的值。</param>
         /// <param name="green">颜色在 RGB 色彩空间的绿色通道（G）的值。</param>
         /// <param name="blue">颜色在 RGB 色彩空间的蓝色通道（B）的值。</param>
@@ -2412,7 +2412,7 @@ namespace Com
         /// <summary>
         /// 返回将颜色在 RGB 色彩空间的各分量转换为 ColorX 结构的新实例。
         /// </summary>
-        /// <param name="alpha">颜色在 RGB 色彩空间的 Alpha 通道（A）的值。</param>
+        /// <param name="alpha">颜色的 Alpha 通道（A）的值。</param>
         /// <param name="rgb">表示颜色在 RGB 色彩空间的各分量的 PointD3D 结构。</param>
         /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromRGB(double alpha, PointD3D rgb)
