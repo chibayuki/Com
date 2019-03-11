@@ -317,7 +317,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 PointD4D 结构的模平方。
+        /// 获取此 PointD4D 结构的模的平方。
         /// </summary>
         public double ModuleSquared
         {

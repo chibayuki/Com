@@ -42,7 +42,7 @@ namespace Com
         double Module { get; }
 
         /// <summary>
-        /// 获取向量的模平方。
+        /// 获取向量的模的平方。
         /// </summary>
         double ModuleSquared { get; }
     }

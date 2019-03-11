@@ -492,7 +492,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 Vector 的模平方。
+        /// 获取此 Vector 的模的平方。
         /// </summary>
         public double ModuleSquared
         {
