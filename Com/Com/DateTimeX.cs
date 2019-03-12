@@ -470,7 +470,7 @@ namespace Com
         #region 构造函数
 
         /// <summary>
-        /// 使用十进制数表示的自公元时刻以来的总毫秒与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数数初始化 DateTimeX 结构的新实例。
+        /// 使用十进制数表示的自公元时刻以来的总毫秒与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数初始化 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="totalMilliseconds">十进制数表示的自公元时刻以来的总毫秒数。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
@@ -549,58 +549,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用指定的年、月、日、时、分与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数初始化 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="year">64 位整数表示的年。</param>
-        /// <param name="month">32 位整数表示的月。</param>
-        /// <param name="day">32 位整数表示的日。</param>
-        /// <param name="hour">32 位整数表示的时。</param>
-        /// <param name="minute">32 位整数表示的分。</param>
-        /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, int day, int hour, int minute, double utcOffset) : this()
-        {
-            _CtorDateTime(year, month, day, hour, minute, _MinSecond, _MinMillisecond, utcOffset);
-        }
-
-        /// <summary>
-        /// 使用指定的年、月、日、时与分初始化以本地时区表示的 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="year">64 位整数表示的年。</param>
-        /// <param name="month">32 位整数表示的月。</param>
-        /// <param name="day">32 位整数表示的日。</param>
-        /// <param name="hour">32 位整数表示的时。</param>
-        /// <param name="minute">32 位整数表示的分。</param>
-        public DateTimeX(long year, int month, int day, int hour, int minute) : this()
-        {
-            _CtorDateTime(year, month, day, hour, minute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
-        }
-
-        /// <summary>
-        /// 使用指定的年、月、日、时与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数初始化 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="year">64 位整数表示的年。</param>
-        /// <param name="month">32 位整数表示的月。</param>
-        /// <param name="day">32 位整数表示的日。</param>
-        /// <param name="hour">32 位整数表示的时。</param>
-        /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, int day, int hour, double utcOffset) : this()
-        {
-            _CtorDateTime(year, month, day, hour, _MinMinute, _MinSecond, _MinMillisecond, utcOffset);
-        }
-
-        /// <summary>
-        /// 使用指定的年、月、日与时初始化以本地时区表示的 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="year">64 位整数表示的年。</param>
-        /// <param name="month">32 位整数表示的月。</param>
-        /// <param name="day">32 位整数表示的日。</param>
-        /// <param name="hour">32 位整数表示的时。</param>
-        public DateTimeX(long year, int month, int day, int hour) : this()
-        {
-            _CtorDateTime(year, month, day, hour, _MinMinute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
-        }
-
-        /// <summary>
         /// 使用指定的年、月、日与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数初始化 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="year">64 位整数表示的年。</param>
@@ -621,46 +569,6 @@ namespace Com
         public DateTimeX(long year, int month, int day) : this()
         {
             _CtorDateTime(year, month, day, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
-        }
-
-        /// <summary>
-        /// 使用指定的年、月与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数初始化 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="year">64 位整数表示的年。</param>
-        /// <param name="month">32 位整数表示的月。</param>
-        /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, int month, double utcOffset) : this()
-        {
-            _CtorDateTime(year, month, _MinDay, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, utcOffset);
-        }
-
-        /// <summary>
-        /// 使用指定的年与月初始化以本地时区表示的 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="year">64 位整数表示的年。</param>
-        /// <param name="month">32 位整数表示的月。</param>
-        public DateTimeX(long year, int month) : this()
-        {
-            _CtorDateTime(year, month, _MinDay, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
-        }
-
-        /// <summary>
-        /// 使用指定的年与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数初始化 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="year">64 位整数表示的年。</param>
-        /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
-        public DateTimeX(long year, double utcOffset) : this()
-        {
-            _CtorDateTime(year, _MinMonth, _MinDay, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, utcOffset);
-        }
-
-        /// <summary>
-        /// 使用指定的年初始化以本地时区表示的 DateTimeX 结构的新实例。
-        /// </summary>
-        /// <param name="year">64 位整数表示的年。</param>
-        public DateTimeX(long year) : this()
-        {
-            _CtorDateTime(year, _MinMonth, _MinDay, _MinHour, _MinMinute, _MinSecond, _MinMillisecond, _LocalUtcOffset);
         }
 
         /// <summary>
@@ -1004,7 +912,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的日期是该年的第几周（以 1 月 1 日所在周为第一周）。
+        /// 获取此 DateTimeX 结构表示的日期是所在年的第几周（以 1 月 1 日所在周为第一周）。
         /// </summary>
         public int WeekOfYear
         {
@@ -1015,7 +923,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的日期是该年的第几天（以 1 月 1 日为第一天）。
+        /// 获取此 DateTimeX 结构表示的日期是所在年的第几天（以 1 月 1 日为第一天）。
         /// </summary>
         public int DayOfYear
         {
@@ -1028,7 +936,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的时刻是该年的第几小时（以 1 月 1 日 0 时为第一小时）。
+        /// 获取此 DateTimeX 结构表示的时刻是所在年的第几小时（以 1 月 1 日 0 时为第一小时）。
         /// </summary>
         public int HourOfYear
         {
@@ -1039,7 +947,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的时刻是该年的第几分钟（以 1 月 1 日 0 时 0 分为第一分钟）。
+        /// 获取此 DateTimeX 结构表示的时刻是所在年的第几分钟（以 1 月 1 日 0 时 0 分为第一分钟）。
         /// </summary>
         public int MinuteOfYear
         {
@@ -1050,7 +958,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的时刻是该年的第几秒（以 1 月 1 日 0 时 0 分 0 秒为第一秒）。
+        /// 获取此 DateTimeX 结构表示的时刻是所在年的第几秒（以 1 月 1 日 0 时 0 分 0 秒为第一秒）。
         /// </summary>
         public int SecondOfYear
         {
@@ -1061,7 +969,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的时刻是该年的第几毫秒（以 1 月 1 日 0 时 0 分 0 秒 0 毫秒为第一毫秒）。
+        /// 获取此 DateTimeX 结构表示的时刻是所在年的第几毫秒（以 1 月 1 日 0 时 0 分 0 秒 0 毫秒为第一毫秒）。
         /// </summary>
         public long MillisecondOfYear
         {
@@ -1092,7 +1000,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 DateTimeX 结构表示的日期是一周的某天的枚举。
+        /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的枚举。
         /// </summary>
         public DayOfWeek DayOfWeek
         {
@@ -1103,7 +1011,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的时刻是该天的第几小时（以 0 时为第一小时）。
+        /// 获取此 DateTimeX 结构表示的时刻是所在天的第几小时（以 0 时为第一小时）。
         /// </summary>
         public int HourOfDay
         {
@@ -1114,7 +1022,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的时刻是该天的第几分钟（以 0 时 0 分为第一分钟）。
+        /// 获取此 DateTimeX 结构表示的时刻是所在天的第几分钟（以 0 时 0 分为第一分钟）。
         /// </summary>
         public int MinuteOfDay
         {
@@ -1125,7 +1033,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的时刻是该天的第几秒（以 0 时 0 分 0 秒为第一秒）。
+        /// 获取此 DateTimeX 结构表示的时刻是所在天的第几秒（以 0 时 0 分 0 秒为第一秒）。
         /// </summary>
         public int SecondOfDay
         {
@@ -1136,7 +1044,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的时刻是该天的第几毫秒（以 0 时 0 分 0 秒 0 毫秒为第一毫秒）。
+        /// 获取此 DateTimeX 结构表示的时刻是所在天的第几毫秒（以 0 时 0 分 0 秒 0 毫秒为第一毫秒）。
         /// </summary>
         public int MillisecondOfDay
         {
@@ -1281,7 +1189,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取表示此 DateTimeX 结构表示的日期是一周的某天的中文长字符串。
+        /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的中文长字符串。
         /// </summary>
         public string WeekdayLongStringInChinese
         {
@@ -1302,7 +1210,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 DateTimeX 结构表示的日期是一周的某天的中文短字符串。
+        /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的中文短字符串。
         /// </summary>
         public string WeekdayShortStringInChinese
         {
@@ -1323,7 +1231,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 DateTimeX 结构表示的日期是一周的某天的英文长字符串。
+        /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的英文长字符串。
         /// </summary>
         public string WeekdayLongStringInEnglish
         {
@@ -1344,7 +1252,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 DateTimeX 结构表示的日期是一周的某天的英文短字符串。
+        /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的英文短字符串。
         /// </summary>
         public string WeekdayShortStringInEnglish
         {
@@ -1365,7 +1273,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 DateTimeX 结构表示的日期是一周的某天的日文长字符串。
+        /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的日文长字符串。
         /// </summary>
         public string WeekdayLongStringInJapanese
         {
@@ -1386,7 +1294,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取表示此 DateTimeX 结构表示的日期是一周的某天的日文短字符串。
+        /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的日文短字符串。
         /// </summary>
         public string WeekdayShortStringInJapanese
         {
@@ -2219,11 +2127,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 DateTimeX 结构是否前者早于后者。
+        /// 判断两个 DateTimeX 结构表示的时刻是否前者早于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
-        /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于后者。</returns>
+        /// <returns>布尔值，表示两个 DateTimeX 结构表示的时刻是否前者早于后者。</returns>
         public static bool operator <(DateTimeX left, DateTimeX right)
         {
             if (!left._Initialized || !right._Initialized)
@@ -2237,11 +2145,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 DateTimeX 结构是否前者晚于后者。
+        /// 判断两个 DateTimeX 结构表示的时刻是否前者晚于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
-        /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于后者。</returns>
+        /// <returns>布尔值，表示两个 DateTimeX 结构表示的时刻是否前者晚于后者。</returns>
         public static bool operator >(DateTimeX left, DateTimeX right)
         {
             if (!left._Initialized || !right._Initialized)
@@ -2255,11 +2163,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 DateTimeX 结构是否前者早于或等于后者。
+        /// 判断两个 DateTimeX 结构表示的时刻是否前者早于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
-        /// <returns>布尔值，表示两个 DateTimeX 结构是否前者早于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 DateTimeX 结构表示的时刻是否前者早于或等于后者。</returns>
         public static bool operator <=(DateTimeX left, DateTimeX right)
         {
             if (!left._Initialized || !right._Initialized)
@@ -2273,11 +2181,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 DateTimeX 结构是否前者晚于或等于后者。
+        /// 判断两个 DateTimeX 结构表示的时刻是否前者晚于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 DateTimeX 结构。</param>
         /// <param name="right">运算符右侧比较的 DateTimeX 结构。</param>
-        /// <returns>布尔值，表示两个 DateTimeX 结构是否前者晚于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 DateTimeX 结构表示的时刻是否前者晚于或等于后者。</returns>
         public static bool operator >=(DateTimeX left, DateTimeX right)
         {
             if (!left._Initialized || !right._Initialized)
