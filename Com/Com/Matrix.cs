@@ -194,9 +194,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用二维双精度浮点数数组表示的矩阵元素初始化 Matrix 的新实例。
+        /// 使用双精度浮点数二维数组表示的矩阵元素初始化 Matrix 的新实例。
         /// </summary>
-        /// <param name="values">二维数组表示的矩阵元素。</param>
+        /// <param name="values">双精度浮点数二维数组表示的矩阵元素。</param>
         public Matrix(double[,] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -760,9 +760,7 @@ namespace Com
             }
             else
             {
-                Matrix result = new Matrix(_MArray);
-
-                return result;
+                return new Matrix(_MArray);
             }
         }
 

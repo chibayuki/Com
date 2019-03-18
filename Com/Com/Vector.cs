@@ -773,9 +773,7 @@ namespace Com
             }
             else
             {
-                Vector result = new Vector(_Type, _VArray);
-
-                return result;
+                return new Vector(_Type, _VArray);
             }
         }
 
