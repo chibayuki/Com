@@ -1078,7 +1078,7 @@ namespace Com
         /// <summary>
         /// 返回表示对角矩阵的 Matrix 的新实例。
         /// </summary>
-        /// <param name="array">包含对角元素的数组。</param>
+        /// <param name="array">包含对角元素的双精度浮点数数组。</param>
         /// <param name="rowsUponMainDiag">对角元素在矩阵中位于主对角线上方的行数。</param>
         /// <returns>Matrix 对象，表示对角矩阵。</returns>
         public static Matrix Diagonal(double[] array, int rowsUponMainDiag)
@@ -1105,7 +1105,7 @@ namespace Com
         /// <summary>
         /// 返回表示对角矩阵的 Matrix 的新实例。
         /// </summary>
-        /// <param name="array">包含对角元素的数组。</param>
+        /// <param name="array">包含对角元素的双精度浮点数数组。</param>
         /// <returns>Matrix 对象，表示对角矩阵。</returns>
         public static Matrix Diagonal(double[] array)
         {
@@ -1133,8 +1133,8 @@ namespace Com
         /// <summary>
         /// 返回表示由 2 个 Matrix 对象组成的增广矩阵的 Matrix 的新实例。
         /// </summary>
-        /// <param name="left">左矩阵。</param>
-        /// <param name="right">右矩阵。</param>
+        /// <param name="left">Matrix 对象，表示左侧的矩阵。</param>
+        /// <param name="right">Matrix 对象，表示右侧的矩阵。</param>
         /// <returns>Matrix 对象，表示由 2 个 Matrix 对象组成的增广矩阵。</returns>
         public static Matrix Augment(Matrix left, Matrix right)
         {
@@ -1769,7 +1769,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Matrix 对象。</param>
         /// <param name="right">运算符右侧比较的 Matrix 对象。</param>
-        /// <returns>布尔值，表示两个 Matrix 对象表示的整数是否相等。</returns>
+        /// <returns>布尔值，表示两个 Matrix 对象是否相等。</returns>
         public static bool operator ==(Matrix left, Matrix right)
         {
             if ((object)left == null && (object)right == null)
@@ -1804,7 +1804,7 @@ namespace Com
         /// </summary>
         /// <param name="left">运算符左侧比较的 Matrix 对象。</param>
         /// <param name="right">运算符右侧比较的 Matrix 对象。</param>
-        /// <returns>布尔值，表示两个 Matrix 对象表示的整数是否不相等。</returns>
+        /// <returns>布尔值，表示两个 Matrix 对象是否不相等。</returns>
         public static bool operator !=(Matrix left, Matrix right)
         {
             if ((object)left == null && (object)right == null)

@@ -32,8 +32,8 @@ namespace Com
         /// <summary>
         /// 计算平面直角坐标系中过两个定点的直线的一般式方程的参数。
         /// </summary>
-        /// <param name="pt1">第一个点。</param>
-        /// <param name="pt2">第二个点。</param>
+        /// <param name="pt1">第一个定点。</param>
+        /// <param name="pt2">第二个定点。</param>
         /// <param name="A">直线的一般式方程的第一个参数。</param>
         /// <param name="B">直线的一般式方程的第二个参数。</param>
         /// <param name="C">直线的一般式方程的第三个参数。</param>
@@ -353,8 +353,8 @@ namespace Com
         /// 判断在一个圆内部能否看到一个点。
         /// </summary>
         /// <param name="pt">点。</param>
-        /// <param name="offset">圆心。</param>
-        /// <param name="radius">半径。</param>
+        /// <param name="offset">圆的圆心。</param>
+        /// <param name="radius">圆的半径。</param>
         /// <returns>布尔值，表示在一个圆内部能否看到一个点。</returns>
         public static bool PointIsVisibleInCircle(PointD pt, PointD offset, double radius)
         {
@@ -372,10 +372,10 @@ namespace Com
         /// 判断在一个椭圆内部能否看到一个点。
         /// </summary>
         /// <param name="pt">点。</param>
-        /// <param name="offset">焦点。</param>
-        /// <param name="semiMajorAxis">半长轴。</param>
-        /// <param name="eccentricity">离心率。</param>
-        /// <param name="rotateAngle">旋转角（弧度）（以焦点为中心，以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，焦点到近焦点连线相对于 +X 轴的角度）。</param>
+        /// <param name="offset">椭圆的焦点。</param>
+        /// <param name="semiMajorAxis">椭圆的半长轴。</param>
+        /// <param name="eccentricity">椭圆的离心率。</param>
+        /// <param name="rotateAngle">椭圆的旋转角（弧度）（以焦点为中心，以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，焦点到近焦点连线相对于 +X 轴的角度）。</param>
         /// <returns>布尔值，表示在一个椭圆内部能否看到一个点。</returns>
         public static bool PointIsVisibleInEllipse(PointD pt, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle)
         {
@@ -398,9 +398,9 @@ namespace Com
         /// </summary>
         /// <param name="pt">点。</param>
         /// <param name="offset">菱形的中心。</param>
-        /// <param name="semiMajorAxis">半长轴。</param>
-        /// <param name="semiMinorAxis">半短轴。</param>
-        /// <param name="rotateAngle">旋转角（弧度）（以焦点为中心，以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，半长轴相对于 +X 轴的角度）。</param>
+        /// <param name="semiMajorAxis">菱形的半长轴。</param>
+        /// <param name="semiMinorAxis">菱形的半短轴。</param>
+        /// <param name="rotateAngle">菱形的旋转角（弧度）（以焦点为中心，以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，半长轴相对于 +X 轴的角度）。</param>
         /// <returns>布尔值，表示在一个菱形内部能否看到一个点。</returns>
         public static bool PointIsVisibleInRhombus(PointD pt, PointD offset, double semiMajorAxis, double semiMinorAxis, double rotateAngle)
         {
@@ -474,8 +474,8 @@ namespace Com
         /// </summary>
         /// <param name="pt1">直线段的第一个端点。</param>
         /// <param name="pt2">直线段的第二个端点。</param>
-        /// <param name="offset">圆心。</param>
-        /// <param name="radius">半径。</param>
+        /// <param name="offset">圆的圆心。</param>
+        /// <param name="radius">圆的半径。</param>
         /// <returns>布尔值，表示在一个圆内部能否看到一个直线段的部分或全部。</returns>
         public static bool LineIsVisibleInCircle(PointD pt1, PointD pt2, PointD offset, double radius)
         {
@@ -522,8 +522,8 @@ namespace Com
         /// <summary>
         /// 判断在一个矩形内部能否看到一个圆的内部或者圆周的部分或全部。
         /// </summary>
-        /// <param name="offset">圆心。</param>
-        /// <param name="radius">半径。</param>
+        /// <param name="offset">圆的圆心。</param>
+        /// <param name="radius">圆的半径。</param>
         /// <param name="rect">矩形。</param>
         /// <returns>布尔值，表示在一个矩形内部能否看到一个圆的内部或者圆周的部分或全部。</returns>
         public static bool CircleInnerIsVisibleInRectangle(PointD offset, double radius, RectangleF rect)
@@ -592,8 +592,8 @@ namespace Com
         /// <summary>
         /// 判断在一个矩形内部能否看到一个圆的圆周的部分或全部。
         /// </summary>
-        /// <param name="offset">圆心。</param>
-        /// <param name="radius">半径。</param>
+        /// <param name="offset">圆的圆心。</param>
+        /// <param name="radius">圆的半径。</param>
         /// <param name="rect">矩形。</param>
         /// <returns>布尔值，表示在一个矩形内部能否看到一个圆的圆周的部分或全部。</returns>
         public static bool CircumferenceIsVisibleInRectangle(PointD offset, double radius, RectangleF rect)
@@ -683,9 +683,9 @@ namespace Com
         /// <summary>
         /// 计算椭圆在指定相位的半径。
         /// </summary>
-        /// <param name="semiMajorAxis">半长轴。</param>
-        /// <param name="eccentricity">离心率。</param>
-        /// <param name="phase">相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="semiMajorAxis">椭圆的半长轴。</param>
+        /// <param name="eccentricity">椭圆的离心率。</param>
+        /// <param name="phase">椭圆的相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <returns>双精度浮点数，表示椭圆在指定相位的半径。</returns>
         public static double GetRadiusOfEllipse(double semiMajorAxis, double eccentricity, double phase)
         {
@@ -702,9 +702,9 @@ namespace Com
         /// <summary>
         /// 计算椭圆在指定相位的焦半径。
         /// </summary>
-        /// <param name="semiMajorAxis">半长轴。</param>
-        /// <param name="eccentricity">离心率。</param>
-        /// <param name="phase">相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
+        /// <param name="semiMajorAxis">椭圆的半长轴。</param>
+        /// <param name="eccentricity">椭圆的离心率。</param>
+        /// <param name="phase">椭圆的相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <returns>双精度浮点数，表示椭圆在指定相位的焦半径。</returns>
         public static double GetFocalRadiusOfEllipse(double semiMajorAxis, double eccentricity, double phase)
         {
@@ -721,8 +721,8 @@ namespace Com
         /// <summary>
         /// 将椭圆的圆心角转换为相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。
         /// </summary>
-        /// <param name="centralAngle">圆心角（弧度）。</param>
-        /// <param name="eccentricity">离心率。</param>
+        /// <param name="centralAngle">椭圆的圆心角（弧度）。</param>
+        /// <param name="eccentricity">椭圆的离心率。</param>
         /// <returns>双精度浮点数，表示将椭圆的圆心角转换为相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）得到的结果。</returns>
         public static double EllipseCentralAngleToPhase(double centralAngle, double eccentricity)
         {
@@ -741,12 +741,12 @@ namespace Com
         #region 位图
 
         /// <summary>
-        /// 屏幕坐标系中，将位图的副本按顺时针方向旋转一个角度，返回旋转后得到的位图。
+        /// 将位图的副本按顺时针方向旋转一个角度，返回旋转后得到的位图。
         /// </summary>
-        /// <param name="bmp">被旋转的位图。</param>
-        /// <param name="rotateAngle">旋转的角度（弧度）。</param>
+        /// <param name="bmp">用于旋转的位图。</param>
+        /// <param name="rotateAngle">按顺时针方向旋转的角度（弧度）。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// <returns>Bitmap 对象，表示屏幕坐标系中，将位图的副本按顺时针方向旋转一个角度得到的结果。</returns>
+        /// <returns>Bitmap 对象，表示将位图的副本按顺时针方向旋转一个角度得到的结果。</returns>
         public static Bitmap RotateBitmap(Bitmap bmp, double rotateAngle, bool antiAlias)
         {
             if (bmp == null || InternalMethod.IsNaNOrInfinity(rotateAngle))

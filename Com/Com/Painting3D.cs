@@ -28,11 +28,11 @@ namespace Com
         /// <summary>
         /// 绘制一个长方体，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
         /// <param name="center">长方体的中心坐标。</param>
         /// <param name="size">长方体的大小。</param>
         /// <param name="color">长方体的颜色。</param>
-        /// <param name="edgeWidth">棱的宽度。</param>
+        /// <param name="edgeWidth">长方体的棱的宽度。</param>
         /// <param name="affineMatrixList">仿射矩阵（左矩阵）列表。</param>
         /// <param name="trueLenDist">真实尺寸距离。</param>
         /// <param name="illuminationDirection">光照方向。</param>
@@ -509,11 +509,11 @@ namespace Com
         /// <summary>
         /// 绘制一个长方体，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
         /// <param name="center">长方体的中心坐标。</param>
         /// <param name="size">长方体的大小。</param>
         /// <param name="color">长方体的颜色。</param>
-        /// <param name="edgeWidth">棱的宽度。</param>
+        /// <param name="edgeWidth">长方体的棱的宽度。</param>
         /// <param name="affineMatrix">仿射矩阵（左矩阵）。</param>
         /// <param name="trueLenDist">真实尺寸距离。</param>
         /// <param name="illuminationDirection">光照方向。</param>
@@ -529,11 +529,11 @@ namespace Com
         /// <summary>
         /// 绘制一个长方体，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
         /// <param name="center">长方体的中心坐标。</param>
         /// <param name="size">长方体的大小。</param>
         /// <param name="color">长方体的颜色。</param>
-        /// <param name="edgeWidth">棱的宽度。</param>
+        /// <param name="edgeWidth">长方体的棱的宽度。</param>
         /// <param name="affineMatrixList">仿射矩阵（左矩阵）列表。</param>
         /// <param name="trueLenDist">真实尺寸距离。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
@@ -546,11 +546,11 @@ namespace Com
         /// <summary>
         /// 绘制一个长方体，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
         /// <param name="center">长方体的中心坐标。</param>
         /// <param name="size">长方体的大小。</param>
         /// <param name="color">长方体的颜色。</param>
-        /// <param name="edgeWidth">棱的宽度。</param>
+        /// <param name="edgeWidth">长方体的棱的宽度。</param>
         /// <param name="affineMatrix">仿射矩阵（左矩阵）。</param>
         /// <param name="trueLenDist">真实尺寸距离。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>

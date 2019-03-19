@@ -31,7 +31,7 @@ namespace Com
         /// <summary>
         /// 绘制一个直线段，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
         /// <param name="pt1">直线段的第一个端点。</param>
         /// <param name="pt2">直线段的第二个端点。</param>
         /// <param name="color">线条颜色。</param>
@@ -107,9 +107,9 @@ namespace Com
         /// <summary>
         /// 绘制极坐标网格，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
-        /// <param name="offset">圆心。</param>
-        /// <param name="radius">半径。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
+        /// <param name="offset">极坐标网格的中心。</param>
+        /// <param name="radius">极坐标网格的半径。</param>
         /// <param name="deltaRadius">极坐标网格内部相邻同心圆的半径差。</param>
         /// <param name="normalIncreasePeriod">法线数量增加周期。</param>
         /// <param name="color">线条颜色。</param>
@@ -178,9 +178,9 @@ namespace Com
         /// <summary>
         /// 绘制一个圆，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
-        /// <param name="offset">圆心。</param>
-        /// <param name="radius">半径。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
+        /// <param name="offset">圆的圆心。</param>
+        /// <param name="radius">圆的半径。</param>
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
@@ -252,15 +252,15 @@ namespace Com
         /// <summary>
         /// 绘制一个大型圆，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
-        /// <param name="offset">圆心。</param>
-        /// <param name="radius">半径。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
+        /// <param name="offset">圆的圆心。</param>
+        /// <param name="radius">圆的半径。</param>
         /// <param name="refPhase">参考相位（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// <param name="minDiv">在绘图位图的可见范围内将圆周按相位等分的最小数量。</param>
-        /// <param name="maxDiv">在绘图位图的可见范围内将圆周按相位等分的最大数量。</param>
+        /// <param name="minDiv">在用于绘制的位图的可见范围内将圆周按相位等分的最小数量。</param>
+        /// <param name="maxDiv">在用于绘制的位图的可见范围内将圆周按相位等分的最大数量。</param>
         /// <param name="divArc">圆周的任何等分的近似长度（像素）。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias, int minDiv, int maxDiv, double divArc)
@@ -669,9 +669,9 @@ namespace Com
         /// <summary>
         /// 绘制一个大型圆，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
-        /// <param name="offset">圆心。</param>
-        /// <param name="radius">半径。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
+        /// <param name="offset">圆的圆心。</param>
+        /// <param name="radius">圆的半径。</param>
         /// <param name="refPhase">参考相位（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
@@ -685,17 +685,17 @@ namespace Com
         /// <summary>
         /// 绘制一个大型椭圆，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
-        /// <param name="offset">焦点。</param>
-        /// <param name="semiMajorAxis">半长轴。</param>
-        /// <param name="eccentricity">离心率。</param>
-        /// <param name="rotateAngle">旋转角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，焦点到近焦点连线相对于 +X 轴的角度）。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
+        /// <param name="offset">椭圆的焦点。</param>
+        /// <param name="semiMajorAxis">椭圆的半长轴。</param>
+        /// <param name="eccentricity">椭圆的离心率。</param>
+        /// <param name="rotateAngle">椭圆的旋转角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，焦点到近焦点连线相对于 +X 轴的角度）。</param>
         /// <param name="refPhase">参考相位（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
-        /// <param name="minDiv">在绘图位图的可见范围内将椭圆周按相位等分的最小数量。</param>
-        /// <param name="maxDiv">在绘图位图的可见范围内将椭圆周按相位等分的最大数量。</param>
+        /// <param name="minDiv">在用于绘制的位图的可见范围内将椭圆周按相位等分的最小数量。</param>
+        /// <param name="maxDiv">在用于绘制的位图的可见范围内将椭圆周按相位等分的最大数量。</param>
         /// <param name="divArc">椭圆周的任何等分的近似长度（像素）。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
         public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias, int minDiv, int maxDiv, double divArc)
@@ -1173,11 +1173,11 @@ namespace Com
         /// <summary>
         /// 绘制一个大型椭圆，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
-        /// <param name="offset">焦点。</param>
-        /// <param name="semiMajorAxis">半长轴。</param>
-        /// <param name="eccentricity">离心率。</param>
-        /// <param name="rotateAngle">旋转角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，焦点到近焦点连线相对于 +X 轴的角度）。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
+        /// <param name="offset">椭圆的焦点。</param>
+        /// <param name="semiMajorAxis">椭圆的半长轴。</param>
+        /// <param name="eccentricity">椭圆的离心率。</param>
+        /// <param name="rotateAngle">椭圆的旋转角（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向，焦点到近焦点连线相对于 +X 轴的角度）。</param>
         /// <param name="refPhase">参考相位（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <param name="color">线条颜色。</param>
         /// <param name="width">线条宽度，0 表示填充。</param>
@@ -1191,7 +1191,7 @@ namespace Com
         /// <summary>
         /// 绘制一行带有阴影效果的文本，阴影位于文本右下方，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="bmp">绘图位图。</param>
+        /// <param name="bmp">用于绘制的位图。</param>
         /// <param name="text">文本内容。</param>
         /// <param name="font">文本字体。</param>
         /// <param name="frontColor">文本颜色。</param>
@@ -1255,7 +1255,7 @@ namespace Com
         /// <summary>
         /// 在透明窗口中绘制图像，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
-        /// <param name="form">绘制图像的窗口。</param>
+        /// <param name="form">用于绘制的窗口。</param>
         /// <param name="bmp">绘制的图像。</param>
         /// <param name="opacity">绘制图像的不透明度。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
