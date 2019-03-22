@@ -755,7 +755,17 @@ namespace Com
             }
             else
             {
-                return Module.CompareTo(vector.Module);
+                for (int i = 0; i < _Size; i++)
+                {
+                    int result = _VArray[i].CompareTo(vector._VArray[i]);
+
+                    if (result != 0)
+                    {
+                        return result;
+                    }
+                }
+
+                return 0;
             }
         }
 
@@ -2899,11 +2909,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的维度与模是否前者小于后者。
+        /// 判断两个 Vector 对象的维度与字典序是否前者小于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        /// <returns>布尔值，表示两个 Vector 对象的模是否前者小于后者。</returns>
+        /// <returns>布尔值，表示两个 Vector 对象的维度与字典序是否前者小于后者。</returns>
         public static bool operator <(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2920,16 +2930,24 @@ namespace Com
             }
             else
             {
-                return (left.Module < right.Module);
+                for (int i = 0; i < left._Size; i++)
+                {
+                    if (left._VArray[i] != right._VArray[i])
+                    {
+                        return (left._VArray[i] < right._VArray[i]);
+                    }
+                }
+
+                return false;
             }
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的维度与模是否前者大于后者。
+        /// 判断两个 Vector 对象的维度与字典序是否前者大于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        /// <returns>布尔值，表示两个 Vector 对象的模是否前者大于后者。</returns>
+        /// <returns>布尔值，表示两个 Vector 对象的维度与字典序是否前者大于后者。</returns>
         public static bool operator >(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2946,16 +2964,24 @@ namespace Com
             }
             else
             {
-                return (left.Module > right.Module);
+                for (int i = 0; i < left._Size; i++)
+                {
+                    if (left._VArray[i] != right._VArray[i])
+                    {
+                        return (left._VArray[i] > right._VArray[i]);
+                    }
+                }
+
+                return false;
             }
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的维度与模是否前者小于或等于后者。
+        /// 判断两个 Vector 对象的维度与字典序是否前者小于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        /// <returns>布尔值，表示两个 Vector 对象的模是否前者小于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 Vector 对象的维度与字典序是否前者小于或等于后者。</returns>
         public static bool operator <=(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2972,16 +2998,24 @@ namespace Com
             }
             else
             {
-                return (left.Module <= right.Module);
+                for (int i = 0; i < left._Size; i++)
+                {
+                    if (left._VArray[i] != right._VArray[i])
+                    {
+                        return (left._VArray[i] < right._VArray[i]);
+                    }
+                }
+
+                return true;
             }
         }
 
         /// <summary>
-        /// 判断两个 Vector 对象的维度与模是否前者大于或等于后者。
+        /// 判断两个 Vector 对象的维度与字典序是否前者大于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 Vector 对象。</param>
         /// <param name="right">运算符右侧比较的 Vector 对象。</param>
-        /// <returns>布尔值，表示两个 Vector 对象的模是否前者大于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 Vector 对象的维度与字典序是否前者大于或等于后者。</returns>
         public static bool operator >=(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
@@ -2998,7 +3032,15 @@ namespace Com
             }
             else
             {
-                return (left.Module >= right.Module);
+                for (int i = 0; i < left._Size; i++)
+                {
+                    if (left._VArray[i] != right._VArray[i])
+                    {
+                        return (left._VArray[i] > right._VArray[i]);
+                    }
+                }
+
+                return true;
             }
         }
 

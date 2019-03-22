@@ -841,7 +841,17 @@ namespace Com
         /// <returns>32 位整数，表示将此 PointD6D 结构与指定的 PointD6D 结构进行次序比较得到的结果。</returns>
         public int CompareTo(PointD6D pt)
         {
-            return Module.CompareTo(pt.Module);
+            for (int i = 0; i < Dimension; i++)
+            {
+                int result = this[i].CompareTo(pt[i]);
+
+                if (result != 0)
+                {
+                    return result;
+                }
+            }
+
+            return 0;
         }
 
         //
@@ -2316,47 +2326,79 @@ namespace Com
         }
 
         /// <summary>
-        /// 判断两个 PointD6D 结构的模是否前者小于后者。
+        /// 判断两个 PointD6D 结构的字典序是否前者小于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD6D 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
-        /// <returns>布尔值，表示两个 PointD6D 结构的模是否前者小于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD6D 结构的字典序是否前者小于后者。</returns>
         public static bool operator <(PointD6D left, PointD6D right)
         {
-            return (left.Module < right.Module);
+            for (int i = 0; i < left.Dimension; i++)
+            {
+                if (left[i] != right[i])
+                {
+                    return (left[i] < right[i]);
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
-        /// 判断两个 PointD6D 结构的模是否前者大于后者。
+        /// 判断两个 PointD6D 结构的字典序是否前者大于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD6D 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
-        /// <returns>布尔值，表示两个 PointD6D 结构的模是否前者大于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD6D 结构的字典序是否前者大于后者。</returns>
         public static bool operator >(PointD6D left, PointD6D right)
         {
-            return (left.Module > right.Module);
+            for (int i = 0; i < left.Dimension; i++)
+            {
+                if (left[i] != right[i])
+                {
+                    return (left[i] > right[i]);
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
-        /// 判断两个 PointD6D 结构的模是否前者小于或等于后者。
+        /// 判断两个 PointD6D 结构的字典序是否前者小于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD6D 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
-        /// <returns>布尔值，表示两个 PointD6D 结构的模是否前者小于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD6D 结构的字典序是否前者小于或等于后者。</returns>
         public static bool operator <=(PointD6D left, PointD6D right)
         {
-            return (left.Module <= right.Module);
+            for (int i = 0; i < left.Dimension; i++)
+            {
+                if (left[i] != right[i])
+                {
+                    return (left[i] < right[i]);
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
-        /// 判断两个 PointD6D 结构的模是否前者大于或等于后者。
+        /// 判断两个 PointD6D 结构的字典序是否前者大于或等于后者。
         /// </summary>
         /// <param name="left">运算符左侧比较的 PointD6D 结构。</param>
         /// <param name="right">运算符右侧比较的 PointD6D 结构。</param>
-        /// <returns>布尔值，表示两个 PointD6D 结构的模是否前者大于或等于后者。</returns>
+        /// <returns>布尔值，表示两个 PointD6D 结构的字典序是否前者大于或等于后者。</returns>
         public static bool operator >=(PointD6D left, PointD6D right)
         {
-            return (left.Module >= right.Module);
+            for (int i = 0; i < left.Dimension; i++)
+            {
+                if (left[i] != right[i])
+                {
+                    return (left[i] > right[i]);
+                }
+            }
+
+            return true;
         }
 
         //
