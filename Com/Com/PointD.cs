@@ -665,7 +665,7 @@ namespace Com
         /// <summary>
         /// 返回此 PointD 结构与指定的 PointD 结构之间的距离。
         /// </summary>
-        /// <param name="pt">PointD 结构，表示另一个点。</param>
+        /// <param name="pt">PointD 结构，表示起始向量。</param>
         /// <returns>双精度浮点数，表示此 PointD 结构与指定的 PointD 结构之间的距离。</returns>
         public double DistanceFrom(PointD pt)
         {
@@ -692,7 +692,7 @@ namespace Com
         /// <summary>
         /// 返回此 PointD 结构与指定的 PointD 结构之间的夹角（弧度）。
         /// </summary>
-        /// <param name="pt">PointD 结构，表示另一个向量。</param>
+        /// <param name="pt">PointD 结构，表示起始向量。</param>
         /// <returns>双精度浮点数，表示此 PointD 结构与指定的 PointD 结构之间的夹角（弧度）。</returns>
         public double AngleFrom(PointD pt)
         {
@@ -1000,7 +1000,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 将此 PointD 结构的指定的基向量方向的分量翻转。
+        /// 将此 PointD 结构在指定的基向量方向的分量翻转。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
         public void Reflect(int index)
@@ -1030,10 +1030,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将此 PointD 结构的由指定的基向量方向的分量翻转的 PointD 结构的新实例。
+        /// 返回将此 PointD 结构在指定的基向量方向的分量翻转的 PointD 结构的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
-        /// <returns>PointD 结构，表示将此 PointD 结构的由指定的基向量方向的分量翻转得到的结果。</returns>
+        /// <returns>PointD 结构，表示将此 PointD 结构在指定的基向量方向的分量翻转得到的结果。</returns>
         public PointD ReflectCopy(int index)
         {
             switch (index)
@@ -1067,9 +1067,9 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 PointD 结构剪切指定的角度。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD 结构沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
@@ -1102,9 +1102,9 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 PointD 结构剪切指定的角度的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD 结构沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>PointD 结构，表示按双精度浮点数表示的弧度将此 PointD 结构剪切指定的角度得到的结果。</returns>
         public PointD ShearCopy(int index1, int index2, double angle)
         {

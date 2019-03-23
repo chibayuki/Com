@@ -43,9 +43,9 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度剪切指定的角度。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         void Shear(int index1, int index2, double angle);
 
         /// <summary>
@@ -144,9 +144,9 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度剪切指定的角度得到的向量。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>T，表示按双精度浮点数表示的弧度剪切指定的角度得到的向量。</returns>
         T ShearCopy(int index1, int index2, double angle);
 

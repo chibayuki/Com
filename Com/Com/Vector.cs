@@ -1381,7 +1381,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 将此 Vector 的指定的基向量方向的分量翻转。
+        /// 将此 Vector 在指定的基向量方向的分量翻转。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
         public void Reflect(int index)
@@ -1397,10 +1397,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将此 Vector 的由指定的基向量方向的分量翻转的新实例。
+        /// 返回将此 Vector 在指定的基向量方向的分量翻转的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
-        /// <returns>Vector 对象，表示将此 Vector 的由指定的基向量方向的分量翻转得到的结果。</returns>
+        /// <returns>Vector 对象，表示将此 Vector 在指定的基向量方向的分量翻转得到的结果。</returns>
         public Vector ReflectCopy(int index)
         {
             if (_Size <= 0 || (index < 0 || index >= _Size))
@@ -1422,9 +1422,9 @@ namespace Com
         /// <summary>
         /// 按双精度浮点数表示的弧度将此 Vector 剪切指定的角度。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
             if (_Size < 2 || (index1 < 0 || index1 >= _Size) || (index2 < 0 || index2 >= _Size) || index1 == index2)
@@ -1440,9 +1440,9 @@ namespace Com
         /// <summary>
         /// 返回按双精度浮点数表示的弧度将此 Vector 剪切指定的角度的新实例。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>Vector 对象，表示按双精度浮点数表示的弧度将此 Vector 剪切指定的角度得到的结果。</returns>
         public Vector ShearCopy(int index1, int index2, double angle)
         {
@@ -2427,9 +2427,9 @@ namespace Com
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
-        /// <param name="index1">索引，用于指定与剪切方向平行且同方向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向垂直且共平面的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示 Vector 对象沿平行于索引 index1 指定的基向量且与之同方向以及垂直于 index2 指定的基向量且与之共平面的方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 Vector 对象沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>Matrix 对象，表示用于剪切 Vector 对象的仿射矩阵。</returns>
         public static Matrix ShearMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
