@@ -1911,9 +1911,9 @@ namespace Com
         /// <summary>
         /// 返回表示用于剪切 PointD3D 结构的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
-        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
-        /// <param name="angle">双精度浮点数，表示 PointD3D 结构绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>Matrix 对象，表示用于剪切 PointD3D 结构的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearMatrix(int index1, int index2, double angle)
         {
