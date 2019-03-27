@@ -2316,7 +2316,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD3D 结构，表示被加数。</param>
         /// <param name="n">双精度浮点数，表示加数。</param>
-        /// <returns>PointD3D 结构，表示将 PointD3D 结构与双精度浮点数的相加得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将 PointD3D 结构的所有分量与双精度浮点数相加得到的结果。</returns>
         public static PointD3D operator +(PointD3D pt, double n)
         {
             return new PointD3D(pt._X + n, pt._Y + n, pt._Z + n);
@@ -2327,7 +2327,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被加数。</param>
         /// <param name="pt">PointD3D 结构，表示加数。</param>
-        /// <returns>PointD3D 结构，表示将双精度浮点数与 PointD3D 结构的相加得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将双精度浮点数与 PointD3D 结构的所有分量相加得到的结果。</returns>
         public static PointD3D operator +(double n, PointD3D pt)
         {
             return new PointD3D(n + pt._X, n + pt._Y, n + pt._Z);
@@ -2338,7 +2338,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD3D 结构，表示被加数。</param>
         /// <param name="right">PointD3D 结构，表示加数。</param>
-        /// <returns>PointD3D 结构，表示将 PointD3D 结构与 PointD3D 结构的相加得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将 PointD3D 结构与 PointD3D 结构的所有分量对应相加得到的结果。</returns>
         public static PointD3D operator +(PointD3D left, PointD3D right)
         {
             return new PointD3D(left._X + right._X, left._Y + right._Y, left._Z + right._Z);
@@ -2351,7 +2351,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD3D 结构，表示被减数。</param>
         /// <param name="n">双精度浮点数，表示减数。</param>
-        /// <returns>PointD3D 结构，表示将 PointD3D 结构与双精度浮点数的相减得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将 PointD3D 结构的所有分量与双精度浮点数相减得到的结果。</returns>
         public static PointD3D operator -(PointD3D pt, double n)
         {
             return new PointD3D(pt._X - n, pt._Y - n, pt._Z - n);
@@ -2362,7 +2362,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被减数。</param>
         /// <param name="pt">PointD3D 结构，表示减数。</param>
-        /// <returns>PointD3D 结构，表示将双精度浮点数与 PointD3D 结构的相减得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将双精度浮点数与 PointD3D 结构的所有分量相减得到的结果。</returns>
         public static PointD3D operator -(double n, PointD3D pt)
         {
             return new PointD3D(n - pt._X, n - pt._Y, n - pt._Z);
@@ -2373,7 +2373,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD3D 结构，表示被减数。</param>
         /// <param name="right">PointD3D 结构，表示减数。</param>
-        /// <returns>PointD3D 结构，表示将 PointD3D 结构与 PointD3D 结构的相减得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将 PointD3D 结构与 PointD3D 结构的所有分量对应相减得到的结果。</returns>
         public static PointD3D operator -(PointD3D left, PointD3D right)
         {
             return new PointD3D(left._X - right._X, left._Y - right._Y, left._Z - right._Z);
@@ -2386,7 +2386,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD3D 结构，表示被乘数。</param>
         /// <param name="n">双精度浮点数，表示乘数。</param>
-        /// <returns>PointD3D 结构，表示将 PointD3D 结构与双精度浮点数的相乘得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将 PointD3D 结构的所有分量与双精度浮点数相乘得到的结果。</returns>
         public static PointD3D operator *(PointD3D pt, double n)
         {
             return new PointD3D(pt._X * n, pt._Y * n, pt._Z * n);
@@ -2397,7 +2397,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被乘数。</param>
         /// <param name="pt">PointD3D 结构，表示乘数。</param>
-        /// <returns>PointD3D 结构，表示将双精度浮点数与 PointD3D 结构的相乘得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将双精度浮点数与 PointD3D 结构的所有分量相乘得到的结果。</returns>
         public static PointD3D operator *(double n, PointD3D pt)
         {
             return new PointD3D(n * pt._X, n * pt._Y, n * pt._Z);
@@ -2408,7 +2408,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD3D 结构，表示被乘数。</param>
         /// <param name="right">PointD3D 结构，表示乘数。</param>
-        /// <returns>PointD3D 结构，表示将 PointD3D 结构与 PointD3D 结构的相乘得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将 PointD3D 结构与 PointD3D 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD3D operator *(PointD3D left, PointD3D right)
         {
             return new PointD3D(left._X * right._X, left._Y * right._Y, left._Z * right._Z);
@@ -2421,7 +2421,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD3D 结构，表示被除数。</param>
         /// <param name="n">双精度浮点数，表示除数。</param>
-        /// <returns>PointD3D 结构，表示将 PointD3D 结构与双精度浮点数的相除得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将 PointD3D 结构的所有分量与双精度浮点数相除得到的结果。</returns>
         public static PointD3D operator /(PointD3D pt, double n)
         {
             return new PointD3D(pt._X / n, pt._Y / n, pt._Z / n);
@@ -2432,7 +2432,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被除数。</param>
         /// <param name="pt">PointD3D 结构，表示除数。</param>
-        /// <returns>PointD3D 结构，表示将双精度浮点数与 PointD3D 结构的相除得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将双精度浮点数与 PointD3D 结构的所有分量相除得到的结果。</returns>
         public static PointD3D operator /(double n, PointD3D pt)
         {
             return new PointD3D(n / pt._X, n / pt._Y, n / pt._Z);
@@ -2443,7 +2443,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD3D 结构，表示被除数。</param>
         /// <param name="right">PointD3D 结构，表示除数。</param>
-        /// <returns>PointD3D 结构，表示将 PointD3D 结构与 PointD3D 结构的相除得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将 PointD3D 结构与 PointD3D 结构的所有分量对应相除得到的结果。</returns>
         public static PointD3D operator /(PointD3D left, PointD3D right)
         {
             return new PointD3D(left._X / right._X, left._Y / right._Y, left._Z / right._Z);

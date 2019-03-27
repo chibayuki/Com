@@ -2273,7 +2273,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD5D 结构，表示被加数。</param>
         /// <param name="n">双精度浮点数，表示加数。</param>
-        /// <returns>PointD5D 结构，表示将 PointD5D 结构与双精度浮点数的相加得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将 PointD5D 结构的所有分量与双精度浮点数相加得到的结果。</returns>
         public static PointD5D operator +(PointD5D pt, double n)
         {
             return new PointD5D(pt._X + n, pt._Y + n, pt._Z + n, pt._U + n, pt._V + n);
@@ -2284,7 +2284,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被加数。</param>
         /// <param name="pt">PointD5D 结构，表示加数。</param>
-        /// <returns>PointD5D 结构，表示将双精度浮点数与 PointD5D 结构的相加得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将双精度浮点数与 PointD5D 结构的所有分量相加得到的结果。</returns>
         public static PointD5D operator +(double n, PointD5D pt)
         {
             return new PointD5D(n + pt._X, n + pt._Y, n + pt._Z, n + pt._U, n + pt._V);
@@ -2295,7 +2295,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD5D 结构，表示被加数。</param>
         /// <param name="right">PointD5D 结构，表示加数。</param>
-        /// <returns>PointD5D 结构，表示将 PointD5D 结构与 PointD5D 结构的相加得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将 PointD5D 结构与 PointD5D 结构的所有分量对应相加得到的结果。</returns>
         public static PointD5D operator +(PointD5D left, PointD5D right)
         {
             return new PointD5D(left._X + right._X, left._Y + right._Y, left._Z + right._Z, left._U + right._U, left._V + right._V);
@@ -2308,7 +2308,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD5D 结构，表示被减数。</param>
         /// <param name="n">双精度浮点数，表示减数。</param>
-        /// <returns>PointD5D 结构，表示将 PointD5D 结构与双精度浮点数的相减得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将 PointD5D 结构的所有分量与双精度浮点数相减得到的结果。</returns>
         public static PointD5D operator -(PointD5D pt, double n)
         {
             return new PointD5D(pt._X - n, pt._Y - n, pt._Z - n, pt._U - n, pt._V - n);
@@ -2319,7 +2319,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被减数。</param>
         /// <param name="pt">PointD5D 结构，表示减数。</param>
-        /// <returns>PointD5D 结构，表示将双精度浮点数与 PointD5D 结构的相减得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将双精度浮点数与 PointD5D 结构的所有分量相减得到的结果。</returns>
         public static PointD5D operator -(double n, PointD5D pt)
         {
             return new PointD5D(n - pt._X, n - pt._Y, n - pt._Z, n - pt._U, n - pt._V);
@@ -2330,7 +2330,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD5D 结构，表示被减数。</param>
         /// <param name="right">PointD5D 结构，表示减数。</param>
-        /// <returns>PointD5D 结构，表示将 PointD5D 结构与 PointD5D 结构的相减得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将 PointD5D 结构与 PointD5D 结构的所有分量对应相减得到的结果。</returns>
         public static PointD5D operator -(PointD5D left, PointD5D right)
         {
             return new PointD5D(left._X - right._X, left._Y - right._Y, left._Z - right._Z, left._U - right._U, left._V - right._V);
@@ -2343,7 +2343,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD5D 结构，表示被乘数。</param>
         /// <param name="n">双精度浮点数，表示乘数。</param>
-        /// <returns>PointD5D 结构，表示将 PointD5D 结构与双精度浮点数的相乘得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将 PointD5D 结构的所有分量与双精度浮点数相乘得到的结果。</returns>
         public static PointD5D operator *(PointD5D pt, double n)
         {
             return new PointD5D(pt._X * n, pt._Y * n, pt._Z * n, pt._U * n, pt._V * n);
@@ -2354,7 +2354,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被乘数。</param>
         /// <param name="pt">PointD5D 结构，表示乘数。</param>
-        /// <returns>PointD5D 结构，表示将双精度浮点数与 PointD5D 结构的相乘得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将双精度浮点数与 PointD5D 结构的所有分量相乘得到的结果。</returns>
         public static PointD5D operator *(double n, PointD5D pt)
         {
             return new PointD5D(n * pt._X, n * pt._Y, n * pt._Z, n * pt._U, n * pt._V);
@@ -2365,7 +2365,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD5D 结构，表示被乘数。</param>
         /// <param name="right">PointD5D 结构，表示乘数。</param>
-        /// <returns>PointD5D 结构，表示将 PointD5D 结构与 PointD5D 结构的相乘得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将 PointD5D 结构与 PointD5D 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD5D operator *(PointD5D left, PointD5D right)
         {
             return new PointD5D(left._X * right._X, left._Y * right._Y, left._Z * right._Z, left._U * right._U, left._V * right._V);
@@ -2378,7 +2378,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD5D 结构，表示被除数。</param>
         /// <param name="n">双精度浮点数，表示除数。</param>
-        /// <returns>PointD5D 结构，表示将 PointD5D 结构与双精度浮点数的相除得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将 PointD5D 结构的所有分量与双精度浮点数相除得到的结果。</returns>
         public static PointD5D operator /(PointD5D pt, double n)
         {
             return new PointD5D(pt._X / n, pt._Y / n, pt._Z / n, pt._U / n, pt._V / n);
@@ -2389,7 +2389,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被除数。</param>
         /// <param name="pt">PointD5D 结构，表示除数。</param>
-        /// <returns>PointD5D 结构，表示将双精度浮点数与 PointD5D 结构的相除得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将双精度浮点数与 PointD5D 结构的所有分量相除得到的结果。</returns>
         public static PointD5D operator /(double n, PointD5D pt)
         {
             return new PointD5D(n / pt._X, n / pt._Y, n / pt._Z, n / pt._U, n / pt._V);
@@ -2400,7 +2400,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD5D 结构，表示被除数。</param>
         /// <param name="right">PointD5D 结构，表示除数。</param>
-        /// <returns>PointD5D 结构，表示将 PointD5D 结构与 PointD5D 结构的相除得到的结果。</returns>
+        /// <returns>PointD5D 结构，表示将 PointD5D 结构与 PointD5D 结构的所有分量对应相除得到的结果。</returns>
         public static PointD5D operator /(PointD5D left, PointD5D right)
         {
             return new PointD5D(left._X / right._X, left._Y / right._Y, left._Z / right._Z, left._U / right._U, left._V / right._V);

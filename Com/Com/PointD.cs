@@ -2267,7 +2267,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被加数。</param>
         /// <param name="n">双精度浮点数，表示加数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与双精度浮点数的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构的所有分量与双精度浮点数相加得到的结果。</returns>
         public static PointD operator +(PointD pt, double n)
         {
             return new PointD(pt._X + n, pt._Y + n);
@@ -2278,7 +2278,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被加数。</param>
         /// <param name="pt">PointD 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将双精度浮点数与 PointD 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将双精度浮点数与 PointD 结构的所有分量相加得到的结果。</returns>
         public static PointD operator +(double n, PointD pt)
         {
             return new PointD(n + pt._X, n + pt._Y);
@@ -2289,7 +2289,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被加数。</param>
         /// <param name="right">PointD 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 PointD 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 PointD 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(PointD left, PointD right)
         {
             return new PointD(left._X + right._X, left._Y + right._Y);
@@ -2300,7 +2300,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被加数。</param>
         /// <param name="right">Point 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 Point 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 Point 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(PointD left, Point right)
         {
             return new PointD(left._X + right.X, left._Y + right.Y);
@@ -2311,7 +2311,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Point 结构，表示被加数。</param>
         /// <param name="right">PointD 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 Point 结构与 PointD 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 Point 结构与 PointD 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(Point left, PointD right)
         {
             return new PointD(left.X + right._X, left.Y + right._Y);
@@ -2322,7 +2322,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被加数。</param>
         /// <param name="right">PointF 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 PointF 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 PointF 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(PointD left, PointF right)
         {
             return new PointD(left._X + right.X, left._Y + right.Y);
@@ -2333,7 +2333,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointF 结构，表示被加数。</param>
         /// <param name="right">PointD 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 PointF 结构与 PointD 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointF 结构与 PointD 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(PointF left, PointD right)
         {
             return new PointD(left.X + right._X, left.Y + right._Y);
@@ -2344,7 +2344,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被加数。</param>
         /// <param name="sz">Size 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 Size 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 Size 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(PointD pt, Size sz)
         {
             return new PointD(pt._X + sz.Width, pt._Y + sz.Height);
@@ -2355,7 +2355,7 @@ namespace Com
         /// </summary>
         /// <param name="sz">Size 结构，表示被加数。</param>
         /// <param name="pt">PointD 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 Size 结构与 PointD 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 Size 结构与 PointD 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(Size sz, PointD pt)
         {
             return new PointD(sz.Width + pt._X, sz.Height + pt._Y);
@@ -2366,7 +2366,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被加数。</param>
         /// <param name="sz">SizeF 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 SizeF 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 SizeF 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(PointD pt, SizeF sz)
         {
             return new PointD(pt._X + sz.Width, pt._Y + sz.Height);
@@ -2377,7 +2377,7 @@ namespace Com
         /// </summary>
         /// <param name="sz">SizeF 结构，表示被加数。</param>
         /// <param name="pt">PointD 结构，表示加数。</param>
-        /// <returns>PointD 结构，表示将 SizeF 结构与 PointD 结构的相加得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 SizeF 结构与 PointD 结构的所有分量对应相加得到的结果。</returns>
         public static PointD operator +(SizeF sz, PointD pt)
         {
             return new PointD(sz.Width + pt._X, sz.Height + pt._Y);
@@ -2390,7 +2390,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被减数。</param>
         /// <param name="n">双精度浮点数，表示减数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与双精度浮点数的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构的所有分量与双精度浮点数相减得到的结果。</returns>
         public static PointD operator -(PointD pt, double n)
         {
             return new PointD(pt._X - n, pt._Y - n);
@@ -2401,7 +2401,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被减数。</param>
         /// <param name="pt">PointD 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将双精度浮点数与 PointD 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将双精度浮点数与 PointD 结构的所有分量相减得到的结果。</returns>
         public static PointD operator -(double n, PointD pt)
         {
             return new PointD(n - pt._X, n - pt._Y);
@@ -2412,7 +2412,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被减数。</param>
         /// <param name="right">PointD 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 PointD 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 PointD 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(PointD left, PointD right)
         {
             return new PointD(left._X - right._X, left._Y - right._Y);
@@ -2423,7 +2423,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被减数。</param>
         /// <param name="right">Point 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 Point 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 Point 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(PointD left, Point right)
         {
             return new PointD(left._X - right.X, left._Y - right.Y);
@@ -2434,7 +2434,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Point 结构，表示被减数。</param>
         /// <param name="right">PointD 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 Point 结构与 PointD 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 Point 结构与 PointD 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(Point left, PointD right)
         {
             return new PointD(left.X - right._X, left.Y - right._Y);
@@ -2445,7 +2445,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被减数。</param>
         /// <param name="right">PointF 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 PointF 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 PointF 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(PointD left, PointF right)
         {
             return new PointD(left._X - right.X, left._Y - right.Y);
@@ -2456,7 +2456,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointF 结构，表示被减数。</param>
         /// <param name="right">PointD 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 PointF 结构与 PointD 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointF 结构与 PointD 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(PointF left, PointD right)
         {
             return new PointD(left.X - right._X, left.Y - right._Y);
@@ -2467,7 +2467,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被减数。</param>
         /// <param name="sz">Size 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 Size 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 Size 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(PointD pt, Size sz)
         {
             return new PointD(pt._X - sz.Width, pt._Y - sz.Height);
@@ -2478,7 +2478,7 @@ namespace Com
         /// </summary>
         /// <param name="sz">Size 结构，表示被减数。</param>
         /// <param name="pt">PointD 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 Size 结构与 PointD 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 Size 结构与 PointD 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(Size sz, PointD pt)
         {
             return new PointD(sz.Width - pt._X, sz.Height - pt._Y);
@@ -2489,7 +2489,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被减数。</param>
         /// <param name="sz">SizeF 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 SizeF 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 SizeF 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(PointD pt, SizeF sz)
         {
             return new PointD(pt._X - sz.Width, pt._Y - sz.Height);
@@ -2500,7 +2500,7 @@ namespace Com
         /// </summary>
         /// <param name="sz">SizeF 结构，表示被减数。</param>
         /// <param name="pt">PointD 结构，表示减数。</param>
-        /// <returns>PointD 结构，表示将 SizeF 结构与 PointD 结构的相减得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 SizeF 结构与 PointD 结构的所有分量对应相减得到的结果。</returns>
         public static PointD operator -(SizeF sz, PointD pt)
         {
             return new PointD(sz.Width - pt._X, sz.Height - pt._Y);
@@ -2513,7 +2513,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被乘数。</param>
         /// <param name="n">双精度浮点数，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与双精度浮点数的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构的所有分量与双精度浮点数相乘得到的结果。</returns>
         public static PointD operator *(PointD pt, double n)
         {
             return new PointD(pt._X * n, pt._Y * n);
@@ -2524,7 +2524,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被乘数。</param>
         /// <param name="pt">PointD 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将双精度浮点数与 PointD 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将双精度浮点数与 PointD 结构的所有分量相乘得到的结果。</returns>
         public static PointD operator *(double n, PointD pt)
         {
             return new PointD(n * pt._X, n * pt._Y);
@@ -2535,7 +2535,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被乘数。</param>
         /// <param name="right">PointD 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 PointD 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 PointD 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(PointD left, PointD right)
         {
             return new PointD(left._X * right._X, left._Y * right._Y);
@@ -2546,7 +2546,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被乘数。</param>
         /// <param name="right">Point 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 Point 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 Point 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(PointD left, Point right)
         {
             return new PointD(left._X * right.X, left._Y * right.Y);
@@ -2557,7 +2557,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Point 结构，表示被乘数。</param>
         /// <param name="right">PointD 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 Point 结构与 PointD 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 Point 结构与 PointD 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(Point left, PointD right)
         {
             return new PointD(left.X * right._X, left.Y * right._Y);
@@ -2568,7 +2568,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被乘数。</param>
         /// <param name="right">PointF 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 PointF 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 PointF 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(PointD left, PointF right)
         {
             return new PointD(left._X * right.X, left._Y * right.Y);
@@ -2579,7 +2579,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointF 结构，表示被乘数。</param>
         /// <param name="right">PointD 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 PointF 结构与 PointD 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointF 结构与 PointD 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(PointF left, PointD right)
         {
             return new PointD(left.X * right._X, left.Y * right._Y);
@@ -2590,7 +2590,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被乘数。</param>
         /// <param name="sz">Size 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 Size 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 Size 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(PointD pt, Size sz)
         {
             return new PointD(pt._X * sz.Width, pt._Y * sz.Height);
@@ -2601,7 +2601,7 @@ namespace Com
         /// </summary>
         /// <param name="sz">Size 结构，表示被乘数。</param>
         /// <param name="pt">PointD 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 Size 结构与 PointD 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 Size 结构与 PointD 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(Size sz, PointD pt)
         {
             return new PointD(sz.Width * pt._X, sz.Height * pt._Y);
@@ -2612,7 +2612,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被乘数。</param>
         /// <param name="sz">SizeF 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 SizeF 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 SizeF 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(PointD pt, SizeF sz)
         {
             return new PointD(pt._X * sz.Width, pt._Y * sz.Height);
@@ -2623,7 +2623,7 @@ namespace Com
         /// </summary>
         /// <param name="sz">SizeF 结构，表示被乘数。</param>
         /// <param name="pt">PointD 结构，表示乘数。</param>
-        /// <returns>PointD 结构，表示将 SizeF 结构与 PointD 结构的相乘得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 SizeF 结构与 PointD 结构的所有分量对应相乘得到的结果。</returns>
         public static PointD operator *(SizeF sz, PointD pt)
         {
             return new PointD(sz.Width * pt._X, sz.Height * pt._Y);
@@ -2636,7 +2636,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被除数。</param>
         /// <param name="n">双精度浮点数，表示除数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与双精度浮点数的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构的所有分量与双精度浮点数相除得到的结果。</returns>
         public static PointD operator /(PointD pt, double n)
         {
             return new PointD(pt._X / n, pt._Y / n);
@@ -2647,7 +2647,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被除数。</param>
         /// <param name="pt">PointD 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将双精度浮点数与 PointD 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将双精度浮点数与 PointD 结构的所有分量相除得到的结果。</returns>
         public static PointD operator /(double n, PointD pt)
         {
             return new PointD(n / pt._X, n / pt._Y);
@@ -2658,7 +2658,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被除数。</param>
         /// <param name="right">PointD 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 PointD 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 PointD 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(PointD left, PointD right)
         {
             return new PointD(left._X / right._X, left._Y / right._Y);
@@ -2669,7 +2669,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被除数。</param>
         /// <param name="right">Point 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 Point 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 Point 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(PointD left, Point right)
         {
             return new PointD(left._X / right.X, left._Y / right.Y);
@@ -2680,7 +2680,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Point 结构，表示被除数。</param>
         /// <param name="right">PointD 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 Point 结构与 PointD 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 Point 结构与 PointD 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(Point left, PointD right)
         {
             return new PointD(left.X / right._X, left.Y / right._Y);
@@ -2691,7 +2691,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointD 结构，表示被除数。</param>
         /// <param name="right">PointF 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 PointF 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 PointF 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(PointD left, PointF right)
         {
             return new PointD(left._X / right.X, left._Y / right.Y);
@@ -2702,7 +2702,7 @@ namespace Com
         /// </summary>
         /// <param name="left">PointF 结构，表示被除数。</param>
         /// <param name="right">PointD 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 PointF 结构与 PointD 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointF 结构与 PointD 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(PointF left, PointD right)
         {
             return new PointD(left.X / right._X, left.Y / right._Y);
@@ -2713,7 +2713,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被除数。</param>
         /// <param name="sz">Size 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 Size 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 Size 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(PointD pt, Size sz)
         {
             return new PointD(pt._X / sz.Width, pt._Y / sz.Height);
@@ -2724,7 +2724,7 @@ namespace Com
         /// </summary>
         /// <param name="sz">Size 结构，表示被除数。</param>
         /// <param name="pt">PointD 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 Size 结构与 PointD 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 Size 结构与 PointD 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(Size sz, PointD pt)
         {
             return new PointD(sz.Width / pt._X, sz.Height / pt._Y);
@@ -2735,7 +2735,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构，表示被除数。</param>
         /// <param name="sz">SizeF 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 PointD 结构与 SizeF 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 PointD 结构与 SizeF 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(PointD pt, SizeF sz)
         {
             return new PointD(pt._X / sz.Width, pt._Y / sz.Height);
@@ -2746,7 +2746,7 @@ namespace Com
         /// </summary>
         /// <param name="sz">SizeF 结构，表示被除数。</param>
         /// <param name="pt">PointD 结构，表示除数。</param>
-        /// <returns>PointD 结构，表示将 SizeF 结构与 PointD 结构的相除得到的结果。</returns>
+        /// <returns>PointD 结构，表示将 SizeF 结构与 PointD 结构的所有分量对应相除得到的结果。</returns>
         public static PointD operator /(SizeF sz, PointD pt)
         {
             return new PointD(sz.Width / pt._X, sz.Height / pt._Y);

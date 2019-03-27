@@ -3094,7 +3094,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">Vector 对象，表示被加数。</param>
         /// <param name="n">双精度浮点数，表示加数。</param>
-        /// <returns>Vector 对象，表示将 Vector 对象与双精度浮点数的相加得到的结果。</returns>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量与双精度浮点数相加得到的结果。</returns>
         public static Vector operator +(Vector vector, double n)
         {
             if (IsNullOrEmpty(vector))
@@ -3119,7 +3119,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被加数。</param>
         /// <param name="vector">Vector 对象，表示加数。</param>
-        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的相加得到的结果。</returns>
+        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的所有分量相加得到的结果。</returns>
         public static Vector operator +(double n, Vector vector)
         {
             if (IsNullOrEmpty(vector))
@@ -3144,7 +3144,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Vector 对象，表示被加数。</param>
         /// <param name="right">Vector 对象，表示加数。</param>
-        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的相加得到的结果。</returns>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的所有分量对应相加得到的结果。</returns>
         public static Vector operator +(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
@@ -3171,7 +3171,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">Vector 对象，表示被减数。</param>
         /// <param name="n">双精度浮点数，表示减数。</param>
-        /// <returns>Vector 对象，表示将 Vector 对象与双精度浮点数的相减得到的结果。</returns>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量与双精度浮点数相减得到的结果。</returns>
         public static Vector operator -(Vector vector, double n)
         {
             if (IsNullOrEmpty(vector))
@@ -3196,7 +3196,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被减数。</param>
         /// <param name="vector">Vector 对象，表示减数。</param>
-        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的相减得到的结果。</returns>
+        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的所有分量相减得到的结果。</returns>
         public static Vector operator -(double n, Vector vector)
         {
             if (IsNullOrEmpty(vector))
@@ -3221,7 +3221,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Vector 对象，表示被减数。</param>
         /// <param name="right">Vector 对象，表示减数。</param>
-        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的相减得到的结果。</returns>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的所有分量对应相减得到的结果。</returns>
         public static Vector operator -(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
@@ -3248,7 +3248,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">Vector 对象，表示被乘数。</param>
         /// <param name="n">双精度浮点数，表示乘数。</param>
-        /// <returns>Vector 对象，表示将 Vector 对象与双精度浮点数的相乘得到的结果。</returns>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量与双精度浮点数相乘得到的结果。</returns>
         public static Vector operator *(Vector vector, double n)
         {
             if (IsNullOrEmpty(vector))
@@ -3273,7 +3273,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被乘数。</param>
         /// <param name="vector">Vector 对象，表示乘数。</param>
-        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的相乘得到的结果。</returns>
+        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的所有分量相乘得到的结果。</returns>
         public static Vector operator *(double n, Vector vector)
         {
             if (IsNullOrEmpty(vector))
@@ -3298,7 +3298,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Vector 对象，表示被乘数。</param>
         /// <param name="right">Vector 对象，表示乘数。</param>
-        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的相乘得到的结果。</returns>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的所有分量对应相乘得到的结果。</returns>
         public static Vector operator *(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
@@ -3325,7 +3325,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">Vector 对象，表示被除数。</param>
         /// <param name="n">双精度浮点数，表示除数。</param>
-        /// <returns>Vector 对象，表示将 Vector 对象与双精度浮点数的相除得到的结果。</returns>
+        /// <returns>Vector 对象，表示将 Vector 对象的所有分量与双精度浮点数相除得到的结果。</returns>
         public static Vector operator /(Vector vector, double n)
         {
             if (IsNullOrEmpty(vector))
@@ -3350,7 +3350,7 @@ namespace Com
         /// </summary>
         /// <param name="n">双精度浮点数，表示被除数。</param>
         /// <param name="vector">Vector 对象，表示除数。</param>
-        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的相除得到的结果。</returns>
+        /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的所有分量相除得到的结果。</returns>
         public static Vector operator /(double n, Vector vector)
         {
             if (IsNullOrEmpty(vector))
@@ -3375,7 +3375,7 @@ namespace Com
         /// </summary>
         /// <param name="left">Vector 对象，表示被除数。</param>
         /// <param name="right">Vector 对象，表示除数。</param>
-        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的相除得到的结果。</returns>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的所有分量对应相除得到的结果。</returns>
         public static Vector operator /(Vector left, Vector right)
         {
             if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
