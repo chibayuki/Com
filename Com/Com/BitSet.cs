@@ -707,10 +707,10 @@ namespace Com
         //
 
         /// <summary>
-        /// 遍历此 BitSet 的所有位值并返回第一个与指定值相等的索引。
+        /// 遍历此 BitSet 的所有位值并返回第一个与指定值相等的位值的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int IndexOf(bool item)
         {
             if (_Size <= 0)
@@ -724,11 +724,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 从指定的索引开始遍历此 BitSet 的所有位值并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始遍历此 BitSet 的所有位值并返回第一个与指定值相等的位值的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int IndexOf(bool item, int startIndex)
         {
             if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size))
@@ -742,12 +742,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 从指定的索引开始遍历此 BitSet 指定数量的位值并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始遍历此 BitSet 指定数量的位值并返回第一个与指定值相等的位值的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
         /// <param name="count">遍历的位值数量。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int IndexOf(bool item, int startIndex, int count)
         {
             if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size) || count <= 0)
@@ -864,10 +864,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 逆序遍历此 BitSet 的所有位值并返回第一个与指定值相等的索引。
+        /// 逆序遍历此 BitSet 的所有位值并返回第一个与指定值相等的位值的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int LastIndexOf(bool item)
         {
             if (_Size <= 0)
@@ -881,11 +881,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 从指定的索引开始逆序遍历此 BitSet 的所有位值并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始逆序遍历此 BitSet 的所有位值并返回第一个与指定值相等的位值的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int LastIndexOf(bool item, int startIndex)
         {
             if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size))
@@ -899,12 +899,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 从指定的索引开始逆序遍历此 BitSet 指定数量的位值并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始逆序遍历此 BitSet 指定数量的位值并返回第一个与指定值相等的位值的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
         /// <param name="count">遍历的位值数量。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int LastIndexOf(bool item, int startIndex, int count)
         {
             if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size) || count <= 0)

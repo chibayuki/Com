@@ -768,21 +768,21 @@ namespace Com
         //
 
         /// <summary>
-        /// 遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// 遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item)
         {
             return Array.IndexOf(ToArray(), item, 0, Dimension);
         }
 
         /// <summary>
-        /// 从指定的索引开始遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item, int startIndex)
         {
             if (startIndex < 0 || startIndex >= Dimension)
@@ -796,12 +796,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 从指定的索引开始遍历此 PointD5D 结构指定数量的分量并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始遍历此 PointD5D 结构指定数量的分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
         /// <param name="count">遍历的分量数量。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item, int startIndex, int count)
         {
             if ((startIndex < 0 || startIndex >= Dimension) || count <= 0)
@@ -817,21 +817,21 @@ namespace Com
         }
 
         /// <summary>
-        /// 逆序遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// 逆序遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item)
         {
             return Array.LastIndexOf(ToArray(), item, Dimension - 1, Dimension);
         }
 
         /// <summary>
-        /// 从指定的索引开始逆序遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始逆序遍历此 PointD5D 结构的所有分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item, int startIndex)
         {
             if (startIndex < 0 || startIndex >= Dimension)
@@ -845,12 +845,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 从指定的索引开始逆序遍历此 PointD5D 结构指定数量的分量并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始逆序遍历此 PointD5D 结构指定数量的分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
         /// <param name="count">遍历的分量数量。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item, int startIndex, int count)
         {
             if ((startIndex < 0 || startIndex >= Dimension) || count <= 0)

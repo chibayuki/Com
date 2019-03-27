@@ -627,21 +627,21 @@ namespace Com
         //
 
         /// <summary>
-        /// 遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// 遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item)
         {
             return Array.IndexOf(ToArray(), item, 0, Dimension);
         }
 
         /// <summary>
-        /// 从指定的索引开始遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item, int startIndex)
         {
             if (startIndex < 0 || startIndex >= Dimension)
@@ -655,12 +655,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 从指定的索引开始遍历此 PointD3D 结构指定数量的分量并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始遍历此 PointD3D 结构指定数量的分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
         /// <param name="count">遍历的分量数量。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item, int startIndex, int count)
         {
             if ((startIndex < 0 || startIndex >= Dimension) || count <= 0)
@@ -676,21 +676,21 @@ namespace Com
         }
 
         /// <summary>
-        /// 逆序遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// 逆序遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item)
         {
             return Array.LastIndexOf(ToArray(), item, Dimension - 1, Dimension);
         }
 
         /// <summary>
-        /// 从指定的索引开始逆序遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始逆序遍历此 PointD3D 结构的所有分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item, int startIndex)
         {
             if (startIndex < 0 || startIndex >= Dimension)
@@ -704,12 +704,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 从指定的索引开始逆序遍历此 PointD3D 结构指定数量的分量并返回第一个与指定值相等的索引。
+        /// 从指定的索引开始逆序遍历此 PointD3D 结构指定数量的分量并返回第一个与指定值相等的分量的索引。
         /// </summary>
         /// <param name="item">用于检索的值。</param>
         /// <param name="startIndex">起始索引。</param>
         /// <param name="count">遍历的分量数量。</param>
-        /// <returns>32 位整数，表示第一个与指定值相等的索引。</returns>
+        /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item, int startIndex, int count)
         {
             if ((startIndex < 0 || startIndex >= Dimension) || count <= 0)
@@ -1079,7 +1079,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴剪切的角度（弧度）。</param>
         public void ShearXY(double angle)
         {
-            Shear(0, 1, angle);
+            _X += _Y * Math.Tan(angle);
         }
 
         /// <summary>
@@ -1088,7 +1088,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴剪切的角度（弧度）。</param>
         public void ShearYX(double angle)
         {
-            Shear(1, 0, angle);
+            _Y += _X * Math.Tan(angle);
         }
 
         /// <summary>
@@ -1097,7 +1097,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴剪切的角度（弧度）。</param>
         public void ShearYZ(double angle)
         {
-            Shear(1, 2, angle);
+            _Y += _Z * Math.Tan(angle);
         }
 
         /// <summary>
@@ -1106,7 +1106,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴剪切的角度（弧度）。</param>
         public void ShearZY(double angle)
         {
-            Shear(2, 1, angle);
+            _Z += _Y * Math.Tan(angle);
         }
 
         /// <summary>
@@ -1115,7 +1115,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴剪切的角度（弧度）。</param>
         public void ShearZX(double angle)
         {
-            Shear(2, 0, angle);
+            _Z += _X * Math.Tan(angle);
         }
 
         /// <summary>
@@ -1124,7 +1124,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴剪切的角度（弧度）。</param>
         public void ShearXZ(double angle)
         {
-            Shear(0, 2, angle);
+            _X += _Z * Math.Tan(angle);
         }
 
         /// <summary>
@@ -1155,7 +1155,7 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +X 轴剪切指定的角度得到的结果。</returns>
         public PointD3D ShearXYCopy(double angle)
         {
-            return ShearCopy(0, 1, angle);
+            return new PointD3D(_X + _Y * Math.Tan(angle), _Y, _Z);
         }
 
         /// <summary>
@@ -1165,7 +1165,7 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +Y 轴剪切指定的角度得到的结果。</returns>
         public PointD3D ShearYXCopy(double angle)
         {
-            return ShearCopy(1, 0, angle);
+            return new PointD3D(_X, _Y + _X * Math.Tan(angle), _Z);
         }
 
         /// <summary>
@@ -1175,7 +1175,7 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Y 轴剪切指定的角度得到的结果。</returns>
         public PointD3D ShearYZCopy(double angle)
         {
-            return ShearCopy(1, 2, angle);
+            return new PointD3D(_X, _Y + _Z * Math.Tan(angle), _Z);
         }
 
         /// <summary>
@@ -1185,7 +1185,7 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Z 轴剪切指定的角度得到的结果。</returns>
         public PointD3D ShearZYCopy(double angle)
         {
-            return ShearCopy(2, 1, angle);
+            return new PointD3D(_X, _Y, _Z + _Y * Math.Tan(angle));
         }
 
         /// <summary>
@@ -1195,7 +1195,7 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +Z 轴剪切指定的角度得到的结果。</returns>
         public PointD3D ShearZXCopy(double angle)
         {
-            return ShearCopy(2, 0, angle);
+            return new PointD3D(_X, _Y, _Z + _X * Math.Tan(angle));
         }
 
         /// <summary>
@@ -1205,7 +1205,7 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +X 轴剪切指定的角度得到的结果。</returns>
         public PointD3D ShearXZCopy(double angle)
         {
-            return ShearCopy(0, 2, angle);
+            return new PointD3D(_X + _Z * Math.Tan(angle), _Y, _Z);
         }
 
         //
