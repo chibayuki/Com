@@ -1171,7 +1171,7 @@ namespace Com
             double SinA = Math.Sin(angle);
 
             _X = __X * CosA - __Y * SinA;
-            _Y = __X * SinA + __Y * CosA;
+            _Y = __Y * CosA + __X * SinA;
         }
 
         /// <summary>
@@ -1187,7 +1187,7 @@ namespace Com
             double SinA = Math.Sin(angle);
 
             _X = (__X - pt._X) * CosA - (__Y - pt._Y) * SinA + pt._X;
-            _Y = (__X - pt._X) * SinA + (__Y - pt._Y) * CosA + pt._Y;
+            _Y = (__Y - pt._Y) * CosA + (__X - pt._X) * SinA + pt._Y;
         }
 
         /// <summary>
@@ -1224,7 +1224,7 @@ namespace Com
             double SinA = Math.Sin(angle);
 
             result._X = _X * CosA - _Y * SinA;
-            result._Y = _X * SinA + _Y * CosA;
+            result._Y = _Y * CosA + _X * SinA;
 
             return result;
         }
@@ -1243,7 +1243,7 @@ namespace Com
             double SinA = Math.Sin(angle);
 
             result._X = (_X - pt._X) * CosA - (_Y - pt._Y) * SinA + pt._X;
-            result._Y = (_X - pt._X) * SinA + (_Y - pt._Y) * CosA + pt._Y;
+            result._Y = (_Y - pt._Y) * CosA + (_X - pt._X) * SinA + pt._Y;
 
             return result;
         }

@@ -1234,7 +1234,13 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 X 轴旋转的角度（弧度）（以 +Y 轴为 0 弧度，从 +Y 轴指向 +Z 轴的方向为正方向）。</param>
         public void RotateX(double angle)
         {
-            Rotate(1, 2, angle);
+            double __Y = _Y, __Z = _Z;
+
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
+            _Y = __Y * CosA - __Z * SinA;
+            _Z = __Z * CosA + __Y * SinA;
         }
 
         /// <summary>
@@ -1243,7 +1249,13 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Y 轴旋转的角度（弧度）（以 +Z 轴为 0 弧度，从 +Z 轴指向 +X 轴的方向为正方向）。</param>
         public void RotateY(double angle)
         {
-            Rotate(2, 0, angle);
+            double __Z = _Z, __X = _X;
+
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
+            _Z = __Z * CosA - __X * SinA;
+            _X = __X * CosA + __Z * SinA;
         }
 
         /// <summary>
@@ -1252,7 +1264,13 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 PointD3D 结构绕 Z 轴旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         public void RotateZ(double angle)
         {
-            Rotate(0, 1, angle);
+            double __X = _X, __Y = _Y;
+
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
+            _X = __X * CosA - __Y * SinA;
+            _Y = __Y * CosA + __X * SinA;
         }
 
         /// <summary>
@@ -1283,7 +1301,16 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构绕 X 轴旋转指定的角度得到的结果。</returns>
         public PointD3D RotateXCopy(double angle)
         {
-            return RotateCopy(1, 2, angle);
+            PointD3D result = new PointD3D();
+
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
+            result._X = _X;
+            result._Y = _Y * CosA - _Z * SinA;
+            result._Z = _Z * CosA + _Y * SinA;
+
+            return result;
         }
 
         /// <summary>
@@ -1293,7 +1320,16 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构绕 Y 轴旋转指定的角度得到的结果。</returns>
         public PointD3D RotateYCopy(double angle)
         {
-            return RotateCopy(2, 0, angle);
+            PointD3D result = new PointD3D();
+
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
+            result._X = _X * CosA + _Z * SinA;
+            result._Y = _Y;
+            result._Z = _Z * CosA - _X * SinA;
+
+            return result;
         }
 
         /// <summary>
@@ -1303,7 +1339,16 @@ namespace Com
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构绕 Z 轴旋转指定的角度得到的结果。</returns>
         public PointD3D RotateZCopy(double angle)
         {
-            return RotateCopy(0, 1, angle);
+            PointD3D result = new PointD3D();
+
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
+
+            result._X = _X * CosA - _Y * SinA;
+            result._Y = _Y * CosA + _X * SinA;
+            result._Z = _Z;
+
+            return result;
         }
 
         //

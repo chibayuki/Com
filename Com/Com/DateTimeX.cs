@@ -400,9 +400,28 @@ namespace Com
 
         //
 
-        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, _UtcOffset); // 表示所在时区时刻的最小可能值的 DateTimeX 结构的实例。
+        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, _UtcOffset); // 表示此 DateTimeX 结构所在时区时刻的最小可能值的 DateTimeX 结构的实例。
 
-        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, _UtcOffset); // 表示所在时区时刻的最大可能值的 DateTimeX 结构的实例。
+        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, _UtcOffset); // 表示此 DateTimeX 结构所在时区时刻的最大可能值的 DateTimeX 结构的实例。
+
+        //
+
+        private int _DayOfWeek // 获取此 DateTimeX 结构表示的日期是所在周的第几天（以周一为第一天）。
+        {
+            get
+            {
+                long TotalDays = (long)(Math.Floor((_TotalMilliseconds + (decimal)_UtcOffset * _MillisecondsPerHour) / _MillisecondsPerDay));
+
+                if (TotalDays >= 0)
+                {
+                    return (1 + (int)(TotalDays % 7));
+                }
+                else
+                {
+                    return (7 - (int)((-TotalDays - 1) % 7));
+                }
+            }
+        }
 
         //
 
@@ -918,7 +937,7 @@ namespace Com
         {
             get
             {
-                return ((DayOfYear - (2 - new DateTimeX(Year, _UtcOffset).DayOfThisWeek)) / 7 + 1);
+                return ((DayOfYear - (2 - new DateTimeX(Year, _UtcOffset)._DayOfWeek)) / 7 + 1);
             }
         }
 
@@ -980,33 +999,13 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取此 DateTimeX 结构表示的日期是所在周的第几天（以周一为第一天）。
-        /// </summary>
-        public int DayOfThisWeek
-        {
-            get
-            {
-                long TotalDays = (long)(Math.Floor((_TotalMilliseconds + (decimal)_UtcOffset * _MillisecondsPerHour) / _MillisecondsPerDay));
-
-                if (TotalDays >= 0)
-                {
-                    return (1 + (int)(TotalDays % 7));
-                }
-                else
-                {
-                    return (7 - (int)((-TotalDays - 1) % 7));
-                }
-            }
-        }
-
-        /// <summary>
         /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的枚举。
         /// </summary>
         public DayOfWeek DayOfWeek
         {
             get
             {
-                return (DayOfWeek)(DayOfThisWeek % 7);
+                return (DayOfWeek)(_DayOfWeek % 7);
             }
         }
 
@@ -1195,7 +1194,7 @@ namespace Com
         {
             get
             {
-                switch (DayOfThisWeek)
+                switch (_DayOfWeek)
                 {
                     case 1: return "星期一";
                     case 2: return "星期二";
@@ -1216,7 +1215,7 @@ namespace Com
         {
             get
             {
-                switch (DayOfThisWeek)
+                switch (_DayOfWeek)
                 {
                     case 1: return "周一";
                     case 2: return "周二";
@@ -1237,7 +1236,7 @@ namespace Com
         {
             get
             {
-                switch (DayOfThisWeek)
+                switch (_DayOfWeek)
                 {
                     case 1: return "Monday";
                     case 2: return "Tuesday";
@@ -1258,7 +1257,7 @@ namespace Com
         {
             get
             {
-                switch (DayOfThisWeek)
+                switch (_DayOfWeek)
                 {
                     case 1: return "Mon";
                     case 2: return "Tue";
@@ -1279,7 +1278,7 @@ namespace Com
         {
             get
             {
-                switch (DayOfThisWeek)
+                switch (_DayOfWeek)
                 {
                     case 1: return "月曜日";
                     case 2: return "火曜日";
@@ -1300,7 +1299,7 @@ namespace Com
         {
             get
             {
-                switch (DayOfThisWeek)
+                switch (_DayOfWeek)
                 {
                     case 1: return "月";
                     case 2: return "火";
