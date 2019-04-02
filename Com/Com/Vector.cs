@@ -1477,27 +1477,13 @@ namespace Com
 
             //
 
-            Matrix matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
-            Matrix matrixVector = _ToMatrixForAffineTransform();
+            double Value1 = _VArray[index1], Value2 = _VArray[index2];
 
-            if (_Type == Type.ColumnVector)
-            {
-                Matrix result = Matrix.Multiply(matrixRotate, matrixVector);
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
 
-                if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(1, _Size + 1))
-                {
-                    Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
-                }
-            }
-            else
-            {
-                Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
-
-                if (!Matrix.IsNullOrEmpty(result) && result.Size == new Size(_Size + 1, 1))
-                {
-                    Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                }
-            }
+            _VArray[index1] = Value1 * CosA - Value2 * SinA;
+            _VArray[index2] = Value2 * CosA + Value1 * SinA;
         }
 
         /// <summary>
@@ -1516,43 +1502,15 @@ namespace Com
 
             //
 
-            Matrix matrixRotate = RotateMatrix(_Type, _Size, index1, index2, angle);
-            Matrix matrixVector = _ToMatrixForAffineTransform();
+            Vector result = Copy();
 
-            if (_Type == Type.ColumnVector)
-            {
-                Matrix result = Matrix.Multiply(matrixRotate, matrixVector);
+            double CosA = Math.Cos(angle);
+            double SinA = Math.Sin(angle);
 
-                if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                {
-                    return Empty;
-                }
-                else
-                {
-                    Vector vector = _GetZeroVector(_Type, _Size);
+            result._VArray[index1] = _VArray[index1] * CosA - _VArray[index2] * SinA;
+            result._VArray[index2] = _VArray[index2] * CosA + _VArray[index1] * SinA;
 
-                    Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
-
-                    return vector;
-                }
-            }
-            else
-            {
-                Matrix result = Matrix.Multiply(matrixVector, matrixRotate);
-
-                if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                {
-                    return Empty;
-                }
-                else
-                {
-                    Vector vector = _GetZeroVector(_Type, _Size);
-
-                    Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
-
-                    return vector;
-                }
-            }
+            return result;
         }
 
         //
