@@ -1153,7 +1153,7 @@ namespace Com
 
             if (LIsNOrE && RIsNOrE)
             {
-                return 0;
+                return double.NaN;
             }
             else if (LIsNOrE || RIsNOrE)
             {
@@ -1206,7 +1206,7 @@ namespace Com
 
             if (LIsNOrE && RIsNOrE)
             {
-                return 0;
+                return double.NaN;
             }
             else if (LIsNOrE || RIsNOrE)
             {
@@ -2544,7 +2544,7 @@ namespace Com
 
             if (LIsNOrE && RIsNOrE)
             {
-                return 0;
+                return double.NaN;
             }
             else if (LIsNOrE || RIsNOrE)
             {
@@ -2598,7 +2598,7 @@ namespace Com
 
             if (LIsNOrE && RIsNOrE)
             {
-                return 0;
+                return double.NaN;
             }
             else if (LIsNOrE || RIsNOrE)
             {
@@ -2644,7 +2644,7 @@ namespace Com
 
             if (LIsNOrE && RIsNOrE)
             {
-                return 0;
+                return double.NaN;
             }
             else if (LIsNOrE || RIsNOrE)
             {
