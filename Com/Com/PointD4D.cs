@@ -827,7 +827,7 @@ namespace Com
 
             if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
             {
-                return NaN;
+                throw new ArithmeticException();
             }
             else
             {
@@ -845,7 +845,7 @@ namespace Com
 
             if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
             {
-                return NaN;
+                throw new ArithmeticException();
             }
             else
             {
@@ -1101,7 +1101,11 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                throw new ArithmeticException();
+            }
+            else
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1123,7 +1127,7 @@ namespace Com
 
             if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
             {
-                return NaN;
+                throw new ArithmeticException();
             }
             else
             {
@@ -1143,7 +1147,11 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                throw new ArithmeticException();
+            }
+            else
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1165,7 +1173,7 @@ namespace Com
 
             if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
             {
-                return NaN;
+                throw new ArithmeticException();
             }
             else
             {
@@ -1196,7 +1204,11 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                throw new ArithmeticException();
+            }
+            else
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1211,11 +1223,19 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
         public void AffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(5, 5))
+            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(5, 5))
+            {
+                throw new ArithmeticException();
+            }
+            else
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+                {
+                    throw new ArithmeticException();
+                }
+                else
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1235,7 +1255,11 @@ namespace Com
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+                {
+                    throw new ArithmeticException();
+                }
+                else
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1269,7 +1293,7 @@ namespace Com
 
             if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
             {
-                return NaN;
+                throw new ArithmeticException();
             }
             else
             {
@@ -1286,7 +1310,7 @@ namespace Com
         {
             if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(5, 5))
             {
-                return NaN;
+                throw new ArithmeticException();
             }
             else
             {
@@ -1294,7 +1318,7 @@ namespace Com
 
                 if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
                 {
-                    return NaN;
+                    throw new ArithmeticException();
                 }
                 else
                 {
@@ -1312,7 +1336,7 @@ namespace Com
         {
             if (InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                return NaN;
+                return this;
             }
             else
             {
@@ -1320,7 +1344,7 @@ namespace Com
 
                 if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
                 {
-                    return NaN;
+                    throw new ArithmeticException();
                 }
                 else
                 {
@@ -1350,7 +1374,11 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+            {
+                throw new ArithmeticException();
+            }
+            else
             {
                 _X = result[0];
                 _Y = result[1];
@@ -1365,11 +1393,19 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix matrixLeft)
         {
-            if (!Matrix.IsNullOrEmpty(matrixLeft) && matrixLeft.Size == new Size(5, 5))
+            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(5, 5))
+            {
+                throw new ArithmeticException();
+            }
+            else
             {
                 Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+                {
+                    throw new ArithmeticException();
+                }
+                else
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1389,7 +1425,11 @@ namespace Com
             {
                 Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-                if (!Vector.IsNullOrEmpty(result) && result.Dimension == 4)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
+                {
+                    throw new ArithmeticException();
+                }
+                else
                 {
                     _X = result[0];
                     _Y = result[1];
@@ -1423,7 +1463,7 @@ namespace Com
 
             if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
             {
-                return NaN;
+                throw new ArithmeticException();
             }
             else
             {
@@ -1440,7 +1480,7 @@ namespace Com
         {
             if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(5, 5))
             {
-                return NaN;
+                throw new ArithmeticException();
             }
             else
             {
@@ -1448,7 +1488,7 @@ namespace Com
 
                 if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
                 {
-                    return NaN;
+                    throw new ArithmeticException();
                 }
                 else
                 {
@@ -1466,7 +1506,7 @@ namespace Com
         {
             if (InternalMethod.IsNullOrEmpty(matrixLeftList))
             {
-                return NaN;
+                return this;
             }
             else
             {
@@ -1474,7 +1514,7 @@ namespace Com
 
                 if (Vector.IsNullOrEmpty(result) || result.Dimension != 4)
                 {
-                    return NaN;
+                    throw new ArithmeticException();
                 }
                 else
                 {
@@ -2532,7 +2572,6 @@ namespace Com
 
             void IDisposable.Dispose()
             {
-
             }
 
             object IEnumerator.Current

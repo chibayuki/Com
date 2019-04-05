@@ -70,7 +70,6 @@ namespace Com
 
         private Matrix() // 不使用任何参数初始化 Matrix 的新实例。
         {
-
         }
 
         /// <summary>
@@ -613,7 +612,7 @@ namespace Com
                     {
                         double det = Determinant;
 
-                        if (InternalMethod.IsNaNOrInfinity(det))
+                        if (InternalMethod.IsNaNOrInfinity(det) || det == 0)
                         {
                             return Empty;
                         }
@@ -1138,22 +1137,29 @@ namespace Com
         /// <returns>Matrix 对象，表示由 2 个 Matrix 对象组成的增广矩阵。</returns>
         public static Matrix Augment(Matrix left, Matrix right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            bool LIsNOrE = IsNullOrEmpty(left);
+            bool RIsNOrE = IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
             {
                 return Empty;
             }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
             else
             {
-                Size sizeLeft = left.Size;
-                Size sizeRight = right.Size;
+                Size sizeL = left.Size;
+                Size sizeR = right.Size;
 
-                if (sizeLeft != sizeRight)
+                if (sizeL.Height != sizeR.Height)
                 {
-                    return Empty;
+                    throw new ArithmeticException();
                 }
                 else
                 {
-                    Size size = new Size(sizeLeft.Width + sizeRight.Width, sizeLeft.Height);
+                    Size size = new Size(sizeL.Width + sizeR.Width, sizeL.Height);
 
                     Matrix result = new Matrix(size);
 
@@ -1161,7 +1167,7 @@ namespace Com
                     {
                         for (int y = 0; y < size.Height; y++)
                         {
-                            result._MArray[x, y] = (x < sizeLeft.Width ? left._MArray[x, y] : right._MArray[x - sizeLeft.Width, y]);
+                            result._MArray[x, y] = (x < sizeL.Width ? left._MArray[x, y] : right._MArray[x - sizeL.Width, y]);
                         }
                     }
 
@@ -1240,22 +1246,29 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相加得到的结果。</returns>
         public static Matrix Add(Matrix left, Matrix right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            bool LIsNOrE = IsNullOrEmpty(left);
+            bool RIsNOrE = IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
             {
                 return Empty;
             }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
             else
             {
-                Size sizeLeft = left.Size;
-                Size sizeRight = right.Size;
+                Size sizeL = left.Size;
+                Size sizeR = right.Size;
 
-                if (sizeLeft != sizeRight)
+                if (sizeL != sizeR)
                 {
-                    return Empty;
+                    throw new ArithmeticException();
                 }
                 else
                 {
-                    Size size = sizeLeft;
+                    Size size = sizeL;
 
                     Matrix result = new Matrix(size);
 
@@ -1340,22 +1353,29 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相减得到的结果。</returns>
         public static Matrix Subtract(Matrix left, Matrix right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            bool LIsNOrE = IsNullOrEmpty(left);
+            bool RIsNOrE = IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
             {
                 return Empty;
             }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
             else
             {
-                Size sizeLeft = left.Size;
-                Size sizeRight = right.Size;
+                Size sizeL = left.Size;
+                Size sizeR = right.Size;
 
-                if (sizeLeft != sizeRight)
+                if (sizeL != sizeR)
                 {
-                    return Empty;
+                    throw new ArithmeticException();
                 }
                 else
                 {
-                    Size size = sizeLeft;
+                    Size size = sizeL;
 
                     Matrix result = new Matrix(size);
 
@@ -1440,24 +1460,31 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象相乘得到的结果。</returns>
         public static Matrix Multiply(Matrix left, Matrix right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            bool LIsNOrE = IsNullOrEmpty(left);
+            bool RIsNOrE = IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
             {
                 return Empty;
             }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
             else
             {
-                Size sizeLeft = left.Size;
-                Size sizeRight = right.Size;
+                Size sizeL = left.Size;
+                Size sizeR = right.Size;
 
-                if (sizeLeft.Width != sizeRight.Height)
+                if (sizeL.Width != sizeR.Height)
                 {
-                    return Empty;
+                    throw new ArithmeticException();
                 }
                 else
                 {
-                    int height = sizeLeft.Width;
+                    int height = sizeL.Width;
 
-                    Size size = new Size(sizeRight.Width, sizeLeft.Height);
+                    Size size = new Size(sizeR.Width, sizeL.Height);
 
                     Matrix result = new Matrix(size);
 
@@ -1492,39 +1519,27 @@ namespace Com
             }
             else
             {
-                if (IsNullOrEmpty(list[0]))
+                if (list.Count == 1)
                 {
-                    return Empty;
+                    if (IsNullOrEmpty(list[0]))
+                    {
+                        return Empty;
+                    }
+                    else
+                    {
+                        return list[0].Copy();
+                    }
                 }
                 else
                 {
                     Matrix result = list[0].Copy();
 
-                    if (list.Count == 1)
+                    for (int i = 1; i < list.Count; i++)
                     {
-                        return result;
+                        result = Multiply(list[i], result);
                     }
-                    else
-                    {
-                        for (int i = 1; i < list.Count; i++)
-                        {
-                            if (!IsNullOrEmpty(list[i]))
-                            {
-                                result = Multiply(list[i], result);
 
-                                if (IsNullOrEmpty(result))
-                                {
-                                    return Empty;
-                                }
-                            }
-                            else
-                            {
-                                return Empty;
-                            }
-                        }
-
-                        return result;
-                    }
+                    return result;
                 }
             }
         }
@@ -1542,39 +1557,27 @@ namespace Com
             }
             else
             {
-                if (IsNullOrEmpty(list[0]))
+                if (list.Count == 1)
                 {
-                    return Empty;
+                    if (IsNullOrEmpty(list[0]))
+                    {
+                        return Empty;
+                    }
+                    else
+                    {
+                        return list[0].Copy();
+                    }
                 }
                 else
                 {
                     Matrix result = list[0].Copy();
 
-                    if (list.Count == 1)
+                    for (int i = 1; i < list.Count; i++)
                     {
-                        return result;
+                        result = Multiply(result, list[i]);
                     }
-                    else
-                    {
-                        for (int i = 1; i < list.Count; i++)
-                        {
-                            if (!IsNullOrEmpty(list[i]))
-                            {
-                                result = Multiply(result, list[i]);
 
-                                if (IsNullOrEmpty(result))
-                                {
-                                    return Empty;
-                                }
-                            }
-                            else
-                            {
-                                return Empty;
-                            }
-                        }
-
-                        return result;
-                    }
+                    return result;
                 }
             }
         }
@@ -1647,18 +1650,25 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象左除得到的结果。</returns>
         public static Matrix DivideLeft(Matrix left, Matrix right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            bool LIsNOrE = IsNullOrEmpty(left);
+            bool RIsNOrE = IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
             {
                 return Empty;
             }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
             else
             {
-                Size sizeLeft = left.Size;
-                Size sizeRight = right.Size;
+                Size sizeL = left.Size;
+                Size sizeR = right.Size;
 
-                if (sizeLeft.Width != sizeLeft.Height || sizeLeft.Width != sizeRight.Height)
+                if (sizeL.Width != sizeL.Height || sizeL.Width != sizeR.Height)
                 {
-                    return Empty;
+                    throw new ArithmeticException();
                 }
                 else
                 {
@@ -1666,7 +1676,7 @@ namespace Com
 
                     if (IsNullOrEmpty(invLeft))
                     {
-                        return Empty;
+                        throw new ArithmeticException();
                     }
                     else
                     {
@@ -1684,18 +1694,25 @@ namespace Com
         /// <returns>Matrix 对象，表示将 Matrix 对象与 Matrix 对象右除得到的结果。</returns>
         public static Matrix DivideRight(Matrix left, Matrix right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            bool LIsNOrE = IsNullOrEmpty(left);
+            bool RIsNOrE = IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
             {
                 return Empty;
             }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
             else
             {
-                Size sizeLeft = left.Size;
-                Size sizeRight = right.Size;
+                Size sizeL = left.Size;
+                Size sizeR = right.Size;
 
-                if (sizeRight.Width != sizeRight.Height || sizeLeft.Width != sizeRight.Height)
+                if (sizeR.Width != sizeR.Height || sizeL.Width != sizeR.Height)
                 {
-                    return Empty;
+                    throw new ArithmeticException();
                 }
                 else
                 {
@@ -1703,7 +1720,7 @@ namespace Com
 
                     if (IsNullOrEmpty(invRight))
                     {
-                        return Empty;
+                        throw new ArithmeticException();
                     }
                     else
                     {
@@ -1723,9 +1740,20 @@ namespace Com
         /// <returns>Vector 对象，表示由 Matrix 对象与 Vector 对象指定的非齐次线性方程组的解向量。</returns>
         public static Vector SolveLinearEquation(Matrix matrix, Vector vector)
         {
-            if (IsNullOrEmpty(matrix) || Vector.IsNullOrEmpty(vector) || !vector.IsColumnVector)
+            bool MIsNOrE = IsNullOrEmpty(matrix);
+            bool VIsNOrE = Vector.IsNullOrEmpty(vector);
+
+            if (MIsNOrE && VIsNOrE)
             {
                 return Vector.Empty;
+            }
+            else if (MIsNOrE || VIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
+            else if (!vector.IsColumnVector)
+            {
+                throw new ArithmeticException();
             }
             else
             {
@@ -1733,7 +1761,7 @@ namespace Com
 
                 if (size.Width != size.Height)
                 {
-                    return Vector.Empty;
+                    throw new ArithmeticException();
                 }
                 else
                 {
@@ -1741,7 +1769,7 @@ namespace Com
 
                     if (order != size.Height)
                     {
-                        return Vector.Empty;
+                        throw new ArithmeticException();
                     }
                     else
                     {
@@ -1749,7 +1777,7 @@ namespace Com
 
                         if (IsNullOrEmpty(solution) || solution.Size != new Size(1, order))
                         {
-                            return Vector.Empty;
+                            throw new ArithmeticException();
                         }
                         else
                         {

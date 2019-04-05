@@ -84,7 +84,6 @@ namespace Com
 
         private BitSet() // 不使用任何参数初始化 BitSet 的新实例。
         {
-
         }
 
         /// <summary>
