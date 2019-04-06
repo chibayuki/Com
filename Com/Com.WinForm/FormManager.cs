@@ -2381,7 +2381,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _CaptionBar.OnFormStyleChanged();
                             _Resizer.OnFormStyleChanged();
@@ -2392,7 +2392,7 @@ namespace Com.WinForm
                             }
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2416,7 +2416,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             try
                             {
@@ -2439,7 +2439,7 @@ namespace Com.WinForm
                             }
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2463,7 +2463,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _CaptionBar.OnFormStyleChanged();
 
@@ -2473,7 +2473,7 @@ namespace Com.WinForm
                             }
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                     else
                     {
@@ -2505,7 +2505,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _CaptionBar.OnFormStyleChanged();
 
@@ -2515,7 +2515,7 @@ namespace Com.WinForm
                             }
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                     else
                     {
@@ -2547,12 +2547,12 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _CaptionBar.OnFormStyleChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2576,7 +2576,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _Client.ShowInTaskbar = _ShowInTaskbar;
 
@@ -2590,7 +2590,7 @@ namespace Com.WinForm
                             _UpdateLayout(UpdateLayoutEventType.None);
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2614,12 +2614,12 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _Client.TopMost = _TopMost;
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2667,12 +2667,12 @@ namespace Com.WinForm
                         Bounds_Current_Width = Math.Max(MinimumWidth, Bounds_Current_Width);
                         Bounds_Current_Height = Math.Max(MinimumHeight, Bounds_Current_Height);
 
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2700,12 +2700,12 @@ namespace Com.WinForm
                         Bounds_Current_Width = Math.Min(MaximumWidth, Bounds_Current_Width);
                         Bounds_Current_Height = Math.Min(MaximumHeight, Bounds_Current_Height);
 
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2729,12 +2729,12 @@ namespace Com.WinForm
 
                 if (_Initialized)
                 {
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
             }
         }
@@ -2759,14 +2759,14 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _Client.Enabled = _CaptionBar.Enabled = _Resizer.Enabled = _SplashScreen.Enabled = _Enabled;
 
                             _OnEnabledChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2790,7 +2790,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             if (!_LoadingNow && !_ClosingNow)
                             {
@@ -2804,7 +2804,7 @@ namespace Com.WinForm
                             _OnVisibleChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2844,7 +2844,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _Client.Opacity = _SplashScreen.Opacity = _Opacity;
 
@@ -2858,7 +2858,7 @@ namespace Com.WinForm
                             _OnOpacityChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2884,7 +2884,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _Client.Text = _Caption;
 
@@ -2896,7 +2896,7 @@ namespace Com.WinForm
                             _OnCaptionChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2920,12 +2920,12 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _CaptionBar.OnCaptionChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -2951,12 +2951,12 @@ namespace Com.WinForm
                     {
                         if (_ShowCaption)
                         {
-                            Action InvokeMethod = () =>
+                            Action Method = () =>
                             {
                                 _CaptionBar.OnCaptionChanged();
                             };
 
-                            _Client.Invoke(InvokeMethod);
+                            _Client.Invoke(Method);
                         }
                     }
                 }
@@ -2983,12 +2983,12 @@ namespace Com.WinForm
                     {
                         if (_ShowCaption)
                         {
-                            Action InvokeMethod = () =>
+                            Action Method = () =>
                             {
                                 _CaptionBar.OnCaptionChanged();
                             };
 
-                            _Client.Invoke(InvokeMethod);
+                            _Client.Invoke(Method);
                         }
                     }
                 }
@@ -3011,12 +3011,12 @@ namespace Com.WinForm
 
                 if (_Initialized)
                 {
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _CaptionBar.OnCaptionChanged();
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
             }
         }
@@ -3041,7 +3041,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _Client.BackColor = RecommendColors.FormBackground.ToColor();
 
@@ -3052,7 +3052,7 @@ namespace Com.WinForm
                             _OnThemeChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -3078,7 +3078,7 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _Client.BackColor = RecommendColors.FormBackground.ToColor();
 
@@ -3089,7 +3089,7 @@ namespace Com.WinForm
                             _OnThemeColorChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -3115,12 +3115,12 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _CaptionBar.OnThemeChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -3146,12 +3146,12 @@ namespace Com.WinForm
                     {
                         if (_FormState != FormState.FullScreen)
                         {
-                            Action InvokeMethod = () =>
+                            Action Method = () =>
                             {
                                 _CaptionBar.Opacity = _Opacity * CaptionBarOpacityRatio;
                             };
 
-                            _Client.Invoke(InvokeMethod);
+                            _Client.Invoke(Method);
                         }
                     }
                 }
@@ -3178,12 +3178,12 @@ namespace Com.WinForm
 
                     if (_Initialized)
                     {
-                        Action InvokeMethod = () =>
+                        Action Method = () =>
                         {
                             _Resizer.OnThemeChanged();
                         };
 
-                        _Client.Invoke(InvokeMethod);
+                        _Client.Invoke(Method);
                     }
                 }
             }
@@ -3223,7 +3223,7 @@ namespace Com.WinForm
             {
                 if (_Initialized)
                 {
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         if (_Client.WindowState != FormWindowState.Minimized && value == FormState.Minimized)
                         {
@@ -3251,7 +3251,7 @@ namespace Com.WinForm
                         }
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
                 else
                 {
@@ -3315,12 +3315,12 @@ namespace Com.WinForm
                             break;
                     }
 
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
                 else
                 {
@@ -3358,12 +3358,12 @@ namespace Com.WinForm
                             break;
                     }
 
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
                 else
                 {
@@ -3459,12 +3459,12 @@ namespace Com.WinForm
                             break;
                     }
 
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.LocationChanged);
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
                 else
                 {
@@ -3502,12 +3502,12 @@ namespace Com.WinForm
                             break;
                     }
 
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
                 else
                 {
@@ -3541,12 +3541,12 @@ namespace Com.WinForm
                             break;
                     }
 
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
                 else
                 {
@@ -3584,12 +3584,12 @@ namespace Com.WinForm
                             break;
                     }
 
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.SizeChanged);
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
                 else
                 {
@@ -3634,12 +3634,12 @@ namespace Com.WinForm
                             break;
                     }
 
-                    Action InvokeMethod = () =>
+                    Action Method = () =>
                     {
                         _UpdateLayout(UpdateLayoutEventType.Result);
                     };
 
-                    _Client.Invoke(InvokeMethod);
+                    _Client.Invoke(Method);
                 }
                 else
                 {
@@ -4216,7 +4216,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool Return()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_Client.WindowState == FormWindowState.Minimized)
                 {
@@ -4245,7 +4245,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4254,7 +4254,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool Minimize()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanMinimize())
                 {
@@ -4268,7 +4268,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4277,7 +4277,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool Maximize()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanMaximize())
                 {
@@ -4291,7 +4291,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4300,7 +4300,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool EnterFullScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanEnterFullScreen())
                 {
@@ -4314,7 +4314,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4323,7 +4323,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool ExitFullScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanExitFullScreen())
                 {
@@ -4337,7 +4337,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4346,7 +4346,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool LeftHalfScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanHighAsScreen())
                 {
@@ -4360,7 +4360,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4369,7 +4369,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool RightHalfScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanHighAsScreen())
                 {
@@ -4383,7 +4383,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4392,7 +4392,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool HighAsScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanHighAsScreen())
                 {
@@ -4406,7 +4406,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4415,7 +4415,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool TopLeftQuarterScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanQuarterScreen())
                 {
@@ -4429,7 +4429,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4438,7 +4438,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool TopRightQuarterScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanQuarterScreen())
                 {
@@ -4452,7 +4452,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4461,7 +4461,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool BottomLeftQuarterScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanQuarterScreen())
                 {
@@ -4475,7 +4475,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4484,7 +4484,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool BottomRightQuarterScreen()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanQuarterScreen())
                 {
@@ -4498,7 +4498,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         /// <summary>
@@ -4507,7 +4507,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此操作是否成功执行。</returns>
         public bool Close()
         {
-            Func<bool> InvokeMethod = () =>
+            Func<bool> Method = () =>
             {
                 if (_CanClose())
                 {
@@ -4521,7 +4521,7 @@ namespace Com.WinForm
                 }
             };
 
-            return (bool)_Client.Invoke(InvokeMethod);
+            return (bool)_Client.Invoke(Method);
         }
 
         //
@@ -4533,9 +4533,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnLoading();
+                Action Method = () => _OnLoading();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4546,9 +4546,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnLoaded();
+                Action Method = () => _OnLoaded();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4559,9 +4559,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnClosing();
+                Action Method = () => _OnClosing();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4572,9 +4572,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnClosed();
+                Action Method = () => _OnClosed();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4585,9 +4585,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnMove();
+                Action Method = () => _OnMove();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4598,9 +4598,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnLocationChanged();
+                Action Method = () => _OnLocationChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4611,9 +4611,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnResize();
+                Action Method = () => _OnResize();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4624,9 +4624,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnSizeChanged();
+                Action Method = () => _OnSizeChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4637,9 +4637,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnFormStateChanged();
+                Action Method = () => _OnFormStateChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4650,9 +4650,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnEnabledChanged();
+                Action Method = () => _OnEnabledChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4663,9 +4663,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnVisibleChanged();
+                Action Method = () => _OnVisibleChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4676,9 +4676,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnOpacityChanged();
+                Action Method = () => _OnOpacityChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4689,9 +4689,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnCaptionChanged();
+                Action Method = () => _OnCaptionChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4702,9 +4702,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnThemeChanged();
+                Action Method = () => _OnThemeChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 
@@ -4715,9 +4715,9 @@ namespace Com.WinForm
         {
             if (_Initialized)
             {
-                Action InvokeMethod = () => _OnThemeColorChanged();
+                Action Method = () => _OnThemeColorChanged();
 
-                _Client.Invoke(InvokeMethod);
+                _Client.Invoke(Method);
             }
         }
 

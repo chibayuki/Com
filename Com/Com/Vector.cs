@@ -1144,14 +1144,14 @@ namespace Com
         /// <returns>双精度浮点数，表示此 Vector 与指定的 Vector 对象之间的距离。</returns>
         public double DistanceFrom(Vector vector)
         {
-            bool LIsNOrE = (_Size <= 0);
-            bool RIsNOrE = IsNullOrEmpty(vector);
+            bool ThisIsNOrE = (_Size <= 0);
+            bool OtherIsNOrE = IsNullOrEmpty(vector);
 
-            if (LIsNOrE && RIsNOrE)
+            if (ThisIsNOrE && OtherIsNOrE)
             {
                 return double.NaN;
             }
-            else if (LIsNOrE || RIsNOrE)
+            else if (ThisIsNOrE || OtherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1197,14 +1197,14 @@ namespace Com
         /// <returns>双精度浮点数，表示此 Vector 与指定的 Vector 对象之间的夹角（弧度）。</returns>
         public double AngleFrom(Vector vector)
         {
-            bool LIsNOrE = (_Size <= 0);
-            bool RIsNOrE = IsNullOrEmpty(vector);
+            bool ThisIsNOrE = (_Size <= 0);
+            bool OtherIsNOrE = IsNullOrEmpty(vector);
 
-            if (LIsNOrE && RIsNOrE)
+            if (ThisIsNOrE && OtherIsNOrE)
             {
                 return double.NaN;
             }
-            else if (LIsNOrE || RIsNOrE)
+            else if (ThisIsNOrE || OtherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1256,14 +1256,14 @@ namespace Com
         /// <param name="vector">Vector 对象，用于平移此 Vector。</param>
         public void Offset(Vector vector)
         {
-            bool LIsNOrE = (_Size <= 0);
-            bool RIsNOrE = IsNullOrEmpty(vector);
+            bool ThisIsNOrE = (_Size <= 0);
+            bool OtherIsNOrE = IsNullOrEmpty(vector);
 
-            if (LIsNOrE && RIsNOrE)
+            if (ThisIsNOrE && OtherIsNOrE)
             {
                 return;
             }
-            else if (LIsNOrE || RIsNOrE)
+            else if (ThisIsNOrE || OtherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1311,14 +1311,14 @@ namespace Com
         /// <returns>Vector 对象，表示按 Vector 对象将此 Vector 平移指定的量得到的结果。</returns>
         public Vector OffsetCopy(Vector vector)
         {
-            bool LIsNOrE = (_Size <= 0);
-            bool RIsNOrE = IsNullOrEmpty(vector);
+            bool ThisIsNOrE = (_Size <= 0);
+            bool OtherIsNOrE = IsNullOrEmpty(vector);
 
-            if (LIsNOrE && RIsNOrE)
+            if (ThisIsNOrE && OtherIsNOrE)
             {
                 return Empty;
             }
-            else if (LIsNOrE || RIsNOrE)
+            else if (ThisIsNOrE || OtherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1362,14 +1362,14 @@ namespace Com
         /// <param name="vector">Vector 对象表示的缩放因数。</param>
         public void Scale(Vector vector)
         {
-            bool LIsNOrE = (_Size <= 0);
-            bool RIsNOrE = IsNullOrEmpty(vector);
+            bool ThisIsNOrE = (_Size <= 0);
+            bool OtherIsNOrE = IsNullOrEmpty(vector);
 
-            if (LIsNOrE && RIsNOrE)
+            if (ThisIsNOrE && OtherIsNOrE)
             {
                 return;
             }
-            else if (LIsNOrE || RIsNOrE)
+            else if (ThisIsNOrE || OtherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1417,14 +1417,14 @@ namespace Com
         /// <returns>Vector 对象，表示按 Vector 对象将此 Vector 缩放指定的倍数得到的结果。</returns>
         public Vector ScaleCopy(Vector vector)
         {
-            bool LIsNOrE = (_Size <= 0);
-            bool RIsNOrE = IsNullOrEmpty(vector);
+            bool ThisIsNOrE = (_Size <= 0);
+            bool OtherIsNOrE = IsNullOrEmpty(vector);
 
-            if (LIsNOrE && RIsNOrE)
+            if (ThisIsNOrE && OtherIsNOrE)
             {
                 return Empty;
             }
-            else if (LIsNOrE || RIsNOrE)
+            else if (ThisIsNOrE || OtherIsNOrE)
             {
                 throw new ArithmeticException();
             }

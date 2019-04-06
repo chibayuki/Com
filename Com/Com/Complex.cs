@@ -661,16 +661,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Complex 结构计算常用对数得到的 Complex 结构的新实例。
-        /// </summary>
-        /// <param name="comp">Complex 结构，表示幂。</param>
-        /// <returns>Complex 结构，表示对 Complex 结构计算常用对数得到的结果。</returns>
-        public static Complex Log10(Complex comp)
-        {
-            return (Log(comp) / Constant.Ln10);
-        }
-
-        /// <summary>
         /// 返回对 Complex 结构计算自然对数得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示幂。</param>

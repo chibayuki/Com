@@ -30,6 +30,7 @@ namespace Com
 
         public const double E = 2.7182818284590451; // 表示自然常数 E。
         public const double LgE = 0.43429448190325183; // 表示自然常数 E 的常用对数。
+        public const double Lg2 = 0.3010299956639812; // 表示 2 的常用对数。
         public const double Ln10 = 2.3025850929940457; // 表示 10 的自然对数。
     }
 }

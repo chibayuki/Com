@@ -110,6 +110,10 @@ namespace Com
 
         private static readonly Real _E = new Real(Constant.E); // 表示自然常数 E 的 Real 结构的实例。
         private static readonly Real _LgE = new Real(Constant.LgE); // 表示自然常数 E 的常用对数的 Real 结构的实例。
+        private static readonly Real _Lg2 = new Real(Constant.Lg2); // 表示 2 的常用对数的 Real 结构的实例。
+
+        private static readonly Real _Ten = new Real(1, 1); // 表示数字 10 的 Real 结构的实例。
+        private static readonly Real _Two = new Real(2, 0); // 表示数字 2 的 Real 结构的实例。
 
         //
 
@@ -911,8 +915,8 @@ namespace Com
         /// <returns>32 位整数，表示此 Real 与指定的 Real 对象进行次序比较的结果。</returns>
         public int CompareTo(Real real)
         {
-            bool ThisIsNaN = IsNaN;
-            bool OtherIsNaN = real.IsNaN;
+            bool ThisIsNaN = double.IsNaN(_Value);
+            bool OtherIsNaN = double.IsNaN(real._Value);
 
             if (ThisIsNaN || OtherIsNaN)
             {
@@ -1020,11 +1024,11 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算平方得到的结果。</returns>
         public static Real Sqr(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
                 return PositiveInfinity;
             }
@@ -1067,13 +1071,13 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算平方根得到的结果。</returns>
         public static Real Sqrt(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return PositiveInfinity;
                 }
@@ -1107,19 +1111,83 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Real 结构计算自然幂得到的 Real 结构的新实例。
+        /// 返回对 Real 结构计算以 10 为底的幂得到的 Real 结构的新实例。
         /// </summary>
-        /// <param name="real">Real 结构，表示底数。</param>
-        /// <returns>Real 结构，表示对 Real 结构计算自然幂得到的结果。</returns>
-        public static Real Exp(Real real)
+        /// <param name="real">Real 结构，表示指数。</param>
+        /// <returns>Real 结构，表示对 Real 结构计算以 10 为底的幂得到的结果。</returns>
+        public static Real Exp10(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
+                {
+                    return PositiveInfinity;
+                }
+                else
+                {
+                    return Zero;
+                }
+            }
+            else if (real._Value == 0)
+            {
+                return One;
+            }
+            else
+            {
+                return (_Ten ^ real);
+            }
+        }
+
+        /// <summary>
+        /// 返回对 Real 结构计算以 2 为底的幂得到的 Real 结构的新实例。
+        /// </summary>
+        /// <param name="real">Real 结构，表示指数。</param>
+        /// <returns>Real 结构，表示对 Real 结构计算以 2 为底的幂得到的结果。</returns>
+        public static Real Exp2(Real real)
+        {
+            if (double.IsNaN(real._Value))
+            {
+                return NaN;
+            }
+            else if (double.IsInfinity(real._Value))
+            {
+                if (double.IsPositiveInfinity(real._Value))
+                {
+                    return PositiveInfinity;
+                }
+                else
+                {
+                    return Zero;
+                }
+            }
+            else if (real._Value == 0)
+            {
+                return One;
+            }
+            else
+            {
+                return (_Two ^ real);
+            }
+        }
+
+        /// <summary>
+        /// 返回对 Real 结构计算自然幂得到的 Real 结构的新实例。
+        /// </summary>
+        /// <param name="real">Real 结构，表示指数。</param>
+        /// <returns>Real 结构，表示对 Real 结构计算自然幂得到的结果。</returns>
+        public static Real Exp(Real real)
+        {
+            if (double.IsNaN(real._Value))
+            {
+                return NaN;
+            }
+            else if (double.IsInfinity(real._Value))
+            {
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return PositiveInfinity;
                 }
@@ -1156,13 +1224,13 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算常用对数得到的结果。</returns>
         public static Real Log10(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return PositiveInfinity;
                 }
@@ -1186,6 +1254,16 @@ namespace Com
                     return NaN;
                 }
             }
+        }
+
+        /// <summary>
+        /// 返回对 Real 结构计算以 2 为底的对数得到的 Real 结构的新实例。
+        /// </summary>
+        /// <param name="real">Real 结构，表示幂。</param>
+        /// <returns>Real 结构，表示对 Real 结构计算以 2 为底的对数得到的结果。</returns>
+        public static Real Log2(Real real)
+        {
+            return (Log10(real) / _Lg2);
         }
 
         /// <summary>
@@ -1218,11 +1296,11 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算正弦得到的结果。</returns>
         public static Real Sin(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
                 return NaN;
             }
@@ -1243,11 +1321,11 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算余弦得到的结果。</returns>
         public static Real Cos(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
                 return NaN;
             }
@@ -1268,11 +1346,11 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算正切得到的结果。</returns>
         public static Real Tan(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
                 return NaN;
             }
@@ -1293,11 +1371,11 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算反正弦得到的结果。</returns>
         public static Real Asin(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
                 return NaN;
             }
@@ -1325,11 +1403,11 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算反余弦得到的结果。</returns>
         public static Real Acos(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
                 return NaN;
             }
@@ -1357,13 +1435,13 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算反正切得到的结果。</returns>
         public static Real Atan(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return _HalfPi;
                 }
@@ -1400,13 +1478,13 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算双曲正弦得到的结果。</returns>
         public static Real Sinh(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return PositiveInfinity;
                 }
@@ -1439,11 +1517,11 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算双曲余弦得到的结果。</returns>
         public static Real Cosh(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
                 return PositiveInfinity;
             }
@@ -1471,13 +1549,13 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算双曲正切得到的结果。</returns>
         public static Real Tanh(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return One;
                 }
@@ -1819,14 +1897,14 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将两个 Real 结构分别取最大值得到的 Real 结构的新实例。
+        /// 返回将两个 Real 结构取最大值得到的 Real 结构的新实例。
         /// </summary>
         /// <param name="left">Real 结构，用于比较的第一个结构。</param>
         /// <param name="right">Real 结构，用于比较的第二个结构。</param>
-        /// <returns>Real 结构，表示将两个 Real 结构分别取最大值得到的结果。</returns>
+        /// <returns>Real 结构，表示将两个 Real 结构取最大值得到的结果。</returns>
         public static Real Max(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return NaN;
             }
@@ -1844,14 +1922,14 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将两个 Real 结构分别取最小值得到的 Real 结构的新实例。
+        /// 返回将两个 Real 结构取最小值得到的 Real 结构的新实例。
         /// </summary>
         /// <param name="left">Real 结构，用于比较的第一个结构。</param>
         /// <param name="right">Real 结构，用于比较的第二个结构。</param>
-        /// <returns>Real 结构，表示将两个 Real 结构分别取最小值得到的结果。</returns>
+        /// <returns>Real 结构，表示将两个 Real 结构取最小值得到的结果。</returns>
         public static Real Min(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return NaN;
             }
@@ -1902,18 +1980,18 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否前者小于后者。</returns>
         public static bool operator <(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return false;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -2001,18 +2079,18 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否前者大于后者。</returns>
         public static bool operator >(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return false;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -2100,18 +2178,18 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否前者小于或等于后者。</returns>
         public static bool operator <=(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return false;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -2199,18 +2277,18 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否前者大于或等于后者。</returns>
         public static bool operator >=(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return false;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -2309,13 +2387,13 @@ namespace Com
         /// <returns>Real 结构，表示在 Real 结构前添加负号得到的结果。</returns>
         public static Real operator -(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return NegativeInfinity;
                 }
@@ -2343,13 +2421,13 @@ namespace Com
         /// <returns>Real 结构，表示将 Real 结构加 1 得到的结果。</returns>
         public static Real operator ++(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return PositiveInfinity;
                 }
@@ -2375,13 +2453,13 @@ namespace Com
         /// <returns>Real 结构，表示将 Real 结构减 1 得到的结果。</returns>
         public static Real operator --(Real real)
         {
-            if (real.IsNaN)
+            if (double.IsNaN(real._Value))
             {
                 return NaN;
             }
-            else if (real.IsInfinity)
+            else if (double.IsInfinity(real._Value))
             {
-                if (real.IsPositiveInfinity)
+                if (double.IsPositiveInfinity(real._Value))
                 {
                     return NegativeInfinity;
                 }
@@ -2410,18 +2488,18 @@ namespace Com
         /// <returns>Real 结构，表示将 Real 结构与 Real 结构的相加得到的结果。</returns>
         public static Real operator +(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return NaN;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -2516,18 +2594,18 @@ namespace Com
         /// <returns>Real 结构，表示将 Real 结构与 Real 结构的相减得到的结果。</returns>
         public static Real operator -(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return NaN;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -2622,18 +2700,18 @@ namespace Com
         /// <returns>Real 结构，表示将 Real 结构与 Real 结构的相乘得到的结果。</returns>
         public static Real operator *(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return NaN;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -2803,18 +2881,18 @@ namespace Com
         /// <returns>Real 结构，表示将 Real 结构与 Real 结构的相除得到的结果。</returns>
         public static Real operator /(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return NaN;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -2955,14 +3033,14 @@ namespace Com
         /// <returns>Real 结构，表示将 Real 结构与 Real 结构的相除得到的余数。</returns>
         public static Real operator %(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return NaN;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool RIsInf = right.IsInfinity;
+                bool LIsInf = double.IsInfinity(left._Value);
+                bool RIsInf = double.IsInfinity(right._Value);
 
                 if (LIsInf && RIsInf)
                 {
@@ -3038,18 +3116,18 @@ namespace Com
         /// <returns>Real 结构，表示对 Real 结构计算幂得到的结果。</returns>
         public static Real operator ^(Real left, Real right)
         {
-            if (left.IsNaN || right.IsNaN)
+            if (double.IsNaN(left._Value) || double.IsNaN(right._Value))
             {
                 return NaN;
             }
-            else if (left.IsInfinity || right.IsInfinity)
+            else if (double.IsInfinity(left._Value) || double.IsInfinity(right._Value))
             {
-                bool LIsInf = left.IsInfinity;
-                bool LIsPosInf = left.IsPositiveInfinity;
-                bool LIsNegInf = left.IsNegativeInfinity;
-                bool RIsInf = right.IsInfinity;
-                bool RIsPosInf = right.IsPositiveInfinity;
-                bool RIsNegInf = right.IsNegativeInfinity;
+                bool LIsPosInf = double.IsPositiveInfinity(left._Value);
+                bool LIsNegInf = double.IsNegativeInfinity(left._Value);
+                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool RIsPosInf = double.IsPositiveInfinity(right._Value);
+                bool RIsNegInf = double.IsNegativeInfinity(right._Value);
+                bool RIsInf = (RIsPosInf || RIsNegInf);
 
                 if (LIsInf && RIsInf)
                 {
@@ -3249,17 +3327,17 @@ namespace Com
                 }
                 else
                 {
-                    Func<Real, Real, Real> FastPower = (baseNum, expNum) =>
+                    Func<Real, Real, Real> FastPower = (baseValue, expValue) =>
                     {
                         double Lg0;
 
-                        if (baseNum._Value == 1)
+                        if (baseValue._Value == 1)
                         {
-                            Lg0 = baseNum._Magnitude * expNum._Value;
+                            Lg0 = baseValue._Magnitude * expValue._Value;
                         }
                         else
                         {
-                            Lg0 = Math.Log10(Math.Pow(baseNum._Value, expNum._Value)) + baseNum._Magnitude * expNum._Value;
+                            Lg0 = Math.Log10(Math.Pow(baseValue._Value, expValue._Value)) + baseValue._Magnitude * expValue._Value;
                         }
 
                         long M0 = (long)Math.Truncate(Lg0);
@@ -3267,15 +3345,15 @@ namespace Com
 
                         Real result = new Real(V0, M0);
 
-                        if (!result.IsNaN && !result.IsInfinity && result._Value != 0)
+                        if (!double.IsNaN(result._Value) && !double.IsInfinity(result._Value) && result._Value != 0)
                         {
-                            if (expNum._Magnitude != 0)
+                            if (expValue._Magnitude != 0)
                             {
                                 double Lgi;
 
-                                if (expNum._Magnitude > 0)
+                                if (expValue._Magnitude > 0)
                                 {
-                                    for (long i = 0; i < expNum._Magnitude; i++)
+                                    for (long i = 0; i < expValue._Magnitude; i++)
                                     {
                                         Lgi = Math.Log10(Math.Pow(result._Value, 10)) + 10 * result._Magnitude;
 
@@ -3283,7 +3361,7 @@ namespace Com
                                         result._Value = Math.Pow(10, Lgi - result._Magnitude);
                                         result._Rectify();
 
-                                        if (result.IsNaN || result.IsInfinity || result._Value == 0)
+                                        if (double.IsNaN(result._Value) || double.IsInfinity(result._Value) || result._Value == 0)
                                         {
                                             break;
                                         }
@@ -3291,7 +3369,7 @@ namespace Com
                                 }
                                 else
                                 {
-                                    for (long i = 0; i < -expNum._Magnitude; i++)
+                                    for (long i = 0; i < -expValue._Magnitude; i++)
                                     {
                                         Lgi = Math.Log10(Math.Pow(result._Value, 0.1)) + 0.1 * result._Magnitude;
 
@@ -3299,7 +3377,7 @@ namespace Com
                                         result._Value = Math.Pow(10, Lgi - result._Magnitude);
                                         result._Rectify();
 
-                                        if (result.IsNaN || result.IsInfinity || result._Value == 0)
+                                        if (double.IsNaN(result._Value) || double.IsInfinity(result._Value) || result._Value == 0)
                                         {
                                             break;
                                         }
