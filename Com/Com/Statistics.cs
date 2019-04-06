@@ -660,10 +660,10 @@ namespace Com
         /// <summary>
         /// 计算服从几何分布的随机变量在指定分布参数的概率。
         /// </summary>
-        /// <param name="p">单个样本满足某个条件的概率，等于数学期望的倒数。</param>
         /// <param name="value">测试的样本数量。</param>
+        /// <param name="p">单个样本满足某个条件的概率，等于数学期望的倒数。</param>
         /// <returns>双精度浮点数，表示服从几何分布的随机变量在指定分布参数的概率。</returns>
-        public static double GeometricDistributionProbability(double p, int value)
+        public static double GeometricDistributionProbability(int value, double p)
         {
             if (InternalMethod.IsNaNOrInfinity(p))
             {
@@ -710,12 +710,12 @@ namespace Com
         /// <summary>
         /// 计算服从超几何分布的随机变量在指定分布参数的概率。
         /// </summary>
+        /// <param name="value">测试的样本中满足某个条件的样本数量。</param>
         /// <param name="N">样本总量。</param>
         /// <param name="M">满足某个条件的样本数量。</param>
         /// <param name="n">测试的样本数量。</param>
-        /// <param name="value">测试的样本中满足某个条件的样本数量。</param>
         /// <returns>双精度浮点数，表示服从超几何分布的随机变量在指定分布参数的概率。</returns>
-        public static double HypergeometricDistributionProbability(int N, int M, int n, int value)
+        public static double HypergeometricDistributionProbability(int value, int N, int M, int n)
         {
             if (N <= 0 || M >= N)
             {
@@ -723,7 +723,7 @@ namespace Com
             }
             else
             {
-                if (M > 0 && n > 0 && value >= 0 && value <= n)
+                if (M > 0 && n > 0 && (value >= 0 && value <= n))
                 {
                     return (double)(_Combination(M, value) / _Combination(N, n) * _Combination(N - M, n - value));
                 }
@@ -737,11 +737,11 @@ namespace Com
         /// <summary>
         /// 计算服从二项分布的随机变量在指定分布参数的概率。
         /// </summary>
+        /// <param name="value">测试的样本数量。</param>
         /// <param name="n">样本总量。</param>
         /// <param name="p">单个样本满足某个条件的概率，等于样本总量为 1 时的数学期望。</param>
-        /// <param name="value">测试的样本数量。</param>
         /// <returns>双精度浮点数，表示服从二项分布的随机变量在指定分布参数的概率。</returns>
-        public static double BinomialDistributionProbability(int n, double p, int value)
+        public static double BinomialDistributionProbability(int value, int n, double p)
         {
             if (InternalMethod.IsNaNOrInfinity(p))
             {
@@ -749,7 +749,7 @@ namespace Com
             }
             else
             {
-                if (n > 0 && p >= 0 && p <= 1)
+                if (n > 0 && (p >= 0 && p <= 1))
                 {
                     if (value >= 0 && value <= n)
                     {
@@ -781,10 +781,10 @@ namespace Com
         /// <summary>
         /// 计算服从泊松分布的随机变量在指定分布参数的概率。
         /// </summary>
-        /// <param name="lambda">单位测度内满足某个条件的平均样本数量，等于数学期望或方差。</param>
         /// <param name="value">单位测度内测试的样本数量。</param>
+        /// <param name="lambda">单位测度内满足某个条件的平均样本数量，等于数学期望或方差。</param>
         /// <returns>双精度浮点数，表示服从泊松分布的随机变量在指定分布参数的概率。</returns>
-        public static double PoissonDistributionProbability(double lambda, int value)
+        public static double PoissonDistributionProbability(int value, double lambda)
         {
             if (InternalMethod.IsNaNOrInfinity(lambda))
             {
@@ -815,12 +815,12 @@ namespace Com
         /// <summary>
         /// 计算服从指数分布的随机变量在指定分布参数的概率密度。
         /// </summary>
-        /// <param name="lambda">率参数，等于数学期望的倒数或标准差的倒数。</param>
         /// <param name="value">样本值。</param>
+        /// <param name="lambda">率参数，等于数学期望的倒数或标准差的倒数。</param>
         /// <returns>双精度浮点数，表示服从指数分布的随机变量在指定分布参数的概率密度。</returns>
-        public static double ExponentialDistributionProbabilityDensity(double lambda, double value)
+        public static double ExponentialDistributionProbabilityDensity(double value, double lambda)
         {
-            if (InternalMethod.IsNaNOrInfinity(lambda) || InternalMethod.IsNaNOrInfinity(value))
+            if (InternalMethod.IsNaNOrInfinity(value) || InternalMethod.IsNaNOrInfinity(lambda))
             {
                 return double.NaN;
             }
@@ -902,13 +902,13 @@ namespace Com
         /// <summary>
         /// 计算服从正态分布的随机变量在指定分布参数的概率密度。
         /// </summary>
+        /// <param name="value">样本值。</param>
         /// <param name="ev">数学期望。</param>
         /// <param name="sd">标准差。</param>
-        /// <param name="value">样本值。</param>
         /// <returns>双精度浮点数，表示服从正态分布的随机变量在指定分布参数的概率密度。</returns>
-        public static double NormalDistributionProbabilityDensity(double ev, double sd, double value)
+        public static double NormalDistributionProbabilityDensity(double value, double ev, double sd)
         {
-            if (InternalMethod.IsNaNOrInfinity(ev) || InternalMethod.IsNaNOrInfinity(sd) || InternalMethod.IsNaNOrInfinity(value))
+            if (InternalMethod.IsNaNOrInfinity(value) || InternalMethod.IsNaNOrInfinity(ev) || InternalMethod.IsNaNOrInfinity(sd))
             {
                 return double.NaN;
             }
@@ -920,46 +920,43 @@ namespace Com
             }
         }
 
+        /// <summary>
+        /// 计算服从卡方分布的随机变量在指定分布参数的概率密度。
+        /// </summary>
+        /// <param name="value">样本值。</param>
+        /// <param name="k">自由度。</param>
+        /// <returns>双精度浮点数，表示服从卡方分布的随机变量在指定分布参数的概率密度。</returns>
+        public static double ChiSquaredDistributionProbabilityDensity(double value, int k)
+        {
+            if (InternalMethod.IsNaNOrInfinity(value))
+            {
+                return double.NaN;
+            }
+            else
+            {
+                if (k > 0)
+                {
+                    if (value > 0)
+                    {
+                        double HalfK = k * 0.5;
+
+                        return ((double)(Real.Pow(value, HalfK - 1) * Real.Exp(-value / 2) / Real.Exp2(HalfK) / _Gamma(HalfK)));
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    return double.NaN;
+                }
+            }
+        }
+
         #endregion
 
         #region 极值与极差
-
-        /// <summary>
-        /// 计算一组可排序对象的最大值。
-        /// </summary>
-        /// <param name="values">用于计算的值。</param>
-        /// <returns>IComparable 对象，表示一组可排序对象的最大值。</returns>
-        public static IComparable Max(params IComparable[] values)
-        {
-            if (InternalMethod.IsNullOrEmpty(values))
-            {
-                throw new ArgumentNullException();
-            }
-
-            //
-
-            IComparable result = values[0];
-
-            for (int i = 1; i < values.Length; i++)
-            {
-                if (values[i] != null)
-                {
-                    if (values[i].CompareTo(result) > 0)
-                    {
-                        result = values[i];
-                    }
-                }
-                else if (result != null)
-                {
-                    if (result.CompareTo(values[i]) < 0)
-                    {
-                        result = values[i];
-                    }
-                }
-            }
-
-            return result;
-        }
 
         /// <summary>
         /// 计算一组 8 位整数的最大值。
@@ -1178,6 +1175,33 @@ namespace Com
         }
 
         /// <summary>
+        /// 计算一组十进制数的最大值。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的最大值。</returns>
+        public static decimal Max(params decimal[] values)
+        {
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            decimal result = values[0];
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (result < values[i])
+                {
+                    result = values[i];
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// 计算一组单精度浮点数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
@@ -1232,40 +1256,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的最大值。
+        /// 计算一组可排序对象的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的最大值。</returns>
-        public static decimal Max(params decimal[] values)
-        {
-            if (InternalMethod.IsNullOrEmpty(values))
-            {
-                throw new ArgumentNullException();
-            }
-
-            //
-
-            decimal result = values[0];
-
-            for (int i = 0; i < values.Length; i++)
-            {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
-
-            return result;
-        }
-
-        //
-
-        /// <summary>
-        /// 计算一组可排序对象的最小值。
-        /// </summary>
-        /// <param name="values">用于计算的值。</param>
-        /// <returns>IComparable 对象，表示一组可排序对象的最小值。</returns>
-        public static IComparable Min(params IComparable[] values)
+        /// <returns>IComparable 对象，表示一组可排序对象的最大值。</returns>
+        public static IComparable Max(params IComparable[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
             {
@@ -1280,14 +1275,14 @@ namespace Com
             {
                 if (values[i] != null)
                 {
-                    if (values[i].CompareTo(result) < 0)
+                    if (values[i].CompareTo(result) > 0)
                     {
                         result = values[i];
                     }
                 }
                 else if (result != null)
                 {
-                    if (result.CompareTo(values[i]) > 0)
+                    if (result.CompareTo(values[i]) < 0)
                     {
                         result = values[i];
                     }
@@ -1296,6 +1291,8 @@ namespace Com
 
             return result;
         }
+
+        //
 
         /// <summary>
         /// 计算一组 8 位整数的最小值。
@@ -1514,6 +1511,33 @@ namespace Com
         }
 
         /// <summary>
+        /// 计算一组十进制数的最小值。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的最小值。</returns>
+        public static decimal Min(params decimal[] values)
+        {
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            decimal result = values[0];
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (result > values[i])
+                {
+                    result = values[i];
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// 计算一组单精度浮点数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
@@ -1568,11 +1592,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的最小值。
+        /// 计算一组可排序对象的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的最小值。</returns>
-        public static decimal Min(params decimal[] values)
+        /// <returns>IComparable 对象，表示一组可排序对象的最小值。</returns>
+        public static IComparable Min(params IComparable[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
             {
@@ -1581,13 +1605,23 @@ namespace Com
 
             //
 
-            decimal result = values[0];
+            IComparable result = values[0];
 
-            for (int i = 0; i < values.Length; i++)
+            for (int i = 1; i < values.Length; i++)
             {
-                if (result > values[i])
+                if (values[i] != null)
                 {
-                    result = values[i];
+                    if (values[i].CompareTo(result) < 0)
+                    {
+                        result = values[i];
+                    }
+                }
+                else if (result != null)
+                {
+                    if (result.CompareTo(values[i]) > 0)
+                    {
+                        result = values[i];
+                    }
                 }
             }
 
@@ -1595,60 +1629,6 @@ namespace Com
         }
 
         //
-
-        /// <summary>
-        /// 计算一组可排序对象的最小值与最小值与最大值。
-        /// </summary>
-        /// <param name="values">用于计算的值。</param>
-        /// <returns>(IComparable, IComparable) 元组，表示一组可排序对象的最小值与最大值。</returns>
-        public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values)
-        {
-            if (InternalMethod.IsNullOrEmpty(values))
-            {
-                throw new ArgumentNullException();
-            }
-
-            //
-
-            IComparable Min = values[0];
-            IComparable Max = values[0];
-
-            for (int i = 1; i < values.Length; i++)
-            {
-                if (values[i] != null)
-                {
-                    if (values[i].CompareTo(Min) < 0)
-                    {
-                        Min = values[i];
-                    }
-
-                    if (values[i].CompareTo(Max) > 0)
-                    {
-                        Max = values[i];
-                    }
-                }
-                else
-                {
-                    if (Min != null)
-                    {
-                        if (Min.CompareTo(values[i]) > 0)
-                        {
-                            Min = values[i];
-                        }
-                    }
-
-                    if (Max != null)
-                    {
-                        if (Max.CompareTo(values[i]) < 0)
-                        {
-                            Max = values[i];
-                        }
-                    }
-                }
-            }
-
-            return (Min, Max);
-        }
 
         /// <summary>
         /// 计算一组 8 位整数的最小值与最小值与最大值。
@@ -1915,6 +1895,39 @@ namespace Com
         }
 
         /// <summary>
+        /// 计算一组十进制数的最小值与最小值与最大值。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>(decimal, decimal) 元组，表示一组十进制数的最小值与最大值。</returns>
+        public static (decimal Min, decimal Max) MinMax(params decimal[] values)
+        {
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            decimal Min = values[0];
+            decimal Max = values[0];
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (Min > values[i])
+                {
+                    Min = values[i];
+                }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+            }
+
+            return (Min, Max);
+        }
+
+        /// <summary>
         /// 计算一组单精度浮点数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
@@ -1981,11 +1994,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的最小值与最小值与最大值。
+        /// 计算一组可排序对象的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>(decimal, decimal) 元组，表示一组十进制数的最小值与最大值。</returns>
-        public static (decimal Min, decimal Max) MinMax(params decimal[] values)
+        /// <returns>(IComparable, IComparable) 元组，表示一组可排序对象的最小值与最大值。</returns>
+        public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
             {
@@ -1994,19 +2007,40 @@ namespace Com
 
             //
 
-            decimal Min = values[0];
-            decimal Max = values[0];
+            IComparable Min = values[0];
+            IComparable Max = values[0];
 
-            for (int i = 0; i < values.Length; i++)
+            for (int i = 1; i < values.Length; i++)
             {
-                if (Min > values[i])
+                if (values[i] != null)
                 {
-                    Min = values[i];
-                }
+                    if (values[i].CompareTo(Min) < 0)
+                    {
+                        Min = values[i];
+                    }
 
-                if (Max < values[i])
+                    if (values[i].CompareTo(Max) > 0)
+                    {
+                        Max = values[i];
+                    }
+                }
+                else
                 {
-                    Max = values[i];
+                    if (Min != null)
+                    {
+                        if (Min.CompareTo(values[i]) > 0)
+                        {
+                            Min = values[i];
+                        }
+                    }
+
+                    if (Max != null)
+                    {
+                        if (Max.CompareTo(values[i]) < 0)
+                        {
+                            Max = values[i];
+                        }
+                    }
                 }
             }
 
@@ -2182,6 +2216,25 @@ namespace Com
         }
 
         /// <summary>
+        /// 计算一组十进制数的极差。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的极差。</returns>
+        public static decimal Range(params decimal[] values)
+        {
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            (decimal Min, decimal Max) = MinMax(values);
+
+            return (Max - Min);
+        }
+
+        /// <summary>
         /// 计算一组单精度浮点数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
@@ -2215,25 +2268,6 @@ namespace Com
             //
 
             (double Min, double Max) = MinMax(values);
-
-            return (Max - Min);
-        }
-
-        /// <summary>
-        /// 计算一组十进制数的极差。
-        /// </summary>
-        /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的极差。</returns>
-        public static decimal Range(params decimal[] values)
-        {
-            if (InternalMethod.IsNullOrEmpty(values))
-            {
-                throw new ArgumentNullException();
-            }
-
-            //
-
-            (decimal Min, decimal Max) = MinMax(values);
 
             return (Max - Min);
         }
@@ -2456,6 +2490,30 @@ namespace Com
         }
 
         /// <summary>
+        /// 计算一组十进制数的求和。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的求和。</returns>
+        public static decimal Sum(params decimal[] values)
+        {
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            decimal result = 0;
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                result += values[i];
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// 计算一组单精度浮点数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
@@ -2503,30 +2561,6 @@ namespace Com
             return result;
         }
 
-        /// <summary>
-        /// 计算一组十进制数的求和。
-        /// </summary>
-        /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的求和。</returns>
-        public static decimal Sum(params decimal[] values)
-        {
-            if (InternalMethod.IsNullOrEmpty(values))
-            {
-                throw new ArgumentNullException();
-            }
-
-            //
-
-            decimal result = 0;
-
-            for (int i = 0; i < values.Length; i++)
-            {
-                result += values[i];
-            }
-
-            return result;
-        }
-
         //
 
         /// <summary>
@@ -2543,17 +2577,25 @@ namespace Com
 
             //
 
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Sum += values[i];
-                }
+                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return ((double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2570,17 +2612,25 @@ namespace Com
 
             //
 
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Sum += values[i];
-                }
+                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return ((double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2597,17 +2647,25 @@ namespace Com
 
             //
 
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Sum += values[i];
-                }
+                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return ((double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2624,17 +2682,25 @@ namespace Com
 
             //
 
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Sum += values[i];
-                }
+                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return ((double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2651,17 +2717,25 @@ namespace Com
 
             //
 
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Sum += values[i];
-                }
+                Sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return ((double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2678,14 +2752,22 @@ namespace Com
 
             //
 
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Sum += values[i];
-                }
+                Sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
+            {
+                Sum += values[i];
+
+                i++;
             }
 
             return ((double)Sum / values.Length);
@@ -2705,14 +2787,11 @@ namespace Com
 
             //
 
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            for (int i = 0; i < values.Length; i++)
             {
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Sum += values[i];
-                }
+                Sum += values[i];
             }
 
             return ((double)Sum / values.Length);
@@ -2733,6 +2812,30 @@ namespace Com
             //
 
             double Sum = 0;
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                Sum += values[i];
+            }
+
+            return (Sum / values.Length);
+        }
+
+        /// <summary>
+        /// 计算一组十进制数的平均值。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>十进制数，表示一组十进制数的平均值。</returns>
+        public static decimal Average(params decimal[] values)
+        {
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            decimal Sum = 0;
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -2790,30 +2893,6 @@ namespace Com
             return (Sum / values.Length);
         }
 
-        /// <summary>
-        /// 计算一组十进制数的平均值。
-        /// </summary>
-        /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的平均值。</returns>
-        public static decimal Average(params decimal[] values)
-        {
-            if (InternalMethod.IsNullOrEmpty(values))
-            {
-                throw new ArgumentNullException();
-            }
-
-            //
-
-            decimal Sum = 0;
-
-            for (int i = 0; i < values.Length; i++)
-            {
-                Sum += values[i];
-            }
-
-            return (Sum / values.Length);
-        }
-
         //
 
         /// <summary>
@@ -2832,27 +2911,48 @@ namespace Com
 
             sbyte Min = values[0];
             sbyte Max = values[0];
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
+                for (int j = i; j < i + 16; j++)
                 {
-                    if (Min > values[i])
+                    if (Min > values[j])
                     {
-                        Min = values[i];
+                        Min = values[j];
                     }
 
-                    if (Max < values[i])
+                    if (Max < values[j])
                     {
-                        Max = values[i];
+                        Max = values[j];
                     }
-
-                    Sum += values[i];
                 }
+
+                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return (Min, Max, (double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                if (Min > values[i])
+                {
+                    Min = values[i];
+                }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -2871,27 +2971,48 @@ namespace Com
 
             byte Min = values[0];
             byte Max = values[0];
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
+                for (int j = i; j < i + 16; j++)
                 {
-                    if (Min > values[i])
+                    if (Min > values[j])
                     {
-                        Min = values[i];
+                        Min = values[j];
                     }
 
-                    if (Max < values[i])
+                    if (Max < values[j])
                     {
-                        Max = values[i];
+                        Max = values[j];
                     }
-
-                    Sum += values[i];
                 }
+
+                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return (Min, Max, (double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                if (Min > values[i])
+                {
+                    Min = values[i];
+                }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -2910,27 +3031,48 @@ namespace Com
 
             short Min = values[0];
             short Max = values[0];
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
+                for (int j = i; j < i + 16; j++)
                 {
-                    if (Min > values[i])
+                    if (Min > values[j])
                     {
-                        Min = values[i];
+                        Min = values[j];
                     }
 
-                    if (Max < values[i])
+                    if (Max < values[j])
                     {
-                        Max = values[i];
+                        Max = values[j];
                     }
-
-                    Sum += values[i];
                 }
+
+                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return (Min, Max, (double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                if (Min > values[i])
+                {
+                    Min = values[i];
+                }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -2949,27 +3091,48 @@ namespace Com
 
             ushort Min = values[0];
             ushort Max = values[0];
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
+                for (int j = i; j < i + 16; j++)
                 {
-                    if (Min > values[i])
+                    if (Min > values[j])
                     {
-                        Min = values[i];
+                        Min = values[j];
                     }
 
-                    if (Max < values[i])
+                    if (Max < values[j])
                     {
-                        Max = values[i];
+                        Max = values[j];
                     }
-
-                    Sum += values[i];
                 }
+
+                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return (Min, Max, (double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                if (Min > values[i])
+                {
+                    Min = values[i];
+                }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -2988,27 +3151,48 @@ namespace Com
 
             int Min = values[0];
             int Max = values[0];
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
+                for (int j = i; j < i + 16; j++)
                 {
-                    if (Min > values[i])
+                    if (Min > values[j])
                     {
-                        Min = values[i];
+                        Min = values[j];
                     }
 
-                    if (Max < values[i])
+                    if (Max < values[j])
                     {
-                        Max = values[i];
+                        Max = values[j];
                     }
-
-                    Sum += values[i];
                 }
+
+                Sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return (Min, Max, (double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                if (Min > values[i])
+                {
+                    Min = values[i];
+                }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3027,27 +3211,48 @@ namespace Com
 
             uint Min = values[0];
             uint Max = values[0];
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                for (int i = 0; i < values.Length; i++)
+                for (int j = i; j < i + 16; j++)
                 {
-                    if (Min > values[i])
+                    if (Min > values[j])
                     {
-                        Min = values[i];
+                        Min = values[j];
                     }
 
-                    if (Max < values[i])
+                    if (Max < values[j])
                     {
-                        Max = values[i];
+                        Max = values[j];
                     }
-
-                    Sum += values[i];
                 }
+
+                Sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return (Min, Max, (double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                if (Min > values[i])
+                {
+                    Min = values[i];
+                }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3066,27 +3271,24 @@ namespace Com
 
             long Min = values[0];
             long Max = values[0];
-            long Sum = 0;
+            double Sum = 0;
 
-            checked
+            for (int i = 0; i < values.Length; i++)
             {
-                for (int i = 0; i < values.Length; i++)
+                if (Min > values[i])
                 {
-                    if (Min > values[i])
-                    {
-                        Min = values[i];
-                    }
-
-                    if (Max < values[i])
-                    {
-                        Max = values[i];
-                    }
-
-                    Sum += values[i];
+                    Min = values[i];
                 }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+
+                Sum += values[i];
             }
 
-            return (Min, Max, (double)Sum / values.Length);
+            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3106,6 +3308,42 @@ namespace Com
             ulong Min = values[0];
             ulong Max = values[0];
             double Sum = 0;
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (Min > values[i])
+                {
+                    Min = values[i];
+                }
+
+                if (Max < values[i])
+                {
+                    Max = values[i];
+                }
+
+                Sum += values[i];
+            }
+
+            return (Min, Max, Sum / values.Length);
+        }
+
+        /// <summary>
+        /// 计算一组十进制数的最小值、最大值与平均值。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>(decimal, decimal, double) 元组，表示一组十进制数的最小值、最大值与平均值。</returns>
+        public static (decimal Min, decimal Max, decimal Average) MinMaxAverage(params decimal[] values)
+        {
+            if (InternalMethod.IsNullOrEmpty(values))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            decimal Min = values[0];
+            decimal Max = values[0];
+            decimal Sum = 0;
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -3178,42 +3416,6 @@ namespace Com
             double Min = values[0];
             double Max = values[0];
             double Sum = 0;
-
-            for (int i = 0; i < values.Length; i++)
-            {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
-
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-            }
-
-            return (Min, Max, Sum / values.Length);
-        }
-
-        /// <summary>
-        /// 计算一组十进制数的最小值、最大值与平均值。
-        /// </summary>
-        /// <param name="values">用于计算的值。</param>
-        /// <returns>(decimal, decimal, double) 元组，表示一组十进制数的最小值、最大值与平均值。</returns>
-        public static (decimal Min, decimal Max, decimal Average) MinMaxAverage(params decimal[] values)
-        {
-            if (InternalMethod.IsNullOrEmpty(values))
-            {
-                throw new ArgumentNullException();
-            }
-
-            //
-
-            decimal Min = values[0];
-            decimal Max = values[0];
-            decimal Sum = 0;
 
             for (int i = 0; i < values.Length; i++)
             {
