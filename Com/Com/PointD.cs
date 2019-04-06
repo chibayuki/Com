@@ -27,6 +27,12 @@ namespace Com
     {
         #region 私有成员与内部成员
 
+        private const int _Dimension = 2; // PointD 结构的维度。
+
+        private static readonly Size _AffineMatrixSize = new Size(_Dimension + 1, _Dimension + 1); // PointD 结构的仿射矩阵大小。
+
+        //
+
         private double _X; // X 坐标。
         private double _Y; // Y 坐标。
 
@@ -128,7 +134,7 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取或设置此 PointD 结构在指定索引的坐标轴的分量。
+        /// 获取或设置此 PointD 结构在指定的基向量方向的分量。
         /// </summary>
         /// <param name="index">索引。</param>
         public double this[int index]
@@ -197,7 +203,7 @@ namespace Com
         {
             get
             {
-                return 2;
+                return _Dimension;
             }
         }
 
@@ -490,7 +496,7 @@ namespace Com
         /// <returns>32 位整数，表示将此 PointD 结构与指定的 PointD 结构进行次序比较得到的结果。</returns>
         public int CompareTo(PointD pt)
         {
-            for (int i = 0; i < Dimension; i++)
+            for (int i = 0; i < _Dimension; i++)
             {
                 int result = this[i].CompareTo(pt[i]);
 
@@ -512,7 +518,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item)
         {
-            return Array.IndexOf(ToArray(), item, 0, Dimension);
+            return Array.IndexOf(ToArray(), item, 0, _Dimension);
         }
 
         /// <summary>
@@ -523,14 +529,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item, int startIndex)
         {
-            if (startIndex < 0 || startIndex >= Dimension)
+            if (startIndex < 0 || startIndex >= _Dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            return Array.IndexOf(ToArray(), item, startIndex, Dimension - startIndex);
+            return Array.IndexOf(ToArray(), item, startIndex, _Dimension - startIndex);
         }
 
         /// <summary>
@@ -542,16 +548,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item, int startIndex, int count)
         {
-            if ((startIndex < 0 || startIndex >= Dimension) || count <= 0)
+            if ((startIndex < 0 || startIndex >= _Dimension) || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            count = Math.Min(Dimension - startIndex, count);
-
-            return Array.IndexOf(ToArray(), item, startIndex, count);
+            return Array.IndexOf(ToArray(), item, startIndex, Math.Min(_Dimension - startIndex, count));
         }
 
         /// <summary>
@@ -561,7 +565,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item)
         {
-            return Array.LastIndexOf(ToArray(), item, Dimension - 1, Dimension);
+            return Array.LastIndexOf(ToArray(), item, _Dimension - 1, _Dimension);
         }
 
         /// <summary>
@@ -572,7 +576,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item, int startIndex)
         {
-            if (startIndex < 0 || startIndex >= Dimension)
+            if (startIndex < 0 || startIndex >= _Dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -591,16 +595,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item, int startIndex, int count)
         {
-            if ((startIndex < 0 || startIndex >= Dimension) || count <= 0)
+            if ((startIndex < 0 || startIndex >= _Dimension) || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            count = Math.Min(startIndex + 1, count);
-
-            return Array.LastIndexOf(ToArray(), item, startIndex, count);
+            return Array.LastIndexOf(ToArray(), item, startIndex, Math.Min(startIndex + 1, count));
         }
 
         /// <summary>
@@ -628,7 +630,7 @@ namespace Com
         /// <returns>双精度浮点数数组，数组元素表示此 PointD 结构的分量。</returns>
         public double[] ToArray()
         {
-            return new double[2] { _X, _Y };
+            return new double[_Dimension] { _X, _Y };
         }
 
         /// <summary>
@@ -637,7 +639,7 @@ namespace Com
         /// <returns>双精度浮点数列表，列表元素表示此 PointD 结构的分量。</returns>
         public List<double> ToList()
         {
-            return new List<double>(2) { _X, _Y };
+            return new List<double>(_Dimension) { _X, _Y };
         }
 
         //
@@ -665,7 +667,7 @@ namespace Com
         /// <summary>
         /// 返回此 PointD 结构与指定的 PointD 结构之间的距离。
         /// </summary>
-        /// <param name="pt">PointD 结构，表示起始向量。</param>
+        /// <param name="pt">PointD 结构，表示另一个向量。</param>
         /// <returns>双精度浮点数，表示此 PointD 结构与指定的 PointD 结构之间的距离。</returns>
         public double DistanceFrom(PointD pt)
         {
@@ -692,7 +694,7 @@ namespace Com
         /// <summary>
         /// 返回此 PointD 结构与指定的 PointD 结构之间的夹角（弧度）。
         /// </summary>
-        /// <param name="pt">PointD 结构，表示起始向量。</param>
+        /// <param name="pt">PointD 结构，表示另一个向量。</param>
         /// <returns>双精度浮点数，表示此 PointD 结构与指定的 PointD 结构之间的夹角（弧度）。</returns>
         public double AngleFrom(PointD pt)
         {
@@ -733,9 +735,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 PointD 结构将此 PointD 结构平移指定的量。
+        /// 按 PointD 结构表示的位移将此 PointD 结构平移指定的量。
         /// </summary>
-        /// <param name="pt">PointD 结构，用于平移此 PointD 结构。</param>
+        /// <param name="pt">PointD 结构表示的位移。</param>
         public void Offset(PointD pt)
         {
             _X += pt._X;
@@ -743,9 +745,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 Point 结构将此 PointD 结构平移指定的量。
+        /// 按 Point 结构表示的位移将此 PointD 结构平移指定的量。
         /// </summary>
-        /// <param name="pt">Point 结构，用于平移此 PointD 结构。</param>
+        /// <param name="pt">Point 结构表示的位移。</param>
         public void Offset(Point pt)
         {
             _X += pt.X;
@@ -753,9 +755,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 PointF 结构将此 PointD 结构平移指定的量。
+        /// 按 PointF 结构表示的位移将此 PointD 结构平移指定的量。
         /// </summary>
-        /// <param name="pt">PointF 结构，用于平移此 PointD 结构。</param>
+        /// <param name="pt">PointF 结构表示的位移。</param>
         public void Offset(PointF pt)
         {
             _X += pt.X;
@@ -763,9 +765,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 Size 结构将此 PointD 结构平移指定的量。
+        /// 按 Size 结构表示的位移将此 PointD 结构平移指定的量。
         /// </summary>
-        /// <param name="sz">Size 结构，用于平移此 PointD 结构。</param>
+        /// <param name="sz">Size 结构表示的位移。</param>
         public void Offset(Size sz)
         {
             _X += sz.Width;
@@ -773,9 +775,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 SizeF 结构将此 PointD 结构平移指定的量。
+        /// 按 SizeF 结构表示的位移将此 PointD 结构平移指定的量。
         /// </summary>
-        /// <param name="sz">SizeF 结构，用于平移此 PointD 结构。</param>
+        /// <param name="sz">SizeF 结构表示的位移。</param>
         public void Offset(SizeF sz)
         {
             _X += sz.Width;
@@ -804,50 +806,50 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 PointD 结构将此 PointD 结构平移指定的量的 PointD 结构的新实例。
+        /// 返回按 PointD 结构表示的位移将此 PointD 结构平移指定的量的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointD 结构，用于平移此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 PointD 结构将此 PointD 结构平移指定的量得到的结果。</returns>
+        /// <param name="pt">PointD 结构表示的位移。</param>
+        /// <returns>PointD 结构，表示按 PointD 结构表示的位移将此 PointD 结构平移指定的量得到的结果。</returns>
         public PointD OffsetCopy(PointD pt)
         {
             return new PointD(_X + pt._X, _Y + pt._Y);
         }
 
         /// <summary>
-        /// 返回按 Point 结构将此 PointD 结构平移指定的量的 PointD 结构的新实例。
+        /// 返回按 Point 结构表示的位移将此 PointD 结构平移指定的量的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="pt">Point 结构，用于平移此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 Point 结构将此 PointD 结构平移指定的量得到的结果。</returns>
+        /// <param name="pt">Point 结构表示的位移。</param>
+        /// <returns>PointD 结构，表示按 Point 结构表示的位移将此 PointD 结构平移指定的量得到的结果。</returns>
         public PointD OffsetCopy(Point pt)
         {
             return new PointD(_X + pt.X, _Y + pt.Y);
         }
 
         /// <summary>
-        /// 返回按 PointF 结构将此 PointD 结构平移指定的量的 PointD 结构的新实例。
+        /// 返回按 PointF 结构表示的位移将此 PointD 结构平移指定的量的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointF 结构，用于平移此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 PointF 结构将此 PointD 结构平移指定的量得到的结果。</returns>
+        /// <param name="pt">PointF 结构表示的位移。</param>
+        /// <returns>PointD 结构，表示按 PointF 结构表示的位移将此 PointD 结构平移指定的量得到的结果。</returns>
         public PointD OffsetCopy(PointF pt)
         {
             return new PointD(_X + pt.X, _Y + pt.Y);
         }
 
         /// <summary>
-        /// 返回按 Size 结构将此 PointD 结构平移指定的量的 PointD 结构的新实例。
+        /// 返回按 Size 结构表示的位移将此 PointD 结构平移指定的量的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="sz">Size 结构，用于平移此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 Size 结构将此 PointD 结构平移指定的量得到的结果。</returns>
+        /// <param name="sz">Size 结构表示的位移。</param>
+        /// <returns>PointD 结构，表示按 Size 结构表示的位移将此 PointD 结构平移指定的量得到的结果。</returns>
         public PointD OffsetCopy(Size sz)
         {
             return new PointD(_X + sz.Width, _Y + sz.Height);
         }
 
         /// <summary>
-        /// 返回按 SizeF 结构将此 PointD 结构平移指定的量的 PointD 结构的新实例。
+        /// 返回按 SizeF 结构表示的位移将此 PointD 结构平移指定的量的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="sz">SizeF 结构，用于平移此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 SizeF 结构将此 PointD 结构平移指定的量得到的结果。</returns>
+        /// <param name="sz">SizeF 结构表示的位移。</param>
+        /// <returns>PointD 结构，表示按 SizeF 结构表示的位移将此 PointD 结构平移指定的量得到的结果。</returns>
         public PointD OffsetCopy(SizeF sz)
         {
             return new PointD(_X + sz.Width, _Y + sz.Height);
@@ -877,9 +879,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 PointD 结构将此 PointD 结构缩放指定的倍数。
+        /// 按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数。
         /// </summary>
-        /// <param name="pt">PointD 结构，用于缩放此 PointD 结构。</param>
+        /// <param name="pt">PointD 结构表示的缩放因数。</param>
         public void Scale(PointD pt)
         {
             _X *= pt._X;
@@ -887,9 +889,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 Point 结构将此 PointD 结构缩放指定的倍数。
+        /// 按 Point 结构表示的缩放因数将此 PointD 结构缩放指定的倍数。
         /// </summary>
-        /// <param name="pt">Point 结构，用于缩放此 PointD 结构。</param>
+        /// <param name="pt">Point 结构表示的缩放因数。</param>
         public void Scale(Point pt)
         {
             _X *= pt.X;
@@ -897,9 +899,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 PointF 结构将此 PointD 结构缩放指定的倍数。
+        /// 按 PointF 结构表示的缩放因数将此 PointD 结构缩放指定的倍数。
         /// </summary>
-        /// <param name="pt">PointF 结构，用于缩放此 PointD 结构。</param>
+        /// <param name="pt">PointF 结构表示的缩放因数。</param>
         public void Scale(PointF pt)
         {
             _X *= pt.X;
@@ -907,9 +909,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 Size 结构将此 PointD 结构缩放指定的倍数。
+        /// 按 Size 结构表示的缩放因数将此 PointD 结构缩放指定的倍数。
         /// </summary>
-        /// <param name="sz">Size 结构，用于缩放此 PointD 结构。</param>
+        /// <param name="sz">Size 结构表示的缩放因数。</param>
         public void Scale(Size sz)
         {
             _X *= sz.Width;
@@ -917,9 +919,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 SizeF 结构将此 PointD 结构缩放指定的倍数。
+        /// 按 SizeF 结构表示的缩放因数将此 PointD 结构缩放指定的倍数。
         /// </summary>
-        /// <param name="sz">SizeF 结构，用于缩放此 PointD 结构。</param>
+        /// <param name="sz">SizeF 结构表示的缩放因数。</param>
         public void Scale(SizeF sz)
         {
             _X *= sz.Width;
@@ -948,50 +950,50 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 PointD 结构将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
+        /// 返回按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointD 结构，用于缩放此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 PointD 结构将此 PointD 结构缩放指定的倍数得到的结果。</returns>
+        /// <param name="pt">PointD 结构表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数得到的结果。</returns>
         public PointD ScaleCopy(PointD pt)
         {
             return new PointD(_X * pt._X, _Y * pt._Y);
         }
 
         /// <summary>
-        /// 返回按 Point 结构将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
+        /// 返回按 Point 结构表示的缩放因数将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="pt">Point 结构，用于缩放此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 Point 结构将此 PointD 结构缩放指定的倍数得到的结果。</returns>
+        /// <param name="pt">Point 结构表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按 Point 结构表示的缩放因数将此 PointD 结构缩放指定的倍数得到的结果。</returns>
         public PointD ScaleCopy(Point pt)
         {
             return new PointD(_X * pt.X, _Y * pt.Y);
         }
 
         /// <summary>
-        /// 返回按 PointF 结构将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
+        /// 返回按 PointF 结构表示的缩放因数将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointF 结构，用于缩放此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 PointF 结构将此 PointD 结构缩放指定的倍数得到的结果。</returns>
+        /// <param name="pt">PointF 结构表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按 PointF 结构表示的缩放因数将此 PointD 结构缩放指定的倍数得到的结果。</returns>
         public PointD ScaleCopy(PointF pt)
         {
             return new PointD(_X * pt.X, _Y * pt.Y);
         }
 
         /// <summary>
-        /// 返回按 Size 结构将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
+        /// 返回按 Size 结构表示的缩放因数将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="sz">Size 结构，用于缩放此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 Size 结构将此 PointD 结构缩放指定的倍数得到的结果。</returns>
+        /// <param name="sz">Size 结构表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按 Size 结构表示的缩放因数将此 PointD 结构缩放指定的倍数得到的结果。</returns>
         public PointD ScaleCopy(Size sz)
         {
             return new PointD(_X * sz.Width, _Y * sz.Height);
         }
 
         /// <summary>
-        /// 返回按 SizeF 结构将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
+        /// 返回按 SizeF 结构表示的缩放因数将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="sz">SizeF 结构，用于缩放此 PointD 结构。</param>
-        /// <returns>PointD 结构，表示按 SizeF 结构将此 PointD 结构缩放指定的倍数得到的结果。</returns>
+        /// <param name="sz">SizeF 结构表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按 SizeF 结构表示的缩放因数将此 PointD 结构缩放指定的倍数得到的结果。</returns>
         public PointD ScaleCopy(SizeF sz)
         {
             return new PointD(_X * sz.Width, _Y * sz.Height);
@@ -1074,7 +1076,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
@@ -1114,7 +1116,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
@@ -1156,7 +1158,7 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
@@ -1209,7 +1211,7 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
@@ -1266,7 +1268,7 @@ namespace Com
         /// <param name="offset">PointD 结构表示的偏移向量。</param>
         public void AffineTransform(PointD ex, PointD ey, PointD offset)
         {
-            Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
+            Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
             {
                 { ex._X, ex._Y, 0 },
                 { ey._X, ey._Y, 0 },
@@ -1275,7 +1277,7 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
@@ -1292,7 +1294,7 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 3x3 仿射矩阵（左矩阵）。</param>
         public void AffineTransform(Matrix matrixLeft)
         {
-            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(3, 3))
+            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != _AffineMatrixSize)
             {
                 throw new ArithmeticException();
             }
@@ -1300,7 +1302,7 @@ namespace Com
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
                     throw new ArithmeticException();
                 }
@@ -1322,7 +1324,7 @@ namespace Com
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
                     throw new ArithmeticException();
                 }
@@ -1343,7 +1345,7 @@ namespace Com
         /// <returns>PointD 结构，表示按 PointD 结构表示的 X 基向量、Y 基向量与偏移向量将此 PointD 结构进行仿射变换得到的结果。</returns>
         public PointD AffineTransformCopy(PointD ex, PointD ey, PointD offset)
         {
-            Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
+            Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
             {
                 { ex._X, ex._Y, 0 },
                 { ey._X, ey._Y, 0 },
@@ -1352,7 +1354,7 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
@@ -1369,7 +1371,7 @@ namespace Com
         /// <returns>PointD 结构，表示按 Matrix 对象表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行仿射变换得到的结果。</returns>
         public PointD AffineTransformCopy(Matrix matrixLeft)
         {
-            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(3, 3))
+            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != _AffineMatrixSize)
             {
                 throw new ArithmeticException();
             }
@@ -1377,7 +1379,7 @@ namespace Com
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
                     throw new ArithmeticException();
                 }
@@ -1403,7 +1405,7 @@ namespace Com
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
                     throw new ArithmeticException();
                 }
@@ -1422,7 +1424,7 @@ namespace Com
         /// <param name="offset">PointD 结构表示的偏移向量。</param>
         public void InverseAffineTransform(PointD ex, PointD ey, PointD offset)
         {
-            Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
+            Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
             {
                 { ex._X, ex._Y, 0 },
                 { ey._X, ey._Y, 0 },
@@ -1431,7 +1433,7 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
@@ -1448,7 +1450,7 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象列表，表示 3x3 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix matrixLeft)
         {
-            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(3, 3))
+            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != _AffineMatrixSize)
             {
                 throw new ArithmeticException();
             }
@@ -1456,7 +1458,7 @@ namespace Com
             {
                 Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
                     throw new ArithmeticException();
                 }
@@ -1478,7 +1480,7 @@ namespace Com
             {
                 Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
                     throw new ArithmeticException();
                 }
@@ -1499,7 +1501,7 @@ namespace Com
         /// <returns>PointD 结构，表示按 PointD 结构表示的 X 基向量、Y 基向量与偏移向量将此 PointD 结构进行逆仿射变换得到的结果。</returns>
         public PointD InverseAffineTransformCopy(PointD ex, PointD ey, PointD offset)
         {
-            Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[3, 3]
+            Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
             {
                 { ex._X, ex._Y, 0 },
                 { ey._X, ey._Y, 0 },
@@ -1508,7 +1510,7 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
@@ -1525,7 +1527,7 @@ namespace Com
         /// <returns>PointD 结构，表示按 Matrix 对象表示的 3x3 仿射矩阵（左矩阵）将此 PointD 结构进行逆仿射变换得到的结果。</returns>
         public PointD InverseAffineTransformCopy(Matrix matrixLeft)
         {
-            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != new Size(3, 3))
+            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != _AffineMatrixSize)
             {
                 throw new ArithmeticException();
             }
@@ -1533,7 +1535,7 @@ namespace Com
             {
                 Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
                     throw new ArithmeticException();
                 }
@@ -1559,7 +1561,7 @@ namespace Com
             {
                 Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != 2)
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
                     throw new ArithmeticException();
                 }
@@ -1773,7 +1775,7 @@ namespace Com
         /// <returns>Matrix 对象，表示不对 PointD 结构进行仿射变换的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix IdentityMatrix()
         {
-            return Matrix.Identity(3);
+            return Matrix.Identity(_Dimension);
         }
 
         //
@@ -1785,7 +1787,7 @@ namespace Com
         /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD 结构的所有分量平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix OffsetMatrix(double d)
         {
-            return Vector.OffsetMatrix(Vector.Type.ColumnVector, 2, d);
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, _Dimension, d);
         }
 
         /// <summary>
@@ -1800,50 +1802,50 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示按 PointD 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 PointD 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">PointD 结构，用于平移 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 PointD 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="pt">PointD 结构表示的位移。</param>
+        /// <returns>Matrix 对象，表示按 PointD 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix OffsetMatrix(PointD pt)
         {
             return Vector.OffsetMatrix(pt.ToColumnVector());
         }
 
         /// <summary>
-        /// 返回表示按 Point 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 Point 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">Point 结构，用于平移 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 Point 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="pt">Point 结构表示的位移。</param>
+        /// <returns>Matrix 对象，表示按 Point 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix OffsetMatrix(Point pt)
         {
             return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, pt.X, pt.Y));
         }
 
         /// <summary>
-        /// 返回表示按 PointF 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 PointF 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">PointF 结构，用于平移 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 PointF 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="pt">PointF 结构表示的位移。</param>
+        /// <returns>Matrix 对象，表示按 PointF 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix OffsetMatrix(PointF pt)
         {
             return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, pt.X, pt.Y));
         }
 
         /// <summary>
-        /// 返回表示按 Size 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 Size 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="sz">Size 结构，用于平移 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 Size 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="sz">Size 结构表示的位移。</param>
+        /// <returns>Matrix 对象，表示按 Size 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix OffsetMatrix(Size sz)
         {
             return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sz.Width, sz.Height));
         }
 
         /// <summary>
-        /// 返回表示按 SizeF 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 SizeF 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="sz">SizeF 结构，用于平移 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 SizeF 结构将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="sz">SizeF 结构表示的位移。</param>
+        /// <returns>Matrix 对象，表示按 SizeF 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix OffsetMatrix(SizeF sz)
         {
             return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sz.Width, sz.Height));
@@ -1858,7 +1860,7 @@ namespace Com
         /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD 结构的所有分量缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ScaleMatrix(double s)
         {
-            return Vector.ScaleMatrix(Vector.Type.ColumnVector, 2, s);
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, _Dimension, s);
         }
 
         /// <summary>
@@ -1873,50 +1875,50 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示按 PointD 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 PointD 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">PointD 结构，用于缩放 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 PointD 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="pt">PointD 结构表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按 PointD 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ScaleMatrix(PointD pt)
         {
             return Vector.ScaleMatrix(pt.ToColumnVector());
         }
 
         /// <summary>
-        /// 返回表示按 Point 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 Point 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">Point 结构，用于缩放 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 Point 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="pt">Point 结构表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按 Point 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ScaleMatrix(Point pt)
         {
             return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, pt.X, pt.Y));
         }
 
         /// <summary>
-        /// 返回表示按 PointF 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 PointF 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">PointF 结构，用于缩放 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 PointF 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="pt">PointF 结构表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按 PointF 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ScaleMatrix(PointF pt)
         {
             return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, pt.X, pt.Y));
         }
 
         /// <summary>
-        /// 返回表示按 Size 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 Size 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="sz">Size 结构，用于缩放 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 Size 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="sz">Size 结构表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按 Size 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ScaleMatrix(Size sz)
         {
             return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sz.Width, sz.Height));
         }
 
         /// <summary>
-        /// 返回表示按 SizeF 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按 SizeF 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="sz">SizeF 结构，用于缩放 PointD 结构。</param>
-        /// <returns>Matrix 对象，表示按 SizeF 结构将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <param name="sz">SizeF 结构表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按 SizeF 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ScaleMatrix(SizeF sz)
         {
             return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sz.Width, sz.Height));
@@ -1931,7 +1933,7 @@ namespace Com
         /// <returns>Matrix 对象，表示用于翻转 PointD 结构的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ReflectMatrix(int index)
         {
-            return Vector.ReflectMatrix(Vector.Type.ColumnVector, 2, index);
+            return Vector.ReflectMatrix(Vector.Type.ColumnVector, _Dimension, index);
         }
 
         /// <summary>
@@ -1963,7 +1965,7 @@ namespace Com
         /// <returns>Matrix 对象，表示用于剪切 PointD 结构的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearMatrix(int index1, int index2, double angle)
         {
-            return Vector.ShearMatrix(Vector.Type.ColumnVector, 2, index1, index2, angle);
+            return Vector.ShearMatrix(Vector.Type.ColumnVector, _Dimension, index1, index2, angle);
         }
 
         /// <summary>
@@ -1995,7 +1997,7 @@ namespace Com
         /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD 结构绕原点旋转指定的角度的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix RotateMatrix(double angle)
         {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, 2, 0, 1, angle);
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, _Dimension, 0, 1, angle);
         }
 
         /// <summary>
@@ -2009,7 +2011,7 @@ namespace Com
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            return Matrix.UnsafeCreateInstance(new double[3, 3]
+            return Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
             {
                 { CosA, SinA, 0 },
                 { -SinA, CosA, 0 },
@@ -2210,7 +2212,7 @@ namespace Com
         /// <returns>布尔值，表示两个 PointD 结构的字典序是否前者小于后者。</returns>
         public static bool operator <(PointD left, PointD right)
         {
-            for (int i = 0; i < left.Dimension; i++)
+            for (int i = 0; i < _Dimension; i++)
             {
                 if (left[i] != right[i])
                 {
@@ -2229,7 +2231,7 @@ namespace Com
         /// <returns>布尔值，表示两个 PointD 结构的字典序是否前者大于后者。</returns>
         public static bool operator >(PointD left, PointD right)
         {
-            for (int i = 0; i < left.Dimension; i++)
+            for (int i = 0; i < _Dimension; i++)
             {
                 if (left[i] != right[i])
                 {
@@ -2248,7 +2250,7 @@ namespace Com
         /// <returns>布尔值，表示两个 PointD 结构的字典序是否前者小于或等于后者。</returns>
         public static bool operator <=(PointD left, PointD right)
         {
-            for (int i = 0; i < left.Dimension; i++)
+            for (int i = 0; i < _Dimension; i++)
             {
                 if (left[i] != right[i])
                 {
@@ -2267,7 +2269,7 @@ namespace Com
         /// <returns>布尔值，表示两个 PointD 结构的字典序是否前者大于或等于后者。</returns>
         public static bool operator >=(PointD left, PointD right)
         {
-            for (int i = 0; i < left.Dimension; i++)
+            for (int i = 0; i < _Dimension; i++)
             {
                 if (left[i] != right[i])
                 {
@@ -2894,7 +2896,7 @@ namespace Com
         {
             get
             {
-                return Dimension;
+                return _Dimension;
             }
 
             set
@@ -2907,7 +2909,7 @@ namespace Com
         {
             get
             {
-                return Dimension;
+                return _Dimension;
             }
         }
 
@@ -2997,7 +2999,7 @@ namespace Com
         {
             get
             {
-                return Dimension;
+                return _Dimension;
             }
         }
 
@@ -3029,7 +3031,7 @@ namespace Com
                 throw new RankException();
             }
 
-            if (array.Length < Dimension)
+            if (array.Length < _Dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -3063,7 +3065,7 @@ namespace Com
             {
                 get
                 {
-                    if (_Index < 0 || _Index >= _Pt.Dimension)
+                    if (_Index < 0 || _Index >= _Dimension)
                     {
                         throw new IndexOutOfRangeException();
                     }
@@ -3076,7 +3078,7 @@ namespace Com
 
             bool IEnumerator.MoveNext()
             {
-                if (_Index >= _Pt.Dimension - 1)
+                if (_Index >= _Dimension - 1)
                 {
                     return false;
                 }
@@ -3116,7 +3118,7 @@ namespace Com
         {
             get
             {
-                return Dimension;
+                return _Dimension;
             }
         }
 
@@ -3132,7 +3134,7 @@ namespace Com
 
         void ICollection<double>.CopyTo(double[] array, int index)
         {
-            if (array != null && array.Length >= Dimension)
+            if (array != null && array.Length >= _Dimension)
             {
                 ToArray().CopyTo(array, index);
             }
@@ -3171,7 +3173,7 @@ namespace Com
             {
                 get
                 {
-                    if (_Index < 0 || _Index >= _Pt.Dimension)
+                    if (_Index < 0 || _Index >= _Dimension)
                     {
                         throw new IndexOutOfRangeException();
                     }
@@ -3184,7 +3186,7 @@ namespace Com
 
             bool IEnumerator.MoveNext()
             {
-                if (_Index >= _Pt.Dimension - 1)
+                if (_Index >= _Dimension - 1)
                 {
                     return false;
                 }
@@ -3205,7 +3207,7 @@ namespace Com
             {
                 get
                 {
-                    if (_Index < 0 || _Index >= _Pt.Dimension)
+                    if (_Index < 0 || _Index >= _Dimension)
                     {
                         throw new IndexOutOfRangeException();
                     }

@@ -839,9 +839,7 @@ namespace Com
 
             //
 
-            count = Math.Min(_Size - startIndex, count);
-
-            return Array.IndexOf(_VArray, item, startIndex, count);
+            return Array.IndexOf(_VArray, item, startIndex, Math.Min(_Size - startIndex, count));
         }
 
         /// <summary>
@@ -895,9 +893,7 @@ namespace Com
 
             //
 
-            count = Math.Min(startIndex + 1, count);
-
-            return Array.LastIndexOf(_VArray, item, startIndex, count);
+            return Array.LastIndexOf(_VArray, item, startIndex, Math.Min(startIndex + 1, count));
         }
 
         /// <summary>
@@ -1144,7 +1140,7 @@ namespace Com
         /// <summary>
         /// 返回此 Vector 与指定的 Vector 对象之间的距离。
         /// </summary>
-        /// <param name="vector">Vector 对象，表示起始向量。</param>
+        /// <param name="vector">Vector 对象，表示另一个向量。</param>
         /// <returns>双精度浮点数，表示此 Vector 与指定的 Vector 对象之间的距离。</returns>
         public double DistanceFrom(Vector vector)
         {
@@ -1197,7 +1193,7 @@ namespace Com
         /// <summary>
         /// 返回此 Vector 与指定的 Vector 对象之间的夹角（弧度）。
         /// </summary>
-        /// <param name="vector">Vector 对象，表示起始向量。</param>
+        /// <param name="vector">Vector 对象，表示另一个向量。</param>
         /// <returns>双精度浮点数，表示此 Vector 与指定的 Vector 对象之间的夹角（弧度）。</returns>
         public double AngleFrom(Vector vector)
         {
