@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 18.9.28.2200
+Version 19.4.7.1250
 
 This file is part of Com
 

@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Vector
-Version 18.9.28.2200
+Version 19.4.7.1250
 
 This file is part of Com
 
@@ -62,13 +62,12 @@ namespace Com
             }
             else
             {
-                Vector result = Empty;
-
-                result._Type = type;
-                result._Size = dimension;
-                result._VArray = new double[result._Size];
-
-                return result;
+                return new Vector()
+                {
+                    _Type = type,
+                    _Size = dimension,
+                    _VArray = new double[dimension]
+                };
             }
         }
 
@@ -76,14 +75,14 @@ namespace Com
 
         internal static Vector UnsafeCreateInstance(Type type, params double[] values) // 以不安全方式创建 Vector 的新实例。
         {
-            Vector result = new Vector();
-
-            result._Type = type;
-
             if (InternalMethod.IsNullOrEmpty(values))
             {
-                result._Size = 0;
-                result._VArray = new double[0];
+                return new Vector()
+                {
+                    _Type = type,
+                    _Size = 0,
+                    _VArray = new double[0]
+                };
             }
             else
             {
@@ -96,18 +95,20 @@ namespace Com
 
                 //
 
-                result._Size = length;
-                result._VArray = values;
+                return new Vector()
+                {
+                    _Type = type,
+                    _Size = length,
+                    _VArray = values
+                };
             }
-
-            return result;
         }
 
         //
 
         private Type _Type; // 此 Vector 的向量类型。
 
-        private int _Size; // 此 Vector 存储的向量维度。
+        private int _Size; // 此 Vector 的向量维度。
 
         private double[] _VArray; // 用于存储向量在各基向量方向的分量的数组。
 
@@ -226,7 +227,7 @@ namespace Com
         #region 属性
 
         /// <summary>
-        /// 获取或设置此 Vector 指定索引的基向量方向的分量。
+        /// 获取或设置此 Vector 在指定的基向量方向的分量。
         /// </summary>
         /// <param name="index">索引。</param>
         public double this[int index]
@@ -520,7 +521,7 @@ namespace Com
         /// <summary>
         /// 获取此 Vector 的相反向量。
         /// </summary>
-        public Vector Negate
+        public Vector Opposite
         {
             get
             {
@@ -1001,7 +1002,7 @@ namespace Com
         /// <summary>
         /// 返回将此 Vector 表示的直角坐标系坐标转换为极坐标系、球坐标系或超球坐标系坐标的新实例。
         /// </summary>
-        /// <returns>Vector 对象，表示将此 Vector 表示的直角坐标系坐标转换为极坐标系坐标得到的结果。</returns>
+        /// <returns>Vector 对象，表示将此 Vector 表示的直角坐标系坐标转换为极坐标系、球坐标系或超球坐标系坐标得到的结果。</returns>
         public Vector ToSpherical()
         {
             if (_Size <= 0)
@@ -1087,7 +1088,7 @@ namespace Com
         /// <summary>
         /// 返回将此 Vector 表示的极坐标系、球坐标系或超球坐标系坐标转换为直角坐标系坐标的新实例。
         /// </summary>
-        /// <returns>Vector 对象，表示将此 Vector 表示的极坐标系坐标转换为直角坐标系坐标得到的结果。</returns>
+        /// <returns>Vector 对象，表示将此 Vector 表示的极坐标系、球坐标系或超球坐标系坐标转换为直角坐标系坐标得到的结果。</returns>
         public Vector ToCartesian()
         {
             if (_Size <= 0)
@@ -1251,9 +1252,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 Vector 对象将此 Vector 平移指定的量。
+        /// 按 Vector 对象表示的位移将此 Vector 平移指定的量。
         /// </summary>
-        /// <param name="vector">Vector 对象，用于平移此 Vector。</param>
+        /// <param name="vector">Vector 对象表示的位移。</param>
         public void Offset(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
@@ -1308,7 +1309,7 @@ namespace Com
         /// 返回按 Vector 对象表示的位移将此 Vector 平移指定的量的新实例。
         /// </summary>
         /// <param name="vector">Vector 对象表示的位移。</param>
-        /// <returns>Vector 对象，表示按 Vector 对象将此 Vector 平移指定的量得到的结果。</returns>
+        /// <returns>Vector 对象，表示按 Vector 对象表示的位移将此 Vector 平移指定的量得到的结果。</returns>
         public Vector OffsetCopy(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
@@ -1411,10 +1412,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Vector 对象将此 Vector 缩放指定的倍数的新实例。
+        /// 返回按 Vector 对象表示的缩放因数将此 Vector 缩放指定的倍数的新实例。
         /// </summary>
-        /// <param name="vector">Vector 对象，用于缩放此 Vector。</param>
-        /// <returns>Vector 对象，表示按 Vector 对象将此 Vector 缩放指定的倍数得到的结果。</returns>
+        /// <param name="vector">Vector 对象表示的缩放因数。</param>
+        /// <returns>Vector 对象，表示按 Vector 对象表示的缩放因数将此 Vector 缩放指定的倍数得到的结果。</returns>
         public Vector ScaleCopy(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
@@ -1490,8 +1491,8 @@ namespace Com
         /// 按双精度浮点数表示的弧度将此 Vector 剪切指定的角度。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
             if (_Size < 2 || (index1 < 0 || index1 >= _Size) || (index2 < 0 || index2 >= _Size))
@@ -1512,8 +1513,8 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将此 Vector 剪切指定的角度的新实例。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>Vector 对象，表示按双精度浮点数表示的弧度将此 Vector 剪切指定的角度得到的结果。</returns>
         public Vector ShearCopy(int index1, int index2, double angle)
         {
@@ -2068,15 +2069,15 @@ namespace Com
             }
             else
             {
-                return AngleFrom(_VArray[index] >= 0 ? Base(_Size, index) : Base(_Size, index).Negate);
+                return AngleFrom(_VArray[index] >= 0 ? Base(_Size, index) : Base(_Size, index).Opposite);
             }
         }
 
         /// <summary>
-        /// 返回此 Vector 与垂直于指定索引的基向量的子空间之间的夹角（弧度）。
+        /// 返回此 Vector 与正交于指定索引的基向量的子空间之间的夹角（弧度）。
         /// </summary>
         /// <param name="index">索引。</param>
-        /// <returns>双精度浮点数，表示此 Vector 与垂直于指定索引的基向量的子空间之间的夹角（弧度）。</returns>
+        /// <returns>双精度浮点数，表示此 Vector 与正交于指定索引的基向量的子空间之间的夹角（弧度）。</returns>
         public double AngleFromSpace(int index)
         {
             if (_Size <= 0 || (index < 0 || index >= _Size))
@@ -2449,8 +2450,8 @@ namespace Com
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示 Vector 对象沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 Vector 对象沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>Matrix 对象，表示用于剪切 Vector 对象的仿射矩阵。</returns>
         public static Matrix ShearMatrix(Type type, int dimension, int index1, int index2, double angle)
         {

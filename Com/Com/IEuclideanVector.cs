@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.IEuclideanVector
-Version 18.10.31.0000
+Version 19.4.7.1250
 
 This file is part of Com
 
@@ -55,7 +55,7 @@ namespace Com
         /// <summary>
         /// 获取相反向量。
         /// </summary>
-        T Negate { get; }
+        T Opposite { get; }
 
         /// <summary>
         /// 获取规范化向量。

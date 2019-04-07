@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD3D
-Version 18.9.28.2200
+Version 19.4.7.1250
 
 This file is part of Com
 
@@ -310,7 +310,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD3D 结构的相反向量。
         /// </summary>
-        public PointD3D Negate
+        public PointD3D Opposite
         {
             get
             {
@@ -768,7 +768,7 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD3D 结构表示的直角坐标系坐标转换为球坐标系坐标的 PointD3D 结构的新实例。
         /// </summary>
-        /// <returns>PointD3D 结构，表示将此 PointD3D 结构表示的直角坐标系坐标转换为极坐标系坐标得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将此 PointD3D 结构表示的直角坐标系坐标转换为球坐标系坐标得到的结果。</returns>
         public PointD3D ToSpherical()
         {
             return new PointD3D(Module, Zenith, Azimuth);
@@ -777,7 +777,7 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD3D 结构表示的球坐标系坐标转换为直角坐标系坐标的 PointD3D 结构的新实例。
         /// </summary>
-        /// <returns>PointD3D 结构，表示将此 PointD3D 结构表示的极坐标系坐标转换为直角坐标系坐标得到的结果。</returns>
+        /// <returns>PointD3D 结构，表示将此 PointD3D 结构表示的球坐标系坐标转换为直角坐标系坐标得到的结果。</returns>
         public PointD3D ToCartesian()
         {
             return new PointD3D(_X * Math.Sin(_Y) * Math.Cos(_Z), _X * Math.Sin(_Y) * Math.Sin(_Z), _X * Math.Cos(_Y));
@@ -1061,8 +1061,8 @@ namespace Com
         /// 按双精度浮点数表示的弧度将此 PointD3D 结构剪切指定的角度。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
@@ -1137,8 +1137,8 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构剪切指定的角度的 PointD3D 结构的新实例。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构剪切指定的角度得到的结果。</returns>
         public PointD3D ShearCopy(int index1, int index2, double angle)
         {
@@ -1999,8 +1999,8 @@ namespace Com
         /// 返回表示用于剪切 PointD3D 结构的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>Matrix 对象，表示用于剪切 PointD3D 结构的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearMatrix(int index1, int index2, double angle)
         {

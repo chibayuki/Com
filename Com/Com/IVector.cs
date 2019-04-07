@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.IVector
-Version 18.10.31.0000
+Version 19.4.7.1250
 
 This file is part of Com
 

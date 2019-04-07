@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Real
-Version 18.12.25.0000
+Version 19.4.7.1250
 
 This file is part of Com
 

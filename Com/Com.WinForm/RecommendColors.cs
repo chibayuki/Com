@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.RecommendColors
-Version 18.9.28.2200
+Version 19.4.7.1250
 
 This file is part of Com
 
@@ -32,43 +32,43 @@ namespace Com.WinForm
         private ColorX _Shadow; // 窗口阴影颜色。
 
         private ColorX _ControlButton; // 控制按钮颜色。
-        private ColorX _ControlButton_DEC; // 控制按钮颜色，降低对比度。
-        private ColorX _ControlButton_INC; // 控制按钮颜色，提高对比度。
+        private ColorX _ControlButton_DEC; // 控制按钮颜色（降低对比度）。
+        private ColorX _ControlButton_INC; // 控制按钮颜色（提高对比度）。
 
         private ColorX _ExitButton; // 退出按钮颜色。
-        private ColorX _ExitButton_DEC; // 退出按钮颜色，降低对比度。
-        private ColorX _ExitButton_INC; // 退出按钮颜色，提高对比度。
+        private ColorX _ExitButton_DEC; // 退出按钮颜色（降低对比度）。
+        private ColorX _ExitButton_INC; // 退出按钮颜色（提高对比度）。
 
         private ColorX _MenuItemBackground; // 菜单项背景颜色。
         private ColorX _MenuItemText; // 菜单项文字颜色。
 
         private ColorX _Main; // 主要颜色。
-        private ColorX _Main_DEC; // 主要颜色，降低对比度。
-        private ColorX _Main_INC; // 主要颜色，提高对比度。
+        private ColorX _Main_DEC; // 主要颜色（降低对比度）。
+        private ColorX _Main_INC; // 主要颜色（提高对比度）。
 
         private ColorX _Text; // 文本颜色。
-        private ColorX _Text_DEC; // 文本颜色，降低对比度。
-        private ColorX _Text_INC; // 文本颜色，提高对比度。
+        private ColorX _Text_DEC; // 文本颜色（降低对比度）。
+        private ColorX _Text_INC; // 文本颜色（提高对比度）。
 
         private ColorX _Background; // 背景颜色。
-        private ColorX _Background_DEC; // 背景颜色，降低对比度。
-        private ColorX _Background_INC; // 背景颜色，提高对比度。
+        private ColorX _Background_DEC; // 背景颜色（降低对比度）。
+        private ColorX _Background_INC; // 背景颜色（提高对比度）。
 
         private ColorX _Border; // 边框颜色。
-        private ColorX _Border_DEC; // 边框颜色，降低对比度。
-        private ColorX _Border_INC; // 边框颜色，提高对比度。
+        private ColorX _Border_DEC; // 边框颜色（降低对比度）。
+        private ColorX _Border_INC; // 边框颜色（提高对比度）。
 
         private ColorX _Button; // 按钮颜色。
-        private ColorX _Button_DEC; // 按钮颜色，降低对比度。
-        private ColorX _Button_INC; // 按钮颜色，提高对比度。
+        private ColorX _Button_DEC; // 按钮颜色（降低对比度）。
+        private ColorX _Button_INC; // 按钮颜色（提高对比度）。
 
         private ColorX _Slider; // 滑块颜色。
-        private ColorX _Slider_DEC; // 滑块颜色，降低对比度。
-        private ColorX _Slider_INC; // 滑块颜色，提高对比度。
+        private ColorX _Slider_DEC; // 滑块颜色（降低对比度）。
+        private ColorX _Slider_INC; // 滑块颜色（提高对比度）。
 
         private ColorX _ScrollBar; // 滚动条颜色。
-        private ColorX _ScrollBar_DEC; // 滚动条颜色，降低对比度。
-        private ColorX _ScrollBar_INC; // 滚动条颜色，提高对比度。
+        private ColorX _ScrollBar_DEC; // 滚动条颜色（降低对比度）。
+        private ColorX _ScrollBar_INC; // 滚动条颜色（提高对比度）。
 
         //
 
@@ -80,7 +80,7 @@ namespace Com.WinForm
             }
         }
 
-        internal ColorX ControlButton_DEC // 控制按钮颜色，降低对比度。
+        internal ColorX ControlButton_DEC // 控制按钮颜色（降低对比度）。
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Com.WinForm
             }
         }
 
-        internal ColorX ControlButton_INC // 控制按钮颜色，提高对比度。
+        internal ColorX ControlButton_INC // 控制按钮颜色（提高对比度）。
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Com.WinForm
             }
         }
 
-        internal ColorX ExitButton_DEC // 退出按钮颜色，降低对比度。
+        internal ColorX ExitButton_DEC // 退出按钮颜色（降低对比度）。
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Com.WinForm
             }
         }
 
-        internal ColorX ExitButton_INC // 退出按钮颜色，提高对比度。
+        internal ColorX ExitButton_INC // 退出按钮颜色（提高对比度）。
         {
             get
             {
@@ -129,19 +129,9 @@ namespace Com.WinForm
             return (color.Lightness_LAB < 70);
         }
 
-        internal static bool BackColorFitLightText(Color color) // 返回表示指定的背景色是否与浅色文本相符的布尔值。
-        {
-            return (((ColorX)color).Lightness_LAB < 70);
-        }
-
         internal static bool BackColorFitDarkText(ColorX color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
         {
             return (color.Lightness_LAB > 30);
-        }
-
-        internal static bool BackColorFitDarkText(Color color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
-        {
-            return (((ColorX)color).Lightness_LAB > 30);
         }
 
         #endregion
@@ -529,7 +519,7 @@ namespace Com.WinForm
         #region 属性
 
         /// <summary>
-        /// 窗口背景颜色。
+        /// 获取窗口背景颜色。
         /// </summary>
         public ColorX FormBackground
         {
@@ -540,7 +530,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 窗口标题栏颜色。
+        /// 获取窗口标题栏颜色。
         /// </summary>
         public ColorX CaptionBar
         {
@@ -551,7 +541,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 窗口标题颜色。
+        /// 获取窗口标题颜色。
         /// </summary>
         public ColorX Caption
         {
@@ -562,7 +552,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 窗口阴影颜色。
+        /// 获取窗口阴影颜色。
         /// </summary>
         public ColorX Shadow
         {
@@ -575,7 +565,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 菜单项背景颜色。
+        /// 获取菜单项背景颜色。
         /// </summary>
         public ColorX MenuItemBackground
         {
@@ -586,7 +576,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 菜单项文字颜色。
+        /// 获取菜单项文字颜色。
         /// </summary>
         public ColorX MenuItemText
         {
@@ -599,7 +589,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 主要颜色。
+        /// 获取主要颜色。
         /// </summary>
         public ColorX Main
         {
@@ -610,7 +600,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 主要颜色，降低对比度。
+        /// 获取主要颜色（降低对比度）。
         /// </summary>
         public ColorX Main_DEC
         {
@@ -621,7 +611,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 主要颜色，提高对比度。
+        /// 获取主要颜色（提高对比度）。
         /// </summary>
         public ColorX Main_INC
         {
@@ -634,7 +624,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 文本颜色。
+        /// 获取文本颜色。
         /// </summary>
         public ColorX Text
         {
@@ -645,7 +635,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 文本颜色，降低对比度。
+        /// 获取文本颜色（降低对比度）。
         /// </summary>
         public ColorX Text_DEC
         {
@@ -656,7 +646,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 文本颜色，提高对比度。
+        /// 获取文本颜色（提高对比度）。
         /// </summary>
         public ColorX Text_INC
         {
@@ -669,7 +659,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 背景颜色。
+        /// 获取背景颜色。
         /// </summary>
         public ColorX Background
         {
@@ -680,7 +670,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 背景颜色，降低对比度。
+        /// 获取背景颜色（降低对比度）。
         /// </summary>
         public ColorX Background_DEC
         {
@@ -691,7 +681,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 背景颜色，提高对比度。
+        /// 获取背景颜色（提高对比度）。
         /// </summary>
         public ColorX Background_INC
         {
@@ -704,7 +694,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 边框颜色。
+        /// 获取边框颜色。
         /// </summary>
         public ColorX Border
         {
@@ -715,7 +705,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 边框颜色，降低对比度。
+        /// 获取边框颜色（降低对比度）。
         /// </summary>
         public ColorX Border_DEC
         {
@@ -726,7 +716,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 边框颜色，提高对比度。
+        /// 获取边框颜色（提高对比度）。
         /// </summary>
         public ColorX Border_INC
         {
@@ -739,7 +729,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 按钮颜色。
+        /// 获取按钮颜色。
         /// </summary>
         public ColorX Button
         {
@@ -750,7 +740,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 按钮颜色，降低对比度。
+        /// 获取按钮颜色（降低对比度）。
         /// </summary>
         public ColorX Button_DEC
         {
@@ -761,7 +751,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 按钮颜色，提高对比度。
+        /// 获取按钮颜色（提高对比度）。
         /// </summary>
         public ColorX Button_INC
         {
@@ -774,7 +764,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 滑块颜色。
+        /// 获取滑块颜色。
         /// </summary>
         public ColorX Slider
         {
@@ -785,7 +775,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 滑块颜色，降低对比度。
+        /// 获取滑块颜色（降低对比度）。
         /// </summary>
         public ColorX Slider_DEC
         {
@@ -796,7 +786,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 滑块颜色，提高对比度。
+        /// 获取滑块颜色（提高对比度）。
         /// </summary>
         public ColorX Slider_INC
         {
@@ -809,7 +799,7 @@ namespace Com.WinForm
         //
 
         /// <summary>
-        /// 滚动条颜色。
+        /// 获取滚动条颜色。
         /// </summary>
         public ColorX ScrollBar
         {
@@ -820,7 +810,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 滚动条颜色，降低对比度。
+        /// 获取滚动条颜色（降低对比度）。
         /// </summary>
         public ColorX ScrollBar_DEC
         {
@@ -831,7 +821,7 @@ namespace Com.WinForm
         }
 
         /// <summary>
-        /// 滚动条颜色，提高对比度。
+        /// 获取滚动条颜色（提高对比度）。
         /// </summary>
         public ColorX ScrollBar_INC
         {

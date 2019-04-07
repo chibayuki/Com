@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Text
-Version 18.9.28.2200
+Version 19.4.7.1250
 
 This file is part of Com
 
@@ -27,8 +27,8 @@ namespace Com
     {
         #region 科学计数法
 
-        private const string _PositiveMagnitudeOrderCode = "kMGTPEZY"; // 正千进制数量级符号。
-        private const string _NegativeMagnitudeOrderCode = "mμnpfazy"; // 负千进制数量级符号。
+        private const string _PositiveMagnitudeOrderCode = "kMGTPEZY"; // 千进制正数量级符号。
+        private const string _NegativeMagnitudeOrderCode = "mμnpfazy"; // 千进制负数量级符号。
 
         /// <summary>
         /// 返回一个以科学记数法表示数值的字符串。
@@ -285,8 +285,8 @@ namespace Com
         /// <param name="sourceString">源字符串。</param>
         /// <param name="startString">起始字符串。</param>
         /// <param name="endString">结尾字符串。</param>
-        /// <param name="includeStartString">是否包含起始字符串。</param>
-        /// <param name="includeEndString">是否包含结尾字符串。</param>
+        /// <param name="includeStartString">结果是否包含起始字符串。</param>
+        /// <param name="includeEndString">结果是否包含结尾字符串。</param>
         /// <returns>字符串，表示源字符串中位于两个指定字符串之间的部分。</returns>
         public static string GetIntervalString(string sourceString, string startString, string endString, bool includeStartString, bool includeEndString)
         {
@@ -375,7 +375,7 @@ namespace Com
 
                 while (Sz.Width <= size.Width || Sz.Height <= size.Height)
                 {
-                    Ft = new Font(Ft.Name, Ft.Size * 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet);
+                    Ft = new Font(Ft.Name, Ft.Size * 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet, Ft.GdiVerticalFont);
                     Sz = TextRenderer.MeasureText(text, Ft);
                 }
 
@@ -386,7 +386,7 @@ namespace Com
                         break;
                     }
 
-                    Ft = new Font(Ft.Name, Ft.Size / 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet);
+                    Ft = new Font(Ft.Name, Ft.Size / 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet, Ft.GdiVerticalFont);
                     Sz = TextRenderer.MeasureText(text, Ft);
                 }
 

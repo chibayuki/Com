@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Matrix
-Version 18.9.28.2200
+Version 19.4.7.1250
 
 This file is part of Com
 
@@ -32,12 +32,13 @@ namespace Com
 
         internal static Matrix UnsafeCreateInstance(double[,] values) // 以不安全方式创建 Matrix 的新实例。
         {
-            Matrix result = new Matrix();
-
             if (InternalMethod.IsNullOrEmpty(values))
             {
-                result._Size = Size.Empty;
-                result._MArray = new double[0, 0];
+                return new Matrix()
+                {
+                    _Size = Size.Empty,
+                    _MArray = new double[0, 0]
+                };
             }
             else
             {
@@ -51,16 +52,17 @@ namespace Com
 
                 //
 
-                result._Size = new Size(width, height);
-                result._MArray = values;
+                return new Matrix()
+                {
+                    _Size = new Size(width, height),
+                    _MArray = values
+                };
             }
-
-            return result;
         }
 
         //
 
-        private Size _Size; // 此 Matrix 存储的矩阵大小。
+        private Size _Size; // 此 Matrix 的矩阵大小。
 
         private double[,] _MArray; // 用于存储矩阵元素的数组。
 

@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD4D
-Version 18.9.28.2200
+Version 19.4.7.1250
 
 This file is part of Com
 
@@ -338,7 +338,7 @@ namespace Com
         /// <summary>
         /// 获取此 PointD4D 结构的相反向量。
         /// </summary>
-        public PointD4D Negate
+        public PointD4D Opposite
         {
             get
             {
@@ -822,7 +822,7 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD4D 结构表示的直角坐标系坐标转换为超球坐标系坐标的 PointD4D 结构的新实例。
         /// </summary>
-        /// <returns>PointD4D 结构，表示将此 PointD4D 结构表示的直角坐标系坐标转换为极坐标系坐标得到的结果。</returns>
+        /// <returns>PointD4D 结构，表示将此 PointD4D 结构表示的直角坐标系坐标转换为超球坐标系坐标得到的结果。</returns>
         public PointD4D ToSpherical()
         {
             Vector result = ToColumnVector().ToSpherical();
@@ -840,7 +840,7 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD4D 结构表示的超球坐标系坐标转换为直角坐标系坐标的 PointD4D 结构的新实例。
         /// </summary>
-        /// <returns>PointD4D 结构，表示将此 PointD4D 结构表示的极坐标系坐标转换为直角坐标系坐标得到的结果。</returns>
+        /// <returns>PointD4D 结构，表示将此 PointD4D 结构表示的超球坐标系坐标转换为直角坐标系坐标得到的结果。</returns>
         public PointD4D ToCartesian()
         {
             Vector result = ToColumnVector().ToCartesian();
@@ -1097,8 +1097,8 @@ namespace Com
         /// 按双精度浮点数表示的弧度将此 PointD4D 结构剪切指定的角度。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
@@ -1120,8 +1120,8 @@ namespace Com
         /// 返回按双精度浮点数表示的弧度将此 PointD4D 结构剪切指定的角度的 PointD4D 结构的新实例。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>PointD4D 结构，表示按双精度浮点数表示的弧度将此 PointD4D 结构剪切指定的角度得到的结果。</returns>
         public PointD4D ShearCopy(int index1, int index2, double angle)
         {
@@ -1844,8 +1844,8 @@ namespace Com
         /// 返回表示用于剪切 PointD4D 结构的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面垂直的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构沿索引 index1 指定的基向量方向且共面垂直于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD4D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         /// <returns>Matrix 对象，表示用于剪切 PointD4D 结构的 5x5 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearMatrix(int index1, int index2, double angle)
         {

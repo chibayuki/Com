@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Constant
-Version 19.1.8.0000
+Version 19.4.7.1250
 
 This file is part of Com
 
