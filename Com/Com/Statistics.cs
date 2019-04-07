@@ -2294,9 +2294,20 @@ namespace Com
 
             checked
             {
-                for (int i = 0; i < values.Length; i++)
+                int i = 0;
+
+                while (i < values.Length - 16)
+                {
+                    result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < values.Length)
                 {
                     result += values[i];
+
+                    i++;
                 }
             }
 
@@ -2321,9 +2332,20 @@ namespace Com
 
             checked
             {
-                for (int i = 0; i < values.Length; i++)
+                int i = 0;
+
+                while (i < values.Length - 16)
+                {
+                    result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < values.Length)
                 {
                     result += values[i];
+
+                    i++;
                 }
             }
 
@@ -2348,9 +2370,20 @@ namespace Com
 
             checked
             {
-                for (int i = 0; i < values.Length; i++)
+                int i = 0;
+
+                while (i < values.Length - 16)
+                {
+                    result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < values.Length)
                 {
                     result += values[i];
+
+                    i++;
                 }
             }
 
@@ -2375,9 +2408,20 @@ namespace Com
 
             checked
             {
-                for (int i = 0; i < values.Length; i++)
+                int i = 0;
+
+                while (i < values.Length - 16)
+                {
+                    result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < values.Length)
                 {
                     result += values[i];
+
+                    i++;
                 }
             }
 
@@ -2402,9 +2446,20 @@ namespace Com
 
             checked
             {
-                for (int i = 0; i < values.Length; i++)
+                int i = 0;
+
+                while (i < values.Length - 16)
+                {
+                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < values.Length)
                 {
                     result += values[i];
+
+                    i++;
                 }
             }
 
@@ -2429,9 +2484,20 @@ namespace Com
 
             checked
             {
-                for (int i = 0; i < values.Length; i++)
+                int i = 0;
+
+                while (i < values.Length - 16)
+                {
+                    result += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < values.Length)
                 {
                     result += values[i];
+
+                    i++;
                 }
             }
 
@@ -2456,9 +2522,20 @@ namespace Com
 
             checked
             {
-                for (int i = 0; i < values.Length; i++)
+                int i = 0;
+
+                while (i < values.Length - 16)
+                {
+                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < values.Length)
                 {
                     result += values[i];
+
+                    i++;
                 }
             }
 
@@ -2481,9 +2558,20 @@ namespace Com
 
             double result = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                result += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 result += values[i];
+
+                i++;
             }
 
             return result;
@@ -2505,9 +2593,20 @@ namespace Com
 
             decimal result = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 result += values[i];
+
+                i++;
             }
 
             return result;
@@ -2529,9 +2628,20 @@ namespace Com
 
             float result = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 result += values[i];
+
+                i++;
             }
 
             return result;
@@ -2553,9 +2663,20 @@ namespace Com
 
             double result = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 result += values[i];
+
+                i++;
             }
 
             return result;
@@ -2789,12 +2910,23 @@ namespace Com
 
             double Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
             {
-                Sum += values[i];
+                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
             }
 
-            return ((double)Sum / values.Length);
+            while (i < values.Length)
+            {
+                Sum += values[i];
+
+                i++;
+            }
+
+            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2813,9 +2945,20 @@ namespace Com
 
             double Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 Sum += values[i];
+
+                i++;
             }
 
             return (Sum / values.Length);
@@ -2837,9 +2980,20 @@ namespace Com
 
             decimal Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                Sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 Sum += values[i];
+
+                i++;
             }
 
             return (Sum / values.Length);
@@ -2861,9 +3015,20 @@ namespace Com
 
             double Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 Sum += values[i];
+
+                i++;
             }
 
             return (float)(Sum / values.Length);
@@ -2885,9 +3050,20 @@ namespace Com
 
             double Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                Sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 Sum += values[i];
+
+                i++;
             }
 
             return (Sum / values.Length);
@@ -3273,7 +3449,29 @@ namespace Com
             long Max = values[0];
             double Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                for (int j = i; j < i + 16; j++)
+                {
+                    if (Min > values[j])
+                    {
+                        Min = values[j];
+                    }
+
+                    if (Max < values[j])
+                    {
+                        Max = values[j];
+                    }
+                }
+
+                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 if (Min > values[i])
                 {
@@ -3286,6 +3484,8 @@ namespace Com
                 }
 
                 Sum += values[i];
+
+                i++;
             }
 
             return (Min, Max, Sum / values.Length);
@@ -3309,7 +3509,29 @@ namespace Com
             ulong Max = values[0];
             double Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                for (int j = i; j < i + 16; j++)
+                {
+                    if (Min > values[j])
+                    {
+                        Min = values[j];
+                    }
+
+                    if (Max < values[j])
+                    {
+                        Max = values[j];
+                    }
+                }
+
+                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 if (Min > values[i])
                 {
@@ -3322,6 +3544,8 @@ namespace Com
                 }
 
                 Sum += values[i];
+
+                i++;
             }
 
             return (Min, Max, Sum / values.Length);
@@ -3345,7 +3569,29 @@ namespace Com
             decimal Max = values[0];
             decimal Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                for (int j = i; j < i + 16; j++)
+                {
+                    if (Min > values[j])
+                    {
+                        Min = values[j];
+                    }
+
+                    if (Max < values[j])
+                    {
+                        Max = values[j];
+                    }
+                }
+
+                Sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 if (Min > values[i])
                 {
@@ -3358,6 +3604,8 @@ namespace Com
                 }
 
                 Sum += values[i];
+
+                i++;
             }
 
             return (Min, Max, Sum / values.Length);
@@ -3381,7 +3629,29 @@ namespace Com
             float Max = values[0];
             double Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                for (int j = i; j < i + 16; j++)
+                {
+                    if (Min > values[j])
+                    {
+                        Min = values[j];
+                    }
+
+                    if (Max < values[j])
+                    {
+                        Max = values[j];
+                    }
+                }
+
+                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 if (Min > values[i])
                 {
@@ -3394,6 +3664,8 @@ namespace Com
                 }
 
                 Sum += values[i];
+
+                i++;
             }
 
             return (Min, Max, (float)(Sum / values.Length));
@@ -3417,7 +3689,29 @@ namespace Com
             double Max = values[0];
             double Sum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            int i = 0;
+
+            while (i < values.Length - 16)
+            {
+                for (int j = i; j < i + 16; j++)
+                {
+                    if (Min > values[j])
+                    {
+                        Min = values[j];
+                    }
+
+                    if (Max < values[j])
+                    {
+                        Max = values[j];
+                    }
+                }
+
+                Sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                i += 16;
+            }
+
+            while (i < values.Length)
             {
                 if (Min > values[i])
                 {
@@ -3430,6 +3724,8 @@ namespace Com
                 }
 
                 Sum += values[i];
+
+                i++;
             }
 
             return (Min, Max, Sum / values.Length);
