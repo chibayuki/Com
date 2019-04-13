@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.DateTimeX
-Version 19.4.7.1250
+Version 19.4.13.0000
 
 This file is part of Com
 
@@ -1521,40 +1521,50 @@ namespace Com
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干年得到的结果。</returns>
         public DateTimeX AddYears(long years)
         {
-            if ((double)Year + years - 1 < long.MinValue)
+            if (years == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)Year + years + 1 > long.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                long NewYear = Year + years;
-
-                if (Year < 0 && NewYear >= 0)
+                if ((double)Year + years - 1 < long.MinValue)
                 {
-                    NewYear += 1;
+                    throw new ArgumentOutOfRangeException();
                 }
-                else if (Year > 0 && NewYear <= 0)
-                {
-                    NewYear -= 1;
-                }
-
-                if (NewYear < _ThisMinValue.Year)
+                else if ((double)Year + years + 1 > long.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    if (NewYear > _ThisMaxValue.Year)
+                    long NewYear = Year + years;
+
+                    if (Year < 0 && NewYear >= 0)
+                    {
+                        NewYear += 1;
+                    }
+                    else if (Year > 0 && NewYear <= 0)
+                    {
+                        NewYear -= 1;
+                    }
+
+                    if (NewYear < _ThisMinValue.Year)
                     {
                         throw new ArgumentOutOfRangeException();
                     }
                     else
                     {
-                        return new DateTimeX(NewYear, Month, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
+                        if (NewYear > _ThisMaxValue.Year)
+                        {
+                            throw new ArgumentOutOfRangeException();
+                        }
+                        else
+                        {
+                            int NewMonth = Month;
+                            int NewDay = Math.Min(Day, DaysInMonth(NewYear, NewMonth));
+
+                            return new DateTimeX(NewYear, NewMonth, NewDay, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
+                        }
                     }
                 }
             }
@@ -1567,56 +1577,65 @@ namespace Com
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干个月得到的结果。</returns>
         public DateTimeX AddMonths(long months)
         {
-            if ((double)Year + (months / _MonthsPerYear) - 2 < long.MinValue)
+            if (months == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)Year + (months / _MonthsPerYear) + 2 > long.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                long NewYear = Year + (months / _MonthsPerYear);
-                int NewMonth = Month + (int)(months % _MonthsPerYear);
-
-                if (NewMonth < _MinMonth)
+                if ((double)Year + (months / _MonthsPerYear) - 2 < long.MinValue)
                 {
-                    NewYear -= 1;
-                    NewMonth += _MonthsPerYear;
+                    throw new ArgumentOutOfRangeException();
                 }
-                else if (NewMonth > _MaxMonth)
-                {
-                    NewYear += 1;
-                    NewMonth -= _MonthsPerYear;
-                }
-
-                if (Year < 0 && NewYear >= 0)
-                {
-                    NewYear += 1;
-                }
-                else if (Year > 0 && NewYear <= 0)
-                {
-                    NewYear -= 1;
-                }
-
-                DateTimeX ThisMinValue = _ThisMinValue;
-
-                if (NewYear < ThisMinValue._Year || (NewYear == ThisMinValue._Year && NewMonth < ThisMinValue._Month))
+                else if ((double)Year + (months / _MonthsPerYear) + 2 > long.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    DateTimeX ThisMaxValue = _ThisMaxValue;
+                    long NewYear = Year + (months / _MonthsPerYear);
+                    int NewMonth = Month + (int)(months % _MonthsPerYear);
 
-                    if (NewYear > ThisMaxValue._Year || (NewYear == ThisMaxValue._Year && NewMonth > ThisMaxValue._Month))
+                    if (NewMonth < _MinMonth)
+                    {
+                        NewYear -= 1;
+                        NewMonth += _MonthsPerYear;
+                    }
+                    else if (NewMonth > _MaxMonth)
+                    {
+                        NewYear += 1;
+                        NewMonth -= _MonthsPerYear;
+                    }
+
+                    if (Year < 0 && NewYear >= 0)
+                    {
+                        NewYear += 1;
+                    }
+                    else if (Year > 0 && NewYear <= 0)
+                    {
+                        NewYear -= 1;
+                    }
+
+                    DateTimeX ThisMinValue = _ThisMinValue;
+
+                    if (NewYear < ThisMinValue._Year || (NewYear == ThisMinValue._Year && NewMonth < ThisMinValue._Month))
                     {
                         throw new ArgumentOutOfRangeException();
                     }
                     else
                     {
-                        return new DateTimeX(NewYear, NewMonth, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
+                        DateTimeX ThisMaxValue = _ThisMaxValue;
+
+                        if (NewYear > ThisMaxValue._Year || (NewYear == ThisMaxValue._Year && NewMonth > ThisMaxValue._Month))
+                        {
+                            throw new ArgumentOutOfRangeException();
+                        }
+                        else
+                        {
+                            int NewDay = Math.Min(Day, DaysInMonth(NewYear, NewMonth));
+
+                            return new DateTimeX(NewYear, NewMonth, NewDay, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
+                        }
                     }
                 }
             }
@@ -1636,29 +1655,36 @@ namespace Com
 
             //
 
-            if ((double)_TotalMilliseconds + weeks * _MillisecondsPerWeek < (double)decimal.MinValue)
+            if (weeks == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)_TotalMilliseconds + weeks * _MillisecondsPerWeek > (double)decimal.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                decimal NewTotalMS = _TotalMilliseconds + (decimal)weeks * _MillisecondsPerWeek;
-
-                if (NewTotalMS < _MinTotalMilliseconds)
+                if ((double)_TotalMilliseconds + weeks * _MillisecondsPerWeek < (double)decimal.MinValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                else if (NewTotalMS > _MaxTotalMilliseconds)
+                else if ((double)_TotalMilliseconds + weeks * _MillisecondsPerWeek > (double)decimal.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, _UtcOffset);
+                    decimal NewTotalMS = _TotalMilliseconds + (decimal)weeks * _MillisecondsPerWeek;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
                 }
             }
         }
@@ -1677,29 +1703,36 @@ namespace Com
 
             //
 
-            if ((double)_TotalMilliseconds + days * _MillisecondsPerDay < (double)decimal.MinValue)
+            if (days == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)_TotalMilliseconds + days * _MillisecondsPerDay > (double)decimal.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                decimal NewTotalMS = _TotalMilliseconds + (decimal)days * _MillisecondsPerDay;
-
-                if (NewTotalMS < _MinTotalMilliseconds)
+                if ((double)_TotalMilliseconds + days * _MillisecondsPerDay < (double)decimal.MinValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                else if (NewTotalMS > _MaxTotalMilliseconds)
+                else if ((double)_TotalMilliseconds + days * _MillisecondsPerDay > (double)decimal.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, _UtcOffset);
+                    decimal NewTotalMS = _TotalMilliseconds + (decimal)days * _MillisecondsPerDay;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
                 }
             }
         }
@@ -1718,29 +1751,36 @@ namespace Com
 
             //
 
-            if ((double)_TotalMilliseconds + hours * _MillisecondsPerHour < (double)decimal.MinValue)
+            if (hours == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)_TotalMilliseconds + hours * _MillisecondsPerHour > (double)decimal.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                decimal NewTotalMS = _TotalMilliseconds + (decimal)hours * _MillisecondsPerHour;
-
-                if (NewTotalMS < _MinTotalMilliseconds)
+                if ((double)_TotalMilliseconds + hours * _MillisecondsPerHour < (double)decimal.MinValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                else if (NewTotalMS > _MaxTotalMilliseconds)
+                else if ((double)_TotalMilliseconds + hours * _MillisecondsPerHour > (double)decimal.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, _UtcOffset);
+                    decimal NewTotalMS = _TotalMilliseconds + (decimal)hours * _MillisecondsPerHour;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
                 }
             }
         }
@@ -1759,29 +1799,36 @@ namespace Com
 
             //
 
-            if ((double)_TotalMilliseconds + minutes * _MillisecondsPerMinute < (double)decimal.MinValue)
+            if (minutes == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)_TotalMilliseconds + minutes * _MillisecondsPerMinute > (double)decimal.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                decimal NewTotalMS = _TotalMilliseconds + (decimal)minutes * _MillisecondsPerMinute;
-
-                if (NewTotalMS < _MinTotalMilliseconds)
+                if ((double)_TotalMilliseconds + minutes * _MillisecondsPerMinute < (double)decimal.MinValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                else if (NewTotalMS > _MaxTotalMilliseconds)
+                else if ((double)_TotalMilliseconds + minutes * _MillisecondsPerMinute > (double)decimal.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, _UtcOffset);
+                    decimal NewTotalMS = _TotalMilliseconds + (decimal)minutes * _MillisecondsPerMinute;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
                 }
             }
         }
@@ -1800,29 +1847,36 @@ namespace Com
 
             //
 
-            if ((double)_TotalMilliseconds + seconds * _MillisecondsPerSecond < (double)decimal.MinValue)
+            if (seconds == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)_TotalMilliseconds + seconds * _MillisecondsPerSecond > (double)decimal.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                decimal NewTotalMS = _TotalMilliseconds + (decimal)seconds * _MillisecondsPerSecond;
-
-                if (NewTotalMS < _MinTotalMilliseconds)
+                if ((double)_TotalMilliseconds + seconds * _MillisecondsPerSecond < (double)decimal.MinValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                else if (NewTotalMS > _MaxTotalMilliseconds)
+                else if ((double)_TotalMilliseconds + seconds * _MillisecondsPerSecond > (double)decimal.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, _UtcOffset);
+                    decimal NewTotalMS = _TotalMilliseconds + (decimal)seconds * _MillisecondsPerSecond;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
                 }
             }
         }
@@ -1834,29 +1888,36 @@ namespace Com
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干毫秒得到的结果。</returns>
         public DateTimeX AddMilliseconds(decimal milliseconds)
         {
-            if ((double)_TotalMilliseconds + (double)milliseconds < (double)decimal.MinValue)
+            if (milliseconds == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)_TotalMilliseconds + (double)milliseconds > (double)decimal.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                decimal NewTotalMS = _TotalMilliseconds + milliseconds;
-
-                if (NewTotalMS < _MinTotalMilliseconds)
+                if ((double)_TotalMilliseconds + (double)milliseconds < (double)decimal.MinValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                else if (NewTotalMS > _MaxTotalMilliseconds)
+                else if ((double)_TotalMilliseconds + (double)milliseconds > (double)decimal.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, _UtcOffset);
+                    decimal NewTotalMS = _TotalMilliseconds + milliseconds;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
                 }
             }
         }
@@ -1875,29 +1936,36 @@ namespace Com
 
             //
 
-            if ((double)_TotalMilliseconds + milliseconds < (double)decimal.MinValue)
+            if (milliseconds == 0)
             {
-                throw new ArgumentOutOfRangeException();
-            }
-            else if ((double)_TotalMilliseconds + milliseconds > (double)decimal.MaxValue)
-            {
-                throw new ArgumentOutOfRangeException();
+                return this;
             }
             else
             {
-                decimal NewTotalMS = _TotalMilliseconds + (decimal)milliseconds;
-
-                if (NewTotalMS < _MinTotalMilliseconds)
+                if ((double)_TotalMilliseconds + milliseconds < (double)decimal.MinValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                else if (NewTotalMS > _MaxTotalMilliseconds)
+                else if ((double)_TotalMilliseconds + milliseconds > (double)decimal.MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    return new DateTimeX(NewTotalMS, _UtcOffset);
+                    decimal NewTotalMS = _TotalMilliseconds + (decimal)milliseconds;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
                 }
             }
         }
