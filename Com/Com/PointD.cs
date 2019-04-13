@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD
-Version 19.4.7.1250
+Version 19.4.13.0000
 
 This file is part of Com
 
@@ -1991,13 +1991,25 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回表示用于旋转 PointD 结构的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
+        /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 PointD 结构绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
+        /// <returns>Matrix 对象，表示用于旋转 PointD 结构的 3x3 仿射矩阵（左矩阵）。</returns>
+        public static Matrix RotateMatrix(int index1, int index2, double angle)
+        {
+            return Vector.RotateMatrix(Vector.Type.ColumnVector, _Dimension, index1, index2, angle);
+        }
+
+        /// <summary>
         /// 返回表示按双精度浮点数表示的弧度将 PointD 结构绕原点旋转指定的角度的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="angle">双精度浮点数，表示 PointD 结构绕原点旋转的角度（弧度）（以 +X 轴为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）。</param>
         /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD 结构绕原点旋转指定的角度的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix RotateMatrix(double angle)
         {
-            return Vector.RotateMatrix(Vector.Type.ColumnVector, _Dimension, 0, 1, angle);
+            return RotateMatrix(0, 1, angle);
         }
 
         /// <summary>
