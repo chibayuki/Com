@@ -956,7 +956,7 @@ namespace Com
 
         #endregion
 
-        #region 极值与极差
+        #region 极值，极差，求和，平均
 
         /// <summary>
         /// 计算一组 8 位整数的最大值。
@@ -2272,9 +2272,7 @@ namespace Com
             return (Max - Min);
         }
 
-        #endregion
-
-        #region 求和与平均
+        //
 
         /// <summary>
         /// 计算一组 8 位整数的求和。

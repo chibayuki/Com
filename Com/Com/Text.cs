@@ -151,19 +151,6 @@ namespace Com
         /// <param name="value">数值。</param>
         /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
         /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
-        /// <param name="unit">单位。</param>
-        /// <returns>字符串，表示以科学记数法表示的数值。</returns>
-        public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression, string unit)
-        {
-            return GetScientificNotationString(value, significance, useNaturalExpression, false, unit);
-        }
-
-        /// <summary>
-        /// 返回一个以科学记数法表示数值的字符串。
-        /// </summary>
-        /// <param name="value">数值。</param>
-        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
-        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
         /// <param name="useMagnitudeOrderCode">对于数量级介于 ±24 的数值，是否使用千进制数量级符号。</param>
         /// <returns>字符串，表示以科学记数法表示的数值。</returns>
         public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression, bool useMagnitudeOrderCode)
@@ -177,35 +164,23 @@ namespace Com
         /// <param name="value">数值。</param>
         /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
         /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="unit">单位。</param>
+        /// <returns>字符串，表示以科学记数法表示的数值。</returns>
+        public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression, string unit)
+        {
+            return GetScientificNotationString(value, significance, useNaturalExpression, false, unit);
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="significance">有效数字位数，0 表示保留所有有效数字。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
         /// <returns>字符串，表示以科学记数法表示的数值。</returns>
         public static string GetScientificNotationString(double value, int significance, bool useNaturalExpression)
         {
             return GetScientificNotationString(value, significance, useNaturalExpression, false, null);
-        }
-
-        /// <summary>
-        /// 返回一个以科学记数法表示数值的字符串。
-        /// </summary>
-        /// <param name="value">数值。</param>
-        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
-        /// <param name="useMagnitudeOrderCode">对于数量级介于 ±24 的数值，是否使用千进制数量级符号。</param>
-        /// <param name="unit">单位。</param>
-        /// <returns>字符串，表示以科学记数法表示的数值。</returns>
-        public static string GetScientificNotationString(double value, bool useNaturalExpression, bool useMagnitudeOrderCode, string unit)
-        {
-            return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, unit);
-        }
-
-        /// <summary>
-        /// 返回一个以科学记数法表示数值的字符串。
-        /// </summary>
-        /// <param name="value">数值。</param>
-        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
-        /// <param name="unit">单位。</param>
-        /// <returns>字符串，表示以科学记数法表示的数值。</returns>
-        public static string GetScientificNotationString(double value, bool useNaturalExpression, string unit)
-        {
-            return GetScientificNotationString(value, 0, useNaturalExpression, false, unit);
         }
 
         /// <summary>
@@ -237,10 +212,35 @@ namespace Com
         /// <param name="value">数值。</param>
         /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
         /// <param name="useMagnitudeOrderCode">对于数量级介于 ±24 的数值，是否使用千进制数量级符号。</param>
+        /// <param name="unit">单位。</param>
+        /// <returns>字符串，表示以科学记数法表示的数值。</returns>
+        public static string GetScientificNotationString(double value, bool useNaturalExpression, bool useMagnitudeOrderCode, string unit)
+        {
+            return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, unit);
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="useMagnitudeOrderCode">对于数量级介于 ±24 的数值，是否使用千进制数量级符号。</param>
         /// <returns>字符串，表示以科学记数法表示的数值。</returns>
         public static string GetScientificNotationString(double value, bool useNaturalExpression, bool useMagnitudeOrderCode)
         {
             return GetScientificNotationString(value, 0, useNaturalExpression, useMagnitudeOrderCode, null);
+        }
+
+        /// <summary>
+        /// 返回一个以科学记数法表示数值的字符串。
+        /// </summary>
+        /// <param name="value">数值。</param>
+        /// <param name="useNaturalExpression">是否使用 "m×10^n" 的格式，而不是 "mE+n"。</param>
+        /// <param name="unit">单位。</param>
+        /// <returns>字符串，表示以科学记数法表示的数值。</returns>
+        public static string GetScientificNotationString(double value, bool useNaturalExpression, string unit)
+        {
+            return GetScientificNotationString(value, 0, useNaturalExpression, false, unit);
         }
 
         /// <summary>
