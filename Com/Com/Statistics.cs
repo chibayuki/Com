@@ -759,7 +759,7 @@ namespace Com
                         }
                         else if (p > 0)
                         {
-                            return (double)(_Combination(n, value) * Math.Pow(p, value) * Math.Pow(1 - p, n - value));
+                            return (double)(_Combination(n, value) * Real.Pow(p, value) * Real.Pow(1 - p, n - value));
                         }
                         else
                         {
@@ -796,7 +796,7 @@ namespace Com
                 {
                     if (value >= 0)
                     {
-                        return (double)((Real)Math.Pow(lambda, value) * Math.Exp(-lambda) / _Factorial(value));
+                        return (double)(Real.Pow(lambda, value) * Real.Exp(-lambda) / _Factorial(value));
                     }
                     else
                     {
@@ -830,7 +830,7 @@ namespace Com
                 {
                     if (value >= 0)
                     {
-                        return (lambda * Math.Exp(-lambda * value));
+                        return (double)(lambda * Real.Exp((Real)(-lambda) * value));
                     }
                     else
                     {
@@ -865,7 +865,7 @@ namespace Com
                     {
                         if (val <= 0)
                         {
-                            return -1;
+                            return 0;
                         }
                         else
                         {
@@ -914,9 +914,9 @@ namespace Com
             }
             else
             {
-                double N = (value - ev) / sd;
+                Real N = ((Real)value - ev) / sd;
 
-                return (Math.Exp(-0.5 * N * N) / Constant.SqrtDoublePi / sd);
+                return (double)(Real.Exp(-0.5 * N * N) / Constant.SqrtDoublePi / sd);
             }
         }
 
@@ -940,7 +940,7 @@ namespace Com
                     {
                         double HalfK = k * 0.5;
 
-                        return ((double)(Real.Pow(value, HalfK - 1) * Real.Exp(-value / 2) / Real.Exp2(HalfK) / _Gamma(HalfK)));
+                        return (double)(Real.Pow(value, (Real)HalfK - 1) * Real.Exp((Real)(-value) / 2) / Real.Exp2(HalfK) / _Gamma(HalfK));
                     }
                     else
                     {
