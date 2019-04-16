@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Real
-Version 19.4.7.1250
+Version 19.4.15.0000
 
 This file is part of Com
 
@@ -61,7 +61,7 @@ namespace Com
             1E+270, 1E+271, 1E+272, 1E+273, 1E+274, 1E+275, 1E+276, 1E+277, 1E+278, 1E+279,
             1E+280, 1E+281, 1E+282, 1E+283, 1E+284, 1E+285, 1E+286, 1E+287, 1E+288, 1E+289,
             1E+290, 1E+291, 1E+292, 1E+293, 1E+294, 1E+295, 1E+296, 1E+297, 1E+298, 1E+299,
-            1E+300, 1E+301, 1E+302, 1E+303, 1E+304, 1E+305, 1E+306, 1E+307, 1E+308
+            1E+300, 1E+301, 1E+302, 1E+303, 1E+304, 1E+305, 1E+306, 1E+307, 1E+308, double.MaxValue
         };
 
         private static readonly double[] _NegativeMagnitudeGeometricValues = new double[] // 用于在一定范围内进行类型转换的负数量级等比数列。
@@ -98,7 +98,7 @@ namespace Com
             1E-290, 1E-291, 1E-292, 1E-293, 1E-294, 1E-295, 1E-296, 1E-297, 1E-298, 1E-299,
             1E-300, 1E-301, 1E-302, 1E-303, 1E-304, 1E-305, 1E-306, 1E-307, 1E-308, 1E-309,
             1E-310, 1E-311, 1E-312, 1E-313, 1E-314, 1E-315, 1E-316, 1E-317, 1E-318, 1E-319,
-            1E-320, 1E-321, 1E-322, 1E-323, 1E-324
+            1E-320, 1E-321, 1E-322, 1E-323, double.Epsilon
         };
 
         //
@@ -110,10 +110,8 @@ namespace Com
 
         private static readonly Real _E = new Real(Constant.E); // 表示自然常数 E 的 Real 结构的实例。
         private static readonly Real _LgE = new Real(Constant.LgE); // 表示自然常数 E 的常用对数的 Real 结构的实例。
-        private static readonly Real _Lg2 = new Real(Constant.Lg2); // 表示 2 的常用对数的 Real 结构的实例。
 
         private static readonly Real _Ten = new Real(1, 1); // 表示数字 10 的 Real 结构的实例。
-        private static readonly Real _Two = new Real(2, 0); // 表示数字 2 的 Real 结构的实例。
 
         //
 
@@ -143,13 +141,16 @@ namespace Com
                     }
                     else
                     {
-                        _Value /= _PositiveMagnitudeGeometricValues[MagShift];
-                        _Magnitude += MagShift;
+                        if (MagShift > 0)
+                        {
+                            _Value /= _PositiveMagnitudeGeometricValues[MagShift];
+                            _Magnitude += MagShift;
+                        }
 
                         if (_Value > -1 && _Value < 1)
                         {
-                            _Value /= 10;
-                            _Magnitude++;
+                            _Value *= 10;
+                            _Magnitude--;
                         }
                     }
                 }
@@ -166,13 +167,22 @@ namespace Com
                     }
                     else
                     {
-                        _Value /= _NegativeMagnitudeGeometricValues[MagShift];
-                        _Magnitude -= MagShift;
+                        if (MagShift > 0)
+                        {
+                            _Value *= 10;
+
+                            if (MagShift > 1)
+                            {
+                                _Value /= _NegativeMagnitudeGeometricValues[MagShift - 1];
+                            }
+
+                            _Magnitude -= MagShift;
+                        }
 
                         if (_Value > -1 && _Value < 1)
                         {
-                            _Value /= 10;
-                            _Magnitude++;
+                            _Value *= 10;
+                            _Magnitude--;
                         }
                     }
                 }
@@ -1143,38 +1153,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回对 Real 结构计算以 2 为底的幂得到的 Real 结构的新实例。
-        /// </summary>
-        /// <param name="real">Real 结构，表示指数。</param>
-        /// <returns>Real 结构，表示对 Real 结构计算以 2 为底的幂得到的结果。</returns>
-        public static Real Exp2(Real real)
-        {
-            if (double.IsNaN(real._Value))
-            {
-                return NaN;
-            }
-            else if (double.IsInfinity(real._Value))
-            {
-                if (double.IsPositiveInfinity(real._Value))
-                {
-                    return PositiveInfinity;
-                }
-                else
-                {
-                    return Zero;
-                }
-            }
-            else if (real._Value == 0)
-            {
-                return One;
-            }
-            else
-            {
-                return (_Two ^ real);
-            }
-        }
-
-        /// <summary>
         /// 返回对 Real 结构计算自然幂得到的 Real 结构的新实例。
         /// </summary>
         /// <param name="real">Real 结构，表示指数。</param>
@@ -1254,16 +1232,6 @@ namespace Com
                     return NaN;
                 }
             }
-        }
-
-        /// <summary>
-        /// 返回对 Real 结构计算以 2 为底的对数得到的 Real 结构的新实例。
-        /// </summary>
-        /// <param name="real">Real 结构，表示幂。</param>
-        /// <returns>Real 结构，表示对 Real 结构计算以 2 为底的对数得到的结果。</returns>
-        public static Real Log2(Real real)
-        {
-            return (Log10(real) / _Lg2);
         }
 
         /// <summary>
@@ -1662,14 +1630,7 @@ namespace Com
             }
             else if (double.IsInfinity(real._Value))
             {
-                if (double.IsPositiveInfinity(real._Value))
-                {
-                    return PositiveInfinity;
-                }
-                else
-                {
-                    return NegativeInfinity;
-                }
+                return PositiveInfinity;
             }
             else if (real._Value == 0)
             {
@@ -3475,7 +3436,7 @@ namespace Com
                     }
                     else
                     {
-                        return (real._Value * (real._Magnitude > 0 ? _PositiveMagnitudeGeometricValues[real._Magnitude] : _NegativeMagnitudeGeometricValues[-real._Magnitude]));
+                        return ((real._Magnitude > 0 ? real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude] : (real._Magnitude == -1 ? real._Value * 0.1 : (real._Value * 0.1) * _NegativeMagnitudeGeometricValues[-real._Magnitude - 1])));
                     }
                 }
             }

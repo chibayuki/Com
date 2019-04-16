@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Statistics
-Version 19.4.7.1250
+Version 19.4.15.0000
 
 This file is part of Com
 
@@ -940,7 +940,7 @@ namespace Com
                     {
                         double HalfK = k * 0.5;
 
-                        return (double)(Real.Pow(value, (Real)HalfK - 1) * Real.Exp((Real)(-value) / 2) / Real.Exp2(HalfK) / _Gamma(HalfK));
+                        return (double)(Real.Pow(value, (Real)HalfK - 1) * Real.Exp((Real)(-value) / 2) / Real.Pow(2, HalfK) / _Gamma(HalfK));
                     }
                     else
                     {
