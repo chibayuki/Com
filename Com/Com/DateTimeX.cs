@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.DateTimeX
-Version 19.4.13.0000
+Version 19.4.17.2100
 
 This file is part of Com
 
