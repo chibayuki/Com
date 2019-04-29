@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Real
-Version 19.4.17.2100
+Version 19.4.28.0000
 
 This file is part of Com
 
@@ -24,8 +24,8 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private const long _MinMagnitude = -999999999999999; // 数量级的最小值。
-        private const long _MaxMagnitude = 999999999999999; // 数量级的最大值。
+        private const long _MinMagnitude = -999999999999999; // 数量级的最小值，等于 double 能够精确表示的最大负整数。
+        private const long _MaxMagnitude = 999999999999999; // 数量级的最大值，等于 double 能够精确表示的最大正整数。
 
         //
 

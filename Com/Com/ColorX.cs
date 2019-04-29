@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorX
-Version 19.4.17.2100
+Version 19.4.29.0000
 
 This file is part of Com
 
@@ -683,17 +683,35 @@ namespace Com
 
         //
 
-        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为 Alpha 通道（A）的值。此函数不对参数进行合法性检查。
+        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为 Alpha 通道（A）的值。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             alpha = opacity / _MaxOpacity * _MaxAlpha;
+
+            if (alpha < _MinAlpha)
+            {
+                alpha = _MinAlpha;
+            }
+            else if (alpha > _MaxAlpha)
+            {
+                alpha = _MaxAlpha;
+            }
         }
 
-        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色的 Alpha 通道（A）的值转换为不透明度。此函数不对参数进行合法性检查。
+        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色的 Alpha 通道（A）的值转换为不透明度。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             opacity = alpha / _MaxAlpha * _MaxOpacity;
+
+            if (opacity < _MinOpacity)
+            {
+                opacity = _MinOpacity;
+            }
+            else if (opacity > _MaxOpacity)
+            {
+                opacity = _MaxOpacity;
+            }
         }
 
-        private static void _RGBToHSV(double red, double green, double blue, out double hue, out double saturation, out double brightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSV 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _RGBToHSV(double red, double green, double blue, out double hue, out double saturation, out double brightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSV 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -721,30 +739,30 @@ namespace Com
                 Min = blue;
             }
 
-            double dH = 1 / (6 * (Max - Min));
-
             if (Max == Min)
             {
                 hue = 0;
             }
             else
             {
+                double dH = 1.0 / 6 / (Max - Min);
+
                 if (Max == red)
                 {
                     hue = dH * (green - blue);
 
-                    if (green < blue)
+                    if (hue < 0)
                     {
-                        hue += 1D;
+                        hue += 1;
                     }
                 }
                 else if (Max == green)
                 {
-                    hue = dH * (blue - red) + 1D / 3D;
+                    hue = dH * (blue - red) + 1.0 / 3;
                 }
                 else
                 {
-                    hue = dH * (red - green) + 2D / 3D;
+                    hue = dH * (red - green) + 2.0 / 3;
                 }
             }
 
@@ -762,15 +780,50 @@ namespace Com
             hue *= _MaxHue_HSV;
             saturation *= _MaxSaturation_HSV;
             brightness *= _MaxBrightness;
+
+            if (hue < _MinHue_HSV)
+            {
+                hue = _MinHue_HSV;
+            }
+            else if (hue > _MaxHue_HSV)
+            {
+                hue = _MaxHue_HSV;
+            }
+
+            if (saturation < _MinSaturation_HSV)
+            {
+                saturation = _MinSaturation_HSV;
+            }
+            else if (saturation > _MaxSaturation_HSV)
+            {
+                saturation = _MaxSaturation_HSV;
+            }
+
+            if (brightness < _MinBrightness)
+            {
+                brightness = _MinBrightness;
+            }
+            else if (brightness > _MaxBrightness)
+            {
+                brightness = _MaxBrightness;
+            }
         }
 
-        private static void _HSVToRGB(double hue, double saturation, double brightness, out double red, out double green, out double blue) // 将颜色在 HSV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _HSVToRGB(double hue, double saturation, double brightness, out double red, out double green, out double blue) // 将颜色在 HSV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             hue /= _MaxHue_HSV;
             saturation /= _MaxSaturation_HSV;
             brightness /= _MaxBrightness;
 
-            int Hi = ((int)Math.Floor(hue * 6)) % 6;
+            int Hi = (int)Math.Floor(hue * 6);
+
+            if (Hi == 6)
+            {
+                hue = 0;
+            }
+
+            Hi %= 6;
+
             double Hf = hue * 6 - Hi;
 
             double C = brightness * saturation;
@@ -845,9 +898,36 @@ namespace Com
             red *= _MaxRed;
             green *= _MaxGreen;
             blue *= _MaxBlue;
+
+            if (red < _MinRed)
+            {
+                red = _MinRed;
+            }
+            else if (red > _MaxRed)
+            {
+                red = _MaxRed;
+            }
+
+            if (green < _MinGreen)
+            {
+                green = _MinGreen;
+            }
+            else if (green > _MaxGreen)
+            {
+                green = _MaxGreen;
+            }
+
+            if (blue < _MinBlue)
+            {
+                blue = _MinBlue;
+            }
+            else if (blue > _MaxBlue)
+            {
+                blue = _MaxBlue;
+            }
         }
 
-        private static void _RGBToHSL(double red, double green, double blue, out double hue, out double saturation, out double lightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSL 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _RGBToHSL(double red, double green, double blue, out double hue, out double saturation, out double lightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSL 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -875,30 +955,30 @@ namespace Com
                 Min = blue;
             }
 
-            double dH = 1 / (6 * (Max - Min));
-
             if (Max == Min)
             {
                 hue = 0;
             }
             else
             {
+                double dH = 1.0 / 6 / (Max - Min);
+
                 if (Max == red)
                 {
                     hue = dH * (green - blue);
 
-                    if (green < blue)
+                    if (hue < 0)
                     {
-                        hue += 1D;
+                        hue += 1;
                     }
                 }
                 else if (Max == green)
                 {
-                    hue = dH * (blue - red) + 1D / 3D;
+                    hue = dH * (blue - red) + 1.0 / 3;
                 }
                 else
                 {
-                    hue = dH * (red - green) + 2D / 3D;
+                    hue = dH * (red - green) + 2.0 / 3;
                 }
             }
 
@@ -916,15 +996,50 @@ namespace Com
             hue *= _MaxHue_HSL;
             saturation *= _MaxSaturation_HSL;
             lightness *= _MaxLightness_HSL;
+
+            if (hue < _MinHue_HSL)
+            {
+                hue = _MinHue_HSL;
+            }
+            else if (hue > _MaxHue_HSL)
+            {
+                hue = _MaxHue_HSL;
+            }
+
+            if (saturation < _MinSaturation_HSL)
+            {
+                saturation = _MinSaturation_HSL;
+            }
+            else if (saturation > _MaxSaturation_HSL)
+            {
+                saturation = _MaxSaturation_HSL;
+            }
+
+            if (lightness < _MinLightness_HSL)
+            {
+                lightness = _MinLightness_HSL;
+            }
+            else if (lightness > _MaxLightness_HSL)
+            {
+                lightness = _MaxLightness_HSL;
+            }
         }
 
-        private static void _HSLToRGB(double hue, double saturation, double lightness, out double red, out double green, out double blue) // 将颜色在 HSL 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _HSLToRGB(double hue, double saturation, double lightness, out double red, out double green, out double blue) // 将颜色在 HSL 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             hue /= _MaxHue_HSL;
             saturation /= _MaxSaturation_HSL;
             lightness /= _MaxLightness_HSL;
 
-            int Hi = ((int)Math.Floor(hue * 6)) % 6;
+            int Hi = (int)Math.Floor(hue * 6);
+
+            if (Hi == 6)
+            {
+                hue = 0;
+            }
+
+            Hi %= 6;
+
             double Hf = hue * 6 - Hi;
 
             double C = (1 - Math.Abs(2 * lightness - 1)) * saturation;
@@ -999,9 +1114,36 @@ namespace Com
             red *= _MaxRed;
             green *= _MaxGreen;
             blue *= _MaxBlue;
+
+            if (red < _MinRed)
+            {
+                red = _MinRed;
+            }
+            else if (red > _MaxRed)
+            {
+                red = _MaxRed;
+            }
+
+            if (green < _MinGreen)
+            {
+                green = _MinGreen;
+            }
+            else if (green > _MaxGreen)
+            {
+                green = _MaxGreen;
+            }
+
+            if (blue < _MinBlue)
+            {
+                blue = _MinBlue;
+            }
+            else if (blue > _MaxBlue)
+            {
+                blue = _MaxBlue;
+            }
         }
 
-        private static void _RGBToCMYK(double red, double green, double blue, out double cyan, out double magenta, out double yellow, out double black) // 将颜色在 RGB 色彩空间的各分量转换为在 CMYK 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _RGBToCMYK(double red, double green, double blue, out double cyan, out double magenta, out double yellow, out double black) // 将颜色在 RGB 色彩空间的各分量转换为在 CMYK 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -1038,9 +1180,45 @@ namespace Com
             magenta *= _MaxMagenta;
             yellow *= _MaxYellow;
             black *= _MaxBlack;
+
+            if (cyan < _MinCyan)
+            {
+                cyan = _MinCyan;
+            }
+            else if (cyan > _MaxCyan)
+            {
+                cyan = _MaxCyan;
+            }
+
+            if (magenta < _MinMagenta)
+            {
+                magenta = _MinMagenta;
+            }
+            else if (magenta > _MaxMagenta)
+            {
+                magenta = _MaxMagenta;
+            }
+
+            if (yellow < _MinYellow)
+            {
+                yellow = _MinYellow;
+            }
+            else if (yellow > _MaxYellow)
+            {
+                yellow = _MaxYellow;
+            }
+
+            if (black < _MinBlack)
+            {
+                black = _MinBlack;
+            }
+            else if (black > _MaxBlack)
+            {
+                black = _MaxBlack;
+            }
         }
 
-        private static void _CMYKToRGB(double cyan, double magenta, double yellow, double black, out double red, out double green, out double blue) // 将颜色在 CMYK 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _CMYKToRGB(double cyan, double magenta, double yellow, double black, out double red, out double green, out double blue) // 将颜色在 CMYK 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             cyan /= _MaxCyan;
             magenta /= _MaxMagenta;
@@ -1063,9 +1241,36 @@ namespace Com
             red *= _MaxRed;
             green *= _MaxGreen;
             blue *= _MaxBlue;
+
+            if (red < _MinRed)
+            {
+                red = _MinRed;
+            }
+            else if (red > _MaxRed)
+            {
+                red = _MaxRed;
+            }
+
+            if (green < _MinGreen)
+            {
+                green = _MinGreen;
+            }
+            else if (green > _MaxGreen)
+            {
+                green = _MaxGreen;
+            }
+
+            if (blue < _MinBlue)
+            {
+                blue = _MinBlue;
+            }
+            else if (blue > _MaxBlue)
+            {
+                blue = _MaxBlue;
+            }
         }
 
-        private static void _RGBToLAB(double red, double green, double blue, out double lightness, out double greenRed, out double blueYellow) // 将颜色在 RGB 色彩空间的各分量转换为在 LAB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _RGBToLAB(double red, double green, double blue, out double lightness, out double greenRed, out double blueYellow) // 将颜色在 RGB 色彩空间的各分量转换为在 LAB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -1112,9 +1317,36 @@ namespace Com
             lightness = 116 * Fy - 16;
             greenRed = 500 * (Fx - Fy);
             blueYellow = 200 * (Fy - Fz);
+
+            if (lightness < _MinLightness_LAB)
+            {
+                lightness = _MinLightness_LAB;
+            }
+            else if (lightness > _MaxLightness_LAB)
+            {
+                lightness = _MaxLightness_LAB;
+            }
+
+            if (greenRed < _MinGreenRed)
+            {
+                greenRed = _MinGreenRed;
+            }
+            else if (greenRed > _MaxGreenRed)
+            {
+                greenRed = _MaxGreenRed;
+            }
+
+            if (blueYellow < _MinBlueYellow)
+            {
+                blueYellow = _MinBlueYellow;
+            }
+            else if (blueYellow > _MaxBlueYellow)
+            {
+                blueYellow = _MaxBlueYellow;
+            }
         }
 
-        private static void _LABToRGB(double lightness, double greenRed, double blueYellow, out double red, out double green, out double blue) // 将颜色在 LAB 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不对参数进行合法性检查。
+        private static void _LABToRGB(double lightness, double greenRed, double blueYellow, out double red, out double green, out double blue) // 将颜色在 LAB 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             double L = (lightness + 16) / 116;
             double a = greenRed / 500;
@@ -1161,6 +1393,33 @@ namespace Com
             red *= _MaxRed;
             green *= _MaxGreen;
             blue *= _MaxBlue;
+
+            if (red < _MinRed)
+            {
+                red = _MinRed;
+            }
+            else if (red > _MaxRed)
+            {
+                red = _MaxRed;
+            }
+
+            if (green < _MinGreen)
+            {
+                green = _MinGreen;
+            }
+            else if (green > _MaxGreen)
+            {
+                green = _MaxGreen;
+            }
+
+            if (blue < _MinBlue)
+            {
+                blue = _MinBlue;
+            }
+            else if (blue > _MaxBlue)
+            {
+                blue = _MaxBlue;
+            }
         }
 
         //
@@ -1201,28 +1460,26 @@ namespace Com
             _Blue = _CheckBlue(blue);
 
             _AlphaToOpacity(_Alpha, out _Opacity);
-            _Opacity = _CheckOpacity(_Opacity);
+            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
+            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
+            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
+            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+
+            //
+
+            _Initialized = true;
+        }
+
+        private void _CtorRGB(double red, double green, double blue) // 为以颜色在 RGB 色彩空间的各分量为参数的构造函数提供实现。
+        {
+            _Red = _CheckRed(red);
+            _Green = _CheckGreen(green);
+            _Blue = _CheckBlue(blue);
 
             _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _Hue_HSV = _CheckHue_HSV(_Hue_HSV);
-            _Saturation_HSV = _CheckSaturation_HSV(_Saturation_HSV);
-            _Brightness = _CheckBrightness(_Brightness);
-
             _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _Hue_HSL = _CheckHue_HSL(_Hue_HSL);
-            _Saturation_HSL = _CheckSaturation_HSL(_Saturation_HSL);
-            _Lightness_HSL = _CheckLightness_HSL(_Lightness_HSL);
-
             _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _Cyan = _CheckCyan(_Cyan);
-            _Magenta = _CheckMagenta(_Magenta);
-            _Yellow = _CheckYellow(_Yellow);
-            _Black = _CheckBlack(_Black);
-
             _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
-            _Lightness_LAB = _CheckLightness_LAB(_Lightness_LAB);
-            _GreenRed = _CheckGreenRed(_GreenRed);
-            _BlueYellow = _CheckBlueYellow(_BlueYellow);
 
             //
 
@@ -1237,28 +1494,26 @@ namespace Com
             _Brightness = _CheckBrightness(brightness);
 
             _OpacityToAlpha(_Opacity, out _Alpha);
-            _Alpha = _CheckAlpha(_Alpha);
+            _HSVToRGB(_Hue_HSV, _Saturation_HSV, _Brightness, out _Red, out _Green, out _Blue);
+            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
+            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
+            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+
+            //
+
+            _Initialized = true;
+        }
+
+        private void _CtorHSV(double hue, double saturation, double brightness) // 为以颜色在 HSV 色彩空间的各分量为参数的构造函数提供实现。
+        {
+            _Hue_HSV = _CheckHue_HSV(hue);
+            _Saturation_HSV = _CheckSaturation_HSV(saturation);
+            _Brightness = _CheckBrightness(brightness);
 
             _HSVToRGB(_Hue_HSV, _Saturation_HSV, _Brightness, out _Red, out _Green, out _Blue);
-            _Red = _CheckRed(_Red);
-            _Green = _CheckGreen(_Green);
-            _Blue = _CheckBlue(_Blue);
-
             _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _Hue_HSL = _CheckHue_HSL(_Hue_HSL);
-            _Saturation_HSL = _CheckSaturation_HSL(_Saturation_HSL);
-            _Lightness_HSL = _CheckLightness_HSL(_Lightness_HSL);
-
             _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _Cyan = _CheckCyan(_Cyan);
-            _Magenta = _CheckMagenta(_Magenta);
-            _Yellow = _CheckYellow(_Yellow);
-            _Black = _CheckBlack(_Black);
-
             _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
-            _Lightness_LAB = _CheckLightness_LAB(_Lightness_LAB);
-            _GreenRed = _CheckGreenRed(_GreenRed);
-            _BlueYellow = _CheckBlueYellow(_BlueYellow);
 
             //
 
@@ -1273,28 +1528,26 @@ namespace Com
             _Lightness_HSL = _CheckLightness_HSL(lightness);
 
             _OpacityToAlpha(_Opacity, out _Alpha);
-            _Alpha = _CheckAlpha(_Alpha);
+            _HSLToRGB(_Hue_HSL, _Saturation_HSL, _Lightness_HSL, out _Red, out _Green, out _Blue);
+            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
+            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
+            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+
+            //
+
+            _Initialized = true;
+        }
+
+        private void _CtorHSL(double hue, double saturation, double lightness) // 为以颜色在 HSL 色彩空间的各分量为参数的构造函数提供实现。
+        {
+            _Hue_HSL = _CheckHue_HSL(hue);
+            _Saturation_HSL = _CheckSaturation_HSL(saturation);
+            _Lightness_HSL = _CheckLightness_HSL(lightness);
 
             _HSLToRGB(_Hue_HSL, _Saturation_HSL, _Lightness_HSL, out _Red, out _Green, out _Blue);
-            _Red = _CheckRed(_Red);
-            _Green = _CheckGreen(_Green);
-            _Blue = _CheckBlue(_Blue);
-
             _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _Hue_HSV = _CheckHue_HSV(_Hue_HSV);
-            _Saturation_HSV = _CheckSaturation_HSV(_Saturation_HSV);
-            _Brightness = _CheckBrightness(_Brightness);
-
             _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _Cyan = _CheckCyan(_Cyan);
-            _Magenta = _CheckMagenta(_Magenta);
-            _Yellow = _CheckYellow(_Yellow);
-            _Black = _CheckBlack(_Black);
-
             _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
-            _Lightness_LAB = _CheckLightness_LAB(_Lightness_LAB);
-            _GreenRed = _CheckGreenRed(_GreenRed);
-            _BlueYellow = _CheckBlueYellow(_BlueYellow);
 
             //
 
@@ -1310,27 +1563,27 @@ namespace Com
             _Black = _CheckBlack(black);
 
             _OpacityToAlpha(_Opacity, out _Alpha);
-            _Alpha = _CheckAlpha(_Alpha);
+            _CMYKToRGB(_Cyan, _Magenta, _Yellow, _Black, out _Red, out _Green, out _Blue);
+            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
+            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
+            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+
+            //
+
+            _Initialized = true;
+        }
+
+        private void _CtorCMYK(double cyan, double magenta, double yellow, double black) // 为以颜色在 CMYK 色彩空间的各分量为参数的构造函数提供实现。
+        {
+            _Cyan = _CheckCyan(cyan);
+            _Magenta = _CheckMagenta(magenta);
+            _Yellow = _CheckYellow(yellow);
+            _Black = _CheckBlack(black);
 
             _CMYKToRGB(_Cyan, _Magenta, _Yellow, _Black, out _Red, out _Green, out _Blue);
-            _Red = _CheckRed(_Red);
-            _Green = _CheckGreen(_Green);
-            _Blue = _CheckBlue(_Blue);
-
             _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _Hue_HSV = _CheckHue_HSV(_Hue_HSV);
-            _Saturation_HSV = _CheckSaturation_HSV(_Saturation_HSV);
-            _Brightness = _CheckBrightness(_Brightness);
-
             _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _Hue_HSL = _CheckHue_HSL(_Hue_HSL);
-            _Saturation_HSL = _CheckSaturation_HSL(_Saturation_HSL);
-            _Lightness_HSL = _CheckLightness_HSL(_Lightness_HSL);
-
             _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
-            _Lightness_LAB = _CheckLightness_LAB(_Lightness_LAB);
-            _GreenRed = _CheckGreenRed(_GreenRed);
-            _BlueYellow = _CheckBlueYellow(_BlueYellow);
 
             //
 
@@ -1345,28 +1598,26 @@ namespace Com
             _BlueYellow = _CheckBlueYellow(blueYellow);
 
             _OpacityToAlpha(_Opacity, out _Alpha);
-            _Alpha = _CheckAlpha(_Alpha);
+            _LABToRGB(_Lightness_LAB, _GreenRed, _BlueYellow, out _Red, out _Green, out _Blue);
+            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
+            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
+            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
+
+            //
+
+            _Initialized = true;
+        }
+
+        private void _CtorLAB(double lightness, double greenRed, double blueYellow) // 为以颜色在 LAB 色彩空间的各分量为参数的构造函数提供实现。
+        {
+            _Lightness_LAB = _CheckLightness_LAB(lightness);
+            _GreenRed = _CheckGreenRed(greenRed);
+            _BlueYellow = _CheckBlueYellow(blueYellow);
 
             _LABToRGB(_Lightness_LAB, _GreenRed, _BlueYellow, out _Red, out _Green, out _Blue);
-            _Red = _CheckRed(Math.Max(_MinRed, Math.Min(_Red, _MaxRed)));
-            _Green = _CheckGreen(Math.Max(_MinGreen, Math.Min(_Green, _MaxGreen)));
-            _Blue = _CheckBlue(Math.Max(_MinBlue, Math.Min(_Blue, _MaxBlue)));
-
             _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _Hue_HSV = _CheckHue_HSV(_Hue_HSV);
-            _Saturation_HSV = _CheckSaturation_HSV(_Saturation_HSV);
-            _Brightness = _CheckBrightness(_Brightness);
-
             _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _Hue_HSL = _CheckHue_HSL(_Hue_HSL);
-            _Saturation_HSL = _CheckSaturation_HSL(_Saturation_HSL);
-            _Lightness_HSL = _CheckLightness_HSL(_Lightness_HSL);
-
             _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _Cyan = _CheckCyan(_Cyan);
-            _Magenta = _CheckMagenta(_Magenta);
-            _Yellow = _CheckYellow(_Yellow);
-            _Black = _CheckBlack(_Black);
 
             //
 
@@ -1539,7 +1790,7 @@ namespace Com
 
             set
             {
-                _CtorRGB(_Alpha, value, _Green, _Blue);
+                _CtorRGB(value, _Green, _Blue);
             }
         }
 
@@ -1555,7 +1806,7 @@ namespace Com
 
             set
             {
-                _CtorRGB(_Alpha, _Red, value, _Blue);
+                _CtorRGB(_Red, value, _Blue);
             }
         }
 
@@ -1571,7 +1822,7 @@ namespace Com
 
             set
             {
-                _CtorRGB(_Alpha, _Red, _Green, value);
+                _CtorRGB(_Red, _Green, value);
             }
         }
 
@@ -1589,7 +1840,7 @@ namespace Com
 
             set
             {
-                _CtorHSV(value, _Saturation_HSV, _Brightness, _Opacity);
+                _CtorHSV(value, _Saturation_HSV, _Brightness);
             }
         }
 
@@ -1605,7 +1856,7 @@ namespace Com
 
             set
             {
-                _CtorHSV(_Hue_HSV, value, _Brightness, _Opacity);
+                _CtorHSV(_Hue_HSV, value, _Brightness);
             }
         }
 
@@ -1621,7 +1872,7 @@ namespace Com
 
             set
             {
-                _CtorHSV(_Hue_HSV, _Saturation_HSV, value, _Opacity);
+                _CtorHSV(_Hue_HSV, _Saturation_HSV, value);
             }
         }
 
@@ -1639,7 +1890,7 @@ namespace Com
 
             set
             {
-                _CtorHSL(value, _Saturation_HSL, _Lightness_HSL, _Opacity);
+                _CtorHSL(value, _Saturation_HSL, _Lightness_HSL);
             }
         }
 
@@ -1655,7 +1906,7 @@ namespace Com
 
             set
             {
-                _CtorHSL(_Hue_HSL, value, _Lightness_HSL, _Opacity);
+                _CtorHSL(_Hue_HSL, value, _Lightness_HSL);
             }
         }
 
@@ -1671,7 +1922,7 @@ namespace Com
 
             set
             {
-                _CtorHSL(_Hue_HSL, _Saturation_HSL, value, _Opacity);
+                _CtorHSL(_Hue_HSL, _Saturation_HSL, value);
             }
         }
 
@@ -1689,7 +1940,7 @@ namespace Com
 
             set
             {
-                _CtorCMYK(value, _Magenta, _Yellow, Black, _Opacity);
+                _CtorCMYK(value, _Magenta, _Yellow, Black);
             }
         }
 
@@ -1705,7 +1956,7 @@ namespace Com
 
             set
             {
-                _CtorCMYK(_Cyan, value, _Yellow, Black, _Opacity);
+                _CtorCMYK(_Cyan, value, _Yellow, Black);
             }
         }
 
@@ -1721,7 +1972,7 @@ namespace Com
 
             set
             {
-                _CtorCMYK(_Cyan, _Magenta, value, Black, _Opacity);
+                _CtorCMYK(_Cyan, _Magenta, value, Black);
             }
         }
 
@@ -1744,7 +1995,7 @@ namespace Com
 
             set
             {
-                _CtorCMYK(_Cyan, _Magenta, _Yellow, value, _Opacity);
+                _CtorCMYK(_Cyan, _Magenta, _Yellow, value);
             }
         }
 
@@ -1762,7 +2013,7 @@ namespace Com
 
             set
             {
-                _CtorLAB(value, _GreenRed, _BlueYellow, _Opacity);
+                _CtorLAB(value, _GreenRed, _BlueYellow);
             }
         }
 
@@ -1778,7 +2029,7 @@ namespace Com
 
             set
             {
-                _CtorLAB(_Lightness_LAB, value, _BlueYellow, _Opacity);
+                _CtorLAB(_Lightness_LAB, value, _BlueYellow);
             }
         }
 
@@ -1794,7 +2045,7 @@ namespace Com
 
             set
             {
-                _CtorLAB(_Lightness_LAB, _GreenRed, value, _Opacity);
+                _CtorLAB(_Lightness_LAB, _GreenRed, value);
             }
         }
 
@@ -1812,7 +2063,7 @@ namespace Com
 
             set
             {
-                _CtorRGB(_Alpha, value.X, value.Y, value.Z);
+                _CtorRGB(value.X, value.Y, value.Z);
             }
         }
 
@@ -1828,7 +2079,7 @@ namespace Com
 
             set
             {
-                _CtorHSV(value.X, value.Y, value.Z, _Opacity);
+                _CtorHSV(value.X, value.Y, value.Z);
             }
         }
 
@@ -1844,7 +2095,7 @@ namespace Com
 
             set
             {
-                _CtorHSL(value.X, value.Y, value.Z, _Opacity);
+                _CtorHSL(value.X, value.Y, value.Z);
             }
         }
 
@@ -1860,7 +2111,7 @@ namespace Com
 
             set
             {
-                _CtorCMYK(value.X, value.Y, value.Z, value.U, _Opacity);
+                _CtorCMYK(value.X, value.Y, value.Z, value.U);
             }
         }
 
@@ -1876,7 +2127,7 @@ namespace Com
 
             set
             {
-                _CtorLAB(value.X, value.Y, value.Z, _Opacity);
+                _CtorLAB(value.X, value.Y, value.Z);
             }
         }
 

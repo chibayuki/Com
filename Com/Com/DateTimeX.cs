@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.DateTimeX
-Version 19.4.17.2100
+Version 19.4.29.0000
 
 This file is part of Com
 
@@ -118,13 +118,13 @@ namespace Com
             }
             else
             {
-                if (year < _MinYear - (utcOffset < 0 ? 1 : 0))
+                if (year < (utcOffset < 0 ? _MinYear - 1 : _MinYear))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 else
                 {
-                    if (year > _MaxYear + (utcOffset > 0 ? 1 : 0))
+                    if (year > (utcOffset > 0 ? _MaxYear + 1 : _MaxYear))
                     {
                         throw new ArgumentOutOfRangeException();
                     }
@@ -217,7 +217,7 @@ namespace Com
 
         //
 
-        private static void _TotalMillisecondsToDateTime(decimal totalMilliseconds, out long year, out int month, out int day, out int hour, out int minute, out int second, out int millisecond) // 将自公元时刻以来的总毫秒数转换为年、月、日、时、分、秒与毫秒。此函数不对参数进行合法性检查。
+        private static void _TotalMillisecondsToDateTime(decimal totalMilliseconds, out long year, out int month, out int day, out int hour, out int minute, out int second, out int millisecond) // 将自公元时刻以来的总毫秒数转换为年、月、日、时、分、秒与毫秒。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             long TotalDays = (long)(Math.Floor(totalMilliseconds / _MillisecondsPerDay));
 
@@ -360,7 +360,7 @@ namespace Com
             millisecond = MS % _MillisecondsPerSecond;
         }
 
-        private static void _DateTimeToTotalMilliseconds(long year, int month, int day, int hour, int minute, int second, int millisecond, out decimal totalMilliseconds) // 将年、月、日、时、分、秒与毫秒转换为自公元时刻以来的总毫秒数。此函数不对参数进行合法性检查。
+        private static void _DateTimeToTotalMilliseconds(long year, int month, int day, int hour, int minute, int second, int millisecond, out decimal totalMilliseconds) // 将年、月、日、时、分、秒与毫秒转换为自公元时刻以来的总毫秒数。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         {
             long TotalDays = 0;
 
@@ -435,14 +435,6 @@ namespace Com
 
             _TotalMillisecondsToDateTime(_TotalMilliseconds + _UtcOffsetMS, out _Year, out _Month, out _Day, out _Hour, out _Minute, out _Second, out _Millisecond);
 
-            _Year = _CheckYear(_Year, _UtcOffset);
-            _Month = _CheckMonth(_Month);
-            _Day = _CheckDay(_Year, _Month, _Day);
-            _Hour = _CheckHour(_Hour);
-            _Minute = _CheckMinute(_Minute);
-            _Second = _CheckSecond(_Second);
-            _Millisecond = _CheckMillisecond(_Millisecond);
-
             //
 
             _Initialized = true;
@@ -469,14 +461,6 @@ namespace Com
             if (_UtcOffset != _Utc && (year <= _MinYear || year >= _MaxYear))
             {
                 _TotalMillisecondsToDateTime(_TotalMilliseconds + _UtcOffsetMS, out _Year, out _Month, out _Day, out _Hour, out _Minute, out _Second, out _Millisecond);
-
-                _Year = _CheckYear(_Year, _UtcOffset);
-                _Month = _CheckMonth(_Month);
-                _Day = _CheckDay(_Year, _Month, _Day);
-                _Hour = _CheckHour(_Hour);
-                _Minute = _CheckMinute(_Minute);
-                _Second = _CheckSecond(_Second);
-                _Millisecond = _CheckMillisecond(_Millisecond);
             }
 
             //
