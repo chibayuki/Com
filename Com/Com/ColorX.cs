@@ -1298,15 +1298,15 @@ namespace Com
 
             Func<double, double> Fxyz = (t) =>
             {
-                const double Delta = 6D / 29D;
+                const double Delta = 6.0 / 29;
 
                 if (t > Delta * Delta * Delta)
                 {
-                    return Math.Pow(t, 1D / 3D);
+                    return Math.Pow(t, 1.0 / 3);
                 }
                 else
                 {
-                    return (t / (3 * Delta * Delta) + 4D / 29D);
+                    return (t / (3 * Delta * Delta) + 4.0 / 29);
                 }
             };
 
@@ -1354,7 +1354,7 @@ namespace Com
 
             Func<double, double> Fxyz = (t) =>
             {
-                const double Delta = 6D / 29D;
+                const double Delta = 6.0 / 29;
 
                 if (t > Delta)
                 {
@@ -1362,7 +1362,7 @@ namespace Com
                 }
                 else
                 {
-                    return ((t - 4D / 29D) * (3 * Delta * Delta));
+                    return ((t - 4.0 / 29) * (3 * Delta * Delta));
                 }
             };
 
