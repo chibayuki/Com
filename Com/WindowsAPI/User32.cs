@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.User32
-Version 19.4.17.2100
+Version 19.5.2.1900
 
 This file is part of Com
 
