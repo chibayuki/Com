@@ -44,7 +44,7 @@ namespace Com
 
         private const double _MinHue_HSV = 0, _MaxHue_HSV = 360; // HSV 色彩空间的色相（H）的最小值与最大值。
         private const double _MinSaturation_HSV = 0, _MaxSaturation_HSV = 100; // HSV 色彩空间的饱和度（S）的最小值与最大值。
-        private const double _MinBrightness = 0, _MaxBrightness = 100; // HSV 色彩空间的明度（V）的最小值与最大值。
+        private const double _MinBrightness = 0, _MaxBrightness = 100; // HSV 色彩空间的亮度（V）的最小值与最大值。
 
         private const double _MinHue_HSL = 0, _MaxHue_HSL = 360; // HSL 色彩空间的色相（H）的最小值与最大值。
         private const double _MinSaturation_HSL = 0, _MaxSaturation_HSL = 100; // HSL 色彩空间的饱和度（S）的最小值与最大值。
@@ -70,7 +70,7 @@ namespace Com
 
         private const double _MinHue_HSV_FloDev = _MinHue_HSV - 5E-13, _MaxHue_HSV_FloDev = _MaxHue_HSV + 5E-11; // HSV 色彩空间的色相（H）的最小值与最大值，包含浮点偏差。
         private const double _MinSaturation_HSV_FloDev = _MinSaturation_HSV - 5E-13, _MaxSaturation_HSV_FloDev = _MaxSaturation_HSV + 5E-11; // HSV 色彩空间的饱和度（S）的最小值与最大值，包含浮点偏差。
-        private const double _MinBrightness_FloDev = _MinBrightness - 5E-13, _MaxBrightness_FloDev = _MaxBrightness + 5E-11; // HSV 色彩空间的明度（V）的最小值与最大值，包含浮点偏差。
+        private const double _MinBrightness_FloDev = _MinBrightness - 5E-13, _MaxBrightness_FloDev = _MaxBrightness + 5E-11; // HSV 色彩空间的亮度（V）的最小值与最大值，包含浮点偏差。
 
         private const double _MinHue_HSL_FloDev = _MinHue_HSL - 5E-13, _MaxHue_HSL_FloDev = _MaxHue_HSL + 5E-11; // HSL 色彩空间的色相（H）的最小值与最大值，包含浮点偏差。
         private const double _MinSaturation_HSL_FloDev = _MinSaturation_HSL - 5E-13, _MaxSaturation_HSL_FloDev = _MaxSaturation_HSL + 5E-11; // HSL 色彩空间的饱和度（S）的最小值与最大值，包含浮点偏差。
@@ -318,7 +318,7 @@ namespace Com
             }
         }
 
-        private static double _CheckBrightness(double brightness) // 对颜色在 HSV 色彩空间的明度（V）的值进行合法性检查，返回合法的值。
+        private static double _CheckBrightness(double brightness) // 对颜色在 HSV 色彩空间的亮度（V）的值进行合法性检查，返回合法的值。
         {
             if (InternalMethod.IsNaNOrInfinity(brightness))
             {
@@ -1435,7 +1435,7 @@ namespace Com
 
         private double _Hue_HSV; // 颜色在 HSV 色彩空间的色相（H）。
         private double _Saturation_HSV; // 颜色在 HSV 色彩空间的饱和度（S）。
-        private double _Brightness; // 颜色在 HSV 色彩空间的明度（V）。
+        private double _Brightness; // 颜色在 HSV 色彩空间的亮度（V）。
 
         private double _Hue_HSL; // 颜色在 HSL 色彩空间的色相（H）。
         private double _Saturation_HSL; // 颜色在 HSL 色彩空间的饱和度（S）。
@@ -1861,7 +1861,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 获取或设置此 ColorX 结构在 HSV 色彩空间的明度（V）。
+        /// 获取或设置此 ColorX 结构在 HSV 色彩空间的亮度（V）。
         /// </summary>
         public double Brightness
         {
@@ -2413,10 +2413,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将此 ColorX 结构在 HSV 色彩空间的明度（V）更改为指定值的 ColorX 结构的新实例。
+        /// 返回将此 ColorX 结构在 HSV 色彩空间的亮度（V）更改为指定值的 ColorX 结构的新实例。
         /// </summary>
-        /// <param name="brightness">颜色在 HSV 色彩空间的明度（V）。</param>
-        /// <returns>ColorX 结构，表示将此 ColorX 结构在 HSV 色彩空间的明度（V）更改为指定值得到的结果。</returns>
+        /// <param name="brightness">颜色在 HSV 色彩空间的亮度（V）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 HSV 色彩空间的亮度（V）更改为指定值得到的结果。</returns>
         public ColorX AtBrightness(double brightness)
         {
             ColorX color = this;
@@ -2706,7 +2706,7 @@ namespace Com
         /// </summary>
         /// <param name="hue">颜色在 HSV 色彩空间的色相（H）。</param>
         /// <param name="saturation">颜色在 HSV 色彩空间的饱和度（S）。</param>
-        /// <param name="brightness">颜色在 HSV 色彩空间的明度（V）。</param>
+        /// <param name="brightness">颜色在 HSV 色彩空间的亮度（V）。</param>
         /// <param name="opacity">颜色的不透明度。</param>
         /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSV(double hue, double saturation, double brightness, double opacity)
@@ -2723,7 +2723,7 @@ namespace Com
         /// </summary>
         /// <param name="hue">颜色在 HSV 色彩空间的色相（H）。</param>
         /// <param name="saturation">颜色在 HSV 色彩空间的饱和度（S）。</param>
-        /// <param name="brightness">颜色在 HSV 色彩空间的明度（V）。</param>
+        /// <param name="brightness">颜色在 HSV 色彩空间的亮度（V）。</param>
         /// <returns>ColorX 结构，表示将颜色在 HSV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHSV(double hue, double saturation, double brightness)
         {
