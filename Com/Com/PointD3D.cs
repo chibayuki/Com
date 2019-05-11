@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD3D
-Version 19.5.2.1900
+Version 19.5.11.0000
 
 This file is part of Com
 
@@ -1883,7 +1883,7 @@ namespace Com
         /// <returns>Matrix 对象，表示不对 PointD3D 结构进行仿射变换的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix IdentityMatrix()
         {
-            return Matrix.Identity(_Dimension);
+            return Matrix.Identity(_Dimension + 1);
         }
 
         //

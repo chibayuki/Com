@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Vector
-Version 19.5.2.1900
+Version 19.5.11.0000
 
 This file is part of Com
 
@@ -2683,7 +2683,7 @@ namespace Com
             {
                 throw new ArithmeticException();
             }
-            else if (left._Size != right._Size)
+            else if (left._Type != right._Type || left._Size != right._Size)
             {
                 throw new ArithmeticException();
             }
@@ -2879,7 +2879,7 @@ namespace Com
             {
                 throw new ArithmeticException();
             }
-            else if (left._Size != right._Size)
+            else if (left._Type != right._Type || left._Size != right._Size)
             {
                 throw new ArithmeticException();
             }
@@ -2915,7 +2915,7 @@ namespace Com
             {
                 throw new ArithmeticException();
             }
-            else if (left._Size != right._Size)
+            else if (left._Type != right._Type || left._Size != right._Size)
             {
                 throw new ArithmeticException();
             }
