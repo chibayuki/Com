@@ -1,6 +1,6 @@
 ﻿Copyright © 2019 chibayuki@foxmail.com
 
 Com
-Version 19.5.2.1900
+Version 19.5.11.1720
 
 Com is released under the GPLv3 license, see GPLv3.txt for more information.

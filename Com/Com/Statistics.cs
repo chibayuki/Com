@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Statistics
-Version 19.5.2.1900
+Version 19.5.11.1720
 
 This file is part of Com
 
