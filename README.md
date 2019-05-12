@@ -21,7 +21,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 - Com.WinForm.RecommendColors 窗口管理器提供的建议配色方案 / Color scheme provided by FormManager.
 
 ### 公开的结构 / Public Structure
-- Com.ColorX 浮点精度的色彩解决方案，支持RGB、HSV、HSL、CMYK、LAB等色彩空间 / Floating-point precision color solution based on RGB, HSV, HSL, CMYK, LAB, etc.
+- Com.ColorX 浮点精度的色彩解决方案，支持RGB、HSV、HSL、CMYK、LAB、YUV等色彩空间 / Floating-point precision color solution based on RGB, HSV, HSL, CMYK, LAB, YUV, etc.
 - Com.Complex 直角坐标形式的二元复数 / Complex in the Cartesian coordinate system.
 - Com.DateTimeX 大型日期时间（范围25252756133808173 BC. ~ 25252756133808174 AD.） / Large date-time (25252756133808173 BC. ~ 25252756133808174 AD.).
 - Com.PointD 二维欧式空间中表示的坐标（向量） / Coordinate (vector) in 2D Euclidean space.
