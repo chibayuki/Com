@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorX
-Version 19.5.11.1720
+Version 19.4.28.0000
 
 This file is part of Com
 
@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Collections;
 using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -22,11 +23,58 @@ using System.Text.RegularExpressions;
 namespace Com
 {
     /// <summary>
-    /// 以双精度浮点数在 RGB、HSV、HSL、CMYK、LAB 等色彩空间表示的颜色。
+    /// 以双精度浮点数在 RGB、HSV、HSL、CMYK、LAB、YUV 等色彩空间表示的颜色。
     /// </summary>
     public struct ColorX : IEquatable<ColorX>
     {
         #region 私有成员与内部成员
+
+        private const int _ChannelToSpaceDivisor = 0x00010000; // 将色彩通道转换为色彩空间的转换因子。
+        private const int _ChannelCount = 4; // 每个色彩空间的最大色彩通道数量。
+
+        private enum _ColorSpace // 色彩空间。
+        {
+            None = 0, // 不表示任何色彩空间。
+
+            RGB = 0x00010000, // RGB 色彩空间。
+            HSV = 0x00020000, // HSV 色彩空间。
+            HSL = 0x00030000, // HSL 色彩空间。
+            CMYK = 0x00040000, // CMYK 色彩空间。
+            LAB = 0x00050000, // LAB 色彩空间。
+            YUV = 0x00060000 // YUV 色彩空间。
+        }
+
+        private enum _ColorChannel // 色彩通道。
+        {
+            None = 0, // 不表示任何色彩通道。
+
+            Red = _ColorSpace.RGB, // RGB 色彩空间的红色通道（R）。
+            Green, // RGB 色彩空间的绿色通道（G）。
+            Blue, // RGB 色彩空间的蓝色通道（B）。
+
+            Hue_HSV = _ColorSpace.HSV, // HSV 色彩空间的色相（H）。
+            Saturation_HSV, // HSV 色彩空间的饱和度（S）。
+            Brightness, // HSV 色彩空间的亮度（V）。
+
+            Hue_HSL = _ColorSpace.HSL, // HSL 色彩空间的色相（H）。
+            Saturation_HSL, // HSL 色彩空间的饱和度（S）。
+            Lightness_HSL, // HSL 色彩空间的明度（L）。
+
+            Cyan = _ColorSpace.CMYK, // CMYK 色彩空间的青色通道（C）。
+            Magenta, // CMYK 色彩空间的洋红色通道（M）。
+            Yellow, // CMYK 色彩空间的黄色通道（Y）。
+            Black, // CMYK 色彩空间的黑色通道（K）。
+
+            Lightness_LAB = _ColorSpace.LAB, // LAB 色彩空间的明度（L）。
+            GreenRed, // LAB 色彩空间的绿色-红色通道（A）。
+            BlueYellow, // LAB 色彩空间的蓝色-黄色通道（B）。
+
+            Luminance = _ColorSpace.YUV, // YUV 色彩空间的亮度（Y）。
+            ChrominanceBlue, // YUV 色彩空间的蓝色色度（U）。
+            ChrominanceRed, // YUV 色彩空间的红色色度（V）。
+        }
+
+        //
 
         private const int _32BitARGBAlphaShift = 24; // 32 位 ARGB 颜色的 Alpha 分量（A）的位偏移量。
         private const int _32BitARGBRedShift = 16; // 32 位 ARGB 颜色的红色分量（R）的位偏移量。
@@ -35,29 +83,33 @@ namespace Com
 
         //
 
-        private const double _MinOpacity = 0, _MaxOpacity = 100; // 不透明度的最小值与最大值。
-        private const double _MinAlpha = 0, _MaxAlpha = 255; // Alpha 通道（A）的最小值与最大值。
+        private const double _MinOpacity = 0, _MaxOpacity = 100, _DefaultOpacity = 100; // 不透明度的最小值、最大值与默认值。
+        private const double _MinAlpha = 0, _MaxAlpha = 255, _DefaultAlpha = 255; // Alpha 通道（A）的最小值、最大值与默认值。
 
-        private const double _MinRed = 0, _MaxRed = 255; // RGB 色彩空间的红色通道（R）的最小值与最大值。
-        private const double _MinGreen = 0, _MaxGreen = 255; // RGB 色彩空间的绿色通道（G）的最小值与最大值。
-        private const double _MinBlue = 0, _MaxBlue = 255; // RGB 色彩空间的蓝色通道（B）的最小值与最大值。
+        private const double _MinRed = 0, _MaxRed = 255, _DefaultRed = 0; // RGB 色彩空间的红色通道（R）的最小值、最大值与默认值。
+        private const double _MinGreen = 0, _MaxGreen = 255, _DefaultGreen = 0; // RGB 色彩空间的绿色通道（G）的最小值、最大值与默认值。
+        private const double _MinBlue = 0, _MaxBlue = 255, _DefaultBlue = 0; // RGB 色彩空间的蓝色通道（B）的最小值、最大值与默认值。
 
-        private const double _MinHue_HSV = 0, _MaxHue_HSV = 360; // HSV 色彩空间的色相（H）的最小值与最大值。
-        private const double _MinSaturation_HSV = 0, _MaxSaturation_HSV = 100; // HSV 色彩空间的饱和度（S）的最小值与最大值。
-        private const double _MinBrightness = 0, _MaxBrightness = 100; // HSV 色彩空间的亮度（V）的最小值与最大值。
+        private const double _MinHue_HSV = 0, _MaxHue_HSV = 360, _DefaultHue_HSV = 0; // HSV 色彩空间的色相（H）的最小值、最大值与默认值。
+        private const double _MinSaturation_HSV = 0, _MaxSaturation_HSV = 100, _DefaultSaturation_HSV = 0; // HSV 色彩空间的饱和度（S）的最小值、最大值与默认值。
+        private const double _MinBrightness = 0, _MaxBrightness = 100, _DefaultBrightness = 0; // HSV 色彩空间的亮度（V）的最小值、最大值与默认值。
 
-        private const double _MinHue_HSL = 0, _MaxHue_HSL = 360; // HSL 色彩空间的色相（H）的最小值与最大值。
-        private const double _MinSaturation_HSL = 0, _MaxSaturation_HSL = 100; // HSL 色彩空间的饱和度（S）的最小值与最大值。
-        private const double _MinLightness_HSL = 0, _MaxLightness_HSL = 100; // HSL 色彩空间的明度（L）的最小值与最大值。
+        private const double _MinHue_HSL = 0, _MaxHue_HSL = 360, _DefaultHue_HSL = 0; // HSL 色彩空间的色相（H）的最小值、最大值与默认值。
+        private const double _MinSaturation_HSL = 0, _MaxSaturation_HSL = 100, _DefaultSaturation_HSL = 0; // HSL 色彩空间的饱和度（S）的最小值、最大值与默认值。
+        private const double _MinLightness_HSL = 0, _MaxLightness_HSL = 100, _DefaultLightness_HSL = 0; // HSL 色彩空间的明度（L）的最小值、最大值与默认值。
 
-        private const double _MinCyan = 0, _MaxCyan = 100; // CMYK 色彩空间的青色通道（C）的最小值与最大值。
-        private const double _MinMagenta = 0, _MaxMagenta = 100; // CMYK 色彩空间的洋红色通道（M）的最小值与最大值。
-        private const double _MinYellow = 0, _MaxYellow = 100; // CMYK 色彩空间的黄色通道（Y）的最小值与最大值。
-        private const double _MinBlack = 0, _MaxBlack = 100; // CMYK 色彩空间的黑色通道（K）的最小值与最大值。
+        private const double _MinCyan = 0, _MaxCyan = 100, _DefaultCyan = 0; // CMYK 色彩空间的青色通道（C）的最小值、最大值与默认值。
+        private const double _MinMagenta = 0, _MaxMagenta = 100, _DefaultMagenta = 0; // CMYK 色彩空间的洋红色通道（M）的最小值、最大值与默认值。
+        private const double _MinYellow = 0, _MaxYellow = 100, _DefaultYellow = 0; // CMYK 色彩空间的黄色通道（Y）的最小值、最大值与默认值。
+        private const double _MinBlack = 0, _MaxBlack = 100, _DefaultBlack = 100; // CMYK 色彩空间的黑色通道（K）的最小值、最大值与默认值。
 
-        private const double _MinLightness_LAB = 0, _MaxLightness_LAB = 100; // LAB 色彩空间的明度（L）的最小值与最大值。
-        private const double _MinGreenRed = -128, _MaxGreenRed = 128; // LAB 色彩空间的绿色-红色通道（A）的最小值与最大值。
-        private const double _MinBlueYellow = -128, _MaxBlueYellow = 128; // LAB 色彩空间的蓝色-黄色通道（B）的最小值与最大值。
+        private const double _MinLightness_LAB = 0, _MaxLightness_LAB = 100, _DefaultLightness_LAB = 0; // LAB 色彩空间的明度（L）的最小值、最大值与默认值。
+        private const double _MinGreenRed = -128, _MaxGreenRed = 128, _DefaultGreenRed = 0; // LAB 色彩空间的绿色-红色通道（A）的最小值、最大值与默认值。
+        private const double _MinBlueYellow = -128, _MaxBlueYellow = 128, _DefaultBlueYellow = 0; // LAB 色彩空间的蓝色-黄色通道（B）的最小值、最大值与默认值。
+
+        private const double _MinLuminance = 0, _MaxLuminance = 1, _DefaultLuminance = 0; // YUV 色彩空间的亮度（Y）的最小值、最大值与默认值。
+        private const double _MinChrominanceBlue = -0.5, _MaxChrominanceBlue = 0.5, _DefaultChrominanceBlue = 0; // YUV 色彩空间的蓝色色度（U）的最小值、最大值与默认值。
+        private const double _MinChrominanceRed = -0.5, _MaxChrominanceRed = 0.5, _DefaultChrominanceRed = 0; // YUV 色彩空间的红色色度（V）的最小值、最大值与默认值。
 
         //
 
@@ -84,6 +136,10 @@ namespace Com
         private const double _MinLightness_LAB_FloDev = _MinLightness_LAB - 5E-13, _MaxLightness_LAB_FloDev = _MaxLightness_LAB + 5E-11; // LAB 色彩空间的明度（L）的最小值与最大值，包含浮点偏差。
         private const double _MinGreenRed_FloDev = _MinGreenRed - 5E-11, _MaxGreenRed_FloDev = _MaxGreenRed + 5E-11; // LAB 色彩空间的绿色-红色通道（A）的最小值与最大值，包含浮点偏差。
         private const double _MinBlueYellow_FloDev = _MinBlueYellow - 5E-11, _MaxBlueYellow_FloDev = _MaxBlueYellow + 5E-11; // LAB 色彩空间的蓝色-黄色通道（B）的最小值与最大值，包含浮点偏差。
+
+        private const double _MinLuminance_FloDev = _MinLuminance - 5E-13, _MaxLuminance_FloDev = _MaxLuminance + 5E-13; // YUV 色彩空间的亮度（Y）的最小值与最大值，包含浮点偏差。
+        private const double _MinChrominanceBlue_FloDev = _MinChrominanceBlue - 5E-14, _MaxChrominanceBlue_FloDev = _MaxChrominanceBlue + 5E-14; // YUV 色彩空间的蓝色色度（U）的最小值与最大值，包含浮点偏差。
+        private const double _MinChrominanceRed_FloDev = _MinChrominanceRed - 5E-14, _MaxChrominanceRed_FloDev = _MaxChrominanceRed + 5E-14; // YUV 色彩空间的红色色度（V）的最小值与最大值，包含浮点偏差。
 
         //
 
@@ -678,6 +734,105 @@ namespace Com
             else
             {
                 return blueYellow;
+            }
+        }
+
+        private static double _CheckLuminance(double luminance) // 对颜色在 YUV 色彩空间的亮度（Y）的值进行合法性检查，返回合法的值。
+        {
+            if (InternalMethod.IsNaNOrInfinity(luminance))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            if (luminance < _MinLuminance)
+            {
+                if (luminance <= _MinLuminance_FloDev)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                return _MinLuminance;
+            }
+            else if (luminance > _MaxLuminance)
+            {
+                if (luminance >= _MaxLuminance_FloDev)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                return _MaxLuminance;
+            }
+            else
+            {
+                return luminance;
+            }
+        }
+
+        private static double _CheckChrominanceBlue(double chrominanceBlue) // 对颜色在 YUV 色彩空间的蓝色色度（U）的值进行合法性检查，返回合法的值。
+        {
+            if (InternalMethod.IsNaNOrInfinity(chrominanceBlue))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            if (chrominanceBlue < _MinChrominanceBlue)
+            {
+                if (chrominanceBlue <= _MinChrominanceBlue_FloDev)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                return _MinChrominanceBlue;
+            }
+            else if (chrominanceBlue > _MaxChrominanceBlue)
+            {
+                if (chrominanceBlue >= _MaxChrominanceBlue_FloDev)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                return _MaxChrominanceBlue;
+            }
+            else
+            {
+                return chrominanceBlue;
+            }
+        }
+
+        private static double _CheckChrominanceRed(double chrominanceRed) // 对颜色在 YUV 色彩空间的红色色度（V）的值进行合法性检查，返回合法的值。
+        {
+            if (InternalMethod.IsNaNOrInfinity(chrominanceRed))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            if (chrominanceRed < _MinChrominanceRed)
+            {
+                if (chrominanceRed <= _MinChrominanceRed_FloDev)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                return _MinChrominanceRed;
+            }
+            else if (chrominanceRed > _MaxChrominanceRed)
+            {
+                if (chrominanceRed >= _MaxChrominanceRed_FloDev)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                return _MaxChrominanceRed;
+            }
+            else
+            {
+                return chrominanceRed;
             }
         }
 
@@ -1422,206 +1577,723 @@ namespace Com
             }
         }
 
+        private static void _RGBToYUV(double red, double green, double blue, out double luminance, out double chrominanceBlue, out double chrominanceRed) // 将颜色在 RGB 色彩空间的各分量转换为在 YUV 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        {
+            red /= _MaxRed;
+            green /= _MaxGreen;
+            blue /= _MaxBlue;
+
+            luminance = 0.299 * red + 0.587 * green + 0.114 * blue;
+            chrominanceBlue = (blue - luminance) / 1.772;
+            chrominanceRed = (red - luminance) / 1.402;
+
+            if (luminance < _MinLuminance)
+            {
+                luminance = _MinLuminance;
+            }
+            else if (luminance > _MaxLuminance)
+            {
+                luminance = _MaxLuminance;
+            }
+
+            if (chrominanceBlue < _MinChrominanceBlue)
+            {
+                chrominanceBlue = _MinChrominanceBlue;
+            }
+            else if (chrominanceBlue > _MaxChrominanceBlue)
+            {
+                chrominanceBlue = _MaxChrominanceBlue;
+            }
+
+            if (chrominanceRed < _MinChrominanceRed)
+            {
+                chrominanceRed = _MinChrominanceRed;
+            }
+            else if (chrominanceRed > _MaxChrominanceRed)
+            {
+                chrominanceRed = _MaxChrominanceRed;
+            }
+        }
+
+        private static void _YUVToRGB(double luminance, double chrominanceBlue, double chrominanceRed, out double red, out double green, out double blue) // 将颜色在 YUV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        {
+            red = luminance + 1.402 * chrominanceRed;
+            green = luminance - (0.202008 * chrominanceBlue + 0.419198 * chrominanceRed) / 0.587;
+            blue = luminance + 1.772 * chrominanceBlue;
+
+            red *= _MaxRed;
+            green *= _MaxGreen;
+            blue *= _MaxBlue;
+
+            if (red < _MinRed)
+            {
+                red = _MinRed;
+            }
+            else if (red > _MaxRed)
+            {
+                red = _MaxRed;
+            }
+
+            if (green < _MinGreen)
+            {
+                green = _MinGreen;
+            }
+            else if (green > _MaxGreen)
+            {
+                green = _MaxGreen;
+            }
+
+            if (blue < _MinBlue)
+            {
+                blue = _MinBlue;
+            }
+            else if (blue > _MaxBlue)
+            {
+                blue = _MaxBlue;
+            }
+        }
+
         //
 
-        private bool _Initialized; // 表示此 ColorX 结构是否已初始化。
+        private _ColorSpace _CurrentColorSpace; // 表示当前使用的色彩空间。
 
         private double _Opacity; // 颜色的不透明度。
-        private double _Alpha; // 颜色的 Alpha 通道（A）的值。
 
-        private double _Red; // 颜色在 RGB 色彩空间的红色通道（R）的值。
-        private double _Green; // 颜色在 RGB 色彩空间的绿色通道（G）的值。
-        private double _Blue; // 颜色在 RGB 色彩空间的蓝色通道（B）的值。
+        private double _Channel1; // 颜色在当前色彩空间的第 1 个分量。
+        private double _Channel2; // 颜色在当前色彩空间的第 2 个分量。
+        private double _Channel3; // 颜色在当前色彩空间的第 3 个分量。
+        private double _Channel4; // 颜色在当前色彩空间的第 4 个分量。
 
-        private double _Hue_HSV; // 颜色在 HSV 色彩空间的色相（H）。
-        private double _Saturation_HSV; // 颜色在 HSV 色彩空间的饱和度（S）。
-        private double _Brightness; // 颜色在 HSV 色彩空间的亮度（V）。
-
-        private double _Hue_HSL; // 颜色在 HSL 色彩空间的色相（H）。
-        private double _Saturation_HSL; // 颜色在 HSL 色彩空间的饱和度（S）。
-        private double _Lightness_HSL; // 颜色在 HSL 色彩空间的明度（L）。
-
-        private double _Cyan; // 颜色在 CMYK 色彩空间的青色通道（C）的值。
-        private double _Magenta; // 颜色在 CMYK 色彩空间的洋红色通道（M）的值。
-        private double _Yellow; // 颜色在 CMYK 色彩空间的黄色通道（Y）的值。
-        private double _Black; // 颜色在 CMYK 色彩空间的黑色通道（K）的值。
-
-        private double _Lightness_LAB; // 颜色在 LAB 色彩空间的明度（L）。
-        private double _GreenRed; // 颜色在 LAB 色彩空间的绿色-红色通道（A）的值。   
-        private double _BlueYellow; // 颜色在 LAB 色彩空间的蓝色-黄色通道（B）的值。
+        private Hashtable _CachedChannels; // 用于缓存颜色在其他色彩空间的分量。
 
         //
 
-        private void _CtorRGB(double alpha, double red, double green, double blue) // 为以颜色在 RGB 色彩空间的各分量为参数的构造函数提供实现。
+        private double[] _GetChannels(_ColorSpace colorSpace) // 获取颜色在指定色彩空间的所有分量。
         {
-            _Alpha = _CheckAlpha(alpha);
-            _Red = _CheckRed(red);
-            _Green = _CheckGreen(green);
-            _Blue = _CheckBlue(blue);
-
-            _AlphaToOpacity(_Alpha, out _Opacity);
-            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+            if (colorSpace == _ColorSpace.None)
+            {
+                throw new ArgumentException();
+            }
 
             //
 
-            _Initialized = true;
+            if (_CurrentColorSpace == _ColorSpace.None)
+            {
+                switch (colorSpace)
+                {
+                    case _ColorSpace.RGB: return new double[_ChannelCount] { _DefaultRed, _DefaultGreen, _DefaultBlue, 0 };
+                    case _ColorSpace.HSV: return new double[_ChannelCount] { _DefaultHue_HSV, _DefaultSaturation_HSV, _DefaultBrightness, 0 };
+                    case _ColorSpace.HSL: return new double[_ChannelCount] { _DefaultHue_HSL, _DefaultSaturation_HSL, _DefaultLightness_HSL, 0 };
+                    case _ColorSpace.CMYK: return new double[_ChannelCount] { _DefaultCyan, _DefaultMagenta, _DefaultYellow, _DefaultBlack };
+                    case _ColorSpace.LAB: return new double[_ChannelCount] { _DefaultLightness_LAB, _DefaultGreenRed, _DefaultBlueYellow, 0 };
+                    case _ColorSpace.YUV: return new double[_ChannelCount] { _DefaultLuminance, _DefaultChrominanceBlue, _DefaultChrominanceRed, 0 };
+                    default: return new double[_ChannelCount];
+                }
+            }
+            else if (colorSpace == _CurrentColorSpace)
+            {
+                return new double[_ChannelCount] { _Channel1, _Channel2, _Channel3, _Channel4 };
+            }
+            else if (_CachedChannels != null && _CachedChannels.Contains(colorSpace))
+            {
+                return (_CachedChannels[colorSpace] as double[]);
+            }
+            else
+            {
+                double[] channels = new double[_ChannelCount];
+
+                if (colorSpace == _ColorSpace.RGB)
+                {
+                    switch (_CurrentColorSpace)
+                    {
+                        case _ColorSpace.HSV:
+                            _HSVToRGB(_Channel1, _Channel2, _Channel3, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.HSL:
+                            _HSLToRGB(_Channel1, _Channel2, _Channel3, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.CMYK:
+                            _CMYKToRGB(_Channel1, _Channel2, _Channel3, _Channel4, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.LAB:
+                            _LABToRGB(_Channel1, _Channel2, _Channel3, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.YUV:
+                            _YUVToRGB(_Channel1, _Channel2, _Channel3, out channels[0], out channels[1], out channels[2]);
+                            break;
+                    }
+                }
+                else
+                {
+                    double R = _DefaultRed;
+                    double G = _DefaultGreen;
+                    double B = _DefaultBlue;
+
+                    if (_CurrentColorSpace == _ColorSpace.RGB)
+                    {
+                        R = _Channel1;
+                        G = _Channel2;
+                        B = _Channel3;
+                    }
+                    else if (_CachedChannels != null && _CachedChannels.Contains(_ColorSpace.RGB))
+                    {
+                        double[] rgb = _CachedChannels[_ColorSpace.RGB] as double[];
+
+                        R = rgb[0];
+                        G = rgb[1];
+                        B = rgb[2];
+                    }
+                    else
+                    {
+                        switch (_CurrentColorSpace)
+                        {
+                            case _ColorSpace.HSV:
+                                _HSVToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.HSL:
+                                _HSLToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.CMYK:
+                                _CMYKToRGB(_Channel1, _Channel2, _Channel3, _Channel4, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.LAB:
+                                _LABToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.YUV:
+                                _YUVToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+                        }
+
+                        if (_CachedChannels == null)
+                        {
+                            _CachedChannels = new Hashtable();
+                        }
+
+                        _CachedChannels.Add(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
+                    }
+
+                    switch (colorSpace)
+                    {
+                        case _ColorSpace.HSV:
+                            _RGBToHSV(R, G, B, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.HSL:
+                            _RGBToHSL(R, G, B, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.CMYK:
+                            _RGBToCMYK(R, G, B, out channels[0], out channels[1], out channels[2], out channels[3]);
+                            break;
+
+                        case _ColorSpace.LAB:
+                            _RGBToLAB(R, G, B, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.YUV:
+                            _RGBToYUV(R, G, B, out channels[0], out channels[1], out channels[2]);
+                            break;
+                    }
+                }
+
+                if (_CachedChannels == null)
+                {
+                    _CachedChannels = new Hashtable();
+                }
+
+                _CachedChannels.Add(colorSpace, channels);
+
+                return channels;
+            }
         }
 
-        private void _CtorRGB(double red, double green, double blue) // 为以颜色在 RGB 色彩空间的各分量为参数的构造函数提供实现。
+        private double _GetChannel(_ColorChannel colorChannel) // 获取颜色在指定色彩通道的分量。
         {
-            _Red = _CheckRed(red);
-            _Green = _CheckGreen(green);
-            _Blue = _CheckBlue(blue);
-
-            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+            if (colorChannel == _ColorChannel.None)
+            {
+                throw new ArgumentException();
+            }
 
             //
 
-            _Initialized = true;
+            int channelIndex = (int)colorChannel % _ChannelToSpaceDivisor;
+            _ColorSpace colorSpace = (_ColorSpace)((int)colorChannel - channelIndex);
+
+            if (_CurrentColorSpace == _ColorSpace.None)
+            {
+                switch (colorChannel)
+                {
+                    case _ColorChannel.Red: return _DefaultRed;
+                    case _ColorChannel.Green: return _DefaultGreen;
+                    case _ColorChannel.Blue: return _DefaultBlue;
+
+                    case _ColorChannel.Hue_HSV: return _DefaultHue_HSV;
+                    case _ColorChannel.Saturation_HSV: return _DefaultSaturation_HSV;
+                    case _ColorChannel.Brightness: return _DefaultBrightness;
+
+                    case _ColorChannel.Hue_HSL: return _DefaultHue_HSL;
+                    case _ColorChannel.Saturation_HSL: return _DefaultSaturation_HSL;
+                    case _ColorChannel.Lightness_HSL: return _DefaultLightness_HSL;
+
+                    case _ColorChannel.Cyan: return _DefaultCyan;
+                    case _ColorChannel.Magenta: return _DefaultMagenta;
+                    case _ColorChannel.Yellow: return _DefaultYellow;
+                    case _ColorChannel.Black: return _DefaultBlack;
+
+                    case _ColorChannel.Lightness_LAB: return _DefaultLightness_LAB;
+                    case _ColorChannel.GreenRed: return _DefaultGreenRed;
+                    case _ColorChannel.BlueYellow: return _DefaultBlueYellow;
+
+                    case _ColorChannel.Luminance: return _DefaultLuminance;
+                    case _ColorChannel.ChrominanceBlue: return _DefaultChrominanceBlue;
+                    case _ColorChannel.ChrominanceRed: return _DefaultChrominanceRed;
+
+                    default: return 0;
+                }
+            }
+            else if (colorSpace == _CurrentColorSpace)
+            {
+                switch (channelIndex)
+                {
+                    case 0: return _Channel1;
+                    case 1: return _Channel2;
+                    case 2: return _Channel3;
+                    case 3: return _Channel4;
+                    default: return 0;
+                }
+            }
+            else if (_CachedChannels != null && _CachedChannels.Contains(colorSpace))
+            {
+                return (_CachedChannels[colorSpace] as double[])[channelIndex];
+            }
+            else
+            {
+                double[] channels = new double[_ChannelCount];
+
+                if (colorSpace == _ColorSpace.RGB)
+                {
+                    switch (_CurrentColorSpace)
+                    {
+                        case _ColorSpace.HSV:
+                            _HSVToRGB(_Channel1, _Channel2, _Channel3, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.HSL:
+                            _HSLToRGB(_Channel1, _Channel2, _Channel3, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.CMYK:
+                            _CMYKToRGB(_Channel1, _Channel2, _Channel3, _Channel4, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.LAB:
+                            _LABToRGB(_Channel1, _Channel2, _Channel3, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.YUV:
+                            _YUVToRGB(_Channel1, _Channel2, _Channel3, out channels[0], out channels[1], out channels[2]);
+                            break;
+                    }
+                }
+                else
+                {
+                    double R = _DefaultRed;
+                    double G = _DefaultGreen;
+                    double B = _DefaultBlue;
+
+                    if (_CurrentColorSpace == _ColorSpace.RGB)
+                    {
+                        R = _Channel1;
+                        G = _Channel2;
+                        B = _Channel3;
+                    }
+                    else if (_CachedChannels != null && _CachedChannels.Contains(_ColorSpace.RGB))
+                    {
+                        double[] rgb = _CachedChannels[_ColorSpace.RGB] as double[];
+
+                        R = rgb[0];
+                        G = rgb[1];
+                        B = rgb[2];
+                    }
+                    else
+                    {
+                        switch (_CurrentColorSpace)
+                        {
+                            case _ColorSpace.HSV:
+                                _HSVToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.HSL:
+                                _HSLToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.CMYK:
+                                _CMYKToRGB(_Channel1, _Channel2, _Channel3, _Channel4, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.LAB:
+                                _LABToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.YUV:
+                                _YUVToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+                        }
+
+                        if (_CachedChannels == null)
+                        {
+                            _CachedChannels = new Hashtable();
+                        }
+
+                        _CachedChannels.Add(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
+                    }
+
+                    switch (colorSpace)
+                    {
+                        case _ColorSpace.HSV:
+                            _RGBToHSV(R, G, B, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.HSL:
+                            _RGBToHSL(R, G, B, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.CMYK:
+                            _RGBToCMYK(R, G, B, out channels[0], out channels[1], out channels[2], out channels[3]);
+                            break;
+
+                        case _ColorSpace.LAB:
+                            _RGBToLAB(R, G, B, out channels[0], out channels[1], out channels[2]);
+                            break;
+
+                        case _ColorSpace.YUV:
+                            _RGBToYUV(R, G, B, out channels[0], out channels[1], out channels[2]);
+                            break;
+                    }
+                }
+
+                if (_CachedChannels == null)
+                {
+                    _CachedChannels = new Hashtable();
+                }
+
+                _CachedChannels.Add(colorSpace, channels);
+
+                return channels[channelIndex];
+            }
         }
 
-        private void _CtorHSV(double hue, double saturation, double brightness, double opacity) // 为以颜色在 HSV 色彩空间的各分量为参数的构造函数提供实现。
+        private void _SetChannels(_ColorSpace colorSpace, params double[] channels) // 设置颜色在指定色彩空间的所有分量。
         {
-            _Opacity = _CheckOpacity(opacity);
-            _Hue_HSV = _CheckHue_HSV(hue);
-            _Saturation_HSV = _CheckSaturation_HSV(saturation);
-            _Brightness = _CheckBrightness(brightness);
+            if (colorSpace == _ColorSpace.None)
+            {
+                throw new ArgumentException();
+            }
 
-            _OpacityToAlpha(_Opacity, out _Alpha);
-            _HSVToRGB(_Hue_HSV, _Saturation_HSV, _Brightness, out _Red, out _Green, out _Blue);
-            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+            if (InternalMethod.IsNullOrEmpty(channels))
+            {
+                throw new ArgumentNullException();
+            }
 
             //
 
-            _Initialized = true;
+            switch (colorSpace)
+            {
+                case _ColorSpace.RGB:
+                    {
+                        _Channel1 = _CheckRed(channels[0]);
+                        _Channel2 = _CheckGreen(channels[1]);
+                        _Channel3 = _CheckBlue(channels[2]);
+                        _Channel4 = 0;
+                    }
+                    break;
+
+                case _ColorSpace.HSV:
+                    {
+                        _Channel1 = _CheckHue_HSV(channels[0]);
+                        _Channel2 = _CheckSaturation_HSV(channels[1]);
+                        _Channel3 = _CheckBrightness(channels[2]);
+                        _Channel4 = 0;
+                    }
+                    break;
+
+                case _ColorSpace.HSL:
+                    {
+                        _Channel1 = _CheckHue_HSL(channels[0]);
+                        _Channel2 = _CheckSaturation_HSL(channels[1]);
+                        _Channel3 = _CheckLightness_HSL(channels[2]);
+                        _Channel4 = 0;
+                    }
+                    break;
+
+                case _ColorSpace.CMYK:
+                    {
+                        _Channel1 = _CheckCyan(channels[0]);
+                        _Channel2 = _CheckMagenta(channels[1]);
+                        _Channel3 = _CheckYellow(channels[2]);
+                        _Channel4 = _CheckBlack(channels[3]);
+                    }
+                    break;
+
+                case _ColorSpace.LAB:
+                    {
+                        _Channel1 = _CheckLightness_LAB(channels[0]);
+                        _Channel2 = _CheckGreenRed(channels[1]);
+                        _Channel3 = _CheckBlueYellow(channels[2]);
+                        _Channel4 = 0;
+                    }
+                    break;
+
+                case _ColorSpace.YUV:
+                    {
+                        _Channel1 = _CheckLuminance(channels[0]);
+                        _Channel2 = _CheckChrominanceBlue(channels[1]);
+                        _Channel3 = _CheckChrominanceRed(channels[2]);
+                        _Channel4 = 0;
+                    }
+                    break;
+            }
+
+            _CurrentColorSpace = colorSpace;
+
+            _CachedChannels = null;
         }
 
-        private void _CtorHSV(double hue, double saturation, double brightness) // 为以颜色在 HSV 色彩空间的各分量为参数的构造函数提供实现。
+        private void _SetChannel(_ColorChannel colorChannel, double channel) // 设置颜色在指定色彩通道的分量。
         {
-            _Hue_HSV = _CheckHue_HSV(hue);
-            _Saturation_HSV = _CheckSaturation_HSV(saturation);
-            _Brightness = _CheckBrightness(brightness);
-
-            _HSVToRGB(_Hue_HSV, _Saturation_HSV, _Brightness, out _Red, out _Green, out _Blue);
-            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+            if (colorChannel == _ColorChannel.None)
+            {
+                throw new ArgumentException();
+            }
 
             //
 
-            _Initialized = true;
-        }
+            switch (colorChannel)
+            {
+                case _ColorChannel.Red: channel = _CheckRed(channel); break;
+                case _ColorChannel.Green: channel = _CheckGreen(channel); break;
+                case _ColorChannel.Blue: channel = _CheckBlue(channel); break;
 
-        private void _CtorHSL(double hue, double saturation, double lightness, double opacity) // 为以颜色在 HSL 色彩空间的各分量为参数的构造函数提供实现。
-        {
-            _Opacity = _CheckOpacity(opacity);
-            _Hue_HSL = _CheckHue_HSL(hue);
-            _Saturation_HSL = _CheckSaturation_HSL(saturation);
-            _Lightness_HSL = _CheckLightness_HSL(lightness);
+                case _ColorChannel.Hue_HSV: channel = _CheckHue_HSV(channel); break;
+                case _ColorChannel.Saturation_HSV: channel = _CheckSaturation_HSV(channel); break;
+                case _ColorChannel.Brightness: channel = _CheckBrightness(channel); break;
 
-            _OpacityToAlpha(_Opacity, out _Alpha);
-            _HSLToRGB(_Hue_HSL, _Saturation_HSL, _Lightness_HSL, out _Red, out _Green, out _Blue);
-            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+                case _ColorChannel.Hue_HSL: channel = _CheckHue_HSL(channel); break;
+                case _ColorChannel.Saturation_HSL: channel = _CheckSaturation_HSL(channel); break;
+                case _ColorChannel.Lightness_HSL: channel = _CheckLightness_HSL(channel); break;
 
-            //
+                case _ColorChannel.Cyan: channel = _CheckCyan(channel); break;
+                case _ColorChannel.Magenta: channel = _CheckMagenta(channel); break;
+                case _ColorChannel.Yellow: channel = _CheckYellow(channel); break;
+                case _ColorChannel.Black: channel = _CheckBlack(channel); break;
 
-            _Initialized = true;
-        }
-
-        private void _CtorHSL(double hue, double saturation, double lightness) // 为以颜色在 HSL 色彩空间的各分量为参数的构造函数提供实现。
-        {
-            _Hue_HSL = _CheckHue_HSL(hue);
-            _Saturation_HSL = _CheckSaturation_HSL(saturation);
-            _Lightness_HSL = _CheckLightness_HSL(lightness);
-
-            _HSLToRGB(_Hue_HSL, _Saturation_HSL, _Lightness_HSL, out _Red, out _Green, out _Blue);
-            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
-            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+                case _ColorChannel.Lightness_LAB: channel = _CheckLightness_LAB(channel); break;
+                case _ColorChannel.GreenRed: channel = _CheckGreenRed(channel); break;
+                case _ColorChannel.BlueYellow: channel = _CheckBlueYellow(channel); break;
+            }
 
             //
 
-            _Initialized = true;
-        }
+            int channelIndex = (int)colorChannel % _ChannelToSpaceDivisor;
+            _ColorSpace colorSpace = (_ColorSpace)((int)colorChannel - channelIndex);
 
-        private void _CtorCMYK(double cyan, double magenta, double yellow, double black, double opacity) // 为以颜色在 CMYK 色彩空间的各分量为参数的构造函数提供实现。
-        {
-            _Opacity = _CheckOpacity(opacity);
-            _Cyan = _CheckCyan(cyan);
-            _Magenta = _CheckMagenta(magenta);
-            _Yellow = _CheckYellow(yellow);
-            _Black = _CheckBlack(black);
+            if (_CurrentColorSpace == _ColorSpace.None)
+            {
+                switch (colorSpace)
+                {
+                    case _ColorSpace.RGB:
+                        {
+                            _Channel1 = _DefaultRed;
+                            _Channel2 = _DefaultGreen;
+                            _Channel3 = _DefaultBlue;
+                            _Channel4 = 0;
+                        }
+                        break;
 
-            _OpacityToAlpha(_Opacity, out _Alpha);
-            _CMYKToRGB(_Cyan, _Magenta, _Yellow, _Black, out _Red, out _Green, out _Blue);
-            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+                    case _ColorSpace.HSV:
+                        {
+                            _Channel1 = _DefaultHue_HSV;
+                            _Channel2 = _DefaultSaturation_HSV;
+                            _Channel3 = _DefaultBrightness;
+                            _Channel4 = 0;
+                        }
+                        break;
 
-            //
+                    case _ColorSpace.HSL:
+                        {
+                            _Channel1 = _DefaultHue_HSL;
+                            _Channel2 = _DefaultSaturation_HSL;
+                            _Channel3 = _DefaultLightness_HSL;
+                            _Channel4 = 0;
+                        }
+                        break;
 
-            _Initialized = true;
-        }
+                    case _ColorSpace.CMYK:
+                        {
+                            _Channel1 = _DefaultCyan;
+                            _Channel2 = _DefaultMagenta;
+                            _Channel3 = _DefaultYellow;
+                            _Channel4 = _DefaultBlack;
+                        }
+                        break;
 
-        private void _CtorCMYK(double cyan, double magenta, double yellow, double black) // 为以颜色在 CMYK 色彩空间的各分量为参数的构造函数提供实现。
-        {
-            _Cyan = _CheckCyan(cyan);
-            _Magenta = _CheckMagenta(magenta);
-            _Yellow = _CheckYellow(yellow);
-            _Black = _CheckBlack(black);
+                    case _ColorSpace.LAB:
+                        {
+                            _Channel1 = _DefaultLightness_LAB;
+                            _Channel2 = _DefaultGreenRed;
+                            _Channel3 = _DefaultBlueYellow;
+                            _Channel4 = 0;
+                        }
+                        break;
 
-            _CMYKToRGB(_Cyan, _Magenta, _Yellow, _Black, out _Red, out _Green, out _Blue);
-            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _RGBToLAB(_Red, _Green, _Blue, out _Lightness_LAB, out _GreenRed, out _BlueYellow);
+                    case _ColorSpace.YUV:
+                        {
+                            _Channel1 = _DefaultLuminance;
+                            _Channel2 = _DefaultChrominanceBlue;
+                            _Channel3 = _DefaultChrominanceRed;
+                            _Channel4 = 0;
+                        }
+                        break;
+                }
+            }
+            else if (colorSpace == _CurrentColorSpace)
+            {
+                goto SET_CHANNEL;
+            }
+            else if (_CachedChannels != null && _CachedChannels.Contains(colorSpace))
+            {
+                double[] channels = _CachedChannels[colorSpace] as double[];
 
-            //
+                _Channel1 = channels[0];
+                _Channel2 = channels[1];
+                _Channel3 = channels[2];
+                _Channel4 = channels[3];
+            }
+            else
+            {
+                if (colorSpace == _ColorSpace.RGB)
+                {
+                    switch (_CurrentColorSpace)
+                    {
+                        case _ColorSpace.HSV:
+                            _HSVToRGB(_Channel1, _Channel2, _Channel3, out _Channel1, out _Channel2, out _Channel3);
+                            break;
 
-            _Initialized = true;
-        }
+                        case _ColorSpace.HSL:
+                            _HSLToRGB(_Channel1, _Channel2, _Channel3, out _Channel1, out _Channel2, out _Channel3);
+                            break;
 
-        private void _CtorLAB(double lightness, double greenRed, double blueYellow, double opacity) // 为以颜色在 LAB 色彩空间的各分量为参数的构造函数提供实现。
-        {
-            _Opacity = _CheckOpacity(opacity);
-            _Lightness_LAB = _CheckLightness_LAB(lightness);
-            _GreenRed = _CheckGreenRed(greenRed);
-            _BlueYellow = _CheckBlueYellow(blueYellow);
+                        case _ColorSpace.CMYK:
+                            _CMYKToRGB(_Channel1, _Channel2, _Channel3, _Channel4, out _Channel1, out _Channel2, out _Channel3);
+                            break;
 
-            _OpacityToAlpha(_Opacity, out _Alpha);
-            _LABToRGB(_Lightness_LAB, _GreenRed, _BlueYellow, out _Red, out _Green, out _Blue);
-            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
+                        case _ColorSpace.LAB:
+                            _LABToRGB(_Channel1, _Channel2, _Channel3, out _Channel1, out _Channel2, out _Channel3);
+                            break;
 
-            //
+                        case _ColorSpace.YUV:
+                            _YUVToRGB(_Channel1, _Channel2, _Channel3, out _Channel1, out _Channel2, out _Channel3);
+                            break;
+                    }
+                }
+                else
+                {
+                    double R = _DefaultRed;
+                    double G = _DefaultGreen;
+                    double B = _DefaultBlue;
 
-            _Initialized = true;
-        }
+                    if (_CurrentColorSpace == _ColorSpace.RGB)
+                    {
+                        R = _Channel1;
+                        G = _Channel2;
+                        B = _Channel3;
+                    }
+                    else if (_CachedChannels != null && _CachedChannels.Contains(_ColorSpace.RGB))
+                    {
+                        double[] rgb = _CachedChannels[_ColorSpace.RGB] as double[];
 
-        private void _CtorLAB(double lightness, double greenRed, double blueYellow) // 为以颜色在 LAB 色彩空间的各分量为参数的构造函数提供实现。
-        {
-            _Lightness_LAB = _CheckLightness_LAB(lightness);
-            _GreenRed = _CheckGreenRed(greenRed);
-            _BlueYellow = _CheckBlueYellow(blueYellow);
+                        R = rgb[0];
+                        G = rgb[1];
+                        B = rgb[2];
+                    }
+                    else
+                    {
+                        switch (_CurrentColorSpace)
+                        {
+                            case _ColorSpace.HSV:
+                                _HSVToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
 
-            _LABToRGB(_Lightness_LAB, _GreenRed, _BlueYellow, out _Red, out _Green, out _Blue);
-            _RGBToHSV(_Red, _Green, _Blue, out _Hue_HSV, out _Saturation_HSV, out _Brightness);
-            _RGBToHSL(_Red, _Green, _Blue, out _Hue_HSL, out _Saturation_HSL, out _Lightness_HSL);
-            _RGBToCMYK(_Red, _Green, _Blue, out _Cyan, out _Magenta, out _Yellow, out _Black);
+                            case _ColorSpace.HSL:
+                                _HSLToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
 
-            //
+                            case _ColorSpace.CMYK:
+                                _CMYKToRGB(_Channel1, _Channel2, _Channel3, _Channel4, out R, out G, out B);
+                                break;
 
-            _Initialized = true;
+                            case _ColorSpace.LAB:
+                                _LABToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+
+                            case _ColorSpace.YUV:
+                                _YUVToRGB(_Channel1, _Channel2, _Channel3, out R, out G, out B);
+                                break;
+                        }
+
+                        if (_CachedChannels == null)
+                        {
+                            _CachedChannels = new Hashtable();
+                        }
+
+                        _CachedChannels.Add(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
+                    }
+
+                    switch (colorSpace)
+                    {
+                        case _ColorSpace.HSV:
+                            _RGBToHSV(R, G, B, out _Channel1, out _Channel2, out _Channel3);
+                            break;
+
+                        case _ColorSpace.HSL:
+                            _RGBToHSL(R, G, B, out _Channel1, out _Channel2, out _Channel3);
+                            break;
+
+                        case _ColorSpace.CMYK:
+                            _RGBToCMYK(R, G, B, out _Channel1, out _Channel2, out _Channel3, out _Channel4);
+                            break;
+
+                        case _ColorSpace.LAB:
+                            _RGBToLAB(R, G, B, out _Channel1, out _Channel2, out _Channel3);
+                            break;
+
+                        case _ColorSpace.YUV:
+                            _RGBToYUV(R, G, B, out _Channel1, out _Channel2, out _Channel3);
+                            break;
+                    }
+                }
+            }
+
+        SET_CHANNEL:
+            switch (channelIndex)
+            {
+                case 0: _Channel1 = channel; break;
+                case 1: _Channel2 = channel; break;
+                case 2: _Channel3 = channel; break;
+                case 3: _Channel4 = channel; break;
+            }
+
+            _CurrentColorSpace = colorSpace;
+
+            _CachedChannels = null;
         }
 
         #endregion
@@ -1634,16 +2306,18 @@ namespace Com
         /// <param name="color">Color 结构。</param>
         public ColorX(Color color) : this()
         {
-            _CtorRGB(color.A, color.R, color.G, color.B);
+            _SetChannels(_ColorSpace.RGB, color.R, color.G, color.B);
+            Alpha = color.A;
         }
 
         /// <summary>
-        /// 使用颜色在 RGB 色彩空间的 32 位 ARGB 值初始化 ColorX 结构的新实例。
+        /// 使用颜色的 32 位 ARGB 值初始化 ColorX 结构的新实例。
         /// </summary>
         /// <param name="argb">颜色在 RGB 色彩空间的 32 位 ARGB 值。</param>
         public ColorX(int argb) : this()
         {
-            _CtorRGB(((uint)argb >> _32BitARGBAlphaShift) & 0xFFU, ((uint)argb >> _32BitARGBRedShift) & 0xFFU, ((uint)argb >> _32BitARGBGreenShift) & 0xFFU, ((uint)argb >> _32BitARGBBlueShift) & 0xFFU);
+            _SetChannels(_ColorSpace.RGB, ((uint)argb >> _32BitARGBRedShift) & 0xFFU, ((uint)argb >> _32BitARGBGreenShift) & 0xFFU, ((uint)argb >> _32BitARGBBlueShift) & 0xFFU);
+            Alpha = ((uint)argb >> _32BitARGBAlphaShift) & 0xFFU;
         }
 
         /// <summary>
@@ -1673,7 +2347,8 @@ namespace Com
 
             int Argb = int.Parse(HexCode, NumberStyles.HexNumber);
 
-            _CtorRGB(((uint)Argb >> _32BitARGBAlphaShift) & 0xFFU, ((uint)Argb >> _32BitARGBRedShift) & 0xFFU, ((uint)Argb >> _32BitARGBGreenShift) & 0xFFU, ((uint)Argb >> _32BitARGBBlueShift) & 0xFFU);
+            _SetChannels(_ColorSpace.RGB, ((uint)Argb >> _32BitARGBRedShift) & 0xFFU, ((uint)Argb >> _32BitARGBGreenShift) & 0xFFU, ((uint)Argb >> _32BitARGBBlueShift) & 0xFFU);
+            Alpha = ((uint)Argb >> _32BitARGBAlphaShift) & 0xFFU;
         }
 
         #endregion
@@ -1701,7 +2376,7 @@ namespace Com
         {
             get
             {
-                return (!_Initialized);
+                return (_CurrentColorSpace == _ColorSpace.None);
             }
         }
 
@@ -1732,17 +2407,11 @@ namespace Com
             {
                 _Opacity = _CheckOpacity(value);
 
-                _OpacityToAlpha(_Opacity, out _Alpha);
-
-                _Alpha = _CheckAlpha(_Alpha);
-
                 //
 
-                if (!_Initialized)
+                if (_CurrentColorSpace == _ColorSpace.None)
                 {
-                    _Black = _MaxBlack;
-
-                    _Initialized = true;
+                    _CurrentColorSpace = _ColorSpace.RGB;
                 }
             }
         }
@@ -1754,24 +2423,22 @@ namespace Com
         {
             get
             {
-                return _Alpha;
+                double alpha;
+
+                _OpacityToAlpha(_Opacity, out alpha);
+
+                return alpha;
             }
 
             set
             {
-                _Alpha = _CheckAlpha(value);
-
-                _AlphaToOpacity(_Alpha, out _Opacity);
-
-                _Opacity = _CheckOpacity(_Opacity);
+                _AlphaToOpacity(_CheckAlpha(value), out _Opacity);
 
                 //
 
-                if (!_Initialized)
+                if (_CurrentColorSpace == _ColorSpace.None)
                 {
-                    _Black = _MaxBlack;
-
-                    _Initialized = true;
+                    _CurrentColorSpace = _ColorSpace.RGB;
                 }
             }
         }
@@ -1785,12 +2452,12 @@ namespace Com
         {
             get
             {
-                return _Red;
+                return _GetChannel(_ColorChannel.Red);
             }
 
             set
             {
-                _CtorRGB(value, _Green, _Blue);
+                _SetChannel(_ColorChannel.Red, value);
             }
         }
 
@@ -1801,12 +2468,12 @@ namespace Com
         {
             get
             {
-                return _Green;
+                return _GetChannel(_ColorChannel.Green);
             }
 
             set
             {
-                _CtorRGB(_Red, value, _Blue);
+                _SetChannel(_ColorChannel.Green, value);
             }
         }
 
@@ -1817,12 +2484,12 @@ namespace Com
         {
             get
             {
-                return _Blue;
+                return _GetChannel(_ColorChannel.Blue);
             }
 
             set
             {
-                _CtorRGB(_Red, _Green, value);
+                _SetChannel(_ColorChannel.Blue, value);
             }
         }
 
@@ -1835,12 +2502,12 @@ namespace Com
         {
             get
             {
-                return _Hue_HSV;
+                return _GetChannel(_ColorChannel.Hue_HSV);
             }
 
             set
             {
-                _CtorHSV(value, _Saturation_HSV, _Brightness);
+                _SetChannel(_ColorChannel.Hue_HSV, value);
             }
         }
 
@@ -1851,12 +2518,12 @@ namespace Com
         {
             get
             {
-                return _Saturation_HSV;
+                return _GetChannel(_ColorChannel.Saturation_HSV);
             }
 
             set
             {
-                _CtorHSV(_Hue_HSV, value, _Brightness);
+                _SetChannel(_ColorChannel.Saturation_HSV, value);
             }
         }
 
@@ -1867,12 +2534,12 @@ namespace Com
         {
             get
             {
-                return _Brightness;
+                return _GetChannel(_ColorChannel.Brightness);
             }
 
             set
             {
-                _CtorHSV(_Hue_HSV, _Saturation_HSV, value);
+                _SetChannel(_ColorChannel.Brightness, value);
             }
         }
 
@@ -1885,12 +2552,12 @@ namespace Com
         {
             get
             {
-                return _Hue_HSL;
+                return _GetChannel(_ColorChannel.Hue_HSL);
             }
 
             set
             {
-                _CtorHSL(value, _Saturation_HSL, _Lightness_HSL);
+                _SetChannel(_ColorChannel.Hue_HSL, value);
             }
         }
 
@@ -1901,12 +2568,12 @@ namespace Com
         {
             get
             {
-                return _Saturation_HSL;
+                return _GetChannel(_ColorChannel.Saturation_HSL);
             }
 
             set
             {
-                _CtorHSL(_Hue_HSL, value, _Lightness_HSL);
+                _SetChannel(_ColorChannel.Saturation_HSL, value);
             }
         }
 
@@ -1917,12 +2584,12 @@ namespace Com
         {
             get
             {
-                return _Lightness_HSL;
+                return _GetChannel(_ColorChannel.Lightness_HSL);
             }
 
             set
             {
-                _CtorHSL(_Hue_HSL, _Saturation_HSL, value);
+                _SetChannel(_ColorChannel.Lightness_HSL, value);
             }
         }
 
@@ -1935,12 +2602,12 @@ namespace Com
         {
             get
             {
-                return _Cyan;
+                return _GetChannel(_ColorChannel.Cyan);
             }
 
             set
             {
-                _CtorCMYK(value, _Magenta, _Yellow, Black);
+                _SetChannel(_ColorChannel.Cyan, value);
             }
         }
 
@@ -1951,12 +2618,12 @@ namespace Com
         {
             get
             {
-                return _Magenta;
+                return _GetChannel(_ColorChannel.Magenta);
             }
 
             set
             {
-                _CtorCMYK(_Cyan, value, _Yellow, Black);
+                _SetChannel(_ColorChannel.Magenta, value);
             }
         }
 
@@ -1967,12 +2634,12 @@ namespace Com
         {
             get
             {
-                return _Yellow;
+                return _GetChannel(_ColorChannel.Yellow);
             }
 
             set
             {
-                _CtorCMYK(_Cyan, _Magenta, value, Black);
+                _SetChannel(_ColorChannel.Yellow, value);
             }
         }
 
@@ -1983,19 +2650,12 @@ namespace Com
         {
             get
             {
-                if (!_Initialized)
-                {
-                    return _MaxBlack;
-                }
-                else
-                {
-                    return _Black;
-                }
+                return _GetChannel(_ColorChannel.Black);
             }
 
             set
             {
-                _CtorCMYK(_Cyan, _Magenta, _Yellow, value);
+                _SetChannel(_ColorChannel.Black, value);
             }
         }
 
@@ -2008,12 +2668,12 @@ namespace Com
         {
             get
             {
-                return _Lightness_LAB;
+                return _GetChannel(_ColorChannel.Lightness_LAB);
             }
 
             set
             {
-                _CtorLAB(value, _GreenRed, _BlueYellow);
+                _SetChannel(_ColorChannel.Lightness_LAB, value);
             }
         }
 
@@ -2024,12 +2684,12 @@ namespace Com
         {
             get
             {
-                return _GreenRed;
+                return _GetChannel(_ColorChannel.GreenRed);
             }
 
             set
             {
-                _CtorLAB(_Lightness_LAB, value, _BlueYellow);
+                _SetChannel(_ColorChannel.GreenRed, value);
             }
         }
 
@@ -2040,12 +2700,62 @@ namespace Com
         {
             get
             {
-                return _BlueYellow;
+                return _GetChannel(_ColorChannel.BlueYellow);
             }
 
             set
             {
-                _CtorLAB(_Lightness_LAB, _GreenRed, value);
+                _SetChannel(_ColorChannel.BlueYellow, value);
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取或设置此 ColorX 结构在 YUV 色彩空间的亮度（Y）。
+        /// </summary>
+        public double Luminance
+        {
+            get
+            {
+                return _GetChannel(_ColorChannel.Luminance);
+            }
+
+            set
+            {
+                _SetChannel(_ColorChannel.Luminance, value);
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置此 ColorX 结构在 YUV 色彩空间的蓝色色度（U）。
+        /// </summary>
+        public double ChrominanceBlue
+        {
+            get
+            {
+                return _GetChannel(_ColorChannel.ChrominanceBlue);
+            }
+
+            set
+            {
+                _SetChannel(_ColorChannel.ChrominanceBlue, value);
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置此 ColorX 结构在 YUV 色彩空间的红色色度（V）。
+        /// </summary>
+        public double ChrominanceRed
+        {
+            get
+            {
+                return _GetChannel(_ColorChannel.ChrominanceRed);
+            }
+
+            set
+            {
+                _SetChannel(_ColorChannel.ChrominanceRed, value);
             }
         }
 
@@ -2058,12 +2768,14 @@ namespace Com
         {
             get
             {
-                return new PointD3D(_Red, _Green, _Blue);
+                double[] channels = _GetChannels(_ColorSpace.RGB);
+
+                return new PointD3D(channels[0], channels[1], channels[2]);
             }
 
             set
             {
-                _CtorRGB(value.X, value.Y, value.Z);
+                _SetChannels(_ColorSpace.RGB, value.ToArray());
             }
         }
 
@@ -2074,12 +2786,14 @@ namespace Com
         {
             get
             {
-                return new PointD3D(_Hue_HSV, _Saturation_HSV, _Brightness);
+                double[] channels = _GetChannels(_ColorSpace.HSV);
+
+                return new PointD3D(channels[0], channels[1], channels[2]);
             }
 
             set
             {
-                _CtorHSV(value.X, value.Y, value.Z);
+                _SetChannels(_ColorSpace.HSV, value.ToArray());
             }
         }
 
@@ -2090,12 +2804,14 @@ namespace Com
         {
             get
             {
-                return new PointD3D(_Hue_HSL, _Saturation_HSL, _Lightness_HSL);
+                double[] channels = _GetChannels(_ColorSpace.HSL);
+
+                return new PointD3D(channels[0], channels[1], channels[2]);
             }
 
             set
             {
-                _CtorHSL(value.X, value.Y, value.Z);
+                _SetChannels(_ColorSpace.HSL, value.ToArray());
             }
         }
 
@@ -2106,12 +2822,14 @@ namespace Com
         {
             get
             {
-                return new PointD4D(_Cyan, _Magenta, _Yellow, Black);
+                double[] channels = _GetChannels(_ColorSpace.CMYK);
+
+                return new PointD4D(channels[0], channels[1], channels[2], channels[3]);
             }
 
             set
             {
-                _CtorCMYK(value.X, value.Y, value.Z, value.U);
+                _SetChannels(_ColorSpace.CMYK, value.ToArray());
             }
         }
 
@@ -2122,12 +2840,32 @@ namespace Com
         {
             get
             {
-                return new PointD3D(_Lightness_LAB, _GreenRed, _BlueYellow);
+                double[] channels = _GetChannels(_ColorSpace.LAB);
+
+                return new PointD3D(channels[0], channels[1], channels[2]);
             }
 
             set
             {
-                _CtorLAB(value.X, value.Y, value.Z);
+                _SetChannels(_ColorSpace.LAB, value.ToArray());
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置表示此 ColorX 结构在 YUV 色彩空间的各分量的 PointD3D 结构。
+        /// </summary>
+        public PointD3D YUV
+        {
+            get
+            {
+                double[] channels = _GetChannels(_ColorSpace.YUV);
+
+                return new PointD3D(channels[0], channels[1], channels[2]);
+            }
+
+            set
+            {
+                _SetChannels(_ColorSpace.YUV, value.ToArray());
             }
         }
 
@@ -2142,7 +2880,10 @@ namespace Com
             {
                 ColorX color = new ColorX();
 
-                color._CtorRGB(_Alpha, _MaxRed - _Red, _MaxGreen - _Green, _MaxBlue - _Blue);
+                double[] rgb = _GetChannels(_ColorSpace.RGB);
+
+                color._SetChannels(_ColorSpace.RGB, _MaxRed - rgb[0], _MaxGreen - rgb[1], _MaxBlue - rgb[2]);
+                color.Alpha = Alpha;
 
                 return color;
             }
@@ -2157,9 +2898,12 @@ namespace Com
             {
                 ColorX color = new ColorX();
 
-                double Y = 0.299 * _Red + 0.587 * _Green + 0.114 * _Blue;
+                double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                color._CtorRGB(_Alpha, Y, Y, Y);
+                double Y = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
+
+                color._SetChannels(_ColorSpace.RGB, Y, Y, Y);
+                color.Alpha = Alpha;
 
                 return color;
             }
@@ -2174,7 +2918,9 @@ namespace Com
         {
             get
             {
-                int Argb = (int)(((uint)Math.Round(_Alpha) << _32BitARGBAlphaShift) | ((uint)Math.Round(_Red) << _32BitARGBRedShift) | ((uint)Math.Round(_Green) << _32BitARGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitARGBBlueShift));
+                double[] rgb = _GetChannels(_ColorSpace.RGB);
+
+                int Argb = (int)(((uint)Math.Round(Alpha) << _32BitARGBAlphaShift) | ((uint)Math.Round(rgb[0]) << _32BitARGBRedShift) | ((uint)Math.Round(rgb[1]) << _32BitARGBGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitARGBBlueShift));
 
                 string HexCode = Convert.ToString(Argb, 16).ToUpper();
 
@@ -2198,7 +2944,9 @@ namespace Com
         {
             get
             {
-                int Rgb = (int)(((uint)Math.Round(_Red) << _32BitARGBRedShift) | ((uint)Math.Round(_Green) << _32BitARGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitARGBBlueShift));
+                double[] rgb = _GetChannels(_ColorSpace.RGB);
+
+                int Rgb = (int)(((uint)Math.Round(rgb[0]) << _32BitARGBRedShift) | ((uint)Math.Round(rgb[1]) << _32BitARGBGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitARGBBlueShift));
 
                 string HexCode = Convert.ToString(Rgb, 16).ToUpper();
 
@@ -2257,13 +3005,15 @@ namespace Com
         {
             string Str = string.Empty;
 
-            if (!_Initialized)
+            switch (_CurrentColorSpace)
             {
-                Str = "Empty";
-            }
-            else
-            {
-                Str = string.Concat("A=", Alpha, ", R=", Red, ", G=", Green, ", B=", Blue);
+                case _ColorSpace.RGB: Str = string.Concat("A=", Alpha, ", R=", _Channel1, ", G=", _Channel2, ", B=", _Channel3); break;
+                case _ColorSpace.HSV: Str = string.Concat("H=", _Channel1, ", S=", _Channel2, ", V=", _Channel3, ", Opacity=", Opacity, "%"); break;
+                case _ColorSpace.HSL: Str = string.Concat("H=", _Channel1, ", S=", _Channel2, ", L=", _Channel3, ", Opacity=", Opacity, "%"); break;
+                case _ColorSpace.CMYK: Str = string.Concat("C=", _Channel1, ", M=", _Channel2, ", Y=", _Channel3, ", K=", _Channel4, ", Opacity=", Opacity, "%"); break;
+                case _ColorSpace.LAB: Str = string.Concat("L=", _Channel1, ", a=", _Channel2, ", b=", _Channel3, ", Opacity=", Opacity, "%"); break;
+                case _ColorSpace.YUV: Str = string.Concat("Y=", _Channel1, ", U=", _Channel2, ", V=", _Channel3, ", Opacity=", Opacity, "%"); break;
+                default: Str = "Empty"; break;
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");
@@ -2278,7 +3028,7 @@ namespace Com
         /// <returns>布尔值，表示此 ColorX 结构是否与指定的 ColorX 结构相等。</returns>
         public bool Equals(ColorX color)
         {
-            return (_Initialized.Equals(color._Initialized) && _Opacity.Equals(color._Opacity) && (_Alpha.Equals(color._Alpha) && _Red.Equals(color._Red) && _Green.Equals(color._Green) && _Blue.Equals(color._Blue)) && (_Hue_HSV.Equals(color._Hue_HSV) && _Saturation_HSV.Equals(color._Saturation_HSV) && _Brightness.Equals(color._Brightness)) && (_Hue_HSL.Equals(color._Hue_HSL) && _Saturation_HSL.Equals(color._Saturation_HSL) && _Lightness_HSL.Equals(color._Lightness_HSL)) && (_Cyan.Equals(color._Cyan) && _Magenta.Equals(color._Magenta) && _Yellow.Equals(color._Yellow) && _Black.Equals(color._Black)) && (_Lightness_LAB.Equals(color._Lightness_LAB) && _GreenRed.Equals(color._GreenRed) && _BlueYellow.Equals(color._BlueYellow)));
+            return (_CurrentColorSpace.Equals(color._CurrentColorSpace) && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && Hashtable.Equals(_CachedChannels, color._CachedChannels));
         }
 
         //
@@ -2289,13 +3039,15 @@ namespace Com
         /// <returns>Color 结构，表示将此 ColorX 结构转换为 Color 结构得到的结果。</returns>
         public Color ToColor()
         {
-            if (!_Initialized)
+            if (_CurrentColorSpace == _ColorSpace.None)
             {
                 return Color.Empty;
             }
             else
             {
-                return Color.FromArgb((int)Math.Round(_Alpha), (int)Math.Round(_Red), (int)Math.Round(_Green), (int)Math.Round(_Blue));
+                double[] rgb = _GetChannels(_ColorSpace.RGB);
+
+                return Color.FromArgb((int)Math.Round(Alpha), (int)Math.Round(rgb[0]), (int)Math.Round(rgb[1]), (int)Math.Round(rgb[2]));
             }
         }
 
@@ -2305,7 +3057,9 @@ namespace Com
         /// <returns>32 位整数，表示将此 ColorX 结构转换为 Color 结构的 32 位 ARGB 值。</returns>
         public int ToARGB()
         {
-            return (int)(((uint)Math.Round(_Alpha) << _32BitARGBAlphaShift) | ((uint)Math.Round(_Red) << _32BitARGBRedShift) | ((uint)Math.Round(_Green) << _32BitARGBGreenShift) | ((uint)Math.Round(_Blue) << _32BitARGBBlueShift));
+            double[] rgb = _GetChannels(_ColorSpace.RGB);
+
+            return (int)(((uint)Math.Round(Alpha) << _32BitARGBAlphaShift) | ((uint)Math.Round(rgb[0]) << _32BitARGBRedShift) | ((uint)Math.Round(rgb[1]) << _32BitARGBGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitARGBBlueShift));
         }
 
         //
@@ -2572,6 +3326,50 @@ namespace Com
             return color;
         }
 
+        //
+
+        /// <summary>
+        /// 返回将此 ColorX 结构在 YUV 色彩空间的亮度（Y）更改为指定值的 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="luminance">颜色在 YUV 色彩空间的亮度（Y）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 YUV 色彩空间的亮度（Y）更改为指定值得到的结果。</returns>
+        public ColorX AtLuminance(double luminance)
+        {
+            ColorX color = this;
+
+            color.Luminance = luminance;
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将此 ColorX 结构在 YUV 色彩空间的蓝色色度（U）更改为指定值的 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="chrominanceBlue">颜色在 YUV 色彩空间的蓝色色度（U）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 YUV 色彩空间的蓝色色度（U）更改为指定值得到的结果。</returns>
+        public ColorX AtChrominanceBlue(double chrominanceBlue)
+        {
+            ColorX color = this;
+
+            color.ChrominanceBlue = chrominanceBlue;
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将此 ColorX 结构在 YUV 色彩空间的红色色度（V）更改为指定值的 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="chrominanceRed">颜色在 YUV 色彩空间的红色色度（V）。</param>
+        /// <returns>ColorX 结构，表示将此 ColorX 结构在 YUV 色彩空间的红色色度（V）更改为指定值得到的结果。</returns>
+        public ColorX AtChrominanceRed(double chrominanceRed)
+        {
+            ColorX color = this;
+
+            color.ChrominanceRed = chrominanceRed;
+
+            return color;
+        }
+
         #endregion
 
         #region 静态方法
@@ -2639,7 +3437,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorRGB(alpha, red, green, blue);
+            color._SetChannels(_ColorSpace.RGB, red, green, blue);
+            color.Alpha = alpha;
 
             return color;
         }
@@ -2655,7 +3454,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorRGB(_MaxAlpha, red, green, blue);
+            color._SetChannels(_ColorSpace.RGB, red, green, blue);
+            color.Alpha = _DefaultAlpha;
 
             return color;
         }
@@ -2670,7 +3470,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorRGB(alpha, rgb.X, rgb.Y, rgb.Z);
+            color._SetChannels(_ColorSpace.RGB, rgb.ToArray());
+            color.Alpha = alpha;
 
             return color;
         }
@@ -2684,7 +3485,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorRGB(_MaxAlpha, rgb.X, rgb.Y, rgb.Z);
+            color._SetChannels(_ColorSpace.RGB, rgb.ToArray());
+            color.Alpha = _DefaultAlpha;
 
             return color;
         }
@@ -2713,7 +3515,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorHSV(hue, saturation, brightness, opacity);
+            color._SetChannels(_ColorSpace.HSV, hue, saturation, brightness);
+            color.Opacity = opacity;
 
             return color;
         }
@@ -2729,7 +3532,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorHSV(hue, saturation, brightness, _MaxOpacity);
+            color._SetChannels(_ColorSpace.HSV, hue, saturation, brightness);
+            color.Opacity = _DefaultOpacity;
 
             return color;
         }
@@ -2744,7 +3548,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorHSV(hsv.X, hsv.Y, hsv.Z, opacity);
+            color._SetChannels(_ColorSpace.HSV, hsv.ToArray());
+            color.Opacity = opacity;
 
             return color;
         }
@@ -2758,7 +3563,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorHSV(hsv.X, hsv.Y, hsv.Z, _MaxOpacity);
+            color._SetChannels(_ColorSpace.HSV, hsv.ToArray());
+            color.Opacity = _DefaultOpacity;
 
             return color;
         }
@@ -2777,7 +3583,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorHSL(hue, saturation, lightness, opacity);
+            color._SetChannels(_ColorSpace.HSL, hue, saturation, lightness);
+            color.Opacity = opacity;
 
             return color;
         }
@@ -2793,7 +3600,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorHSL(hue, saturation, lightness, _MaxOpacity);
+            color._SetChannels(_ColorSpace.HSL, hue, saturation, lightness);
+            color.Opacity = _DefaultOpacity;
 
             return color;
         }
@@ -2808,7 +3616,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorHSL(hsl.X, hsl.Y, hsl.Z, opacity);
+            color._SetChannels(_ColorSpace.HSL, hsl.ToArray());
+            color.Opacity = opacity;
 
             return color;
         }
@@ -2822,7 +3631,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorHSL(hsl.X, hsl.Y, hsl.Z, _MaxOpacity);
+            color._SetChannels(_ColorSpace.HSL, hsl.ToArray());
+            color.Opacity = _DefaultOpacity;
 
             return color;
         }
@@ -2842,7 +3652,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorCMYK(cyan, magenta, yellow, black, opacity);
+            color._SetChannels(_ColorSpace.CMYK, cyan, magenta, yellow, black);
+            color.Opacity = opacity;
 
             return color;
         }
@@ -2859,7 +3670,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorCMYK(cyan, magenta, yellow, black, _MaxOpacity);
+            color._SetChannels(_ColorSpace.CMYK, cyan, magenta, yellow, black);
+            color.Opacity = _DefaultOpacity;
 
             return color;
         }
@@ -2874,7 +3686,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorCMYK(cmyk.X, cmyk.Y, cmyk.Z, cmyk.U, opacity);
+            color._SetChannels(_ColorSpace.CMYK, cmyk.ToArray());
+            color.Opacity = opacity;
 
             return color;
         }
@@ -2888,7 +3701,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorCMYK(cmyk.X, cmyk.Y, cmyk.Z, cmyk.U, _MaxOpacity);
+            color._SetChannels(_ColorSpace.CMYK, cmyk.ToArray());
+            color.Opacity = _DefaultOpacity;
 
             return color;
         }
@@ -2907,7 +3721,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorLAB(lightness, greenRed, blueYellow, opacity);
+            color._SetChannels(_ColorSpace.LAB, lightness, greenRed, blueYellow);
+            color.Opacity = opacity;
 
             return color;
         }
@@ -2923,7 +3738,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorLAB(lightness, greenRed, blueYellow, _MaxOpacity);
+            color._SetChannels(_ColorSpace.LAB, lightness, greenRed, blueYellow);
+            color.Opacity = _DefaultOpacity;
 
             return color;
         }
@@ -2938,7 +3754,8 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorLAB(lab.X, lab.Y, lab.Z, opacity);
+            color._SetChannels(_ColorSpace.LAB, lab.ToArray());
+            color.Opacity = opacity;
 
             return color;
         }
@@ -2952,7 +3769,76 @@ namespace Com
         {
             ColorX color = new ColorX();
 
-            color._CtorLAB(lab.X, lab.Y, lab.Z, _MaxOpacity);
+            color._SetChannels(_ColorSpace.LAB, lab.ToArray());
+            color.Opacity = _DefaultOpacity;
+
+            return color;
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="luminance">颜色在 YUV 色彩空间的亮度（Y）。</param>
+        /// <param name="chrominanceBlue">颜色在 YUV 色彩空间的蓝色色度（U）的值。</param>
+        /// <param name="chrominanceRed">颜色在 YUV 色彩空间的红色色度（V）的值。</param>
+        /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
+        public static ColorX FromYUV(double luminance, double chrominanceBlue, double chrominanceRed, double opacity)
+        {
+            ColorX color = new ColorX();
+
+            color._SetChannels(_ColorSpace.YUV, luminance, chrominanceBlue, chrominanceRed);
+            color.Opacity = opacity;
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="luminance">颜色在 YUV 色彩空间的亮度（Y）。</param>
+        /// <param name="chrominanceBlue">颜色在 YUV 色彩空间的蓝色色度（U）的值。</param>
+        /// <param name="chrominanceRed">颜色在 YUV 色彩空间的红色色度（V）的值。</param>
+        /// <returns>ColorX 结构，表示将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
+        public static ColorX FromYUV(double luminance, double chrominanceBlue, double chrominanceRed)
+        {
+            ColorX color = new ColorX();
+
+            color._SetChannels(_ColorSpace.YUV, luminance, chrominanceBlue, chrominanceRed);
+            color.Opacity = _DefaultOpacity;
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="yuv">表示颜色在 YUV 色彩空间的各分量的 PointD3D 结构。</param>
+        /// <param name="opacity">颜色的不透明度。</param>
+        /// <returns>ColorX 结构，表示将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
+        public static ColorX FromYUV(PointD3D yuv, double opacity)
+        {
+            ColorX color = new ColorX();
+
+            color._SetChannels(_ColorSpace.YUV, yuv.ToArray());
+            color.Opacity = opacity;
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="yuv">表示颜色在 YUV 色彩空间的各分量的 PointD3D 结构。</param>
+        /// <returns>ColorX 结构，表示将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
+        public static ColorX FromYUV(PointD3D yuv)
+        {
+            ColorX color = new ColorX();
+
+            color._SetChannels(_ColorSpace.YUV, yuv.ToArray());
+            color.Opacity = _DefaultOpacity;
 
             return color;
         }
@@ -2992,13 +3878,13 @@ namespace Com
         /// <returns>布尔值，表示两个 ColorX 结构是否表示相同的颜色。</returns>
         public static bool operator ==(ColorX left, ColorX right)
         {
-            if (!left._Initialized || !right._Initialized)
+            if (left._CurrentColorSpace == _ColorSpace.None || right._CurrentColorSpace == _ColorSpace.None)
             {
                 return false;
             }
             else
             {
-                return (left.Alpha == right.Alpha && left.Red == right.Red && left.Green == right.Green && left.Blue == right.Blue);
+                return (left._CurrentColorSpace == right._CurrentColorSpace && left._Opacity == right._Opacity && (left._Channel1 == right._Channel1 && left._Channel2 == right._Channel2 && left._Channel3 == right._Channel3 && left._Channel4 == right._Channel4));
             }
         }
 
@@ -3010,13 +3896,13 @@ namespace Com
         /// <returns>布尔值，表示两个 ColorX 结构是否表示不同的颜色。</returns>
         public static bool operator !=(ColorX left, ColorX right)
         {
-            if (!left._Initialized || !right._Initialized)
+            if (left._CurrentColorSpace == _ColorSpace.None || right._CurrentColorSpace == _ColorSpace.None)
             {
                 return true;
             }
             else
             {
-                return (left.Alpha != right.Alpha || left.Red != right.Red || left.Green != right.Green || left.Blue != right.Blue);
+                return (left._CurrentColorSpace != right._CurrentColorSpace || left._Opacity != right._Opacity || (left._Channel1 != right._Channel1 || left._Channel2 != right._Channel2 || left._Channel3 != right._Channel3 || left._Channel4 != right._Channel4));
             }
         }
 

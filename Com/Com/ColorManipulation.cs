@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorManipulation
-Version 19.5.11.1720
+Version 19.5.2.1900
 
 This file is part of Com
 
@@ -298,6 +298,32 @@ namespace Com
             return BlendByLAB((ColorX)color1, (ColorX)color2, proportion).ToColor();
         }
 
+        /// <summary>
+        /// 返回将 ColorX 结构表示的两种颜色在 YUV 色彩空间按指定比例线性混合得到的颜色。
+        /// </summary>
+        /// <param name="color1">ColorX 结构表示的第一种颜色。</param>
+        /// <param name="color2">ColorX 结构表示的第二种颜色。</param>
+        /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将两种颜色在 YUV 色彩空间按指定比例线性混合得到的颜色。</returns>
+        public static ColorX BlendByYUV(ColorX color1, ColorX color2, double proportion)
+        {
+            proportion = _CheckProportion(proportion);
+
+            return ColorX.FromYUV(color1.YUV * proportion + color2.YUV * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
+        }
+
+        /// <summary>
+        /// 返回将 Color 结构表示的两种颜色在 YUV 色彩空间按指定比例线性混合得到的颜色。
+        /// </summary>
+        /// <param name="color1">Color 结构表示的第一种颜色。</param>
+        /// <param name="color2">Color 结构表示的第二种颜色。</param>
+        /// <param name="proportion">第一种颜色所占的比例，取值范围为 [0, 1] 或 (1, 100]。</param>
+        /// <returns>Color 结构，表示将两种颜色在 YUV 色彩空间按指定比例线性混合得到的颜色。</returns>
+        public static Color BlendByYUV(Color color1, Color color2, double proportion)
+        {
+            return BlendByYUV((ColorX)color1, (ColorX)color2, proportion).ToColor();
+        }
+
         //
 
         private static double _CheckLevel(double level) // 对双精度浮点数表示的调整程度的值进行合法性检查，返回合法的值。
@@ -446,6 +472,42 @@ namespace Com
         public static Color ShiftLightnessByLAB(Color color, double level)
         {
             return ShiftLightnessByLAB((ColorX)color, level).ToColor();
+        }
+
+        /// <summary>
+        /// 返回将 ColorX 结构表示的颜色在 YUV 色彩空间调整明度得到的颜色。
+        /// </summary>
+        /// <param name="color">ColorX 结构表示的颜色。</param>
+        /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>ColorX 结构，表示将指定颜色在 YUV 色彩空间调整明度得到的颜色。</returns>
+        public static ColorX ShiftLightnessByYUV(ColorX color, double level)
+        {
+            level = _CheckLevel(level);
+
+            if (level != 0)
+            {
+                if (level < 0)
+                {
+                    return color.AtLuminance(color.Luminance * (1 + level));
+                }
+                else
+                {
+                    return color.AtLuminance(100 - (100 - color.Luminance) * (1 - level));
+                }
+            }
+
+            return color;
+        }
+
+        /// <summary>
+        /// 返回将 Color 结构表示的颜色在 YUV 色彩空间调整明度得到的颜色。
+        /// </summary>
+        /// <param name="color">Color 结构表示的颜色。</param>
+        /// <param name="level">调整的程度，取值范围为 [-1, 1] 或 [-100, -1) ∪ (1, 100]。</param>
+        /// <returns>Color 结构，表示将指定颜色在 YUV 色彩空间调整明度得到的颜色。</returns>
+        public static Color ShiftLightnessByYUV(Color color, double level)
+        {
+            return ShiftLightnessByYUV((ColorX)color, level).ToColor();
         }
 
         /// <summary>
