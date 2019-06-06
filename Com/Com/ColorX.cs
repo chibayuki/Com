@@ -3781,8 +3781,8 @@ namespace Com
         /// 返回将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="luminance">颜色在 YUV 色彩空间的亮度（Y）。</param>
-        /// <param name="chrominanceBlue">颜色在 YUV 色彩空间的蓝色色度（U）的值。</param>
-        /// <param name="chrominanceRed">颜色在 YUV 色彩空间的红色色度（V）的值。</param>
+        /// <param name="chrominanceBlue">颜色在 YUV 色彩空间的蓝色色度（U）。</param>
+        /// <param name="chrominanceRed">颜色在 YUV 色彩空间的红色色度（V）。</param>
         /// <param name="opacity">颜色的不透明度。</param>
         /// <returns>ColorX 结构，表示将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromYUV(double luminance, double chrominanceBlue, double chrominanceRed, double opacity)
@@ -3799,8 +3799,8 @@ namespace Com
         /// 返回将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="luminance">颜色在 YUV 色彩空间的亮度（Y）。</param>
-        /// <param name="chrominanceBlue">颜色在 YUV 色彩空间的蓝色色度（U）的值。</param>
-        /// <param name="chrominanceRed">颜色在 YUV 色彩空间的红色色度（V）的值。</param>
+        /// <param name="chrominanceBlue">颜色在 YUV 色彩空间的蓝色色度（U）。</param>
+        /// <param name="chrominanceRed">颜色在 YUV 色彩空间的红色色度（V）。</param>
         /// <returns>ColorX 结构，表示将颜色在 YUV 色彩空间的各分量转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromYUV(double luminance, double chrominanceBlue, double chrominanceRed)
         {
