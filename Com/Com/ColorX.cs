@@ -2306,8 +2306,11 @@ namespace Com
         /// <param name="color">Color 结构。</param>
         public ColorX(Color color) : this()
         {
-            _SetChannels(_ColorSpace.RGB, color.R, color.G, color.B);
-            Alpha = color.A;
+            if (!color.IsEmpty)
+            {
+                _SetChannels(_ColorSpace.RGB, color.R, color.G, color.B);
+                Alpha = color.A;
+            }
         }
 
         /// <summary>
@@ -2331,7 +2334,7 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
-            string HexCode = new Regex(@"[^A-Fa-f\d]").Replace(hexCode, string.Empty);
+            string HexCode = new Regex(@"[^A-Za-z\d]").Replace(hexCode, string.Empty);
 
             if (string.IsNullOrEmpty(HexCode))
             {
@@ -2960,6 +2963,26 @@ namespace Com
                 {
                     return ("#" + HexCode);
                 }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 获取此 ColorX 结构的名称。
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                string name = ColorConverter.GetColorNameByArgb(ToARGB());
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    name = ARGBHexCode;
+                }
+
+                return name;
             }
         }
 
@@ -3853,6 +3876,30 @@ namespace Com
         public static ColorX FromHexCode(string hexCode)
         {
             return new ColorX(hexCode);
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将颜色的名称转换为 ColorX 结构的新实例。
+        /// </summary>
+        /// <param name="name">颜色的名称。</param>
+        /// <returns>ColorX 结构，表示将颜色的名称转换为 ColorX 结构得到的结果。</returns>
+        public static ColorX FromName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException();
+            }
+
+            ColorX color = ColorConverter.GetColorByName(name);
+
+            if (color.IsEmpty)
+            {
+                color = FromHexCode(name);
+            }
+
+            return color;
         }
 
         //
