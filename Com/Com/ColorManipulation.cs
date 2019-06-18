@@ -25,25 +25,6 @@ namespace Com
     /// </summary>
     public static class ColorManipulation
     {
-        private static string _GetColorName(int argb, string hexCode) // 根据 32 位 ARGB 值与 16 进制 ARGB 码获取颜色的名称。
-        {
-            PropertyInfo[] PInfo = typeof(Color).GetProperties();
-
-            foreach (PropertyInfo PropInfo in PInfo)
-            {
-                string Name = PropInfo.Name;
-                Color Cr = Color.FromName(Name);
-                KnownColor KC = Cr.ToKnownColor();
-
-                if ((KC >= KnownColor.Transparent && KC <= KnownColor.YellowGreen) && argb == Cr.ToArgb())
-                {
-                    return string.Concat(Name, " (", hexCode, ")");
-                }
-            }
-
-            return hexCode;
-        }
-
         /// <summary>
         /// 获取 ColorX 结构表示的颜色的名称。
         /// </summary>
@@ -51,7 +32,17 @@ namespace Com
         /// <returns>字符串，表示指定颜色的名称。</returns>
         public static string GetColorName(ColorX color)
         {
-            return _GetColorName(color.ToARGB(), color.ARGBHexCode);
+            string name = color.Name;
+            string hexCode = color.ARGBHexCode;
+
+            if (name == hexCode)
+            {
+                return name;
+            }
+            else
+            {
+                return string.Concat(name, " (", hexCode, ")");
+            }
         }
 
         /// <summary>
