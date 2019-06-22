@@ -4373,6 +4373,11 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色的 16 进制 ARGB 码或 RGB 码转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHexCode(string hexCode)
         {
+            if (string.IsNullOrEmpty(hexCode))
+            {
+                throw new ArgumentNullException();
+            }
+
             string HexCode = new Regex(@"[^A-Za-z\d]").Replace(hexCode, string.Empty);
 
             if (string.IsNullOrEmpty(HexCode))
