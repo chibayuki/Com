@@ -29,480 +29,472 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private static Hashtable _NameTable = null; // 表示从 32 位 ARGB 值到颜色名称的映射。
+        private static Hashtable _ColorNameTable = null; // 表示从 32 位 ARGB 值到颜色名称的映射。
         private static Hashtable _ArgbTable = null; // 表示从颜色名称到 32 位 ARGB 值的映射。
 
-        private static void _EnsureNameAndArgbTable() // 初始化 32 位 ARGB 值与颜色名称的映射表。
+        private static void _EnsureColorNameAndArgbTable() // 初始化 32 位 ARGB 值与颜色名称的映射表。
         {
-            if (_NameTable == null || _ArgbTable == null)
+            if (_ColorNameTable == null || _ArgbTable == null)
             {
-                int transparent = Color.Transparent.ToArgb();
-                int aliceblue = Color.AliceBlue.ToArgb();
-                int antiquewhite = Color.AntiqueWhite.ToArgb();
-                int aqua = Color.Aqua.ToArgb();
-                int aquamarine = Color.Aquamarine.ToArgb();
-                int azure = Color.Azure.ToArgb();
-                int beige = Color.Beige.ToArgb();
-                int bisque = Color.Bisque.ToArgb();
-                int black = Color.Black.ToArgb();
-                int blanchedalmond = Color.BlanchedAlmond.ToArgb();
-                int blue = Color.Blue.ToArgb();
-                int blueviolet = Color.BlueViolet.ToArgb();
-                int brown = Color.Brown.ToArgb();
-                int burlywood = Color.BurlyWood.ToArgb();
-                int cadetblue = Color.CadetBlue.ToArgb();
-                int chartreuse = Color.Chartreuse.ToArgb();
-                int chocolate = Color.Chocolate.ToArgb();
-                int coral = Color.Coral.ToArgb();
-                int cornflowerblue = Color.CornflowerBlue.ToArgb();
-                int cornsilk = Color.Cornsilk.ToArgb();
-                int crimson = Color.Crimson.ToArgb();
-                int cyan = Color.Cyan.ToArgb();
-                int darkblue = Color.DarkBlue.ToArgb();
-                int darkcyan = Color.DarkCyan.ToArgb();
-                int darkgoldenrod = Color.DarkGoldenrod.ToArgb();
-                int darkgray = Color.DarkGray.ToArgb();
-                int darkgreen = Color.DarkGreen.ToArgb();
-                int darkkhaki = Color.DarkKhaki.ToArgb();
-                int darkmagenta = Color.DarkMagenta.ToArgb();
-                int darkolivegreen = Color.DarkOliveGreen.ToArgb();
-                int darkorange = Color.DarkOrange.ToArgb();
-                int darkorchid = Color.DarkOrchid.ToArgb();
-                int darkred = Color.DarkRed.ToArgb();
-                int darksalmon = Color.DarkSalmon.ToArgb();
-                int darkseagreen = Color.DarkSeaGreen.ToArgb();
-                int darkslateblue = Color.DarkSlateBlue.ToArgb();
-                int darkslategray = Color.DarkSlateGray.ToArgb();
-                int darkturquoise = Color.DarkTurquoise.ToArgb();
-                int darkviolet = Color.DarkViolet.ToArgb();
-                int deeppink = Color.DeepPink.ToArgb();
-                int deepskyblue = Color.DeepSkyBlue.ToArgb();
-                int dimgray = Color.DimGray.ToArgb();
-                int dodgerblue = Color.DodgerBlue.ToArgb();
-                int firebrick = Color.Firebrick.ToArgb();
-                int floralwhite = Color.FloralWhite.ToArgb();
-                int forestgreen = Color.ForestGreen.ToArgb();
-                int fuchsia = Color.Fuchsia.ToArgb();
-                int gainsboro = Color.Gainsboro.ToArgb();
-                int ghostwhite = Color.GhostWhite.ToArgb();
-                int gold = Color.Gold.ToArgb();
-                int goldenrod = Color.Goldenrod.ToArgb();
-                int gray = Color.Gray.ToArgb();
-                int green = Color.Green.ToArgb();
-                int greenyellow = Color.GreenYellow.ToArgb();
-                int honeydew = Color.Honeydew.ToArgb();
-                int hotpink = Color.HotPink.ToArgb();
-                int indianred = Color.IndianRed.ToArgb();
-                int indigo = Color.Indigo.ToArgb();
-                int ivory = Color.Ivory.ToArgb();
-                int khaki = Color.Khaki.ToArgb();
-                int lavender = Color.Lavender.ToArgb();
-                int lavenderblush = Color.LavenderBlush.ToArgb();
-                int lawngreen = Color.LawnGreen.ToArgb();
-                int lemonchiffon = Color.LemonChiffon.ToArgb();
-                int lightblue = Color.LightBlue.ToArgb();
-                int lightcoral = Color.LightCoral.ToArgb();
-                int lightcyan = Color.LightCyan.ToArgb();
-                int lightgoldenrodyellow = Color.LightGoldenrodYellow.ToArgb();
-                int lightgray = Color.LightGray.ToArgb();
-                int lightgreen = Color.LightGreen.ToArgb();
-                int lightpink = Color.LightPink.ToArgb();
-                int lightsalmon = Color.LightSalmon.ToArgb();
-                int lightseagreen = Color.LightSeaGreen.ToArgb();
-                int lightskyblue = Color.LightSkyBlue.ToArgb();
-                int lightslategray = Color.LightSlateGray.ToArgb();
-                int lightsteelblue = Color.LightSteelBlue.ToArgb();
-                int lightyellow = Color.LightYellow.ToArgb();
-                int lime = Color.Lime.ToArgb();
-                int limegreen = Color.LimeGreen.ToArgb();
-                int linen = Color.Linen.ToArgb();
-                int magenta = Color.Magenta.ToArgb();
-                int maroon = Color.Maroon.ToArgb();
-                int mediumaquamarine = Color.MediumAquamarine.ToArgb();
-                int mediumblue = Color.MediumBlue.ToArgb();
-                int mediumorchid = Color.MediumOrchid.ToArgb();
-                int mediumpurple = Color.MediumPurple.ToArgb();
-                int mediumseagreen = Color.MediumSeaGreen.ToArgb();
-                int mediumslateblue = Color.MediumSlateBlue.ToArgb();
-                int mediumspringgreen = Color.MediumSpringGreen.ToArgb();
-                int mediumturquoise = Color.MediumTurquoise.ToArgb();
-                int mediumvioletred = Color.MediumVioletRed.ToArgb();
-                int midnightblue = Color.MidnightBlue.ToArgb();
-                int mintcream = Color.MintCream.ToArgb();
-                int mistyrose = Color.MistyRose.ToArgb();
-                int moccasin = Color.Moccasin.ToArgb();
-                int navajowhite = Color.NavajoWhite.ToArgb();
-                int navy = Color.Navy.ToArgb();
-                int oldlace = Color.OldLace.ToArgb();
-                int olive = Color.Olive.ToArgb();
-                int olivedrab = Color.OliveDrab.ToArgb();
-                int orange = Color.Orange.ToArgb();
-                int orangered = Color.OrangeRed.ToArgb();
-                int orchid = Color.Orchid.ToArgb();
-                int palegoldenrod = Color.PaleGoldenrod.ToArgb();
-                int palegreen = Color.PaleGreen.ToArgb();
-                int paleturquoise = Color.PaleTurquoise.ToArgb();
-                int palevioletred = Color.PaleVioletRed.ToArgb();
-                int papayawhip = Color.PapayaWhip.ToArgb();
-                int peachpuff = Color.PeachPuff.ToArgb();
-                int peru = Color.Peru.ToArgb();
-                int pink = Color.Pink.ToArgb();
-                int plum = Color.Plum.ToArgb();
-                int powderblue = Color.PowderBlue.ToArgb();
-                int purple = Color.Purple.ToArgb();
-                int red = Color.Red.ToArgb();
-                int rosybrown = Color.RosyBrown.ToArgb();
-                int royalblue = Color.RoyalBlue.ToArgb();
-                int saddlebrown = Color.SaddleBrown.ToArgb();
-                int salmon = Color.Salmon.ToArgb();
-                int sandybrown = Color.SandyBrown.ToArgb();
-                int seagreen = Color.SeaGreen.ToArgb();
-                int seashell = Color.SeaShell.ToArgb();
-                int sienna = Color.Sienna.ToArgb();
-                int silver = Color.Silver.ToArgb();
-                int skyblue = Color.SkyBlue.ToArgb();
-                int slateblue = Color.SlateBlue.ToArgb();
-                int slategray = Color.SlateGray.ToArgb();
-                int snow = Color.Snow.ToArgb();
-                int springgreen = Color.SpringGreen.ToArgb();
-                int steelblue = Color.SteelBlue.ToArgb();
-                int tan = Color.Tan.ToArgb();
-                int teal = Color.Teal.ToArgb();
-                int thistle = Color.Thistle.ToArgb();
-                int tomato = Color.Tomato.ToArgb();
-                int turquoise = Color.Turquoise.ToArgb();
-                int violet = Color.Violet.ToArgb();
-                int wheat = Color.Wheat.ToArgb();
-                int white = Color.White.ToArgb();
-                int whitesmoke = Color.WhiteSmoke.ToArgb();
-                int yellow = Color.Yellow.ToArgb();
-                int yellowgreen = Color.YellowGreen.ToArgb();
+                const int transparent = 0x00FFFFFF;
+                const int aliceblue = unchecked((int)0xFFF0F8FF);
+                const int antiquewhite = unchecked((int)0xFFFAEBD7);
+                const int aqua = unchecked((int)0xFF00FFFF);
+                const int aquamarine = unchecked((int)0xFF7FFFD4);
+                const int azure = unchecked((int)0xFFF0FFFF);
+                const int beige = unchecked((int)0xFFF5F5DC);
+                const int bisque = unchecked((int)0xFFFFE4C4);
+                const int black = unchecked((int)0xFF000000);
+                const int blanchedalmond = unchecked((int)0xFFFFEBCD);
+                const int blue = unchecked((int)0xFF0000FF);
+                const int blueviolet = unchecked((int)0xFF8A2BE2);
+                const int brown = unchecked((int)0xFFA52A2A);
+                const int burlywood = unchecked((int)0xFFDEB887);
+                const int cadetblue = unchecked((int)0xFF5F9EA0);
+                const int chartreuse = unchecked((int)0xFF7FFF00);
+                const int chocolate = unchecked((int)0xFFD2691E);
+                const int coral = unchecked((int)0xFFFF7F50);
+                const int cornflowerblue = unchecked((int)0xFF6495ED);
+                const int cornsilk = unchecked((int)0xFFFFF8DC);
+                const int crimson = unchecked((int)0xFFDC143C);
+                const int cyan = unchecked((int)0xFF00FFFF);
+                const int darkblue = unchecked((int)0xFF00008B);
+                const int darkcyan = unchecked((int)0xFF008B8B);
+                const int darkgoldenrod = unchecked((int)0xFFB8860B);
+                const int darkgray = unchecked((int)0xFFA9A9A9);
+                const int darkgreen = unchecked((int)0xFF006400);
+                const int darkkhaki = unchecked((int)0xFFBDB76B);
+                const int darkmagenta = unchecked((int)0xFF8B008B);
+                const int darkolivegreen = unchecked((int)0xFF556B2F);
+                const int darkorange = unchecked((int)0xFFFF8C00);
+                const int darkorchid = unchecked((int)0xFF9932CC);
+                const int darkred = unchecked((int)0xFF8B0000);
+                const int darksalmon = unchecked((int)0xFFE9967A);
+                const int darkseagreen = unchecked((int)0xFF8FBC8B);
+                const int darkslateblue = unchecked((int)0xFF483D8B);
+                const int darkslategray = unchecked((int)0xFF2F4F4F);
+                const int darkturquoise = unchecked((int)0xFF00CED1);
+                const int darkviolet = unchecked((int)0xFF9400D3);
+                const int deeppink = unchecked((int)0xFFFF1493);
+                const int deepskyblue = unchecked((int)0xFF00BFFF);
+                const int dimgray = unchecked((int)0xFF696969);
+                const int dodgerblue = unchecked((int)0xFF1E90FF);
+                const int firebrick = unchecked((int)0xFFB22222);
+                const int floralwhite = unchecked((int)0xFFFFFAF0);
+                const int forestgreen = unchecked((int)0xFF228B22);
+                const int fuchsia = unchecked((int)0xFFFF00FF);
+                const int gainsboro = unchecked((int)0xFFDCDCDC);
+                const int ghostwhite = unchecked((int)0xFFF8F8FF);
+                const int gold = unchecked((int)0xFFFFD700);
+                const int goldenrod = unchecked((int)0xFFDAA520);
+                const int gray = unchecked((int)0xFF808080);
+                const int green = unchecked((int)0xFF008000);
+                const int greenyellow = unchecked((int)0xFFADFF2F);
+                const int honeydew = unchecked((int)0xFFF0FFF0);
+                const int hotpink = unchecked((int)0xFFFF69B4);
+                const int indianred = unchecked((int)0xFFCD5C5C);
+                const int indigo = unchecked((int)0xFF4B0082);
+                const int ivory = unchecked((int)0xFFFFFFF0);
+                const int khaki = unchecked((int)0xFFF0E68C);
+                const int lavender = unchecked((int)0xFFE6E6FA);
+                const int lavenderblush = unchecked((int)0xFFFFF0F5);
+                const int lawngreen = unchecked((int)0xFF7CFC00);
+                const int lemonchiffon = unchecked((int)0xFFFFFACD);
+                const int lightblue = unchecked((int)0xFFADD8E6);
+                const int lightcoral = unchecked((int)0xFFF08080);
+                const int lightcyan = unchecked((int)0xFFE0FFFF);
+                const int lightgoldenrodyellow = unchecked((int)0xFFFAFAD2);
+                const int lightgray = unchecked((int)0xFFD3D3D3);
+                const int lightgreen = unchecked((int)0xFF90EE90);
+                const int lightpink = unchecked((int)0xFFFFB6C1);
+                const int lightsalmon = unchecked((int)0xFFFFA07A);
+                const int lightseagreen = unchecked((int)0xFF20B2AA);
+                const int lightskyblue = unchecked((int)0xFF87CEFA);
+                const int lightslategray = unchecked((int)0xFF778899);
+                const int lightsteelblue = unchecked((int)0xFFB0C4DE);
+                const int lightyellow = unchecked((int)0xFFFFFFE0);
+                const int lime = unchecked((int)0xFF00FF00);
+                const int limegreen = unchecked((int)0xFF32CD32);
+                const int linen = unchecked((int)0xFFFAF0E6);
+                const int magenta = unchecked((int)0xFFFF00FF);
+                const int maroon = unchecked((int)0xFF800000);
+                const int mediumaquamarine = unchecked((int)0xFF66CDAA);
+                const int mediumblue = unchecked((int)0xFF0000CD);
+                const int mediumorchid = unchecked((int)0xFFBA55D3);
+                const int mediumpurple = unchecked((int)0xFF9370DB);
+                const int mediumseagreen = unchecked((int)0xFF3CB371);
+                const int mediumslateblue = unchecked((int)0xFF7B68EE);
+                const int mediumspringgreen = unchecked((int)0xFF00FA9A);
+                const int mediumturquoise = unchecked((int)0xFF48D1CC);
+                const int mediumvioletred = unchecked((int)0xFFC71585);
+                const int midnightblue = unchecked((int)0xFF191970);
+                const int mintcream = unchecked((int)0xFFF5FFFA);
+                const int mistyrose = unchecked((int)0xFFFFE4E1);
+                const int moccasin = unchecked((int)0xFFFFE4B5);
+                const int navajowhite = unchecked((int)0xFFFFDEAD);
+                const int navy = unchecked((int)0xFF000080);
+                const int oldlace = unchecked((int)0xFFFDF5E6);
+                const int olive = unchecked((int)0xFF808000);
+                const int olivedrab = unchecked((int)0xFF6B8E23);
+                const int orange = unchecked((int)0xFFFFA500);
+                const int orangered = unchecked((int)0xFFFF4500);
+                const int orchid = unchecked((int)0xFFDA70D6);
+                const int palegoldenrod = unchecked((int)0xFFEEE8AA);
+                const int palegreen = unchecked((int)0xFF98FB98);
+                const int paleturquoise = unchecked((int)0xFFAFEEEE);
+                const int palevioletred = unchecked((int)0xFFDB7093);
+                const int papayawhip = unchecked((int)0xFFFFEFD5);
+                const int peachpuff = unchecked((int)0xFFFFDAB9);
+                const int peru = unchecked((int)0xFFCD853F);
+                const int pink = unchecked((int)0xFFFFC0CB);
+                const int plum = unchecked((int)0xFFDDA0DD);
+                const int powderblue = unchecked((int)0xFFB0E0E6);
+                const int purple = unchecked((int)0xFF800080);
+                const int red = unchecked((int)0xFFFF0000);
+                const int rosybrown = unchecked((int)0xFFBC8F8F);
+                const int royalblue = unchecked((int)0xFF4169E1);
+                const int saddlebrown = unchecked((int)0xFF8B4513);
+                const int salmon = unchecked((int)0xFFFA8072);
+                const int sandybrown = unchecked((int)0xFFF4A460);
+                const int seagreen = unchecked((int)0xFF2E8B57);
+                const int seashell = unchecked((int)0xFFFFF5EE);
+                const int sienna = unchecked((int)0xFFA0522D);
+                const int silver = unchecked((int)0xFFC0C0C0);
+                const int skyblue = unchecked((int)0xFF87CEEB);
+                const int slateblue = unchecked((int)0xFF6A5ACD);
+                const int slategray = unchecked((int)0xFF708090);
+                const int snow = unchecked((int)0xFFFFFAFA);
+                const int springgreen = unchecked((int)0xFF00FF7F);
+                const int steelblue = unchecked((int)0xFF4682B4);
+                const int tan = unchecked((int)0xFFD2B48C);
+                const int teal = unchecked((int)0xFF008080);
+                const int thistle = unchecked((int)0xFFD8BFD8);
+                const int tomato = unchecked((int)0xFFFF6347);
+                const int turquoise = unchecked((int)0xFF40E0D0);
+                const int violet = unchecked((int)0xFFEE82EE);
+                const int wheat = unchecked((int)0xFFF5DEB3);
+                const int white = unchecked((int)0xFFFFFFFF);
+                const int whitesmoke = unchecked((int)0xFFF5F5F5);
+                const int yellow = unchecked((int)0xFFFFFF00);
+                const int yellowgreen = unchecked((int)0xFF9ACD32);
 
-                if (_NameTable == null)
+                if (_ColorNameTable == null)
                 {
-                    _NameTable = new Hashtable();
+                    _ColorNameTable = new Hashtable();
 
-                    _NameTable.Add(transparent, "Transparent");
-                    _NameTable.Add(aliceblue, "AliceBlue");
-                    _NameTable.Add(antiquewhite, "AntiqueWhite");
+                    _ColorNameTable.Add(transparent, "Transparent");
+                    _ColorNameTable.Add(aliceblue, "AliceBlue");
+                    _ColorNameTable.Add(antiquewhite, "AntiqueWhite");
                     // Aqua 与 Cyan 异名同色，使用 Cyan
-                    // _NameTable.Add(aqua, "Aqua");
-                    _NameTable.Add(aquamarine, "Aquamarine");
-                    _NameTable.Add(azure, "Azure");
-                    _NameTable.Add(beige, "Beige");
-                    _NameTable.Add(bisque, "Bisque");
-                    _NameTable.Add(black, "Black");
-                    _NameTable.Add(blanchedalmond, "BlanchedAlmond");
-                    _NameTable.Add(blue, "Blue");
-                    _NameTable.Add(blueviolet, "BlueViolet");
-                    _NameTable.Add(brown, "Brown");
-                    _NameTable.Add(burlywood, "BurlyWood");
-                    _NameTable.Add(cadetblue, "CadetBlue");
-                    _NameTable.Add(chartreuse, "Chartreuse");
-                    _NameTable.Add(chocolate, "Chocolate");
-                    _NameTable.Add(coral, "Coral");
-                    _NameTable.Add(cornflowerblue, "CornflowerBlue");
-                    _NameTable.Add(cornsilk, "Cornsilk");
-                    _NameTable.Add(crimson, "Crimson");
-                    _NameTable.Add(cyan, "Cyan");
-                    _NameTable.Add(darkblue, "DarkBlue");
-                    _NameTable.Add(darkcyan, "DarkCyan");
-                    _NameTable.Add(darkgoldenrod, "DarkGoldenrod");
-                    _NameTable.Add(darkgray, "DarkGray");
-                    _NameTable.Add(darkgreen, "DarkGreen");
-                    _NameTable.Add(darkkhaki, "DarkKhaki");
-                    _NameTable.Add(darkmagenta, "DarkMagenta");
-                    _NameTable.Add(darkolivegreen, "DarkOliveGreen");
-                    _NameTable.Add(darkorange, "DarkOrange");
-                    _NameTable.Add(darkorchid, "DarkOrchid");
-                    _NameTable.Add(darkred, "DarkRed");
-                    _NameTable.Add(darksalmon, "DarkSalmon");
-                    _NameTable.Add(darkseagreen, "DarkSeaGreen");
-                    _NameTable.Add(darkslateblue, "DarkSlateBlue");
-                    _NameTable.Add(darkslategray, "DarkSlateGray");
-                    _NameTable.Add(darkturquoise, "DarkTurquoise");
-                    _NameTable.Add(darkviolet, "DarkViolet");
-                    _NameTable.Add(deeppink, "DeepPink");
-                    _NameTable.Add(deepskyblue, "DeepSkyBlue");
-                    _NameTable.Add(dimgray, "DimGray");
-                    _NameTable.Add(dodgerblue, "DodgerBlue");
-                    _NameTable.Add(firebrick, "Firebrick");
-                    _NameTable.Add(floralwhite, "FloralWhite");
-                    _NameTable.Add(forestgreen, "ForestGreen");
+                    // _ColorNameTable.Add(aqua, "Aqua");
+                    _ColorNameTable.Add(aquamarine, "Aquamarine");
+                    _ColorNameTable.Add(azure, "Azure");
+                    _ColorNameTable.Add(beige, "Beige");
+                    _ColorNameTable.Add(bisque, "Bisque");
+                    _ColorNameTable.Add(black, "Black");
+                    _ColorNameTable.Add(blanchedalmond, "BlanchedAlmond");
+                    _ColorNameTable.Add(blue, "Blue");
+                    _ColorNameTable.Add(blueviolet, "BlueViolet");
+                    _ColorNameTable.Add(brown, "Brown");
+                    _ColorNameTable.Add(burlywood, "BurlyWood");
+                    _ColorNameTable.Add(cadetblue, "CadetBlue");
+                    _ColorNameTable.Add(chartreuse, "Chartreuse");
+                    _ColorNameTable.Add(chocolate, "Chocolate");
+                    _ColorNameTable.Add(coral, "Coral");
+                    _ColorNameTable.Add(cornflowerblue, "CornflowerBlue");
+                    _ColorNameTable.Add(cornsilk, "Cornsilk");
+                    _ColorNameTable.Add(crimson, "Crimson");
+                    _ColorNameTable.Add(cyan, "Cyan");
+                    _ColorNameTable.Add(darkblue, "DarkBlue");
+                    _ColorNameTable.Add(darkcyan, "DarkCyan");
+                    _ColorNameTable.Add(darkgoldenrod, "DarkGoldenrod");
+                    _ColorNameTable.Add(darkgray, "DarkGray");
+                    _ColorNameTable.Add(darkgreen, "DarkGreen");
+                    _ColorNameTable.Add(darkkhaki, "DarkKhaki");
+                    _ColorNameTable.Add(darkmagenta, "DarkMagenta");
+                    _ColorNameTable.Add(darkolivegreen, "DarkOliveGreen");
+                    _ColorNameTable.Add(darkorange, "DarkOrange");
+                    _ColorNameTable.Add(darkorchid, "DarkOrchid");
+                    _ColorNameTable.Add(darkred, "DarkRed");
+                    _ColorNameTable.Add(darksalmon, "DarkSalmon");
+                    _ColorNameTable.Add(darkseagreen, "DarkSeaGreen");
+                    _ColorNameTable.Add(darkslateblue, "DarkSlateBlue");
+                    _ColorNameTable.Add(darkslategray, "DarkSlateGray");
+                    _ColorNameTable.Add(darkturquoise, "DarkTurquoise");
+                    _ColorNameTable.Add(darkviolet, "DarkViolet");
+                    _ColorNameTable.Add(deeppink, "DeepPink");
+                    _ColorNameTable.Add(deepskyblue, "DeepSkyBlue");
+                    _ColorNameTable.Add(dimgray, "DimGray");
+                    _ColorNameTable.Add(dodgerblue, "DodgerBlue");
+                    _ColorNameTable.Add(firebrick, "Firebrick");
+                    _ColorNameTable.Add(floralwhite, "FloralWhite");
+                    _ColorNameTable.Add(forestgreen, "ForestGreen");
                     // Fuchsia 与 Magenta 异名同色，使用 Magenta
-                    // _NameTable.Add(fuchsia, "Fuchsia");
-                    _NameTable.Add(gainsboro, "Gainsboro");
-                    _NameTable.Add(ghostwhite, "GhostWhite");
-                    _NameTable.Add(gold, "Gold");
-                    _NameTable.Add(goldenrod, "Goldenrod");
-                    _NameTable.Add(gray, "Gray");
-                    _NameTable.Add(green, "Green");
-                    _NameTable.Add(greenyellow, "GreenYellow");
-                    _NameTable.Add(honeydew, "Honeydew");
-                    _NameTable.Add(hotpink, "HotPink");
-                    _NameTable.Add(indianred, "IndianRed");
-                    _NameTable.Add(indigo, "Indigo");
-                    _NameTable.Add(ivory, "Ivory");
-                    _NameTable.Add(khaki, "Khaki");
-                    _NameTable.Add(lavender, "Lavender");
-                    _NameTable.Add(lavenderblush, "LavenderBlush");
-                    _NameTable.Add(lawngreen, "LawnGreen");
-                    _NameTable.Add(lemonchiffon, "LemonChiffon");
-                    _NameTable.Add(lightblue, "LightBlue");
-                    _NameTable.Add(lightcoral, "LightCoral");
-                    _NameTable.Add(lightcyan, "LightCyan");
-                    _NameTable.Add(lightgoldenrodyellow, "LightGoldenrodYellow");
-                    _NameTable.Add(lightgray, "LightGray");
-                    _NameTable.Add(lightgreen, "LightGreen");
-                    _NameTable.Add(lightpink, "LightPink");
-                    _NameTable.Add(lightsalmon, "LightSalmon");
-                    _NameTable.Add(lightseagreen, "LightSeaGreen");
-                    _NameTable.Add(lightskyblue, "LightSkyBlue");
-                    _NameTable.Add(lightslategray, "LightSlateGray");
-                    _NameTable.Add(lightsteelblue, "LightSteelBlue");
-                    _NameTable.Add(lightyellow, "LightYellow");
-                    _NameTable.Add(lime, "Lime");
-                    _NameTable.Add(limegreen, "LimeGreen");
-                    _NameTable.Add(linen, "Linen");
-                    _NameTable.Add(magenta, "Magenta");
-                    _NameTable.Add(maroon, "Maroon");
-                    _NameTable.Add(mediumaquamarine, "MediumAquamarine");
-                    _NameTable.Add(mediumblue, "MediumBlue");
-                    _NameTable.Add(mediumorchid, "MediumOrchid");
-                    _NameTable.Add(mediumpurple, "MediumPurple");
-                    _NameTable.Add(mediumseagreen, "MediumSeaGreen");
-                    _NameTable.Add(mediumslateblue, "MediumSlateBlue");
-                    _NameTable.Add(mediumspringgreen, "MediumSpringGreen");
-                    _NameTable.Add(mediumturquoise, "MediumTurquoise");
-                    _NameTable.Add(mediumvioletred, "MediumVioletRed");
-                    _NameTable.Add(midnightblue, "MidnightBlue");
-                    _NameTable.Add(mintcream, "MintCream");
-                    _NameTable.Add(mistyrose, "MistyRose");
-                    _NameTable.Add(moccasin, "Moccasin");
-                    _NameTable.Add(navajowhite, "NavajoWhite");
-                    _NameTable.Add(navy, "Navy");
-                    _NameTable.Add(oldlace, "OldLace");
-                    _NameTable.Add(olive, "Olive");
-                    _NameTable.Add(olivedrab, "OliveDrab");
-                    _NameTable.Add(orange, "Orange");
-                    _NameTable.Add(orangered, "OrangeRed");
-                    _NameTable.Add(orchid, "Orchid");
-                    _NameTable.Add(palegoldenrod, "PaleGoldenrod");
-                    _NameTable.Add(palegreen, "PaleGreen");
-                    _NameTable.Add(paleturquoise, "PaleTurquoise");
-                    _NameTable.Add(palevioletred, "PaleVioletRed");
-                    _NameTable.Add(papayawhip, "PapayaWhip");
-                    _NameTable.Add(peachpuff, "PeachPuff");
-                    _NameTable.Add(peru, "Peru");
-                    _NameTable.Add(pink, "Pink");
-                    _NameTable.Add(plum, "Plum");
-                    _NameTable.Add(powderblue, "PowderBlue");
-                    _NameTable.Add(purple, "Purple");
-                    _NameTable.Add(red, "Red");
-                    _NameTable.Add(rosybrown, "RosyBrown");
-                    _NameTable.Add(royalblue, "RoyalBlue");
-                    _NameTable.Add(saddlebrown, "SaddleBrown");
-                    _NameTable.Add(salmon, "Salmon");
-                    _NameTable.Add(sandybrown, "SandyBrown");
-                    _NameTable.Add(seagreen, "SeaGreen");
-                    _NameTable.Add(seashell, "SeaShell");
-                    _NameTable.Add(sienna, "Sienna");
-                    _NameTable.Add(silver, "Silver");
-                    _NameTable.Add(skyblue, "SkyBlue");
-                    _NameTable.Add(slateblue, "SlateBlue");
-                    _NameTable.Add(slategray, "SlateGray");
-                    _NameTable.Add(snow, "Snow");
-                    _NameTable.Add(springgreen, "SpringGreen");
-                    _NameTable.Add(steelblue, "SteelBlue");
-                    _NameTable.Add(tan, "Tan");
-                    _NameTable.Add(teal, "Teal");
-                    _NameTable.Add(thistle, "Thistle");
-                    _NameTable.Add(tomato, "Tomato");
-                    _NameTable.Add(turquoise, "Turquoise");
-                    _NameTable.Add(violet, "Violet");
-                    _NameTable.Add(wheat, "Wheat");
-                    _NameTable.Add(white, "White");
-                    _NameTable.Add(whitesmoke, "WhiteSmoke");
-                    _NameTable.Add(yellow, "Yellow");
-                    _NameTable.Add(yellowgreen, "YellowGreen");
+                    // _ColorNameTable.Add(fuchsia, "Fuchsia");
+                    _ColorNameTable.Add(gainsboro, "Gainsboro");
+                    _ColorNameTable.Add(ghostwhite, "GhostWhite");
+                    _ColorNameTable.Add(gold, "Gold");
+                    _ColorNameTable.Add(goldenrod, "Goldenrod");
+                    _ColorNameTable.Add(gray, "Gray");
+                    _ColorNameTable.Add(green, "Green");
+                    _ColorNameTable.Add(greenyellow, "GreenYellow");
+                    _ColorNameTable.Add(honeydew, "Honeydew");
+                    _ColorNameTable.Add(hotpink, "HotPink");
+                    _ColorNameTable.Add(indianred, "IndianRed");
+                    _ColorNameTable.Add(indigo, "Indigo");
+                    _ColorNameTable.Add(ivory, "Ivory");
+                    _ColorNameTable.Add(khaki, "Khaki");
+                    _ColorNameTable.Add(lavender, "Lavender");
+                    _ColorNameTable.Add(lavenderblush, "LavenderBlush");
+                    _ColorNameTable.Add(lawngreen, "LawnGreen");
+                    _ColorNameTable.Add(lemonchiffon, "LemonChiffon");
+                    _ColorNameTable.Add(lightblue, "LightBlue");
+                    _ColorNameTable.Add(lightcoral, "LightCoral");
+                    _ColorNameTable.Add(lightcyan, "LightCyan");
+                    _ColorNameTable.Add(lightgoldenrodyellow, "LightGoldenrodYellow");
+                    _ColorNameTable.Add(lightgray, "LightGray");
+                    _ColorNameTable.Add(lightgreen, "LightGreen");
+                    _ColorNameTable.Add(lightpink, "LightPink");
+                    _ColorNameTable.Add(lightsalmon, "LightSalmon");
+                    _ColorNameTable.Add(lightseagreen, "LightSeaGreen");
+                    _ColorNameTable.Add(lightskyblue, "LightSkyBlue");
+                    _ColorNameTable.Add(lightslategray, "LightSlateGray");
+                    _ColorNameTable.Add(lightsteelblue, "LightSteelBlue");
+                    _ColorNameTable.Add(lightyellow, "LightYellow");
+                    _ColorNameTable.Add(lime, "Lime");
+                    _ColorNameTable.Add(limegreen, "LimeGreen");
+                    _ColorNameTable.Add(linen, "Linen");
+                    _ColorNameTable.Add(magenta, "Magenta");
+                    _ColorNameTable.Add(maroon, "Maroon");
+                    _ColorNameTable.Add(mediumaquamarine, "MediumAquamarine");
+                    _ColorNameTable.Add(mediumblue, "MediumBlue");
+                    _ColorNameTable.Add(mediumorchid, "MediumOrchid");
+                    _ColorNameTable.Add(mediumpurple, "MediumPurple");
+                    _ColorNameTable.Add(mediumseagreen, "MediumSeaGreen");
+                    _ColorNameTable.Add(mediumslateblue, "MediumSlateBlue");
+                    _ColorNameTable.Add(mediumspringgreen, "MediumSpringGreen");
+                    _ColorNameTable.Add(mediumturquoise, "MediumTurquoise");
+                    _ColorNameTable.Add(mediumvioletred, "MediumVioletRed");
+                    _ColorNameTable.Add(midnightblue, "MidnightBlue");
+                    _ColorNameTable.Add(mintcream, "MintCream");
+                    _ColorNameTable.Add(mistyrose, "MistyRose");
+                    _ColorNameTable.Add(moccasin, "Moccasin");
+                    _ColorNameTable.Add(navajowhite, "NavajoWhite");
+                    _ColorNameTable.Add(navy, "Navy");
+                    _ColorNameTable.Add(oldlace, "OldLace");
+                    _ColorNameTable.Add(olive, "Olive");
+                    _ColorNameTable.Add(olivedrab, "OliveDrab");
+                    _ColorNameTable.Add(orange, "Orange");
+                    _ColorNameTable.Add(orangered, "OrangeRed");
+                    _ColorNameTable.Add(orchid, "Orchid");
+                    _ColorNameTable.Add(palegoldenrod, "PaleGoldenrod");
+                    _ColorNameTable.Add(palegreen, "PaleGreen");
+                    _ColorNameTable.Add(paleturquoise, "PaleTurquoise");
+                    _ColorNameTable.Add(palevioletred, "PaleVioletRed");
+                    _ColorNameTable.Add(papayawhip, "PapayaWhip");
+                    _ColorNameTable.Add(peachpuff, "PeachPuff");
+                    _ColorNameTable.Add(peru, "Peru");
+                    _ColorNameTable.Add(pink, "Pink");
+                    _ColorNameTable.Add(plum, "Plum");
+                    _ColorNameTable.Add(powderblue, "PowderBlue");
+                    _ColorNameTable.Add(purple, "Purple");
+                    _ColorNameTable.Add(red, "Red");
+                    _ColorNameTable.Add(rosybrown, "RosyBrown");
+                    _ColorNameTable.Add(royalblue, "RoyalBlue");
+                    _ColorNameTable.Add(saddlebrown, "SaddleBrown");
+                    _ColorNameTable.Add(salmon, "Salmon");
+                    _ColorNameTable.Add(sandybrown, "SandyBrown");
+                    _ColorNameTable.Add(seagreen, "SeaGreen");
+                    _ColorNameTable.Add(seashell, "SeaShell");
+                    _ColorNameTable.Add(sienna, "Sienna");
+                    _ColorNameTable.Add(silver, "Silver");
+                    _ColorNameTable.Add(skyblue, "SkyBlue");
+                    _ColorNameTable.Add(slateblue, "SlateBlue");
+                    _ColorNameTable.Add(slategray, "SlateGray");
+                    _ColorNameTable.Add(snow, "Snow");
+                    _ColorNameTable.Add(springgreen, "SpringGreen");
+                    _ColorNameTable.Add(steelblue, "SteelBlue");
+                    _ColorNameTable.Add(tan, "Tan");
+                    _ColorNameTable.Add(teal, "Teal");
+                    _ColorNameTable.Add(thistle, "Thistle");
+                    _ColorNameTable.Add(tomato, "Tomato");
+                    _ColorNameTable.Add(turquoise, "Turquoise");
+                    _ColorNameTable.Add(violet, "Violet");
+                    _ColorNameTable.Add(wheat, "Wheat");
+                    _ColorNameTable.Add(white, "White");
+                    _ColorNameTable.Add(whitesmoke, "WhiteSmoke");
+                    _ColorNameTable.Add(yellow, "Yellow");
+                    _ColorNameTable.Add(yellowgreen, "YellowGreen");
                 }
 
                 if (_ArgbTable == null)
                 {
-                    _ArgbTable = new Hashtable();
+                    _ArgbTable = new Hashtable(StringComparer.OrdinalIgnoreCase);
 
-                    _ArgbTable.Add("transparent", transparent);
-                    _ArgbTable.Add("aliceblue", aliceblue);
-                    _ArgbTable.Add("antiquewhite", antiquewhite);
-                    _ArgbTable.Add("aqua", aqua);
-                    _ArgbTable.Add("aquamarine", aquamarine);
-                    _ArgbTable.Add("azure", azure);
-                    _ArgbTable.Add("beige", beige);
-                    _ArgbTable.Add("bisque", bisque);
-                    _ArgbTable.Add("black", black);
-                    _ArgbTable.Add("blanchedalmond", blanchedalmond);
-                    _ArgbTable.Add("blue", blue);
-                    _ArgbTable.Add("blueviolet", blueviolet);
-                    _ArgbTable.Add("brown", brown);
-                    _ArgbTable.Add("burlywood", burlywood);
-                    _ArgbTable.Add("cadetblue", cadetblue);
-                    _ArgbTable.Add("chartreuse", chartreuse);
-                    _ArgbTable.Add("chocolate", chocolate);
-                    _ArgbTable.Add("coral", coral);
-                    _ArgbTable.Add("cornflowerblue", cornflowerblue);
-                    _ArgbTable.Add("cornsilk", cornsilk);
-                    _ArgbTable.Add("crimson", crimson);
-                    _ArgbTable.Add("cyan", cyan);
-                    _ArgbTable.Add("darkblue", darkblue);
-                    _ArgbTable.Add("darkcyan", darkcyan);
-                    _ArgbTable.Add("darkgoldenrod", darkgoldenrod);
-                    _ArgbTable.Add("darkgray", darkgray);
-                    _ArgbTable.Add("darkgreen", darkgreen);
-                    _ArgbTable.Add("darkkhaki", darkkhaki);
-                    _ArgbTable.Add("darkmagenta", darkmagenta);
-                    _ArgbTable.Add("darkolivegreen", darkolivegreen);
-                    _ArgbTable.Add("darkorange", darkorange);
-                    _ArgbTable.Add("darkorchid", darkorchid);
-                    _ArgbTable.Add("darkred", darkred);
-                    _ArgbTable.Add("darksalmon", darksalmon);
-                    _ArgbTable.Add("darkseagreen", darkseagreen);
-                    _ArgbTable.Add("darkslateblue", darkslateblue);
-                    _ArgbTable.Add("darkslategray", darkslategray);
-                    _ArgbTable.Add("darkturquoise", darkturquoise);
-                    _ArgbTable.Add("darkviolet", darkviolet);
-                    _ArgbTable.Add("deeppink", deeppink);
-                    _ArgbTable.Add("deepskyblue", deepskyblue);
-                    _ArgbTable.Add("dimgray", dimgray);
-                    _ArgbTable.Add("dodgerblue", dodgerblue);
-                    _ArgbTable.Add("firebrick", firebrick);
-                    _ArgbTable.Add("floralwhite", floralwhite);
-                    _ArgbTable.Add("forestgreen", forestgreen);
-                    _ArgbTable.Add("fuchsia", fuchsia);
-                    _ArgbTable.Add("gainsboro", gainsboro);
-                    _ArgbTable.Add("ghostwhite", ghostwhite);
-                    _ArgbTable.Add("gold", gold);
-                    _ArgbTable.Add("goldenrod", goldenrod);
-                    _ArgbTable.Add("gray", gray);
-                    _ArgbTable.Add("green", green);
-                    _ArgbTable.Add("greenyellow", greenyellow);
-                    _ArgbTable.Add("honeydew", honeydew);
-                    _ArgbTable.Add("hotpink", hotpink);
-                    _ArgbTable.Add("indianred", indianred);
-                    _ArgbTable.Add("indigo", indigo);
-                    _ArgbTable.Add("ivory", ivory);
-                    _ArgbTable.Add("khaki", khaki);
-                    _ArgbTable.Add("lavender", lavender);
-                    _ArgbTable.Add("lavenderblush", lavenderblush);
-                    _ArgbTable.Add("lawngreen", lawngreen);
-                    _ArgbTable.Add("lemonchiffon", lemonchiffon);
-                    _ArgbTable.Add("lightblue", lightblue);
-                    _ArgbTable.Add("lightcoral", lightcoral);
-                    _ArgbTable.Add("lightcyan", lightcyan);
-                    _ArgbTable.Add("lightgoldenrodyellow", lightgoldenrodyellow);
-                    _ArgbTable.Add("lightgray", lightgray);
-                    _ArgbTable.Add("lightgreen", lightgreen);
-                    _ArgbTable.Add("lightpink", lightpink);
-                    _ArgbTable.Add("lightsalmon", lightsalmon);
-                    _ArgbTable.Add("lightseagreen", lightseagreen);
-                    _ArgbTable.Add("lightskyblue", lightskyblue);
-                    _ArgbTable.Add("lightslategray", lightslategray);
-                    _ArgbTable.Add("lightsteelblue", lightsteelblue);
-                    _ArgbTable.Add("lightyellow", lightyellow);
-                    _ArgbTable.Add("lime", lime);
-                    _ArgbTable.Add("limegreen", limegreen);
-                    _ArgbTable.Add("linen", linen);
-                    _ArgbTable.Add("magenta", magenta);
-                    _ArgbTable.Add("maroon", maroon);
-                    _ArgbTable.Add("mediumaquamarine", mediumaquamarine);
-                    _ArgbTable.Add("mediumblue", mediumblue);
-                    _ArgbTable.Add("mediumorchid", mediumorchid);
-                    _ArgbTable.Add("mediumpurple", mediumpurple);
-                    _ArgbTable.Add("mediumseagreen", mediumseagreen);
-                    _ArgbTable.Add("mediumslateblue", mediumslateblue);
-                    _ArgbTable.Add("mediumspringgreen", mediumspringgreen);
-                    _ArgbTable.Add("mediumturquoise", mediumturquoise);
-                    _ArgbTable.Add("mediumvioletred", mediumvioletred);
-                    _ArgbTable.Add("midnightblue", midnightblue);
-                    _ArgbTable.Add("mintcream", mintcream);
-                    _ArgbTable.Add("mistyrose", mistyrose);
-                    _ArgbTable.Add("moccasin", moccasin);
-                    _ArgbTable.Add("navajowhite", navajowhite);
-                    _ArgbTable.Add("navy", navy);
-                    _ArgbTable.Add("oldlace", oldlace);
-                    _ArgbTable.Add("olive", olive);
-                    _ArgbTable.Add("olivedrab", olivedrab);
-                    _ArgbTable.Add("orange", orange);
-                    _ArgbTable.Add("orangered", orangered);
-                    _ArgbTable.Add("orchid", orchid);
-                    _ArgbTable.Add("palegoldenrod", palegoldenrod);
-                    _ArgbTable.Add("palegreen", palegreen);
-                    _ArgbTable.Add("paleturquoise", paleturquoise);
-                    _ArgbTable.Add("palevioletred", palevioletred);
-                    _ArgbTable.Add("papayawhip", papayawhip);
-                    _ArgbTable.Add("peachpuff", peachpuff);
-                    _ArgbTable.Add("peru", peru);
-                    _ArgbTable.Add("pink", pink);
-                    _ArgbTable.Add("plum", plum);
-                    _ArgbTable.Add("powderblue", powderblue);
-                    _ArgbTable.Add("purple", purple);
-                    _ArgbTable.Add("red", red);
-                    _ArgbTable.Add("rosybrown", rosybrown);
-                    _ArgbTable.Add("royalblue", royalblue);
-                    _ArgbTable.Add("saddlebrown", saddlebrown);
-                    _ArgbTable.Add("salmon", salmon);
-                    _ArgbTable.Add("sandybrown", sandybrown);
-                    _ArgbTable.Add("seagreen", seagreen);
-                    _ArgbTable.Add("seashell", seashell);
-                    _ArgbTable.Add("sienna", sienna);
-                    _ArgbTable.Add("silver", silver);
-                    _ArgbTable.Add("skyblue", skyblue);
-                    _ArgbTable.Add("slateblue", slateblue);
-                    _ArgbTable.Add("slategray", slategray);
-                    _ArgbTable.Add("snow", snow);
-                    _ArgbTable.Add("springgreen", springgreen);
-                    _ArgbTable.Add("steelblue", steelblue);
-                    _ArgbTable.Add("tan", tan);
-                    _ArgbTable.Add("teal", teal);
-                    _ArgbTable.Add("thistle", thistle);
-                    _ArgbTable.Add("tomato", tomato);
-                    _ArgbTable.Add("turquoise", turquoise);
-                    _ArgbTable.Add("violet", violet);
-                    _ArgbTable.Add("wheat", wheat);
-                    _ArgbTable.Add("white", white);
-                    _ArgbTable.Add("whitesmoke", whitesmoke);
-                    _ArgbTable.Add("yellow", yellow);
-                    _ArgbTable.Add("yellowgreen", yellowgreen);
+                    _ArgbTable.Add("Transparent", transparent);
+                    _ArgbTable.Add("AliceBlue", aliceblue);
+                    _ArgbTable.Add("AntiqueWhite", antiquewhite);
+                    _ArgbTable.Add("Aqua", aqua);
+                    _ArgbTable.Add("Aquamarine", aquamarine);
+                    _ArgbTable.Add("Azure", azure);
+                    _ArgbTable.Add("Beige", beige);
+                    _ArgbTable.Add("Bisque", bisque);
+                    _ArgbTable.Add("Black", black);
+                    _ArgbTable.Add("BlanchedAlmond", blanchedalmond);
+                    _ArgbTable.Add("Blue", blue);
+                    _ArgbTable.Add("BlueViolet", blueviolet);
+                    _ArgbTable.Add("Brown", brown);
+                    _ArgbTable.Add("BurlyWood", burlywood);
+                    _ArgbTable.Add("CadetBlue", cadetblue);
+                    _ArgbTable.Add("Chartreuse", chartreuse);
+                    _ArgbTable.Add("Chocolate", chocolate);
+                    _ArgbTable.Add("Coral", coral);
+                    _ArgbTable.Add("CornflowerBlue", cornflowerblue);
+                    _ArgbTable.Add("Cornsilk", cornsilk);
+                    _ArgbTable.Add("Crimson", crimson);
+                    _ArgbTable.Add("Cyan", cyan);
+                    _ArgbTable.Add("DarkBlue", darkblue);
+                    _ArgbTable.Add("DarkCyan", darkcyan);
+                    _ArgbTable.Add("DarkGoldenrod", darkgoldenrod);
+                    _ArgbTable.Add("DarkGray", darkgray);
+                    _ArgbTable.Add("DarkGreen", darkgreen);
+                    _ArgbTable.Add("DarkKhaki", darkkhaki);
+                    _ArgbTable.Add("DarkMagenta", darkmagenta);
+                    _ArgbTable.Add("DarkOliveGreen", darkolivegreen);
+                    _ArgbTable.Add("DarkOrange", darkorange);
+                    _ArgbTable.Add("DarkOrchid", darkorchid);
+                    _ArgbTable.Add("DarkRed", darkred);
+                    _ArgbTable.Add("DarkSalmon", darksalmon);
+                    _ArgbTable.Add("DarkSeaGreen", darkseagreen);
+                    _ArgbTable.Add("DarkSlateBlue", darkslateblue);
+                    _ArgbTable.Add("DarkSlateGray", darkslategray);
+                    _ArgbTable.Add("DarkTurquoise", darkturquoise);
+                    _ArgbTable.Add("DarkViolet", darkviolet);
+                    _ArgbTable.Add("DeepPink", deeppink);
+                    _ArgbTable.Add("DeepSkyBlue", deepskyblue);
+                    _ArgbTable.Add("DimGray", dimgray);
+                    _ArgbTable.Add("DodgerBlue", dodgerblue);
+                    _ArgbTable.Add("Firebrick", firebrick);
+                    _ArgbTable.Add("FloralWhite", floralwhite);
+                    _ArgbTable.Add("ForestGreen", forestgreen);
+                    _ArgbTable.Add("Fuchsia", fuchsia);
+                    _ArgbTable.Add("Gainsboro", gainsboro);
+                    _ArgbTable.Add("GhostWhite", ghostwhite);
+                    _ArgbTable.Add("Gold", gold);
+                    _ArgbTable.Add("Goldenrod", goldenrod);
+                    _ArgbTable.Add("Gray", gray);
+                    _ArgbTable.Add("Green", green);
+                    _ArgbTable.Add("GreenYellow", greenyellow);
+                    _ArgbTable.Add("Honeydew", honeydew);
+                    _ArgbTable.Add("HotPink", hotpink);
+                    _ArgbTable.Add("IndianRed", indianred);
+                    _ArgbTable.Add("Indigo", indigo);
+                    _ArgbTable.Add("Ivory", ivory);
+                    _ArgbTable.Add("Khaki", khaki);
+                    _ArgbTable.Add("Lavender", lavender);
+                    _ArgbTable.Add("LavenderBlush", lavenderblush);
+                    _ArgbTable.Add("LawnGreen", lawngreen);
+                    _ArgbTable.Add("LemonChiffon", lemonchiffon);
+                    _ArgbTable.Add("LightBlue", lightblue);
+                    _ArgbTable.Add("LightCoral", lightcoral);
+                    _ArgbTable.Add("LightCyan", lightcyan);
+                    _ArgbTable.Add("LightGoldenrodYellow", lightgoldenrodyellow);
+                    _ArgbTable.Add("LightGray", lightgray);
+                    _ArgbTable.Add("LightGreen", lightgreen);
+                    _ArgbTable.Add("LightPink", lightpink);
+                    _ArgbTable.Add("LightSalmon", lightsalmon);
+                    _ArgbTable.Add("LightSeaGreen", lightseagreen);
+                    _ArgbTable.Add("LightSkyBlue", lightskyblue);
+                    _ArgbTable.Add("LightSlateGray", lightslategray);
+                    _ArgbTable.Add("LightSteelBlue", lightsteelblue);
+                    _ArgbTable.Add("LightYellow", lightyellow);
+                    _ArgbTable.Add("Lime", lime);
+                    _ArgbTable.Add("LimeGreen", limegreen);
+                    _ArgbTable.Add("Linen", linen);
+                    _ArgbTable.Add("Magenta", magenta);
+                    _ArgbTable.Add("Maroon", maroon);
+                    _ArgbTable.Add("MediumAquamarine", mediumaquamarine);
+                    _ArgbTable.Add("MediumBlue", mediumblue);
+                    _ArgbTable.Add("MediumOrchid", mediumorchid);
+                    _ArgbTable.Add("MediumPurple", mediumpurple);
+                    _ArgbTable.Add("MediumSeaGreen", mediumseagreen);
+                    _ArgbTable.Add("MediumSlateBlue", mediumslateblue);
+                    _ArgbTable.Add("MediumSpringGreen", mediumspringgreen);
+                    _ArgbTable.Add("MediumTurquoise", mediumturquoise);
+                    _ArgbTable.Add("MediumVioletRed", mediumvioletred);
+                    _ArgbTable.Add("MidnightBlue", midnightblue);
+                    _ArgbTable.Add("MintCream", mintcream);
+                    _ArgbTable.Add("MistyRose", mistyrose);
+                    _ArgbTable.Add("Moccasin", moccasin);
+                    _ArgbTable.Add("NavajoWhite", navajowhite);
+                    _ArgbTable.Add("Navy", navy);
+                    _ArgbTable.Add("OldLace", oldlace);
+                    _ArgbTable.Add("Olive", olive);
+                    _ArgbTable.Add("OliveDrab", olivedrab);
+                    _ArgbTable.Add("Orange", orange);
+                    _ArgbTable.Add("OrangeRed", orangered);
+                    _ArgbTable.Add("Orchid", orchid);
+                    _ArgbTable.Add("PaleGoldenrod", palegoldenrod);
+                    _ArgbTable.Add("PaleGreen", palegreen);
+                    _ArgbTable.Add("PaleTurquoise", paleturquoise);
+                    _ArgbTable.Add("PaleVioletRed", palevioletred);
+                    _ArgbTable.Add("PapayaWhip", papayawhip);
+                    _ArgbTable.Add("PeachPuff", peachpuff);
+                    _ArgbTable.Add("Peru", peru);
+                    _ArgbTable.Add("Pink", pink);
+                    _ArgbTable.Add("Plum", plum);
+                    _ArgbTable.Add("PowderBlue", powderblue);
+                    _ArgbTable.Add("Purple", purple);
+                    _ArgbTable.Add("Red", red);
+                    _ArgbTable.Add("RosyBrown", rosybrown);
+                    _ArgbTable.Add("RoyalBlue", royalblue);
+                    _ArgbTable.Add("SaddleBrown", saddlebrown);
+                    _ArgbTable.Add("Salmon", salmon);
+                    _ArgbTable.Add("SandyBrown", sandybrown);
+                    _ArgbTable.Add("SeaGreen", seagreen);
+                    _ArgbTable.Add("SeaShell", seashell);
+                    _ArgbTable.Add("Sienna", sienna);
+                    _ArgbTable.Add("Silver", silver);
+                    _ArgbTable.Add("SkyBlue", skyblue);
+                    _ArgbTable.Add("SlateBlue", slateblue);
+                    _ArgbTable.Add("SlateGray", slategray);
+                    _ArgbTable.Add("Snow", snow);
+                    _ArgbTable.Add("SpringGreen", springgreen);
+                    _ArgbTable.Add("SteelBlue", steelblue);
+                    _ArgbTable.Add("Tan", tan);
+                    _ArgbTable.Add("Teal", teal);
+                    _ArgbTable.Add("Thistle", thistle);
+                    _ArgbTable.Add("Tomato", tomato);
+                    _ArgbTable.Add("Turquoise", turquoise);
+                    _ArgbTable.Add("Violet", violet);
+                    _ArgbTable.Add("Wheat", wheat);
+                    _ArgbTable.Add("White", white);
+                    _ArgbTable.Add("WhiteSmoke", whitesmoke);
+                    _ArgbTable.Add("Yellow", yellow);
+                    _ArgbTable.Add("YellowGreen", yellowgreen);
                 }
             }
         }
 
-        private static string _GetNameByArgb(int argb) // 根据 32 位 ARGB 值获取颜色名称。
+        private static string _GetColorNameByArgb(int argb) // 根据 32 位 ARGB 值获取颜色名称。
         {
-            _EnsureNameAndArgbTable();
+            _EnsureColorNameAndArgbTable();
 
-            if (_NameTable.Contains(argb))
+            if (_ColorNameTable.Contains(argb))
             {
-                return (string)_NameTable[argb];
+                return (string)_ColorNameTable[argb];
             }
 
             return null;
         }
 
-        private static int? _GetArgbByName(string name) // 根据颜色名称获取 32 位 ARGB 值。
+        private static int? _GetArgbByColorName(string name) // 根据颜色名称获取 32 位 ARGB 值。
         {
-            _EnsureNameAndArgbTable();
+            _EnsureColorNameAndArgbTable();
 
-            if (!string.IsNullOrWhiteSpace(name))
+            if (!string.IsNullOrWhiteSpace(name) && _ArgbTable.Contains(name))
             {
-                string Name = new Regex(@"[^A-Za-z]").Replace(name, string.Empty).ToLower();
-
-                if (!string.IsNullOrEmpty(Name))
-                {
-                    if (_ArgbTable.Contains(Name))
-                    {
-                        return (int)_ArgbTable[Name];
-                    }
-                }
+                return (int)_ArgbTable[name];
             }
 
             return null;
@@ -2805,34 +2797,42 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用颜色的 16 进制 ARGB 码或 RGB 码初始化 ColorX 结构的新实例。
+        /// 使用颜色的名称初始化 ColorX 结构的新实例。
         /// </summary>
-        /// <param name="hexCode">颜色的 16 进制 ARGB 码或 RGB 码。</param>
-        public ColorX(string hexCode) : this()
+        /// <param name="name">颜色的名称。</param>
+        public ColorX(string name) : this()
         {
-            if (string.IsNullOrEmpty(hexCode))
+            if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentNullException();
-            }
-
-            string HexCode = new Regex(@"[^A-Za-z\d]").Replace(hexCode, string.Empty);
-
-            if (string.IsNullOrEmpty(HexCode))
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (HexCode.Length > 8)
-            {
-                throw new OverflowException();
             }
 
             //
 
-            int Argb = int.Parse(HexCode, NumberStyles.HexNumber);
+            int argb;
 
-            _SetChannels(_ColorSpace.RGB, ((uint)Argb >> _32BitArgbRedShift) & 0xFFU, ((uint)Argb >> _32BitArgbGreenShift) & 0xFFU, ((uint)Argb >> _32BitArgbBlueShift) & 0xFFU);
-            Alpha = ((uint)Argb >> _32BitArgbAlphaShift) & 0xFFU;
+            int? _argb = _GetArgbByColorName(name);
+
+            if (_argb != null)
+            {
+                argb = _argb.Value;
+            }
+            else
+            {
+                string HexCode = new Regex(@"[^A-Za-z\d]").Replace(name, string.Empty);
+
+                if (string.IsNullOrEmpty(HexCode))
+                {
+                    throw new FormatException();
+                }
+
+                //
+
+                argb = int.Parse(HexCode, NumberStyles.HexNumber);
+            }
+
+            _SetChannels(_ColorSpace.RGB, ((uint)argb >> _32BitArgbRedShift) & 0xFFU, ((uint)argb >> _32BitArgbGreenShift) & 0xFFU, ((uint)argb >> _32BitArgbBlueShift) & 0xFFU);
+            Alpha = ((uint)argb >> _32BitArgbAlphaShift) & 0xFFU;
         }
 
         #endregion
@@ -3404,9 +3404,9 @@ namespace Com
             {
                 double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                int Argb = (int)(((uint)Math.Round(Alpha) << _32BitArgbAlphaShift) | ((uint)Math.Round(rgb[0]) << _32BitArgbRedShift) | ((uint)Math.Round(rgb[1]) << _32BitArgbGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitArgbBlueShift));
+                int argb = (int)(((uint)Math.Round(Alpha) << _32BitArgbAlphaShift) | ((uint)Math.Round(rgb[0]) << _32BitArgbRedShift) | ((uint)Math.Round(rgb[1]) << _32BitArgbGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitArgbBlueShift));
 
-                string HexCode = Convert.ToString(Argb, 16).ToUpper();
+                string HexCode = Convert.ToString(argb, 16).ToUpper();
 
                 int Len = HexCode.Length;
 
@@ -3430,9 +3430,9 @@ namespace Com
             {
                 double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                int Rgb = (int)(((uint)Math.Round(rgb[0]) << _32BitArgbRedShift) | ((uint)Math.Round(rgb[1]) << _32BitArgbGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitArgbBlueShift));
+                int _rgb = (int)(((uint)Math.Round(rgb[0]) << _32BitArgbRedShift) | ((uint)Math.Round(rgb[1]) << _32BitArgbGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitArgbBlueShift));
 
-                string HexCode = Convert.ToString(Rgb, 16).ToUpper();
+                string HexCode = Convert.ToString(_rgb, 16).ToUpper();
 
                 int Len = HexCode.Length;
 
@@ -3458,27 +3458,29 @@ namespace Com
             {
                 double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                int Argb = (int)(((uint)Math.Round(Alpha) << _32BitArgbAlphaShift) | ((uint)Math.Round(rgb[0]) << _32BitArgbRedShift) | ((uint)Math.Round(rgb[1]) << _32BitArgbGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitArgbBlueShift));
+                int argb = (int)(((uint)Math.Round(Alpha) << _32BitArgbAlphaShift) | ((uint)Math.Round(rgb[0]) << _32BitArgbRedShift) | ((uint)Math.Round(rgb[1]) << _32BitArgbGreenShift) | ((uint)Math.Round(rgb[2]) << _32BitArgbBlueShift));
 
-                string name = _GetNameByArgb(Argb);
+                string name = _GetColorNameByArgb(argb);
 
-                if (string.IsNullOrWhiteSpace(name))
+                if (!string.IsNullOrWhiteSpace(name))
                 {
-                    string HexCode = Convert.ToString(Argb, 16).ToUpper();
+                    return name;
+                }
+                else
+                {
+                    string HexCode = Convert.ToString(argb, 16).ToUpper();
 
                     int Len = HexCode.Length;
 
                     if (Len < 8)
                     {
-                        name = "#" + HexCode.PadLeft(8, '0');
+                        return ("#" + HexCode.PadLeft(8, '0'));
                     }
                     else
                     {
-                        name = "#" + HexCode;
+                        return ("#" + HexCode);
                     }
                 }
-
-                return name;
             }
         }
 
@@ -4371,7 +4373,18 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色的 16 进制 ARGB 码或 RGB 码转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromHexCode(string hexCode)
         {
-            return new ColorX(hexCode);
+            string HexCode = new Regex(@"[^A-Za-z\d]").Replace(hexCode, string.Empty);
+
+            if (string.IsNullOrEmpty(HexCode))
+            {
+                throw new FormatException();
+            }
+
+            //
+
+            int argb = int.Parse(HexCode, NumberStyles.HexNumber);
+
+            return new ColorX(argb);
         }
 
         //
@@ -4383,21 +4396,7 @@ namespace Com
         /// <returns>ColorX 结构，表示将颜色的名称转换为 ColorX 结构得到的结果。</returns>
         public static ColorX FromName(string name)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException();
-            }
-
-            int? argb = _GetArgbByName(name);
-
-            if (argb != null)
-            {
-                return new ColorX(argb.Value);
-            }
-            else
-            {
-                return new ColorX(name);
-            }
+            return new ColorX(name);
         }
 
         //
