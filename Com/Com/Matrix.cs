@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Matrix
-Version 19.5.11.1720
+Version 19.6.22.0000
 
 This file is part of Com
 
@@ -891,13 +891,7 @@ namespace Com
             {
                 double[,] result = new double[_Size.Width, _Size.Height];
 
-                for (int x = 0; x < _Size.Height; x++)
-                {
-                    for (int y = 0; y < _Size.Width; y++)
-                    {
-                        result[x, y] = _MArray[x, y];
-                    }
-                }
+                Array.Copy(_MArray, result, _Size.Width * _Size.Height);
 
                 return result;
             }
