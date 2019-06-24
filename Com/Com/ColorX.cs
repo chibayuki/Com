@@ -9,6 +9,8 @@ This file is part of Com
 Com is released under the GPLv3 license
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+//#define __CACHE_BY_HASH // 启用宏：通道缓存使用哈希方式；禁用宏：通道缓存使用查表方式。
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -509,19 +511,20 @@ namespace Com
 
         //
 
-        private const int _ChannelToSpaceDivisor = 0x00010000; // 将色彩通道转换为色彩空间的转换因子。
+        private const int _SpaceBase = 0x00010000; // 色彩空间的基码。
+        private const int _SpaceCount = 6; // 色彩空间数量。
         private const int _ChannelCount = 4; // 每个色彩空间的最大色彩通道数量。
 
         private enum _ColorSpace // 色彩空间。
         {
             None = 0, // 不表示任何色彩空间。
 
-            RGB = 0x00010000, // RGB 色彩空间。
-            HSV = 0x00020000, // HSV 色彩空间。
-            HSL = 0x00030000, // HSL 色彩空间。
-            CMYK = 0x00040000, // CMYK 色彩空间。
-            LAB = 0x00050000, // LAB 色彩空间。
-            YUV = 0x00060000 // YUV 色彩空间。
+            RGB = _SpaceBase, // RGB 色彩空间。
+            HSV = 2 * _SpaceBase, // HSV 色彩空间。
+            HSL = 3 * _SpaceBase, // HSL 色彩空间。
+            CMYK = 4 * _SpaceBase, // CMYK 色彩空间。
+            LAB = 5 * _SpaceBase, // LAB 色彩空间。
+            YUV = 6 * _SpaceBase // YUV 色彩空间。
         }
 
         private enum _ColorChannel // 色彩通道。
@@ -2137,7 +2140,71 @@ namespace Com
         private double _Channel3; // 颜色在当前色彩空间的第 3 个分量。
         private double _Channel4; // 颜色在当前色彩空间的第 4 个分量。
 
+#if __CACHE_BY_HASH
         private Hashtable _CachedChannels; // 用于缓存颜色在其他色彩空间的分量。
+
+        private bool _CheckCache() // 检查缓存是否已经创建。
+        {
+            return (_CachedChannels != null);
+        }
+
+        private void _CreateCache() // 创建缓存。
+        {
+            _CachedChannels = new Hashtable();
+        }
+
+        private void _DestroyCache() // 释放缓存。
+        {
+            _CachedChannels = null;
+        }
+
+        private bool _SearchCache(_ColorSpace colorSpace) // 检索缓存中是否存在指定色彩空间的通道值。
+        {
+            return _CachedChannels.Contains(colorSpace);
+        }
+
+        private double[] _GetCache(_ColorSpace colorSpace) // 获取缓存中指定色彩空间的通道值。
+        {
+            return (_CachedChannels[colorSpace] as double[]);
+        }
+
+        private void _SetCache(_ColorSpace colorSpace, double[] channels) // 设置缓存中指定色彩空间的通道值。
+        {
+            _CachedChannels.Add(colorSpace, channels);
+        }
+#else
+        private double[][] _CachedChannels; // 用于缓存颜色在其他色彩空间的分量。
+
+        private bool _CheckCache() // 检查缓存是否已经创建。
+        {
+            return (_CachedChannels != null);
+        }
+
+        private void _CreateCache() // 创建缓存。
+        {
+            _CachedChannels = new double[_SpaceCount][];
+        }
+
+        private void _DestroyCache() // 释放缓存。
+        {
+            _CachedChannels = null;
+        }
+
+        private bool _SearchCache(_ColorSpace colorSpace) // 检索缓存中是否存在指定色彩空间的通道值。
+        {
+            return (_CachedChannels[(int)colorSpace / _SpaceBase - 1] != null);
+        }
+
+        private double[] _GetCache(_ColorSpace colorSpace) // 获取缓存中指定色彩空间的通道值。
+        {
+            return _CachedChannels[(int)colorSpace / _SpaceBase - 1];
+        }
+
+        private void _SetCache(_ColorSpace colorSpace, double[] channels) // 设置缓存中指定色彩空间的通道值。
+        {
+            _CachedChannels[(int)colorSpace / _SpaceBase - 1] = channels;
+        }
+#endif
 
         //
 
@@ -2167,9 +2234,9 @@ namespace Com
             {
                 return new double[_ChannelCount] { _Channel1, _Channel2, _Channel3, _Channel4 };
             }
-            else if (_CachedChannels != null && _CachedChannels.Contains(colorSpace))
+            else if (_CheckCache() && _SearchCache(colorSpace))
             {
-                return (_CachedChannels[colorSpace] as double[]);
+                return _GetCache(colorSpace);
             }
             else
             {
@@ -2212,9 +2279,9 @@ namespace Com
                         G = _Channel2;
                         B = _Channel3;
                     }
-                    else if (_CachedChannels != null && _CachedChannels.Contains(_ColorSpace.RGB))
+                    else if (_CheckCache() && _SearchCache(_ColorSpace.RGB))
                     {
-                        double[] rgb = _CachedChannels[_ColorSpace.RGB] as double[];
+                        double[] rgb = _GetCache(_ColorSpace.RGB);
 
                         R = rgb[0];
                         G = rgb[1];
@@ -2245,12 +2312,12 @@ namespace Com
                                 break;
                         }
 
-                        if (_CachedChannels == null)
+                        if (!_CheckCache())
                         {
-                            _CachedChannels = new Hashtable();
+                            _CreateCache();
                         }
 
-                        _CachedChannels.Add(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
+                        _SetCache(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
                     }
 
                     switch (colorSpace)
@@ -2277,12 +2344,12 @@ namespace Com
                     }
                 }
 
-                if (_CachedChannels == null)
+                if (!_CheckCache())
                 {
-                    _CachedChannels = new Hashtable();
+                    _CreateCache();
                 }
 
-                _CachedChannels.Add(colorSpace, channels);
+                _SetCache(colorSpace, channels);
 
                 return channels;
             }
@@ -2297,7 +2364,7 @@ namespace Com
 
             //
 
-            int channelIndex = (int)colorChannel % _ChannelToSpaceDivisor;
+            int channelIndex = (int)colorChannel % _SpaceBase;
             _ColorSpace colorSpace = (_ColorSpace)((int)colorChannel - channelIndex);
 
             if (_CurrentColorSpace == _ColorSpace.None)
@@ -2343,9 +2410,9 @@ namespace Com
                     default: return 0;
                 }
             }
-            else if (_CachedChannels != null && _CachedChannels.Contains(colorSpace))
+            else if (_CheckCache() && _SearchCache(colorSpace))
             {
-                return (_CachedChannels[colorSpace] as double[])[channelIndex];
+                return _GetCache(colorSpace)[channelIndex];
             }
             else
             {
@@ -2388,9 +2455,9 @@ namespace Com
                         G = _Channel2;
                         B = _Channel3;
                     }
-                    else if (_CachedChannels != null && _CachedChannels.Contains(_ColorSpace.RGB))
+                    else if (_CheckCache() && _SearchCache(_ColorSpace.RGB))
                     {
-                        double[] rgb = _CachedChannels[_ColorSpace.RGB] as double[];
+                        double[] rgb = _GetCache(_ColorSpace.RGB);
 
                         R = rgb[0];
                         G = rgb[1];
@@ -2421,12 +2488,12 @@ namespace Com
                                 break;
                         }
 
-                        if (_CachedChannels == null)
+                        if (!_CheckCache())
                         {
-                            _CachedChannels = new Hashtable();
+                            _CreateCache();
                         }
 
-                        _CachedChannels.Add(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
+                        _SetCache(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
                     }
 
                     switch (colorSpace)
@@ -2453,12 +2520,12 @@ namespace Com
                     }
                 }
 
-                if (_CachedChannels == null)
+                if (!_CheckCache())
                 {
-                    _CachedChannels = new Hashtable();
+                    _CreateCache();
                 }
 
-                _CachedChannels.Add(colorSpace, channels);
+                _SetCache(colorSpace, channels);
 
                 return channels[channelIndex];
             }
@@ -2537,7 +2604,7 @@ namespace Com
 
             _CurrentColorSpace = colorSpace;
 
-            _CachedChannels = null;
+            _DestroyCache();
         }
 
         private void _SetChannel(_ColorChannel colorChannel, double channel) // 设置颜色在指定色彩通道的分量。
@@ -2575,7 +2642,7 @@ namespace Com
 
             //
 
-            int channelIndex = (int)colorChannel % _ChannelToSpaceDivisor;
+            int channelIndex = (int)colorChannel % _SpaceBase;
             _ColorSpace colorSpace = (_ColorSpace)((int)colorChannel - channelIndex);
 
             if (_CurrentColorSpace == _ColorSpace.None)
@@ -2641,9 +2708,9 @@ namespace Com
             {
                 goto SET_CHANNEL;
             }
-            else if (_CachedChannels != null && _CachedChannels.Contains(colorSpace))
+            else if (_CheckCache() && _SearchCache(colorSpace))
             {
-                double[] channels = _CachedChannels[colorSpace] as double[];
+                double[] channels = _GetCache(colorSpace);
 
                 _Channel1 = channels[0];
                 _Channel2 = channels[1];
@@ -2689,9 +2756,9 @@ namespace Com
                         G = _Channel2;
                         B = _Channel3;
                     }
-                    else if (_CachedChannels != null && _CachedChannels.Contains(_ColorSpace.RGB))
+                    else if (_CheckCache() && _SearchCache(_ColorSpace.RGB))
                     {
-                        double[] rgb = _CachedChannels[_ColorSpace.RGB] as double[];
+                        double[] rgb = _GetCache(_ColorSpace.RGB);
 
                         R = rgb[0];
                         G = rgb[1];
@@ -2722,12 +2789,12 @@ namespace Com
                                 break;
                         }
 
-                        if (_CachedChannels == null)
+                        if (!_CheckCache())
                         {
-                            _CachedChannels = new Hashtable();
+                            _CreateCache();
                         }
 
-                        _CachedChannels.Add(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
+                        _SetCache(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
                     }
 
                     switch (colorSpace)
@@ -2766,7 +2833,7 @@ namespace Com
 
             _CurrentColorSpace = colorSpace;
 
-            _CachedChannels = null;
+            _DestroyCache();
         }
 
         #endregion
@@ -3549,7 +3616,11 @@ namespace Com
         /// <returns>布尔值，表示此 ColorX 结构是否与指定的 ColorX 结构相等。</returns>
         public bool Equals(ColorX color)
         {
+#if __CACHE_BY_HASH
             return (_CurrentColorSpace.Equals(color._CurrentColorSpace) && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && Hashtable.Equals(_CachedChannels, color._CachedChannels));
+#else
+            return (_CurrentColorSpace.Equals(color._CurrentColorSpace) && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && Array.Equals(_CachedChannels, color._CachedChannels));
+#endif
         }
 
         //
