@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.ControlSubstitution
-Version 19.5.11.1720
+Version 19.6.25.0000
 
 This file is part of Com
 
@@ -27,7 +27,7 @@ namespace Com.WinForm
     /// </summary>
     public static class ControlSubstitution
     {
-        private static Hashtable _EventKeyHashtable = new Hashtable(); // 用于存储事件键值的哈希表。
+        private static Hashtable _EventKeyTable = new Hashtable(); // 用于存储事件键值的哈希表。
         private static EventHandlerList _Events = new EventHandlerList(); // 用于存储事件委托的列表。
 
         private static void _AddEventHandler(Control control, string eventName, Delegate eventHandler) // 向控件的指定事件添加一个委托。
@@ -1094,12 +1094,12 @@ namespace Com.WinForm
 
                     string hashKey = string.Concat(control.GetType().FullName, "|", control.GetHashCode(), "|", control.Name, "|", eventName);
 
-                    if (!_EventKeyHashtable.Contains(hashKey))
+                    if (!_EventKeyTable.ContainsKey(hashKey))
                     {
-                        _EventKeyHashtable.Add(hashKey, new object());
+                        _EventKeyTable.Add(hashKey, new object());
                     }
 
-                    object eventKey = _EventKeyHashtable[hashKey];
+                    object eventKey = _EventKeyTable[hashKey];
 
                     _Events.AddHandler(eventKey, eventHandler);
                 }
@@ -1115,9 +1115,9 @@ namespace Com.WinForm
                 {
                     string hashKey = string.Concat(control.GetType().FullName, "|", control.GetHashCode(), "|", control.Name, "|", eventName);
 
-                    if (_EventKeyHashtable.Contains(hashKey))
+                    if (_EventKeyTable.ContainsKey(hashKey))
                     {
-                        object eventKey = _EventKeyHashtable[hashKey];
+                        object eventKey = _EventKeyTable[hashKey];
 
                         Delegate delegates = _Events[eventKey];
 
@@ -1904,7 +1904,7 @@ namespace Com.WinForm
                             _Events.RemoveHandler(eventKey, delegates);
                         }
 
-                        _EventKeyHashtable.Remove(hashKey);
+                        _EventKeyTable.Remove(hashKey);
                     }
                 }
             }
