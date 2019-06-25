@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Real
-Version 19.5.11.1720
+Version 19.6.22.0000
 
 This file is part of Com
 
@@ -1248,7 +1248,7 @@ namespace Com
         /// 返回对 Real 结构计算对数得到的 Real 结构的新实例。
         /// </summary>
         /// <param name="left">Real 结构，表示幂。</param>
-        /// <param name="right">Real 结构，表示基数。</param>
+        /// <param name="right">Real 结构，表示底数。</param>
         /// <returns>Real 结构，表示对 Real 结构计算对数得到的结果。</returns>
         public static Real Log(Real left, Real right)
         {

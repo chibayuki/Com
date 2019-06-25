@@ -9,15 +9,12 @@ This file is part of Com
 Com is released under the GPLv3 license
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-//#define __CACHE_BY_HASH // 启用宏：通道缓存使用哈希方式；禁用宏：通道缓存使用查表方式。
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Collections;
 using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -31,8 +28,8 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private static Hashtable _ColorNameTable = null; // 表示从 32 位 ARGB 值到颜色名称的映射。
-        private static Hashtable _ArgbTable = null; // 表示从颜色名称到 32 位 ARGB 值的映射。
+        private static Dictionary<int, string> _ColorNameTable = null; // 表示从 32 位 ARGB 值到颜色名称的映射。
+        private static Dictionary<string, int> _ArgbTable = null; // 表示从颜色名称到 32 位 ARGB 值的映射。
 
         private static void _EnsureColorNameAndArgbTable() // 初始化 32 位 ARGB 值与颜色名称的映射表。
         {
@@ -182,7 +179,7 @@ namespace Com
 
                 if (_ColorNameTable == null)
                 {
-                    _ColorNameTable = new Hashtable();
+                    _ColorNameTable = new Dictionary<int, string>();
 
                     _ColorNameTable.Add(transparent, "Transparent");
                     _ColorNameTable.Add(aliceblue, "AliceBlue");
@@ -331,7 +328,7 @@ namespace Com
 
                 if (_ArgbTable == null)
                 {
-                    _ArgbTable = new Hashtable(StringComparer.OrdinalIgnoreCase);
+                    _ArgbTable = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
                     _ArgbTable.Add("Transparent", transparent);
                     _ArgbTable.Add("AliceBlue", aliceblue);
@@ -482,9 +479,9 @@ namespace Com
         {
             _EnsureColorNameAndArgbTable();
 
-            if (_ColorNameTable.Contains(argb))
+            if (_ColorNameTable.ContainsKey(argb))
             {
-                return (string)_ColorNameTable[argb];
+                return _ColorNameTable[argb];
             }
 
             return null;
@@ -494,9 +491,9 @@ namespace Com
         {
             _EnsureColorNameAndArgbTable();
 
-            if (!string.IsNullOrWhiteSpace(name) && _ArgbTable.Contains(name))
+            if (!string.IsNullOrWhiteSpace(name) && _ArgbTable.ContainsKey(name))
             {
-                return (int)_ArgbTable[name];
+                return _ArgbTable[name];
             }
 
             return null;
@@ -2140,40 +2137,9 @@ namespace Com
         private double _Channel3; // 颜色在当前色彩空间的第 3 个分量。
         private double _Channel4; // 颜色在当前色彩空间的第 4 个分量。
 
-#if __CACHE_BY_HASH
-        private Hashtable _CachedChannels; // 用于缓存颜色在其他色彩空间的分量。
-
-        private bool _CheckCache() // 检查缓存是否已经创建。
-        {
-            return (_CachedChannels != null);
-        }
-
-        private void _CreateCache() // 创建缓存。
-        {
-            _CachedChannels = new Hashtable();
-        }
-
-        private void _DestroyCache() // 释放缓存。
-        {
-            _CachedChannels = null;
-        }
-
-        private bool _SearchCache(_ColorSpace colorSpace) // 检索缓存中是否存在指定色彩空间的通道值。
-        {
-            return _CachedChannels.Contains(colorSpace);
-        }
-
-        private double[] _GetCache(_ColorSpace colorSpace) // 获取缓存中指定色彩空间的通道值。
-        {
-            return (_CachedChannels[colorSpace] as double[]);
-        }
-
-        private void _SetCache(_ColorSpace colorSpace, double[] channels) // 设置缓存中指定色彩空间的通道值。
-        {
-            _CachedChannels.Add(colorSpace, channels);
-        }
-#else
         private double[][] _CachedChannels; // 用于缓存颜色在其他色彩空间的分量。
+
+        //
 
         private bool _CheckCache() // 检查缓存是否已经创建。
         {
@@ -2204,7 +2170,73 @@ namespace Com
         {
             _CachedChannels[(int)colorSpace / _SpaceBase - 1] = channels;
         }
-#endif
+
+        private static bool _CompareCache(double[][] cache1, double[][] cache2) // 比较两个缓存的内容是否相同。
+        {
+            if (cache1 == null && cache2 == null)
+            {
+                return true;
+            }
+            else if (cache1 == null || cache2 == null)
+            {
+                return false;
+            }
+            else if (object.ReferenceEquals(cache1, cache2))
+            {
+                return true;
+            }
+            else
+            {
+                int len_c = cache1.Length;
+
+                if (len_c != cache2.Length)
+                {
+                    return false;
+                }
+                else
+                {
+                    for (int i = 0; i < len_c; i++)
+                    {
+                        if ((cache1[i] == null) != (cache2[i] == null))
+                        {
+                            return false;
+                        }
+                    }
+
+                    for (int i = 0; i < len_c; i++)
+                    {
+                        double[] array1 = cache1[i];
+
+                        if (array1 != null)
+                        {
+                            double[] array2 = cache2[i];
+
+                            if (!object.ReferenceEquals(array1, array2))
+                            {
+                                int len_a = array1.Length;
+
+                                if (len_a != array2.Length)
+                                {
+                                    return false;
+                                }
+                                else
+                                {
+                                    for (int j = 0; j < len_a; j++)
+                                    {
+                                        if (!array1[j].Equals(array2[j]))
+                                        {
+                                            return false;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+            }
+        }
 
         //
 
@@ -3616,11 +3648,7 @@ namespace Com
         /// <returns>布尔值，表示此 ColorX 结构是否与指定的 ColorX 结构相等。</returns>
         public bool Equals(ColorX color)
         {
-#if __CACHE_BY_HASH
-            return (_CurrentColorSpace.Equals(color._CurrentColorSpace) && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && Hashtable.Equals(_CachedChannels, color._CachedChannels));
-#else
-            return (_CurrentColorSpace.Equals(color._CurrentColorSpace) && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && Array.Equals(_CachedChannels, color._CachedChannels));
-#endif
+            return (_CurrentColorSpace.Equals(color._CurrentColorSpace) && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && _CompareCache(_CachedChannels, color._CachedChannels));
         }
 
         //

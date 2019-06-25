@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Vector
-Version 19.5.11.1720
+Version 19.6.25.0000
 
 This file is part of Com
 
@@ -3600,10 +3600,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                for (int i = 0; i < _Size; i++)
-                {
-                    _VArray[i] = default(double);
-                }
+                Array.Clear(_VArray, 0, _Size);
             }
         }
 
@@ -3789,10 +3786,7 @@ namespace Com
         {
             if (_Size > 0)
             {
-                for (int i = 0; i < _Size; i++)
-                {
-                    _VArray[i] = default(double);
-                }
+                Array.Clear(_VArray, 0, _Size);
             }
         }
 

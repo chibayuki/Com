@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Complex
-Version 19.5.11.1720
+Version 19.6.22.0000
 
 This file is part of Com
 
@@ -503,7 +503,7 @@ namespace Com
         /// <summary>
         /// 返回将 PointD 结构转换为 Complex 结构的新实例。
         /// </summary>
-        /// <param name="pt">Point 结构。</param>
+        /// <param name="pt">PointD 结构。</param>
         /// <returns>Complex 结构，表示将 PointD 结构转换为 Complex 结构得到的结果。</returns>
         public static Complex FromPointD(PointD pt)
         {
@@ -674,7 +674,7 @@ namespace Com
         /// 返回对 Complex 结构计算复对数得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="left">Complex 结构，表示幂。</param>
-        /// <param name="right">Complex 结构，表示基数。</param>
+        /// <param name="right">Complex 结构，表示底数。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算复对数得到的结果。</returns>
         public static Complex Log(Complex left, Complex right)
         {
@@ -692,7 +692,7 @@ namespace Com
         /// 返回对双精度浮点数计算复对数得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="left">Complex 结构，表示幂。</param>
-        /// <param name="right">双精度浮点数，表示基数。</param>
+        /// <param name="right">双精度浮点数，表示底数。</param>
         /// <returns>Complex 结构，表示对双精度浮点数计算复对数得到的结果。</returns>
         public static Complex Log(Complex left, double right)
         {
@@ -710,7 +710,7 @@ namespace Com
         /// 返回对 Complex 结构计算实对数得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="left">双精度浮点数，表示幂。</param>
-        /// <param name="right">Complex 结构，表示基数。</param>
+        /// <param name="right">Complex 结构，表示底数。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算实对数得到的结果。</returns>
         public static Complex Log(double left, Complex right)
         {
