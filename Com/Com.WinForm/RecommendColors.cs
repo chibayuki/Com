@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.RecommendColors
-Version 19.5.11.1720
+Version 19.6.26.0000
 
 This file is part of Com
 
@@ -842,13 +842,13 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此 RecommendColors 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is RecommendColors))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
+            }
+            else if (obj == null || !(obj is RecommendColors))
+            {
+                return false;
             }
             else
             {
@@ -909,17 +909,13 @@ namespace Com.WinForm
         /// <returns>布尔值，表示两个 RecommendColors 对象是否相等。</returns>
         public static bool Equals(RecommendColors left, RecommendColors right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -939,17 +935,13 @@ namespace Com.WinForm
         /// <returns>布尔值，表示两个 RecommendColors 对象是否相等。</returns>
         public static bool operator ==(RecommendColors left, RecommendColors right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -965,17 +957,13 @@ namespace Com.WinForm
         /// <returns>布尔值，表示两个 RecommendColors 对象是否不相等。</returns>
         public static bool operator !=(RecommendColors left, RecommendColors right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
             }
             else
             {
