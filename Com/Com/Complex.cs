@@ -256,13 +256,13 @@ namespace Com
         //
 
         /// <summary>
-        /// 获取此 Complex 结构的共轭复数。
+        /// 获取此 Complex 结构的相反数。
         /// </summary>
-        public Complex Conjugate
+        public Complex Opposite
         {
             get
             {
-                return new Complex(_Real, -_Imaginary);
+                return new Complex(-_Real, -_Imaginary);
             }
         }
 
@@ -283,6 +283,17 @@ namespace Com
 
                     return new Complex(_Real / ModSqr, -_Imaginary / ModSqr);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Complex 结构的共轭复数。
+        /// </summary>
+        public Complex Conjugate
+        {
+            get
+            {
+                return new Complex(_Real, -_Imaginary);
             }
         }
 

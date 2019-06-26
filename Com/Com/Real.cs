@@ -784,6 +784,78 @@ namespace Com
             }
         }
 
+        //
+
+        /// <summary>
+        /// 获取此 Real 结构的相反数。
+        /// </summary>
+        public Real Opposite
+        {
+            get
+            {
+                if (double.IsNaN(_Value))
+                {
+                    return NaN;
+                }
+                else if (double.IsInfinity(_Value))
+                {
+                    if (double.IsPositiveInfinity(_Value))
+                    {
+                        return NegativeInfinity;
+                    }
+                    else
+                    {
+                        return PositiveInfinity;
+                    }
+                }
+                else if (_Value == 0)
+                {
+                    return Zero;
+                }
+                else
+                {
+                    return new Real(-_Value, _Magnitude);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取此 Real 结构的倒数。
+        /// </summary>
+        public Real Reciprocal
+        {
+            get
+            {
+                if (double.IsNaN(_Value))
+                {
+                    return NaN;
+                }
+                else if (double.IsInfinity(_Value))
+                {
+                    return Zero;
+                }
+                else if (_Value == 0)
+                {
+                    return PositiveInfinity;
+                }
+                else
+                {
+                    if (this == One)
+                    {
+                        return One;
+                    }
+                    else if (this == MinusOne)
+                    {
+                        return MinusOne;
+                    }
+                    else
+                    {
+                        return new Real(1 / _Value, -_Magnitude);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region 方法
