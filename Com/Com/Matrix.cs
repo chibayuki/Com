@@ -668,13 +668,13 @@ namespace Com
         /// <returns>布尔值，表示此 Matrix 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is Matrix))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
+            }
+            else if (obj == null || !(obj is Matrix))
+            {
+                return false;
             }
             else
             {
@@ -720,13 +720,13 @@ namespace Com
         /// <returns>布尔值，表示此 Matrix 是否与指定的 Matrix 对象相等。</returns>
         public bool Equals(Matrix matrix)
         {
-            if ((object)matrix == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, matrix))
+            if (object.ReferenceEquals(this, matrix))
             {
                 return true;
+            }
+            else if ((object)matrix == null)
+            {
+                return false;
             }
             else if (_Size != matrix._Size)
             {
@@ -921,17 +921,13 @@ namespace Com
         /// <returns>布尔值，表示两个 Matrix 对象是否相等。</returns>
         public static bool Equals(Matrix left, Matrix right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -1796,7 +1792,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Matrix 对象是否相等。</returns>
         public static bool operator ==(Matrix left, Matrix right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
@@ -1804,23 +1800,21 @@ namespace Com
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
+            else
             {
-                return true;
-            }
-
-            for (int x = 0; x < left._Size.Width; x++)
-            {
-                for (int y = 0; y < left._Size.Height; y++)
+                for (int x = 0; x < left._Size.Width; x++)
                 {
-                    if (left._MArray[x, y] != right._MArray[x, y])
+                    for (int y = 0; y < left._Size.Height; y++)
                     {
-                        return false;
+                        if (left._MArray[x, y] != right._MArray[x, y])
+                        {
+                            return false;
+                        }
                     }
                 }
-            }
 
-            return true;
+                return true;
+            }
         }
 
         /// <summary>
@@ -1831,7 +1825,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Matrix 对象是否不相等。</returns>
         public static bool operator !=(Matrix left, Matrix right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
@@ -1839,23 +1833,21 @@ namespace Com
             {
                 return true;
             }
-            else if (object.ReferenceEquals(left, right))
+            else
             {
-                return false;
-            }
-
-            for (int x = 0; x < left._Size.Width; x++)
-            {
-                for (int y = 0; y < left._Size.Height; y++)
+                for (int x = 0; x < left._Size.Width; x++)
                 {
-                    if (left._MArray[x, y] != right._MArray[x, y])
+                    for (int y = 0; y < left._Size.Height; y++)
                     {
-                        return true;
+                        if (left._MArray[x, y] != right._MArray[x, y])
+                        {
+                            return true;
+                        }
                     }
                 }
-            }
 
-            return false;
+                return false;
+            }
         }
 
         #endregion

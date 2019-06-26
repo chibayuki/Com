@@ -3594,13 +3594,13 @@ namespace Com
         /// <returns>布尔值，表示此 ColorX 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is ColorX))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
+            }
+            else if (obj == null || !(obj is ColorX))
+            {
+                return false;
             }
             else
             {
@@ -4002,17 +4002,13 @@ namespace Com
         /// <returns>布尔值，表示两个 ColorX 结构是否相等。</returns>
         public static bool Equals(ColorX left, ColorX right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {

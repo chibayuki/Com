@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.DateTimeX
-Version 19.5.11.1720
+Version 19.6.26.0000
 
 This file is part of Com
 
@@ -1402,13 +1402,13 @@ namespace Com
         /// <returns>布尔值，表示此 DateTimeX 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is DateTimeX))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
+            }
+            else if (obj == null || !(obj is DateTimeX))
+            {
+                return false;
             }
             else
             {
@@ -1462,13 +1462,13 @@ namespace Com
         /// <returns>32 位整数，表示将此 DateTimeX 结构与指定的对象进行次序比较得到的结果。</returns>
         public int CompareTo(object obj)
         {
-            if (obj == null || !(obj is DateTimeX))
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return 0;
+            }
+            else if (obj == null || !(obj is DateTimeX))
+            {
+                return 1;
             }
             else
             {
@@ -2024,17 +2024,13 @@ namespace Com
         /// <returns>布尔值，表示两个 DateTimeX 结构是否相等。</returns>
         public static bool Equals(DateTimeX left, DateTimeX right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -2052,7 +2048,7 @@ namespace Com
         /// <returns>32 位整数，表示将两个 DateTimeX 结构进行次序比较得到的结果。</returns>
         public static int Compare(DateTimeX left, DateTimeX right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return 0;
             }
@@ -2063,10 +2059,6 @@ namespace Com
             else if ((object)right == null)
             {
                 return 1;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return 0;
             }
             else
             {

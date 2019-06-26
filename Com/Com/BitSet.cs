@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.BitSet
-Version 19.5.11.1720
+Version 19.6.26.0000
 
 This file is part of Com
 
@@ -515,13 +515,13 @@ namespace Com
         /// <returns>布尔值，表示此 BitSet 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is BitSet))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
+            }
+            else if (obj == null || !(obj is BitSet))
+            {
+                return false;
             }
             else
             {
@@ -567,13 +567,13 @@ namespace Com
         /// <returns>布尔值，表示此 BitSet 是否与指定的 BitSet 对象相等。</returns>
         public bool Equals(BitSet bitSet)
         {
-            if ((object)bitSet == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, bitSet))
+            if (object.ReferenceEquals(this, bitSet))
             {
                 return true;
+            }
+            else if ((object)bitSet == null)
+            {
+                return false;
             }
             else if (_Size != bitSet._Size || _UintArray.Length != bitSet._UintArray.Length)
             {
@@ -602,13 +602,13 @@ namespace Com
         /// <returns>32 位整数，表示此 BitSet 与指定的对象进行次序比较的结果。</returns>
         public int CompareTo(object obj)
         {
-            if (obj == null || !(obj is BitSet))
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return 0;
+            }
+            else if (obj == null || !(obj is BitSet))
+            {
+                return 1;
             }
             else
             {
@@ -623,13 +623,13 @@ namespace Com
         /// <returns>32 位整数，表示此 BitSet 与指定的 BitSet 对象进行次序比较的结果。</returns>
         public int CompareTo(BitSet bitSet)
         {
-            if ((object)bitSet == null)
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, bitSet))
+            if (object.ReferenceEquals(this, bitSet))
             {
                 return 0;
+            }
+            else if ((object)bitSet == null)
+            {
+                return 1;
             }
             else
             {
@@ -1624,17 +1624,13 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象是否相等。</returns>
         public static bool Equals(BitSet left, BitSet right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -1652,7 +1648,7 @@ namespace Com
         /// <returns>32 位整数，表示对两个 BitSet 对象进行次序比较的结果。</returns>
         public static int Compare(BitSet left, BitSet right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return 0;
             }
@@ -1663,10 +1659,6 @@ namespace Com
             else if ((object)right == null)
             {
                 return 1;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return 0;
             }
             else
             {
@@ -1686,17 +1678,13 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否相等。</returns>
         public static bool operator ==(BitSet left, BitSet right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -1731,17 +1719,13 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否不相等。</returns>
         public static bool operator !=(BitSet left, BitSet right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
             }
             else
             {
@@ -1776,11 +1760,11 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否前者小于后者。</returns>
         public static bool operator <(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return false;
             }
@@ -1817,11 +1801,11 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否前者大于后者。</returns>
         public static bool operator >(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
             {
                 return false;
             }
@@ -1858,13 +1842,13 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否前者小于或等于后者。</returns>
         public static bool operator <=(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return false;
             }
             else
             {
@@ -1899,13 +1883,13 @@ namespace Com
         /// <returns>布尔值，表示两个 BitSet 对象表示的整数是否前者大于或等于后者。</returns>
         public static bool operator >=(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right))
+            {
+                return false;
             }
             else
             {

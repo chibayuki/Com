@@ -795,13 +795,13 @@ namespace Com
         /// <returns>布尔值，表示此 Real 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is Real))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
+            }
+            else if (obj == null || !(obj is Real))
+            {
+                return false;
             }
             else
             {
@@ -904,13 +904,13 @@ namespace Com
         /// <returns>32 位整数，表示此 Real 与指定的对象进行次序比较的结果。</returns>
         public int CompareTo(object obj)
         {
-            if (obj == null || !(obj is Real))
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return 0;
+            }
+            else if (obj == null || !(obj is Real))
+            {
+                return 1;
             }
             else
             {
@@ -975,17 +975,13 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否相等。</returns>
         public static bool Equals(Real left, Real right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -1003,7 +999,7 @@ namespace Com
         /// <returns>32 位整数，表示对两个 Real 对象进行次序比较的结果。</returns>
         public static int Compare(Real left, Real right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return 0;
             }
@@ -1014,10 +1010,6 @@ namespace Com
             else if ((object)right == null)
             {
                 return 1;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return 0;
             }
             else
             {

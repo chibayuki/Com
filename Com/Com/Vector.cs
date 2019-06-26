@@ -626,13 +626,13 @@ namespace Com
         /// <returns>布尔值，表示此 Vector 是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is Vector))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
+            }
+            else if (obj == null || !(obj is Vector))
+            {
+                return false;
             }
             else
             {
@@ -678,13 +678,13 @@ namespace Com
         /// <returns>布尔值，表示此 Vector 是否与指定的 Vector 对象相等。</returns>
         public bool Equals(Vector vector)
         {
-            if ((object)vector == null)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, vector))
+            if (object.ReferenceEquals(this, vector))
             {
                 return true;
+            }
+            else if ((object)vector == null)
+            {
+                return false;
             }
             else if (_Type != vector._Type || _Size != vector._Size)
             {
@@ -713,13 +713,13 @@ namespace Com
         /// <returns>32 位整数，表示将此 Vector 与指定的对象进行次序比较得到的结果。</returns>
         public int CompareTo(object obj)
         {
-            if (obj == null || !(obj is Vector))
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return 0;
+            }
+            else if (obj == null || !(obj is Vector))
+            {
+                return 1;
             }
             else
             {
@@ -734,13 +734,13 @@ namespace Com
         /// <returns>32 位整数，表示将此 Vector 与指定的 Vector 对象进行次序比较得到的结果。</returns>
         public int CompareTo(Vector vector)
         {
-            if ((object)vector == null)
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, vector))
+            if (object.ReferenceEquals(this, vector))
             {
                 return 0;
+            }
+            else if ((object)vector == null)
+            {
+                return 1;
             }
             else if (_Size != vector._Size)
             {
@@ -2121,17 +2121,13 @@ namespace Com
         /// <returns>布尔值，表示两个 Vector 对象是否相等。</returns>
         public static bool Equals(Vector left, Vector right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -2149,7 +2145,7 @@ namespace Com
         /// <returns>32 位整数，表示将两个 Vector 对象进行次序比较得到的结果。</returns>
         public static int Compare(Vector left, Vector right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return 0;
             }
@@ -2160,10 +2156,6 @@ namespace Com
             else if ((object)right == null)
             {
                 return 1;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return 0;
             }
             else
             {
@@ -2944,17 +2936,13 @@ namespace Com
         /// <returns>布尔值，表示两个 Vector 对象是否相等。</returns>
         public static bool operator ==(Vector left, Vector right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -2978,17 +2966,13 @@ namespace Com
         /// <returns>布尔值，表示两个 Vector 对象是否不相等。</returns>
         public static bool operator !=(Vector left, Vector right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
             else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type || left._Size != right._Size)
             {
                 return true;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return false;
             }
             else
             {
@@ -3012,11 +2996,11 @@ namespace Com
         /// <returns>布尔值，表示两个 Vector 对象的维度与字典序是否前者小于后者。</returns>
         public static bool operator <(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
             {
                 return false;
             }
@@ -3046,11 +3030,11 @@ namespace Com
         /// <returns>布尔值，表示两个 Vector 对象的维度与字典序是否前者大于后者。</returns>
         public static bool operator >(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            if (object.ReferenceEquals(left, right))
             {
                 return false;
             }
-            else if (object.ReferenceEquals(left, right))
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
             {
                 return false;
             }
@@ -3080,13 +3064,13 @@ namespace Com
         /// <returns>布尔值，表示两个 Vector 对象的维度与字典序是否前者小于或等于后者。</returns>
         public static bool operator <=(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            {
+                return false;
             }
             else if (left._Size != right._Size)
             {
@@ -3114,13 +3098,13 @@ namespace Com
         /// <returns>布尔值，表示两个 Vector 对象的维度与字典序是否前者大于或等于后者。</returns>
         public static bool operator >=(Vector left, Vector right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(left, right))
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Type != right._Type)
+            {
+                return false;
             }
             else if (left._Size != right._Size)
             {

@@ -297,13 +297,13 @@ namespace Com
         /// <returns>布尔值，表示此 Complex 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is Complex))
-            {
-                return false;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return true;
+            }
+            else if (obj == null || !(obj is Complex))
+            {
+                return false;
             }
             else
             {
@@ -401,13 +401,13 @@ namespace Com
         /// <returns>32 位整数，表示将此 Complex 结构与指定的对象进行次序比较得到的结果。</returns>
         public int CompareTo(object obj)
         {
-            if (obj == null || !(obj is Complex))
-            {
-                return 1;
-            }
-            else if (object.ReferenceEquals(this, obj))
+            if (object.ReferenceEquals(this, obj))
             {
                 return 0;
+            }
+            else if (obj == null || !(obj is Complex))
+            {
+                return 1;
             }
             else
             {
@@ -448,17 +448,13 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构是否相等。</returns>
         public static bool Equals(Complex left, Complex right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return true;
             }
             else if ((object)left == null || (object)right == null)
             {
                 return false;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return true;
             }
             else
             {
@@ -476,7 +472,7 @@ namespace Com
         /// <returns>32 位整数，表示将两个 Complex 结构进行次序比较得到的结果。</returns>
         public static int Compare(Complex left, Complex right)
         {
-            if ((object)left == null && (object)right == null)
+            if (object.ReferenceEquals(left, right))
             {
                 return 0;
             }
@@ -487,10 +483,6 @@ namespace Com
             else if ((object)right == null)
             {
                 return 1;
-            }
-            else if (object.ReferenceEquals(left, right))
-            {
-                return 0;
             }
             else
             {
@@ -1234,7 +1226,7 @@ namespace Com
         /// 将指定的双精度浮点数显式转换为 Complex 结构。
         /// </summary>
         /// <param name="real">用于转换的双精度浮点数。</param>
-        /// <returns>PointD 结构，表示显式转换的结果。</returns>
+        /// <returns>Complex 结构，表示显式转换的结果。</returns>
         public static explicit operator Complex(double real)
         {
             return new Complex(real);
