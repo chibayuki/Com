@@ -28,6 +28,43 @@ namespace Com
     {
         #region 私有成员与内部成员
 
+        private const int _32BitArgbShiftAlpha = 24; // 32 位 ARGB 颜色的 Alpha 分量（A）的位偏移量。
+        private const int _32BitArgbShiftRed = 16; // 32 位 ARGB 颜色的红色分量（R）的位偏移量。
+        private const int _32BitArgbShiftGreen = 8; // 32 位 ARGB 颜色的绿色分量（G）的位偏移量。
+        private const int _32BitArgbShiftBlue = 0; // 32 位 ARGB 颜色的蓝色分量（B）的位偏移量。
+
+        private static int _MakeArgb(double alpha, double red, double green, double blue)
+        {
+            return (int)(((uint)Math.Round(alpha) << _32BitArgbShiftAlpha) | ((uint)Math.Round(red) << _32BitArgbShiftRed) | ((uint)Math.Round(green) << _32BitArgbShiftGreen) | ((uint)Math.Round(blue) << _32BitArgbShiftBlue));
+        }
+
+        private static int _MakeArgb(double red, double green, double blue)
+        {
+            return (int)(((uint)Math.Round(red) << _32BitArgbShiftRed) | ((uint)Math.Round(green) << _32BitArgbShiftGreen) | ((uint)Math.Round(blue) << _32BitArgbShiftBlue));
+        }
+
+        private static double _ArgbToAlpha(int argb)
+        {
+            return (((uint)argb >> _32BitArgbShiftAlpha) & 0xFFU);
+        }
+
+        private static double _ArgbToRed(int argb)
+        {
+            return (((uint)argb >> _32BitArgbShiftRed) & 0xFFU);
+        }
+
+        private static double _ArgbToGreen(int argb)
+        {
+            return (((uint)argb >> _32BitArgbShiftGreen) & 0xFFU);
+        }
+
+        private static double _ArgbToBlue(int argb)
+        {
+            return (((uint)argb >> _32BitArgbShiftBlue) & 0xFFU);
+        }
+
+        //
+
         private static Dictionary<int, string> _ColorNameTable = null; // 表示从 32 位 ARGB 值到颜色名称的映射。
         private static Dictionary<string, int> _ArgbTable = null; // 表示从颜色名称到 32 位 ARGB 值的映射。
 
@@ -550,13 +587,6 @@ namespace Com
             ChrominanceBlue, // YUV 色彩空间的蓝色色度（U）。
             ChrominanceRed, // YUV 色彩空间的红色色度（V）。
         }
-
-        //
-
-        private const int _32BitArgbShiftAlpha = 24; // 32 位 ARGB 颜色的 Alpha 分量（A）的位偏移量。
-        private const int _32BitArgbShiftRed = 16; // 32 位 ARGB 颜色的红色分量（R）的位偏移量。
-        private const int _32BitArgbShiftGreen = 8; // 32 位 ARGB 颜色的绿色分量（G）的位偏移量。
-        private const int _32BitArgbShiftBlue = 0; // 32 位 ARGB 颜色的蓝色分量（B）的位偏移量。
 
         //
 
@@ -2150,12 +2180,12 @@ namespace Com
             return (_CachedChannels != null);
         }
 
-        private void _CreateCache() // 创建缓存。
+        private void _InitializeCache() // 初始化缓存。
         {
             _CachedChannels = new double[_SpaceCount][];
         }
 
-        private void _DestroyCache() // 释放缓存。
+        private void _DiscardCache() // 丢弃缓存。
         {
             _CachedChannels = null;
         }
@@ -2346,7 +2376,7 @@ namespace Com
 
                         if (!_CheckCache())
                         {
-                            _CreateCache();
+                            _InitializeCache();
                         }
 
                         _SetCache(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
@@ -2378,7 +2408,7 @@ namespace Com
 
                 if (!_CheckCache())
                 {
-                    _CreateCache();
+                    _InitializeCache();
                 }
 
                 _SetCache(colorSpace, channels);
@@ -2522,7 +2552,7 @@ namespace Com
 
                         if (!_CheckCache())
                         {
-                            _CreateCache();
+                            _InitializeCache();
                         }
 
                         _SetCache(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
@@ -2554,7 +2584,7 @@ namespace Com
 
                 if (!_CheckCache())
                 {
-                    _CreateCache();
+                    _InitializeCache();
                 }
 
                 _SetCache(colorSpace, channels);
@@ -2636,7 +2666,7 @@ namespace Com
 
             _CurrentColorSpace = colorSpace;
 
-            _DestroyCache();
+            _DiscardCache();
         }
 
         private void _SetChannel(_ColorChannel colorChannel, double channel) // 设置颜色在指定色彩通道的分量。
@@ -2823,7 +2853,7 @@ namespace Com
 
                         if (!_CheckCache())
                         {
-                            _CreateCache();
+                            _InitializeCache();
                         }
 
                         _SetCache(_ColorSpace.RGB, new double[_ChannelCount] { R, G, B, 0 });
@@ -2865,7 +2895,7 @@ namespace Com
 
             _CurrentColorSpace = colorSpace;
 
-            _DestroyCache();
+            _DiscardCache();
         }
 
         #endregion
@@ -2891,8 +2921,8 @@ namespace Com
         /// <param name="argb">颜色在 RGB 色彩空间的 32 位 ARGB 值。</param>
         public ColorX(int argb) : this()
         {
-            _SetChannels(_ColorSpace.RGB, ((uint)argb >> _32BitArgbShiftRed) & 0xFFU, ((uint)argb >> _32BitArgbShiftGreen) & 0xFFU, ((uint)argb >> _32BitArgbShiftBlue) & 0xFFU);
-            Alpha = ((uint)argb >> _32BitArgbShiftAlpha) & 0xFFU;
+            _SetChannels(_ColorSpace.RGB, _ArgbToRed(argb), _ArgbToGreen(argb), _ArgbToBlue(argb));
+            Alpha = _ArgbToAlpha(argb);
         }
 
         /// <summary>
@@ -2930,8 +2960,8 @@ namespace Com
                 argb = int.Parse(HexCode, NumberStyles.HexNumber);
             }
 
-            _SetChannels(_ColorSpace.RGB, ((uint)argb >> _32BitArgbShiftRed) & 0xFFU, ((uint)argb >> _32BitArgbShiftGreen) & 0xFFU, ((uint)argb >> _32BitArgbShiftBlue) & 0xFFU);
-            Alpha = ((uint)argb >> _32BitArgbShiftAlpha) & 0xFFU;
+            _SetChannels(_ColorSpace.RGB, _ArgbToRed(argb), _ArgbToGreen(argb), _ArgbToBlue(argb));
+            Alpha = _ArgbToAlpha(argb);
         }
 
         #endregion
@@ -3503,7 +3533,7 @@ namespace Com
             {
                 double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                int argb = (int)(((uint)Math.Round(Alpha) << _32BitArgbShiftAlpha) | ((uint)Math.Round(rgb[0]) << _32BitArgbShiftRed) | ((uint)Math.Round(rgb[1]) << _32BitArgbShiftGreen) | ((uint)Math.Round(rgb[2]) << _32BitArgbShiftBlue));
+                int argb = _MakeArgb(Alpha, rgb[0], rgb[1], rgb[2]);
 
                 string HexCode = Convert.ToString(argb, 16).ToUpper();
 
@@ -3529,7 +3559,7 @@ namespace Com
             {
                 double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                int _rgb = (int)(((uint)Math.Round(rgb[0]) << _32BitArgbShiftRed) | ((uint)Math.Round(rgb[1]) << _32BitArgbShiftGreen) | ((uint)Math.Round(rgb[2]) << _32BitArgbShiftBlue));
+                int _rgb = _MakeArgb(rgb[0], rgb[1], rgb[2]);
 
                 string HexCode = Convert.ToString(_rgb, 16).ToUpper();
 
@@ -3557,7 +3587,7 @@ namespace Com
             {
                 double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                int argb = (int)(((uint)Math.Round(Alpha) << _32BitArgbShiftAlpha) | ((uint)Math.Round(rgb[0]) << _32BitArgbShiftRed) | ((uint)Math.Round(rgb[1]) << _32BitArgbShiftGreen) | ((uint)Math.Round(rgb[2]) << _32BitArgbShiftBlue));
+                int argb = _MakeArgb(Alpha, rgb[0], rgb[1], rgb[2]);
 
                 string name = _GetColorNameByArgb(argb);
 
@@ -3679,7 +3709,7 @@ namespace Com
         {
             double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-            return (int)(((uint)Math.Round(Alpha) << _32BitArgbShiftAlpha) | ((uint)Math.Round(rgb[0]) << _32BitArgbShiftRed) | ((uint)Math.Round(rgb[1]) << _32BitArgbShiftGreen) | ((uint)Math.Round(rgb[2]) << _32BitArgbShiftBlue));
+            return _MakeArgb(Alpha, rgb[0], rgb[1], rgb[2]);
         }
 
         //
