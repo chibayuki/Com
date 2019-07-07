@@ -33,32 +33,27 @@ namespace Com
         private const int _32BitArgbShiftGreen = 8; // 32 位 ARGB 颜色的绿色分量（G）的位偏移量。
         private const int _32BitArgbShiftBlue = 0; // 32 位 ARGB 颜色的蓝色分量（B）的位偏移量。
 
-        private static int _MakeArgb(double alpha, double red, double green, double blue)
+        private static int _MakeArgb(double alpha, double red, double green, double blue) // 将颜色的 Alpha、红色、绿色、蓝色分量（A、R、G、B）转换为 32 位 ARGB 值。
         {
             return (int)(((uint)Math.Round(alpha) << _32BitArgbShiftAlpha) | ((uint)Math.Round(red) << _32BitArgbShiftRed) | ((uint)Math.Round(green) << _32BitArgbShiftGreen) | ((uint)Math.Round(blue) << _32BitArgbShiftBlue));
         }
 
-        private static int _MakeArgb(double red, double green, double blue)
-        {
-            return (int)(((uint)Math.Round(red) << _32BitArgbShiftRed) | ((uint)Math.Round(green) << _32BitArgbShiftGreen) | ((uint)Math.Round(blue) << _32BitArgbShiftBlue));
-        }
-
-        private static double _ArgbToAlpha(int argb)
+        private static double _GetAlphaByArgb(int argb) // 根据 32 位 ARGB 值获取颜色的 Alpha 分量（A）。
         {
             return (((uint)argb >> _32BitArgbShiftAlpha) & 0xFFU);
         }
 
-        private static double _ArgbToRed(int argb)
+        private static double _GetRedByArgb(int argb) // 根据 32 位 ARGB 值获取颜色的红色分量（R）。
         {
             return (((uint)argb >> _32BitArgbShiftRed) & 0xFFU);
         }
 
-        private static double _ArgbToGreen(int argb)
+        private static double _GetGreenByArgb(int argb) // 根据 32 位 ARGB 值获取颜色的绿色分量（G）。
         {
             return (((uint)argb >> _32BitArgbShiftGreen) & 0xFFU);
         }
 
-        private static double _ArgbToBlue(int argb)
+        private static double _GetBlueByArgb(int argb) // 根据 32 位 ARGB 值获取颜色的蓝色分量（B）。
         {
             return (((uint)argb >> _32BitArgbShiftBlue) & 0xFFU);
         }
@@ -2921,8 +2916,8 @@ namespace Com
         /// <param name="argb">颜色在 RGB 色彩空间的 32 位 ARGB 值。</param>
         public ColorX(int argb) : this()
         {
-            _SetChannels(_ColorSpace.RGB, _ArgbToRed(argb), _ArgbToGreen(argb), _ArgbToBlue(argb));
-            Alpha = _ArgbToAlpha(argb);
+            _SetChannels(_ColorSpace.RGB, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
+            Alpha = _GetAlphaByArgb(argb);
         }
 
         /// <summary>
@@ -2960,8 +2955,8 @@ namespace Com
                 argb = int.Parse(HexCode, NumberStyles.HexNumber);
             }
 
-            _SetChannels(_ColorSpace.RGB, _ArgbToRed(argb), _ArgbToGreen(argb), _ArgbToBlue(argb));
-            Alpha = _ArgbToAlpha(argb);
+            _SetChannels(_ColorSpace.RGB, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
+            Alpha = _GetAlphaByArgb(argb);
         }
 
         #endregion
@@ -3559,15 +3554,22 @@ namespace Com
             {
                 double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                int _rgb = _MakeArgb(rgb[0], rgb[1], rgb[2]);
+                int argb = _MakeArgb(_MinAlpha, rgb[0], rgb[1], rgb[2]);
 
-                string HexCode = Convert.ToString(_rgb, 16).ToUpper();
+                string HexCode = Convert.ToString(argb, 16).ToUpper();
 
                 int Len = HexCode.Length;
 
-                if (Len < 6)
+                if (Len != 6)
                 {
-                    return ("#" + HexCode.PadLeft(6, '0'));
+                    if (Len < 6)
+                    {
+                        return ("#" + HexCode.PadLeft(6, '0'));
+                    }
+                    else
+                    {
+                        return ("#" + HexCode.Substring(Len - 6, 6));
+                    }
                 }
                 else
                 {
