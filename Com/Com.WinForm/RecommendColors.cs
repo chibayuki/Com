@@ -138,14 +138,14 @@ namespace Com.WinForm
 
         #region 构造函数
 
-        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor, bool isActive) // 使用主题、主题色、表示是否在窗口标题栏上显示主题色的布尔值、表示表示是否在窗口阴影显示主题色的布尔值与表示窗口是否处于活动状态的布尔值初始化 RecommendColors 的新实例。
+        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor, bool isActive) // 使用主题、主题色、表示是否在窗口标题栏上显示主题色的布尔值、表示是否在窗口阴影显示主题色的布尔值与表示窗口是否处于活动状态的布尔值初始化 RecommendColors 的新实例。
         {
             switch (theme)
             {
                 case Theme.Colorful:
                     {
                         _Main = ColorManipulation.BlendByLAB(themeColor.AtLightness_HSL(56), themeColor, 0.75);
-                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) / 4);
+                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25);
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.15);
 
@@ -161,7 +161,7 @@ namespace Com.WinForm
                             else
                             {
                                 _CaptionBar = _FormBackground;
-                                _Caption = themeColor.AtLightness_HSL(24);
+                                _Caption = Color.FromArgb(16, 16, 16);
                             }
                         }
                         else
@@ -219,7 +219,7 @@ namespace Com.WinForm
                 case Theme.White:
                     {
                         _Main = ColorManipulation.BlendByLAB(themeColor.AtLightness_HSL(56), themeColor, 0.75);
-                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) / 4);
+                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25);
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.15);
 
@@ -235,7 +235,7 @@ namespace Com.WinForm
                             else
                             {
                                 _CaptionBar = _FormBackground;
-                                _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                                _Caption = Color.FromArgb(16, 16, 16);
                             }
                         }
                         else
@@ -293,7 +293,7 @@ namespace Com.WinForm
                 case Theme.LightGray:
                     {
                         _Main = ColorManipulation.BlendByLAB(themeColor.AtLightness_HSL(56), themeColor, 0.75);
-                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) / 4).GrayscaleColor;
+                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25).GrayscaleColor;
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.15);
 
@@ -309,7 +309,7 @@ namespace Com.WinForm
                             else
                             {
                                 _CaptionBar = _FormBackground;
-                                _Caption = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                                _Caption = Color.FromArgb(16, 16, 16);
                             }
                         }
                         else
@@ -367,7 +367,7 @@ namespace Com.WinForm
                 case Theme.DarkGray:
                     {
                         _Main = ColorManipulation.BlendByLAB(themeColor.AtLightness_HSL(44), themeColor, 0.75);
-                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) / 4).GrayscaleColor;
+                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25).GrayscaleColor;
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.15);
 
@@ -383,7 +383,7 @@ namespace Com.WinForm
                             else
                             {
                                 _CaptionBar = _FormBackground;
-                                _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                                _Caption = Color.FromArgb(240, 240, 240);
                             }
                         }
                         else
@@ -441,7 +441,7 @@ namespace Com.WinForm
                 case Theme.Black:
                     {
                         _Main = ColorManipulation.BlendByLAB(themeColor.AtLightness_HSL(44), themeColor, 0.75);
-                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) / 4);
+                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25);
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.15);
 
@@ -457,7 +457,7 @@ namespace Com.WinForm
                             else
                             {
                                 _CaptionBar = _FormBackground;
-                                _Caption = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                                _Caption = Color.FromArgb(240, 240, 240);
                             }
                         }
                         else
@@ -512,6 +512,30 @@ namespace Com.WinForm
                     }
                     break;
             }
+
+            _Text = ColorManipulation.ShiftLightnessByLAB(_Text, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Text_DEC = ColorManipulation.ShiftLightnessByLAB(_Text_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Text_INC = ColorManipulation.ShiftLightnessByLAB(_Text_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+
+            _Background = ColorManipulation.ShiftLightnessByLAB(_Background, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Background_DEC = ColorManipulation.ShiftLightnessByLAB(_Background_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Background_INC = ColorManipulation.ShiftLightnessByLAB(_Background_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+
+            _Border = ColorManipulation.ShiftLightnessByLAB(_Border, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Border_DEC = ColorManipulation.ShiftLightnessByLAB(_Border_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Border_INC = ColorManipulation.ShiftLightnessByLAB(_Border_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+
+            _Button = ColorManipulation.ShiftLightnessByLAB(_Button, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Button_DEC = ColorManipulation.ShiftLightnessByLAB(_Button_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Button_INC = ColorManipulation.ShiftLightnessByLAB(_Button_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+
+            _Slider = ColorManipulation.ShiftLightnessByLAB(_Slider, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Slider_DEC = ColorManipulation.ShiftLightnessByLAB(_Slider_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Slider_INC = ColorManipulation.ShiftLightnessByLAB(_Slider_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+
+            _ScrollBar = ColorManipulation.ShiftLightnessByLAB(_ScrollBar, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _ScrollBar_DEC = ColorManipulation.ShiftLightnessByLAB(_ScrollBar_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _ScrollBar_INC = ColorManipulation.ShiftLightnessByLAB(_ScrollBar_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
         }
 
         #endregion
