@@ -513,29 +513,33 @@ namespace Com.WinForm
                     break;
             }
 
-            _Text = ColorManipulation.ShiftLightnessByLAB(_Text, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Text_DEC = ColorManipulation.ShiftLightnessByLAB(_Text_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Text_INC = ColorManipulation.ShiftLightnessByLAB(_Text_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            //
 
-            _Background = ColorManipulation.ShiftLightnessByLAB(_Background, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Background_DEC = ColorManipulation.ShiftLightnessByLAB(_Background_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Background_INC = ColorManipulation.ShiftLightnessByLAB(_Background_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            double LShift = (themeColor.Lightness_LAB / 50 - 1) * 0.1;
 
-            _Border = ColorManipulation.ShiftLightnessByLAB(_Border, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Border_DEC = ColorManipulation.ShiftLightnessByLAB(_Border_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Border_INC = ColorManipulation.ShiftLightnessByLAB(_Border_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Text = ColorManipulation.ShiftLightnessByLAB(_Text, LShift);
+            _Text_DEC = ColorManipulation.ShiftLightnessByLAB(_Text_DEC, LShift);
+            _Text_INC = ColorManipulation.ShiftLightnessByLAB(_Text_INC, LShift);
 
-            _Button = ColorManipulation.ShiftLightnessByLAB(_Button, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Button_DEC = ColorManipulation.ShiftLightnessByLAB(_Button_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Button_INC = ColorManipulation.ShiftLightnessByLAB(_Button_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Background = ColorManipulation.ShiftLightnessByLAB(_Background, LShift);
+            _Background_DEC = ColorManipulation.ShiftLightnessByLAB(_Background_DEC, LShift);
+            _Background_INC = ColorManipulation.ShiftLightnessByLAB(_Background_INC, LShift);
 
-            _Slider = ColorManipulation.ShiftLightnessByLAB(_Slider, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Slider_DEC = ColorManipulation.ShiftLightnessByLAB(_Slider_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _Slider_INC = ColorManipulation.ShiftLightnessByLAB(_Slider_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Border = ColorManipulation.ShiftLightnessByLAB(_Border, LShift);
+            _Border_DEC = ColorManipulation.ShiftLightnessByLAB(_Border_DEC, LShift);
+            _Border_INC = ColorManipulation.ShiftLightnessByLAB(_Border_INC, LShift);
 
-            _ScrollBar = ColorManipulation.ShiftLightnessByLAB(_ScrollBar, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _ScrollBar_DEC = ColorManipulation.ShiftLightnessByLAB(_ScrollBar_DEC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
-            _ScrollBar_INC = ColorManipulation.ShiftLightnessByLAB(_ScrollBar_INC, (themeColor.Lightness_LAB / 50 - 1) * 0.1);
+            _Button = ColorManipulation.ShiftLightnessByLAB(_Button, LShift);
+            _Button_DEC = ColorManipulation.ShiftLightnessByLAB(_Button_DEC, LShift);
+            _Button_INC = ColorManipulation.ShiftLightnessByLAB(_Button_INC, LShift);
+
+            _Slider = ColorManipulation.ShiftLightnessByLAB(_Slider, LShift);
+            _Slider_DEC = ColorManipulation.ShiftLightnessByLAB(_Slider_DEC, LShift);
+            _Slider_INC = ColorManipulation.ShiftLightnessByLAB(_Slider_INC, LShift);
+
+            _ScrollBar = ColorManipulation.ShiftLightnessByLAB(_ScrollBar, LShift);
+            _ScrollBar_DEC = ColorManipulation.ShiftLightnessByLAB(_ScrollBar_DEC, LShift);
+            _ScrollBar_INC = ColorManipulation.ShiftLightnessByLAB(_ScrollBar_INC, LShift);
         }
 
         #endregion
