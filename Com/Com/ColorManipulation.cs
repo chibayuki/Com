@@ -377,8 +377,10 @@ namespace Com
                     return color.AtBrightness(100 - (100 - color.Brightness) * (1 - level));
                 }
             }
-
-            return color;
+            else
+            {
+                return color;
+            }
         }
 
         /// <summary>
@@ -413,8 +415,10 @@ namespace Com
                     return color.AtLightness_HSL(100 - (100 - color.Lightness_HSL) * (1 - level));
                 }
             }
-
-            return color;
+            else
+            {
+                return color;
+            }
         }
 
         /// <summary>
@@ -449,8 +453,10 @@ namespace Com
                     return color.AtLightness_LAB(100 - (100 - color.Lightness_LAB) * (1 - level));
                 }
             }
-
-            return color;
+            else
+            {
+                return color;
+            }
         }
 
         /// <summary>
@@ -485,8 +491,10 @@ namespace Com
                     return color.AtLuminance(100 - (100 - color.Luminance) * (1 - level));
                 }
             }
-
-            return color;
+            else
+            {
+                return color;
+            }
         }
 
         /// <summary>
@@ -521,8 +529,10 @@ namespace Com
                     return color.AtSaturation_HSV(100 - (100 - color.Saturation_HSV) * (1 - level));
                 }
             }
-
-            return color;
+            else
+            {
+                return color;
+            }
         }
 
         /// <summary>
@@ -557,8 +567,10 @@ namespace Com
                     return color.AtSaturation_HSL(100 - (100 - color.Saturation_HSL) * (1 - level));
                 }
             }
-
-            return color;
+            else
+            {
+                return color;
+            }
         }
 
         /// <summary>
