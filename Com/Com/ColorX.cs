@@ -2879,7 +2879,7 @@ namespace Com
                 }
             }
 
-        SET_CHANNEL:
+            SET_CHANNEL:
             switch (channelIndex)
             {
                 case 0: _Channel1 = channel; break;
@@ -2995,7 +2995,34 @@ namespace Com
         {
             get
             {
-                return (_Opacity == _MinOpacity);
+                if (_CurrentColorSpace == _ColorSpace.None)
+                {
+                    return false;
+                }
+                else
+                {
+                    return (_Opacity == _MinOpacity);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取表示此 ColorX 结构是否为 32 位真彩色的布尔值。
+        /// </summary>
+        public bool IsTrueColor
+        {
+            get
+            {
+                if (_CurrentColorSpace == _ColorSpace.None)
+                {
+                    return false;
+                }
+                else
+                {
+                    double[] channels = _GetChannels(_ColorSpace.RGB);
+
+                    return (channels[0] == Math.Truncate(channels[0]) && channels[1] == Math.Truncate(channels[1]) && channels[2] == Math.Truncate(channels[2]));
+                }
             }
         }
 
