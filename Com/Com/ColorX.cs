@@ -537,6 +537,10 @@ namespace Com
 
         //
 
+        private static readonly string _EmptyColorName = "Empty"; // Empty 颜色的名称。
+
+        //
+
         private const int _SpaceBase = 0x00010000; // 色彩空间的基码。
         private const int _SpaceCount = 6; // 色彩空间数量。
         private const int _ChannelCount = 4; // 每个色彩空间的最大色彩通道数量。
@@ -2933,30 +2937,33 @@ namespace Com
 
             //
 
-            int argb;
-
-            int? _argb = _GetArgbByColorName(name);
-
-            if (_argb != null)
+            if (!string.Equals(name, _EmptyColorName, StringComparison.OrdinalIgnoreCase))
             {
-                argb = _argb.Value;
-            }
-            else
-            {
-                string HexCode = new Regex(@"[^A-Za-z\d]").Replace(name, string.Empty);
+                int argb;
 
-                if (string.IsNullOrEmpty(HexCode))
+                int? _argb = _GetArgbByColorName(name);
+
+                if (_argb != null)
                 {
-                    throw new FormatException();
+                    argb = _argb.Value;
+                }
+                else
+                {
+                    string HexCode = new Regex(@"[^A-Za-z\d]").Replace(name, string.Empty);
+
+                    if (string.IsNullOrEmpty(HexCode))
+                    {
+                        throw new FormatException();
+                    }
+
+                    //
+
+                    argb = int.Parse(HexCode, NumberStyles.HexNumber);
                 }
 
-                //
-
-                argb = int.Parse(HexCode, NumberStyles.HexNumber);
+                _SetChannels(_ColorSpace.RGB, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
+                Alpha = _GetAlphaByArgb(argb);
             }
-
-            _SetChannels(_ColorSpace.RGB, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
-            Alpha = _GetAlphaByArgb(argb);
         }
 
         #endregion
@@ -3513,14 +3520,21 @@ namespace Com
         {
             get
             {
-                ColorX color = new ColorX();
+                if (_CurrentColorSpace == _ColorSpace.None)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    ColorX color = new ColorX();
 
-                double[] rgb = _GetChannels(_ColorSpace.RGB);
+                    double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                color._SetChannels(_ColorSpace.RGB, _MaxRed - rgb[0], _MaxGreen - rgb[1], _MaxBlue - rgb[2]);
-                color.Alpha = Alpha;
+                    color._SetChannels(_ColorSpace.RGB, _MaxRed - rgb[0], _MaxGreen - rgb[1], _MaxBlue - rgb[2]);
+                    color.Alpha = Alpha;
 
-                return color;
+                    return color;
+                }
             }
         }
 
@@ -3531,16 +3545,23 @@ namespace Com
         {
             get
             {
-                ColorX color = new ColorX();
+                if (_CurrentColorSpace == _ColorSpace.None)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    ColorX color = new ColorX();
 
-                double[] rgb = _GetChannels(_ColorSpace.RGB);
+                    double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                double Y = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
+                    double Y = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
 
-                color._SetChannels(_ColorSpace.RGB, Y, Y, Y);
-                color.Alpha = Alpha;
+                    color._SetChannels(_ColorSpace.RGB, Y, Y, Y);
+                    color.Alpha = Alpha;
 
-                return color;
+                    return color;
+                }
             }
         }
 
@@ -3614,29 +3635,36 @@ namespace Com
         {
             get
             {
-                double[] rgb = _GetChannels(_ColorSpace.RGB);
-
-                int argb = _MakeArgb(Alpha, rgb[0], rgb[1], rgb[2]);
-
-                string name = _GetColorNameByArgb(argb);
-
-                if (!string.IsNullOrWhiteSpace(name))
+                if (_CurrentColorSpace == _ColorSpace.None)
                 {
-                    return name;
+                    return _EmptyColorName;
                 }
                 else
                 {
-                    string HexCode = Convert.ToString(argb, 16).ToUpper();
+                    double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                    int Len = HexCode.Length;
+                    int argb = _MakeArgb(Alpha, rgb[0], rgb[1], rgb[2]);
 
-                    if (Len < 8)
+                    string name = _GetColorNameByArgb(argb);
+
+                    if (!string.IsNullOrWhiteSpace(name))
                     {
-                        return ("#" + HexCode.PadLeft(8, '0'));
+                        return name;
                     }
                     else
                     {
-                        return ("#" + HexCode);
+                        string HexCode = Convert.ToString(argb, 16).ToUpper();
+
+                        int Len = HexCode.Length;
+
+                        if (Len < 8)
+                        {
+                            return ("#" + HexCode.PadLeft(8, '0'));
+                        }
+                        else
+                        {
+                            return ("#" + HexCode);
+                        }
                     }
                 }
             }
