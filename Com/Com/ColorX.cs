@@ -3720,7 +3720,7 @@ namespace Com
                 case _ColorSpace.CMYK: Str = string.Concat("C=", _Channel1, ", M=", _Channel2, ", Y=", _Channel3, ", K=", _Channel4, ", Opacity=", Opacity, "%"); break;
                 case _ColorSpace.LAB: Str = string.Concat("L=", _Channel1, ", a=", _Channel2, ", b=", _Channel3, ", Opacity=", Opacity, "%"); break;
                 case _ColorSpace.YUV: Str = string.Concat("Y=", _Channel1, ", U=", _Channel2, ", V=", _Channel3, ", Opacity=", Opacity, "%"); break;
-                default: Str = "Empty"; break;
+                default: Str = _EmptyColorName; break;
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");
