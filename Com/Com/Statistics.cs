@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Statistics
-Version 19.5.11.1720
+Version 19.8.5.2000
 
 This file is part of Com
 
@@ -1175,10 +1175,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的最大值。
+        /// 计算一组十进制浮点数的最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的最大值。</returns>
+        /// <returns>十进制浮点数，表示一组十进制浮点数的最大值。</returns>
         public static decimal Max(params decimal[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -1511,10 +1511,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的最小值。
+        /// 计算一组十进制浮点数的最小值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的最小值。</returns>
+        /// <returns>十进制浮点数，表示一组十进制浮点数的最小值。</returns>
         public static decimal Min(params decimal[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -1895,10 +1895,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的最小值与最小值与最大值。
+        /// 计算一组十进制浮点数的最小值与最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>(decimal, decimal) 元组，表示一组十进制数的最小值与最大值。</returns>
+        /// <returns>(decimal, decimal) 元组，表示一组十进制浮点数的最小值与最大值。</returns>
         public static (decimal Min, decimal Max) MinMax(params decimal[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -2216,10 +2216,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的极差。
+        /// 计算一组十进制浮点数的极差。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的极差。</returns>
+        /// <returns>十进制浮点数，表示一组十进制浮点数的极差。</returns>
         public static decimal Range(params decimal[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -2576,10 +2576,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的求和。
+        /// 计算一组十进制浮点数的求和。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的求和。</returns>
+        /// <returns>十进制浮点数，表示一组十进制浮点数的求和。</returns>
         public static decimal Sum(params decimal[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -2963,10 +2963,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的平均值。
+        /// 计算一组十进制浮点数的平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>十进制数，表示一组十进制数的平均值。</returns>
+        /// <returns>十进制浮点数，表示一组十进制浮点数的平均值。</returns>
         public static decimal Average(params decimal[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -3550,10 +3550,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制数的最小值、最大值与平均值。
+        /// 计算一组十进制浮点数的最小值、最大值与平均值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
-        /// <returns>(decimal, decimal, double) 元组，表示一组十进制数的最小值、最大值与平均值。</returns>
+        /// <returns>(decimal, decimal, double) 元组，表示一组十进制浮点数的最小值、最大值与平均值。</returns>
         public static (decimal Min, decimal Max, decimal Average) MinMaxAverage(params decimal[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))

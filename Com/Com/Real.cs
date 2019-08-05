@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Real
-Version 19.6.22.0000
+Version 19.8.5.2000
 
 This file is part of Com
 
@@ -359,9 +359,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用十进制数表示的值初始化 Real 结构的新实例。
+        /// 使用十进制浮点数表示的值初始化 Real 结构的新实例。
         /// </summary>
-        /// <param name="value">十进制数表示的值。</param>
+        /// <param name="value">十进制浮点数表示的值。</param>
         public Real(decimal value)
         {
             _Value = (double)value;
@@ -932,25 +932,44 @@ namespace Com
                 else
                 {
                     string Part1 = _Value.ToString();
-                    string Part2 = "×10^";
-                    string Part3 = string.Empty;
+                    string Part2 = "E";
+
+                    long Mag = _Magnitude;
 
                     if (Part1 == "10")
                     {
                         Part1 = "1";
-                        Part3 = (_Magnitude + 1).ToString();
+                        Mag++;
                     }
                     else if (Part1 == "-10")
                     {
                         Part1 = "-1";
-                        Part3 = (_Magnitude + 1).ToString();
+                        Mag++;
+                    }
+
+                    string Part3 = string.Empty;
+                    string Part4 = string.Empty;
+
+                    if (Mag > 0)
+                    {
+                        Part3 = "+";
+                        Part4 = Mag.ToString();
                     }
                     else
                     {
-                        Part3 = _Magnitude.ToString();
+                        Part4 = (-Mag).ToString();
+
+                        if (Mag > -10)
+                        {
+                            Part3 = "-0";
+                        }
+                        else
+                        {
+                            Part3 = "-";
+                        }
                     }
 
-                    return string.Concat(Part1, Part2, Part3);
+                    return string.Concat(Part1, Part2, Part3, Part4);
                 }
             }
         }
@@ -3563,10 +3582,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 将指定的 Real 结构显式转换为十进制数。
+        /// 将指定的 Real 结构显式转换为十进制浮点数。
         /// </summary>
         /// <param name="real">用于转换的 Real 结构。</param>
-        /// <returns>十进制数，表示显式转换的结果。</returns>
+        /// <returns>十进制浮点数，表示显式转换的结果。</returns>
         public static explicit operator decimal(Real real)
         {
             if (double.IsNaN(real._Value))
@@ -4026,9 +4045,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 将指定的十进制数显式转换为 Real 结构。
+        /// 将指定的十进制浮点数显式转换为 Real 结构。
         /// </summary>
-        /// <param name="value">用于转换的十进制数。</param>
+        /// <param name="value">用于转换的十进制浮点数。</param>
         /// <returns>Real 结构，表示显式转换的结果。</returns>
         public static explicit operator Real(decimal value)
         {

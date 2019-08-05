@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 19.6.26.0000
+Version 19.8.5.2000
 
 This file is part of Com
 

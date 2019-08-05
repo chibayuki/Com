@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.DateTimeX
-Version 19.6.26.0000
+Version 19.8.5.2000
 
 This file is part of Com
 
@@ -473,9 +473,9 @@ namespace Com
         #region 构造函数
 
         /// <summary>
-        /// 使用十进制数表示的自公元时刻以来的总毫秒与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数初始化 DateTimeX 结构的新实例。
+        /// 使用十进制浮点数表示的自公元时刻以来的总毫秒与所在时区的标准时间与协调世界时（UTC）之间的时差的小时数初始化 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="totalMilliseconds">十进制数表示的自公元时刻以来的总毫秒数。</param>
+        /// <param name="totalMilliseconds">十进制浮点数表示的自公元时刻以来的总毫秒数。</param>
         /// <param name="utcOffset">双精度浮点数表示的所在时区的标准时间与协调世界时（UTC）之间的时差的小时数。</param>
         public DateTimeX(decimal totalMilliseconds, double utcOffset) : this()
         {
@@ -483,9 +483,9 @@ namespace Com
         }
 
         /// <summary>
-        /// 使用十进制数表示的自公元时刻以来的总毫秒数初始化以本地时区表示的 DateTimeX 结构的新实例。
+        /// 使用十进制浮点数表示的自公元时刻以来的总毫秒数初始化以本地时区表示的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="totalMilliseconds">十进制数表示的自公元时刻以来的总毫秒数。</param>
+        /// <param name="totalMilliseconds">十进制浮点数表示的自公元时刻以来的总毫秒数。</param>
         public DateTimeX(decimal totalMilliseconds) : this()
         {
             _CtorTotalMilliseconds(totalMilliseconds, _LocalUtcOffset);
@@ -1868,7 +1868,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干毫秒得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="milliseconds">十进制数表示的毫秒，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="milliseconds">十进制浮点数表示的毫秒，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干毫秒得到的结果。</returns>
         public DateTimeX AddMilliseconds(decimal milliseconds)
         {
