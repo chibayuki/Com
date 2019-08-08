@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorX
-Version 19.8.5.2000
+Version 19.8.8.0000
 
 This file is part of Com
 
@@ -2939,13 +2939,14 @@ namespace Com
 
             if (!string.Equals(name, _EmptyColorName, StringComparison.OrdinalIgnoreCase))
             {
-                int argb;
-
                 int? _argb = _GetArgbByColorName(name);
 
                 if (_argb != null)
                 {
-                    argb = _argb.Value;
+                    int argb = _argb.Value;
+
+                    _SetChannels(_ColorSpace.RGB, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
+                    Alpha = _GetAlphaByArgb(argb);
                 }
                 else
                 {
@@ -2958,11 +2959,40 @@ namespace Com
 
                     //
 
-                    argb = int.Parse(HexCode, NumberStyles.HexNumber);
-                }
+                    int Len = HexCode.Length;
 
-                _SetChannels(_ColorSpace.RGB, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
-                Alpha = _GetAlphaByArgb(argb);
+                    if (Len == 6 || Len == 8)
+                    {
+                        int argb = int.Parse(HexCode, NumberStyles.HexNumber);
+
+                        _SetChannels(_ColorSpace.RGB, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
+                        Alpha = _GetAlphaByArgb(argb);
+                    }
+                    else if (Len == 64)
+                    {
+                        Func<string, double> HexCodeToValue = (hex) =>
+                        {
+                            unsafe
+                            {
+                                long val = long.Parse(hex, NumberStyles.HexNumber);
+
+                                return *(double*)(&val);
+                            }
+                        };
+
+                        string strA = string.Concat(HexCode.Substring(0, 3), HexCode.Substring(12, 2), HexCode.Substring(20, 2), HexCode.Substring(28, 2), HexCode.Substring(36, 2), HexCode.Substring(44, 2), HexCode.Substring(52, 3));
+                        string strR = string.Concat(HexCode.Substring(3, 3), HexCode.Substring(14, 2), HexCode.Substring(22, 2), HexCode.Substring(30, 2), HexCode.Substring(38, 2), HexCode.Substring(46, 2), HexCode.Substring(55, 3));
+                        string strG = string.Concat(HexCode.Substring(6, 3), HexCode.Substring(16, 2), HexCode.Substring(24, 2), HexCode.Substring(32, 2), HexCode.Substring(40, 2), HexCode.Substring(48, 2), HexCode.Substring(58, 3));
+                        string strB = string.Concat(HexCode.Substring(9, 3), HexCode.Substring(18, 2), HexCode.Substring(26, 2), HexCode.Substring(34, 2), HexCode.Substring(42, 2), HexCode.Substring(50, 2), HexCode.Substring(61, 3));
+
+                        _SetChannels(_ColorSpace.RGB, HexCodeToValue(strR), HexCodeToValue(strG), HexCodeToValue(strB));
+                        Alpha = HexCodeToValue(strA);
+                    }
+                    else
+                    {
+                        throw new FormatException();
+                    }
+                }
             }
         }
 
@@ -3026,9 +3056,10 @@ namespace Com
                 }
                 else
                 {
+                    double alpha = Alpha;
                     double[] channels = _GetChannels(_ColorSpace.RGB);
 
-                    return (channels[0] == Math.Truncate(channels[0]) && channels[1] == Math.Truncate(channels[1]) && channels[2] == Math.Truncate(channels[2]));
+                    return (alpha == Math.Truncate(alpha) && channels[0] == Math.Truncate(channels[0]) && channels[1] == Math.Truncate(channels[1]) && channels[2] == Math.Truncate(channels[2]));
                 }
             }
         }
@@ -3578,7 +3609,7 @@ namespace Com
 
                 int argb = _MakeArgb(Alpha, rgb[0], rgb[1], rgb[2]);
 
-                string HexCode = Convert.ToString(argb, 16).ToUpper();
+                string HexCode = Convert.ToString(argb, 16).ToUpperInvariant();
 
                 int Len = HexCode.Length;
 
@@ -3604,7 +3635,7 @@ namespace Com
 
                 int argb = _MakeArgb(_MinAlpha, rgb[0], rgb[1], rgb[2]);
 
-                string HexCode = Convert.ToString(argb, 16).ToUpper();
+                string HexCode = Convert.ToString(argb, 16).ToUpperInvariant();
 
                 int Len = HexCode.Length;
 
@@ -3653,7 +3684,7 @@ namespace Com
                     }
                     else
                     {
-                        string HexCode = Convert.ToString(argb, 16).ToUpper();
+                        string HexCode = Convert.ToString(argb, 16).ToUpperInvariant();
 
                         int Len = HexCode.Length;
 
@@ -3666,6 +3697,85 @@ namespace Com
                             return ("#" + HexCode);
                         }
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取此 ColorX 结构的精确名称。
+        /// </summary>
+        public string ExactName
+        {
+            get
+            {
+                if (_CurrentColorSpace == _ColorSpace.None)
+                {
+                    return _EmptyColorName;
+                }
+                else
+                {
+                    Func<double, string> ValueToHexCode = (val) =>
+                    {
+                        unsafe
+                        {
+                            string hex = Convert.ToString(*(long*)(&val), 16).ToUpperInvariant();
+
+                            if (hex.Length < 16)
+                            {
+                                return hex.PadLeft(16, '0');
+                            }
+                            else
+                            {
+                                return hex;
+                            }
+                        }
+                    };
+
+                    double[] rgb = _GetChannels(_ColorSpace.RGB);
+
+                    string strA = ValueToHexCode(Alpha);
+                    string strR = ValueToHexCode(rgb[0]);
+                    string strG = ValueToHexCode(rgb[1]);
+                    string strB = ValueToHexCode(rgb[2]);
+
+                    StringBuilder stringBuilder = new StringBuilder(70);
+
+                    stringBuilder.Append(strA.Substring(0, 3));
+                    stringBuilder.Append(strR.Substring(0, 3));
+                    stringBuilder.Append(strG.Substring(0, 3));
+                    stringBuilder.Append(strB.Substring(0, 3));
+                    stringBuilder.Append('-');
+                    stringBuilder.Append(strA.Substring(3, 2));
+                    stringBuilder.Append(strR.Substring(3, 2));
+                    stringBuilder.Append(strG.Substring(3, 2));
+                    stringBuilder.Append(strB.Substring(3, 2));
+                    stringBuilder.Append('-');
+                    stringBuilder.Append(strA.Substring(5, 2));
+                    stringBuilder.Append(strR.Substring(5, 2));
+                    stringBuilder.Append(strG.Substring(5, 2));
+                    stringBuilder.Append(strB.Substring(5, 2));
+                    stringBuilder.Append('-');
+                    stringBuilder.Append(strA.Substring(7, 2));
+                    stringBuilder.Append(strR.Substring(7, 2));
+                    stringBuilder.Append(strG.Substring(7, 2));
+                    stringBuilder.Append(strB.Substring(7, 2));
+                    stringBuilder.Append('-');
+                    stringBuilder.Append(strA.Substring(9, 2));
+                    stringBuilder.Append(strR.Substring(9, 2));
+                    stringBuilder.Append(strG.Substring(9, 2));
+                    stringBuilder.Append(strB.Substring(9, 2));
+                    stringBuilder.Append('-');
+                    stringBuilder.Append(strA.Substring(11, 2));
+                    stringBuilder.Append(strR.Substring(11, 2));
+                    stringBuilder.Append(strG.Substring(11, 2));
+                    stringBuilder.Append(strB.Substring(11, 2));
+                    stringBuilder.Append('-');
+                    stringBuilder.Append(strA.Substring(13, 3));
+                    stringBuilder.Append(strR.Substring(13, 3));
+                    stringBuilder.Append(strG.Substring(13, 3));
+                    stringBuilder.Append(strB.Substring(13, 3));
+
+                    return stringBuilder.ToString();
                 }
             }
         }
@@ -4569,9 +4679,37 @@ namespace Com
 
             //
 
-            int argb = int.Parse(HexCode, NumberStyles.HexNumber);
+            int Len = HexCode.Length;
 
-            return new ColorX(argb);
+            if (Len == 6 || Len == 8)
+            {
+                int argb = int.Parse(HexCode, NumberStyles.HexNumber);
+
+                return new ColorX(argb);
+            }
+            else if (Len == 64)
+            {
+                Func<string, double> HexCodeToValue = (hex) =>
+                {
+                    unsafe
+                    {
+                        long val = long.Parse(hex, NumberStyles.HexNumber);
+
+                        return *(double*)(&val);
+                    }
+                };
+
+                string strA = string.Concat(HexCode.Substring(0, 3), HexCode.Substring(12, 2), HexCode.Substring(20, 2), HexCode.Substring(28, 2), HexCode.Substring(36, 2), HexCode.Substring(44, 2), HexCode.Substring(52, 3));
+                string strR = string.Concat(HexCode.Substring(3, 3), HexCode.Substring(14, 2), HexCode.Substring(22, 2), HexCode.Substring(30, 2), HexCode.Substring(38, 2), HexCode.Substring(46, 2), HexCode.Substring(55, 3));
+                string strG = string.Concat(HexCode.Substring(6, 3), HexCode.Substring(16, 2), HexCode.Substring(24, 2), HexCode.Substring(32, 2), HexCode.Substring(40, 2), HexCode.Substring(48, 2), HexCode.Substring(58, 3));
+                string strB = string.Concat(HexCode.Substring(9, 3), HexCode.Substring(18, 2), HexCode.Substring(26, 2), HexCode.Substring(34, 2), HexCode.Substring(42, 2), HexCode.Substring(50, 2), HexCode.Substring(61, 3));
+
+                return FromRGB(HexCodeToValue(strA), HexCodeToValue(strR), HexCodeToValue(strG), HexCodeToValue(strB));
+            }
+            else
+            {
+                throw new FormatException();
+            }
         }
 
         //

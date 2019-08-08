@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Text
-Version 19.8.5.2000
+Version 19.8.8.0000
 
 This file is part of Com
 
@@ -302,8 +302,8 @@ namespace Com
                 }
                 else
                 {
-                    int StartIndex = sourceString.IndexOf(startString) + (includeStartString ? 0 : startString.Length);
-                    int EndIndex = sourceString.IndexOf(endString) + (includeEndString ? endString.Length : 0);
+                    int StartIndex = sourceString.IndexOf(startString, StringComparison.Ordinal) + (includeStartString ? 0 : startString.Length);
+                    int EndIndex = sourceString.IndexOf(endString, StringComparison.Ordinal) + (includeEndString ? endString.Length : 0);
 
                     if (StartIndex >= EndIndex)
                     {
