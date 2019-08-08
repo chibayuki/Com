@@ -2966,7 +2966,15 @@ namespace Com
                         int argb = int.Parse(HexCode, NumberStyles.HexNumber);
 
                         _SetChannels(_ColorSpace.RGB, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
-                        Alpha = _GetAlphaByArgb(argb);
+
+                        if (Len == 8)
+                        {
+                            Alpha = _GetAlphaByArgb(argb);
+                        }
+                        else
+                        {
+                            Alpha = _DefaultAlpha;
+                        }
                     }
                     else if (Len == 64)
                     {
@@ -4685,7 +4693,14 @@ namespace Com
             {
                 int argb = int.Parse(HexCode, NumberStyles.HexNumber);
 
-                return new ColorX(argb);
+                if (Len == 8)
+                {
+                    return new ColorX(argb);
+                }
+                else
+                {
+                    return FromRGB(_DefaultAlpha, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
+                }
             }
             else if (Len == 64)
             {
