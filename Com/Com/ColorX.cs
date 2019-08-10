@@ -2897,6 +2897,61 @@ namespace Com
             _DiscardCache();
         }
 
+        //
+
+        private static string _GetHexCodeBySpace(_ColorSpace colorSpace) // 根据色彩空间获取 16 进制码。
+        {
+            switch (colorSpace)
+            {
+                case _ColorSpace.RGB: return "19DCECBF";
+                case _ColorSpace.HSV: return "64C7CFE9";
+                case _ColorSpace.HSL: return "64C7CFCF";
+                case _ColorSpace.CMYK: return "53EA2E4E";
+                case _ColorSpace.LAB: return "D48E023F";
+                case _ColorSpace.YUV: return "34B48CDA";
+                default: throw new ArgumentException();
+            }
+        }
+
+        private static _ColorSpace _GetSpaceByHexCode(string hexCode) // 根据 16 进制码获取色彩空间。
+        {
+            switch (hexCode)
+            {
+                case "19DCECBF": return _ColorSpace.RGB;
+                case "64C7CFE9": return _ColorSpace.HSV;
+                case "64C7CFCF": return _ColorSpace.HSL;
+                case "53EA2E4E": return _ColorSpace.CMYK;
+                case "D48E023F": return _ColorSpace.LAB;
+                case "34B48CDA": return _ColorSpace.YUV;
+                default: throw new ArgumentException();
+            }
+        }
+
+        private unsafe static string _GetHexCodeByChannel(double channel) // 根据通道值获取 16 进制码。
+        {
+            string hexCode = Convert.ToString(*(long*)(&channel), 16).ToUpperInvariant();
+
+            if (hexCode.Length < 16)
+            {
+                return hexCode.PadLeft(16, '0');
+            }
+            else
+            {
+                return hexCode;
+            }
+        }
+
+        private unsafe static double _GetChannelByHexCode(string hexCode) // 根据 16 进制码获取通道值。
+        {
+            long val = long.Parse(hexCode, NumberStyles.HexNumber);
+
+            return *(double*)(&val);
+        }
+
+        private const int _ExactHexCodeLength = 88; // 精确 16 进制码的长度（不含分隔符）。
+        private const int _ExactHexCodeStepShift = 19; // 生成精确 16 进制码所需的字符序迭代偏移，等于以长度与迭代偏移为初始值可以辗转相除次数最多的最小质数。
+        private const int _ExactHexCodeInitShift = 7; // 生成精确 16 进制码所需的字符序初始偏移，等于以迭代偏移与初始偏移为初始值可以辗转相除次数最多的最小质数。
+
         #endregion
 
         #region 构造函数
@@ -2976,25 +3031,36 @@ namespace Com
                             Alpha = _DefaultAlpha;
                         }
                     }
-                    else if (Len == 64)
+                    else if (Len == _ExactHexCodeLength)
                     {
-                        Func<string, double> HexCodeToValue = (hex) =>
+                        char[] ch1 = HexCode.ToCharArray();
+                        char[] ch2 = new char[_ExactHexCodeLength];
+
+                        int i2 = _ExactHexCodeInitShift;
+
+                        for (int i1 = 0; i1 < _ExactHexCodeLength; i1++)
                         {
-                            unsafe
+                            i2 -= _ExactHexCodeStepShift;
+
+                            if (i2 < 0)
                             {
-                                long val = long.Parse(hex, NumberStyles.HexNumber);
-
-                                return *(double*)(&val);
+                                i2 += _ExactHexCodeLength;
                             }
-                        };
 
-                        string strA = string.Concat(HexCode.Substring(0, 3), HexCode.Substring(12, 2), HexCode.Substring(20, 2), HexCode.Substring(28, 2), HexCode.Substring(36, 2), HexCode.Substring(44, 2), HexCode.Substring(52, 3));
-                        string strR = string.Concat(HexCode.Substring(3, 3), HexCode.Substring(14, 2), HexCode.Substring(22, 2), HexCode.Substring(30, 2), HexCode.Substring(38, 2), HexCode.Substring(46, 2), HexCode.Substring(55, 3));
-                        string strG = string.Concat(HexCode.Substring(6, 3), HexCode.Substring(16, 2), HexCode.Substring(24, 2), HexCode.Substring(32, 2), HexCode.Substring(40, 2), HexCode.Substring(48, 2), HexCode.Substring(58, 3));
-                        string strB = string.Concat(HexCode.Substring(9, 3), HexCode.Substring(18, 2), HexCode.Substring(26, 2), HexCode.Substring(34, 2), HexCode.Substring(42, 2), HexCode.Substring(50, 2), HexCode.Substring(61, 3));
+                            ch2[i1] = ch1[i2];
+                        }
 
-                        _SetChannels(_ColorSpace.RGB, HexCodeToValue(strR), HexCodeToValue(strG), HexCodeToValue(strB));
-                        Alpha = HexCodeToValue(strA);
+                        string str = new string(ch2);
+
+                        string strS = str.Substring(0, 8);
+                        string strC0 = str.Substring(8, 16);
+                        string strC1 = str.Substring(24, 16);
+                        string strC2 = str.Substring(40, 16);
+                        string strC3 = str.Substring(56, 16);
+                        string strC4 = str.Substring(72, 16);
+
+                        _SetChannels(_GetSpaceByHexCode(strS), _GetChannelByHexCode(strC1), _GetChannelByHexCode(strC2), _GetChannelByHexCode(strC3), _GetChannelByHexCode(strC4));
+                        Opacity = _GetChannelByHexCode(strC0);
                     }
                     else
                     {
@@ -3065,9 +3131,9 @@ namespace Com
                 else
                 {
                     double alpha = Alpha;
-                    double[] channels = _GetChannels(_ColorSpace.RGB);
+                    double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                    return (alpha == Math.Truncate(alpha) && channels[0] == Math.Truncate(channels[0]) && channels[1] == Math.Truncate(channels[1]) && channels[2] == Math.Truncate(channels[2]));
+                    return (alpha == Math.Truncate(alpha) && rgb[0] == Math.Truncate(rgb[0]) && rgb[1] == Math.Truncate(rgb[1]) && rgb[2] == Math.Truncate(rgb[2]));
                 }
             }
         }
@@ -3449,9 +3515,9 @@ namespace Com
         {
             get
             {
-                double[] channels = _GetChannels(_ColorSpace.RGB);
+                double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                return new PointD3D(channels[0], channels[1], channels[2]);
+                return new PointD3D(rgb[0], rgb[1], rgb[2]);
             }
 
             set
@@ -3467,9 +3533,9 @@ namespace Com
         {
             get
             {
-                double[] channels = _GetChannels(_ColorSpace.HSV);
+                double[] hsv = _GetChannels(_ColorSpace.HSV);
 
-                return new PointD3D(channels[0], channels[1], channels[2]);
+                return new PointD3D(hsv[0], hsv[1], hsv[2]);
             }
 
             set
@@ -3485,9 +3551,9 @@ namespace Com
         {
             get
             {
-                double[] channels = _GetChannels(_ColorSpace.HSL);
+                double[] hsl = _GetChannels(_ColorSpace.HSL);
 
-                return new PointD3D(channels[0], channels[1], channels[2]);
+                return new PointD3D(hsl[0], hsl[1], hsl[2]);
             }
 
             set
@@ -3503,9 +3569,9 @@ namespace Com
         {
             get
             {
-                double[] channels = _GetChannels(_ColorSpace.CMYK);
+                double[] cmyk = _GetChannels(_ColorSpace.CMYK);
 
-                return new PointD4D(channels[0], channels[1], channels[2], channels[3]);
+                return new PointD4D(cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
             }
 
             set
@@ -3521,9 +3587,9 @@ namespace Com
         {
             get
             {
-                double[] channels = _GetChannels(_ColorSpace.LAB);
+                double[] lab = _GetChannels(_ColorSpace.LAB);
 
-                return new PointD3D(channels[0], channels[1], channels[2]);
+                return new PointD3D(lab[0], lab[1], lab[2]);
             }
 
             set
@@ -3539,9 +3605,9 @@ namespace Com
         {
             get
             {
-                double[] channels = _GetChannels(_ColorSpace.YUV);
+                double[] yuv = _GetChannels(_ColorSpace.YUV);
 
-                return new PointD3D(channels[0], channels[1], channels[2]);
+                return new PointD3D(yuv[0], yuv[1], yuv[2]);
             }
 
             set
@@ -3709,10 +3775,12 @@ namespace Com
             }
         }
 
+        //
+
         /// <summary>
-        /// 获取此 ColorX 结构的精确名称。
+        /// 获取此 ColorX 结构的精确 16 进制码。
         /// </summary>
-        public string ExactName
+        public string ExactHexCode
         {
             get
             {
@@ -3722,68 +3790,57 @@ namespace Com
                 }
                 else
                 {
-                    Func<double, string> ValueToHexCode = (val) =>
+                    string strS = _GetHexCodeBySpace(_CurrentColorSpace);
+                    string strC0 = _GetHexCodeByChannel(_Opacity);
+                    string strC1 = _GetHexCodeByChannel(_Channel1);
+                    string strC2 = _GetHexCodeByChannel(_Channel2);
+                    string strC3 = _GetHexCodeByChannel(_Channel3);
+                    string strC4 = _GetHexCodeByChannel(_Channel4);
+
+                    char[] ch1 = string.Concat(strS, strC0, strC1, strC2, strC3, strC4).ToCharArray();
+                    char[] ch2 = new char[_ExactHexCodeLength];
+
+                    int i2 = _ExactHexCodeInitShift;
+
+                    for (int i1 = 0; i1 < _ExactHexCodeLength; i1++)
                     {
-                        unsafe
+                        i2 -= _ExactHexCodeStepShift;
+
+                        if (i2 < 0)
                         {
-                            string hex = Convert.ToString(*(long*)(&val), 16).ToUpperInvariant();
-
-                            if (hex.Length < 16)
-                            {
-                                return hex.PadLeft(16, '0');
-                            }
-                            else
-                            {
-                                return hex;
-                            }
+                            i2 += _ExactHexCodeLength;
                         }
-                    };
 
-                    double[] rgb = _GetChannels(_ColorSpace.RGB);
+                        ch2[i2] = ch1[i1];
+                    }
 
-                    string strA = ValueToHexCode(Alpha);
-                    string strR = ValueToHexCode(rgb[0]);
-                    string strG = ValueToHexCode(rgb[1]);
-                    string strB = ValueToHexCode(rgb[2]);
+                    string str = new string(ch2);
 
-                    StringBuilder stringBuilder = new StringBuilder(70);
+                    StringBuilder sb = new StringBuilder(_ExactHexCodeLength + 10);
 
-                    stringBuilder.Append(strA.Substring(0, 3));
-                    stringBuilder.Append(strR.Substring(0, 3));
-                    stringBuilder.Append(strG.Substring(0, 3));
-                    stringBuilder.Append(strB.Substring(0, 3));
-                    stringBuilder.Append('-');
-                    stringBuilder.Append(strA.Substring(3, 2));
-                    stringBuilder.Append(strR.Substring(3, 2));
-                    stringBuilder.Append(strG.Substring(3, 2));
-                    stringBuilder.Append(strB.Substring(3, 2));
-                    stringBuilder.Append('-');
-                    stringBuilder.Append(strA.Substring(5, 2));
-                    stringBuilder.Append(strR.Substring(5, 2));
-                    stringBuilder.Append(strG.Substring(5, 2));
-                    stringBuilder.Append(strB.Substring(5, 2));
-                    stringBuilder.Append('-');
-                    stringBuilder.Append(strA.Substring(7, 2));
-                    stringBuilder.Append(strR.Substring(7, 2));
-                    stringBuilder.Append(strG.Substring(7, 2));
-                    stringBuilder.Append(strB.Substring(7, 2));
-                    stringBuilder.Append('-');
-                    stringBuilder.Append(strA.Substring(9, 2));
-                    stringBuilder.Append(strR.Substring(9, 2));
-                    stringBuilder.Append(strG.Substring(9, 2));
-                    stringBuilder.Append(strB.Substring(9, 2));
-                    stringBuilder.Append('-');
-                    stringBuilder.Append(strA.Substring(11, 2));
-                    stringBuilder.Append(strR.Substring(11, 2));
-                    stringBuilder.Append(strG.Substring(11, 2));
-                    stringBuilder.Append(strB.Substring(11, 2));
-                    stringBuilder.Append('-');
-                    stringBuilder.Append(strA.Substring(13, 3));
-                    stringBuilder.Append(strR.Substring(13, 3));
-                    stringBuilder.Append(strG.Substring(13, 3));
-                    stringBuilder.Append(strB.Substring(13, 3));
+                    sb.Append(str.Substring(0, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(8, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(16, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(24, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(32, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(40, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(48, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(56, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(64, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(72, 8));
+                    sb.Append('-');
+                    sb.Append(str.Substring(80, 8));
 
-                    return stringBuilder.ToString();
+                    return sb.ToString();
                 }
             }
         }
@@ -4702,24 +4759,44 @@ namespace Com
                     return FromRGB(_DefaultAlpha, _GetRedByArgb(argb), _GetGreenByArgb(argb), _GetBlueByArgb(argb));
                 }
             }
-            else if (Len == 64)
+            else if (Len == _ExactHexCodeLength)
             {
-                Func<string, double> HexCodeToValue = (hex) =>
+                char[] ch1 = HexCode.ToCharArray();
+                char[] ch2 = new char[_ExactHexCodeLength];
+
+                int i2 = _ExactHexCodeInitShift;
+
+                for (int i1 = 0; i1 < _ExactHexCodeLength; i1++)
                 {
-                    unsafe
+                    i2 -= _ExactHexCodeStepShift;
+
+                    if (i2 < 0)
                     {
-                        long val = long.Parse(hex, NumberStyles.HexNumber);
-
-                        return *(double*)(&val);
+                        i2 += _ExactHexCodeLength;
                     }
-                };
 
-                string strA = string.Concat(HexCode.Substring(0, 3), HexCode.Substring(12, 2), HexCode.Substring(20, 2), HexCode.Substring(28, 2), HexCode.Substring(36, 2), HexCode.Substring(44, 2), HexCode.Substring(52, 3));
-                string strR = string.Concat(HexCode.Substring(3, 3), HexCode.Substring(14, 2), HexCode.Substring(22, 2), HexCode.Substring(30, 2), HexCode.Substring(38, 2), HexCode.Substring(46, 2), HexCode.Substring(55, 3));
-                string strG = string.Concat(HexCode.Substring(6, 3), HexCode.Substring(16, 2), HexCode.Substring(24, 2), HexCode.Substring(32, 2), HexCode.Substring(40, 2), HexCode.Substring(48, 2), HexCode.Substring(58, 3));
-                string strB = string.Concat(HexCode.Substring(9, 3), HexCode.Substring(18, 2), HexCode.Substring(26, 2), HexCode.Substring(34, 2), HexCode.Substring(42, 2), HexCode.Substring(50, 2), HexCode.Substring(61, 3));
+                    ch2[i1] = ch1[i2];
+                }
 
-                return FromRGB(HexCodeToValue(strA), HexCodeToValue(strR), HexCodeToValue(strG), HexCodeToValue(strB));
+                string str = new string(ch2);
+
+                string strS = str.Substring(0, 8);
+                string strC0 = str.Substring(8, 16);
+                string strC1 = str.Substring(24, 16);
+                string strC2 = str.Substring(40, 16);
+                string strC3 = str.Substring(56, 16);
+                string strC4 = str.Substring(72, 16);
+
+                switch (_GetSpaceByHexCode(strS))
+                {
+                    case _ColorSpace.RGB: return FromRGB(_GetChannelByHexCode(strC0) / _MaxOpacity * _MaxAlpha, _GetChannelByHexCode(strC1), _GetChannelByHexCode(strC2), _GetChannelByHexCode(strC3));
+                    case _ColorSpace.HSV: return FromHSV(_GetChannelByHexCode(strC1), _GetChannelByHexCode(strC2), _GetChannelByHexCode(strC3), _GetChannelByHexCode(strC0));
+                    case _ColorSpace.HSL: return FromHSL(_GetChannelByHexCode(strC1), _GetChannelByHexCode(strC2), _GetChannelByHexCode(strC3), _GetChannelByHexCode(strC0));
+                    case _ColorSpace.CMYK: return FromCMYK(_GetChannelByHexCode(strC1), _GetChannelByHexCode(strC2), _GetChannelByHexCode(strC3), _GetChannelByHexCode(strC4), _GetChannelByHexCode(strC0));
+                    case _ColorSpace.LAB: return FromLAB(_GetChannelByHexCode(strC1), _GetChannelByHexCode(strC2), _GetChannelByHexCode(strC3), _GetChannelByHexCode(strC0));
+                    case _ColorSpace.YUV: return FromYUV(_GetChannelByHexCode(strC1), _GetChannelByHexCode(strC2), _GetChannelByHexCode(strC3), _GetChannelByHexCode(strC0));
+                    default: throw new ArgumentException();
+                }
             }
             else
             {
