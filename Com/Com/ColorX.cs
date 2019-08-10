@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorX
-Version 19.8.8.0000
+Version 19.8.10.1600
 
 This file is part of Com
 
