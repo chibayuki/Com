@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorManipulation
-Version 19.8.10.1600
+Version 19.8.11.0000
 
 This file is part of Com
 
@@ -32,15 +32,23 @@ namespace Com
         public static string GetColorName(ColorX color)
         {
             string name = color.Name;
-            string hexCode = color.ARGBHexCode;
 
-            if (name == hexCode)
+            if (color.IsEmpty)
             {
                 return name;
             }
             else
             {
-                return string.Concat(name, " (", hexCode, ")");
+                string hexCode = color.ARGBHexCode;
+
+                if (name == hexCode)
+                {
+                    return name;
+                }
+                else
+                {
+                    return string.Concat(name, " (", hexCode, ")");
+                }
             }
         }
 

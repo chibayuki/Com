@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorX
-Version 19.8.10.1600
+Version 19.8.11.0000
 
 This file is part of Com
 
@@ -3533,6 +3533,31 @@ namespace Com
         //
 
         /// <summary>
+        /// 获取此 ColorX 结构的相反色。
+        /// </summary>
+        public ColorX InvertColor
+        {
+            get
+            {
+                if (_CurrentColorSpace == _ColorSpace.None)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    ColorX color = new ColorX();
+
+                    double[] rgb = _GetChannels(_ColorSpace.RGB);
+
+                    color._SetChannels(_ColorSpace.RGB, _MaxRed - rgb[0], _MaxGreen - rgb[1], _MaxBlue - rgb[2]);
+                    color.Alpha = Alpha;
+
+                    return color;
+                }
+            }
+        }
+
+        /// <summary>
         /// 获取此 ColorX 结构的互补色。
         /// </summary>
         public ColorX ComplementaryColor
@@ -3549,7 +3574,11 @@ namespace Com
 
                     double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                    color._SetChannels(_ColorSpace.RGB, _MaxRed - rgb[0], _MaxGreen - rgb[1], _MaxBlue - rgb[2]);
+                    double max = Math.Max(Math.Max(rgb[0], rgb[1]), rgb[2]);
+                    double min = Math.Min(Math.Min(rgb[0], rgb[1]), rgb[2]);
+                    double sum = max + min;
+
+                    color._SetChannels(_ColorSpace.RGB, sum - rgb[0], sum - rgb[1], sum - rgb[2]);
                     color.Alpha = Alpha;
 
                     return color;
