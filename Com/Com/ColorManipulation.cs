@@ -85,6 +85,26 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回 ColorX 结构表示的颜色的相反色。
+        /// </summary>
+        /// <param name="color">ColorX 结构表示的颜色。</param>
+        /// <returns>ColorX 结构，表示指定颜色的相反色。</returns>
+        public static ColorX GetInvertColor(ColorX color)
+        {
+            return color.InvertColor;
+        }
+
+        /// <summary>
+        /// 返回 Color 结构表示的颜色的相反色。
+        /// </summary>
+        /// <param name="color">Color 结构表示的颜色。</param>
+        /// <returns>Color 结构，表示指定颜色的相反色。</returns>
+        public static Color GetInvertColor(Color color)
+        {
+            return GetComplementaryColor((ColorX)color).ToColor();
+        }
+
+        /// <summary>
         /// 返回 ColorX 结构表示的颜色的互补色。
         /// </summary>
         /// <param name="color">ColorX 结构表示的颜色。</param>
@@ -203,7 +223,32 @@ namespace Com
         {
             proportion = _CheckProportion(proportion);
 
-            return ColorX.FromHSV(color1.HSV * proportion + color2.HSV * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
+            PointD3D hsv1 = color1.HSV;
+            PointD3D hsv2 = color2.HSV;
+
+            double deltaHue = hsv1.X - hsv2.X;
+
+            if (deltaHue < -180)
+            {
+                deltaHue += 360;
+            }
+            else if (deltaHue > 180)
+            {
+                deltaHue -= 360;
+            }
+
+            double newHue = hsv2.X + deltaHue * proportion;
+
+            if (newHue < 0)
+            {
+                newHue += 360;
+            }
+            else if (newHue >= 360)
+            {
+                newHue -= 360;
+            }
+
+            return ColorX.FromHSV(newHue, hsv1.Y * proportion + hsv2.Y * (1 - proportion), hsv1.Z * proportion + hsv2.Z * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
         }
 
         /// <summary>
@@ -229,7 +274,32 @@ namespace Com
         {
             proportion = _CheckProportion(proportion);
 
-            return ColorX.FromHSL(color1.HSL * proportion + color2.HSL * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
+            PointD3D hsl1 = color1.HSL;
+            PointD3D hsl2 = color2.HSL;
+
+            double deltaHue = hsl1.X - hsl2.X;
+
+            if (deltaHue < -180)
+            {
+                deltaHue += 360;
+            }
+            else if (deltaHue > 180)
+            {
+                deltaHue -= 360;
+            }
+
+            double newHue = hsl2.X + deltaHue * proportion;
+
+            if (newHue < 0)
+            {
+                newHue += 360;
+            }
+            else if (newHue >= 360)
+            {
+                newHue -= 360;
+            }
+
+            return ColorX.FromHSL(newHue, hsl1.Y * proportion + hsl2.Y * (1 - proportion), hsl1.Z * proportion + hsl2.Z * (1 - proportion), color1.Opacity * proportion + color2.Opacity * (1 - proportion));
         }
 
         /// <summary>
