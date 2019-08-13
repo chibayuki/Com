@@ -91,7 +91,7 @@ namespace Com
         /// <returns>ColorX 结构，表示指定颜色的相反色。</returns>
         public static ColorX GetInvertColor(ColorX color)
         {
-            return color.InvertColor;
+            return color.Invert;
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Com
         /// <returns>ColorX 结构，表示指定颜色的互补色。</returns>
         public static ColorX GetComplementaryColor(ColorX color)
         {
-            return color.ComplementaryColor;
+            return color.Complementary;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Com
         /// <returns>ColorX 结构，表示指定颜色的灰度颜色。</returns>
         public static ColorX GetGrayscaleColor(ColorX color)
         {
-            return color.GrayscaleColor;
+            return color.Grayscale;
         }
 
         /// <summary>

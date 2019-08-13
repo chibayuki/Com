@@ -3535,7 +3535,7 @@ namespace Com
         /// <summary>
         /// 获取此 ColorX 结构的相反色。
         /// </summary>
-        public ColorX InvertColor
+        public ColorX Invert
         {
             get
             {
@@ -3560,7 +3560,7 @@ namespace Com
         /// <summary>
         /// 获取此 ColorX 结构的互补色。
         /// </summary>
-        public ColorX ComplementaryColor
+        public ColorX Complementary
         {
             get
             {
@@ -3587,9 +3587,21 @@ namespace Com
         }
 
         /// <summary>
+        /// 获取此 ColorX 结构的互补色。
+        /// </summary>
+        [Obsolete]
+        public ColorX ComplementaryColor
+        {
+            get
+            {
+                return Complementary;
+            }
+        }
+
+        /// <summary>
         /// 获取此 ColorX 结构的灰度颜色。
         /// </summary>
-        public ColorX GrayscaleColor
+        public ColorX Grayscale
         {
             get
             {
@@ -3610,6 +3622,18 @@ namespace Com
 
                     return color;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 获取此 ColorX 结构的灰度颜色。
+        /// </summary>
+        [Obsolete]
+        public ColorX GrayscaleColor
+        {
+            get
+            {
+                return Grayscale;
             }
         }
 

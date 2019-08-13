@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Statistics
-Version 19.8.10.1600
+Version 19.8.13.0000
 
 This file is part of Com
 
@@ -972,17 +972,28 @@ namespace Com
 
             //
 
-            sbyte result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                sbyte result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    sbyte val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -999,17 +1010,28 @@ namespace Com
 
             //
 
-            byte result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                byte result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    byte val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1026,17 +1048,28 @@ namespace Com
 
             //
 
-            short result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                short result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    short val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1053,17 +1086,28 @@ namespace Com
 
             //
 
-            ushort result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                ushort result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    ushort val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1080,17 +1124,28 @@ namespace Com
 
             //
 
-            int result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                int result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    int val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1107,17 +1162,28 @@ namespace Com
 
             //
 
-            uint result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                uint result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    uint val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1134,17 +1200,28 @@ namespace Com
 
             //
 
-            long result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                long result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    long val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1161,17 +1238,28 @@ namespace Com
 
             //
 
-            ulong result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                ulong result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    ulong val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1188,17 +1276,28 @@ namespace Com
 
             //
 
-            decimal result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                decimal result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    decimal val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1215,17 +1314,28 @@ namespace Com
 
             //
 
-            float result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                float result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    float val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1242,17 +1352,28 @@ namespace Com
 
             //
 
-            double result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result < values[i])
-                {
-                    result = values[i];
-                }
-            }
+                double result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    double val = values[i];
+
+                    if (result < val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1269,27 +1390,38 @@ namespace Com
 
             //
 
-            IComparable result = values[0];
+            int Len = values.Length;
 
-            for (int i = 1; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (values[i] != null)
-                {
-                    if (values[i].CompareTo(result) > 0)
-                    {
-                        result = values[i];
-                    }
-                }
-                else if (result != null)
-                {
-                    if (result.CompareTo(values[i]) < 0)
-                    {
-                        result = values[i];
-                    }
-                }
-            }
+                IComparable result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    IComparable val = values[i];
+
+                    if (val != null)
+                    {
+                        if (val.CompareTo(result) > 0)
+                        {
+                            result = val;
+                        }
+                    }
+                    else if (result != null)
+                    {
+                        if (result.CompareTo(val) < 0)
+                        {
+                            result = val;
+                        }
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         //
@@ -1308,17 +1440,28 @@ namespace Com
 
             //
 
-            sbyte result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                sbyte result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    sbyte val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1335,17 +1478,28 @@ namespace Com
 
             //
 
-            byte result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                byte result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    byte val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1362,17 +1516,28 @@ namespace Com
 
             //
 
-            short result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                short result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    short val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1389,17 +1554,28 @@ namespace Com
 
             //
 
-            ushort result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                ushort result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    ushort val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1416,17 +1592,28 @@ namespace Com
 
             //
 
-            int result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                int result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    int val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1443,17 +1630,28 @@ namespace Com
 
             //
 
-            uint result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                uint result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    uint val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1470,17 +1668,28 @@ namespace Com
 
             //
 
-            long result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                long result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    long val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1497,17 +1706,28 @@ namespace Com
 
             //
 
-            ulong result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                ulong result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    ulong val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1524,17 +1744,28 @@ namespace Com
 
             //
 
-            decimal result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                decimal result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    decimal val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1551,17 +1782,28 @@ namespace Com
 
             //
 
-            float result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                float result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    float val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1578,17 +1820,28 @@ namespace Com
 
             //
 
-            double result = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (result > values[i])
-                {
-                    result = values[i];
-                }
-            }
+                double result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    double val = values[i];
+
+                    if (result > val)
+                    {
+                        result = val;
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -1605,27 +1858,38 @@ namespace Com
 
             //
 
-            IComparable result = values[0];
+            int Len = values.Length;
 
-            for (int i = 1; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (values[i] != null)
-                {
-                    if (values[i].CompareTo(result) < 0)
-                    {
-                        result = values[i];
-                    }
-                }
-                else if (result != null)
-                {
-                    if (result.CompareTo(values[i]) > 0)
-                    {
-                        result = values[i];
-                    }
-                }
-            }
+                IComparable result = values[0];
 
-            return result;
+                for (int i = 1; i < Len; i++)
+                {
+                    IComparable val = values[i];
+
+                    if (val != null)
+                    {
+                        if (val.CompareTo(result) < 0)
+                        {
+                            result = val;
+                        }
+                    }
+                    else if (result != null)
+                    {
+                        if (result.CompareTo(val) > 0)
+                        {
+                            result = val;
+                        }
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return values[0];
+            }
         }
 
         //
@@ -1644,23 +1908,36 @@ namespace Com
 
             //
 
-            sbyte Min = values[0];
-            sbyte Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                sbyte min = values[0];
+                sbyte max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    sbyte val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                sbyte val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1677,23 +1954,36 @@ namespace Com
 
             //
 
-            byte Min = values[0];
-            byte Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                byte min = values[0];
+                byte max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    byte val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                byte val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1710,23 +2000,36 @@ namespace Com
 
             //
 
-            short Min = values[0];
-            short Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                short min = values[0];
+                short max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    short val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                short val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1743,23 +2046,36 @@ namespace Com
 
             //
 
-            ushort Min = values[0];
-            ushort Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                ushort min = values[0];
+                ushort max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    ushort val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                ushort val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1776,23 +2092,36 @@ namespace Com
 
             //
 
-            int Min = values[0];
-            int Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                int min = values[0];
+                int max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    int val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                int val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1809,23 +2138,36 @@ namespace Com
 
             //
 
-            uint Min = values[0];
-            uint Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                uint min = values[0];
+                uint max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    uint val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                uint val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1842,23 +2184,36 @@ namespace Com
 
             //
 
-            long Min = values[0];
-            long Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                long min = values[0];
+                long max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    long val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                long val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1875,23 +2230,36 @@ namespace Com
 
             //
 
-            ulong Min = values[0];
-            ulong Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                ulong min = values[0];
+                ulong max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    ulong val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                ulong val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1908,23 +2276,36 @@ namespace Com
 
             //
 
-            decimal Min = values[0];
-            decimal Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                decimal min = values[0];
+                decimal max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    decimal val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                decimal val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1941,23 +2322,36 @@ namespace Com
 
             //
 
-            float Min = values[0];
-            float Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                float min = values[0];
+                float max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    float val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                float val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -1974,23 +2368,36 @@ namespace Com
 
             //
 
-            double Min = values[0];
-            double Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 0; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (Min > values[i])
+                double min = values[0];
+                double max = values[0];
+
+                for (int i = 1; i < Len; i++)
                 {
-                    Min = values[i];
+                    double val = values[i];
+
+                    if (min > val)
+                    {
+                        min = val;
+                    }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
                 }
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
+                return (min, max);
             }
+            else
+            {
+                double val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         /// <summary>
@@ -2007,44 +2414,55 @@ namespace Com
 
             //
 
-            IComparable Min = values[0];
-            IComparable Max = values[0];
+            int Len = values.Length;
 
-            for (int i = 1; i < values.Length; i++)
+            if (Len > 1)
             {
-                if (values[i] != null)
-                {
-                    if (values[i].CompareTo(Min) < 0)
-                    {
-                        Min = values[i];
-                    }
+                IComparable min = values[0];
+                IComparable max = values[0];
 
-                    if (values[i].CompareTo(Max) > 0)
-                    {
-                        Max = values[i];
-                    }
-                }
-                else
+                for (int i = 1; i < Len; i++)
                 {
-                    if (Min != null)
+                    if (values[i] != null)
                     {
-                        if (Min.CompareTo(values[i]) > 0)
+                        if (values[i].CompareTo(min) < 0)
                         {
-                            Min = values[i];
+                            min = values[i];
+                        }
+
+                        if (values[i].CompareTo(max) > 0)
+                        {
+                            max = values[i];
                         }
                     }
-
-                    if (Max != null)
+                    else
                     {
-                        if (Max.CompareTo(values[i]) < 0)
+                        if (min != null)
                         {
-                            Max = values[i];
+                            if (min.CompareTo(values[i]) > 0)
+                            {
+                                min = values[i];
+                            }
+                        }
+
+                        if (max != null)
+                        {
+                            if (max.CompareTo(values[i]) < 0)
+                            {
+                                max = values[i];
+                            }
                         }
                     }
                 }
+
+                return (min, max);
             }
+            else
+            {
+                IComparable val = values[0];
 
-            return (Min, Max);
+                return (val, val);
+            }
         }
 
         //
@@ -2288,28 +2706,37 @@ namespace Com
 
             //
 
-            int result = 0;
+            int Len = values.Length;
 
-            checked
+            if (Len > 1)
             {
-                int i = 0;
+                int result = 0;
 
-                while (i < values.Length - 16)
+                checked
                 {
-                    result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    int i = 0;
 
-                    i += 16;
+                    while (i < Len - 16)
+                    {
+                        result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                        i += 16;
+                    }
+
+                    while (i < Len)
+                    {
+                        result += values[i];
+
+                        i++;
+                    }
                 }
 
-                while (i < values.Length)
-                {
-                    result += values[i];
-
-                    i++;
-                }
+                return result;
             }
-
-            return result;
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -2326,28 +2753,37 @@ namespace Com
 
             //
 
-            int result = 0;
+            int Len = values.Length;
 
-            checked
+            if (Len > 1)
             {
-                int i = 0;
+                int result = 0;
 
-                while (i < values.Length - 16)
+                checked
                 {
-                    result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    int i = 0;
 
-                    i += 16;
+                    while (i < Len - 16)
+                    {
+                        result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                        i += 16;
+                    }
+
+                    while (i < Len)
+                    {
+                        result += values[i];
+
+                        i++;
+                    }
                 }
 
-                while (i < values.Length)
-                {
-                    result += values[i];
-
-                    i++;
-                }
+                return result;
             }
-
-            return result;
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -2364,28 +2800,37 @@ namespace Com
 
             //
 
-            int result = 0;
+            int Len = values.Length;
 
-            checked
+            if (Len > 1)
             {
-                int i = 0;
+                int result = 0;
 
-                while (i < values.Length - 16)
+                checked
                 {
-                    result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    int i = 0;
 
-                    i += 16;
+                    while (i < Len - 16)
+                    {
+                        result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                        i += 16;
+                    }
+
+                    while (i < Len)
+                    {
+                        result += values[i];
+
+                        i++;
+                    }
                 }
 
-                while (i < values.Length)
-                {
-                    result += values[i];
-
-                    i++;
-                }
+                return result;
             }
-
-            return result;
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -2402,28 +2847,37 @@ namespace Com
 
             //
 
-            int result = 0;
+            int Len = values.Length;
 
-            checked
+            if (Len > 1)
             {
-                int i = 0;
+                int result = 0;
 
-                while (i < values.Length - 16)
+                checked
                 {
-                    result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    int i = 0;
 
-                    i += 16;
+                    while (i < Len - 16)
+                    {
+                        result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                        i += 16;
+                    }
+
+                    while (i < Len)
+                    {
+                        result += values[i];
+
+                        i++;
+                    }
                 }
 
-                while (i < values.Length)
-                {
-                    result += values[i];
-
-                    i++;
-                }
+                return result;
             }
-
-            return result;
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -2440,28 +2894,37 @@ namespace Com
 
             //
 
-            int result = 0;
+            int Len = values.Length;
 
-            checked
+            if (Len > 1)
             {
-                int i = 0;
+                int result = 0;
 
-                while (i < values.Length - 16)
+                checked
                 {
-                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    int i = 0;
 
-                    i += 16;
+                    while (i < Len - 16)
+                    {
+                        result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                        i += 16;
+                    }
+
+                    while (i < Len)
+                    {
+                        result += values[i];
+
+                        i++;
+                    }
                 }
 
-                while (i < values.Length)
-                {
-                    result += values[i];
-
-                    i++;
-                }
+                return result;
             }
-
-            return result;
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -2478,28 +2941,37 @@ namespace Com
 
             //
 
-            long result = 0;
+            int Len = values.Length;
 
-            checked
+            if (Len > 1)
             {
-                int i = 0;
+                long result = 0;
 
-                while (i < values.Length - 16)
+                checked
                 {
-                    result += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    int i = 0;
 
-                    i += 16;
+                    while (i < Len - 16)
+                    {
+                        result += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                        i += 16;
+                    }
+
+                    while (i < Len)
+                    {
+                        result += values[i];
+
+                        i++;
+                    }
                 }
 
-                while (i < values.Length)
-                {
-                    result += values[i];
-
-                    i++;
-                }
+                return result;
             }
-
-            return result;
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -2516,28 +2988,37 @@ namespace Com
 
             //
 
-            long result = 0;
+            int Len = values.Length;
 
-            checked
+            if (Len > 1)
             {
-                int i = 0;
+                long result = 0;
 
-                while (i < values.Length - 16)
+                checked
                 {
-                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    int i = 0;
 
-                    i += 16;
+                    while (i < Len - 16)
+                    {
+                        result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                        i += 16;
+                    }
+
+                    while (i < Len)
+                    {
+                        result += values[i];
+
+                        i++;
+                    }
                 }
 
-                while (i < values.Length)
-                {
-                    result += values[i];
-
-                    i++;
-                }
+                return result;
             }
-
-            return result;
+            else
+            {
+                return values[0];
+            }
         }
 
         /// <summary>
@@ -2554,25 +3035,34 @@ namespace Com
 
             //
 
-            double result = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                result += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double result = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    result += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    result += values[i];
+
+                    i++;
+                }
+
+                return result;
             }
-
-            while (i < values.Length)
+            else
             {
-                result += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return result;
         }
 
         /// <summary>
@@ -2589,25 +3079,34 @@ namespace Com
 
             //
 
-            decimal result = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                decimal result = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    result += values[i];
+
+                    i++;
+                }
+
+                return result;
             }
-
-            while (i < values.Length)
+            else
             {
-                result += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return result;
         }
 
         /// <summary>
@@ -2624,25 +3123,34 @@ namespace Com
 
             //
 
-            float result = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                float result = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    result += values[i];
+
+                    i++;
+                }
+
+                return result;
             }
-
-            while (i < values.Length)
+            else
             {
-                result += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return result;
         }
 
         /// <summary>
@@ -2659,25 +3167,34 @@ namespace Com
 
             //
 
-            double result = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double result = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    result += values[i];
+
+                    i++;
+                }
+
+                return result;
             }
-
-            while (i < values.Length)
+            else
             {
-                result += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return result;
         }
 
         //
@@ -2696,25 +3213,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2731,25 +3257,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2766,25 +3301,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2801,25 +3345,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2836,25 +3389,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2871,25 +3433,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return ((double)Sum / values.Length);
         }
 
         /// <summary>
@@ -2906,25 +3477,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2941,25 +3521,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -2976,25 +3565,34 @@ namespace Com
 
             //
 
-            decimal Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                decimal sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         /// <summary>
@@ -3011,25 +3609,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (float)(sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (float)(Sum / values.Length);
         }
 
         /// <summary>
@@ -3046,25 +3653,34 @@ namespace Com
 
             //
 
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                Sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                double sum = 0;
 
-                i += 16;
+                int i = 0;
+
+                while (i < Len - 16)
+                {
+                    sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sum += values[i];
+
+                    i++;
+                }
+
+                return (sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                Sum += values[i];
-
-                i++;
+                return values[0];
             }
-
-            return (Sum / values.Length);
         }
 
         //
@@ -3083,50 +3699,65 @@ namespace Com
 
             //
 
-            sbyte Min = values[0];
-            sbyte Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                sbyte min = values[0];
+                sbyte max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        sbyte val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    sbyte val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                sbyte val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3143,50 +3774,65 @@ namespace Com
 
             //
 
-            byte Min = values[0];
-            byte Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                byte min = values[0];
+                byte max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        byte val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    byte val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                byte val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3203,50 +3849,65 @@ namespace Com
 
             //
 
-            short Min = values[0];
-            short Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                short min = values[0];
+                short max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        short val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    short val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                short val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3263,50 +3924,65 @@ namespace Com
 
             //
 
-            ushort Min = values[0];
-            ushort Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                ushort min = values[0];
+                ushort max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        ushort val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    ushort val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                ushort val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3323,50 +3999,65 @@ namespace Com
 
             //
 
-            int Min = values[0];
-            int Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                int min = values[0];
+                int max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        int val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    int val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                int val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3383,50 +4074,65 @@ namespace Com
 
             //
 
-            uint Min = values[0];
-            uint Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                uint min = values[0];
+                uint max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        uint val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    uint val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                uint val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3443,50 +4149,65 @@ namespace Com
 
             //
 
-            long Min = values[0];
-            long Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                long min = values[0];
+                long max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        long val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    long val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                long val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3503,50 +4224,65 @@ namespace Com
 
             //
 
-            ulong Min = values[0];
-            ulong Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                ulong min = values[0];
+                ulong max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        ulong val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    ulong val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                ulong val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3563,50 +4299,65 @@ namespace Com
 
             //
 
-            decimal Min = values[0];
-            decimal Max = values[0];
-            decimal Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                decimal min = values[0];
+                decimal max = values[0];
+                decimal sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        decimal val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    decimal val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                decimal val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         /// <summary>
@@ -3623,50 +4374,65 @@ namespace Com
 
             //
 
-            float Min = values[0];
-            float Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                float min = values[0];
+                float max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        float val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    float val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, (float)(sum / Len));
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                float val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, (float)(Sum / values.Length));
         }
 
         /// <summary>
@@ -3683,50 +4449,65 @@ namespace Com
 
             //
 
-            double Min = values[0];
-            double Max = values[0];
-            double Sum = 0;
+            int Len = values.Length;
 
-            int i = 0;
-
-            while (i < values.Length - 16)
+            if (Len > 1)
             {
-                for (int j = i; j < i + 16; j++)
+                double min = values[0];
+                double max = values[0];
+                double sum = 0;
+
+                int i = 0;
+
+                while (i < Len - 16)
                 {
-                    if (Min > values[j])
+                    for (int j = i; j < i + 16; j++)
                     {
-                        Min = values[j];
+                        double val = values[j];
+
+                        if (min > val)
+                        {
+                            min = val;
+                        }
+
+                        if (max < val)
+                        {
+                            max = val;
+                        }
                     }
 
-                    if (Max < values[j])
+                    sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+
+                    i += 16;
+                }
+
+                while (i < Len)
+                {
+                    double val = values[i];
+
+                    if (min > val)
                     {
-                        Max = values[j];
+                        min = val;
                     }
+
+                    if (max < val)
+                    {
+                        max = val;
+                    }
+
+                    sum += values[i];
+
+                    i++;
                 }
 
-                Sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
-
-                i += 16;
+                return (min, max, sum / Len);
             }
-
-            while (i < values.Length)
+            else
             {
-                if (Min > values[i])
-                {
-                    Min = values[i];
-                }
+                double val = values[0];
 
-                if (Max < values[i])
-                {
-                    Max = values[i];
-                }
-
-                Sum += values[i];
-
-                i++;
+                return (val, val, val);
             }
-
-            return (Min, Max, Sum / values.Length);
         }
 
         #endregion
@@ -3747,17 +4528,19 @@ namespace Com
 
             //
 
+            int Len = values.Length;
+
             double Avg = Average(values);
             double SqrSum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            for (int i = 0; i < Len; i++)
             {
                 double Delta = values[i] - Avg;
 
                 SqrSum += Delta * Delta;
             }
 
-            return (SqrSum / values.Length);
+            return (SqrSum / Len);
         }
 
         /// <summary>
@@ -3774,17 +4557,19 @@ namespace Com
 
             //
 
+            int Len = values.Length;
+
             double Avg = Average(values);
             double SqrSum = 0;
 
-            for (int i = 0; i < values.Length; i++)
+            for (int i = 0; i < Len; i++)
             {
                 double Delta = values[i] - Avg;
 
                 SqrSum += Delta * Delta;
             }
 
-            return (SqrSum / (values.Length - 1));
+            return (SqrSum / (Len - 1));
         }
 
         /// <summary>
