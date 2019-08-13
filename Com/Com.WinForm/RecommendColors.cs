@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.RecommendColors
-Version 19.8.10.1600
+Version 19.8.13.0000
 
 This file is part of Com
 
@@ -166,13 +166,13 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _CaptionBar = _FormBackground.Grayscale;
                             _Caption = Color.FromArgb(128, 128, 128);
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
+                            _Shadow = (isActive ? _Main : _Main.Grayscale);
                         }
                         else
                         {
@@ -223,7 +223,7 @@ namespace Com.WinForm
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.15);
 
-                        _FormBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
+                        _FormBackground = themeColor.AtLightness_HSL(98).Grayscale;
 
                         if (isActive)
                         {
@@ -240,13 +240,13 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _CaptionBar = _FormBackground.Grayscale;
                             _Caption = Color.FromArgb(128, 128, 128);
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
+                            _Shadow = (isActive ? _Main : _Main.Grayscale);
                         }
                         else
                         {
@@ -261,43 +261,43 @@ namespace Com.WinForm
                         _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
                         _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
-                        _MenuItemBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
-                        _MenuItemText = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                        _MenuItemBackground = themeColor.AtLightness_HSL(98).Grayscale;
+                        _MenuItemText = themeColor.AtLightness_HSL(24).Grayscale;
 
-                        _Text = themeColor.AtLightness_HSL(40).GrayscaleColor;
-                        _Text_DEC = themeColor.AtLightness_HSL(56).GrayscaleColor;
-                        _Text_INC = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                        _Text = themeColor.AtLightness_HSL(40).Grayscale;
+                        _Text_DEC = themeColor.AtLightness_HSL(56).Grayscale;
+                        _Text_INC = themeColor.AtLightness_HSL(24).Grayscale;
 
-                        _Background = themeColor.AtLightness_HSL(92).GrayscaleColor;
-                        _Background_DEC = themeColor.AtLightness_HSL(96).GrayscaleColor;
-                        _Background_INC = themeColor.AtLightness_HSL(88).GrayscaleColor;
+                        _Background = themeColor.AtLightness_HSL(92).Grayscale;
+                        _Background_DEC = themeColor.AtLightness_HSL(96).Grayscale;
+                        _Background_INC = themeColor.AtLightness_HSL(88).Grayscale;
 
-                        _Border = themeColor.AtLightness_HSL(68).GrayscaleColor;
-                        _Border_DEC = themeColor.AtLightness_HSL(84).GrayscaleColor;
-                        _Border_INC = themeColor.AtLightness_HSL(52).GrayscaleColor;
+                        _Border = themeColor.AtLightness_HSL(68).Grayscale;
+                        _Border_DEC = themeColor.AtLightness_HSL(84).Grayscale;
+                        _Border_INC = themeColor.AtLightness_HSL(52).Grayscale;
 
-                        _Button = themeColor.AtLightness_HSL(76).GrayscaleColor;
-                        _Button_DEC = themeColor.AtLightness_HSL(82).GrayscaleColor;
-                        _Button_INC = themeColor.AtLightness_HSL(70).GrayscaleColor;
+                        _Button = themeColor.AtLightness_HSL(76).Grayscale;
+                        _Button_DEC = themeColor.AtLightness_HSL(82).Grayscale;
+                        _Button_INC = themeColor.AtLightness_HSL(70).Grayscale;
 
-                        _Slider = themeColor.AtLightness_HSL(68).GrayscaleColor;
-                        _Slider_DEC = themeColor.AtLightness_HSL(76).GrayscaleColor;
-                        _Slider_INC = themeColor.AtLightness_HSL(60).GrayscaleColor;
+                        _Slider = themeColor.AtLightness_HSL(68).Grayscale;
+                        _Slider_DEC = themeColor.AtLightness_HSL(76).Grayscale;
+                        _Slider_INC = themeColor.AtLightness_HSL(60).Grayscale;
 
-                        _ScrollBar = themeColor.AtLightness_HSL(84).GrayscaleColor;
-                        _ScrollBar_DEC = themeColor.AtLightness_HSL(86).GrayscaleColor;
-                        _ScrollBar_INC = themeColor.AtLightness_HSL(82).GrayscaleColor;
+                        _ScrollBar = themeColor.AtLightness_HSL(84).Grayscale;
+                        _ScrollBar_DEC = themeColor.AtLightness_HSL(86).Grayscale;
+                        _ScrollBar_INC = themeColor.AtLightness_HSL(82).Grayscale;
                     }
                     break;
 
                 case Theme.LightGray:
                     {
                         _Main = ColorManipulation.BlendByLAB(themeColor.AtLightness_HSL(56), themeColor, 0.75);
-                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25).GrayscaleColor;
+                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25).Grayscale;
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.15);
 
-                        _FormBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
+                        _FormBackground = themeColor.AtLightness_HSL(98).Grayscale;
 
                         if (isActive)
                         {
@@ -314,13 +314,13 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _CaptionBar = _FormBackground.Grayscale;
                             _Caption = Color.FromArgb(128, 128, 128);
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
+                            _Shadow = (isActive ? _Main : _Main.Grayscale);
                         }
                         else
                         {
@@ -335,30 +335,30 @@ namespace Com.WinForm
                         _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
                         _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
-                        _MenuItemBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
-                        _MenuItemText = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                        _MenuItemBackground = themeColor.AtLightness_HSL(98).Grayscale;
+                        _MenuItemText = themeColor.AtLightness_HSL(24).Grayscale;
 
-                        _Text = themeColor.AtLightness_HSL(40).GrayscaleColor;
+                        _Text = themeColor.AtLightness_HSL(40).Grayscale;
                         _Text_DEC = themeColor.AtLightness_HSL(56);
                         _Text_INC = themeColor.AtLightness_HSL(24);
 
-                        _Background = themeColor.AtLightness_HSL(92).GrayscaleColor;
+                        _Background = themeColor.AtLightness_HSL(92).Grayscale;
                         _Background_DEC = themeColor.AtLightness_HSL(96);
                         _Background_INC = themeColor.AtLightness_HSL(88);
 
-                        _Border = themeColor.AtLightness_HSL(68).GrayscaleColor;
+                        _Border = themeColor.AtLightness_HSL(68).Grayscale;
                         _Border_DEC = themeColor.AtLightness_HSL(84);
                         _Border_INC = themeColor.AtLightness_HSL(52);
 
-                        _Button = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                        _Button = themeColor.AtLightness_HSL(76).Grayscale;
                         _Button_DEC = themeColor.AtLightness_HSL(82);
                         _Button_INC = themeColor.AtLightness_HSL(70);
 
-                        _Slider = themeColor.AtLightness_HSL(68).GrayscaleColor;
+                        _Slider = themeColor.AtLightness_HSL(68).Grayscale;
                         _Slider_DEC = themeColor.AtLightness_HSL(76);
                         _Slider_INC = themeColor.AtLightness_HSL(60);
 
-                        _ScrollBar = themeColor.AtLightness_HSL(84).GrayscaleColor;
+                        _ScrollBar = themeColor.AtLightness_HSL(84).Grayscale;
                         _ScrollBar_DEC = themeColor.AtLightness_HSL(86);
                         _ScrollBar_INC = themeColor.AtLightness_HSL(82);
                     }
@@ -367,11 +367,11 @@ namespace Com.WinForm
                 case Theme.DarkGray:
                     {
                         _Main = ColorManipulation.BlendByLAB(themeColor.AtLightness_HSL(44), themeColor, 0.75);
-                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25).GrayscaleColor;
+                        _Main = ColorManipulation.ShiftLightnessByLAB(_Main, (1 - _Main.Lightness_LAB / 50) * 0.25).Grayscale;
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.15);
 
-                        _FormBackground = themeColor.AtLightness_HSL(2).GrayscaleColor;
+                        _FormBackground = themeColor.AtLightness_HSL(2).Grayscale;
 
                         if (isActive)
                         {
@@ -388,13 +388,13 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _CaptionBar = _FormBackground.Grayscale;
                             _Caption = Color.FromArgb(192, 192, 192);
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
+                            _Shadow = (isActive ? _Main : _Main.Grayscale);
                         }
                         else
                         {
@@ -409,30 +409,30 @@ namespace Com.WinForm
                         _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
                         _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
-                        _MenuItemBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
-                        _MenuItemText = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                        _MenuItemBackground = themeColor.AtLightness_HSL(98).Grayscale;
+                        _MenuItemText = themeColor.AtLightness_HSL(24).Grayscale;
 
-                        _Text = themeColor.AtLightness_HSL(60).GrayscaleColor;
+                        _Text = themeColor.AtLightness_HSL(60).Grayscale;
                         _Text_DEC = themeColor.AtLightness_HSL(44);
                         _Text_INC = themeColor.AtLightness_HSL(76);
 
-                        _Background = themeColor.AtLightness_HSL(8).GrayscaleColor;
+                        _Background = themeColor.AtLightness_HSL(8).Grayscale;
                         _Background_DEC = themeColor.AtLightness_HSL(4);
                         _Background_INC = themeColor.AtLightness_HSL(12);
 
-                        _Border = themeColor.AtLightness_HSL(32).GrayscaleColor;
+                        _Border = themeColor.AtLightness_HSL(32).Grayscale;
                         _Border_DEC = themeColor.AtLightness_HSL(16);
                         _Border_INC = themeColor.AtLightness_HSL(48);
 
-                        _Button = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                        _Button = themeColor.AtLightness_HSL(24).Grayscale;
                         _Button_DEC = themeColor.AtLightness_HSL(18);
                         _Button_INC = themeColor.AtLightness_HSL(30);
 
-                        _Slider = themeColor.AtLightness_HSL(32).GrayscaleColor;
+                        _Slider = themeColor.AtLightness_HSL(32).Grayscale;
                         _Slider_DEC = themeColor.AtLightness_HSL(24);
                         _Slider_INC = themeColor.AtLightness_HSL(40);
 
-                        _ScrollBar = themeColor.AtLightness_HSL(16).GrayscaleColor;
+                        _ScrollBar = themeColor.AtLightness_HSL(16).Grayscale;
                         _ScrollBar_DEC = themeColor.AtLightness_HSL(14);
                         _ScrollBar_INC = themeColor.AtLightness_HSL(18);
                     }
@@ -445,7 +445,7 @@ namespace Com.WinForm
                         _Main_DEC = ColorManipulation.ShiftLightnessByHSL(_Main, -0.2);
                         _Main_INC = ColorManipulation.ShiftLightnessByHSL(_Main, 0.15);
 
-                        _FormBackground = themeColor.AtLightness_HSL(2).GrayscaleColor;
+                        _FormBackground = themeColor.AtLightness_HSL(2).Grayscale;
 
                         if (isActive)
                         {
@@ -462,13 +462,13 @@ namespace Com.WinForm
                         }
                         else
                         {
-                            _CaptionBar = _FormBackground.GrayscaleColor;
+                            _CaptionBar = _FormBackground.Grayscale;
                             _Caption = Color.FromArgb(192, 192, 192);
                         }
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.GrayscaleColor);
+                            _Shadow = (isActive ? _Main : _Main.Grayscale);
                         }
                         else
                         {
@@ -483,32 +483,32 @@ namespace Com.WinForm
                         _ExitButton_DEC = ColorX.FromRGB(232, 17, 35);
                         _ExitButton_INC = _ExitButton_DEC.AtOpacity(70);
 
-                        _MenuItemBackground = themeColor.AtLightness_HSL(98).GrayscaleColor;
-                        _MenuItemText = themeColor.AtLightness_HSL(24).GrayscaleColor;
+                        _MenuItemBackground = themeColor.AtLightness_HSL(98).Grayscale;
+                        _MenuItemText = themeColor.AtLightness_HSL(24).Grayscale;
 
-                        _Text = themeColor.AtLightness_HSL(60).GrayscaleColor;
-                        _Text_DEC = themeColor.AtLightness_HSL(44).GrayscaleColor;
-                        _Text_INC = themeColor.AtLightness_HSL(76).GrayscaleColor;
+                        _Text = themeColor.AtLightness_HSL(60).Grayscale;
+                        _Text_DEC = themeColor.AtLightness_HSL(44).Grayscale;
+                        _Text_INC = themeColor.AtLightness_HSL(76).Grayscale;
 
-                        _Background = themeColor.AtLightness_HSL(8).GrayscaleColor;
-                        _Background_DEC = themeColor.AtLightness_HSL(4).GrayscaleColor;
-                        _Background_INC = themeColor.AtLightness_HSL(12).GrayscaleColor;
+                        _Background = themeColor.AtLightness_HSL(8).Grayscale;
+                        _Background_DEC = themeColor.AtLightness_HSL(4).Grayscale;
+                        _Background_INC = themeColor.AtLightness_HSL(12).Grayscale;
 
-                        _Border = themeColor.AtLightness_HSL(32).GrayscaleColor;
-                        _Border_DEC = themeColor.AtLightness_HSL(16).GrayscaleColor;
-                        _Border_INC = themeColor.AtLightness_HSL(48).GrayscaleColor;
+                        _Border = themeColor.AtLightness_HSL(32).Grayscale;
+                        _Border_DEC = themeColor.AtLightness_HSL(16).Grayscale;
+                        _Border_INC = themeColor.AtLightness_HSL(48).Grayscale;
 
-                        _Button = themeColor.AtLightness_HSL(24).GrayscaleColor;
-                        _Button_DEC = themeColor.AtLightness_HSL(18).GrayscaleColor;
-                        _Button_INC = themeColor.AtLightness_HSL(30).GrayscaleColor;
+                        _Button = themeColor.AtLightness_HSL(24).Grayscale;
+                        _Button_DEC = themeColor.AtLightness_HSL(18).Grayscale;
+                        _Button_INC = themeColor.AtLightness_HSL(30).Grayscale;
 
-                        _Slider = themeColor.AtLightness_HSL(32).GrayscaleColor;
-                        _Slider_DEC = themeColor.AtLightness_HSL(24).GrayscaleColor;
-                        _Slider_INC = themeColor.AtLightness_HSL(40).GrayscaleColor;
+                        _Slider = themeColor.AtLightness_HSL(32).Grayscale;
+                        _Slider_DEC = themeColor.AtLightness_HSL(24).Grayscale;
+                        _Slider_INC = themeColor.AtLightness_HSL(40).Grayscale;
 
-                        _ScrollBar = themeColor.AtLightness_HSL(16).GrayscaleColor;
-                        _ScrollBar_DEC = themeColor.AtLightness_HSL(14).GrayscaleColor;
-                        _ScrollBar_INC = themeColor.AtLightness_HSL(18).GrayscaleColor;
+                        _ScrollBar = themeColor.AtLightness_HSL(16).Grayscale;
+                        _ScrollBar_DEC = themeColor.AtLightness_HSL(14).Grayscale;
+                        _ScrollBar_INC = themeColor.AtLightness_HSL(18).Grayscale;
                     }
                     break;
             }
