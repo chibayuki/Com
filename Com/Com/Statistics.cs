@@ -1895,7 +1895,7 @@ namespace Com
         //
 
         /// <summary>
-        /// 计算一组 8 位整数的最小值与最小值与最大值。
+        /// 计算一组 8 位整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(sbyte, sbyte) 元组，表示一组 8 位整数的最小值与最大值。</returns>
@@ -1941,7 +1941,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组 8 位无符号整数的最小值与最小值与最大值。
+        /// 计算一组 8 位无符号整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(byte, byte) 元组，表示一组 8 位无符号整数的最小值与最大值。</returns>
@@ -1987,7 +1987,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组 16 位整数的最小值与最小值与最大值。
+        /// 计算一组 16 位整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(short, short) 元组，表示一组 16 位整数的最小值与最大值。</returns>
@@ -2033,7 +2033,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组 16 位无符号整数的最小值与最小值与最大值。
+        /// 计算一组 16 位无符号整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(ushort, ushort) 元组，表示一组 16 位无符号整数的最小值与最大值。</returns>
@@ -2079,7 +2079,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组 32 位整数的最小值与最小值与最大值。
+        /// 计算一组 32 位整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(int, int) 元组，表示一组 32 位整数的最小值与最大值。</returns>
@@ -2125,7 +2125,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组 32 位无符号整数的最小值与最小值与最大值。
+        /// 计算一组 32 位无符号整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(uint, uint) 元组，表示一组 32 位无符号整数的最小值与最大值。</returns>
@@ -2171,7 +2171,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组 64 位整数的最小值与最小值与最大值。
+        /// 计算一组 64 位整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(long, long) 元组，表示一组 64 位整数的最小值与最大值。</returns>
@@ -2217,7 +2217,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组 64 位无符号整数的最小值与最小值与最大值。
+        /// 计算一组 64 位无符号整数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(ulong, ulong) 元组，表示一组 64 位无符号整数的最小值与最大值。</returns>
@@ -2263,7 +2263,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组十进制浮点数的最小值与最小值与最大值。
+        /// 计算一组十进制浮点数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(decimal, decimal) 元组，表示一组十进制浮点数的最小值与最大值。</returns>
@@ -2309,7 +2309,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组单精度浮点数的最小值与最小值与最大值。
+        /// 计算一组单精度浮点数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(float, float) 元组，表示一组单精度浮点数的最小值与最大值。</returns>
@@ -2355,7 +2355,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组双精度浮点数的最小值与最小值与最大值。
+        /// 计算一组双精度浮点数的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(double, double) 元组，表示一组双精度浮点数的最小值与最大值。</returns>
@@ -2401,7 +2401,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 计算一组可排序对象的最小值与最小值与最大值。
+        /// 计算一组可排序对象的最小值与最大值。
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(IComparable, IComparable) 元组，表示一组可排序对象的最小值与最大值。</returns>
