@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Matrix
-Version 19.8.10.1600
+Version 19.8.16.0000
 
 This file is part of Com
 
@@ -395,7 +395,7 @@ namespace Com
         {
             get
             {
-                if (_Size.Width <= 0 || _Size.Height <= 0 || _Size.Width != _Size.Height)
+                if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
                 {
                     return double.NaN;
                 }
@@ -556,7 +556,7 @@ namespace Com
         {
             get
             {
-                if (_Size.Width <= 0 || _Size.Height <= 0 || _Size.Width != _Size.Height)
+                if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
                 {
                     return Empty;
                 }
@@ -598,7 +598,7 @@ namespace Com
         {
             get
             {
-                if (_Size.Width <= 0 || _Size.Height <= 0 || _Size.Width != _Size.Height)
+                if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
                 {
                     return Empty;
                 }
@@ -908,7 +908,7 @@ namespace Com
         /// <returns>布尔值，表示指定的 Matrix 是否为 null 或表示空矩阵。</returns>
         public static bool IsNullOrEmpty(Matrix matrix)
         {
-            return ((object)matrix == null || matrix._Size.Width <= 0 || matrix._Size.Height <= 0);
+            return ((object)matrix == null || (matrix._Size.Width <= 0 || matrix._Size.Height <= 0));
         }
 
         //
@@ -1084,9 +1084,19 @@ namespace Com
 
                 Matrix result = new Matrix(order, order);
 
-                for (int i = 0; i < array.Length; i++)
+                if (rowsUponMainDiag >= 0)
                 {
-                    result._MArray[(rowsUponMainDiag >= 0 ? i + rowsUponMainDiag : i), (rowsUponMainDiag >= 0 ? i : i - rowsUponMainDiag)] = array[i];
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        result._MArray[i + rowsUponMainDiag, i] = array[i];
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        result._MArray[i, i - rowsUponMainDiag] = array[i];
+                    }
                 }
 
                 return result;
@@ -1155,11 +1165,19 @@ namespace Com
 
                     Matrix result = new Matrix(size);
 
-                    for (int x = 0; x < size.Width; x++)
+                    for (int x = 0; x < sizeL.Width; x++)
                     {
                         for (int y = 0; y < size.Height; y++)
                         {
-                            result._MArray[x, y] = (x < sizeL.Width ? left._MArray[x, y] : right._MArray[x - sizeL.Width, y]);
+                            result._MArray[x, y] = left._MArray[x, y];
+                        }
+                    }
+
+                    for (int x = sizeL.Width; x < size.Width; x++)
+                    {
+                        for (int y = 0; y < size.Height; y++)
+                        {
+                            result._MArray[x, y] = right._MArray[x - sizeL.Width, y];
                         }
                     }
 

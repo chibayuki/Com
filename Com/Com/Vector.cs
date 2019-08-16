@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Vector
-Version 19.8.10.1600
+Version 19.8.16.0000
 
 This file is part of Com
 
@@ -303,19 +303,15 @@ namespace Com
                 }
                 else
                 {
-                    bool result = true;
-
                     for (int i = 0; i < _Size; i++)
                     {
                         if (_VArray[i] != 0)
                         {
-                            result = false;
-
-                            break;
+                            return false;
                         }
                     }
 
-                    return result;
+                    return true;
                 }
             }
         }
@@ -1557,7 +1553,8 @@ namespace Com
 
             //
 
-            double Value1 = _VArray[index1], Value2 = _VArray[index2];
+            double Value1 = _VArray[index1];
+            double Value2 = _VArray[index2];
 
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
@@ -1588,11 +1585,14 @@ namespace Com
 
             Vector result = Copy();
 
+            double Value1 = _VArray[index1];
+            double Value2 = _VArray[index2];
+
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            result._VArray[index1] = _VArray[index1] * CosA - _VArray[index2] * SinA;
-            result._VArray[index2] = _VArray[index2] * CosA + _VArray[index1] * SinA;
+            result._VArray[index1] = Value1 * CosA - Value2 * SinA;
+            result._VArray[index2] = Value2 * CosA + Value1 * SinA;
 
             return result;
         }
