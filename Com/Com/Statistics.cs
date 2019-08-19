@@ -978,9 +978,11 @@ namespace Com
             {
                 sbyte result = values[0];
 
+                sbyte val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    sbyte val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1016,9 +1018,11 @@ namespace Com
             {
                 byte result = values[0];
 
+                byte val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    byte val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1054,9 +1058,11 @@ namespace Com
             {
                 short result = values[0];
 
+                short val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    short val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1092,9 +1098,11 @@ namespace Com
             {
                 ushort result = values[0];
 
+                ushort val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    ushort val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1130,9 +1138,11 @@ namespace Com
             {
                 int result = values[0];
 
+                int val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    int val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1168,9 +1178,11 @@ namespace Com
             {
                 uint result = values[0];
 
+                uint val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    uint val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1206,9 +1218,11 @@ namespace Com
             {
                 long result = values[0];
 
+                long val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    long val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1244,9 +1258,11 @@ namespace Com
             {
                 ulong result = values[0];
 
+                ulong val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    ulong val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1282,9 +1298,11 @@ namespace Com
             {
                 decimal result = values[0];
 
+                decimal val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    decimal val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1320,9 +1338,11 @@ namespace Com
             {
                 float result = values[0];
 
+                float val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    float val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1358,9 +1378,11 @@ namespace Com
             {
                 double result = values[0];
 
+                double val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    double val = values[i];
+                    val = values[i];
 
                     if (result < val)
                     {
@@ -1396,9 +1418,11 @@ namespace Com
             {
                 IComparable result = values[0];
 
+                IComparable val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    IComparable val = values[i];
+                    val = values[i];
 
                     if (val != null)
                     {
@@ -1446,9 +1470,11 @@ namespace Com
             {
                 sbyte result = values[0];
 
+                sbyte val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    sbyte val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1484,9 +1510,11 @@ namespace Com
             {
                 byte result = values[0];
 
+                byte val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    byte val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1522,9 +1550,11 @@ namespace Com
             {
                 short result = values[0];
 
+                short val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    short val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1560,9 +1590,11 @@ namespace Com
             {
                 ushort result = values[0];
 
+                ushort val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    ushort val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1598,9 +1630,11 @@ namespace Com
             {
                 int result = values[0];
 
+                int val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    int val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1636,9 +1670,11 @@ namespace Com
             {
                 uint result = values[0];
 
+                uint val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    uint val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1674,9 +1710,11 @@ namespace Com
             {
                 long result = values[0];
 
+                long val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    long val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1712,9 +1750,11 @@ namespace Com
             {
                 ulong result = values[0];
 
+                ulong val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    ulong val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1750,9 +1790,11 @@ namespace Com
             {
                 decimal result = values[0];
 
+                decimal val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    decimal val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1788,9 +1830,11 @@ namespace Com
             {
                 float result = values[0];
 
+                float val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    float val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1826,9 +1870,11 @@ namespace Com
             {
                 double result = values[0];
 
+                double val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    double val = values[i];
+                    val = values[i];
 
                     if (result > val)
                     {
@@ -1864,9 +1910,11 @@ namespace Com
             {
                 IComparable result = values[0];
 
+                IComparable val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    IComparable val = values[i];
+                    val = values[i];
 
                     if (val != null)
                     {
@@ -1915,9 +1963,11 @@ namespace Com
                 sbyte min = values[0];
                 sbyte max = values[0];
 
+                sbyte val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    sbyte val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -1961,9 +2011,11 @@ namespace Com
                 byte min = values[0];
                 byte max = values[0];
 
+                byte val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    byte val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2007,9 +2059,11 @@ namespace Com
                 short min = values[0];
                 short max = values[0];
 
+                short val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    short val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2053,9 +2107,11 @@ namespace Com
                 ushort min = values[0];
                 ushort max = values[0];
 
+                ushort val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    ushort val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2099,9 +2155,11 @@ namespace Com
                 int min = values[0];
                 int max = values[0];
 
+                int val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    int val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2145,9 +2203,11 @@ namespace Com
                 uint min = values[0];
                 uint max = values[0];
 
+                uint val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    uint val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2191,9 +2251,11 @@ namespace Com
                 long min = values[0];
                 long max = values[0];
 
+                long val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    long val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2237,9 +2299,11 @@ namespace Com
                 ulong min = values[0];
                 ulong max = values[0];
 
+                ulong val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    ulong val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2283,9 +2347,11 @@ namespace Com
                 decimal min = values[0];
                 decimal max = values[0];
 
+                decimal val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    decimal val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2329,9 +2395,11 @@ namespace Com
                 float min = values[0];
                 float max = values[0];
 
+                float val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    float val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2375,9 +2443,11 @@ namespace Com
                 double min = values[0];
                 double max = values[0];
 
+                double val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    double val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -2421,35 +2491,39 @@ namespace Com
                 IComparable min = values[0];
                 IComparable max = values[0];
 
+                IComparable val;
+
                 for (int i = 1; i < Len; i++)
                 {
-                    if (values[i] != null)
+                    val = values[i];
+
+                    if (val != null)
                     {
-                        if (values[i].CompareTo(min) < 0)
+                        if (val.CompareTo(min) < 0)
                         {
-                            min = values[i];
+                            min = val;
                         }
 
-                        if (values[i].CompareTo(max) > 0)
+                        if (val.CompareTo(max) > 0)
                         {
-                            max = values[i];
+                            max = val;
                         }
                     }
                     else
                     {
                         if (min != null)
                         {
-                            if (min.CompareTo(values[i]) > 0)
+                            if (min.CompareTo(val) > 0)
                             {
-                                min = values[i];
+                                min = val;
                             }
                         }
 
                         if (max != null)
                         {
-                            if (max.CompareTo(values[i]) < 0)
+                            if (max.CompareTo(val) < 0)
                             {
-                                max = values[i];
+                                max = val;
                             }
                         }
                     }
@@ -3709,11 +3783,13 @@ namespace Com
 
                 int i = 0;
 
+                sbyte val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        sbyte val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -3733,7 +3809,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    sbyte val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -3784,11 +3860,13 @@ namespace Com
 
                 int i = 0;
 
+                byte val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        byte val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -3808,7 +3886,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    byte val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -3859,11 +3937,13 @@ namespace Com
 
                 int i = 0;
 
+                short val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        short val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -3883,7 +3963,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    short val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -3934,11 +4014,13 @@ namespace Com
 
                 int i = 0;
 
+                ushort val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        ushort val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -3958,7 +4040,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    ushort val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -4009,11 +4091,13 @@ namespace Com
 
                 int i = 0;
 
+                int val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        int val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -4033,7 +4117,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    int val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -4084,11 +4168,13 @@ namespace Com
 
                 int i = 0;
 
+                uint val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        uint val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -4108,7 +4194,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    uint val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -4159,11 +4245,13 @@ namespace Com
 
                 int i = 0;
 
+                long val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        long val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -4183,7 +4271,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    long val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -4234,11 +4322,13 @@ namespace Com
 
                 int i = 0;
 
+                ulong val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        ulong val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -4258,7 +4348,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    ulong val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -4309,11 +4399,13 @@ namespace Com
 
                 int i = 0;
 
+                decimal val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        decimal val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -4333,7 +4425,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    decimal val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -4384,11 +4476,13 @@ namespace Com
 
                 int i = 0;
 
+                float val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        float val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -4408,7 +4502,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    float val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
@@ -4459,11 +4553,13 @@ namespace Com
 
                 int i = 0;
 
+                double val;
+
                 while (i < Len - 16)
                 {
                     for (int j = i; j < i + 16; j++)
                     {
-                        double val = values[j];
+                        val = values[j];
 
                         if (min > val)
                         {
@@ -4483,7 +4579,7 @@ namespace Com
 
                 while (i < Len)
                 {
-                    double val = values[i];
+                    val = values[i];
 
                     if (min > val)
                     {
