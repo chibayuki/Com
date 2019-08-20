@@ -1403,7 +1403,7 @@ namespace Com
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>IComparable 对象，表示一组可排序对象的最大值。</returns>
-        public static IComparable Max(params IComparable[] values)
+        public static T Max<T>(params T[] values) where T : IComparable
         {
             if (InternalMethod.IsNullOrEmpty(values))
             {
@@ -1416,9 +1416,9 @@ namespace Com
 
             if (Len > 1)
             {
-                IComparable result = values[0];
+                T result = values[0];
 
-                IComparable val;
+                T val;
 
                 for (int i = 1; i < Len; i++)
                 {
@@ -1446,6 +1446,17 @@ namespace Com
             {
                 return values[0];
             }
+        }
+
+        /// <summary>
+        /// 计算一组可排序对象的最大值。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>IComparable 对象，表示一组可排序对象的最大值。</returns>
+        [Obsolete]
+        public static IComparable Max(params IComparable[] values)
+        {
+            return Max<IComparable>(values);
         }
 
         //
@@ -1895,7 +1906,7 @@ namespace Com
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>IComparable 对象，表示一组可排序对象的最小值。</returns>
-        public static IComparable Min(params IComparable[] values)
+        public static T Min<T>(params T[] values) where T : IComparable
         {
             if (InternalMethod.IsNullOrEmpty(values))
             {
@@ -1908,9 +1919,9 @@ namespace Com
 
             if (Len > 1)
             {
-                IComparable result = values[0];
+                T result = values[0];
 
-                IComparable val;
+                T val;
 
                 for (int i = 1; i < Len; i++)
                 {
@@ -1938,6 +1949,17 @@ namespace Com
             {
                 return values[0];
             }
+        }
+
+        /// <summary>
+        /// 计算一组可排序对象的最小值。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>IComparable 对象，表示一组可排序对象的最小值。</returns>
+        [Obsolete]
+        public static IComparable Min(params IComparable[] values)
+        {
+            return Min<IComparable>(values);
         }
 
         //
@@ -2475,7 +2497,7 @@ namespace Com
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(IComparable, IComparable) 元组，表示一组可排序对象的最小值与最大值。</returns>
-        public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values)
+        public static (T Min, T Max) MinMax<T>(params T[] values) where T : IComparable
         {
             if (InternalMethod.IsNullOrEmpty(values))
             {
@@ -2488,10 +2510,10 @@ namespace Com
 
             if (Len > 1)
             {
-                IComparable min = values[0];
-                IComparable max = values[0];
+                T min = values[0];
+                T max = values[0];
 
-                IComparable val;
+                T val;
 
                 for (int i = 1; i < Len; i++)
                 {
@@ -2533,10 +2555,21 @@ namespace Com
             }
             else
             {
-                IComparable val = values[0];
+                T val = values[0];
 
                 return (val, val);
             }
+        }
+
+        /// <summary>
+        /// 计算一组可排序对象的最小值与最大值。
+        /// </summary>
+        /// <param name="values">用于计算的值。</param>
+        /// <returns>(IComparable, IComparable) 元组，表示一组可排序对象的最小值与最大值。</returns>
+        [Obsolete]
+        public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values)
+        {
+            return MinMax<IComparable>(values);
         }
 
         //
