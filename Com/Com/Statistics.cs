@@ -1420,20 +1420,25 @@ namespace Com
 
                 T val;
 
-                for (int i = 1; i < Len; i++)
+                if (default(T) == null)
                 {
-                    val = values[i];
-
-                    if (val != null)
+                    for (int i = 1; i < Len; i++)
                     {
-                        if (val.CompareTo(result) > 0)
+                        val = values[i];
+
+                        if (val != null && (result == null || val.CompareTo(result) > 0))
                         {
                             result = val;
                         }
                     }
-                    else if (result != null)
+                }
+                else
+                {
+                    for (int i = 1; i < Len; i++)
                     {
-                        if (result.CompareTo(val) < 0)
+                        val = values[i];
+
+                        if (val.CompareTo(result) > 0)
                         {
                             result = val;
                         }
@@ -1923,20 +1928,25 @@ namespace Com
 
                 T val;
 
-                for (int i = 1; i < Len; i++)
+                if (default(T) == null)
                 {
-                    val = values[i];
-
-                    if (val != null)
+                    for (int i = 1; i < Len; i++)
                     {
-                        if (val.CompareTo(result) < 0)
+                        val = values[i];
+
+                        if (val != null && (result == null || val.CompareTo(result) < 0))
                         {
                             result = val;
                         }
                     }
-                    else if (result != null)
+                }
+                else
+                {
+                    for (int i = 1; i < Len; i++)
                     {
-                        if (result.CompareTo(val) > 0)
+                        val = values[i];
+
+                        if (val.CompareTo(result) < 0)
                         {
                             result = val;
                         }
@@ -2515,12 +2525,32 @@ namespace Com
 
                 T val;
 
-                for (int i = 1; i < Len; i++)
+                if (default(T) == null)
                 {
-                    val = values[i];
-
-                    if (val != null)
+                    for (int i = 1; i < Len; i++)
                     {
+                        val = values[i];
+
+                        if (val != null)
+                        {
+                            if (min == null || val.CompareTo(min) < 0)
+                            {
+                                min = val;
+                            }
+
+                            if (max == null || val.CompareTo(max) > 0)
+                            {
+                                max = val;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < Len; i++)
+                    {
+                        val = values[i];
+
                         if (val.CompareTo(min) < 0)
                         {
                             min = val;
@@ -2529,24 +2559,6 @@ namespace Com
                         if (val.CompareTo(max) > 0)
                         {
                             max = val;
-                        }
-                    }
-                    else
-                    {
-                        if (min != null)
-                        {
-                            if (min.CompareTo(val) > 0)
-                            {
-                                min = val;
-                            }
-                        }
-
-                        if (max != null)
-                        {
-                            if (max.CompareTo(val) < 0)
-                            {
-                                max = val;
-                            }
                         }
                     }
                 }
