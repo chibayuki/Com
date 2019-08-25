@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.Effect
-Version 19.8.10.1600
+Version 19.8.25.2000
 
 This file is part of Com
 
