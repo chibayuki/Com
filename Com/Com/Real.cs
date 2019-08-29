@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Real
-Version 19.8.25.2000
+Version 19.8.29.0000
 
 This file is part of Com
 
@@ -1935,7 +1935,7 @@ namespace Com
                 {
                     double Val = real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude];
 
-                    return new Real(Val);
+                    return new Real(Math.Truncate(Val));
                 }
             }
         }
