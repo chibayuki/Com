@@ -2601,22 +2601,24 @@ namespace Com
             }
             else
             {
-                if (left._Magnitude > right._Magnitude)
+                long DeltaMag = left._Magnitude - right._Magnitude;
+
+                if (DeltaMag > 0)
                 {
-                    if (left._Magnitude - right._Magnitude <= 16)
+                    if (DeltaMag <= 16)
                     {
-                        return new Real(left._Value + right._Value / _PositiveMagnitudeGeometricValues[left._Magnitude - right._Magnitude], left._Magnitude);
+                        return new Real(left._Value + right._Value / _PositiveMagnitudeGeometricValues[DeltaMag], left._Magnitude);
                     }
                     else
                     {
                         return left;
                     }
                 }
-                else if (left._Magnitude < right._Magnitude)
+                else if (DeltaMag < 0)
                 {
-                    if (right._Magnitude - left._Magnitude <= 16)
+                    if (DeltaMag >= -16)
                     {
-                        return new Real(left._Value / _PositiveMagnitudeGeometricValues[right._Magnitude - left._Magnitude] + right._Value, right._Magnitude);
+                        return new Real(left._Value / _PositiveMagnitudeGeometricValues[-DeltaMag] + right._Value, right._Magnitude);
                     }
                     else
                     {
@@ -2707,22 +2709,24 @@ namespace Com
             }
             else
             {
-                if (left._Magnitude > right._Magnitude)
+                long DeltaMag = left._Magnitude - right._Magnitude;
+
+                if (DeltaMag > 0)
                 {
-                    if (left._Magnitude - right._Magnitude <= 16)
+                    if (DeltaMag <= 16)
                     {
-                        return new Real(left._Value - right._Value / _PositiveMagnitudeGeometricValues[left._Magnitude - right._Magnitude], left._Magnitude);
+                        return new Real(left._Value - right._Value / _PositiveMagnitudeGeometricValues[DeltaMag], left._Magnitude);
                     }
                     else
                     {
                         return left;
                     }
                 }
-                else if (left._Magnitude < right._Magnitude)
+                else if (DeltaMag < 0)
                 {
-                    if (right._Magnitude - left._Magnitude <= 16)
+                    if (DeltaMag >= -16)
                     {
-                        return new Real(left._Value / _PositiveMagnitudeGeometricValues[right._Magnitude - left._Magnitude] - right._Value, right._Magnitude);
+                        return new Real(left._Value / _PositiveMagnitudeGeometricValues[-DeltaMag] - right._Value, right._Magnitude);
                     }
                     else
                     {
@@ -3128,18 +3132,26 @@ namespace Com
                 {
                     if (result._Value > ValAbsR)
                     {
-                        result._Value -= Math.Truncate(result._Value / ValAbsR) * ValAbsR;
+                        result._Value %= ValAbsR;
                     }
                     else
                     {
-                        result._Value = result._Value * 10 - Math.Truncate(result._Value * 10 / ValAbsR) * ValAbsR;
+                        result._Value = (result._Value * 10) % ValAbsR;
                         result._Magnitude--;
                     }
 
                     if (result._Value < 1)
                     {
-                        result._Value *= 10;
-                        result._Magnitude--;
+                        for (int i = 16; i > 0; i--)
+                        {
+                            if (result._Value < _NegativeMagnitudeGeometricValues[i - 1])
+                            {
+                                result._Value *= _PositiveMagnitudeGeometricValues[i];
+                                result._Magnitude -= i;
+
+                                break;
+                            }
+                        }
                     }
                 }
 
