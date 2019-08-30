@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Geometry
-Version 19.8.25.2000
+Version 19.8.30.0000
 
 This file is part of Com
 
@@ -175,10 +175,97 @@ namespace Com
             }
         }
 
+        //
+
+        /// <summary>
+        /// 将一个角度映射到范围为一个周角的区间。
+        /// </summary>
+        /// <param name="angle">用于转换的角度。</param>
+        /// <param name="asDegree">用于转换的角度是否以角度制表示。</param>
+        /// <param name="zeroCentered">目标区间是否以 0 为中心。</param>
+        /// <returns>双精度浮点数，表示将一个角度映射到范围为一个周角的区间得到的结果。</returns>
+        public static double AngleMapping(double angle, bool asDegree, bool zeroCentered)
+        {
+            if (InternalMethod.IsNaNOrInfinity(angle))
+            {
+                return double.NaN;
+            }
+            else
+            {
+                double result = angle;
+
+                double perigon = (asDegree ? 360 : Constant.DoublePi);
+
+                if (angle >= 0)
+                {
+                    if (angle >= perigon)
+                    {
+                        result = angle % perigon;
+                    }
+                }
+                else
+                {
+                    result = perigon + angle % perigon;
+                }
+
+                if (zeroCentered)
+                {
+                    double flat = (asDegree ? 180 : Constant.Pi);
+
+                    if (result >= flat)
+                    {
+                        return (result - flat);
+                    }
+                    else
+                    {
+                        return result;
+                    }
+                }
+                else
+                {
+                    return result;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 将一个角度映射到范围为一个周角的区间。
+        /// </summary>
+        /// <param name="angle">用于转换的角度。</param>
+        /// <param name="asDegree">用于转换的角度是否以角度制表示。</param>
+        /// <returns>双精度浮点数，表示将一个角度映射到范围为一个周角的区间得到的结果。</returns>
+        public static double AngleMapping(double angle, bool asDegree)
+        {
+            if (InternalMethod.IsNaNOrInfinity(angle))
+            {
+                return double.NaN;
+            }
+            else
+            {
+                double perigon = (asDegree ? 360 : Constant.DoublePi);
+
+                if (angle >= 0)
+                {
+                    if (angle < perigon)
+                    {
+                        return angle;
+                    }
+                    else
+                    {
+                        return (angle % perigon);
+                    }
+                }
+                else
+                {
+                    return (perigon + angle % perigon);
+                }
+            }
+        }
+
         /// <summary>
         /// 将一个角度（弧度）映射到 [0, 2 * PI) 区间。
         /// </summary>
-        /// <param name="angle">角度（弧度）。</param>
+        /// <param name="angle">用于转换的角度（弧度）。</param>
         /// <returns>双精度浮点数，表示将一个角度（弧度）映射到 [0, 2 * PI) 区间得到的结果。</returns>
         public static double AngleMapping(double angle)
         {
@@ -188,14 +275,57 @@ namespace Com
             }
             else
             {
-                if (angle >= 0 && angle < Constant.DoublePi)
+                if (angle >= 0)
                 {
-                    return angle;
+                    if (angle < Constant.DoublePi)
+                    {
+                        return angle;
+                    }
+                    else
+                    {
+                        return (angle % Constant.DoublePi);
+                    }
                 }
                 else
                 {
-                    return (angle - Math.Floor(angle / Constant.DoublePi) * Constant.DoublePi);
+                    return (Constant.DoublePi + angle % Constant.DoublePi);
                 }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 将一个角度由弧度制转换为角度制。
+        /// </summary>
+        /// <param name="angle">用于转换的角度（弧度）。</param>
+        /// <returns>双精度浮点数，表示将一个角度由弧度制转换为角度制得到的结果。</returns>
+        public static double RadianToDegree(double angle)
+        {
+            if (InternalMethod.IsNaNOrInfinity(angle))
+            {
+                return double.NaN;
+            }
+            else
+            {
+                return (angle * Constant.DegsPerRad);
+            }
+        }
+
+        /// <summary>
+        /// 将一个角度由角度制转换为弧度制。
+        /// </summary>
+        /// <param name="angle">用于转换的角度（角度）。</param>
+        /// <returns>双精度浮点数，表示将一个角度由角度制转换为弧度制得到的结果。</returns>
+        public static double DegreeToRadian(double angle)
+        {
+            if (InternalMethod.IsNaNOrInfinity(angle))
+            {
+                return double.NaN;
+            }
+            else
+            {
+                return (angle / Constant.DegsPerRad);
             }
         }
 
