@@ -196,16 +196,9 @@ namespace Com
 
                 double perigon = (asDegree ? 360 : Constant.DoublePi);
 
-                if (angle >= 0)
+                if (angle < 0 || angle >= perigon)
                 {
-                    if (angle >= perigon)
-                    {
-                        result = angle % perigon;
-                    }
-                }
-                else
-                {
-                    result = perigon + angle % perigon;
+                    result = angle - Math.Floor(angle / perigon) * perigon;
                 }
 
                 if (zeroCentered)
@@ -236,30 +229,7 @@ namespace Com
         /// <returns>双精度浮点数，表示将一个角度映射到范围为一个周角的区间得到的结果。</returns>
         public static double AngleMapping(double angle, bool asDegree)
         {
-            if (InternalMethod.IsNaNOrInfinity(angle))
-            {
-                return double.NaN;
-            }
-            else
-            {
-                double perigon = (asDegree ? 360 : Constant.DoublePi);
-
-                if (angle >= 0)
-                {
-                    if (angle < perigon)
-                    {
-                        return angle;
-                    }
-                    else
-                    {
-                        return (angle % perigon);
-                    }
-                }
-                else
-                {
-                    return (perigon + angle % perigon);
-                }
-            }
+            return AngleMapping(angle, asDegree, false);
         }
 
         /// <summary>
@@ -269,28 +239,7 @@ namespace Com
         /// <returns>双精度浮点数，表示将一个角度（弧度）映射到 [0, 2 * PI) 区间得到的结果。</returns>
         public static double AngleMapping(double angle)
         {
-            if (InternalMethod.IsNaNOrInfinity(angle))
-            {
-                return double.NaN;
-            }
-            else
-            {
-                if (angle >= 0)
-                {
-                    if (angle < Constant.DoublePi)
-                    {
-                        return angle;
-                    }
-                    else
-                    {
-                        return (angle % Constant.DoublePi);
-                    }
-                }
-                else
-                {
-                    return (Constant.DoublePi + angle % Constant.DoublePi);
-                }
-            }
+            return AngleMapping(angle, false, false);
         }
 
         //
@@ -302,14 +251,7 @@ namespace Com
         /// <returns>双精度浮点数，表示将一个角度由弧度制转换为角度制得到的结果。</returns>
         public static double RadianToDegree(double angle)
         {
-            if (InternalMethod.IsNaNOrInfinity(angle))
-            {
-                return double.NaN;
-            }
-            else
-            {
-                return (angle * Constant.DegsPerRad);
-            }
+            return (angle * Constant.DegsPerRad);
         }
 
         /// <summary>
@@ -319,14 +261,7 @@ namespace Com
         /// <returns>双精度浮点数，表示将一个角度由角度制转换为弧度制得到的结果。</returns>
         public static double DegreeToRadian(double angle)
         {
-            if (InternalMethod.IsNaNOrInfinity(angle))
-            {
-                return double.NaN;
-            }
-            else
-            {
-                return (angle / Constant.DegsPerRad);
-            }
+            return (angle / Constant.DegsPerRad);
         }
 
         #endregion
