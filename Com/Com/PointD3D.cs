@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD3D
-Version 19.8.25.2000
+Version 19.9.1.0000
 
 This file is part of Com
 
@@ -1422,6 +1422,29 @@ namespace Com
         }
 
         /// <summary>
+        /// 按 Matrix 对象数组表示的 4x4 仿射矩阵（左矩阵）数组将此 PointD3D 结构进行仿射变换。
+        /// </summary>
+        /// <param name="matricesLeft">Matrix 对象数组，表示 4x4 仿射矩阵（左矩阵）数组。</param>
+        public void AffineTransform(params Matrix[] matricesLeft)
+        {
+            if (!InternalMethod.IsNullOrEmpty(matricesLeft))
+            {
+                Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
+
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
+                }
+            }
+        }
+
+        /// <summary>
         /// 按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构进行仿射变换。
         /// </summary>
         /// <param name="matrixLeftList">Matrix 对象列表，表示 4x4 仿射矩阵（左矩阵）列表。</param>
@@ -1488,6 +1511,32 @@ namespace Com
             else
             {
                 Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
+
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    return new PointD3D(result[0], result[1], result[2]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回按 Matrix 对象数组表示的 4x4 仿射矩阵（左矩阵）数组将此 PointD3D 结构进行仿射变换的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="matricesLeft">Matrix 对象数组，表示 4x4 仿射矩阵（左矩阵）数组。</param>
+        /// <returns>PointD3D 结构，表示按 Matrix 对象数组表示的 4x4 仿射矩阵（左矩阵）数组将此 PointD3D 结构进行仿射变换得到的结果。</returns>
+        public PointD3D AffineTransformCopy(params Matrix[] matricesLeft)
+        {
+            if (InternalMethod.IsNullOrEmpty(matricesLeft))
+            {
+                return this;
+            }
+            else
+            {
+                Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
 
                 if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
                 {
@@ -1585,6 +1634,29 @@ namespace Com
         }
 
         /// <summary>
+        /// 按 Matrix 对象数组表示的 4x4 仿射矩阵（左矩阵）数组将此 PointD3D 结构进行逆仿射变换。
+        /// </summary>
+        /// <param name="matricesLeft">Matrix 对象数组，表示 4x4 仿射矩阵（左矩阵）数组。</param>
+        public void InverseAffineTransform(params Matrix[] matricesLeft)
+        {
+            if (!InternalMethod.IsNullOrEmpty(matricesLeft))
+            {
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
+
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    _X = result[0];
+                    _Y = result[1];
+                    _Z = result[2];
+                }
+            }
+        }
+
+        /// <summary>
         /// 按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matrixLeftList">Matrix 对象列表，表示 4x4 仿射矩阵（左矩阵）列表。</param>
@@ -1664,6 +1736,32 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回按 Matrix 对象数组表示的 4x4 仿射矩阵（左矩阵）数组将此 PointD3D 结构进行逆仿射变换的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="matricesLeft">Matrix 对象数组，表示 4x4 仿射矩阵（左矩阵）数组。</param>
+        /// <returns>PointD3D 结构，表示按 Matrix 对象数组表示的 4x4 仿射矩阵（左矩阵）数组将此 PointD3D 结构进行逆仿射变换得到的结果。</returns>
+        public PointD3D InverseAffineTransformCopy(params Matrix[] matricesLeft)
+        {
+            if (InternalMethod.IsNullOrEmpty(matricesLeft))
+            {
+                return this;
+            }
+            else
+            {
+                Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
+
+                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    return new PointD3D(result[0], result[1], result[2]);
+                }
+            }
+        }
+
+        /// <summary>
         /// 返回按 Matrix 对象列表表示的 4x4 仿射矩阵（左矩阵）列表将此 PointD3D 结构进行逆仿射变换的 PointD3D 结构的新实例。
         /// </summary>
         /// <param name="matrixLeftList">Matrix 对象列表，表示 4x4 仿射矩阵（左矩阵）列表。</param>
@@ -1695,7 +1793,7 @@ namespace Com
         /// 返回将此 PointD3D 结构投影至平行于 XY 平面的投影面的 PointD 结构的新实例。
         /// </summary>
         /// <param name="prjCenter">PointD3D 结构，表示投射中心在投影面的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维度量其真实尺度与投影尺度的比值等于其到投影面的距离与此距离的比值。</param>
+        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维测度其真实大小与投影大小的比值等于其到投影面的距离与此距离的比值。</param>
         /// <returns>PointD 结构，表示将此 PointD3D 结构投影至平行于 XY 平面的投影面得到的结果。</returns>
         public PointD ProjectToXY(PointD3D prjCenter, double trueLenDist)
         {
@@ -1729,7 +1827,7 @@ namespace Com
         /// 返回将此 PointD3D 结构投影至平行于 YZ 平面的投影面的 PointD 结构的新实例。
         /// </summary>
         /// <param name="prjCenter">PointD3D 结构，表示投射中心在投影面的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维度量其真实尺度与投影尺度的比值等于其到投影面的距离与此距离的比值。</param>
+        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维测度其真实大小与投影大小的比值等于其到投影面的距离与此距离的比值。</param>
         /// <returns>PointD 结构，表示将此 PointD3D 结构投影至平行于 YZ 平面的投影面得到的结果。</returns>
         public PointD ProjectToYZ(PointD3D prjCenter, double trueLenDist)
         {
@@ -1763,7 +1861,7 @@ namespace Com
         /// 返回将此 PointD3D 结构投影至平行于 ZX 平面的投影面的 PointD 结构的新实例。
         /// </summary>
         /// <param name="prjCenter">PointD3D 结构，表示投射中心在投影面的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维度量其真实尺度与投影尺度的比值等于其到投影面的距离与此距离的比值。</param>
+        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影面的一维测度其真实大小与投影大小的比值等于其到投影面的距离与此距离的比值。</param>
         /// <returns>PointD 结构，表示将此 PointD3D 结构投影至平行于 ZX 平面的投影面得到的结果。</returns>
         public PointD ProjectToZX(PointD3D prjCenter, double trueLenDist)
         {

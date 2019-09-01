@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Vector
-Version 19.8.25.2000
+Version 19.9.1.0000
 
 This file is part of Com
 
@@ -1654,20 +1654,20 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换。
+        /// 按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public void AffineTransform(List<Matrix> matrixList)
+        /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public void AffineTransform(params Matrix[] matrices)
         {
-            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrices))
             {
                 Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    for (int i = 0; i < matrixList.Count; i++)
+                    for (int i = 0; i < matrices.Length; i++)
                     {
-                        result = Matrix.Multiply(matrixList[i], result);
+                        result = Matrix.Multiply(matrices[i], result);
                     }
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
@@ -1681,9 +1681,9 @@ namespace Com
                 }
                 else
                 {
-                    for (int i = 0; i < matrixList.Count; i++)
+                    for (int i = 0; i < matrices.Length; i++)
                     {
-                        result = Matrix.Multiply(result, matrixList[i]);
+                        result = Matrix.Multiply(result, matrices[i]);
                     }
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
@@ -1695,6 +1695,18 @@ namespace Com
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换。
+        /// </summary>
+        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public void AffineTransform(List<Matrix> matrixList)
+        {
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                AffineTransform(matrixList.ToArray());
             }
         }
 
@@ -1762,17 +1774,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换的新实例。
+        /// 返回按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换得到的结果。</returns>
-        public Vector AffineTransformCopy(List<Matrix> matrixList)
+        /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换得到的结果。</returns>
+        public Vector AffineTransformCopy(params Matrix[] matrices)
         {
             if (_Size <= 0)
             {
                 return Empty;
             }
-            else if (InternalMethod.IsNullOrEmpty(matrixList))
+            else if (InternalMethod.IsNullOrEmpty(matrices))
             {
                 return Copy();
             }
@@ -1782,9 +1794,9 @@ namespace Com
 
                 if (_Type == Type.ColumnVector)
                 {
-                    for (int i = 0; i < matrixList.Count; i++)
+                    for (int i = 0; i < matrices.Length; i++)
                     {
-                        result = Matrix.Multiply(matrixList[i], result);
+                        result = Matrix.Multiply(matrices[i], result);
                     }
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
@@ -1802,9 +1814,9 @@ namespace Com
                 }
                 else
                 {
-                    for (int i = 0; i < matrixList.Count; i++)
+                    for (int i = 0; i < matrices.Length; i++)
                     {
-                        result = Matrix.Multiply(result, matrixList[i]);
+                        result = Matrix.Multiply(result, matrices[i]);
                     }
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
@@ -1820,6 +1832,27 @@ namespace Com
                         return vector;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换得到的结果。</returns>
+        public Vector AffineTransformCopy(List<Matrix> matrixList)
+        {
+            if (_Size <= 0)
+            {
+                return Empty;
+            }
+            else if (InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                return Copy();
+            }
+            else
+            {
+                return AffineTransformCopy(matrixList.ToArray());
             }
         }
 
@@ -1878,20 +1911,20 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换。
+        /// 按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public void InverseAffineTransform(List<Matrix> matrixList)
+        /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public void InverseAffineTransform(params Matrix[] matrices)
         {
-            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrices))
             {
                 Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    for (int i = matrices.Length - 1; i >= 0; i--)
                     {
-                        result = Matrix.DivideLeft(matrixList[i], result);
+                        result = Matrix.DivideLeft(matrices[i], result);
                     }
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
@@ -1905,9 +1938,9 @@ namespace Com
                 }
                 else
                 {
-                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    for (int i = matrices.Length - 1; i >= 0; i--)
                     {
-                        result = Matrix.DivideRight(result, matrixList[i]);
+                        result = Matrix.DivideRight(result, matrices[i]);
                     }
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
@@ -1919,6 +1952,18 @@ namespace Com
                         Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换。
+        /// </summary>
+        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public void InverseAffineTransform(List<Matrix> matrixList)
+        {
+            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                InverseAffineTransform(matrixList.ToArray());
             }
         }
 
@@ -1986,17 +2031,17 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换的新实例。
+        /// 返回按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换得到的结果。</returns>
-        public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
+        /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行逆仿射变换得到的结果。</returns>
+        public Vector InverseAffineTransformCopy(params Matrix[] matrices)
         {
             if (_Size <= 0)
             {
                 return Empty;
             }
-            else if (InternalMethod.IsNullOrEmpty(matrixList))
+            else if (InternalMethod.IsNullOrEmpty(matrices))
             {
                 return Copy();
             }
@@ -2006,9 +2051,9 @@ namespace Com
 
                 if (_Type == Type.ColumnVector)
                 {
-                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    for (int i = matrices.Length - 1; i >= 0; i--)
                     {
-                        result = Matrix.DivideLeft(matrixList[i], result);
+                        result = Matrix.DivideLeft(matrices[i], result);
                     }
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
@@ -2026,9 +2071,9 @@ namespace Com
                 }
                 else
                 {
-                    for (int i = matrixList.Count - 1; i >= 0; i--)
+                    for (int i = matrices.Length - 1; i >= 0; i--)
                     {
-                        result = Matrix.DivideRight(result, matrixList[i]);
+                        result = Matrix.DivideRight(result, matrices[i]);
                     }
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
@@ -2044,6 +2089,27 @@ namespace Com
                         return vector;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换得到的结果。</returns>
+        public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
+        {
+            if (_Size <= 0)
+            {
+                return Empty;
+            }
+            else if (InternalMethod.IsNullOrEmpty(matrixList))
+            {
+                return Copy();
+            }
+            else
+            {
+                return InverseAffineTransformCopy(matrixList.ToArray());
             }
         }
 

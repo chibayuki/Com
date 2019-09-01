@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.IAffine
-Version 19.8.25.2000
+Version 19.9.1.0000
 
 This file is part of Com
 
@@ -65,6 +65,12 @@ namespace Com
         void AffineTransform(Matrix matrix);
 
         /// <summary>
+        /// 按仿射矩阵数组进行仿射变换。
+        /// </summary>
+        /// <param name="matrices">仿射矩阵数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        void AffineTransform(params Matrix[] matrices);
+
+        /// <summary>
         /// 按仿射矩阵列表进行仿射变换。
         /// </summary>
         /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
@@ -75,6 +81,12 @@ namespace Com
         /// </summary>
         /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         void InverseAffineTransform(Matrix matrix);
+
+        /// <summary>
+        /// 按仿射矩阵数组进行逆仿射变换。
+        /// </summary>
+        /// <param name="matrices">仿射矩阵数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        void InverseAffineTransform(params Matrix[] matrices);
 
         /// <summary>
         /// 按仿射矩阵列表进行逆仿射变换。
@@ -171,6 +183,13 @@ namespace Com
         T AffineTransformCopy(Matrix matrix);
 
         /// <summary>
+        /// 返回按仿射矩阵数组进行仿射变换得到的向量。
+        /// </summary>
+        /// <param name="matrices">仿射矩阵数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <returns>T，表示按仿射矩阵数组进行仿射变换得到的向量。</returns>
+        T AffineTransformCopy(params Matrix[] matrices);
+
+        /// <summary>
         /// 返回按仿射矩阵列表进行仿射变换得到的向量。
         /// </summary>
         /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
@@ -183,6 +202,13 @@ namespace Com
         /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         /// <returns>T，表示按仿射矩阵进行逆仿射变换得到的向量。</returns>
         T InverseAffineTransformCopy(Matrix matrix);
+
+        /// <summary>
+        /// 返回按仿射矩阵数组进行逆仿射变换得到的向量。
+        /// </summary>
+        /// <param name="matrices">仿射矩阵数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <returns>T，表示按仿射矩阵数组进行逆仿射变换得到的向量。</returns>
+        T InverseAffineTransformCopy(params Matrix[] matrices);
 
         /// <summary>
         /// 返回按仿射矩阵列表进行逆仿射变换得到的向量。
