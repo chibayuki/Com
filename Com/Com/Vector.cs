@@ -1142,13 +1142,13 @@ namespace Com
         public double DistanceFrom(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
-            bool OtherIsNOrE = IsNullOrEmpty(vector);
+            bool AnotherIsNOrE = IsNullOrEmpty(vector);
 
-            if (ThisIsNOrE && OtherIsNOrE)
+            if (ThisIsNOrE && AnotherIsNOrE)
             {
                 return double.NaN;
             }
-            else if (ThisIsNOrE || OtherIsNOrE)
+            else if (ThisIsNOrE || AnotherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1195,13 +1195,13 @@ namespace Com
         public double AngleFrom(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
-            bool OtherIsNOrE = IsNullOrEmpty(vector);
+            bool AnotherIsNOrE = IsNullOrEmpty(vector);
 
-            if (ThisIsNOrE && OtherIsNOrE)
+            if (ThisIsNOrE && AnotherIsNOrE)
             {
                 return double.NaN;
             }
-            else if (ThisIsNOrE || OtherIsNOrE)
+            else if (ThisIsNOrE || AnotherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1254,13 +1254,13 @@ namespace Com
         public void Offset(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
-            bool OtherIsNOrE = IsNullOrEmpty(vector);
+            bool AnotherIsNOrE = IsNullOrEmpty(vector);
 
-            if (ThisIsNOrE && OtherIsNOrE)
+            if (ThisIsNOrE && AnotherIsNOrE)
             {
                 return;
             }
-            else if (ThisIsNOrE || OtherIsNOrE)
+            else if (ThisIsNOrE || AnotherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1309,13 +1309,13 @@ namespace Com
         public Vector OffsetCopy(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
-            bool OtherIsNOrE = IsNullOrEmpty(vector);
+            bool AnotherIsNOrE = IsNullOrEmpty(vector);
 
-            if (ThisIsNOrE && OtherIsNOrE)
+            if (ThisIsNOrE && AnotherIsNOrE)
             {
                 return Empty;
             }
-            else if (ThisIsNOrE || OtherIsNOrE)
+            else if (ThisIsNOrE || AnotherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1360,13 +1360,13 @@ namespace Com
         public void Scale(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
-            bool OtherIsNOrE = IsNullOrEmpty(vector);
+            bool AnotherIsNOrE = IsNullOrEmpty(vector);
 
-            if (ThisIsNOrE && OtherIsNOrE)
+            if (ThisIsNOrE && AnotherIsNOrE)
             {
                 return;
             }
-            else if (ThisIsNOrE || OtherIsNOrE)
+            else if (ThisIsNOrE || AnotherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1415,13 +1415,13 @@ namespace Com
         public Vector ScaleCopy(Vector vector)
         {
             bool ThisIsNOrE = (_Size <= 0);
-            bool OtherIsNOrE = IsNullOrEmpty(vector);
+            bool AnotherIsNOrE = IsNullOrEmpty(vector);
 
-            if (ThisIsNOrE && OtherIsNOrE)
+            if (ThisIsNOrE && AnotherIsNOrE)
             {
                 return Empty;
             }
-            else if (ThisIsNOrE || OtherIsNOrE)
+            else if (ThisIsNOrE || AnotherIsNOrE)
             {
                 throw new ArithmeticException();
             }
@@ -1659,8 +1659,35 @@ namespace Com
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public void AffineTransform(params Matrix[] matrices)
         {
-            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrices))
+            if (InternalMethod.IsNullOrEmpty(matrices))
             {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (_Size <= 0)
+            {
+                for (int i = 0; i < matrices.Length; i++)
+                {
+                    if (!Matrix.IsNullOrEmpty(matrices[i]))
+                    {
+                        throw new ArgumentNullException();
+                    }
+                }
+            }
+            else
+            {
+                Size AffineMatrixSize = new Size(_Size + 1, _Size + 1);
+
+                for (int i = 0; i < matrices.Length; i++)
+                {
+                    if (Matrix.IsNullOrEmpty(matrices[i]) || matrices[i].Size != AffineMatrixSize)
+                    {
+                        throw new ArgumentNullException();
+                    }
+                }
+
                 Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
@@ -1704,10 +1731,14 @@ namespace Com
         /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public void AffineTransform(List<Matrix> matrixList)
         {
-            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            if (InternalMethod.IsNullOrEmpty(matrixList))
             {
-                AffineTransform(matrixList.ToArray());
+                throw new ArgumentNullException();
             }
+
+            //
+
+            AffineTransform(matrixList.ToArray());
         }
 
         /// <summary>
@@ -1780,16 +1811,37 @@ namespace Com
         /// <returns>Vector 对象，表示按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换得到的结果。</returns>
         public Vector AffineTransformCopy(params Matrix[] matrices)
         {
+            if (InternalMethod.IsNullOrEmpty(matrices))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
             if (_Size <= 0)
             {
+                for (int i = 0; i < matrices.Length; i++)
+                {
+                    if (!Matrix.IsNullOrEmpty(matrices[i]))
+                    {
+                        throw new ArgumentNullException();
+                    }
+                }
+
                 return Empty;
-            }
-            else if (InternalMethod.IsNullOrEmpty(matrices))
-            {
-                return Copy();
             }
             else
             {
+                Size AffineMatrixSize = new Size(_Size + 1, _Size + 1);
+
+                for (int i = 0; i < matrices.Length; i++)
+                {
+                    if (Matrix.IsNullOrEmpty(matrices[i]) || matrices[i].Size != AffineMatrixSize)
+                    {
+                        throw new ArgumentNullException();
+                    }
+                }
+
                 Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
@@ -1842,18 +1894,14 @@ namespace Com
         /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换得到的结果。</returns>
         public Vector AffineTransformCopy(List<Matrix> matrixList)
         {
-            if (_Size <= 0)
+            if (InternalMethod.IsNullOrEmpty(matrixList))
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (InternalMethod.IsNullOrEmpty(matrixList))
-            {
-                return Copy();
-            }
-            else
-            {
-                return AffineTransformCopy(matrixList.ToArray());
-            }
+
+            //
+
+            return AffineTransformCopy(matrixList.ToArray());
         }
 
         /// <summary>
@@ -1916,8 +1964,35 @@ namespace Com
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public void InverseAffineTransform(params Matrix[] matrices)
         {
-            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrices))
+            if (InternalMethod.IsNullOrEmpty(matrices))
             {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (_Size <= 0)
+            {
+                for (int i = 0; i < matrices.Length; i++)
+                {
+                    if (!Matrix.IsNullOrEmpty(matrices[i]))
+                    {
+                        throw new ArgumentNullException();
+                    }
+                }
+            }
+            else
+            {
+                Size AffineMatrixSize = new Size(_Size + 1, _Size + 1);
+
+                for (int i = 0; i < matrices.Length; i++)
+                {
+                    if (Matrix.IsNullOrEmpty(matrices[i]) || matrices[i].Size != AffineMatrixSize)
+                    {
+                        throw new ArgumentNullException();
+                    }
+                }
+
                 Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
@@ -1961,10 +2036,14 @@ namespace Com
         /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         public void InverseAffineTransform(List<Matrix> matrixList)
         {
-            if (_Size > 0 && !InternalMethod.IsNullOrEmpty(matrixList))
+            if (InternalMethod.IsNullOrEmpty(matrixList))
             {
-                InverseAffineTransform(matrixList.ToArray());
+                throw new ArgumentNullException();
             }
+
+            //
+
+            InverseAffineTransform(matrixList.ToArray());
         }
 
         /// <summary>
@@ -2037,16 +2116,37 @@ namespace Com
         /// <returns>Vector 对象，表示按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行逆仿射变换得到的结果。</returns>
         public Vector InverseAffineTransformCopy(params Matrix[] matrices)
         {
+            if (InternalMethod.IsNullOrEmpty(matrices))
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
             if (_Size <= 0)
             {
+                for (int i = 0; i < matrices.Length; i++)
+                {
+                    if (!Matrix.IsNullOrEmpty(matrices[i]))
+                    {
+                        throw new ArgumentNullException();
+                    }
+                }
+
                 return Empty;
-            }
-            else if (InternalMethod.IsNullOrEmpty(matrices))
-            {
-                return Copy();
             }
             else
             {
+                Size AffineMatrixSize = new Size(_Size + 1, _Size + 1);
+
+                for (int i = 0; i < matrices.Length; i++)
+                {
+                    if (Matrix.IsNullOrEmpty(matrices[i]) || matrices[i].Size != AffineMatrixSize)
+                    {
+                        throw new ArgumentNullException();
+                    }
+                }
+
                 Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
@@ -2099,18 +2199,14 @@ namespace Com
         /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换得到的结果。</returns>
         public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
         {
-            if (_Size <= 0)
+            if (InternalMethod.IsNullOrEmpty(matrixList))
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (InternalMethod.IsNullOrEmpty(matrixList))
-            {
-                return Copy();
-            }
-            else
-            {
-                return InverseAffineTransformCopy(matrixList.ToArray());
-            }
+
+            //
+
+            return InverseAffineTransformCopy(matrixList.ToArray());
         }
 
         //

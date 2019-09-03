@@ -33,6 +33,20 @@ namespace Com
 
         //
 
+        private static PointD4D FromVector(Vector vector) // 返回将 Vector 对象转换为 PointD4D 结构的新实例。
+        {
+            if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
+            {
+                throw new ArithmeticException();
+            }
+            else
+            {
+                return new PointD4D(vector[0], vector[1], vector[2], vector[3]);
+            }
+        }
+
+        //
+
         private double _X; // X 坐标。
         private double _Y; // Y 坐标。
         private double _Z; // Z 坐标。
@@ -827,14 +841,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ToSpherical();
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
+            return FromVector(result);
         }
 
         /// <summary>
@@ -845,14 +852,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ToCartesian();
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
+            return FromVector(result);
         }
 
         //
@@ -1103,17 +1103,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1127,14 +1117,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
+            return FromVector(result);
         }
 
         //
@@ -1149,17 +1132,7 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1173,14 +1146,7 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
+            return FromVector(result);
         }
 
         //
@@ -1206,17 +1172,7 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1225,26 +1181,9 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
         public void AffineTransform(Matrix matrixLeft)
         {
-            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != _AffineMatrixSize)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
+            Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    _X = result[0];
-                    _Y = result[1];
-                    _Z = result[2];
-                    _U = result[3];
-                }
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1253,22 +1192,9 @@ namespace Com
         /// <param name="matricesLeft">Matrix 对象数组，表示 5x5 仿射矩阵（左矩阵）数组。</param>
         public void AffineTransform(params Matrix[] matricesLeft)
         {
-            if (!InternalMethod.IsNullOrEmpty(matricesLeft))
-            {
-                Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
+            Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    _X = result[0];
-                    _Y = result[1];
-                    _Z = result[2];
-                    _U = result[3];
-                }
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1277,22 +1203,9 @@ namespace Com
         /// <param name="matrixLeftList">Matrix 对象列表，表示 5x5 仿射矩阵（左矩阵）列表。</param>
         public void AffineTransform(List<Matrix> matrixLeftList)
         {
-            if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
-            {
-                Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
+            Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    _X = result[0];
-                    _Y = result[1];
-                    _Z = result[2];
-                    _U = result[3];
-                }
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1317,14 +1230,7 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
+            return FromVector(result);
         }
 
         /// <summary>
@@ -1334,23 +1240,9 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行仿射变换得到的结果。</returns>
         public PointD4D AffineTransformCopy(Matrix matrixLeft)
         {
-            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != _AffineMatrixSize)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
+            Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    return new PointD4D(result[0], result[1], result[2], result[3]);
-                }
-            }
+            return FromVector(result);
         }
 
         /// <summary>
@@ -1360,23 +1252,9 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象数组表示的 5x5 仿射矩阵（左矩阵）数组将此 PointD4D 结构进行仿射变换得到的结果。</returns>
         public PointD4D AffineTransformCopy(params Matrix[] matricesLeft)
         {
-            if (InternalMethod.IsNullOrEmpty(matricesLeft))
-            {
-                return this;
-            }
-            else
-            {
-                Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
+            Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    return new PointD4D(result[0], result[1], result[2], result[3]);
-                }
-            }
+            return FromVector(result);
         }
 
         /// <summary>
@@ -1386,23 +1264,9 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象列表表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD4D 结构进行仿射变换得到的结果。</returns>
         public PointD4D AffineTransformCopy(List<Matrix> matrixLeftList)
         {
-            if (InternalMethod.IsNullOrEmpty(matrixLeftList))
-            {
-                return this;
-            }
-            else
-            {
-                Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
+            Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    return new PointD4D(result[0], result[1], result[2], result[3]);
-                }
-            }
+            return FromVector(result);
         }
 
         /// <summary>
@@ -1426,17 +1290,7 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                _X = result[0];
-                _Y = result[1];
-                _Z = result[2];
-                _U = result[3];
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1445,26 +1299,9 @@ namespace Com
         /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
         public void InverseAffineTransform(Matrix matrixLeft)
         {
-            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != _AffineMatrixSize)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
+            Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    _X = result[0];
-                    _Y = result[1];
-                    _Z = result[2];
-                    _U = result[3];
-                }
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1473,22 +1310,9 @@ namespace Com
         /// <param name="matricesLeft">Matrix 对象数组，表示 5x5 仿射矩阵（左矩阵）数组。</param>
         public void InverseAffineTransform(params Matrix[] matricesLeft)
         {
-            if (!InternalMethod.IsNullOrEmpty(matricesLeft))
-            {
-                Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
+            Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    _X = result[0];
-                    _Y = result[1];
-                    _Z = result[2];
-                    _U = result[3];
-                }
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1497,22 +1321,9 @@ namespace Com
         /// <param name="matrixLeftList">Matrix 对象列表，表示 5x5 仿射矩阵（左矩阵）列表。</param>
         public void InverseAffineTransform(List<Matrix> matrixLeftList)
         {
-            if (!InternalMethod.IsNullOrEmpty(matrixLeftList))
-            {
-                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
+            Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    _X = result[0];
-                    _Y = result[1];
-                    _Z = result[2];
-                    _U = result[3];
-                }
-            }
+            this = FromVector(result);
         }
 
         /// <summary>
@@ -1537,14 +1348,7 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                return new PointD4D(result[0], result[1], result[2], result[3]);
-            }
+            return FromVector(result);
         }
 
         /// <summary>
@@ -1554,23 +1358,9 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
         public PointD4D InverseAffineTransformCopy(Matrix matrixLeft)
         {
-            if (Matrix.IsNullOrEmpty(matrixLeft) || matrixLeft.Size != _AffineMatrixSize)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
+            Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    return new PointD4D(result[0], result[1], result[2], result[3]);
-                }
-            }
+            return FromVector(result);
         }
 
         /// <summary>
@@ -1580,23 +1370,9 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象数组表示的 5x5 仿射矩阵（左矩阵）数组将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
         public PointD4D InverseAffineTransformCopy(params Matrix[] matricesLeft)
         {
-            if (InternalMethod.IsNullOrEmpty(matricesLeft))
-            {
-                return this;
-            }
-            else
-            {
-                Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
+            Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    return new PointD4D(result[0], result[1], result[2], result[3]);
-                }
-            }
+            return FromVector(result);
         }
 
         /// <summary>
@@ -1606,23 +1382,9 @@ namespace Com
         /// <returns>PointD4D 结构，表示按 Matrix 对象列表表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
         public PointD4D InverseAffineTransformCopy(List<Matrix> matrixLeftList)
         {
-            if (InternalMethod.IsNullOrEmpty(matrixLeftList))
-            {
-                return this;
-            }
-            else
-            {
-                Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
+            Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-                if (Vector.IsNullOrEmpty(result) || result.Dimension != _Dimension)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    return new PointD4D(result[0], result[1], result[2], result[3]);
-                }
-            }
+            return FromVector(result);
         }
 
         //
