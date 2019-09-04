@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Matrix
-Version 19.8.25.2000
+Version 19.9.4.0000
 
 This file is part of Com
 
@@ -969,10 +969,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示零矩阵的 Matrix 的新实例。
+        /// 返回表示全零矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
-        /// <returns>Matrix 对象，表示零矩阵。</returns>
+        /// <returns>Matrix 对象，表示全零矩阵。</returns>
         public static Matrix Zeros(Size size)
         {
             if (size.Width < 0 || size.Height < 0)
@@ -993,11 +993,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示零矩阵的 Matrix 的新实例。
+        /// 返回表示全零矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
-        /// <returns>Matrix 对象，表示零矩阵。</returns>
+        /// <returns>Matrix 对象，表示全零矩阵。</returns>
         public static Matrix Zeros(int width, int height)
         {
             if (width < 0 || height < 0)
@@ -1018,10 +1018,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示一矩阵的 Matrix 的新实例。
+        /// 返回表示全一矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="size">矩阵的宽度（列数）与高度（行数）。</param>
-        /// <returns>Matrix 对象，表示一矩阵。</returns>
+        /// <returns>Matrix 对象，表示全一矩阵。</returns>
         public static Matrix Ones(Size size)
         {
             if (size.Width < 0 || size.Height < 0)
@@ -1042,11 +1042,11 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示一矩阵的 Matrix 的新实例。
+        /// 返回表示全一矩阵的 Matrix 的新实例。
         /// </summary>
         /// <param name="width">矩阵的宽度（列数）。</param>
         /// <param name="height">矩阵的高度（行数）。</param>
-        /// <returns>Matrix 对象，表示一矩阵。</returns>
+        /// <returns>Matrix 对象，表示全一矩阵。</returns>
         public static Matrix Ones(int width, int height)
         {
             if (width < 0 || height < 0)

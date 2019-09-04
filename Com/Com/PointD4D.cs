@@ -52,6 +52,23 @@ namespace Com
         private double _Z; // Z 坐标。
         private double _U; // U 坐标。
 
+        //
+
+        private void UpdateByVector(Vector vector) // 按 Vector 对象更新此 PointD4D 结构。
+        {
+            if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
+            {
+                throw new ArithmeticException();
+            }
+            else
+            {
+                _X = vector[0];
+                _Y = vector[1];
+                _Z = vector[2];
+                _U = vector[3];
+            }
+        }
+
         #endregion
 
         #region 构造函数
@@ -1103,7 +1120,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1132,7 +1149,7 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1172,7 +1189,7 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1183,7 +1200,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1194,7 +1211,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1205,7 +1222,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1290,7 +1307,7 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1301,7 +1318,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1312,7 +1329,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
@@ -1323,7 +1340,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-            this = FromVector(result);
+            UpdateByVector(result);
         }
 
         /// <summary>
