@@ -33,20 +33,6 @@ namespace Com
 
         //
 
-        private static PointD4D FromVector(Vector vector) // 返回将 Vector 对象转换为 PointD4D 结构的新实例。
-        {
-            if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                return new PointD4D(vector[0], vector[1], vector[2], vector[3]);
-            }
-        }
-
-        //
-
         private double _X; // X 坐标。
         private double _Y; // Y 坐标。
         private double _Z; // Z 坐标。
@@ -54,19 +40,19 @@ namespace Com
 
         //
 
-        private void UpdateByVector(Vector vector) // 按 Vector 对象更新此 PointD4D 结构。
+        private void _UpdateByVector(Vector vector) // 按 Vector 对象更新此 PointD4D 结构。
         {
             if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
-            else
-            {
-                _X = vector[0];
-                _Y = vector[1];
-                _Z = vector[2];
-                _U = vector[3];
-            }
+
+            //
+
+            _X = vector[0];
+            _Y = vector[1];
+            _Z = vector[2];
+            _U = vector[3];
         }
 
         #endregion
@@ -1120,7 +1106,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1149,7 +1135,7 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1189,7 +1175,7 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1200,7 +1186,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1211,7 +1197,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1222,7 +1208,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1307,7 +1293,7 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1318,7 +1304,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1329,7 +1315,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1340,7 +1326,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1614,6 +1600,25 @@ namespace Com
             {
                 return left.CompareTo(right);
             }
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将 Vector 对象转换为 PointD4D 结构的新实例。
+        /// </summary>
+        /// <param name="vector">Vector 对象。</param>
+        /// <returns>PointD4D 结构，表示转换的结果。</returns>
+        public static PointD4D FromVector(Vector vector)
+        {
+            if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
+            {
+                throw new ArithmeticException();
+            }
+
+            //
+
+            return new PointD4D(vector[0], vector[1], vector[2], vector[3]);
         }
 
         //

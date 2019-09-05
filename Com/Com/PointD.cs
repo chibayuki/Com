@@ -33,36 +33,22 @@ namespace Com
 
         //
 
-        private static PointD FromVector(Vector vector) // 返回将 Vector 对象转换为 PointD 结构的新实例。
-        {
-            if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                return new PointD(vector[0], vector[1]);
-            }
-        }
-
-        //
-
         private double _X; // X 坐标。
         private double _Y; // Y 坐标。
 
         //
 
-        private void UpdateByVector(Vector vector) // 按 Vector 对象更新此 PointD 结构。
+        private void _UpdateByVector(Vector vector) // 按 Vector 对象更新此 PointD 结构。
         {
             if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
             {
                 throw new ArithmeticException();
             }
-            else
-            {
-                _X = vector[0];
-                _Y = vector[1];
-            }
+
+            //
+
+            _X = vector[0];
+            _Y = vector[1];
         }
 
         #endregion
@@ -1105,7 +1091,7 @@ namespace Com
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1172,7 +1158,7 @@ namespace Com
         {
             Vector result = ToColumnVector().RotateCopy(index1, index2, angle);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1276,7 +1262,7 @@ namespace Com
 
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1287,7 +1273,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1298,7 +1284,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1309,7 +1295,7 @@ namespace Com
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1386,7 +1372,7 @@ namespace Com
 
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1397,7 +1383,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1408,7 +1394,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1419,7 +1405,7 @@ namespace Com
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
 
-            UpdateByVector(result);
+            _UpdateByVector(result);
         }
 
         /// <summary>
@@ -1612,6 +1598,25 @@ namespace Com
             {
                 return left.CompareTo(right);
             }
+        }
+
+        //
+
+        /// <summary>
+        /// 返回将 Vector 对象转换为 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="vector">Vector 对象。</param>
+        /// <returns>PointD 结构，表示转换的结果。</returns>
+        public static PointD FromVector(Vector vector)
+        {
+            if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
+            {
+                throw new ArithmeticException();
+            }
+
+            //
+
+            return new PointD(vector[0], vector[1]);
         }
 
         //
