@@ -1617,12 +1617,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD6D 结构投影至平行于 XYZUV 空间的投影空间的 PointD5D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD6D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD6D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD5D 结构，表示将此 PointD6D 结构投影至平行于 XYZUV 空间的投影空间得到的结果。</returns>
-        public PointD5D ProjectToXYZUV(PointD6D prjCenter, double trueLenDist)
+        public PointD5D ProjectToXYZUV(PointD6D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return XYZUV;
             }
@@ -1634,7 +1634,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_W - prjCenter._W);
+                    double Scale = focalLength / (_W - prjCenter._W);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {
@@ -1651,12 +1651,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD6D 结构投影至平行于 YZUVW 空间的投影空间的 PointD5D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD6D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD6D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD5D 结构，表示将此 PointD6D 结构投影至平行于 YZUVW 空间的投影空间得到的结果。</returns>
-        public PointD5D ProjectToYZUVW(PointD6D prjCenter, double trueLenDist)
+        public PointD5D ProjectToYZUVW(PointD6D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return YZUVW;
             }
@@ -1668,7 +1668,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_X - prjCenter._X);
+                    double Scale = focalLength / (_X - prjCenter._X);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {
@@ -1685,12 +1685,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD6D 结构投影至平行于 ZUVWX 空间的投影空间的 PointD5D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD6D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD6D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD5D 结构，表示将此 PointD6D 结构投影至平行于 ZUVWX 空间的投影空间得到的结果。</returns>
-        public PointD5D ProjectToZUVWX(PointD6D prjCenter, double trueLenDist)
+        public PointD5D ProjectToZUVWX(PointD6D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return ZUVWX;
             }
@@ -1702,7 +1702,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_Y - prjCenter._Y);
+                    double Scale = focalLength / (_Y - prjCenter._Y);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {
@@ -1719,12 +1719,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD6D 结构投影至平行于 UVWXY 空间的投影空间的 PointD5D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD6D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD6D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD5D 结构，表示将此 PointD6D 结构投影至平行于 UVWXY 空间的投影空间得到的结果。</returns>
-        public PointD5D ProjectToUVWXY(PointD6D prjCenter, double trueLenDist)
+        public PointD5D ProjectToUVWXY(PointD6D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return UVWXY;
             }
@@ -1736,7 +1736,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_Z - prjCenter._Z);
+                    double Scale = focalLength / (_Z - prjCenter._Z);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {
@@ -1753,12 +1753,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD6D 结构投影至平行于 VWXYZ 空间的投影空间的 PointD5D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD6D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD6D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD5D 结构，表示将此 PointD6D 结构投影至平行于 VWXYZ 空间的投影空间得到的结果。</returns>
-        public PointD5D ProjectToVWXYZ(PointD6D prjCenter, double trueLenDist)
+        public PointD5D ProjectToVWXYZ(PointD6D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return VWXYZ;
             }
@@ -1770,7 +1770,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_U - prjCenter._U);
+                    double Scale = focalLength / (_U - prjCenter._U);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {
@@ -1787,12 +1787,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD6D 结构投影至平行于 WXYZU 空间的投影空间的 PointD5D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD6D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD6D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD5D 结构，表示将此 PointD6D 结构投影至平行于 WXYZU 空间的投影空间得到的结果。</returns>
-        public PointD5D ProjectToWXYZU(PointD6D prjCenter, double trueLenDist)
+        public PointD5D ProjectToWXYZU(PointD6D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return WXYZU;
             }
@@ -1804,7 +1804,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_V - prjCenter._V);
+                    double Scale = focalLength / (_V - prjCenter._V);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {

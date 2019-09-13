@@ -1395,12 +1395,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD4D 结构投影至平行于 XYZ 空间的投影空间的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD4D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD4D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD3D 结构，表示将此 PointD4D 结构投影至平行于 XYZ 空间的投影空间得到的结果。</returns>
-        public PointD3D ProjectToXYZ(PointD4D prjCenter, double trueLenDist)
+        public PointD3D ProjectToXYZ(PointD4D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return XYZ;
             }
@@ -1412,7 +1412,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_U - prjCenter._U);
+                    double Scale = focalLength / (_U - prjCenter._U);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {
@@ -1429,12 +1429,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD4D 结构投影至平行于 YZU 空间的投影空间的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD4D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD4D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD3D 结构，表示将此 PointD4D 结构投影至平行于 YZU 空间的投影空间得到的结果。</returns>
-        public PointD3D ProjectToYZU(PointD4D prjCenter, double trueLenDist)
+        public PointD3D ProjectToYZU(PointD4D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return YZU;
             }
@@ -1446,7 +1446,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_X - prjCenter._X);
+                    double Scale = focalLength / (_X - prjCenter._X);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {
@@ -1463,12 +1463,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD4D 结构投影至平行于 ZUX 空间的投影空间的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD4D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD4D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD3D 结构，表示将此 PointD4D 结构投影至平行于 ZUX 空间的投影空间得到的结果。</returns>
-        public PointD3D ProjectToZUX(PointD4D prjCenter, double trueLenDist)
+        public PointD3D ProjectToZUX(PointD4D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return ZUX;
             }
@@ -1480,7 +1480,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_Y - prjCenter._Y);
+                    double Scale = focalLength / (_Y - prjCenter._Y);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {
@@ -1497,12 +1497,12 @@ namespace Com
         /// <summary>
         /// 返回将此 PointD4D 结构投影至平行于 UXY 空间的投影空间的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="prjCenter">PointD4D 结构，表示投射中心在投影空间的正投影在原坐标系的坐标。</param>
-        /// <param name="trueLenDist">双精度浮点数表示的距离，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与此距离的比值。</param>
+        /// <param name="prjCenter">PointD4D 结构，表示投影中心在投影空间的正投影在原坐标系的坐标。</param>
+        /// <param name="focalLength">双精度浮点数表示的焦距，平行于投影空间的一维测度其真实大小与投影大小的比值等于其到投影空间的距离与焦距的比值。</param>
         /// <returns>PointD3D 结构，表示将此 PointD4D 结构投影至平行于 UXY 空间的投影空间得到的结果。</returns>
-        public PointD3D ProjectToUXY(PointD4D prjCenter, double trueLenDist)
+        public PointD3D ProjectToUXY(PointD4D prjCenter, double focalLength)
         {
-            if (trueLenDist == 0)
+            if (focalLength == 0)
             {
                 return UXY;
             }
@@ -1514,7 +1514,7 @@ namespace Com
                 }
                 else
                 {
-                    double Scale = trueLenDist / (_Z - prjCenter._Z);
+                    double Scale = focalLength / (_Z - prjCenter._Z);
 
                     if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
                     {

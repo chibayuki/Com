@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Painting3D
-Version 19.8.25.2000
+Version 19.9.13.0000
 
 This file is part of Com
 
@@ -34,17 +34,17 @@ namespace Com
         /// <param name="color">长方体的颜色。</param>
         /// <param name="edgeWidth">长方体的棱的宽度。</param>
         /// <param name="affineMatrixList">仿射矩阵（左矩阵）列表。</param>
-        /// <param name="trueLenDist">真实尺寸距离。</param>
+        /// <param name="focalLength">焦距。</param>
         /// <param name="illuminationDirection">光照方向。</param>
         /// <param name="illuminationDirectionIsAfterAffineTransform">光照方向是否基于仿射变换之后的坐标系。</param>
         /// <param name="exposure">曝光，取值范围为 [-100, 100]。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrixList, double trueLenDist, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrixList, double focalLength, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
         {
             try
             {
-                if (bmp == null || center.IsNaNOrInfinity || (size.IsNaNOrInfinity || size.IsZero) || (color.IsEmpty || color.A == 0) || InternalMethod.IsNaNOrInfinity(edgeWidth) || InternalMethod.IsNullOrEmpty(affineMatrixList) || (InternalMethod.IsNaNOrInfinity(trueLenDist) || trueLenDist < 0) || illuminationDirection.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(exposure))
+                if (bmp == null || center.IsNaNOrInfinity || (size.IsNaNOrInfinity || size.IsZero) || (color.IsEmpty || color.A == 0) || InternalMethod.IsNaNOrInfinity(edgeWidth) || InternalMethod.IsNullOrEmpty(affineMatrixList) || (InternalMethod.IsNaNOrInfinity(focalLength) || focalLength < 0) || illuminationDirection.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(exposure))
                 {
                     return false;
                 }
@@ -79,14 +79,14 @@ namespace Com
 
                     PointD3D PrjCenter = new PointD3D(bmp.Width / 2, bmp.Height / 2, 0);
 
-                    PointD P2D_000 = P3D_000.ProjectToXY(PrjCenter, trueLenDist);
-                    PointD P2D_100 = P3D_100.ProjectToXY(PrjCenter, trueLenDist);
-                    PointD P2D_010 = P3D_010.ProjectToXY(PrjCenter, trueLenDist);
-                    PointD P2D_110 = P3D_110.ProjectToXY(PrjCenter, trueLenDist);
-                    PointD P2D_001 = P3D_001.ProjectToXY(PrjCenter, trueLenDist);
-                    PointD P2D_101 = P3D_101.ProjectToXY(PrjCenter, trueLenDist);
-                    PointD P2D_011 = P3D_011.ProjectToXY(PrjCenter, trueLenDist);
-                    PointD P2D_111 = P3D_111.ProjectToXY(PrjCenter, trueLenDist);
+                    PointD P2D_000 = P3D_000.ProjectToXY(PrjCenter, focalLength);
+                    PointD P2D_100 = P3D_100.ProjectToXY(PrjCenter, focalLength);
+                    PointD P2D_010 = P3D_010.ProjectToXY(PrjCenter, focalLength);
+                    PointD P2D_110 = P3D_110.ProjectToXY(PrjCenter, focalLength);
+                    PointD P2D_001 = P3D_001.ProjectToXY(PrjCenter, focalLength);
+                    PointD P2D_101 = P3D_101.ProjectToXY(PrjCenter, focalLength);
+                    PointD P2D_011 = P3D_011.ProjectToXY(PrjCenter, focalLength);
+                    PointD P2D_111 = P3D_111.ProjectToXY(PrjCenter, focalLength);
 
                     PointF P_000 = P2D_000.ToPointF();
                     PointF P_100 = P2D_100.ToPointF();
@@ -429,7 +429,7 @@ namespace Com
                                         {
                                             if (edgeWidth > 0)
                                             {
-                                                float EdgeWidth = (trueLenDist == 0 ? edgeWidth : (float)(trueLenDist / (ElementZAvg[EIndex] - PrjCenter.Z) * edgeWidth));
+                                                float EdgeWidth = (focalLength == 0 ? edgeWidth : (float)(focalLength / (ElementZAvg[EIndex] - PrjCenter.Z) * edgeWidth));
 
                                                 try
                                                 {
@@ -439,19 +439,19 @@ namespace Com
                                                     {
                                                         int Alpha;
 
-                                                        if (trueLenDist == 0)
+                                                        if (focalLength == 0)
                                                         {
                                                             Alpha = Cr.A;
                                                         }
                                                         else
                                                         {
-                                                            if (Z - PrjCenter.Z <= trueLenDist)
+                                                            if (Z - PrjCenter.Z <= focalLength)
                                                             {
                                                                 Alpha = Cr.A;
                                                             }
                                                             else
                                                             {
-                                                                Alpha = (int)Math.Max(0, Math.Min(trueLenDist / (Z - PrjCenter.Z) * Cr.A, 255));
+                                                                Alpha = (int)Math.Max(0, Math.Min(focalLength / (Z - PrjCenter.Z) * Cr.A, 255));
                                                             }
                                                         }
 
@@ -515,15 +515,15 @@ namespace Com
         /// <param name="color">长方体的颜色。</param>
         /// <param name="edgeWidth">长方体的棱的宽度。</param>
         /// <param name="affineMatrix">仿射矩阵（左矩阵）。</param>
-        /// <param name="trueLenDist">真实尺寸距离。</param>
+        /// <param name="focalLength">焦距。</param>
         /// <param name="illuminationDirection">光照方向。</param>
         /// <param name="illuminationDirectionIsAfterAffineTransform">光照方向是否基于仿射变换之后的坐标系。</param>
         /// <param name="exposure">曝光，取值范围为 [-100, 100]。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double trueLenDist, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double focalLength, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
         {
-            return PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, trueLenDist, illuminationDirection, illuminationDirectionIsAfterAffineTransform, exposure, antiAlias);
+            return PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, focalLength, illuminationDirection, illuminationDirectionIsAfterAffineTransform, exposure, antiAlias);
         }
 
         /// <summary>
@@ -535,12 +535,12 @@ namespace Com
         /// <param name="color">长方体的颜色。</param>
         /// <param name="edgeWidth">长方体的棱的宽度。</param>
         /// <param name="affineMatrixList">仿射矩阵（左矩阵）列表。</param>
-        /// <param name="trueLenDist">真实尺寸距离。</param>
+        /// <param name="focalLength">焦距。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrixList, double trueLenDist, bool antiAlias)
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrixList, double focalLength, bool antiAlias)
         {
-            return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrixList, trueLenDist, PointD3D.Zero, false, 0, antiAlias);
+            return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrixList, focalLength, PointD3D.Zero, false, 0, antiAlias);
         }
 
         /// <summary>
@@ -552,12 +552,12 @@ namespace Com
         /// <param name="color">长方体的颜色。</param>
         /// <param name="edgeWidth">长方体的棱的宽度。</param>
         /// <param name="affineMatrix">仿射矩阵（左矩阵）。</param>
-        /// <param name="trueLenDist">真实尺寸距离。</param>
+        /// <param name="focalLength">焦距。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double trueLenDist, bool antiAlias)
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double focalLength, bool antiAlias)
         {
-            return PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, trueLenDist, PointD3D.Zero, false, 0, antiAlias);
+            return PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, focalLength, PointD3D.Zero, false, 0, antiAlias);
         }
     }
 }
