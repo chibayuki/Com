@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 19.8.25.2000
+Version 19.9.15.0000
 
 This file is part of Com
 
@@ -1263,9 +1263,9 @@ namespace Com.WinForm
 
             for (int i = 0; i < 3; i++)
             {
-                CrMtrx[0, i] = 0.2126F;
-                CrMtrx[1, i] = 0.7152F;
-                CrMtrx[2, i] = 0.0722F;
+                CrMtrx[0, i] = 0.299F;
+                CrMtrx[1, i] = 0.587F;
+                CrMtrx[2, i] = 0.114F;
             }
 
             ImageAttributes ImgAttr = new ImageAttributes();
