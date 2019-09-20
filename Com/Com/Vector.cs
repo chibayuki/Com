@@ -2819,7 +2819,7 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回两个 Vector 对象的向量积。
+        /// 返回两个 Vector 对象的向量积。两个 N 维向量的向量积为一个 N * (N - 1) / 2 维向量，其所有分量的数值依次为 E(0)∧E(1) 基向量、E(0)∧E(2) 基向量、……、E(0)∧E(N - 1) 基向量、E(1)∧E(2) 基向量、E(1)∧E(3) 基向量、……、 E(N - 2)∧E(N - 1) 基向量的系数，其中 E(i) 为 N 维向量的第 i 维基向量。
         /// </summary>
         /// <param name="left">第一个 Vector 对象。</param>
         /// <param name="right">第二个 Vector 对象。</param>

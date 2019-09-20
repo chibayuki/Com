@@ -25,6 +25,24 @@ namespace Com
     /// </summary>
     public static class Painting3D
     {
+        private static readonly PointD3D Vertex_000 = new PointD3D(0, 0, 0) - 0.5; // 正方体的 000 顶点。
+        private static readonly PointD3D Vertex_100 = new PointD3D(1, 0, 0) - 0.5; // 正方体的 100 顶点。
+        private static readonly PointD3D Vertex_010 = new PointD3D(0, 1, 0) - 0.5; // 正方体的 010 顶点。
+        private static readonly PointD3D Vertex_110 = new PointD3D(1, 1, 0) - 0.5; // 正方体的 110 顶点。
+        private static readonly PointD3D Vertex_001 = new PointD3D(0, 0, 1) - 0.5; // 正方体的 001 顶点。
+        private static readonly PointD3D Vertex_101 = new PointD3D(1, 0, 1) - 0.5; // 正方体的 101 顶点。
+        private static readonly PointD3D Vertex_011 = new PointD3D(0, 1, 1) - 0.5; // 正方体的 011 顶点。
+        private static readonly PointD3D Vertex_111 = new PointD3D(1, 1, 1) - 0.5; // 正方体的 111 顶点。
+
+        private static readonly PointD3D NormalVector_NXY = new PointD3D(0, 0, -1); // 正方体表面的 -XY 法向量。
+        private static readonly PointD3D NormalVector_PXY = new PointD3D(0, 0, 1); // 正方体表面的 +XY 法向量。
+        private static readonly PointD3D NormalVector_NYZ = new PointD3D(-1, 0, 0); // 正方体表面的 -YZ 法向量。
+        private static readonly PointD3D NormalVector_PYZ = new PointD3D(1, 0, 0); // 正方体表面的 +YZ 法向量。
+        private static readonly PointD3D NormalVector_NZX = new PointD3D(0, -1, 0); // 正方体表面的 -ZX 法向量。
+        private static readonly PointD3D NormalVector_PZX = new PointD3D(0, 1, 0); // 正方体表面的 +ZX 法向量。
+
+        //
+
         /// <summary>
         /// 绘制一个长方体，并返回表示是否已经实际完成绘图的布尔值。
         /// </summary>
@@ -50,23 +68,32 @@ namespace Com
                 }
                 else
                 {
-                    PointD3D P3D_000 = new PointD3D(0, 0, 0);
-                    PointD3D P3D_100 = new PointD3D(1, 0, 0);
-                    PointD3D P3D_010 = new PointD3D(0, 1, 0);
-                    PointD3D P3D_110 = new PointD3D(1, 1, 0);
-                    PointD3D P3D_001 = new PointD3D(0, 0, 1);
-                    PointD3D P3D_101 = new PointD3D(1, 0, 1);
-                    PointD3D P3D_011 = new PointD3D(0, 1, 1);
-                    PointD3D P3D_111 = new PointD3D(1, 1, 1);
+                    PointD3D P3D_000 = Vertex_000;
+                    PointD3D P3D_100 = Vertex_100;
+                    PointD3D P3D_010 = Vertex_010;
+                    PointD3D P3D_110 = Vertex_110;
+                    PointD3D P3D_001 = Vertex_001;
+                    PointD3D P3D_101 = Vertex_101;
+                    PointD3D P3D_011 = Vertex_011;
+                    PointD3D P3D_111 = Vertex_111;
 
-                    P3D_000 = (P3D_000 - 0.5) * size + center;
-                    P3D_100 = (P3D_100 - 0.5) * size + center;
-                    P3D_010 = (P3D_010 - 0.5) * size + center;
-                    P3D_110 = (P3D_110 - 0.5) * size + center;
-                    P3D_001 = (P3D_001 - 0.5) * size + center;
-                    P3D_101 = (P3D_101 - 0.5) * size + center;
-                    P3D_011 = (P3D_011 - 0.5) * size + center;
-                    P3D_111 = (P3D_111 - 0.5) * size + center;
+                    P3D_000.Scale(size);
+                    P3D_100.Scale(size);
+                    P3D_010.Scale(size);
+                    P3D_110.Scale(size);
+                    P3D_001.Scale(size);
+                    P3D_101.Scale(size);
+                    P3D_011.Scale(size);
+                    P3D_111.Scale(size);
+
+                    P3D_000.Offset(center);
+                    P3D_100.Offset(center);
+                    P3D_010.Offset(center);
+                    P3D_110.Offset(center);
+                    P3D_001.Offset(center);
+                    P3D_101.Offset(center);
+                    P3D_011.Offset(center);
+                    P3D_111.Offset(center);
 
                     P3D_000.AffineTransform(affineMatrixList);
                     P3D_100.AffineTransform(affineMatrixList);
@@ -97,7 +124,7 @@ namespace Com
                     PointF P_011 = P2D_011.ToPointF();
                     PointF P_111 = P2D_111.ToPointF();
 
-                    List<PointD3D[]> Element3D = new List<PointD3D[]>(18)
+                    PointD3D[][] Element3D = new PointD3D[][]
                     {
                         // XY 面
                         new PointD3D[] { P3D_000, P3D_010, P3D_110, P3D_100 },
@@ -130,7 +157,7 @@ namespace Com
                         new PointD3D[] { P3D_110, P3D_111 }
                     };
 
-                    List<PointF[]> Element2D = new List<PointF[]>(18)
+                    PointF[][] Element2D = new PointF[][]
                     {
                         // XY 面
                         new PointF[] { P_000, P_010, P_110, P_100 },
@@ -167,9 +194,9 @@ namespace Com
 
                     bool CuboidIsVisible = false;
 
-                    List<bool> ElementVisible = new List<bool>(Element2D.Count);
+                    bool[] ElementVisible = new bool[Element2D.Length];
 
-                    for (int i = 0; i < Element2D.Count; i++)
+                    for (int i = 0; i < Element2D.Length; i++)
                     {
                         bool EVisible = false;
 
@@ -192,7 +219,7 @@ namespace Com
                             }
                         }
 
-                        ElementVisible.Add(EVisible);
+                        ElementVisible[i] = EVisible;
 
                         if (!CuboidIsVisible && EVisible)
                         {
@@ -206,7 +233,7 @@ namespace Com
                     }
                     else
                     {
-                        List<double> IlluminationIntensity = new List<double>(Element3D.Count);
+                        double[] IlluminationIntensity = new double[Element3D.Length];
 
                         double Exposure = Math.Max(-2, Math.Min(exposure / 50, 2));
 
@@ -214,49 +241,50 @@ namespace Com
                         {
                             for (int i = 0; i < 6; i++)
                             {
-                                IlluminationIntensity.Add(Exposure);
+                                IlluminationIntensity[i] = Exposure;
                             }
 
-                            for (int i = 6; i < Element3D.Count; i++)
+                            for (int i = 6; i < Element3D.Length; i++)
                             {
-                                IlluminationIntensity.Add(Constant.HalfSqrt2 * (Exposure + 1) + (Exposure - 1));
+                                IlluminationIntensity[i] = Constant.HalfSqrt2 * (Exposure + 1) + (Exposure - 1);
                             }
                         }
                         else
                         {
-                            List<PointD3D> NormalVector = new List<PointD3D>(6)
+                            PointD3D[] NormalVector = new PointD3D[]
                             {
                                 // XY 面
-                                new PointD3D(0, 0, -1),
-                                new PointD3D(0, 0, 1),
+                                NormalVector_NXY,
+                                NormalVector_PXY,
 
                                 // YZ 面
-                                new PointD3D(-1, 0, 0),
-                                new PointD3D(1, 0, 0),
+                                NormalVector_NYZ,
+                                NormalVector_PYZ,
 
                                 // ZX 面
-                                new PointD3D(0, -1, 0),
-                                new PointD3D(0, 1, 0),
+                                NormalVector_NZX,
+                                NormalVector_PZX
                             };
 
                             if (illuminationDirectionIsAfterAffineTransform)
                             {
-                                PointD3D NewOrigin = new PointD3D(0, 0, 0).AffineTransformCopy(affineMatrixList);
+                                PointD3D NewOriginOpposite = PointD3D.Zero.AffineTransformCopy(affineMatrixList).Opposite;
 
-                                for (int i = 0; i < NormalVector.Count; i++)
+                                for (int i = 0; i < NormalVector.Length; i++)
                                 {
-                                    NormalVector[i] = NormalVector[i].AffineTransformCopy(affineMatrixList) - NewOrigin;
+                                    NormalVector[i].AffineTransform(affineMatrixList);
+                                    NormalVector[i].Offset(NewOriginOpposite);
                                 }
                             }
 
-                            List<double> Angle = new List<double>(NormalVector.Count);
+                            double[] Angle = new double[NormalVector.Length];
 
-                            for (int i = 0; i < NormalVector.Count; i++)
+                            for (int i = 0; i < NormalVector.Length; i++)
                             {
-                                Angle.Add(illuminationDirection.AngleFrom(NormalVector[i]));
+                                Angle[i] = illuminationDirection.AngleFrom(NormalVector[i]);
                             }
 
-                            for (int i = 0; i < Angle.Count; i++)
+                            for (int i = 0; i < Angle.Length; i++)
                             {
                                 double A = Angle[i];
                                 double CosA = Math.Cos(A);
@@ -280,10 +308,10 @@ namespace Com
 
                                 _IlluminationIntensity += Exposure;
 
-                                IlluminationIntensity.Add(_IlluminationIntensity);
+                                IlluminationIntensity[i] = _IlluminationIntensity;
                             }
 
-                            for (int i = 6; i < Element3D.Count; i++)
+                            for (int i = 6; i < Element3D.Length; i++)
                             {
                                 double _IlluminationIntensity = 0;
 
@@ -313,26 +341,26 @@ namespace Com
 
                                 _IlluminationIntensity = Constant.HalfSqrt2 * (_IlluminationIntensity / Num + 1) + (Exposure - 1);
 
-                                IlluminationIntensity.Add(_IlluminationIntensity);
+                                IlluminationIntensity[i] = _IlluminationIntensity;
                             }
                         }
 
-                        for (int i = 0; i < IlluminationIntensity.Count; i++)
+                        for (int i = 0; i < IlluminationIntensity.Length; i++)
                         {
                             IlluminationIntensity[i] = Math.Max(-1, Math.Min(IlluminationIntensity[i], 1));
                         }
 
                         //
 
-                        List<Color> ElementColor = new List<Color>(IlluminationIntensity.Count);
+                        Color[] ElementColor = new Color[IlluminationIntensity.Length];
 
-                        for (int i = 0; i < IlluminationIntensity.Count; i++)
+                        for (int i = 0; i < IlluminationIntensity.Length; i++)
                         {
                             double _IlluminationIntensity = IlluminationIntensity[i];
 
                             if (_IlluminationIntensity == 0)
                             {
-                                ElementColor.Add(color);
+                                ElementColor[i] = color;
                             }
                             else
                             {
@@ -347,15 +375,15 @@ namespace Com
                                     EColor.Lightness_HSL += (100 - EColor.Lightness_HSL) * _IlluminationIntensity;
                                 }
 
-                                ElementColor.Add(EColor.ToColor());
+                                ElementColor[i] = EColor.ToColor();
                             }
                         }
 
                         //
 
-                        List<double> ElementZAvg = new List<double>(Element3D.Count);
+                        double[] ElementZAvg = new double[Element3D.Length];
 
-                        for (int i = 0; i < Element3D.Count; i++)
+                        for (int i = 0; i < Element3D.Length; i++)
                         {
                             PointD3D[] Element = Element3D[i];
 
@@ -368,19 +396,19 @@ namespace Com
 
                             ZAvg /= Element.Length;
 
-                            ElementZAvg.Add(ZAvg);
+                            ElementZAvg[i] = ZAvg;
                         }
 
-                        List<int> ElementIndex = new List<int>(ElementZAvg.Count);
+                        int[] ElementIndex = new int[ElementZAvg.Length];
 
-                        for (int i = 0; i < ElementZAvg.Count; i++)
+                        for (int i = 0; i < ElementZAvg.Length; i++)
                         {
-                            ElementIndex.Add(i);
+                            ElementIndex[i] = i;
                         }
 
-                        for (int i = 0; i < ElementZAvg.Count; i++)
+                        for (int i = 0; i < ElementZAvg.Length; i++)
                         {
-                            for (int j = i + 1; j < ElementZAvg.Count; j++)
+                            for (int j = i + 1; j < ElementZAvg.Length; j++)
                             {
                                 if (ElementZAvg[ElementIndex[i]] < ElementZAvg[ElementIndex[j]] || (ElementZAvg[ElementIndex[i]] <= ElementZAvg[ElementIndex[j]] + edgeWidth && Element2D[ElementIndex[i]].Length < Element2D[ElementIndex[j]].Length))
                                 {
@@ -402,7 +430,7 @@ namespace Com
 
                             //
 
-                            for (int i = 0; i < ElementIndex.Count; i++)
+                            for (int i = 0; i < ElementIndex.Length; i++)
                             {
                                 int EIndex = ElementIndex[i];
 
