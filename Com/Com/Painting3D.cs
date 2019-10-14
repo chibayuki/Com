@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Painting3D
-Version 19.9.13.0000
+Version 19.10.14.2100
 
 This file is part of Com
 
@@ -25,21 +25,21 @@ namespace Com
     /// </summary>
     public static class Painting3D
     {
-        private static readonly PointD3D Vertex_000 = new PointD3D(0, 0, 0) - 0.5; // 正方体的 000 顶点。
-        private static readonly PointD3D Vertex_100 = new PointD3D(1, 0, 0) - 0.5; // 正方体的 100 顶点。
-        private static readonly PointD3D Vertex_010 = new PointD3D(0, 1, 0) - 0.5; // 正方体的 010 顶点。
-        private static readonly PointD3D Vertex_110 = new PointD3D(1, 1, 0) - 0.5; // 正方体的 110 顶点。
-        private static readonly PointD3D Vertex_001 = new PointD3D(0, 0, 1) - 0.5; // 正方体的 001 顶点。
-        private static readonly PointD3D Vertex_101 = new PointD3D(1, 0, 1) - 0.5; // 正方体的 101 顶点。
-        private static readonly PointD3D Vertex_011 = new PointD3D(0, 1, 1) - 0.5; // 正方体的 011 顶点。
-        private static readonly PointD3D Vertex_111 = new PointD3D(1, 1, 1) - 0.5; // 正方体的 111 顶点。
+        private static readonly PointD3D _Vertex000 = new PointD3D(0, 0, 0) - 0.5; // 正方体的 000 顶点。
+        private static readonly PointD3D _Vertex100 = new PointD3D(1, 0, 0) - 0.5; // 正方体的 100 顶点。
+        private static readonly PointD3D _Vertex010 = new PointD3D(0, 1, 0) - 0.5; // 正方体的 010 顶点。
+        private static readonly PointD3D _Vertex110 = new PointD3D(1, 1, 0) - 0.5; // 正方体的 110 顶点。
+        private static readonly PointD3D _Vertex001 = new PointD3D(0, 0, 1) - 0.5; // 正方体的 001 顶点。
+        private static readonly PointD3D _Vertex101 = new PointD3D(1, 0, 1) - 0.5; // 正方体的 101 顶点。
+        private static readonly PointD3D _Vertex011 = new PointD3D(0, 1, 1) - 0.5; // 正方体的 011 顶点。
+        private static readonly PointD3D _Vertex111 = new PointD3D(1, 1, 1) - 0.5; // 正方体的 111 顶点。
 
-        private static readonly PointD3D NormalVector_NXY = new PointD3D(0, 0, -1); // 正方体表面的 -XY 法向量。
-        private static readonly PointD3D NormalVector_PXY = new PointD3D(0, 0, 1); // 正方体表面的 +XY 法向量。
-        private static readonly PointD3D NormalVector_NYZ = new PointD3D(-1, 0, 0); // 正方体表面的 -YZ 法向量。
-        private static readonly PointD3D NormalVector_PYZ = new PointD3D(1, 0, 0); // 正方体表面的 +YZ 法向量。
-        private static readonly PointD3D NormalVector_NZX = new PointD3D(0, -1, 0); // 正方体表面的 -ZX 法向量。
-        private static readonly PointD3D NormalVector_PZX = new PointD3D(0, 1, 0); // 正方体表面的 +ZX 法向量。
+        private static readonly PointD3D _NormalVectorNXY = new PointD3D(0, 0, -1); // 正方体表面的 -XY 法向量。
+        private static readonly PointD3D _NormalVectorPXY = new PointD3D(0, 0, 1); // 正方体表面的 +XY 法向量。
+        private static readonly PointD3D _NormalVectorNYZ = new PointD3D(-1, 0, 0); // 正方体表面的 -YZ 法向量。
+        private static readonly PointD3D _NormalVectorPYZ = new PointD3D(1, 0, 0); // 正方体表面的 +YZ 法向量。
+        private static readonly PointD3D _NormalVectorNZX = new PointD3D(0, -1, 0); // 正方体表面的 -ZX 法向量。
+        private static readonly PointD3D _NormalVectorPZX = new PointD3D(0, 1, 0); // 正方体表面的 +ZX 法向量。
 
         //
 
@@ -68,14 +68,14 @@ namespace Com
                 }
                 else
                 {
-                    PointD3D P3D_000 = Vertex_000;
-                    PointD3D P3D_100 = Vertex_100;
-                    PointD3D P3D_010 = Vertex_010;
-                    PointD3D P3D_110 = Vertex_110;
-                    PointD3D P3D_001 = Vertex_001;
-                    PointD3D P3D_101 = Vertex_101;
-                    PointD3D P3D_011 = Vertex_011;
-                    PointD3D P3D_111 = Vertex_111;
+                    PointD3D P3D_000 = _Vertex000;
+                    PointD3D P3D_100 = _Vertex100;
+                    PointD3D P3D_010 = _Vertex010;
+                    PointD3D P3D_110 = _Vertex110;
+                    PointD3D P3D_001 = _Vertex001;
+                    PointD3D P3D_101 = _Vertex101;
+                    PointD3D P3D_011 = _Vertex011;
+                    PointD3D P3D_111 = _Vertex111;
 
                     P3D_000.Scale(size);
                     P3D_100.Scale(size);
@@ -254,16 +254,16 @@ namespace Com
                             PointD3D[] NormalVector = new PointD3D[]
                             {
                                 // XY 面
-                                NormalVector_NXY,
-                                NormalVector_PXY,
+                                _NormalVectorNXY,
+                                _NormalVectorPXY,
 
                                 // YZ 面
-                                NormalVector_NYZ,
-                                NormalVector_PYZ,
+                                _NormalVectorNYZ,
+                                _NormalVectorPYZ,
 
                                 // ZX 面
-                                NormalVector_NZX,
-                                NormalVector_PZX
+                                _NormalVectorNZX,
+                                _NormalVectorPZX
                             };
 
                             if (illuminationDirectionIsAfterAffineTransform)

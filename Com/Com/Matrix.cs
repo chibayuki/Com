@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Matrix
-Version 19.9.4.0000
+Version 19.10.14.2100
 
 This file is part of Com
 

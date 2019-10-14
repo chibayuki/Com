@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Geometry
-Version 19.8.30.0000
+Version 19.10.14.2100
 
 This file is part of Com
 
