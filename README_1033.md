@@ -1,3 +1,5 @@
+###### Language\(语言\): \[English\] / [\[中文\]](README.md)
+
 # Com
 Com is a common component, which is a DLL for supporting linear algebra, bit operation, large date-time, high precision nonlinear color processing, animation presentation, window management, etc.
 
@@ -5,7 +7,7 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.Animation
 ###### Presenting animation by frame rate, frame number and drawing method.
 #### Com.BitOperation
-###### Scheme of rapid bit operation (up to 64 bits and far faster than BitSet).
+###### Scheme of rapid bit operation (up to 64 bits and faster than BitSet).
 #### Com.ColorManipulation
 ###### Scheme of nonlinear color processing based on ColorX.
 #### Com.Geometry
@@ -27,9 +29,9 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.BitSet
 ###### Managing set of bits (up to 2146434944 bits) and providing basic bit operations.
 #### Com.Matrix
-###### Matrix, supporting all linear transformations.
+###### Matrix, supporting linear transformations.
 #### Com.Vector
-###### Column or row vector of any dimensions, supporting linear transformations of PointDnD.
+###### Column or row vector of any dimensions, supporting linear transformations of PointDxD.
 #### Com.WinForm.FormManager
 ###### Window manager of winform.
 #### Com.WinForm.RecommendColors
@@ -37,7 +39,7 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 
 ## Public Structure
 #### Com.ColorX
-###### Floating-point precision color solution based on RGB, HSV, HSL, CMYK, LAB, YUV, etc.
+###### Floating-point precision color expression based on RGB, HSV, HSL, CMYK, LAB, YUV, etc.
 #### Com.Complex
 ###### Complex in the Cartesian coordinate system.
 #### Com.DateTimeX
@@ -56,17 +58,11 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 ###### Real number (floating-point number in the order of magnitude between ±999999999999999).
 
 ## Public Interface
-#### Com.IAffine
+#### Com.IAffine and Com.IAffine\<T\>
 ###### Method for affine transform.
-#### Com.IAffine\<T\>
-###### Method for affine transform.
-#### Com.IEuclideanVector
+#### Com.IEuclideanVector and Com.IEuclideanVector\<T\>
 ###### Euclidean vector.
-#### Com.IEuclideanVector\<T\>
-###### Euclidean vector.
-#### Com.ILinearAlgebraVector
-###### Linear algebra vector.
-#### Com.ILinearAlgebraVector\<T\>
+#### Com.ILinearAlgebraVector and Com.ILinearAlgebraVector\<T\>
 ###### Linear algebra vector.
 #### Com.IVector\<T\>
 ###### Vector (a finite, ordered, and iterable set, which contains certain number of elements with clear values).
