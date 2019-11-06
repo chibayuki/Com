@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Matrix
-Version 19.10.14.2100
+Version 19.11.6.0000
 
 This file is part of Com
 
@@ -1517,36 +1517,84 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回将列表中所有 Matrix 对象依次左乘得到的 Matrix 的新实例。
+        /// 返回将数组中所有 Matrix 对象依次左乘得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="list">左矩阵列表。</param>
-        /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次左乘得到的结果。</returns>
-        public static Matrix MultiplyLeft(List<Matrix> list)
+        /// <param name="matrices">左矩阵数组。</param>
+        /// <returns>Matrix 对象，表示将数组中所有 Matrix 对象依次左乘得到的结果。</returns>
+        public static Matrix MultiplyLeft(params Matrix[] matrices)
         {
-            if (InternalMethod.IsNullOrEmpty(list))
+            if (InternalMethod.IsNullOrEmpty(matrices))
             {
                 return Empty;
             }
             else
             {
-                if (list.Count == 1)
+                if (matrices.Length == 1)
                 {
-                    if (IsNullOrEmpty(list[0]))
+                    if (IsNullOrEmpty(matrices[0]))
                     {
                         return Empty;
                     }
                     else
                     {
-                        return list[0].Copy();
+                        return matrices[0].Copy();
                     }
                 }
                 else
                 {
-                    Matrix result = list[0].Copy();
+                    Matrix result = matrices[0].Copy();
 
-                    for (int i = 1; i < list.Count; i++)
+                    for (int i = 1; i < matrices.Length; i++)
                     {
-                        result = Multiply(list[i], result);
+                        result = Multiply(matrices[i], result);
+                    }
+
+                    return result;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回将列表中所有 Matrix 对象依次左乘得到的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="matrices">左矩阵列表。</param>
+        /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次左乘得到的结果。</returns>
+        public static Matrix MultiplyLeft(List<Matrix> matrices)
+        {
+            return MultiplyLeft(matrices.ToArray());
+        }
+
+        /// <summary>
+        /// 返回将数组中所有 Matrix 对象依次右乘得到的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="matrices">右矩阵数组。</param>
+        /// <returns>Matrix 对象，表示将数组中所有 Matrix 对象依次右乘得到的结果。</returns>
+        public static Matrix MultiplyRight(params Matrix[] matrices)
+        {
+            if (InternalMethod.IsNullOrEmpty(matrices))
+            {
+                return Empty;
+            }
+            else
+            {
+                if (matrices.Length == 1)
+                {
+                    if (IsNullOrEmpty(matrices[0]))
+                    {
+                        return Empty;
+                    }
+                    else
+                    {
+                        return matrices[0].Copy();
+                    }
+                }
+                else
+                {
+                    Matrix result = matrices[0].Copy();
+
+                    for (int i = 1; i < matrices.Length; i++)
+                    {
+                        result = Multiply(result, matrices[i]);
                     }
 
                     return result;
@@ -1557,39 +1605,11 @@ namespace Com
         /// <summary>
         /// 返回将列表中所有 Matrix 对象依次右乘得到的 Matrix 的新实例。
         /// </summary>
-        /// <param name="list">右矩阵列表。</param>
+        /// <param name="matrices">右矩阵列表。</param>
         /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次右乘得到的结果。</returns>
-        public static Matrix MultiplyRight(List<Matrix> list)
+        public static Matrix MultiplyRight(List<Matrix> matrices)
         {
-            if (InternalMethod.IsNullOrEmpty(list))
-            {
-                return Empty;
-            }
-            else
-            {
-                if (list.Count == 1)
-                {
-                    if (IsNullOrEmpty(list[0]))
-                    {
-                        return Empty;
-                    }
-                    else
-                    {
-                        return list[0].Copy();
-                    }
-                }
-                else
-                {
-                    Matrix result = list[0].Copy();
-
-                    for (int i = 1; i < list.Count; i++)
-                    {
-                        result = Multiply(result, list[i]);
-                    }
-
-                    return result;
-                }
-            }
+            return MultiplyRight(matrices.ToArray());
         }
 
         /// <summary>

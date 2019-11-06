@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Vector
-Version 19.10.14.2100
+Version 19.11.6.0000
 
 This file is part of Com
 
@@ -1997,10 +1997,7 @@ namespace Com
 
                 if (_Type == Type.ColumnVector)
                 {
-                    for (int i = matrices.Length - 1; i >= 0; i--)
-                    {
-                        result = Matrix.DivideLeft(matrices[i], result);
-                    }
+                    result = Matrix.DivideLeft(Matrix.MultiplyLeft(matrices), result);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
                     {
@@ -2013,10 +2010,7 @@ namespace Com
                 }
                 else
                 {
-                    for (int i = matrices.Length - 1; i >= 0; i--)
-                    {
-                        result = Matrix.DivideRight(result, matrices[i]);
-                    }
+                    result = Matrix.DivideRight(result, Matrix.MultiplyRight(matrices));
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
                     {
@@ -2151,10 +2145,7 @@ namespace Com
 
                 if (_Type == Type.ColumnVector)
                 {
-                    for (int i = matrices.Length - 1; i >= 0; i--)
-                    {
-                        result = Matrix.DivideLeft(matrices[i], result);
-                    }
+                    result = Matrix.DivideLeft(Matrix.MultiplyLeft(matrices), result);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
                     {
@@ -2171,10 +2162,7 @@ namespace Com
                 }
                 else
                 {
-                    for (int i = matrices.Length - 1; i >= 0; i--)
-                    {
-                        result = Matrix.DivideRight(result, matrices[i]);
-                    }
+                    result = Matrix.DivideRight(result, Matrix.MultiplyRight(matrices));
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
                     {
