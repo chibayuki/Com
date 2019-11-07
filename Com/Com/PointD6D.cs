@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD6D
-Version 19.10.14.2100
+Version 19.11.7.0000
 
 This file is part of Com
 
@@ -1110,6 +1110,39 @@ namespace Com
         }
 
         /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD6D 结构在指定的基向量方向的分量平移指定的量。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void Offset(int index, double d)
+        {
+            switch (index)
+            {
+                case 0: _X += d; break;
+                case 1: _Y += d; break;
+                case 2: _Z += d; break;
+                case 3: _U += d; break;
+                case 4: _V += d; break;
+                case 5: _W += d; break;
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 按 PointD6D 结构表示的位移将此 PointD6D 结构平移指定的量。
+        /// </summary>
+        /// <param name="pt">PointD6D 结构表示的位移。</param>
+        public void Offset(PointD6D pt)
+        {
+            _X += pt._X;
+            _Y += pt._Y;
+            _Z += pt._Z;
+            _U += pt._U;
+            _V += pt._V;
+            _W += pt._W;
+        }
+
+        /// <summary>
         /// 按双精度浮点数表示的 X 坐标位移、Y 坐标位移、Z 坐标位移、U 坐标位移、V 坐标位移与 W 坐标位移将此 PointD6D 结构平移指定的量。
         /// </summary>
         /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
@@ -1129,20 +1162,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 PointD6D 结构表示的位移将此 PointD6D 结构平移指定的量。
-        /// </summary>
-        /// <param name="pt">PointD6D 结构表示的位移。</param>
-        public void Offset(PointD6D pt)
-        {
-            _X += pt._X;
-            _Y += pt._Y;
-            _Z += pt._Z;
-            _U += pt._U;
-            _V += pt._V;
-            _W += pt._W;
-        }
-
-        /// <summary>
         /// 返回按双精度浮点数表示的位移将此 PointD6D 结构的所有分量平移指定的量的 PointD6D 结构的新实例。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
@@ -1150,6 +1169,36 @@ namespace Com
         public PointD6D OffsetCopy(double d)
         {
             return new PointD6D(_X + d, _Y + d, _Z + d, _U + d, _V + d, _W + d);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD6D 结构在指定的基向量方向的分量平移指定的量的 PointD6D 结构的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD6D 结构，表示按双精度浮点数表示的位移将此 PointD6D 结构在指定的基向量方向的分量平移指定的量得到的结果。</returns>
+        public PointD6D OffsetCopy(int index, double d)
+        {
+            switch (index)
+            {
+                case 0: return new PointD6D(_X + d, _Y, _Z, _U, _V, _W);
+                case 1: return new PointD6D(_X, _Y + d, _Z, _U, _V, _W);
+                case 2: return new PointD6D(_X, _Y, _Z + d, _U, _V, _W);
+                case 3: return new PointD6D(_X, _Y, _Z, _U + d, _V, _W);
+                case 4: return new PointD6D(_X, _Y, _Z, _U, _V + d, _W);
+                case 5: return new PointD6D(_X, _Y, _Z, _U, _V, _W + d);
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 返回按 PointD6D 结构表示的位移将此 PointD6D 结构平移指定的量的 PointD6D 结构的新实例。
+        /// </summary>
+        /// <param name="pt">PointD6D 结构表示的位移。</param>
+        /// <returns>PointD6D 结构，表示按 PointD6D 结构表示的位移将此 PointD6D 结构平移指定的量得到的结果。</returns>
+        public PointD6D OffsetCopy(PointD6D pt)
+        {
+            return new PointD6D(_X + pt._X, _Y + pt._Y, _Z + pt._Z, _U + pt._U, _V + pt._V, _W + pt._W);
         }
 
         /// <summary>
@@ -1167,16 +1216,6 @@ namespace Com
             return new PointD6D(_X + dx, _Y + dy, _Z + dz, _U + du, _V + dv, _W + dw);
         }
 
-        /// <summary>
-        /// 返回按 PointD6D 结构表示的位移将此 PointD6D 结构平移指定的量的 PointD6D 结构的新实例。
-        /// </summary>
-        /// <param name="pt">PointD6D 结构表示的位移。</param>
-        /// <returns>PointD6D 结构，表示按 PointD6D 结构表示的位移将此 PointD6D 结构平移指定的量得到的结果。</returns>
-        public PointD6D OffsetCopy(PointD6D pt)
-        {
-            return new PointD6D(_X + pt._X, _Y + pt._Y, _Z + pt._Z, _U + pt._U, _V + pt._V, _W + pt._W);
-        }
-
         //
 
         /// <summary>
@@ -1191,6 +1230,39 @@ namespace Com
             _U *= s;
             _V *= s;
             _W *= s;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD6D 结构在指定的基向量方向的分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void Scale(int index, double s)
+        {
+            switch (index)
+            {
+                case 0: _X *= s; break;
+                case 1: _Y *= s; break;
+                case 2: _Z *= s; break;
+                case 3: _U *= s; break;
+                case 4: _V *= s; break;
+                case 5: _W *= s; break;
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 按 PointD6D 结构表示的缩放因数将此 PointD6D 结构缩放指定的倍数。
+        /// </summary>
+        /// <param name="pt">PointD6D 结构表示的缩放因数。</param>
+        public void Scale(PointD6D pt)
+        {
+            _X *= pt._X;
+            _Y *= pt._Y;
+            _Z *= pt._Z;
+            _U *= pt._U;
+            _V *= pt._V;
+            _W *= pt._W;
         }
 
         /// <summary>
@@ -1213,20 +1285,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 PointD6D 结构表示的缩放因数将此 PointD6D 结构缩放指定的倍数。
-        /// </summary>
-        /// <param name="pt">PointD6D 结构表示的缩放因数。</param>
-        public void Scale(PointD6D pt)
-        {
-            _X *= pt._X;
-            _Y *= pt._Y;
-            _Z *= pt._Z;
-            _U *= pt._U;
-            _V *= pt._V;
-            _W *= pt._W;
-        }
-
-        /// <summary>
         /// 返回按双精度浮点数表示的缩放因数将此 PointD6D 结构的所有分量缩放指定的倍数的 PointD6D 结构的新实例。
         /// </summary>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
@@ -1234,6 +1292,36 @@ namespace Com
         public PointD6D ScaleCopy(double s)
         {
             return new PointD6D(_X * s, _Y * s, _Z * s, _U * s, _V * s, _W * s);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD6D 结构在指定的基向量方向的分量缩放指定的倍数的 PointD6D 结构的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD6D 结构，表示按双精度浮点数表示的缩放因数将此 PointD6D 结构在指定的基向量方向的分量缩放指定的倍数得到的结果。</returns>
+        public PointD6D ScaleCopy(int index, double s)
+        {
+            switch (index)
+            {
+                case 0: return new PointD6D(_X * s, _Y, _Z, _U, _V, _W);
+                case 1: return new PointD6D(_X, _Y * s, _Z, _U, _V, _W);
+                case 2: return new PointD6D(_X, _Y, _Z * s, _U, _V, _W);
+                case 3: return new PointD6D(_X, _Y, _Z, _U * s, _V, _W);
+                case 4: return new PointD6D(_X, _Y, _Z, _U, _V * s, _W);
+                case 5: return new PointD6D(_X, _Y, _Z, _U, _V, _W * s);
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 返回按 PointD6D 结构表示的缩放因数将此 PointD6D 结构缩放指定的倍数的 PointD6D 结构的新实例。
+        /// </summary>
+        /// <param name="pt">PointD6D 结构表示的缩放因数。</param>
+        /// <returns>PointD6D 结构，表示按 PointD6D 结构表示的缩放因数将此 PointD6D 结构缩放指定的倍数得到的结果。</returns>
+        public PointD6D ScaleCopy(PointD6D pt)
+        {
+            return new PointD6D(_X * pt._X, _Y * pt._Y, _Z * pt._Z, _U * pt._U, _V * pt._V, _W * pt._W);
         }
 
         /// <summary>
@@ -1249,16 +1337,6 @@ namespace Com
         public PointD6D ScaleCopy(double sx, double sy, double sz, double su, double sv, double sw)
         {
             return new PointD6D(_X * sx, _Y * sy, _Z * sz, _U * su, _V * sv, _W * sw);
-        }
-
-        /// <summary>
-        /// 返回按 PointD6D 结构表示的缩放因数将此 PointD6D 结构缩放指定的倍数的 PointD6D 结构的新实例。
-        /// </summary>
-        /// <param name="pt">PointD6D 结构表示的缩放因数。</param>
-        /// <returns>PointD6D 结构，表示按 PointD6D 结构表示的缩放因数将此 PointD6D 结构缩放指定的倍数得到的结果。</returns>
-        public PointD6D ScaleCopy(PointD6D pt)
-        {
-            return new PointD6D(_X * pt._X, _Y * pt._Y, _Z * pt._Z, _U * pt._U, _V * pt._V, _W * pt._W);
         }
 
         //

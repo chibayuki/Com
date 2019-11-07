@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD
-Version 19.10.14.2100
+Version 19.11.7.0000
 
 This file is part of Com
 
@@ -739,6 +739,31 @@ namespace Com
         }
 
         /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD 结构的指定的基向量方向的分量平移指定的量。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void Offset(int index, double d)
+        {
+            switch (index)
+            {
+                case 0: _X += d; break;
+                case 1: _Y += d; break;
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 按 PointD 结构表示的位移将此 PointD 结构平移指定的量。
+        /// </summary>
+        /// <param name="pt">PointD 结构表示的位移。</param>
+        public void Offset(PointD pt)
+        {
+            _X += pt._X;
+            _Y += pt._Y;
+        }
+
+        /// <summary>
         /// 按双精度浮点数表示的 X 坐标位移与 Y 坐标位移将此 PointD 结构平移指定的量。
         /// </summary>
         /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
@@ -750,13 +775,21 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 PointD 结构表示的位移将此 PointD 结构平移指定的量。
+        /// 按双精度浮点数表示的位移将此 PointD 结构在 X 轴的分量平移指定的量。
         /// </summary>
-        /// <param name="pt">PointD 结构表示的位移。</param>
-        public void Offset(PointD pt)
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void OffsetX(double d)
         {
-            _X += pt._X;
-            _Y += pt._Y;
+            _X += d;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD 结构在 Y 轴的分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void OffsetY(double d)
+        {
+            _Y += d;
         }
 
         /// <summary>
@@ -810,6 +843,32 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD 结构的指定的基向量方向的分量平移指定的量的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD 结构，表示按双精度浮点数表示的位移将此 PointD 结构的指定的基向量方向的分量平移指定的量得到的结果。</returns>
+        public PointD OffsetCopy(int index, double d)
+        {
+            switch (index)
+            {
+                case 0: return new PointD(_X + d, _Y);
+                case 1: return new PointD(_X, _Y + d);
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 返回按 PointD 结构表示的位移将此 PointD 结构平移指定的量的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="pt">PointD 结构表示的位移。</param>
+        /// <returns>PointD 结构，表示按 PointD 结构表示的位移将此 PointD 结构平移指定的量得到的结果。</returns>
+        public PointD OffsetCopy(PointD pt)
+        {
+            return new PointD(_X + pt._X, _Y + pt._Y);
+        }
+
+        /// <summary>
         /// 返回按双精度浮点数表示的 X 坐标位移与 Y 坐标位移将此 PointD 结构平移指定的量的 PointD 结构的新实例。
         /// </summary>
         /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
@@ -821,13 +880,23 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 PointD 结构表示的位移将此 PointD 结构平移指定的量的 PointD 结构的新实例。
+        /// 返回按双精度浮点数表示的位移将此 PointD 结构在 X 轴的分量平移指定的量的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointD 结构表示的位移。</param>
-        /// <returns>PointD 结构，表示按 PointD 结构表示的位移将此 PointD 结构平移指定的量得到的结果。</returns>
-        public PointD OffsetCopy(PointD pt)
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD 结构，表示按双精度浮点数表示的位移将此 PointD 结构在 X 轴的分量平移指定的量得到的结果。</returns>
+        public PointD OffsetXCopy(double d)
         {
-            return new PointD(_X + pt._X, _Y + pt._Y);
+            return new PointD(_X + d, _Y);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD 结构在 Y 轴的分量平移指定的量的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD 结构，表示按双精度浮点数表示的位移将此 PointD 结构在 Y 轴的分量平移指定的量得到的结果。</returns>
+        public PointD OffsetYCopy(double d)
+        {
+            return new PointD(_X, _Y + d);
         }
 
         /// <summary>
@@ -883,6 +952,31 @@ namespace Com
         }
 
         /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD 结构的指定的基向量方向的分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void Scale(int index, double s)
+        {
+            switch (index)
+            {
+                case 0: _X *= s; break;
+                case 1: _Y *= s; break;
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数。
+        /// </summary>
+        /// <param name="pt">PointD 结构表示的缩放因数。</param>
+        public void Scale(PointD pt)
+        {
+            _X *= pt._X;
+            _Y *= pt._Y;
+        }
+
+        /// <summary>
         /// 按双精度浮点数表示的 X 坐标缩放因数与 Y 坐标缩放因数将此 PointD 结构缩放指定的倍数。
         /// </summary>
         /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
@@ -894,13 +988,21 @@ namespace Com
         }
 
         /// <summary>
-        /// 按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数。
+        /// 按双精度浮点数表示的缩放因数将此 PointD 结构在 X 轴的分量缩放指定的倍数。
         /// </summary>
-        /// <param name="pt">PointD 结构表示的缩放因数。</param>
-        public void Scale(PointD pt)
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void ScaleX(double s)
         {
-            _X *= pt._X;
-            _Y *= pt._Y;
+            _X *= s;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD 结构在 Y 轴的分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void ScaleY(double s)
+        {
+            _Y *= s;
         }
 
         /// <summary>
@@ -954,6 +1056,32 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD 结构的指定的基向量方向的分量缩放指定的倍数的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按双精度浮点数表示的缩放因数将此 PointD 结构的指定的基向量方向的分量缩放指定的倍数得到的结果。</returns>
+        public PointD ScaleCopy(int index, double s)
+        {
+            switch (index)
+            {
+                case 0: return new PointD(_X * s, _Y);
+                case 1: return new PointD(_X, _Y * s);
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 返回按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="pt">PointD 结构表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数得到的结果。</returns>
+        public PointD ScaleCopy(PointD pt)
+        {
+            return new PointD(_X * pt._X, _Y * pt._Y);
+        }
+
+        /// <summary>
         /// 返回按双精度浮点数表示的 X 坐标缩放因数与 Y 坐标缩放因数将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
         /// </summary>
         /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
@@ -965,13 +1093,23 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数的 PointD 结构的新实例。
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD 结构在 X 轴的分量缩放指定的倍数的 PointD 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointD 结构表示的缩放因数。</param>
-        /// <returns>PointD 结构，表示按 PointD 结构表示的缩放因数将此 PointD 结构缩放指定的倍数得到的结果。</returns>
-        public PointD ScaleCopy(PointD pt)
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按双精度浮点数表示的缩放因数将此 PointD 结构在 X 轴的分量缩放指定的倍数得到的结果。</returns>
+        public PointD ScaleXCopy(double s)
         {
-            return new PointD(_X * pt._X, _Y * pt._Y);
+            return new PointD(_X * s, _Y);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD 结构在 Y 轴的分量缩放指定的倍数的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按双精度浮点数表示的缩放因数将此 PointD 结构在 Y 轴的分量缩放指定的倍数得到的结果。</returns>
+        public PointD ScaleYCopy(double s)
+        {
+            return new PointD(_X, _Y * s);
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.PointD3D
-Version 19.10.14.2100
+Version 19.11.7.0000
 
 This file is part of Com
 
@@ -864,16 +864,19 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的 X 坐标位移、Y 坐标位移与 Z 坐标位移将此 PointD3D 结构平移指定的量。
+        /// 按双精度浮点数表示的位移将此 PointD3D 结构在指定的基向量方向的分量平移指定的量。
         /// </summary>
-        /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
-        /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
-        /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
-        public void Offset(double dx, double dy, double dz)
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void Offset(int index, double d)
         {
-            _X += dx;
-            _Y += dy;
-            _Z += dz;
+            switch (index)
+            {
+                case 0: _X += d; break;
+                case 1: _Y += d; break;
+                case 2: _Z += d; break;
+                default: throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -888,6 +891,46 @@ namespace Com
         }
 
         /// <summary>
+        /// 按双精度浮点数表示的 X 坐标位移、Y 坐标位移与 Z 坐标位移将此 PointD3D 结构平移指定的量。
+        /// </summary>
+        /// <param name="dx">双精度浮点数表示的 X 坐标位移。</param>
+        /// <param name="dy">双精度浮点数表示的 Y 坐标位移。</param>
+        /// <param name="dz">双精度浮点数表示的 Z 坐标位移。</param>
+        public void Offset(double dx, double dy, double dz)
+        {
+            _X += dx;
+            _Y += dy;
+            _Z += dz;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD3D 结构在 X 轴的分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void OffsetX(double d)
+        {
+            _X += d;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD3D 结构在 Y 轴的分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void OffsetY(double d)
+        {
+            _Y += d;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD3D 结构在 Z 轴的分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void OffsetZ(double d)
+        {
+            _Z += d;
+        }
+
+        /// <summary>
         /// 返回按双精度浮点数表示的位移将此 PointD3D 结构的所有分量平移指定的量的 PointD3D 结构的新实例。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
@@ -895,6 +938,33 @@ namespace Com
         public PointD3D OffsetCopy(double d)
         {
             return new PointD3D(_X + d, _Y + d, _Z + d);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD3D 结构在指定的基向量方向的分量平移指定的量的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的位移将此 PointD3D 结构在指定的基向量方向的分量平移指定的量得到的结果。</returns>
+        public PointD3D OffsetCopy(int index, double d)
+        {
+            switch (index)
+            {
+                case 0: return new PointD3D(_X + d, _Y, _Z);
+                case 1: return new PointD3D(_X, _Y + d, _Z);
+                case 2: return new PointD3D(_X, _Y, _Z + d);
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 返回按 PointD3D 结构表示的位移将此 PointD3D 结构平移指定的量的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="pt">PointD3D 结构表示的位移。</param>
+        /// <returns>PointD3D 结构，表示按 PointD3D 结构表示的位移将此 PointD3D 结构平移指定的量得到的结果。</returns>
+        public PointD3D OffsetCopy(PointD3D pt)
+        {
+            return new PointD3D(_X + pt._X, _Y + pt._Y, _Z + pt._Z);
         }
 
         /// <summary>
@@ -910,13 +980,33 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 PointD3D 结构表示的位移将此 PointD3D 结构平移指定的量的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的位移将此 PointD3D 结构在 X 轴的分量平移指定的量的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointD3D 结构表示的位移。</param>
-        /// <returns>PointD3D 结构，表示按 PointD3D 结构表示的位移将此 PointD3D 结构平移指定的量得到的结果。</returns>
-        public PointD3D OffsetCopy(PointD3D pt)
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的位移将此 PointD3D 结构在 X 轴的分量平移指定的量得到的结果。</returns>
+        public PointD3D OffsetXCopy(double d)
         {
-            return new PointD3D(_X + pt._X, _Y + pt._Y, _Z + pt._Z);
+            return new PointD3D(_X + d, _Y, _Z);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD3D 结构在 Y 轴的分量平移指定的量的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的位移将此 PointD3D 结构在 Y 轴的分量平移指定的量得到的结果。</returns>
+        public PointD3D OffsetYCopy(double d)
+        {
+            return new PointD3D(_X, _Y + d, _Z);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD3D 结构在 Z 轴的分量平移指定的量的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的位移将此 PointD3D 结构在 Z 轴的分量平移指定的量得到的结果。</returns>
+        public PointD3D OffsetZCopy(double d)
+        {
+            return new PointD3D(_X, _Y, _Z + d);
         }
 
         //
@@ -933,16 +1023,19 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的 X 坐标缩放因数、Y 坐标缩放因数与 Z 坐标缩放因数将此 PointD3D 结构缩放指定的倍数。
+        /// 按双精度浮点数表示的缩放因数将此 PointD3D 结构在指定的基向量方向的分量缩放指定的倍数。
         /// </summary>
-        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
-        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
-        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
-        public void Scale(double sx, double sy, double sz)
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void Scale(int index, double s)
         {
-            _X *= sx;
-            _Y *= sy;
-            _Z *= sz;
+            switch (index)
+            {
+                case 0: _X *= s; break;
+                case 1: _Y *= s; break;
+                case 2: _Z *= s; break;
+                default: throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <summary>
@@ -957,6 +1050,46 @@ namespace Com
         }
 
         /// <summary>
+        /// 按双精度浮点数表示的 X 坐标缩放因数、Y 坐标缩放因数与 Z 坐标缩放因数将此 PointD3D 结构缩放指定的倍数。
+        /// </summary>
+        /// <param name="sx">双精度浮点数表示的 X 坐标缩放因数。</param>
+        /// <param name="sy">双精度浮点数表示的 Y 坐标缩放因数。</param>
+        /// <param name="sz">双精度浮点数表示的 Z 坐标缩放因数。</param>
+        public void Scale(double sx, double sy, double sz)
+        {
+            _X *= sx;
+            _Y *= sy;
+            _Z *= sz;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD3D 结构在 X 轴的分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void ScaleX(double s)
+        {
+            _X *= s;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD3D 结构在 Y 轴的分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void ScaleY(double s)
+        {
+            _Y *= s;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD3D 结构在 Z 轴的分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void ScaleZ(double s)
+        {
+            _Z *= s;
+        }
+
+        /// <summary>
         /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构的所有分量缩放指定的倍数的 PointD3D 结构的新实例。
         /// </summary>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
@@ -964,6 +1097,33 @@ namespace Com
         public PointD3D ScaleCopy(double s)
         {
             return new PointD3D(_X * s, _Y * s, _Z * s);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构在指定的基向量方向的分量缩放指定的倍数的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的缩放因数将此 PointD3D 结构在指定的基向量方向的分量缩放指定的倍数得到的结果。</returns>
+        public PointD3D ScaleCopy(int index, double s)
+        {
+            switch (index)
+            {
+                case 0: return new PointD3D(_X * s, _Y, _Z);
+                case 1: return new PointD3D(_X, _Y * s, _Z);
+                case 2: return new PointD3D(_X, _Y, _Z * s);
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 返回按 PointD3D 结构表示的缩放因数将此 PointD3D 结构缩放指定的倍数的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="pt">PointD3D 结构表示的缩放因数。</param>
+        /// <returns>PointD3D 结构，表示按 PointD3D 结构表示的缩放因数将此 PointD3D 结构缩放指定的倍数得到的结果。</returns>
+        public PointD3D ScaleCopy(PointD3D pt)
+        {
+            return new PointD3D(_X * pt._X, _Y * pt._Y, _Z * pt._Z);
         }
 
         /// <summary>
@@ -979,13 +1139,33 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按 PointD3D 结构表示的缩放因数将此 PointD3D 结构缩放指定的倍数的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构在 X 轴的分量缩放指定的倍数的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="pt">PointD3D 结构表示的缩放因数。</param>
-        /// <returns>PointD3D 结构，表示按 PointD3D 结构表示的缩放因数将此 PointD3D 结构缩放指定的倍数得到的结果。</returns>
-        public PointD3D ScaleCopy(PointD3D pt)
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的缩放因数将此 PointD3D 结构在 X 轴的分量缩放指定的倍数得到的结果。</returns>
+        public PointD3D ScaleXCopy(double s)
         {
-            return new PointD3D(_X * pt._X, _Y * pt._Y, _Z * pt._Z);
+            return new PointD3D(_X * s, _Y, _Z);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构在 Y 轴的分量缩放指定的倍数的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的缩放因数将此 PointD3D 结构在 Y 轴的分量缩放指定的倍数得到的结果。</returns>
+        public PointD3D ScaleYCopy(double s)
+        {
+            return new PointD3D(_X, _Y * s, _Z);
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构在 Z 轴的分量缩放指定的倍数的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的缩放因数将此 PointD3D 结构在 Z 轴的分量缩放指定的倍数得到的结果。</returns>
+        public PointD3D ScaleZCopy(double s)
+        {
+            return new PointD3D(_X, _Y, _Z * s);
         }
 
         //

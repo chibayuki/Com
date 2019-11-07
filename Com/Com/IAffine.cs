@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.IAffine
-Version 19.10.14.2100
+Version 19.11.7.0000
 
 This file is part of Com
 
@@ -29,16 +29,36 @@ namespace Com
         void Offset(double d);
 
         /// <summary>
+        /// 按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        void Offset(int index, double d);
+
+        //
+
+        /// <summary>
         /// 按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数。
         /// </summary>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
         void Scale(double s);
 
         /// <summary>
+        /// 按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        void Scale(int index, double s);
+
+        //
+
+        /// <summary>
         /// 对指定的基向量方向的分量翻转。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
         void Reflect(int index);
+
+        //
 
         /// <summary>
         /// 按双精度浮点数表示的弧度剪切指定的角度。
@@ -47,6 +67,8 @@ namespace Com
         /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
         /// <param name="angle">双精度浮点数，表示沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
         void Shear(int index1, int index2, double angle);
+
+        //
 
         /// <summary>
         /// 按双精度浮点数表示的弧度旋转指定的角度。
@@ -107,6 +129,13 @@ namespace Com
         void Offset(T vector);
 
         /// <summary>
+        /// 返回按向量表示的位移平移指定的量得到的向量。
+        /// </summary>
+        /// <param name="vector">向量表示的位移。</param>
+        /// <returns>T，表示按向量表示的位移对所有分量平移指定的量得到的向量。</returns>
+        T OffsetCopy(T vector);
+
+        /// <summary>
         /// 返回按双精度浮点数表示的位移对所有分量平移指定的量得到的向量。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
@@ -114,11 +143,12 @@ namespace Com
         T OffsetCopy(double d);
 
         /// <summary>
-        /// 返回按向量表示的位移平移指定的量得到的向量。
+        /// 返回按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量得到的向量。
         /// </summary>
-        /// <param name="vector">向量表示的位移。</param>
-        /// <returns>T，表示按向量表示的位移对所有分量平移指定的量得到的向量。</returns>
-        T OffsetCopy(T vector);
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>T，表示按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量得到的向量。</returns>
+        T OffsetCopy(int index, double d);
 
         //
 
@@ -129,6 +159,13 @@ namespace Com
         void Scale(T vector);
 
         /// <summary>
+        /// 返回按向量表示的缩放因数缩放指定的倍数得到的向量。
+        /// </summary>
+        /// <param name="vector">向量表示的缩放因数。</param>
+        /// <returns>T，表示按向量表示的缩放因数缩放指定的倍数得到的向量。</returns>
+        T ScaleCopy(T vector);
+
+        /// <summary>
         /// 返回按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数得到的向量。
         /// </summary>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
@@ -136,11 +173,12 @@ namespace Com
         T ScaleCopy(double s);
 
         /// <summary>
-        /// 返回按向量表示的缩放因数缩放指定的倍数得到的向量。
+        /// 返回按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数得到的向量。
         /// </summary>
-        /// <param name="vector">向量表示的缩放因数。</param>
-        /// <returns>T，表示按向量表示的缩放因数缩放指定的倍数得到的向量。</returns>
-        T ScaleCopy(T vector);
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>T，表示按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数得到的向量。</returns>
+        T ScaleCopy(int index, double s);
 
         //
 

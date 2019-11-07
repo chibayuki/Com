@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Vector
-Version 19.11.6.0000
+Version 19.11.7.0000
 
 This file is part of Com
 
@@ -1248,6 +1248,23 @@ namespace Com
         }
 
         /// <summary>
+        /// 按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void Offset(int index, double d)
+        {
+            if (_Size <= 0 || (index < 0 || index >= _Size))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            _VArray[index] += d;
+        }
+
+        /// <summary>
         /// 按 Vector 对象表示的位移将此 Vector 平移指定的量。
         /// </summary>
         /// <param name="vector">Vector 对象表示的位移。</param>
@@ -1299,6 +1316,28 @@ namespace Com
 
                 return result;
             }
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量得到的结果。</returns>
+        public Vector OffsetCopy(int index, double d)
+        {
+            if (_Size <= 0 || (index < 0 || index >= _Size))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            Vector result = Copy();
+
+            result._VArray[index] += d;
+
+            return result;
         }
 
         /// <summary>
@@ -1354,6 +1393,23 @@ namespace Com
         }
 
         /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void Scale(int index, double s)
+        {
+            if (_Size <= 0 || (index < 0 || index >= _Size))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            _VArray[index] *= s;
+        }
+
+        /// <summary>
         /// 按 Vector 对象表示的缩放因数将此 Vector 缩放指定的倍数。
         /// </summary>
         /// <param name="vector">Vector 对象表示的缩放因数。</param>
@@ -1405,6 +1461,28 @@ namespace Com
 
                 return result;
             }
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数得到的结果。</returns>
+        public Vector ScaleCopy(int index, double s)
+        {
+            if (_Size <= 0 || (index < 0 || index >= _Size))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            Vector result = Copy();
+
+            result._VArray[index] *= s;
+
+            return result;
         }
 
         /// <summary>
