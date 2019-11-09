@@ -914,18 +914,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的位移将此 PointD4D 结构的所有分量平移指定的量。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        public void Offset(double d)
-        {
-            _X += d;
-            _Y += d;
-            _Z += d;
-            _U += d;
-        }
-
-        /// <summary>
         /// 按双精度浮点数表示的位移将此 PointD4D 结构在指定的基向量方向的分量平移指定的量。
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
@@ -940,6 +928,18 @@ namespace Com
                 case 3: _U += d; break;
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD4D 结构的所有分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void Offset(double d)
+        {
+            _X += d;
+            _Y += d;
+            _Z += d;
+            _U += d;
         }
 
         /// <summary>
@@ -970,16 +970,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的位移将此 PointD4D 结构的所有分量平移指定的量的 PointD4D 结构的新实例。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>PointD4D 结构，表示按双精度浮点数表示的位移将此 PointD4D 结构的所有分量平移指定的量得到的结果。</returns>
-        public PointD4D OffsetCopy(double d)
-        {
-            return new PointD4D(_X + d, _Y + d, _Z + d, _U + d);
-        }
-
-        /// <summary>
         /// 返回按双精度浮点数表示的位移将此 PointD4D 结构在指定的基向量方向的分量平移指定的量的 PointD4D 结构的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
@@ -995,6 +985,16 @@ namespace Com
                 case 3: return new PointD4D(_X, _Y, _Z, _U + d);
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD4D 结构的所有分量平移指定的量的 PointD4D 结构的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD4D 结构，表示按双精度浮点数表示的位移将此 PointD4D 结构的所有分量平移指定的量得到的结果。</returns>
+        public PointD4D OffsetCopy(double d)
+        {
+            return new PointD4D(_X + d, _Y + d, _Z + d, _U + d);
         }
 
         /// <summary>
@@ -1023,18 +1023,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的缩放因数将此 PointD4D 结构的所有分量缩放指定的倍数。
-        /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        public void Scale(double s)
-        {
-            _X *= s;
-            _Y *= s;
-            _Z *= s;
-            _U *= s;
-        }
-
-        /// <summary>
         /// 按双精度浮点数表示的缩放因数将此 PointD4D 结构在指定的基向量方向的分量缩放指定的倍数。
         /// </summary>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
@@ -1049,6 +1037,18 @@ namespace Com
                 case 3: _U *= s; break;
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD4D 结构的所有分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void Scale(double s)
+        {
+            _X *= s;
+            _Y *= s;
+            _Z *= s;
+            _U *= s;
         }
 
         /// <summary>
@@ -1079,16 +1079,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的缩放因数将此 PointD4D 结构的所有分量缩放指定的倍数的 PointD4D 结构的新实例。
-        /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>PointD4D 结构，表示按双精度浮点数表示的缩放因数将此 PointD4D 结构的所有分量缩放指定的倍数得到的结果。</returns>
-        public PointD4D ScaleCopy(double s)
-        {
-            return new PointD4D(_X * s, _Y * s, _Z * s, _U * s);
-        }
-
-        /// <summary>
         /// 返回按双精度浮点数表示的缩放因数将此 PointD4D 结构在指定的基向量方向的分量缩放指定的倍数的 PointD4D 结构的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
@@ -1104,6 +1094,16 @@ namespace Com
                 case 3: return new PointD4D(_X, _Y, _Z, _U * s);
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD4D 结构的所有分量缩放指定的倍数的 PointD4D 结构的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD4D 结构，表示按双精度浮点数表示的缩放因数将此 PointD4D 结构的所有分量缩放指定的倍数得到的结果。</returns>
+        public PointD4D ScaleCopy(double s)
+        {
+            return new PointD4D(_X * s, _Y * s, _Z * s, _U * s);
         }
 
         /// <summary>
@@ -1705,6 +1705,17 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回表示按双精度浮点数表示的位移将 PointD4D 结构在指定的基向量方向的分量平移指定的量的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD4D 结构在指定的基向量方向的分量平移指定的量的 5x5 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetMatrix(int index, double d)
+        {
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, _Dimension, index, d);
+        }
+
+        /// <summary>
         /// 返回表示按双精度浮点数表示的位移将 PointD4D 结构的所有分量平移指定的量的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
@@ -1712,6 +1723,16 @@ namespace Com
         public static Matrix OffsetMatrix(double d)
         {
             return Vector.OffsetMatrix(Vector.Type.ColumnVector, _Dimension, d);
+        }
+
+        /// <summary>
+        /// 返回表示按 PointD4D 结构表示的位移将 PointD4D 结构平移指定的量的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="pt">PointD4D 结构表示的位移。</param>
+        /// <returns>Matrix 对象，表示按 PointD4D 结构表示的位移将 PointD4D 结构平移指定的量的 5x5 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetMatrix(PointD4D pt)
+        {
+            return Vector.OffsetMatrix(pt.ToColumnVector());
         }
 
         /// <summary>
@@ -1727,17 +1748,18 @@ namespace Com
             return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, dx, dy, dz, du));
         }
 
-        /// <summary>
-        /// 返回表示按 PointD4D 结构表示的位移将 PointD4D 结构平移指定的量的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
-        /// </summary>
-        /// <param name="pt">PointD4D 结构表示的位移。</param>
-        /// <returns>Matrix 对象，表示按 PointD4D 结构表示的位移将 PointD4D 结构平移指定的量的 5x5 仿射矩阵（左矩阵）。</returns>
-        public static Matrix OffsetMatrix(PointD4D pt)
-        {
-            return Vector.OffsetMatrix(pt.ToColumnVector());
-        }
-
         //
+
+        /// <summary>
+        /// 返回表示按双精度浮点数表示的缩放因数将 PointD4D 结构在指定的基向量方向的分量缩放指定的倍数的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD4D 结构在指定的基向量方向的分量缩放指定的倍数的 5x5 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleMatrix(int index, double s)
+        {
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, _Dimension, index, s);
+        }
 
         /// <summary>
         /// 返回表示按双精度浮点数表示的缩放因数将 PointD4D 结构的所有分量缩放指定的倍数的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
@@ -1747,6 +1769,16 @@ namespace Com
         public static Matrix ScaleMatrix(double s)
         {
             return Vector.ScaleMatrix(Vector.Type.ColumnVector, _Dimension, s);
+        }
+
+        /// <summary>
+        /// 返回表示按 PointD4D 结构表示的缩放因数将 PointD4D 结构缩放指定的倍数的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="pt">PointD4D 结构表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按 PointD4D 结构表示的缩放因数将 PointD4D 结构缩放指定的倍数的 5x5 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleMatrix(PointD4D pt)
+        {
+            return Vector.ScaleMatrix(pt.ToColumnVector());
         }
 
         /// <summary>
@@ -1762,23 +1794,13 @@ namespace Com
             return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, sx, sy, sz, su));
         }
 
-        /// <summary>
-        /// 返回表示按 PointD4D 结构表示的缩放因数将 PointD4D 结构缩放指定的倍数的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
-        /// </summary>
-        /// <param name="pt">PointD4D 结构表示的缩放因数。</param>
-        /// <returns>Matrix 对象，表示按 PointD4D 结构表示的缩放因数将 PointD4D 结构缩放指定的倍数的 5x5 仿射矩阵（左矩阵）。</returns>
-        public static Matrix ScaleMatrix(PointD4D pt)
-        {
-            return Vector.ScaleMatrix(pt.ToColumnVector());
-        }
-
         //
 
         /// <summary>
-        /// 返回表示用于翻转 PointD4D 结构的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示将 PointD4D 结构在指定的基向量方向的分量翻转的 5x5 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
-        /// <returns>Matrix 对象，表示用于翻转 PointD4D 结构的 5x5 仿射矩阵（左矩阵）。</returns>
+        /// <returns>Matrix 对象，表示将 PointD4D 结构在指定的基向量方向的分量翻转的 5x5 仿射矩阵（左矩阵）。</returns>
         public static Matrix ReflectMatrix(int index)
         {
             return Vector.ReflectMatrix(Vector.Type.ColumnVector, _Dimension, index);

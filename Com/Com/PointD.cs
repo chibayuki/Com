@@ -729,16 +729,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的位移将此 PointD 结构的所有分量平移指定的量。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        public void Offset(double d)
-        {
-            _X += d;
-            _Y += d;
-        }
-
-        /// <summary>
         /// 按双精度浮点数表示的位移将此 PointD 结构的指定的基向量方向的分量平移指定的量。
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
@@ -751,6 +741,16 @@ namespace Com
                 case 1: _Y += d; break;
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD 结构的所有分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void Offset(double d)
+        {
+            _X += d;
+            _Y += d;
         }
 
         /// <summary>
@@ -833,16 +833,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的位移将此 PointD 结构的所有分量平移指定的量的 PointD 结构的新实例。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>PointD 结构，表示按双精度浮点数表示的位移将此 PointD 结构的所有分量平移指定的量得到的结果。</returns>
-        public PointD OffsetCopy(double d)
-        {
-            return new PointD(_X + d, _Y + d);
-        }
-
-        /// <summary>
         /// 返回按双精度浮点数表示的位移将此 PointD 结构的指定的基向量方向的分量平移指定的量的 PointD 结构的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
@@ -856,6 +846,16 @@ namespace Com
                 case 1: return new PointD(_X, _Y + d);
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD 结构的所有分量平移指定的量的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD 结构，表示按双精度浮点数表示的位移将此 PointD 结构的所有分量平移指定的量得到的结果。</returns>
+        public PointD OffsetCopy(double d)
+        {
+            return new PointD(_X + d, _Y + d);
         }
 
         /// <summary>
@@ -942,16 +942,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的缩放因数将此 PointD 结构的所有分量缩放指定的倍数。
-        /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        public void Scale(double s)
-        {
-            _X *= s;
-            _Y *= s;
-        }
-
-        /// <summary>
         /// 按双精度浮点数表示的缩放因数将此 PointD 结构的指定的基向量方向的分量缩放指定的倍数。
         /// </summary>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
@@ -964,6 +954,16 @@ namespace Com
                 case 1: _Y *= s; break;
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD 结构的所有分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void Scale(double s)
+        {
+            _X *= s;
+            _Y *= s;
         }
 
         /// <summary>
@@ -1046,16 +1046,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的缩放因数将此 PointD 结构的所有分量缩放指定的倍数的 PointD 结构的新实例。
-        /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>PointD 结构，表示按双精度浮点数表示的缩放因数将此 PointD 结构的所有分量缩放指定的倍数得到的结果。</returns>
-        public PointD ScaleCopy(double s)
-        {
-            return new PointD(_X * s, _Y * s);
-        }
-
-        /// <summary>
         /// 返回按双精度浮点数表示的缩放因数将此 PointD 结构的指定的基向量方向的分量缩放指定的倍数的 PointD 结构的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
@@ -1069,6 +1059,16 @@ namespace Com
                 case 1: return new PointD(_X, _Y * s);
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD 结构的所有分量缩放指定的倍数的 PointD 结构的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD 结构，表示按双精度浮点数表示的缩放因数将此 PointD 结构的所有分量缩放指定的倍数得到的结果。</returns>
+        public PointD ScaleCopy(double s)
+        {
+            return new PointD(_X * s, _Y * s);
         }
 
         /// <summary>
@@ -1823,6 +1823,17 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回表示按双精度浮点数表示的位移将 PointD 结构在指定的基向量方向的分量平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD 结构在指定的基向量方向的分量平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetMatrix(int index, double d)
+        {
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, _Dimension, index, d);
+        }
+
+        /// <summary>
         /// 返回表示按双精度浮点数表示的位移将 PointD 结构的所有分量平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
@@ -1830,6 +1841,16 @@ namespace Com
         public static Matrix OffsetMatrix(double d)
         {
             return Vector.OffsetMatrix(Vector.Type.ColumnVector, _Dimension, d);
+        }
+
+        /// <summary>
+        /// 返回表示按 PointD 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="pt">PointD 结构表示的位移。</param>
+        /// <returns>Matrix 对象，表示按 PointD 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetMatrix(PointD pt)
+        {
+            return Vector.OffsetMatrix(pt.ToColumnVector());
         }
 
         /// <summary>
@@ -1844,13 +1865,23 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示按 PointD 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的位移将 PointD 结构在 X 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">PointD 结构表示的位移。</param>
-        /// <returns>Matrix 对象，表示按 PointD 结构表示的位移将 PointD 结构平移指定的量的 3x3 仿射矩阵（左矩阵）。</returns>
-        public static Matrix OffsetMatrix(PointD pt)
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD 结构在 X 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetXMatrix(double d)
         {
-            return Vector.OffsetMatrix(pt.ToColumnVector());
+            return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, d, 0));
+        }
+
+        /// <summary>
+        /// 返回表示按双精度浮点数表示的位移将 PointD 结构在 Y 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD 结构在 Y 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetYMatrix(double d)
+        {
+            return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, 0, d));
         }
 
         /// <summary>
@@ -1896,6 +1927,17 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回表示按双精度浮点数表示的缩放因数将 PointD 结构在指定的基向量方向的分量缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD 结构在指定的基向量方向的分量缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleMatrix(int index, double s)
+        {
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, _Dimension, index, s);
+        }
+
+        /// <summary>
         /// 返回表示按双精度浮点数表示的缩放因数将 PointD 结构的所有分量缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
@@ -1903,6 +1945,16 @@ namespace Com
         public static Matrix ScaleMatrix(double s)
         {
             return Vector.ScaleMatrix(Vector.Type.ColumnVector, _Dimension, s);
+        }
+
+        /// <summary>
+        /// 返回表示按 PointD 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="pt">PointD 结构表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按 PointD 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleMatrix(PointD pt)
+        {
+            return Vector.ScaleMatrix(pt.ToColumnVector());
         }
 
         /// <summary>
@@ -1917,13 +1969,23 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示按 PointD 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的缩放因数将 PointD 结构在 X 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">PointD 结构表示的缩放因数。</param>
-        /// <returns>Matrix 对象，表示按 PointD 结构表示的缩放因数将 PointD 结构缩放指定的倍数的 3x3 仿射矩阵（左矩阵）。</returns>
-        public static Matrix ScaleMatrix(PointD pt)
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD 结构在 X 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleXMatrix(double s)
         {
-            return Vector.ScaleMatrix(pt.ToColumnVector());
+            return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, s, 0));
+        }
+
+        /// <summary>
+        /// 返回表示按双精度浮点数表示的缩放因数将 PointD 结构在 Y 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD 结构在 Y 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleYMatrix(double s)
+        {
+            return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, 0, s));
         }
 
         /// <summary>
@@ -1969,10 +2031,10 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回表示用于翻转 PointD 结构的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示将 PointD 结构在指定的基向量方向的分量翻转的 3x3 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
-        /// <returns>Matrix 对象，表示用于翻转 PointD 结构的 3x3 仿射矩阵（左矩阵）。</returns>
+        /// <returns>Matrix 对象，表示将 PointD 结构在指定的基向量方向的分量翻转的 3x3 仿射矩阵（左矩阵）。</returns>
         public static Matrix ReflectMatrix(int index)
         {
             return Vector.ReflectMatrix(Vector.Type.ColumnVector, _Dimension, index);

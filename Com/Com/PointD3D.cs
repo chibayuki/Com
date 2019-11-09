@@ -853,17 +853,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的位移将此 PointD3D 结构的所有分量平移指定的量。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        public void Offset(double d)
-        {
-            _X += d;
-            _Y += d;
-            _Z += d;
-        }
-
-        /// <summary>
         /// 按双精度浮点数表示的位移将此 PointD3D 结构在指定的基向量方向的分量平移指定的量。
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
@@ -877,6 +866,17 @@ namespace Com
                 case 2: _Z += d; break;
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 PointD3D 结构的所有分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void Offset(double d)
+        {
+            _X += d;
+            _Y += d;
+            _Z += d;
         }
 
         /// <summary>
@@ -931,16 +931,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的位移将此 PointD3D 结构的所有分量平移指定的量的 PointD3D 结构的新实例。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的位移将此 PointD3D 结构的所有分量平移指定的量得到的结果。</returns>
-        public PointD3D OffsetCopy(double d)
-        {
-            return new PointD3D(_X + d, _Y + d, _Z + d);
-        }
-
-        /// <summary>
         /// 返回按双精度浮点数表示的位移将此 PointD3D 结构在指定的基向量方向的分量平移指定的量的 PointD3D 结构的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
@@ -955,6 +945,16 @@ namespace Com
                 case 2: return new PointD3D(_X, _Y, _Z + d);
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 PointD3D 结构的所有分量平移指定的量的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的位移将此 PointD3D 结构的所有分量平移指定的量得到的结果。</returns>
+        public PointD3D OffsetCopy(double d)
+        {
+            return new PointD3D(_X + d, _Y + d, _Z + d);
         }
 
         /// <summary>
@@ -1012,17 +1012,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的缩放因数将此 PointD3D 结构的所有分量缩放指定的倍数。
-        /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        public void Scale(double s)
-        {
-            _X *= s;
-            _Y *= s;
-            _Z *= s;
-        }
-
-        /// <summary>
         /// 按双精度浮点数表示的缩放因数将此 PointD3D 结构在指定的基向量方向的分量缩放指定的倍数。
         /// </summary>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
@@ -1036,6 +1025,17 @@ namespace Com
                 case 2: _Z *= s; break;
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 PointD3D 结构的所有分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void Scale(double s)
+        {
+            _X *= s;
+            _Y *= s;
+            _Z *= s;
         }
 
         /// <summary>
@@ -1090,16 +1090,6 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构的所有分量缩放指定的倍数的 PointD3D 结构的新实例。
-        /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的缩放因数将此 PointD3D 结构的所有分量缩放指定的倍数得到的结果。</returns>
-        public PointD3D ScaleCopy(double s)
-        {
-            return new PointD3D(_X * s, _Y * s, _Z * s);
-        }
-
-        /// <summary>
         /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构在指定的基向量方向的分量缩放指定的倍数的 PointD3D 结构的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
@@ -1114,6 +1104,16 @@ namespace Com
                 case 2: return new PointD3D(_X, _Y, _Z * s);
                 default: throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 PointD3D 结构的所有分量缩放指定的倍数的 PointD3D 结构的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的缩放因数将此 PointD3D 结构的所有分量缩放指定的倍数得到的结果。</returns>
+        public PointD3D ScaleCopy(double s)
+        {
+            return new PointD3D(_X * s, _Y * s, _Z * s);
         }
 
         /// <summary>
@@ -1966,6 +1966,17 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回表示按双精度浮点数表示的位移将 PointD3D 结构在指定的基向量方向的分量平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD3D 结构在指定的基向量方向的分量平移指定的量的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetMatrix(int index, double d)
+        {
+            return Vector.OffsetMatrix(Vector.Type.ColumnVector, _Dimension, index, d);
+        }
+
+        /// <summary>
         /// 返回表示按双精度浮点数表示的位移将 PointD3D 结构的所有分量平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
@@ -1973,6 +1984,16 @@ namespace Com
         public static Matrix OffsetMatrix(double d)
         {
             return Vector.OffsetMatrix(Vector.Type.ColumnVector, _Dimension, d);
+        }
+
+        /// <summary>
+        /// 返回表示按 PointD3D 结构表示的位移将此 PointD3D 结构平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="pt">PointD3D 结构表示的位移。</param>
+        /// <returns>Matrix 对象，表示按 PointD3D 结构表示的位移将此 PointD3D 结构平移指定的量的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetMatrix(PointD3D pt)
+        {
+            return Vector.OffsetMatrix(pt.ToColumnVector());
         }
 
         /// <summary>
@@ -1988,16 +2009,47 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示按 PointD3D 结构表示的位移将此 PointD3D 结构平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的位移将 PointD3D 结构在 X 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">PointD3D 结构表示的位移。</param>
-        /// <returns>Matrix 对象，表示按 PointD3D 结构表示的位移将此 PointD3D 结构平移指定的量的 4x4 仿射矩阵（左矩阵）。</returns>
-        public static Matrix OffsetMatrix(PointD3D pt)
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD3D 结构在 X 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetXMatrix(double d)
         {
-            return Vector.OffsetMatrix(pt.ToColumnVector());
+            return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, d, 0, 0));
+        }
+
+        /// <summary>
+        /// 返回表示按双精度浮点数表示的位移将 PointD3D 结构在 Y 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD3D 结构在 Y 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetYMatrix(double d)
+        {
+            return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, 0, d, 0));
+        }
+
+        /// <summary>
+        /// 返回表示按双精度浮点数表示的位移将 PointD3D 结构在 Z 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 PointD3D 结构在 Z 轴的分量平移指定的量的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix OffsetZMatrix(double d)
+        {
+            return Vector.OffsetMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, 0, 0, d));
         }
 
         //
+
+        /// <summary>
+        /// 返回表示按双精度浮点数表示的缩放因数将 PointD3D 结构在指定的基向量方向的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD3D 结构在指定的基向量方向的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleMatrix(int index, double s)
+        {
+            return Vector.ScaleMatrix(Vector.Type.ColumnVector, _Dimension, index, s);
+        }
 
         /// <summary>
         /// 返回表示按双精度浮点数表示的缩放因数将 PointD3D 结构的所有分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
@@ -2007,6 +2059,16 @@ namespace Com
         public static Matrix ScaleMatrix(double s)
         {
             return Vector.ScaleMatrix(Vector.Type.ColumnVector, _Dimension, s);
+        }
+
+        /// <summary>
+        /// 返回表示按 PointD3D 结构表示的缩放因数将 PointD3D 结构缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="pt">PointD3D 结构表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按 PointD3D 结构表示的缩放因数将 PointD3D 结构缩放指定的倍数的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleMatrix(PointD3D pt)
+        {
+            return Vector.ScaleMatrix(pt.ToColumnVector());
         }
 
         /// <summary>
@@ -2022,22 +2084,42 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示按 PointD3D 结构表示的缩放因数将 PointD3D 结构缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的缩放因数将 PointD3D 结构在 X 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="pt">PointD3D 结构表示的缩放因数。</param>
-        /// <returns>Matrix 对象，表示按 PointD3D 结构表示的缩放因数将 PointD3D 结构缩放指定的倍数的 4x4 仿射矩阵（左矩阵）。</returns>
-        public static Matrix ScaleMatrix(PointD3D pt)
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD3D 结构在 X 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleXMatrix(double s)
         {
-            return Vector.ScaleMatrix(pt.ToColumnVector());
+            return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, s, 0, 0));
+        }
+
+        /// <summary>
+        /// 返回表示按双精度浮点数表示的缩放因数将 PointD3D 结构在 Y 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD3D 结构在 Y 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleYMatrix(double s)
+        {
+            return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, 0, s, 0));
+        }
+
+        /// <summary>
+        /// 返回表示按双精度浮点数表示的缩放因数将 PointD3D 结构在 Z 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 PointD3D 结构在 Z 轴的分量缩放指定的倍数的 4x4 仿射矩阵（左矩阵）。</returns>
+        public static Matrix ScaleZMatrix(double s)
+        {
+            return Vector.ScaleMatrix(Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, 0, 0, s));
         }
 
         //
 
         /// <summary>
-        /// 返回表示用于翻转 PointD3D 结构的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示将 PointD3D 结构在指定的基向量方向的分量翻转的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
-        /// <returns>Matrix 对象，表示用于翻转 PointD3D 结构的 4x4 仿射矩阵（左矩阵）。</returns>
+        /// <returns>Matrix 对象，表示将 PointD3D 结构在指定的基向量方向的分量翻转的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ReflectMatrix(int index)
         {
             return Vector.ReflectMatrix(Vector.Type.ColumnVector, _Dimension, index);

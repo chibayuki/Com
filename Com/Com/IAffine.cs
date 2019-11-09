@@ -23,25 +23,19 @@ namespace Com
     public interface IAffine
     {
         /// <summary>
-        /// 按双精度浮点数表示的位移对所有分量平移指定的量。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        void Offset(double d);
-
-        /// <summary>
         /// 按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量。
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
         /// <param name="d">双精度浮点数表示的位移。</param>
         void Offset(int index, double d);
 
-        //
-
         /// <summary>
-        /// 按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数。
+        /// 按双精度浮点数表示的位移对所有分量平移指定的量。
         /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        void Scale(double s);
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        void Offset(double d);
+
+        //
 
         /// <summary>
         /// 按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数。
@@ -49,6 +43,12 @@ namespace Com
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
         void Scale(int index, double s);
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        void Scale(double s);
 
         //
 
@@ -123,6 +123,21 @@ namespace Com
     public interface IAffine<T> : IAffine where T : IVector<double>
     {
         /// <summary>
+        /// 返回按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量得到的向量。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>T，表示按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量得到的向量。</returns>
+        T OffsetCopy(int index, double d);
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的位移对所有分量平移指定的量得到的向量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>T，表示按双精度浮点数表示的位移对所有分量平移指定的量得到的向量。</returns>
+        T OffsetCopy(double d);
+
+        /// <summary>
         /// 按向量表示的位移平移指定的量。
         /// </summary>
         /// <param name="vector">向量表示的位移。</param>
@@ -135,22 +150,22 @@ namespace Com
         /// <returns>T，表示按向量表示的位移对所有分量平移指定的量得到的向量。</returns>
         T OffsetCopy(T vector);
 
-        /// <summary>
-        /// 返回按双精度浮点数表示的位移对所有分量平移指定的量得到的向量。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>T，表示按双精度浮点数表示的位移对所有分量平移指定的量得到的向量。</returns>
-        T OffsetCopy(double d);
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量得到的向量。
-        /// </summary>
-        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>T，表示按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量得到的向量。</returns>
-        T OffsetCopy(int index, double d);
-
         //
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数得到的向量。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>T，表示按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数得到的向量。</returns>
+        T ScaleCopy(int index, double s);
+
+        /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数得到的向量。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>T，表示按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数得到的向量。</returns>
+        T ScaleCopy(double s);
 
         /// <summary>
         /// 按向量表示的缩放因数缩放指定的倍数。
@@ -164,21 +179,6 @@ namespace Com
         /// <param name="vector">向量表示的缩放因数。</param>
         /// <returns>T，表示按向量表示的缩放因数缩放指定的倍数得到的向量。</returns>
         T ScaleCopy(T vector);
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数得到的向量。
-        /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>T，表示按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数得到的向量。</returns>
-        T ScaleCopy(double s);
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数得到的向量。
-        /// </summary>
-        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>T，表示按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数得到的向量。</returns>
-        T ScaleCopy(int index, double s);
 
         //
 

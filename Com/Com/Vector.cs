@@ -1233,21 +1233,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的位移将此 Vector 的所有分量平移指定的量。
-        /// </summary>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        public void Offset(double d)
-        {
-            if (_Size > 0)
-            {
-                for (int i = 0; i < _Size; i++)
-                {
-                    _VArray[i] += d;
-                }
-            }
-        }
-
-        /// <summary>
         /// 按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量。
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
@@ -1262,6 +1247,21 @@ namespace Com
             //
 
             _VArray[index] += d;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的位移将此 Vector 的所有分量平移指定的量。
+        /// </summary>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        public void Offset(double d)
+        {
+            if (_Size > 0)
+            {
+                for (int i = 0; i < _Size; i++)
+                {
+                    _VArray[i] += d;
+                }
+            }
         }
 
         /// <summary>
@@ -1295,6 +1295,28 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量得到的结果。</returns>
+        public Vector OffsetCopy(int index, double d)
+        {
+            if (_Size <= 0 || (index < 0 || index >= _Size))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            Vector result = Copy();
+
+            result._VArray[index] += d;
+
+            return result;
+        }
+
+        /// <summary>
         /// 返回按双精度浮点数表示的位移将此 Vector 的所有分量平移指定的量的新实例。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
@@ -1316,28 +1338,6 @@ namespace Com
 
                 return result;
             }
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量的新实例。
-        /// </summary>
-        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>Vector 对象，表示按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量得到的结果。</returns>
-        public Vector OffsetCopy(int index, double d)
-        {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            //
-
-            Vector result = Copy();
-
-            result._VArray[index] += d;
-
-            return result;
         }
 
         /// <summary>
@@ -1378,21 +1378,6 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的缩放因数将此 Vector 的所有分量缩放指定的倍数。
-        /// </summary>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        public void Scale(double s)
-        {
-            if (_Size > 0)
-            {
-                for (int i = 0; i < _Size; i++)
-                {
-                    _VArray[i] *= s;
-                }
-            }
-        }
-
-        /// <summary>
         /// 按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数。
         /// </summary>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
@@ -1407,6 +1392,21 @@ namespace Com
             //
 
             _VArray[index] *= s;
+        }
+
+        /// <summary>
+        /// 按双精度浮点数表示的缩放因数将此 Vector 的所有分量缩放指定的倍数。
+        /// </summary>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        public void Scale(double s)
+        {
+            if (_Size > 0)
+            {
+                for (int i = 0; i < _Size; i++)
+                {
+                    _VArray[i] *= s;
+                }
+            }
         }
 
         /// <summary>
@@ -1440,6 +1440,28 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数的新实例。
+        /// </summary>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数得到的结果。</returns>
+        public Vector ScaleCopy(int index, double s)
+        {
+            if (_Size <= 0 || (index < 0 || index >= _Size))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            Vector result = Copy();
+
+            result._VArray[index] *= s;
+
+            return result;
+        }
+
+        /// <summary>
         /// 返回按双精度浮点数表示的缩放因数将此 Vector 的所有分量缩放指定的倍数的新实例。
         /// </summary>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
@@ -1461,28 +1483,6 @@ namespace Com
 
                 return result;
             }
-        }
-
-        /// <summary>
-        /// 返回按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数的新实例。
-        /// </summary>
-        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>Vector 对象，表示按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数得到的结果。</returns>
-        public Vector ScaleCopy(int index, double s)
-        {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            //
-
-            Vector result = Copy();
-
-            result._VArray[index] *= s;
-
-            return result;
         }
 
         /// <summary>
@@ -2508,6 +2508,41 @@ namespace Com
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
+        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
+        /// <param name="d">双精度浮点数表示的位移。</param>
+        /// <returns>Matrix 对象，表示用于平移 Vector 对象的仿射矩阵。</returns>
+        public static Matrix OffsetMatrix(Type type, int dimension, int index, double d)
+        {
+            if (dimension < 0)
+            {
+                throw new OverflowException();
+            }
+            else if (index < 0 || index >= dimension)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            Matrix result = Matrix.Identity(dimension + 1);
+
+            if (type == Type.ColumnVector)
+            {
+                result[dimension, index] = d;
+            }
+            else
+            {
+                result[index, dimension] = d;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 返回表示用于平移 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
         /// <param name="d">双精度浮点数表示的位移。</param>
         /// <returns>Matrix 对象，表示用于平移 Vector 对象的仿射矩阵。</returns>
         public static Matrix OffsetMatrix(Type type, int dimension, double d)
@@ -2587,6 +2622,34 @@ namespace Com
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
+        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
+        /// <param name="s">双精度浮点数表示的缩放因数。</param>
+        /// <returns>Matrix 对象，表示用于缩放 Vector 对象的仿射矩阵。</returns>
+        public static Matrix ScaleMatrix(Type type, int dimension, int index, double s)
+        {
+            if (dimension < 0)
+            {
+                throw new OverflowException();
+            }
+            else if (index < 0 || index >= dimension)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            Matrix result = Matrix.Identity(dimension + 1);
+
+            result[index, index] = s;
+
+            return result;
+        }
+
+        /// <summary>
+        /// 返回表示用于缩放 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
         /// <returns>Matrix 对象，表示用于缩放 Vector 对象的仿射矩阵。</returns>
         public static Matrix ScaleMatrix(Type type, int dimension, double s)
@@ -2650,7 +2713,11 @@ namespace Com
         /// <returns>Matrix 对象，表示用于翻转 Vector 对象的仿射矩阵。</returns>
         public static Matrix ReflectMatrix(Type type, int dimension, int index)
         {
-            if (dimension <= 0 || (index < 0 || index >= dimension))
+            if (dimension < 0)
+            {
+                throw new OverflowException();
+            }
+            else if (index < 0 || index >= dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2675,7 +2742,11 @@ namespace Com
         /// <returns>Matrix 对象，表示用于剪切 Vector 对象的仿射矩阵。</returns>
         public static Matrix ShearMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
-            if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
+            if (dimension < 0)
+            {
+                throw new OverflowException();
+            }
+            else if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2713,7 +2784,11 @@ namespace Com
         /// <returns>Matrix 对象，表示用于旋转 Vector 对象的仿射矩阵。</returns>
         public static Matrix RotateMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
-            if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
+            if (dimension < 0)
+            {
+                throw new OverflowException();
+            }
+            else if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
             {
                 throw new ArgumentOutOfRangeException();
             }
