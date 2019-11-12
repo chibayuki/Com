@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.ColorX
-Version 19.10.14.2100
+Version 19.11.12.0000
 
 This file is part of Com
 
@@ -537,7 +537,7 @@ namespace Com
 
         //
 
-        private static readonly string _EmptyColorName = "Empty"; // Empty 颜色的名称。
+        private const string _EmptyColorName = "Empty"; // Empty 颜色的名称。
 
         //
 
@@ -561,28 +561,28 @@ namespace Com
         {
             None = 0, // 不表示任何色彩通道。
 
-            Red = (int)_ColorSpace.RGB, // RGB 色彩空间的红色通道（R）。
+            Red = _ColorSpace.RGB + 1, // RGB 色彩空间的红色通道（R）。
             Green, // RGB 色彩空间的绿色通道（G）。
             Blue, // RGB 色彩空间的蓝色通道（B）。
 
-            Hue_HSV = (int)_ColorSpace.HSV, // HSV 色彩空间的色相（H）。
+            Hue_HSV = _ColorSpace.HSV + 1, // HSV 色彩空间的色相（H）。
             Saturation_HSV, // HSV 色彩空间的饱和度（S）。
             Brightness, // HSV 色彩空间的亮度（V）。
 
-            Hue_HSL = (int)_ColorSpace.HSL, // HSL 色彩空间的色相（H）。
+            Hue_HSL = _ColorSpace.HSL + 1, // HSL 色彩空间的色相（H）。
             Saturation_HSL, // HSL 色彩空间的饱和度（S）。
             Lightness_HSL, // HSL 色彩空间的明度（L）。
 
-            Cyan = (int)_ColorSpace.CMYK, // CMYK 色彩空间的青色通道（C）。
+            Cyan = _ColorSpace.CMYK + 1, // CMYK 色彩空间的青色通道（C）。
             Magenta, // CMYK 色彩空间的洋红色通道（M）。
             Yellow, // CMYK 色彩空间的黄色通道（Y）。
             Black, // CMYK 色彩空间的黑色通道（K）。
 
-            Lightness_LAB = (int)_ColorSpace.LAB, // LAB 色彩空间的明度（L）。
+            Lightness_LAB = _ColorSpace.LAB + 1, // LAB 色彩空间的明度（L）。
             GreenRed, // LAB 色彩空间的绿色-红色通道（A）。
             BlueYellow, // LAB 色彩空间的蓝色-黄色通道（B）。
 
-            Luminance = (int)_ColorSpace.YUV, // YUV 色彩空间的亮度（Y）。
+            Luminance = _ColorSpace.YUV + 1, // YUV 色彩空间的亮度（Y）。
             ChrominanceBlue, // YUV 色彩空间的蓝色色度（U）。
             ChrominanceRed, // YUV 色彩空间的红色色度（V）。
         }
@@ -2425,8 +2425,8 @@ namespace Com
 
             //
 
-            int channelIndex = (int)colorChannel % _SpaceBase;
-            _ColorSpace colorSpace = (_ColorSpace)((int)colorChannel - channelIndex);
+            int channelIndex = (int)colorChannel % _SpaceBase - 1;
+            _ColorSpace colorSpace = (_ColorSpace)((int)colorChannel - channelIndex - 1);
 
             if (_CurrentColorSpace == _ColorSpace.None)
             {
@@ -2703,8 +2703,8 @@ namespace Com
 
             //
 
-            int channelIndex = (int)colorChannel % _SpaceBase;
-            _ColorSpace colorSpace = (_ColorSpace)((int)colorChannel - channelIndex);
+            int channelIndex = (int)colorChannel % _SpaceBase - 1;
+            _ColorSpace colorSpace = (_ColorSpace)((int)colorChannel - channelIndex - 1);
 
             if (_CurrentColorSpace == _ColorSpace.None)
             {
