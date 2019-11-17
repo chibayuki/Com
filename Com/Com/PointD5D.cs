@@ -2413,6 +2413,18 @@ namespace Com
             return new PointD5D(left._X / right._X, left._Y / right._Y, left._Z / right._Z, left._U / right._U, left._V / right._V);
         }
 
+        //
+
+        /// <summary>
+        /// 将指定的值元组隐式转换为 PointD5D 结构。
+        /// </summary>
+        /// <param name="tuple">用于转换的值元组。</param>
+        /// <returns>PointD5D 结构，表示隐式转换的结果。</returns>
+        public static implicit operator PointD5D((double, double, double, double, double) tuple)
+        {
+            return new PointD5D(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5);
+        }
+
         #endregion
 
         #region 显式接口成员实现

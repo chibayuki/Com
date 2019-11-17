@@ -2695,6 +2695,18 @@ namespace Com
             return new PointD3D(left._X / right._X, left._Y / right._Y, left._Z / right._Z);
         }
 
+        //
+
+        /// <summary>
+        /// 将指定的值元组隐式转换为 PointD3D 结构。
+        /// </summary>
+        /// <param name="tuple">用于转换的值元组。</param>
+        /// <returns>PointD3D 结构，表示隐式转换的结果。</returns>
+        public static implicit operator PointD3D((double, double, double) tuple)
+        {
+            return new PointD3D(tuple.Item1, tuple.Item2, tuple.Item3);
+        }
+
         #endregion
 
         #region 显式接口成员实现

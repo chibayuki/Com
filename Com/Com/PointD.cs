@@ -3002,6 +3002,18 @@ namespace Com
             return new PointD(sz);
         }
 
+        //
+
+        /// <summary>
+        /// 将指定的值元组隐式转换为 PointD 结构。
+        /// </summary>
+        /// <param name="tuple">用于转换的值元组。</param>
+        /// <returns>PointD 结构，表示隐式转换的结果。</returns>
+        public static implicit operator PointD((double, double) tuple)
+        {
+            return new PointD(tuple.Item1, tuple.Item2);
+        }
+
         #endregion
 
         #region 显式接口成员实现

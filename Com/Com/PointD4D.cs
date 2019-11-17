@@ -2261,6 +2261,18 @@ namespace Com
             return new PointD4D(left._X / right._X, left._Y / right._Y, left._Z / right._Z, left._U / right._U);
         }
 
+        //
+
+        /// <summary>
+        /// 将指定的值元组隐式转换为 PointD4D 结构。
+        /// </summary>
+        /// <param name="tuple">用于转换的值元组。</param>
+        /// <returns>PointD4D 结构，表示隐式转换的结果。</returns>
+        public static implicit operator PointD4D((double, double, double, double) tuple)
+        {
+            return new PointD4D(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+        }
+
         #endregion
 
         #region 显式接口成员实现
