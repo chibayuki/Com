@@ -494,9 +494,13 @@ namespace Com
             {
                 return 0;
             }
-            else if (obj == null || !(obj is PointD))
+            else if (obj == null)
             {
                 return 1;
+            }
+            else if (!(obj is PointD))
+            {
+                throw new ArgumentException();
             }
             else
             {

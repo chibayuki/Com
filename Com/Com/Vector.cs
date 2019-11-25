@@ -713,9 +713,13 @@ namespace Com
             {
                 return 0;
             }
-            else if (obj == null || !(obj is Vector))
+            else if (obj == null)
             {
                 return 1;
+            }
+            else if (!(obj is Vector))
+            {
+                throw new ArgumentException();
             }
             else
             {

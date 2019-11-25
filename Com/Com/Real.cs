@@ -999,9 +999,13 @@ namespace Com
             {
                 return 0;
             }
-            else if (obj == null || !(obj is Real))
+            else if (obj == null)
             {
                 return 1;
+            }
+            else if (!(obj is Real))
+            {
+                throw new ArgumentException();
             }
             else
             {

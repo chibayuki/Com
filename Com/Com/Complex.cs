@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Complex
-Version 19.10.14.2100
+Version 19.11.25.0000
 
 This file is part of Com
 
@@ -416,9 +416,13 @@ namespace Com
             {
                 return 0;
             }
-            else if (obj == null || !(obj is Complex))
+            else if (obj == null)
             {
                 return 1;
+            }
+            else if (!(obj is Complex))
+            {
+                throw new ArgumentException();
             }
             else
             {

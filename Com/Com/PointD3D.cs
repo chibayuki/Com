@@ -616,9 +616,13 @@ namespace Com
             {
                 return 0;
             }
-            else if (obj == null || !(obj is PointD3D))
+            else if (obj == null)
             {
                 return 1;
+            }
+            else if (!(obj is PointD3D))
+            {
+                throw new ArgumentException();
             }
             else
             {
