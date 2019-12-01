@@ -65,7 +65,7 @@ namespace Com
 
         private static void _EnsureColorNameAndArgbTable() // 初始化 32 位 ARGB 值与颜色名称的映射表。
         {
-            if (_ColorNameTable == null || _ArgbTable == null)
+            if (_ColorNameTable is null || _ArgbTable is null)
             {
                 const int transparent = 0x00FFFFFF;
                 const int aliceBlue = unchecked((int)0xFFF0F8FF);
@@ -209,7 +209,7 @@ namespace Com
                 const int yellow = unchecked((int)0xFFFFFF00);
                 const int yellowGreen = unchecked((int)0xFF9ACD32);
 
-                if (_ColorNameTable == null)
+                if (_ColorNameTable is null)
                 {
                     _ColorNameTable = new Dictionary<int, string>();
 
@@ -358,7 +358,7 @@ namespace Com
                     _ColorNameTable.Add(yellowGreen, "YellowGreen");
                 }
 
-                if (_ArgbTable == null)
+                if (_ArgbTable is null)
                 {
                     _ArgbTable = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
@@ -2176,7 +2176,7 @@ namespace Com
 
         private bool _CheckCache() // 检查缓存是否已经创建。
         {
-            return (_CachedChannels != null);
+            return (!(_CachedChannels is null));
         }
 
         private void _InitializeCache() // 初始化缓存。
@@ -2191,7 +2191,7 @@ namespace Com
 
         private bool _SearchCache(_ColorSpace colorSpace) // 检索缓存中是否存在指定色彩空间的通道值。
         {
-            return (_CachedChannels[(int)colorSpace / _SpaceBase - 1] != null);
+            return (!(_CachedChannels[(int)colorSpace / _SpaceBase - 1] is null));
         }
 
         private double[] _GetCache(_ColorSpace colorSpace) // 获取缓存中指定色彩空间的通道值。
@@ -2210,7 +2210,7 @@ namespace Com
             {
                 return true;
             }
-            else if (cache1 == null || cache2 == null)
+            else if (cache1 is null || cache2 is null)
             {
                 return false;
             }
@@ -2226,7 +2226,7 @@ namespace Com
                 {
                     for (int i = 0; i < len_c; i++)
                     {
-                        if ((cache1[i] == null) != (cache2[i] == null))
+                        if ((cache1[i] is null) != (cache2[i] is null))
                         {
                             return false;
                         }
@@ -2236,7 +2236,7 @@ namespace Com
                     {
                         double[] array1 = cache1[i];
 
-                        if (array1 != null)
+                        if (!(array1 is null))
                         {
                             double[] array2 = cache2[i];
 
@@ -2941,7 +2941,7 @@ namespace Com
             {
                 int? _argb = _GetArgbByColorName(name);
 
-                if (_argb != null)
+                if (_argb.HasValue)
                 {
                     int argb = _argb.Value;
 
@@ -3757,7 +3757,7 @@ namespace Com
             {
                 return true;
             }
-            else if (obj == null || !(obj is ColorX))
+            else if (obj is null || !(obj is ColorX))
             {
                 return false;
             }
@@ -4161,18 +4161,7 @@ namespace Com
         /// <returns>布尔值，表示两个 ColorX 结构是否相等。</returns>
         public static bool Equals(ColorX left, ColorX right)
         {
-            if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else
-            {
-                return left.Equals(right);
-            }
+            return left.Equals(right);
         }
 
         //

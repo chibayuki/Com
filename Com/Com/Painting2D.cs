@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Painting2D
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -42,7 +42,7 @@ namespace Com
         {
             try
             {
-                if (bmp == null || (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width <= 0))
+                if (bmp is null || (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width <= 0))
                 {
                     return false;
                 }
@@ -119,7 +119,7 @@ namespace Com
         {
             try
             {
-                if (bmp == null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || (InternalMethod.IsNaNOrInfinity(deltaRadius) || deltaRadius <= 0) || normalIncreasePeriod <= 0 || (color.IsEmpty || color.A == 0))
+                if (bmp is null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || (InternalMethod.IsNaNOrInfinity(deltaRadius) || deltaRadius <= 0) || normalIncreasePeriod <= 0 || (color.IsEmpty || color.A == 0))
                 {
                     return false;
                 }
@@ -189,7 +189,7 @@ namespace Com
         {
             try
             {
-                if (bmp == null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0))
+                if (bmp is null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0))
                 {
                     return false;
                 }
@@ -267,7 +267,7 @@ namespace Com
         {
             try
             {
-                if (bmp == null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || InternalMethod.IsNaNOrInfinity(refPhase) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0) || (minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv) || (InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0))
+                if (bmp is null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || InternalMethod.IsNaNOrInfinity(refPhase) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0) || (minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv) || (InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0))
                 {
                     return false;
                 }
@@ -702,7 +702,7 @@ namespace Com
         {
             try
             {
-                if (bmp == null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0) || InternalMethod.IsNaNOrInfinity(rotateAngle) || InternalMethod.IsNaNOrInfinity(refPhase) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0) || (minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv) || (InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0))
+                if (bmp is null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0) || InternalMethod.IsNaNOrInfinity(rotateAngle) || InternalMethod.IsNaNOrInfinity(refPhase) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0) || (minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv) || (InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0))
                 {
                     return false;
                 }
@@ -1204,7 +1204,7 @@ namespace Com
         {
             try
             {
-                if (bmp == null || string.IsNullOrWhiteSpace(text) || font == null || (frontColor.IsEmpty || frontColor.A == 0) || ((PointD)pt).IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(offset) || offset < 0))
+                if (bmp is null || string.IsNullOrWhiteSpace(text) || font is null || (frontColor.IsEmpty || frontColor.A == 0) || ((PointD)pt).IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(offset) || offset < 0))
                 {
                     return false;
                 }
@@ -1263,7 +1263,7 @@ namespace Com
         {
             try
             {
-                if (form == null || bmp == null || InternalMethod.IsNaNOrInfinity(opacity) || opacity <= 0)
+                if (form is null || bmp is null || InternalMethod.IsNaNOrInfinity(opacity) || opacity <= 0)
                 {
                     return false;
                 }

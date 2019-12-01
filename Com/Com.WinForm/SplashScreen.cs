@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.SplashScreen
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -58,7 +58,7 @@ namespace Com.WinForm
 
             //
 
-            if (_FormSplashBitmap != null)
+            if (!(_FormSplashBitmap is null))
             {
                 _FormSplashBitmap.Dispose();
             }
@@ -79,7 +79,7 @@ namespace Com.WinForm
             {
                 _UpdateSplashBitmap();
 
-                if (_FormSplashBitmap != null)
+                if (!(_FormSplashBitmap is null))
                 {
                     Panel_Splash.CreateGraphics().DrawImage(_FormSplashBitmap, new Point(0, 0));
                 }
@@ -119,12 +119,12 @@ namespace Com.WinForm
         {
             if (Panel_SplashScreen.Visible)
             {
-                if (_FormSplashBitmap == null)
+                if (_FormSplashBitmap is null)
                 {
                     _UpdateSplashBitmap();
                 }
 
-                if (_FormSplashBitmap != null)
+                if (!(_FormSplashBitmap is null))
                 {
                     e.Graphics.DrawImage(_FormSplashBitmap, new Point(0, 0));
                 }

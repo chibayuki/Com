@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Text
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -326,7 +326,7 @@ namespace Com
         /// <returns>字符串，表示按照指定字体与绘图宽度截取后的字符串。</returns>
         public static string StringIntercept(string text, Font font, int width)
         {
-            if (string.IsNullOrEmpty(text) || font == null)
+            if (string.IsNullOrEmpty(text) || font is null)
             {
                 return string.Empty;
             }
@@ -364,7 +364,7 @@ namespace Com
         /// <returns>Font 对象，表示使字符串的绘图区域不超过指定大小的字体。</returns>
         public static Font GetSuitableFont(string text, Font font, SizeF size)
         {
-            if (string.IsNullOrEmpty(text) || font == null)
+            if (string.IsNullOrEmpty(text) || font is null)
             {
                 return font;
             }

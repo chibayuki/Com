@@ -626,7 +626,7 @@ namespace Com
             {
                 return true;
             }
-            else if (obj == null || !(obj is Vector))
+            else if (obj is null || !(obj is Vector))
             {
                 return false;
             }
@@ -678,7 +678,7 @@ namespace Com
             {
                 return true;
             }
-            else if ((object)vector == null)
+            else if (vector is null)
             {
                 return false;
             }
@@ -713,7 +713,7 @@ namespace Com
             {
                 return 0;
             }
-            else if (obj == null)
+            else if (obj is null)
             {
                 return 1;
             }
@@ -738,7 +738,7 @@ namespace Com
             {
                 return 0;
             }
-            else if ((object)vector == null)
+            else if (vector is null)
             {
                 return 1;
             }
@@ -1810,17 +1810,17 @@ namespace Com
         /// <summary>
         /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public void AffineTransform(List<Matrix> matrixList)
+        /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public void AffineTransform(List<Matrix> matrices)
         {
-            if (InternalMethod.IsNullOrEmpty(matrixList))
+            if (InternalMethod.IsNullOrEmpty(matrices))
             {
                 throw new ArgumentNullException();
             }
 
             //
 
-            AffineTransform(matrixList.ToArray());
+            AffineTransform(matrices.ToArray());
         }
 
         /// <summary>
@@ -1972,18 +1972,18 @@ namespace Com
         /// <summary>
         /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换得到的结果。</returns>
-        public Vector AffineTransformCopy(List<Matrix> matrixList)
+        public Vector AffineTransformCopy(List<Matrix> matrices)
         {
-            if (InternalMethod.IsNullOrEmpty(matrixList))
+            if (InternalMethod.IsNullOrEmpty(matrices))
             {
                 throw new ArgumentNullException();
             }
 
             //
 
-            return AffineTransformCopy(matrixList.ToArray());
+            return AffineTransformCopy(matrices.ToArray());
         }
 
         /// <summary>
@@ -2109,17 +2109,17 @@ namespace Com
         /// <summary>
         /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        public void InverseAffineTransform(List<Matrix> matrixList)
+        /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        public void InverseAffineTransform(List<Matrix> matrices)
         {
-            if (InternalMethod.IsNullOrEmpty(matrixList))
+            if (InternalMethod.IsNullOrEmpty(matrices))
             {
                 throw new ArgumentNullException();
             }
 
             //
 
-            InverseAffineTransform(matrixList.ToArray());
+            InverseAffineTransform(matrices.ToArray());
         }
 
         /// <summary>
@@ -2265,18 +2265,18 @@ namespace Com
         /// <summary>
         /// 返回按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换的新实例。
         /// </summary>
-        /// <param name="matrixList">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换得到的结果。</returns>
-        public Vector InverseAffineTransformCopy(List<Matrix> matrixList)
+        public Vector InverseAffineTransformCopy(List<Matrix> matrices)
         {
-            if (InternalMethod.IsNullOrEmpty(matrixList))
+            if (InternalMethod.IsNullOrEmpty(matrices))
             {
                 throw new ArgumentNullException();
             }
 
             //
 
-            return InverseAffineTransformCopy(matrixList.ToArray());
+            return InverseAffineTransformCopy(matrices.ToArray());
         }
 
         //
@@ -2340,7 +2340,7 @@ namespace Com
         /// <returns>布尔值，表示指定的 Vector 是否为 null 或表示空向量。</returns>
         public static bool IsNullOrEmpty(Vector vector)
         {
-            return ((object)vector == null || vector._Size <= 0);
+            return (vector is null || vector._Size <= 0);
         }
 
         //
@@ -2357,7 +2357,7 @@ namespace Com
             {
                 return true;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return false;
             }
@@ -2381,11 +2381,11 @@ namespace Com
             {
                 return 0;
             }
-            else if ((object)left == null)
+            else if (left is null)
             {
                 return -1;
             }
-            else if ((object)right == null)
+            else if (right is null)
             {
                 return 1;
             }
@@ -3871,7 +3871,7 @@ namespace Com
 
             set
             {
-                if (value == null || !(value is double))
+                if (value is null || !(value is double))
                 {
                     throw new ArgumentNullException();
                 }
@@ -3897,7 +3897,7 @@ namespace Com
 
         bool IList.Contains(object item)
         {
-            if (item == null || !(item is double))
+            if (item is null || !(item is double))
             {
                 return false;
             }
@@ -3909,7 +3909,7 @@ namespace Com
 
         int IList.IndexOf(object item)
         {
-            if (item == null || !(item is double))
+            if (item is null || !(item is double))
             {
                 return -1;
             }
@@ -3964,7 +3964,7 @@ namespace Com
 
         void ICollection.CopyTo(Array array, int index)
         {
-            if (array == null)
+            if (array is null)
             {
                 throw new ArgumentNullException();
             }
@@ -4083,7 +4083,7 @@ namespace Com
 
         void ICollection<double>.CopyTo(double[] array, int index)
         {
-            if (_Size > 0 && (array != null && array.Length >= _Size))
+            if (_Size > 0 && (!(array is null) && array.Length >= _Size))
             {
                 _VArray.CopyTo(array, index);
             }

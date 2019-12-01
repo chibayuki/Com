@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.Resizer
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -42,7 +42,7 @@ namespace Com.WinForm
 
         private void _UpdateResizerBitmap() // 更新窗口大小调节器绘图。
         {
-            if (_ResizerBitmap != null)
+            if (!(_ResizerBitmap is null))
             {
                 _ResizerBitmap.Dispose();
             }
@@ -83,7 +83,7 @@ namespace Com.WinForm
         {
             _UpdateResizerBitmap();
 
-            if (_ResizerBitmap != null)
+            if (!(_ResizerBitmap is null))
             {
                 Painting2D.PaintImageOnTransparentForm(this, _ResizerBitmap, Me.Opacity);
             }

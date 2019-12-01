@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.ControlSubstitution
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -34,7 +34,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (control != null && !string.IsNullOrWhiteSpace(eventName) && eventHandler != null)
+                if (!(control is null) && !string.IsNullOrWhiteSpace(eventName) && !(eventHandler is null))
                 {
                     switch (eventName)
                     {
@@ -42,7 +42,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.AutoSizeChanged += _EH;
                                 }
@@ -57,7 +57,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.BackColorChanged += _EH;
                                 }
@@ -72,7 +72,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.BackgroundImageChanged += _EH;
                                 }
@@ -87,7 +87,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.BackgroundImageLayoutChanged += _EH;
                                 }
@@ -102,7 +102,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.BindingContextChanged += _EH;
                                 }
@@ -117,7 +117,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.CausesValidationChanged += _EH;
                                 }
@@ -132,7 +132,7 @@ namespace Com.WinForm
                             {
                                 UICuesEventHandler _EH = eventHandler as UICuesEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ChangeUICues += _EH;
                                 }
@@ -147,7 +147,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Click += _EH;
                                 }
@@ -162,7 +162,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ClientSizeChanged += _EH;
                                 }
@@ -177,7 +177,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ContextMenuChanged += _EH;
                                 }
@@ -192,7 +192,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ContextMenuStripChanged += _EH;
                                 }
@@ -207,7 +207,7 @@ namespace Com.WinForm
                             {
                                 ControlEventHandler _EH = eventHandler as ControlEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ControlAdded += _EH;
                                 }
@@ -222,7 +222,7 @@ namespace Com.WinForm
                             {
                                 ControlEventHandler _EH = eventHandler as ControlEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ControlRemoved += _EH;
                                 }
@@ -237,7 +237,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.CursorChanged += _EH;
                                 }
@@ -252,7 +252,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.DockChanged += _EH;
                                 }
@@ -267,7 +267,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.DoubleClick += _EH;
                                 }
@@ -282,7 +282,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.DpiChangedAfterParent += _EH;
                                 }
@@ -297,7 +297,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.DpiChangedBeforeParent += _EH;
                                 }
@@ -312,7 +312,7 @@ namespace Com.WinForm
                             {
                                 DragEventHandler _EH = eventHandler as DragEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.DragDrop += _EH;
                                 }
@@ -327,7 +327,7 @@ namespace Com.WinForm
                             {
                                 DragEventHandler _EH = eventHandler as DragEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.DragEnter += _EH;
                                 }
@@ -342,7 +342,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.DragLeave += _EH;
                                 }
@@ -357,7 +357,7 @@ namespace Com.WinForm
                             {
                                 DragEventHandler _EH = eventHandler as DragEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.DragOver += _EH;
                                 }
@@ -372,7 +372,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.EnabledChanged += _EH;
                                 }
@@ -387,7 +387,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Enter += _EH;
                                 }
@@ -402,7 +402,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.FontChanged += _EH;
                                 }
@@ -417,7 +417,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ForeColorChanged += _EH;
                                 }
@@ -432,7 +432,7 @@ namespace Com.WinForm
                             {
                                 GiveFeedbackEventHandler _EH = eventHandler as GiveFeedbackEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.GiveFeedback += _EH;
                                 }
@@ -447,7 +447,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.GotFocus += _EH;
                                 }
@@ -462,7 +462,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.HandleCreated += _EH;
                                 }
@@ -477,7 +477,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.HandleDestroyed += _EH;
                                 }
@@ -492,7 +492,7 @@ namespace Com.WinForm
                             {
                                 HelpEventHandler _EH = eventHandler as HelpEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.HelpRequested += _EH;
                                 }
@@ -507,7 +507,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ImeModeChanged += _EH;
                                 }
@@ -522,7 +522,7 @@ namespace Com.WinForm
                             {
                                 InvalidateEventHandler _EH = eventHandler as InvalidateEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Invalidated += _EH;
                                 }
@@ -537,7 +537,7 @@ namespace Com.WinForm
                             {
                                 KeyEventHandler _EH = eventHandler as KeyEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.KeyDown += _EH;
                                 }
@@ -552,7 +552,7 @@ namespace Com.WinForm
                             {
                                 KeyPressEventHandler _EH = eventHandler as KeyPressEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.KeyPress += _EH;
                                 }
@@ -567,7 +567,7 @@ namespace Com.WinForm
                             {
                                 KeyEventHandler _EH = eventHandler as KeyEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.KeyUp += _EH;
                                 }
@@ -582,7 +582,7 @@ namespace Com.WinForm
                             {
                                 LayoutEventHandler _EH = eventHandler as LayoutEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Layout += _EH;
                                 }
@@ -597,7 +597,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Leave += _EH;
                                 }
@@ -612,7 +612,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.LocationChanged += _EH;
                                 }
@@ -627,7 +627,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.LostFocus += _EH;
                                 }
@@ -642,7 +642,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MarginChanged += _EH;
                                 }
@@ -657,7 +657,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseCaptureChanged += _EH;
                                 }
@@ -672,7 +672,7 @@ namespace Com.WinForm
                             {
                                 MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseClick += _EH;
                                 }
@@ -687,7 +687,7 @@ namespace Com.WinForm
                             {
                                 MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseDoubleClick += _EH;
                                 }
@@ -702,7 +702,7 @@ namespace Com.WinForm
                             {
                                 MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseDown += _EH;
                                 }
@@ -717,7 +717,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseEnter += _EH;
                                 }
@@ -732,7 +732,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseHover += _EH;
                                 }
@@ -747,7 +747,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseLeave += _EH;
                                 }
@@ -762,7 +762,7 @@ namespace Com.WinForm
                             {
                                 MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseMove += _EH;
                                 }
@@ -777,7 +777,7 @@ namespace Com.WinForm
                             {
                                 MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseUp += _EH;
                                 }
@@ -792,7 +792,7 @@ namespace Com.WinForm
                             {
                                 MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.MouseWheel += _EH;
                                 }
@@ -807,7 +807,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Move += _EH;
                                 }
@@ -822,7 +822,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.PaddingChanged += _EH;
                                 }
@@ -837,7 +837,7 @@ namespace Com.WinForm
                             {
                                 PaintEventHandler _EH = eventHandler as PaintEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Paint += _EH;
                                 }
@@ -852,7 +852,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.ParentChanged += _EH;
                                 }
@@ -867,7 +867,7 @@ namespace Com.WinForm
                             {
                                 PreviewKeyDownEventHandler _EH = eventHandler as PreviewKeyDownEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.PreviewKeyDown += _EH;
                                 }
@@ -882,7 +882,7 @@ namespace Com.WinForm
                             {
                                 QueryAccessibilityHelpEventHandler _EH = eventHandler as QueryAccessibilityHelpEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.QueryAccessibilityHelp += _EH;
                                 }
@@ -897,7 +897,7 @@ namespace Com.WinForm
                             {
                                 QueryContinueDragEventHandler _EH = eventHandler as QueryContinueDragEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.QueryContinueDrag += _EH;
                                 }
@@ -912,7 +912,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.RegionChanged += _EH;
                                 }
@@ -927,7 +927,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Resize += _EH;
                                 }
@@ -942,7 +942,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.RightToLeftChanged += _EH;
                                 }
@@ -957,7 +957,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.SizeChanged += _EH;
                                 }
@@ -972,7 +972,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.StyleChanged += _EH;
                                 }
@@ -987,7 +987,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.SystemColorsChanged += _EH;
                                 }
@@ -1002,7 +1002,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.TabIndexChanged += _EH;
                                 }
@@ -1017,7 +1017,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.TabStopChanged += _EH;
                                 }
@@ -1032,7 +1032,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.TextChanged += _EH;
                                 }
@@ -1047,7 +1047,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Validated += _EH;
                                 }
@@ -1062,7 +1062,7 @@ namespace Com.WinForm
                             {
                                 CancelEventHandler _EH = eventHandler as CancelEventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.Validating += _EH;
                                 }
@@ -1077,7 +1077,7 @@ namespace Com.WinForm
                             {
                                 EventHandler _EH = eventHandler as EventHandler;
 
-                                if (_EH != null)
+                                if (!(_EH is null))
                                 {
                                     control.VisibleChanged += _EH;
                                 }
@@ -1111,7 +1111,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (control != null && !string.IsNullOrWhiteSpace(eventName))
+                if (!(control is null) && !string.IsNullOrWhiteSpace(eventName))
                 {
                     string hashKey = string.Concat(control.GetType().FullName, "|", control.GetHashCode(), "|", control.Name, "|", eventName);
 
@@ -1121,7 +1121,7 @@ namespace Com.WinForm
 
                         Delegate delegates = _Events[eventKey];
 
-                        if (delegates != null)
+                        if (!(delegates is null))
                         {
                             Delegate[] delegateList = delegates.GetInvocationList();
 
@@ -1133,7 +1133,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.AutoSizeChanged -= _EH;
                                             }
@@ -1144,7 +1144,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.BackColorChanged -= _EH;
                                             }
@@ -1155,7 +1155,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.BackgroundImageChanged -= _EH;
                                             }
@@ -1166,7 +1166,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.BackgroundImageLayoutChanged -= _EH;
                                             }
@@ -1177,7 +1177,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.BindingContextChanged -= _EH;
                                             }
@@ -1188,7 +1188,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.CausesValidationChanged -= _EH;
                                             }
@@ -1199,7 +1199,7 @@ namespace Com.WinForm
                                         {
                                             UICuesEventHandler _EH = eventHandler as UICuesEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ChangeUICues -= _EH;
                                             }
@@ -1210,7 +1210,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Click -= _EH;
                                             }
@@ -1221,7 +1221,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ClientSizeChanged -= _EH;
                                             }
@@ -1232,7 +1232,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ContextMenuChanged -= _EH;
                                             }
@@ -1243,7 +1243,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ContextMenuStripChanged -= _EH;
                                             }
@@ -1254,7 +1254,7 @@ namespace Com.WinForm
                                         {
                                             ControlEventHandler _EH = eventHandler as ControlEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ControlAdded -= _EH;
                                             }
@@ -1265,7 +1265,7 @@ namespace Com.WinForm
                                         {
                                             ControlEventHandler _EH = eventHandler as ControlEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ControlRemoved -= _EH;
                                             }
@@ -1276,7 +1276,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.CursorChanged -= _EH;
                                             }
@@ -1287,7 +1287,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.DockChanged -= _EH;
                                             }
@@ -1298,7 +1298,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.DoubleClick -= _EH;
                                             }
@@ -1309,7 +1309,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.DpiChangedAfterParent -= _EH;
                                             }
@@ -1320,7 +1320,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.DpiChangedBeforeParent -= _EH;
                                             }
@@ -1331,7 +1331,7 @@ namespace Com.WinForm
                                         {
                                             DragEventHandler _EH = eventHandler as DragEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.DragDrop -= _EH;
                                             }
@@ -1342,7 +1342,7 @@ namespace Com.WinForm
                                         {
                                             DragEventHandler _EH = eventHandler as DragEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.DragEnter -= _EH;
                                             }
@@ -1353,7 +1353,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.DragLeave -= _EH;
                                             }
@@ -1364,7 +1364,7 @@ namespace Com.WinForm
                                         {
                                             DragEventHandler _EH = eventHandler as DragEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.DragOver -= _EH;
                                             }
@@ -1375,7 +1375,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.EnabledChanged -= _EH;
                                             }
@@ -1386,7 +1386,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Enter -= _EH;
                                             }
@@ -1397,7 +1397,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.FontChanged -= _EH;
                                             }
@@ -1408,7 +1408,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ForeColorChanged -= _EH;
                                             }
@@ -1419,7 +1419,7 @@ namespace Com.WinForm
                                         {
                                             GiveFeedbackEventHandler _EH = eventHandler as GiveFeedbackEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.GiveFeedback -= _EH;
                                             }
@@ -1430,7 +1430,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.GotFocus -= _EH;
                                             }
@@ -1441,7 +1441,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.HandleCreated -= _EH;
                                             }
@@ -1452,7 +1452,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.HandleDestroyed -= _EH;
                                             }
@@ -1463,7 +1463,7 @@ namespace Com.WinForm
                                         {
                                             HelpEventHandler _EH = eventHandler as HelpEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.HelpRequested -= _EH;
                                             }
@@ -1474,7 +1474,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ImeModeChanged -= _EH;
                                             }
@@ -1485,7 +1485,7 @@ namespace Com.WinForm
                                         {
                                             InvalidateEventHandler _EH = eventHandler as InvalidateEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Invalidated -= _EH;
                                             }
@@ -1496,7 +1496,7 @@ namespace Com.WinForm
                                         {
                                             KeyEventHandler _EH = eventHandler as KeyEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.KeyDown -= _EH;
                                             }
@@ -1507,7 +1507,7 @@ namespace Com.WinForm
                                         {
                                             KeyPressEventHandler _EH = eventHandler as KeyPressEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.KeyPress -= _EH;
                                             }
@@ -1518,7 +1518,7 @@ namespace Com.WinForm
                                         {
                                             KeyEventHandler _EH = eventHandler as KeyEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.KeyUp -= _EH;
                                             }
@@ -1529,7 +1529,7 @@ namespace Com.WinForm
                                         {
                                             LayoutEventHandler _EH = eventHandler as LayoutEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Layout -= _EH;
                                             }
@@ -1540,7 +1540,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Leave -= _EH;
                                             }
@@ -1551,7 +1551,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.LocationChanged -= _EH;
                                             }
@@ -1562,7 +1562,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.LostFocus -= _EH;
                                             }
@@ -1573,7 +1573,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MarginChanged -= _EH;
                                             }
@@ -1584,7 +1584,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseCaptureChanged -= _EH;
                                             }
@@ -1595,7 +1595,7 @@ namespace Com.WinForm
                                         {
                                             MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseClick -= _EH;
                                             }
@@ -1606,7 +1606,7 @@ namespace Com.WinForm
                                         {
                                             MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseDoubleClick -= _EH;
                                             }
@@ -1617,7 +1617,7 @@ namespace Com.WinForm
                                         {
                                             MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseDown -= _EH;
                                             }
@@ -1628,7 +1628,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseEnter -= _EH;
                                             }
@@ -1639,7 +1639,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseHover -= _EH;
                                             }
@@ -1650,7 +1650,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseLeave -= _EH;
                                             }
@@ -1661,7 +1661,7 @@ namespace Com.WinForm
                                         {
                                             MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseMove -= _EH;
                                             }
@@ -1672,7 +1672,7 @@ namespace Com.WinForm
                                         {
                                             MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseUp -= _EH;
                                             }
@@ -1683,7 +1683,7 @@ namespace Com.WinForm
                                         {
                                             MouseEventHandler _EH = eventHandler as MouseEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.MouseWheel -= _EH;
                                             }
@@ -1694,7 +1694,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Move -= _EH;
                                             }
@@ -1705,7 +1705,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.PaddingChanged -= _EH;
                                             }
@@ -1716,7 +1716,7 @@ namespace Com.WinForm
                                         {
                                             PaintEventHandler _EH = eventHandler as PaintEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Paint -= _EH;
                                             }
@@ -1727,7 +1727,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.ParentChanged -= _EH;
                                             }
@@ -1738,7 +1738,7 @@ namespace Com.WinForm
                                         {
                                             PreviewKeyDownEventHandler _EH = eventHandler as PreviewKeyDownEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.PreviewKeyDown -= _EH;
                                             }
@@ -1749,7 +1749,7 @@ namespace Com.WinForm
                                         {
                                             QueryAccessibilityHelpEventHandler _EH = eventHandler as QueryAccessibilityHelpEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.QueryAccessibilityHelp -= _EH;
                                             }
@@ -1760,7 +1760,7 @@ namespace Com.WinForm
                                         {
                                             QueryContinueDragEventHandler _EH = eventHandler as QueryContinueDragEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.QueryContinueDrag -= _EH;
                                             }
@@ -1771,7 +1771,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.RegionChanged -= _EH;
                                             }
@@ -1782,7 +1782,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Resize -= _EH;
                                             }
@@ -1793,7 +1793,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.RightToLeftChanged -= _EH;
                                             }
@@ -1804,7 +1804,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.SizeChanged -= _EH;
                                             }
@@ -1815,7 +1815,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.StyleChanged -= _EH;
                                             }
@@ -1826,7 +1826,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.SystemColorsChanged -= _EH;
                                             }
@@ -1837,7 +1837,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.TabIndexChanged -= _EH;
                                             }
@@ -1848,7 +1848,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.TabStopChanged -= _EH;
                                             }
@@ -1859,7 +1859,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.TextChanged -= _EH;
                                             }
@@ -1870,7 +1870,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Validated -= _EH;
                                             }
@@ -1881,7 +1881,7 @@ namespace Com.WinForm
                                         {
                                             CancelEventHandler _EH = eventHandler as CancelEventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.Validating -= _EH;
                                             }
@@ -1892,7 +1892,7 @@ namespace Com.WinForm
                                         {
                                             EventHandler _EH = eventHandler as EventHandler;
 
-                                            if (_EH != null)
+                                            if (!(_EH is null))
                                             {
                                                 control.VisibleChanged -= _EH;
                                             }
@@ -1934,7 +1934,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     if (backColor.IsEmpty)
                     {
@@ -1974,7 +1974,7 @@ namespace Com.WinForm
                         }
                     }
 
-                    if (font == null)
+                    if (font is null)
                     {
                         mouseOverFont = mouseDownFont = null;
                     }
@@ -1982,12 +1982,12 @@ namespace Com.WinForm
                     {
                         label.Font = font;
 
-                        if (mouseOverFont == null)
+                        if (mouseOverFont is null)
                         {
                             mouseOverFont = font;
                         }
 
-                        if (mouseDownFont == null)
+                        if (mouseDownFont is null)
                         {
                             mouseDownFont = font;
                         }
@@ -2007,14 +2007,14 @@ namespace Com.WinForm
                             label.ForeColor = mouseOverForeColor;
                         }
 
-                        if (mouseOverFont != null)
+                        if (!(mouseOverFont is null))
                         {
                             label.Font = mouseOverFont;
                         }
 
                         //
 
-                        if (mouseEnterEvent != null)
+                        if (!(mouseEnterEvent is null))
                         {
                             mouseEnterEvent(sender, e);
                         }
@@ -2032,14 +2032,14 @@ namespace Com.WinForm
                             label.ForeColor = foreColor;
                         }
 
-                        if (font != null)
+                        if (!(font is null))
                         {
                             label.Font = font;
                         }
 
                         //
 
-                        if (mouseLeaveEvent != null)
+                        if (!(mouseLeaveEvent is null))
                         {
                             mouseLeaveEvent(sender, e);
                         }
@@ -2059,7 +2059,7 @@ namespace Com.WinForm
                                 label.ForeColor = mouseDownForeColor;
                             }
 
-                            if (mouseDownFont != null)
+                            if (!(mouseDownFont is null))
                             {
                                 label.Font = mouseDownFont;
                             }
@@ -2082,7 +2082,7 @@ namespace Com.WinForm
                                     label.ForeColor = mouseOverForeColor;
                                 }
 
-                                if (mouseOverFont != null)
+                                if (!(mouseOverFont is null))
                                 {
                                     label.Font = mouseOverFont;
                                 }
@@ -2099,7 +2099,7 @@ namespace Com.WinForm
                                     label.ForeColor = foreColor;
                                 }
 
-                                if (font != null)
+                                if (!(font is null))
                                 {
                                     label.Font = font;
                                 }
@@ -2109,7 +2109,7 @@ namespace Com.WinForm
 
                     MouseEventHandler MouseClick = (sender, e) =>
                     {
-                        if (clickEvent != null && e.Button == MouseButtons.Left)
+                        if (!(clickEvent is null) && e.Button == MouseButtons.Left)
                         {
                             clickEvent(sender, EventArgs.Empty);
                         }
@@ -2117,7 +2117,7 @@ namespace Com.WinForm
 
                     MouseEventHandler MouseDoubleClick = (sender, e) =>
                     {
-                        if (doubleClickEvent != null && e.Button == MouseButtons.Left)
+                        if (!(doubleClickEvent is null) && e.Button == MouseButtons.Left)
                         {
                             doubleClickEvent(sender, EventArgs.Empty);
                         }
@@ -2161,7 +2161,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, mouseEnterEvent, mouseLeaveEvent, backColor, mouseOverBackColor, mouseDownBackColor, font, mouseOverFont, mouseDownFont, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2187,7 +2187,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, mouseEnterEvent, mouseLeaveEvent, Color.Empty, Color.Empty, Color.Empty, font, mouseOverFont, mouseDownFont, foreColor, mouseOverForeColor, mouseDownForeColor);
                 }
@@ -2213,7 +2213,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, mouseEnterEvent, mouseLeaveEvent, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null, foreColor, mouseOverForeColor, mouseDownForeColor);
                 }
@@ -2236,7 +2236,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, mouseEnterEvent, mouseLeaveEvent, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2256,7 +2256,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, mouseEnterEvent, mouseLeaveEvent, Color.Empty, Color.Empty, Color.Empty, null, null, null, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2283,7 +2283,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, null, null, backColor, mouseOverBackColor, mouseDownBackColor, font, mouseOverFont, mouseDownFont, foreColor, mouseOverForeColor, mouseDownForeColor);
                 }
@@ -2307,7 +2307,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, null, null, backColor, mouseOverBackColor, mouseDownBackColor, font, mouseOverFont, mouseDownFont, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2331,7 +2331,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, null, null, Color.Empty, Color.Empty, Color.Empty, font, mouseOverFont, mouseDownFont, foreColor, mouseOverForeColor, mouseDownForeColor);
                 }
@@ -2355,7 +2355,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, null, null, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null, foreColor, mouseOverForeColor, mouseDownForeColor);
                 }
@@ -2376,7 +2376,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, null, null, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2394,7 +2394,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, doubleClickEvent, null, null, Color.Empty, Color.Empty, Color.Empty, null, null, null, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2420,7 +2420,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, null, null, null, backColor, mouseOverBackColor, mouseDownBackColor, font, mouseOverFont, mouseDownFont, foreColor, mouseOverForeColor, mouseDownForeColor);
                 }
@@ -2443,7 +2443,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, null, null, null, backColor, mouseOverBackColor, mouseDownBackColor, font, mouseOverFont, mouseDownFont, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2466,7 +2466,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, null, null, null, Color.Empty, Color.Empty, Color.Empty, font, mouseOverFont, mouseDownFont, foreColor, mouseOverForeColor, mouseDownForeColor);
                 }
@@ -2489,7 +2489,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, null, null, null, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null, foreColor, mouseOverForeColor, mouseDownForeColor);
                 }
@@ -2509,7 +2509,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, null, null, null, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2526,7 +2526,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (label != null)
+                if (!(label is null))
                 {
                     LabelAsButton(label, clickEvent, null, null, null, Color.Empty, Color.Empty, Color.Empty, null, null, null, Color.Empty, Color.Empty, Color.Empty);
                 }
@@ -2554,7 +2554,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     if (backColor.IsEmpty)
                     {
@@ -2575,7 +2575,7 @@ namespace Com.WinForm
                         }
                     }
 
-                    if (image == null)
+                    if (image is null)
                     {
                         mouseOverImage = mouseDownImage = null;
                     }
@@ -2583,12 +2583,12 @@ namespace Com.WinForm
                     {
                         pictureBox.Image = image;
 
-                        if (mouseOverImage == null)
+                        if (mouseOverImage is null)
                         {
                             mouseOverImage = image;
                         }
 
-                        if (mouseDownImage == null)
+                        if (mouseDownImage is null)
                         {
                             mouseDownImage = image;
                         }
@@ -2603,14 +2603,14 @@ namespace Com.WinForm
                             pictureBox.BackColor = mouseOverBackColor;
                         }
 
-                        if (mouseOverImage != null)
+                        if (!(mouseOverImage is null))
                         {
                             pictureBox.Image = mouseOverImage;
                         }
 
                         //
 
-                        if (mouseEnterEvent != null)
+                        if (!(mouseEnterEvent is null))
                         {
                             mouseEnterEvent(sender, e);
                         }
@@ -2623,14 +2623,14 @@ namespace Com.WinForm
                             pictureBox.BackColor = backColor;
                         }
 
-                        if (image != null)
+                        if (!(image is null))
                         {
                             pictureBox.Image = image;
                         }
 
                         //
 
-                        if (mouseLeaveEvent != null)
+                        if (!(mouseLeaveEvent is null))
                         {
                             mouseLeaveEvent(sender, e);
                         }
@@ -2645,7 +2645,7 @@ namespace Com.WinForm
                                 pictureBox.BackColor = mouseDownBackColor;
                             }
 
-                            if (mouseDownImage != null)
+                            if (!(mouseDownImage is null))
                             {
                                 pictureBox.Image = mouseDownImage;
                             }
@@ -2663,7 +2663,7 @@ namespace Com.WinForm
                                     pictureBox.BackColor = mouseOverBackColor;
                                 }
 
-                                if (mouseOverImage != null)
+                                if (!(mouseOverImage is null))
                                 {
                                     pictureBox.Image = mouseOverImage;
                                 }
@@ -2675,7 +2675,7 @@ namespace Com.WinForm
                                     pictureBox.BackColor = backColor;
                                 }
 
-                                if (image != null)
+                                if (!(image is null))
                                 {
                                     pictureBox.Image = image;
                                 }
@@ -2685,7 +2685,7 @@ namespace Com.WinForm
 
                     MouseEventHandler MouseClick = (sender, e) =>
                     {
-                        if (clickEvent != null && e.Button == MouseButtons.Left)
+                        if (!(clickEvent is null) && e.Button == MouseButtons.Left)
                         {
                             clickEvent(sender, EventArgs.Empty);
                         }
@@ -2693,7 +2693,7 @@ namespace Com.WinForm
 
                     MouseEventHandler MouseDoubleClick = (sender, e) =>
                     {
-                        if (doubleClickEvent != null && e.Button == MouseButtons.Left)
+                        if (!(doubleClickEvent is null) && e.Button == MouseButtons.Left)
                         {
                             doubleClickEvent(sender, EventArgs.Empty);
                         }
@@ -2734,7 +2734,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, doubleClickEvent, mouseEnterEvent, mouseLeaveEvent, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null);
                 }
@@ -2757,7 +2757,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, doubleClickEvent, mouseEnterEvent, mouseLeaveEvent, Color.Empty, Color.Empty, Color.Empty, image, mouseOverImage, mouseDownImage);
                 }
@@ -2777,7 +2777,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, doubleClickEvent, mouseEnterEvent, mouseLeaveEvent, Color.Empty, Color.Empty, Color.Empty, null, null, null);
                 }
@@ -2801,7 +2801,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, doubleClickEvent, null, null, backColor, mouseOverBackColor, mouseDownBackColor, image, mouseOverImage, mouseDownImage);
                 }
@@ -2822,7 +2822,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, doubleClickEvent, null, null, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null);
                 }
@@ -2843,7 +2843,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, doubleClickEvent, null, null, Color.Empty, Color.Empty, Color.Empty, image, mouseOverImage, mouseDownImage);
                 }
@@ -2861,7 +2861,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, doubleClickEvent, null, null, Color.Empty, Color.Empty, Color.Empty, null, null, null);
                 }
@@ -2884,7 +2884,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, null, null, null, backColor, mouseOverBackColor, mouseDownBackColor, image, mouseOverImage, mouseDownImage);
                 }
@@ -2904,7 +2904,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, null, null, null, backColor, mouseOverBackColor, mouseDownBackColor, null, null, null);
                 }
@@ -2924,7 +2924,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, null, null, null, Color.Empty, Color.Empty, Color.Empty, image, mouseOverImage, mouseDownImage);
                 }
@@ -2941,7 +2941,7 @@ namespace Com.WinForm
         {
             try
             {
-                if (pictureBox != null)
+                if (!(pictureBox is null))
                 {
                     PictureBoxAsButton(pictureBox, clickEvent, null, null, null, Color.Empty, Color.Empty, Color.Empty, null, null, null);
                 }

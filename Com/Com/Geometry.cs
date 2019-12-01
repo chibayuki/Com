@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Geometry
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -275,7 +275,7 @@ namespace Com
         /// <returns>Point 结构，表示鼠标相对于控件的坐标。</returns>
         public static Point GetCursorPositionOfControl(Control ctrl)
         {
-            if (ctrl == null)
+            if (ctrl is null)
             {
                 return Point.Empty;
             }
@@ -292,7 +292,7 @@ namespace Com
         /// <returns>布尔值，表示鼠标指针是否在控件内部。</returns>
         public static bool CursorIsInControl(Control ctrl)
         {
-            if (ctrl == null)
+            if (ctrl is null)
             {
                 return false;
             }
@@ -312,7 +312,7 @@ namespace Com
         /// <returns>布尔值，表示控件坐标系中的一个点是否在控件内部。</returns>
         public static bool PointIsInControl(Point pt, Control ctrl)
         {
-            if (ctrl == null)
+            if (ctrl is null)
             {
                 return false;
             }
@@ -330,7 +330,7 @@ namespace Com
         /// <returns>布尔值，表示屏幕坐标系中的一个点是否在控件内部。</returns>
         public static bool ScreenPointIsInControl(Point pt, Control ctrl)
         {
-            if (ctrl == null)
+            if (ctrl is null)
             {
                 return false;
             }
@@ -360,7 +360,7 @@ namespace Com
 
                 foreach (Control Ctrl in ctrls)
                 {
-                    if (Ctrl != null)
+                    if (!(Ctrl is null))
                     {
                         L = Math.Min(L, Ctrl.Left);
                         T = Math.Min(T, Ctrl.Top);
@@ -814,7 +814,7 @@ namespace Com
         /// <returns>Bitmap 对象，表示将位图的副本按顺时针方向旋转一个角度得到的结果。</returns>
         public static Bitmap RotateBitmap(Bitmap bmp, double rotateAngle, bool antiAlias)
         {
-            if (bmp == null || InternalMethod.IsNaNOrInfinity(rotateAngle))
+            if (bmp is null || InternalMethod.IsNaNOrInfinity(rotateAngle))
             {
                 return null;
             }

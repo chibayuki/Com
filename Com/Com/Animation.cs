@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Animation
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -44,7 +44,7 @@ namespace Com
         {
             try
             {
-                if (frame == null)
+                if (frame is null)
                 {
                     throw new ArgumentNullException();
                 }
@@ -56,7 +56,7 @@ namespace Com
 
                 //
 
-                if (keyFrameList == null)
+                if (keyFrameList is null)
                 {
                     keyFrameList = new List<int>(0);
                 }

@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.RecommendColors
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -874,7 +874,7 @@ namespace Com.WinForm
             {
                 return true;
             }
-            else if (obj == null || !(obj is RecommendColors))
+            else if (obj is null || !(obj is RecommendColors))
             {
                 return false;
             }
@@ -911,7 +911,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此 RecommendColors 是否与指定的 RecommendColors 对象相等。</returns>
         public bool Equals(RecommendColors recommendColors)
         {
-            if ((object)recommendColors == null)
+            if (recommendColors is null)
             {
                 return false;
             }
@@ -941,7 +941,7 @@ namespace Com.WinForm
             {
                 return true;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return false;
             }
@@ -967,7 +967,7 @@ namespace Com.WinForm
             {
                 return true;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return false;
             }
@@ -989,7 +989,7 @@ namespace Com.WinForm
             {
                 return false;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return true;
             }

@@ -796,7 +796,7 @@ namespace Com
             {
                 return true;
             }
-            else if (obj == null || !(obj is PointD6D))
+            else if (obj is null || !(obj is PointD6D))
             {
                 return false;
             }
@@ -849,7 +849,7 @@ namespace Com
             {
                 return 0;
             }
-            else if (obj == null)
+            else if (obj is null)
             {
                 return 1;
             }
@@ -1495,10 +1495,10 @@ namespace Com
         /// <summary>
         /// 按 Matrix 对象列表表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行仿射变换。
         /// </summary>
-        /// <param name="matrixLeftList">Matrix 对象列表，表示 7x7 仿射矩阵（左矩阵）列表。</param>
-        public void AffineTransform(List<Matrix> matrixLeftList)
+        /// <param name="matricesLeft">Matrix 对象列表，表示 7x7 仿射矩阵（左矩阵）列表。</param>
+        public void AffineTransform(List<Matrix> matricesLeft)
         {
-            Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
+            Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
 
             _UpdateByVector(result);
         }
@@ -1559,11 +1559,11 @@ namespace Com
         /// <summary>
         /// 返回按 Matrix 对象列表表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行仿射变换的 PointD6D 结构的新实例。
         /// </summary>
-        /// <param name="matrixLeftList">Matrix 对象列表，表示 7x7 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matricesLeft">Matrix 对象列表，表示 7x7 仿射矩阵（左矩阵）列表。</param>
         /// <returns>PointD6D 结构，表示按 Matrix 对象列表表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行仿射变换得到的结果。</returns>
-        public PointD6D AffineTransformCopy(List<Matrix> matrixLeftList)
+        public PointD6D AffineTransformCopy(List<Matrix> matricesLeft)
         {
-            Vector result = ToColumnVector().AffineTransformCopy(matrixLeftList);
+            Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
 
             return FromVector(result);
         }
@@ -1621,10 +1621,10 @@ namespace Com
         /// <summary>
         /// 按 Matrix 对象列表表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行逆仿射变换。
         /// </summary>
-        /// <param name="matrixLeftList">Matrix 对象列表，表示 7x7 仿射矩阵（左矩阵）列表。</param>
-        public void InverseAffineTransform(List<Matrix> matrixLeftList)
+        /// <param name="matricesLeft">Matrix 对象列表，表示 7x7 仿射矩阵（左矩阵）列表。</param>
+        public void InverseAffineTransform(List<Matrix> matricesLeft)
         {
-            Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
+            Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
 
             _UpdateByVector(result);
         }
@@ -1685,11 +1685,11 @@ namespace Com
         /// <summary>
         /// 返回按 Matrix 对象列表表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行逆仿射变换的 PointD6D 结构的新实例。
         /// </summary>
-        /// <param name="matrixLeftList">Matrix 对象列表，表示 7x7 仿射矩阵（左矩阵）列表。</param>
+        /// <param name="matricesLeft">Matrix 对象列表，表示 7x7 仿射矩阵（左矩阵）列表。</param>
         /// <returns>PointD6D 结构，表示按 Matrix 对象列表表示的 7x7 仿射矩阵（左矩阵）列表将此 PointD6D 结构进行逆仿射变换得到的结果。</returns>
-        public PointD6D InverseAffineTransformCopy(List<Matrix> matrixLeftList)
+        public PointD6D InverseAffineTransformCopy(List<Matrix> matricesLeft)
         {
-            Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeftList);
+            Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
 
             return FromVector(result);
         }
@@ -1932,18 +1932,7 @@ namespace Com
         /// <returns>布尔值，表示两个 PointD6D 结构是否相等。</returns>
         public static bool Equals(PointD6D left, PointD6D right)
         {
-            if (object.ReferenceEquals(left, right))
-            {
-                return true;
-            }
-            else if ((object)left == null || (object)right == null)
-            {
-                return false;
-            }
-            else
-            {
-                return left.Equals(right);
-            }
+            return left.Equals(right);
         }
 
         //
@@ -1956,22 +1945,7 @@ namespace Com
         /// <returns>32 位整数，表示将两个 PointD6D 结构进行次序比较得到的结果。</returns>
         public static int Compare(PointD6D left, PointD6D right)
         {
-            if (object.ReferenceEquals(left, right))
-            {
-                return 0;
-            }
-            else if ((object)left == null)
-            {
-                return -1;
-            }
-            else if ((object)right == null)
-            {
-                return 1;
-            }
-            else
-            {
-                return left.CompareTo(right);
-            }
+            return left.CompareTo(right);
         }
 
         //
@@ -2628,7 +2602,7 @@ namespace Com
 
             set
             {
-                if (value == null || !(value is double))
+                if (value is null || !(value is double))
                 {
                     throw new ArgumentNullException();
                 }
@@ -2651,7 +2625,7 @@ namespace Com
 
         bool IList.Contains(object item)
         {
-            if (item == null || !(item is double))
+            if (item is null || !(item is double))
             {
                 return false;
             }
@@ -2663,7 +2637,7 @@ namespace Com
 
         int IList.IndexOf(object item)
         {
-            if (item == null || !(item is double))
+            if (item is null || !(item is double))
             {
                 return -1;
             }
@@ -2718,7 +2692,7 @@ namespace Com
 
         void ICollection.CopyTo(Array array, int index)
         {
-            if (array == null)
+            if (array is null)
             {
                 throw new ArgumentNullException();
             }
@@ -2831,7 +2805,7 @@ namespace Com
 
         void ICollection<double>.CopyTo(double[] array, int index)
         {
-            if (array != null && array.Length >= _Dimension)
+            if (!(array is null) && array.Length >= _Dimension)
             {
                 ToArray().CopyTo(array, index);
             }

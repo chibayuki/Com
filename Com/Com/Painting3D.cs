@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.Painting3D
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -51,18 +51,18 @@ namespace Com
         /// <param name="size">长方体的大小。</param>
         /// <param name="color">长方体的颜色。</param>
         /// <param name="edgeWidth">长方体的棱的宽度。</param>
-        /// <param name="affineMatrixList">仿射矩阵（左矩阵）列表。</param>
+        /// <param name="affineMatrices">仿射矩阵（左矩阵）列表。</param>
         /// <param name="focalLength">焦距。</param>
         /// <param name="illuminationDirection">光照方向。</param>
         /// <param name="illuminationDirectionIsAfterAffineTransform">光照方向是否基于仿射变换之后的坐标系。</param>
         /// <param name="exposure">曝光，取值范围为 [-100, 100]。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrixList, double focalLength, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrices, double focalLength, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
         {
             try
             {
-                if (bmp == null || center.IsNaNOrInfinity || (size.IsNaNOrInfinity || size.IsZero) || (color.IsEmpty || color.A == 0) || InternalMethod.IsNaNOrInfinity(edgeWidth) || InternalMethod.IsNullOrEmpty(affineMatrixList) || (InternalMethod.IsNaNOrInfinity(focalLength) || focalLength < 0) || illuminationDirection.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(exposure))
+                if (bmp is null || center.IsNaNOrInfinity || (size.IsNaNOrInfinity || size.IsZero) || (color.IsEmpty || color.A == 0) || InternalMethod.IsNaNOrInfinity(edgeWidth) || InternalMethod.IsNullOrEmpty(affineMatrices) || (InternalMethod.IsNaNOrInfinity(focalLength) || focalLength < 0) || illuminationDirection.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(exposure))
                 {
                     return false;
                 }
@@ -95,14 +95,14 @@ namespace Com
                     P3D_011.Offset(center);
                     P3D_111.Offset(center);
 
-                    P3D_000.AffineTransform(affineMatrixList);
-                    P3D_100.AffineTransform(affineMatrixList);
-                    P3D_010.AffineTransform(affineMatrixList);
-                    P3D_110.AffineTransform(affineMatrixList);
-                    P3D_001.AffineTransform(affineMatrixList);
-                    P3D_101.AffineTransform(affineMatrixList);
-                    P3D_011.AffineTransform(affineMatrixList);
-                    P3D_111.AffineTransform(affineMatrixList);
+                    P3D_000.AffineTransform(affineMatrices);
+                    P3D_100.AffineTransform(affineMatrices);
+                    P3D_010.AffineTransform(affineMatrices);
+                    P3D_110.AffineTransform(affineMatrices);
+                    P3D_001.AffineTransform(affineMatrices);
+                    P3D_101.AffineTransform(affineMatrices);
+                    P3D_011.AffineTransform(affineMatrices);
+                    P3D_111.AffineTransform(affineMatrices);
 
                     PointD3D PrjCenter = new PointD3D(bmp.Width / 2, bmp.Height / 2, 0);
 
@@ -268,11 +268,11 @@ namespace Com
 
                             if (illuminationDirectionIsAfterAffineTransform)
                             {
-                                PointD3D NewOriginOpposite = PointD3D.Zero.AffineTransformCopy(affineMatrixList).Opposite;
+                                PointD3D NewOriginOpposite = PointD3D.Zero.AffineTransformCopy(affineMatrices).Opposite;
 
                                 for (int i = 0; i < NormalVector.Length; i++)
                                 {
-                                    NormalVector[i].AffineTransform(affineMatrixList);
+                                    NormalVector[i].AffineTransform(affineMatrices);
                                     NormalVector[i].Offset(NewOriginOpposite);
                                 }
                             }
@@ -509,7 +509,7 @@ namespace Com
                                                         Grph.DrawLines(Pn, Element);
                                                     }
 
-                                                    if (Br != null)
+                                                    if (!(Br is null))
                                                     {
                                                         Br.Dispose();
                                                     }
@@ -562,13 +562,13 @@ namespace Com
         /// <param name="size">长方体的大小。</param>
         /// <param name="color">长方体的颜色。</param>
         /// <param name="edgeWidth">长方体的棱的宽度。</param>
-        /// <param name="affineMatrixList">仿射矩阵（左矩阵）列表。</param>
+        /// <param name="affineMatrices">仿射矩阵（左矩阵）列表。</param>
         /// <param name="focalLength">焦距。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrixList, double focalLength, bool antiAlias)
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrices, double focalLength, bool antiAlias)
         {
-            return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrixList, focalLength, PointD3D.Zero, false, 0, antiAlias);
+            return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrices, focalLength, PointD3D.Zero, false, 0, antiAlias);
         }
 
         /// <summary>

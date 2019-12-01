@@ -474,7 +474,7 @@ namespace Com
         {
             get
             {
-                if (_UintArray == null)
+                if (_UintArray is null)
                 {
                     return 0;
                 }
@@ -519,7 +519,7 @@ namespace Com
             {
                 return true;
             }
-            else if (obj == null || !(obj is BitSet))
+            else if (obj is null || !(obj is BitSet))
             {
                 return false;
             }
@@ -571,7 +571,7 @@ namespace Com
             {
                 return true;
             }
-            else if ((object)bitSet == null)
+            else if (bitSet is null)
             {
                 return false;
             }
@@ -606,7 +606,7 @@ namespace Com
             {
                 return 0;
             }
-            else if (obj == null)
+            else if (obj is null)
             {
                 return 1;
             }
@@ -631,7 +631,7 @@ namespace Com
             {
                 return 0;
             }
-            else if ((object)bitSet == null)
+            else if (bitSet is null)
             {
                 return 1;
             }
@@ -1615,7 +1615,7 @@ namespace Com
         /// <returns>布尔值，表示指定的 BitSet 是否为 null 或不包含任何元素。</returns>
         public static bool IsNullOrEmpty(BitSet bitSet)
         {
-            return ((object)bitSet == null || bitSet._Size <= 0);
+            return (bitSet is null || bitSet._Size <= 0);
         }
 
         //
@@ -1632,7 +1632,7 @@ namespace Com
             {
                 return true;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return false;
             }
@@ -1656,11 +1656,11 @@ namespace Com
             {
                 return 0;
             }
-            else if ((object)left == null)
+            else if (left is null)
             {
                 return -1;
             }
-            else if ((object)right == null)
+            else if (right is null)
             {
                 return 1;
             }
@@ -2008,7 +2008,7 @@ namespace Com
 
             set
             {
-                if (value == null || !(value is bool))
+                if (value is null || !(value is bool))
                 {
                     throw new ArgumentNullException();
                 }
@@ -2035,7 +2035,7 @@ namespace Com
 
         bool IList.Contains(object item)
         {
-            if (item == null || !(item is bool))
+            if (item is null || !(item is bool))
             {
                 return false;
             }
@@ -2047,7 +2047,7 @@ namespace Com
 
         int IList.IndexOf(object item)
         {
-            if (item == null || !(item is bool))
+            if (item is null || !(item is bool))
             {
                 return -1;
             }

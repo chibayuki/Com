@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -114,7 +114,7 @@ namespace Com.WinForm
 
         private void _AddOwned(FormManager formManager) // 向表示此窗口拥有的所有窗口的窗口管理器列表添加一个窗口管理器。
         {
-            if (formManager != null && !_Owned.Contains(formManager))
+            if (!(formManager is null) && !_Owned.Contains(formManager))
             {
                 _Owned.Add(formManager);
 
@@ -127,7 +127,7 @@ namespace Com.WinForm
 
         private void _RemoveOwned(FormManager formManager) // 从表示此窗口拥有的所有窗口的窗口管理器列表删除一个窗口管理器。
         {
-            if (formManager != null && _Owned.Contains(formManager))
+            if (!(formManager is null) && _Owned.Contains(formManager))
             {
                 _Owned.Remove(formManager);
 
@@ -954,7 +954,7 @@ namespace Com.WinForm
 
         private bool _CanReturn() // 判断是否允许窗口还原。
         {
-            return (_Initialized && (_FormState != FormState.FullScreen && _FormState != FormState.Normal) && (_ReturnVerification == null || (_ReturnVerification != null && _ReturnVerification(EventArgs.Empty))));
+            return (_Initialized && (_FormState != FormState.FullScreen && _FormState != FormState.Normal) && (_ReturnVerification is null || (!(_ReturnVerification is null) && _ReturnVerification(EventArgs.Empty))));
         }
 
         internal bool CanReturn() // 判断是否允许窗口还原。
@@ -969,17 +969,17 @@ namespace Com.WinForm
 
         private bool _CanMaximize() // 判断是否允许窗口最大化。
         {
-            return (_Initialized && _EnableMaximize && _Client.WindowState != FormWindowState.Minimized && (_FormState != FormState.FullScreen && _FormState != FormState.Maximized) && (_MaximizeVerification == null || (_MaximizeVerification != null && _MaximizeVerification(EventArgs.Empty))));
+            return (_Initialized && _EnableMaximize && _Client.WindowState != FormWindowState.Minimized && (_FormState != FormState.FullScreen && _FormState != FormState.Maximized) && (_MaximizeVerification is null || (!(_MaximizeVerification is null) && _MaximizeVerification(EventArgs.Empty))));
         }
 
         private bool _CanEnterFullScreen() // 判断是否允许窗口进入全屏幕模式。
         {
-            return (_Initialized && _EnableFullScreen && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen && (_EnterFullScreenVerification == null || (_EnterFullScreenVerification != null && _EnterFullScreenVerification(EventArgs.Empty))));
+            return (_Initialized && _EnableFullScreen && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen && (_EnterFullScreenVerification is null || (!(_EnterFullScreenVerification is null) && _EnterFullScreenVerification(EventArgs.Empty))));
         }
 
         private bool _CanExitFullScreen() // 判断是否允许窗口退出全屏幕模式。
         {
-            return (_Initialized && _Client.WindowState != FormWindowState.Minimized && _FormState == FormState.FullScreen && (_ExitFullScreenVerification == null || (_ExitFullScreenVerification != null && _ExitFullScreenVerification(EventArgs.Empty))));
+            return (_Initialized && _Client.WindowState != FormWindowState.Minimized && _FormState == FormState.FullScreen && (_ExitFullScreenVerification is null || (!(_ExitFullScreenVerification is null) && _ExitFullScreenVerification(EventArgs.Empty))));
         }
 
         private bool _CanHighAsScreen() // 判断是否允许窗口与桌面的高度相同。
@@ -994,7 +994,7 @@ namespace Com.WinForm
 
         private bool _CanClose() // 判断是否允许窗口关闭。
         {
-            return (_Initialized && (_CloseVerification == null || (_CloseVerification != null && _CloseVerification(EventArgs.Empty))));
+            return (_Initialized && (_CloseVerification is null || (!(_CloseVerification is null) && _CloseVerification(EventArgs.Empty))));
         }
 
         //
@@ -1005,7 +1005,7 @@ namespace Com.WinForm
         {
             EventHandler Method = _Events[eventKey] as EventHandler;
 
-            if (Method != null)
+            if (!(Method is null))
             {
                 Method(this, EventArgs.Empty);
             }
@@ -1513,7 +1513,7 @@ namespace Com.WinForm
 
                 //
 
-                if (_Owner != null)
+                if (!(_Owner is null))
                 {
                     _Owner._RemoveOwned(this);
                 }
@@ -1554,7 +1554,7 @@ namespace Com.WinForm
 
             //
 
-            if (_Owner != null)
+            if (!(_Owner is null))
             {
                 _Owner._RemoveOwned(this);
             }
@@ -1571,7 +1571,7 @@ namespace Com.WinForm
 
         private void _Ctor(Form client, FormManager owner) // 为以 Form 对象与 FormManager 对象为参数的构造函数提供实现。
         {
-            if (client == null)
+            if (client is null)
             {
                 try
                 {
@@ -1606,7 +1606,7 @@ namespace Com.WinForm
 
             //
 
-            if (owner != null && !object.ReferenceEquals(_Owner, owner))
+            if (!(owner is null) && !object.ReferenceEquals(_Owner, owner))
             {
                 _Owner = owner;
             }
@@ -1615,7 +1615,7 @@ namespace Com.WinForm
                 _Owner = null;
             }
 
-            if (_Owner != null)
+            if (!(_Owner is null))
             {
                 _Owner._AddOwned(this);
 
@@ -1726,7 +1726,7 @@ namespace Com.WinForm
             Rectangle CurScrClient = PrimaryScreenClient;
 
             Rectangle Bounds_Screen = CurScrClient;
-            Rectangle Bounds_Parent = (_Owner != null ? _Owner.Bounds : CurScrClient);
+            Rectangle Bounds_Parent = (_Owner is null ? CurScrClient : _Owner.Bounds);
 
             switch (_Client.StartPosition)
             {
@@ -1766,7 +1766,7 @@ namespace Com.WinForm
 
             //
 
-            if (_Caption == null)
+            if (_Caption is null)
             {
                 if (!string.IsNullOrEmpty(_Client.Text))
                 {
@@ -2077,7 +2077,7 @@ namespace Com.WinForm
 
             //
 
-            if (_Owner != null)
+            if (!(_Owner is null))
             {
                 _Owner._RemoveOwned(this);
             }
@@ -2871,12 +2871,12 @@ namespace Com.WinForm
         {
             get
             {
-                return (_Caption == null ? string.Empty : _Caption);
+                return (_Caption is null ? string.Empty : _Caption);
             }
 
             set
             {
-                string Cap = (value == null ? string.Empty : value);
+                string Cap = (value is null ? string.Empty : value);
 
                 if (_Caption != Cap)
                 {
@@ -2943,7 +2943,7 @@ namespace Com.WinForm
 
             set
             {
-                if (value != null && !_CaptionFont.Equals(value))
+                if (!(value is null) && !_CaptionFont.Equals(value))
                 {
                     _CaptionFont = value;
 
@@ -3766,7 +3766,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.Loading, value);
                 }
@@ -3774,7 +3774,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.Loading, value);
                 }
@@ -3788,7 +3788,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.Loaded, value);
                 }
@@ -3796,7 +3796,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.Loaded, value);
                 }
@@ -3810,7 +3810,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.Closing, value);
                 }
@@ -3818,7 +3818,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.Closing, value);
                 }
@@ -3832,7 +3832,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.Closed, value);
                 }
@@ -3840,7 +3840,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.Closed, value);
                 }
@@ -3854,7 +3854,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.Activated, value);
                 }
@@ -3862,7 +3862,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.Activated, value);
                 }
@@ -3876,7 +3876,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.Deactivate, value);
                 }
@@ -3884,7 +3884,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.Deactivate, value);
                 }
@@ -3898,7 +3898,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.Move, value);
                 }
@@ -3906,7 +3906,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.Move, value);
                 }
@@ -3920,7 +3920,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.LocationChanged, value);
                 }
@@ -3928,7 +3928,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.LocationChanged, value);
                 }
@@ -3942,7 +3942,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.Resize, value);
                 }
@@ -3950,7 +3950,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.Resize, value);
                 }
@@ -3964,7 +3964,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.SizeChanged, value);
                 }
@@ -3972,7 +3972,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.SizeChanged, value);
                 }
@@ -3986,7 +3986,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.FormStateChanged, value);
                 }
@@ -3994,7 +3994,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.FormStateChanged, value);
                 }
@@ -4008,7 +4008,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.EnabledChanged, value);
                 }
@@ -4016,7 +4016,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.EnabledChanged, value);
                 }
@@ -4030,7 +4030,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.VisibleChanged, value);
                 }
@@ -4038,7 +4038,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.VisibleChanged, value);
                 }
@@ -4052,7 +4052,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.OpacityChanged, value);
                 }
@@ -4060,7 +4060,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.OpacityChanged, value);
                 }
@@ -4074,7 +4074,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.CaptionChanged, value);
                 }
@@ -4082,7 +4082,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.CaptionChanged, value);
                 }
@@ -4096,7 +4096,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.ThemeChanged, value);
                 }
@@ -4104,7 +4104,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.ThemeChanged, value);
                 }
@@ -4118,7 +4118,7 @@ namespace Com.WinForm
         {
             add
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.AddHandler(EventKey.ThemeColorChanged, value);
                 }
@@ -4126,7 +4126,7 @@ namespace Com.WinForm
 
             remove
             {
-                if (value != null)
+                if (!(value is null))
                 {
                     _Events.RemoveHandler(EventKey.ThemeColorChanged, value);
                 }
@@ -4148,7 +4148,7 @@ namespace Com.WinForm
             {
                 return true;
             }
-            else if (obj == null || !(obj is FormManager))
+            else if (obj is null || !(obj is FormManager))
             {
                 return false;
             }
@@ -4194,7 +4194,7 @@ namespace Com.WinForm
         /// <returns>布尔值，表示此 FormManager 是否与指定的 FormManager 对象相等。</returns>
         public bool Equals(FormManager formManager)
         {
-            if ((object)formManager == null)
+            if (formManager is null)
             {
                 return false;
             }
@@ -4737,7 +4737,7 @@ namespace Com.WinForm
             {
                 return true;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return false;
             }
@@ -4763,7 +4763,7 @@ namespace Com.WinForm
             {
                 return true;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return false;
             }
@@ -4785,7 +4785,7 @@ namespace Com.WinForm
             {
                 return false;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return true;
             }

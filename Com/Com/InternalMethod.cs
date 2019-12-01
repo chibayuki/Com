@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.InternalMethod
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -33,12 +33,12 @@ namespace Com
 
         public static bool IsNullOrEmpty(Array array) // 判断数组是否为 null 或不包含任何元素。
         {
-            return (array == null || array.Length <= 0);
+            return (array is null || array.Length <= 0);
         }
 
         public static bool IsNullOrEmpty<T>(List<T> list) // 判断列表是否为 null 或不包含任何元素。
         {
-            return (list == null || list.Count <= 0);
+            return (list is null || list.Count <= 0);
         }
     }
 }

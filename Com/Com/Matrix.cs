@@ -672,7 +672,7 @@ namespace Com
             {
                 return true;
             }
-            else if (obj == null || !(obj is Matrix))
+            else if (obj is null || !(obj is Matrix))
             {
                 return false;
             }
@@ -724,7 +724,7 @@ namespace Com
             {
                 return true;
             }
-            else if ((object)matrix == null)
+            else if (matrix is null)
             {
                 return false;
             }
@@ -908,7 +908,7 @@ namespace Com
         /// <returns>布尔值，表示指定的 Matrix 是否为 null 或表示空矩阵。</returns>
         public static bool IsNullOrEmpty(Matrix matrix)
         {
-            return ((object)matrix == null || (matrix._Size.Width <= 0 || matrix._Size.Height <= 0));
+            return (matrix is null || (matrix._Size.Width <= 0 || matrix._Size.Height <= 0));
         }
 
         //
@@ -925,7 +925,7 @@ namespace Com
             {
                 return true;
             }
-            else if ((object)left == null || (object)right == null)
+            else if (left is null || right is null)
             {
                 return false;
             }

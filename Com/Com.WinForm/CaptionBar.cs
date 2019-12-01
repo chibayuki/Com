@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
-Version 19.10.14.2100
+Version 19.12.1.0000
 
 This file is part of Com
 
@@ -57,7 +57,7 @@ namespace Com.WinForm
 
         private void _UpdateCaptionBarBitmap() // 更新标题栏绘图。
         {
-            if (_CaptionBarBitmap != null)
+            if (!(_CaptionBarBitmap is null))
             {
                 _CaptionBarBitmap.Dispose();
             }
@@ -74,7 +74,7 @@ namespace Com.WinForm
 
                 //
 
-                if (Me.CaptionBarBackgroundImage != null)
+                if (!(Me.CaptionBarBackgroundImage is null))
                 {
                     Bitmap BkgImg = Me.CaptionBarBackgroundImage;
 
@@ -175,7 +175,7 @@ namespace Com.WinForm
             {
                 _UpdateCaptionBarBitmap();
 
-                if (_CaptionBarBitmap != null)
+                if (!(_CaptionBarBitmap is null))
                 {
                     Panel_CaptionBar.CreateGraphics().DrawImage(_CaptionBarBitmap, new Point(0, 0));
 
@@ -429,12 +429,12 @@ namespace Com.WinForm
         {
             if (Me.FormState != FormState.FullScreen)
             {
-                if (_CaptionBarBitmap == null)
+                if (_CaptionBarBitmap is null)
                 {
                     _UpdateCaptionBarBitmap();
                 }
 
-                if (_CaptionBarBitmap != null)
+                if (!(_CaptionBarBitmap is null))
                 {
                     e.Graphics.DrawImage(_CaptionBarBitmap, new Point(0, 0));
                 }
