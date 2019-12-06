@@ -604,35 +604,37 @@ namespace Com
                 }
                 else
                 {
-                    Matrix result = Adjoint;
+                    double det = Determinant;
 
-                    if (IsNullOrEmpty(result))
+                    if (InternalMethod.IsNaNOrInfinity(det) || det == 0)
                     {
                         return Empty;
                     }
                     else
                     {
-                        double det = Determinant;
+                        Matrix result = Adjoint;
 
-                        if (InternalMethod.IsNaNOrInfinity(det) || det == 0)
+                        if (IsNullOrEmpty(result))
                         {
                             return Empty;
                         }
-
-                        for (int x = 0; x < _Size.Width; x++)
+                        else
                         {
-                            for (int y = 0; y < _Size.Height; y++)
+                            for (int x = 0; x < _Size.Width; x++)
                             {
-                                result._MArray[x, y] /= det;
-
-                                if (InternalMethod.IsNaNOrInfinity(result._MArray[x, y]))
+                                for (int y = 0; y < _Size.Height; y++)
                                 {
-                                    return Empty;
+                                    result._MArray[x, y] /= det;
+
+                                    if (InternalMethod.IsNaNOrInfinity(result._MArray[x, y]))
+                                    {
+                                        return Empty;
+                                    }
                                 }
                             }
-                        }
 
-                        return result;
+                            return result;
+                        }
                     }
                 }
             }
