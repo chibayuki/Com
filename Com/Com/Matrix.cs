@@ -1500,15 +1500,39 @@ namespace Com
 
                     Matrix result = new Matrix(size);
 
-                    for (int x = 0; x < size.Width; x++)
+                    if (size.Width <= size.Height)
+                    {
+                        for (int x = 0; x < size.Width; x++)
+                        {
+                            for (int i = 0; i < height; i++)
+                            {
+                                double Rxi = right._MArray[x, i];
+
+                                if (Rxi != 0)
+                                {
+                                    for (int y = 0; y < size.Height; y++)
+                                    {
+                                        result._MArray[x, y] += (left._MArray[i, y] * Rxi);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
                     {
                         for (int y = 0; y < size.Height; y++)
                         {
-                            result._MArray[x, y] = 0;
-
                             for (int i = 0; i < height; i++)
                             {
-                                result._MArray[x, y] += (left._MArray[i, y] * right._MArray[x, i]);
+                                double Liy = left._MArray[i, y];
+
+                                if (Liy != 0)
+                                {
+                                    for (int x = 0; x < size.Width; x++)
+                                    {
+                                        result._MArray[x, y] += (Liy * right._MArray[x, i]);
+                                    }
+                                }
                             }
                         }
                     }
