@@ -1704,11 +1704,11 @@ namespace Com
             }
             else
             {
-                Matrix matrixVector = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    Matrix result = Matrix.Multiply(matrix, matrixVector);
+                    result = Matrix.Multiply(matrix, result);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
                     {
@@ -1721,7 +1721,7 @@ namespace Com
                 }
                 else
                 {
-                    Matrix result = Matrix.Multiply(matrixVector, matrix);
+                    result = Matrix.Multiply(result, matrix);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
                     {
@@ -1847,11 +1847,11 @@ namespace Com
             }
             else
             {
-                Matrix matrixVector = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    Matrix result = Matrix.Multiply(matrix, matrixVector);
+                    result = Matrix.Multiply(matrix, result);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
                     {
@@ -1868,7 +1868,7 @@ namespace Com
                 }
                 else
                 {
-                    Matrix result = Matrix.Multiply(matrixVector, matrix);
+                    result = Matrix.Multiply(result, matrix);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
                     {
@@ -2009,11 +2009,11 @@ namespace Com
             }
             else
             {
-                Matrix matrixVector = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    Matrix result = Matrix.DivideLeft(matrix, matrixVector);
+                    result = Matrix.DivideLeft(matrix, result);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
                     {
@@ -2026,7 +2026,7 @@ namespace Com
                 }
                 else
                 {
-                    Matrix result = Matrix.DivideRight(matrixVector, matrix);
+                    result = Matrix.DivideRight(result, matrix);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
                     {
@@ -2146,11 +2146,11 @@ namespace Com
             }
             else
             {
-                Matrix matrixVector = _ToMatrixForAffineTransform();
+                Matrix result = _ToMatrixForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    Matrix result = Matrix.DivideLeft(matrix, matrixVector);
+                    result = Matrix.DivideLeft(matrix, result);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
                     {
@@ -2167,7 +2167,7 @@ namespace Com
                 }
                 else
                 {
-                    Matrix result = Matrix.DivideRight(matrixVector, matrix);
+                    result = Matrix.DivideRight(result, matrix);
 
                     if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
                     {
