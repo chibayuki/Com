@@ -2,7 +2,7 @@
 Copyright © 2019 chibayuki@foxmail.com
 
 Com.IAffine
-Version 19.11.7.0000
+Version 19.12.20.0000
 
 This file is part of Com
 
@@ -20,15 +20,9 @@ namespace Com
     /// <summary>
     /// 表示用于支持仿射变换的方法。
     /// </summary>
+    [Obsolete]
     public interface IAffine
     {
-        /// <summary>
-        /// 按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量。
-        /// </summary>
-        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        void Offset(int index, double d);
-
         /// <summary>
         /// 按双精度浮点数表示的位移对所有分量平移指定的量。
         /// </summary>
@@ -36,13 +30,6 @@ namespace Com
         void Offset(double d);
 
         //
-
-        /// <summary>
-        /// 按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数。
-        /// </summary>
-        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        void Scale(int index, double s);
 
         /// <summary>
         /// 按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数。
@@ -61,11 +48,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度剪切指定的角度。
+        /// 按双精度浮点数表示的弧度错切指定的角度。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
         void Shear(int index1, int index2, double angle);
 
         //
@@ -95,8 +82,8 @@ namespace Com
         /// <summary>
         /// 按仿射矩阵列表进行仿射变换。
         /// </summary>
-        /// <param name="matrices">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        void AffineTransform(List<Matrix> matrices);
+        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        void AffineTransform(List<Matrix> matrixList);
 
         /// <summary>
         /// 按仿射矩阵进行逆仿射变换。
@@ -113,22 +100,21 @@ namespace Com
         /// <summary>
         /// 按仿射矩阵列表进行逆仿射变换。
         /// </summary>
-        /// <param name="matrices">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        void InverseAffineTransform(List<Matrix> matrices);
+        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        void InverseAffineTransform(List<Matrix> matrixList);
     }
 
     /// <summary>
     /// 表示用于支持仿射变换的方法。
     /// </summary>
+    [Obsolete]
     public interface IAffine<T> : IAffine where T : IVector<double>
     {
         /// <summary>
-        /// 返回按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量得到的向量。
+        /// 按向量表示的位移平移指定的量。
         /// </summary>
-        /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
-        /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>T，表示按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量得到的向量。</returns>
-        T OffsetCopy(int index, double d);
+        /// <param name="vector">向量表示的位移。</param>
+        void Offset(T vector);
 
         /// <summary>
         /// 返回按双精度浮点数表示的位移对所有分量平移指定的量得到的向量。
@@ -136,12 +122,6 @@ namespace Com
         /// <param name="d">双精度浮点数表示的位移。</param>
         /// <returns>T，表示按双精度浮点数表示的位移对所有分量平移指定的量得到的向量。</returns>
         T OffsetCopy(double d);
-
-        /// <summary>
-        /// 按向量表示的位移平移指定的量。
-        /// </summary>
-        /// <param name="vector">向量表示的位移。</param>
-        void Offset(T vector);
 
         /// <summary>
         /// 返回按向量表示的位移平移指定的量得到的向量。
@@ -153,12 +133,10 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数得到的向量。
+        /// 按向量表示的缩放因数缩放指定的倍数。
         /// </summary>
-        /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
-        /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>T，表示按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数得到的向量。</returns>
-        T ScaleCopy(int index, double s);
+        /// <param name="vector">向量表示的缩放因数。</param>
+        void Scale(T vector);
 
         /// <summary>
         /// 返回按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数得到的向量。
@@ -166,12 +144,6 @@ namespace Com
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
         /// <returns>T，表示按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数得到的向量。</returns>
         T ScaleCopy(double s);
-
-        /// <summary>
-        /// 按向量表示的缩放因数缩放指定的倍数。
-        /// </summary>
-        /// <param name="vector">向量表示的缩放因数。</param>
-        void Scale(T vector);
 
         /// <summary>
         /// 返回按向量表示的缩放因数缩放指定的倍数得到的向量。
@@ -192,12 +164,12 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度剪切指定的角度得到的向量。
+        /// 返回按双精度浮点数表示的弧度错切指定的角度得到的向量。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
-        /// <returns>T，表示按双精度浮点数表示的弧度剪切指定的角度得到的向量。</returns>
+        /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
+        /// <returns>T，表示按双精度浮点数表示的弧度错切指定的角度得到的向量。</returns>
         T ShearCopy(int index1, int index2, double angle);
 
         //
@@ -230,9 +202,9 @@ namespace Com
         /// <summary>
         /// 返回按仿射矩阵列表进行仿射变换得到的向量。
         /// </summary>
-        /// <param name="matrices">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>T，表示按仿射矩阵列表进行仿射变换得到的向量。</returns>
-        T AffineTransformCopy(List<Matrix> matrices);
+        T AffineTransformCopy(List<Matrix> matrixList);
 
         /// <summary>
         /// 返回按仿射矩阵进行逆仿射变换得到的向量。
@@ -251,8 +223,8 @@ namespace Com
         /// <summary>
         /// 返回按仿射矩阵列表进行逆仿射变换得到的向量。
         /// </summary>
-        /// <param name="matrices">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        /// <param name="matrixList">仿射矩阵列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>T，表示按仿射矩阵列表进行逆仿射变换得到的向量。</returns>
-        T InverseAffineTransformCopy(List<Matrix> matrices);
+        T InverseAffineTransformCopy(List<Matrix> matrixList);
     }
 }

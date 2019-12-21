@@ -1258,11 +1258,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD3D 结构剪切指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构错切指定的角度。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
@@ -1271,66 +1271,66 @@ namespace Com
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +X 轴剪切指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +X 轴错切指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴剪切的角度（弧度）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴错切的角度（弧度）。</param>
         public void ShearXY(double angle)
         {
             _X += _Y * Math.Tan(angle);
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +Y 轴剪切指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +Y 轴错切指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴剪切的角度（弧度）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴错切的角度（弧度）。</param>
         public void ShearYX(double angle)
         {
             _Y += _X * Math.Tan(angle);
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Y 轴剪切指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Y 轴错切指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴剪切的角度（弧度）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴错切的角度（弧度）。</param>
         public void ShearYZ(double angle)
         {
             _Y += _Z * Math.Tan(angle);
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Z 轴剪切指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Z 轴错切指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴剪切的角度（弧度）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴错切的角度（弧度）。</param>
         public void ShearZY(double angle)
         {
             _Z += _Y * Math.Tan(angle);
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +Z 轴剪切指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +Z 轴错切指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴剪切的角度（弧度）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴错切的角度（弧度）。</param>
         public void ShearZX(double angle)
         {
             _Z += _X * Math.Tan(angle);
         }
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +X 轴剪切指定的角度。
+        /// 按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +X 轴错切指定的角度。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴剪切的角度（弧度）。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴错切的角度（弧度）。</param>
         public void ShearXZ(double angle)
         {
             _X += _Z * Math.Tan(angle);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构剪切指定的角度的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构错切指定的角度的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构剪切指定的角度得到的结果。</returns>
+        /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构错切指定的角度得到的结果。</returns>
         public PointD3D ShearCopy(int index1, int index2, double angle)
         {
             Vector result = ToColumnVector().ShearCopy(index1, index2, angle);
@@ -1339,60 +1339,60 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +X 轴剪切指定的角度的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +X 轴错切指定的角度的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴剪切的角度（弧度）。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +X 轴剪切指定的角度得到的结果。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴错切的角度（弧度）。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +X 轴错切指定的角度得到的结果。</returns>
         public PointD3D ShearXYCopy(double angle)
         {
             return new PointD3D(_X + _Y * Math.Tan(angle), _Y, _Z);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +Y 轴剪切指定的角度的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +Y 轴错切指定的角度的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴剪切的角度（弧度）。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +Y 轴剪切指定的角度得到的结果。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴错切的角度（弧度）。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 XY 平面向 +Y 轴错切指定的角度得到的结果。</returns>
         public PointD3D ShearYXCopy(double angle)
         {
             return new PointD3D(_X, _Y + _X * Math.Tan(angle), _Z);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Y 轴剪切指定的角度的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Y 轴错切指定的角度的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴剪切的角度（弧度）。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Y 轴剪切指定的角度得到的结果。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴错切的角度（弧度）。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Y 轴错切指定的角度得到的结果。</returns>
         public PointD3D ShearYZCopy(double angle)
         {
             return new PointD3D(_X, _Y + _Z * Math.Tan(angle), _Z);
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Z 轴剪切指定的角度的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Z 轴错切指定的角度的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴剪切的角度（弧度）。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Z 轴剪切指定的角度得到的结果。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴错切的角度（弧度）。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 YZ 平面向 +Z 轴错切指定的角度得到的结果。</returns>
         public PointD3D ShearZYCopy(double angle)
         {
             return new PointD3D(_X, _Y, _Z + _Y * Math.Tan(angle));
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +Z 轴剪切指定的角度的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +Z 轴错切指定的角度的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴剪切的角度（弧度）。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +Z 轴剪切指定的角度得到的结果。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴错切的角度（弧度）。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +Z 轴错切指定的角度得到的结果。</returns>
         public PointD3D ShearZXCopy(double angle)
         {
             return new PointD3D(_X, _Y, _Z + _X * Math.Tan(angle));
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +X 轴剪切指定的角度的 PointD3D 结构的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +X 轴错切指定的角度的 PointD3D 结构的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴剪切的角度（弧度）。</param>
-        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +X 轴剪切指定的角度得到的结果。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴错切的角度（弧度）。</param>
+        /// <returns>PointD3D 结构，表示按双精度浮点数表示的弧度将此 PointD3D 结构在 ZX 平面向 +X 轴错切指定的角度得到的结果。</returns>
         public PointD3D ShearXZCopy(double angle)
         {
             return new PointD3D(_X + _Z * Math.Tan(angle), _Y, _Z);
@@ -2133,72 +2133,72 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回表示用于剪切 PointD3D 结构的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示用于错切 PointD3D 结构的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示用于剪切 PointD3D 结构的 4x4 仿射矩阵（左矩阵）。</returns>
+        /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示用于错切 PointD3D 结构的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearMatrix(int index1, int index2, double angle)
         {
             return Vector.ShearMatrix(Vector.Type.ColumnVector, _Dimension, index1, index2, angle);
         }
 
         /// <summary>
-        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +X 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +X 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +X 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +X 轴错切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +X 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearXYMatrix(double angle)
         {
             return ShearMatrix(0, 1, angle);
         }
 
         /// <summary>
-        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +Y 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +Y 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +Y 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 XY 平面向 +Y 轴错切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 XY 平面向 +Y 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearYXMatrix(double angle)
         {
             return ShearMatrix(1, 0, angle);
         }
 
         /// <summary>
-        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Y 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Y 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Y 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Y 轴错切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Y 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearYZMatrix(double angle)
         {
             return ShearMatrix(1, 2, angle);
         }
 
         /// <summary>
-        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Z 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Z 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Z 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 YZ 平面向 +Z 轴错切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 YZ 平面向 +Z 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearZYMatrix(double angle)
         {
             return ShearMatrix(2, 1, angle);
         }
 
         /// <summary>
-        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +Z 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +Z 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +Z 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +Z 轴错切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +Z 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearZXMatrix(double angle)
         {
             return ShearMatrix(2, 0, angle);
         }
 
         /// <summary>
-        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +X 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
+        /// 返回表示按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +X 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）的 Matrix 的新实例。
         /// </summary>
-        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +X 轴剪切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
+        /// <param name="angle">双精度浮点数，表示此 PointD3D 结构在 ZX 平面向 +X 轴错切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 PointD3D 结构在 ZX 平面向 +X 轴错切指定的角度的 4x4 仿射矩阵（左矩阵）。</returns>
         public static Matrix ShearXZMatrix(double angle)
         {
             return ShearMatrix(0, 2, angle);

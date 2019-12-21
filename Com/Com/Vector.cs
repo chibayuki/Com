@@ -1566,11 +1566,11 @@ namespace Com
         //
 
         /// <summary>
-        /// 按双精度浮点数表示的弧度将此 Vector 剪切指定的角度。
+        /// 按双精度浮点数表示的弧度将此 Vector 错切指定的角度。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
+        /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
             if (_Size < 2 || (index1 < 0 || index1 >= _Size) || (index2 < 0 || index2 >= _Size))
@@ -1588,12 +1588,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回按双精度浮点数表示的弧度将此 Vector 剪切指定的角度的新实例。
+        /// 返回按双精度浮点数表示的弧度将此 Vector 错切指定的角度的新实例。
         /// </summary>
-        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
-        /// <returns>Vector 对象，表示按双精度浮点数表示的弧度将此 Vector 剪切指定的角度得到的结果。</returns>
+        /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
+        /// <returns>Vector 对象，表示按双精度浮点数表示的弧度将此 Vector 错切指定的角度得到的结果。</returns>
         public Vector ShearCopy(int index1, int index2, double angle)
         {
             if (_Size < 2 || (index1 < 0 || index1 >= _Size) || (index2 < 0 || index2 >= _Size))
@@ -2736,14 +2736,14 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示按双精度浮点数表示的弧度将 Vector 对象剪切指定的角度的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按双精度浮点数表示的弧度将 Vector 对象错切指定的角度的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
-        /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
-        /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
-        /// <param name="angle">双精度浮点数，表示 Vector 对象沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 Vector 对象剪切指定的角度的仿射矩阵。</returns>
+        /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
+        /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
+        /// <param name="angle">双精度浮点数，表示 Vector 对象沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 Vector 对象错切指定的角度的仿射矩阵。</returns>
         public static Matrix ShearMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
             if (dimension < 0)
