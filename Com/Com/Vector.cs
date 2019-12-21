@@ -2508,13 +2508,13 @@ namespace Com
         //
 
         /// <summary>
-        /// 返回表示用于平移 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按双精度浮点数表示的位移将 Vector 对象在指定的基向量方向的分量平移指定的量的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
         /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>Matrix 对象，表示用于平移 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 Vector 对象在指定的基向量方向的分量平移指定的量的仿射矩阵。</returns>
         public static Matrix OffsetMatrix(Type type, int dimension, int index, double d)
         {
             if (dimension < 0)
@@ -2543,12 +2543,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示用于平移 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按双精度浮点数表示的位移将 Vector 对象的所有分量平移指定的量的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="d">双精度浮点数表示的位移。</param>
-        /// <returns>Matrix 对象，表示用于平移 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的位移将 Vector 对象的所有分量平移指定的量的仿射矩阵。</returns>
         public static Matrix OffsetMatrix(Type type, int dimension, double d)
         {
             if (dimension < 0)
@@ -2586,10 +2586,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示用于平移 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按 Vector 对象表示的位移将 Vector 对象平移指定的量的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="vector">Vector 对象表示的位移。</param>
-        /// <returns>Matrix 对象，表示用于平移 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示按 Vector 对象表示的位移将 Vector 对象平移指定的量的仿射矩阵。</returns>
         public static Matrix OffsetMatrix(Vector vector)
         {
             if (IsNullOrEmpty(vector))
@@ -2622,13 +2622,13 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示用于缩放 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按双精度浮点数表示的缩放因数将 Vector 对象在指定的基向量方向的分量缩放指定的倍数的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>Matrix 对象，表示用于缩放 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 Vector 对象在指定的基向量方向的分量缩放指定的倍数的仿射矩阵。</returns>
         public static Matrix ScaleMatrix(Type type, int dimension, int index, double s)
         {
             if (dimension < 0)
@@ -2650,12 +2650,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示用于缩放 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按双精度浮点数表示的缩放因数将 Vector 对象的所有分量缩放指定的倍数的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        /// <returns>Matrix 对象，表示用于缩放 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的缩放因数将 Vector 对象的所有分量缩放指定的倍数的仿射矩阵。</returns>
         public static Matrix ScaleMatrix(Type type, int dimension, double s)
         {
             if (dimension < 0)
@@ -2683,10 +2683,10 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示用于缩放 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按 Vector 对象表示的缩放因数将 Vector 对象缩放指定的倍数的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="vector">Vector 对象表示的缩放因数。</param>
-        /// <returns>Matrix 对象，表示用于缩放 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示按 Vector 对象表示的缩放因数将 Vector 对象缩放指定的倍数的仿射矩阵。</returns>
         public static Matrix ScaleMatrix(Vector vector)
         {
             if (IsNullOrEmpty(vector))
@@ -2709,12 +2709,12 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示用于翻转 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示将 Vector 对象在指定的基向量方向的分量翻转的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
-        /// <returns>Matrix 对象，表示用于翻转 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示将 Vector 对象在指定的基向量方向的分量翻转的仿射矩阵。</returns>
         public static Matrix ReflectMatrix(Type type, int dimension, int index)
         {
             if (dimension < 0)
@@ -2736,14 +2736,14 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示用于剪切 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按双精度浮点数表示的弧度将 Vector 对象剪切指定的角度的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index1">索引，用于指定与剪切方向同向的基向量。</param>
         /// <param name="index2">索引，用于指定与剪切方向共面正交的基向量。</param>
         /// <param name="angle">双精度浮点数，表示 Vector 对象沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向剪切的角度（弧度）。</param>
-        /// <returns>Matrix 对象，表示用于剪切 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 Vector 对象剪切指定的角度的仿射矩阵。</returns>
         public static Matrix ShearMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
             if (dimension < 0)
@@ -2778,14 +2778,14 @@ namespace Com
         }
 
         /// <summary>
-        /// 返回表示用于旋转 Vector 对象的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
+        /// 返回表示按双精度浮点数表示的弧度将 Vector 对象旋转指定的角度的仿射矩阵的 Matrix 的新实例，对于列向量将返回左矩阵，对于行向量将返回右矩阵。
         /// </summary>
         /// <param name="type">向量类型。</param>
         /// <param name="dimension">向量维度。</param>
         /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
         /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
         /// <param name="angle">双精度浮点数，表示 Vector 对象绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
-        /// <returns>Matrix 对象，表示用于旋转 Vector 对象的仿射矩阵。</returns>
+        /// <returns>Matrix 对象，表示按双精度浮点数表示的弧度将 Vector 对象旋转指定的角度的仿射矩阵。</returns>
         public static Matrix RotateMatrix(Type type, int dimension, int index1, int index2, double angle)
         {
             if (dimension < 0)
