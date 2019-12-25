@@ -1581,10 +1581,21 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回将枚举容器中所有 Matrix 对象依次左乘得到的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="matrices">左矩阵枚举容器。</param>
+        /// <returns>Matrix 对象，表示将枚举容器中所有 Matrix 对象依次左乘得到的结果。</returns>
+        public static Matrix MultiplyLeft(IEnumerable<Matrix> matrices)
+        {
+            return MultiplyLeft(matrices.ToArray());
+        }
+
+        /// <summary>
         /// 返回将列表中所有 Matrix 对象依次左乘得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="matrices">左矩阵列表。</param>
         /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次左乘得到的结果。</returns>
+        [Obsolete]
         public static Matrix MultiplyLeft(List<Matrix> matrices)
         {
             return MultiplyLeft(matrices.ToArray());
@@ -1629,10 +1640,21 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回将枚举容器中所有 Matrix 对象依次右乘得到的 Matrix 的新实例。
+        /// </summary>
+        /// <param name="matrices">右矩阵枚举容器。</param>
+        /// <returns>Matrix 对象，表示将枚举容器中所有 Matrix 对象依次右乘得到的结果。</returns>
+        public static Matrix MultiplyRight(IEnumerable<Matrix> matrices)
+        {
+            return MultiplyRight(matrices.ToArray());
+        }
+
+        /// <summary>
         /// 返回将列表中所有 Matrix 对象依次右乘得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="matrices">右矩阵列表。</param>
         /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次右乘得到的结果。</returns>
+        [Obsolete]
         public static Matrix MultiplyRight(List<Matrix> matrices)
         {
             return MultiplyRight(matrices.ToArray());
