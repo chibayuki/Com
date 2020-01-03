@@ -534,17 +534,17 @@ namespace Com
                 }
                 else
                 {
-                    Matrix result = new Matrix(_Size.Height, _Size.Width);
+                    double[,] result = new double[_Size.Width, _Size.Height];
 
                     for (int x = 0; x < _Size.Height; x++)
                     {
                         for (int y = 0; y < _Size.Width; y++)
                         {
-                            result._MArray[x, y] = _MArray[y, x];
+                            result[x, y] = _MArray[y, x];
                         }
                     }
 
-                    return result;
+                    return UnsafeCreateInstance(result);
                 }
             }
         }
@@ -735,11 +735,13 @@ namespace Com
                 return false;
             }
 
+            double[,] arrayR = matrix._MArray;
+
             for (int x = 0; x < _Size.Width; x++)
             {
                 for (int y = 0; y < _Size.Height; y++)
                 {
-                    if (!_MArray[x, y].Equals(matrix._MArray[x, y]))
+                    if (!_MArray[x, y].Equals(arrayR[x, y]))
                     {
                         return false;
                     }
@@ -784,17 +786,17 @@ namespace Com
 
             //
 
-            Matrix result = new Matrix(size);
+            double[,] result = new double[size.Width, size.Height];
 
             for (int x = 0; x < size.Width; x++)
             {
                 for (int y = 0; y < size.Height; y++)
                 {
-                    result._MArray[x, y] = _MArray[index.X + x, index.Y + y];
+                    result[x, y] = _MArray[index.X + x, index.Y + y];
                 }
             }
 
-            return result;
+            return UnsafeCreateInstance(result);
         }
 
         /// <summary>
@@ -814,17 +816,17 @@ namespace Com
 
             //
 
-            Matrix result = new Matrix(width, height);
+            double[,] result = new double[width, height];
 
             for (int _x = 0; _x < width; _x++)
             {
                 for (int _y = 0; _y < height; _y++)
                 {
-                    result._MArray[_x, _y] = _MArray[x + _x, y + _y];
+                    result[_x, _y] = _MArray[x + _x, y + _y];
                 }
             }
 
-            return result;
+            return UnsafeCreateInstance(result);
         }
 
         //
@@ -959,14 +961,14 @@ namespace Com
             }
             else
             {
-                Matrix result = new Matrix(order, order);
+                double[,] result = new double[order, order];
 
                 for (int i = 0; i < order; i++)
                 {
-                    result._MArray[i, i] = 1;
+                    result[i, i] = 1;
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1084,24 +1086,24 @@ namespace Com
             {
                 int order = array.Length + Math.Abs(rowsUponMainDiag);
 
-                Matrix result = new Matrix(order, order);
+                double[,] result = new double[order, order];
 
                 if (rowsUponMainDiag >= 0)
                 {
                     for (int i = 0; i < array.Length; i++)
                     {
-                        result._MArray[i + rowsUponMainDiag, i] = array[i];
+                        result[i + rowsUponMainDiag, i] = array[i];
                     }
                 }
                 else
                 {
                     for (int i = 0; i < array.Length; i++)
                     {
-                        result._MArray[i, i - rowsUponMainDiag] = array[i];
+                        result[i, i - rowsUponMainDiag] = array[i];
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1120,14 +1122,14 @@ namespace Com
             {
                 int order = array.Length;
 
-                Matrix result = new Matrix(order, order);
+                double[,] result = new double[order, order];
 
                 for (int i = 0; i < array.Length; i++)
                 {
-                    result._MArray[i, i] = array[i];
+                    result[i, i] = array[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1165,13 +1167,15 @@ namespace Com
                 {
                     Size size = new Size(sizeL.Width + sizeR.Width, sizeL.Height);
 
-                    Matrix result = new Matrix(size);
+                    double[,] result = new double[size.Width, size.Height];
+
+                    double[,] arrayL = left._MArray, arrayR = right._MArray;
 
                     for (int x = 0; x < sizeL.Width; x++)
                     {
                         for (int y = 0; y < size.Height; y++)
                         {
-                            result._MArray[x, y] = left._MArray[x, y];
+                            result[x, y] = arrayL[x, y];
                         }
                     }
 
@@ -1179,11 +1183,11 @@ namespace Com
                     {
                         for (int y = 0; y < size.Height; y++)
                         {
-                            result._MArray[x, y] = right._MArray[x - sizeL.Width, y];
+                            result[x, y] = arrayR[x - sizeL.Width, y];
                         }
                     }
 
-                    return result;
+                    return UnsafeCreateInstance(result);
                 }
             }
         }
@@ -1206,17 +1210,17 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix result = new Matrix(size);
+                double[,] result = new double[size.Width, size.Height];
 
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result._MArray[x, y] = matrix._MArray[x, y] + n;
+                        result[x, y] = matrix._MArray[x, y] + n;
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1236,17 +1240,17 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix result = new Matrix(size);
+                double[,] result = new double[size.Width, size.Height];
 
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result._MArray[x, y] = n + matrix._MArray[x, y];
+                        result[x, y] = n + matrix._MArray[x, y];
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1282,17 +1286,19 @@ namespace Com
                 {
                     Size size = sizeL;
 
-                    Matrix result = new Matrix(size);
+                    double[,] result = new double[size.Width, size.Height];
+
+                    double[,] arrayL = left._MArray, arrayR = right._MArray;
 
                     for (int x = 0; x < size.Width; x++)
                     {
                         for (int y = 0; y < size.Height; y++)
                         {
-                            result._MArray[x, y] = left._MArray[x, y] + right._MArray[x, y];
+                            result[x, y] = arrayL[x, y] + arrayR[x, y];
                         }
                     }
 
-                    return result;
+                    return UnsafeCreateInstance(result);
                 }
             }
         }
@@ -1313,17 +1319,17 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix result = new Matrix(size);
+                double[,] result = new double[size.Width, size.Height];
 
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result._MArray[x, y] = matrix._MArray[x, y] - n;
+                        result[x, y] = matrix._MArray[x, y] - n;
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1343,17 +1349,17 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix result = new Matrix(size);
+                double[,] result = new double[size.Width, size.Height];
 
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result._MArray[x, y] = n - matrix._MArray[x, y];
+                        result[x, y] = n - matrix._MArray[x, y];
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1389,17 +1395,19 @@ namespace Com
                 {
                     Size size = sizeL;
 
-                    Matrix result = new Matrix(size);
+                    double[,] result = new double[size.Width, size.Height];
+
+                    double[,] arrayL = left._MArray, arrayR = right._MArray;
 
                     for (int x = 0; x < size.Width; x++)
                     {
                         for (int y = 0; y < size.Height; y++)
                         {
-                            result._MArray[x, y] = left._MArray[x, y] - right._MArray[x, y];
+                            result[x, y] = arrayL[x, y] - arrayR[x, y];
                         }
                     }
 
-                    return result;
+                    return UnsafeCreateInstance(result);
                 }
             }
         }
@@ -1420,17 +1428,17 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix result = new Matrix(size);
+                double[,] result = new double[size.Width, size.Height];
 
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result._MArray[x, y] = matrix._MArray[x, y] * n;
+                        result[x, y] = matrix._MArray[x, y] * n;
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1450,17 +1458,17 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix result = new Matrix(size);
+                double[,] result = new double[size.Width, size.Height];
 
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result._MArray[x, y] = n * matrix._MArray[x, y];
+                        result[x, y] = n * matrix._MArray[x, y];
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1498,7 +1506,9 @@ namespace Com
 
                     Size size = new Size(sizeR.Width, sizeL.Height);
 
-                    Matrix result = new Matrix(size);
+                    double[,] result = new double[size.Width, size.Height];
+
+                    double[,] arrayL = left._MArray, arrayR = right._MArray;
 
                     if (size.Width <= size.Height)
                     {
@@ -1506,13 +1516,13 @@ namespace Com
                         {
                             for (int i = 0; i < height; i++)
                             {
-                                double Rxi = right._MArray[x, i];
+                                double Rxi = arrayR[x, i];
 
                                 if (Rxi != 0)
                                 {
                                     for (int y = 0; y < size.Height; y++)
                                     {
-                                        result._MArray[x, y] += (left._MArray[i, y] * Rxi);
+                                        result[x, y] += (arrayL[i, y] * Rxi);
                                     }
                                 }
                             }
@@ -1524,20 +1534,20 @@ namespace Com
                         {
                             for (int i = 0; i < height; i++)
                             {
-                                double Liy = left._MArray[i, y];
+                                double Liy = arrayL[i, y];
 
                                 if (Liy != 0)
                                 {
                                     for (int x = 0; x < size.Width; x++)
                                     {
-                                        result._MArray[x, y] += (Liy * right._MArray[x, i]);
+                                        result[x, y] += (Liy * arrayR[x, i]);
                                     }
                                 }
                             }
                         }
                     }
 
-                    return result;
+                    return UnsafeCreateInstance(result);
                 }
             }
         }
@@ -1676,17 +1686,17 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix result = new Matrix(size);
+                double[,] result = new double[size.Width, size.Height];
 
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result._MArray[x, y] = matrix._MArray[x, y] / n;
+                        result[x, y] = matrix._MArray[x, y] / n;
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1706,17 +1716,17 @@ namespace Com
             {
                 Size size = matrix.Size;
 
-                Matrix result = new Matrix(size);
+                double[,] result = new double[size.Width, size.Height];
 
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result._MArray[x, y] = n / matrix._MArray[x, y];
+                        result[x, y] = n / matrix._MArray[x, y];
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -1888,11 +1898,13 @@ namespace Com
             }
             else
             {
+                double[,] arrayL = left._MArray, arrayR = right._MArray;
+
                 for (int x = 0; x < left._Size.Width; x++)
                 {
                     for (int y = 0; y < left._Size.Height; y++)
                     {
-                        if (left._MArray[x, y] != right._MArray[x, y])
+                        if (arrayL[x, y] != arrayR[x, y])
                         {
                             return false;
                         }
@@ -1921,11 +1933,13 @@ namespace Com
             }
             else
             {
+                double[,] arrayL = left._MArray, arrayR = right._MArray;
+
                 for (int x = 0; x < left._Size.Width; x++)
                 {
                     for (int y = 0; y < left._Size.Height; y++)
                     {
-                        if (left._MArray[x, y] != right._MArray[x, y])
+                        if (arrayL[x, y] != arrayR[x, y])
                         {
                             return true;
                         }

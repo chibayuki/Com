@@ -527,14 +527,14 @@ namespace Com
                 }
                 else
                 {
-                    Vector result = _GetZeroVector(_Type, _Size);
+                    double[] result = new double[_Size];
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        result._VArray[i] = -_VArray[i];
+                        result[i] = -_VArray[i];
                     }
 
-                    return result;
+                    return UnsafeCreateInstance(_Type, result);
                 }
             }
         }
@@ -560,14 +560,14 @@ namespace Com
                     }
                     else
                     {
-                        Vector result = _GetZeroVector(_Type, _Size);
+                        double[] result = new double[_Size];
 
                         for (int i = 0; i < _Size; i++)
                         {
-                            result._VArray[i] = _VArray[i] / Mod;
+                            result[i] = _VArray[i] / Mod;
                         }
 
-                        return result;
+                        return UnsafeCreateInstance(_Type, result);
                     }
                 }
             }
@@ -688,9 +688,11 @@ namespace Com
             }
             else
             {
+                double[] arrayR = vector._VArray;
+
                 for (int i = 0; i < _Size; i++)
                 {
-                    if (!_VArray[i].Equals(vector._VArray[i]))
+                    if (!_VArray[i].Equals(arrayR[i]))
                     {
                         return false;
                     }
@@ -755,9 +757,11 @@ namespace Com
             }
             else
             {
+                double[] arrayR = vector._VArray;
+
                 for (int i = 0; i < _Size; i++)
                 {
-                    int result = _VArray[i].CompareTo(vector._VArray[i]);
+                    int result = _VArray[i].CompareTo(arrayR[i]);
 
                     if (result != 0)
                     {
@@ -1011,9 +1015,9 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(_Type, _Size);
+                double[] result = new double[_Size];
 
-                result._VArray[0] = Module;
+                result[0] = Module;
 
                 if (_Size > 1)
                 {
@@ -1042,7 +1046,7 @@ namespace Com
                         }
                     };
 
-                    result._VArray[_Size - 1] = VectorAngle2PI(_VArray[_Size - 2], _VArray[_Size - 1]);
+                    result[_Size - 1] = VectorAngle2PI(_VArray[_Size - 2], _VArray[_Size - 1]);
 
                     if (_Size > 2)
                     {
@@ -1076,12 +1080,12 @@ namespace Com
                                 SqrY += _VArray[j] * _VArray[j];
                             }
 
-                            result._VArray[i + 1] = VectorAnglePI(_VArray[i], Math.Sqrt(SqrY));
+                            result[i + 1] = VectorAnglePI(_VArray[i], Math.Sqrt(SqrY));
                         }
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(_Type, result);
             }
         }
 
@@ -1097,42 +1101,42 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(_Type, _Size);
+                double[] result = new double[_Size];
 
                 if (_Size == 1)
                 {
-                    result._VArray[0] = _VArray[0];
+                    result[0] = _VArray[0];
                 }
                 else
                 {
-                    result._VArray[0] = _VArray[0] * Math.Cos(_VArray[1]);
+                    result[0] = _VArray[0] * Math.Cos(_VArray[1]);
 
                     if (_Size == 2)
                     {
-                        result._VArray[1] = _VArray[0] * Math.Sin(_VArray[1]);
+                        result[1] = _VArray[0] * Math.Sin(_VArray[1]);
                     }
                     else
                     {
-                        result._VArray[_Size - 1] = _VArray[0];
+                        result[_Size - 1] = _VArray[0];
 
                         for (int i = 1; i < _Size; i++)
                         {
-                            result._VArray[_Size - 1] *= Math.Sin(_VArray[i]);
+                            result[_Size - 1] *= Math.Sin(_VArray[i]);
                         }
 
                         for (int i = 1; i < _Size - 1; i++)
                         {
-                            result._VArray[i] = _VArray[0] * Math.Cos(_VArray[i + 1]);
+                            result[i] = _VArray[0] * Math.Cos(_VArray[i + 1]);
 
                             for (int j = 1; j < i + 1; j++)
                             {
-                                result._VArray[i] *= Math.Sin(_VArray[j]);
+                                result[i] *= Math.Sin(_VArray[j]);
                             }
                         }
                     }
                 }
 
-                return result;
+                return UnsafeCreateInstance(_Type, result);
             }
         }
 
@@ -1165,9 +1169,11 @@ namespace Com
                 double[] Delta = new double[_Size];
                 double AbsMax = 0;
 
-                for (int i = 0; i < Delta.Length; i++)
+                double[] arrayR = vector._VArray;
+
+                for (int i = 0; i < _Size; i++)
                 {
-                    Delta[i] = _VArray[i] - vector._VArray[i];
+                    Delta[i] = _VArray[i] - arrayR[i];
                     AbsMax = Math.Max(AbsMax, Math.Abs(Delta[i]));
                 }
 
@@ -1179,7 +1185,7 @@ namespace Com
                 {
                     double SqrSum = 0;
 
-                    for (int i = 0; i < Delta.Length; i++)
+                    for (int i = 0; i < _Size; i++)
                     {
                         double Factor = Delta[i] / AbsMax;
 
@@ -1224,9 +1230,11 @@ namespace Com
                     double ModProduct = Module * vector.Module;
                     double CosA = 0;
 
+                    double[] arrayR = vector._VArray;
+
                     for (int i = 0; i < _Size; i++)
                     {
-                        CosA += _VArray[i] * vector._VArray[i] / ModProduct;
+                        CosA += _VArray[i] * arrayR[i] / ModProduct;
                     }
 
                     return Math.Acos(CosA);
@@ -2855,9 +2863,11 @@ namespace Com
                 double[] Delta = new double[left._Size];
                 double AbsMax = 0;
 
-                for (int i = 0; i < Delta.Length; i++)
+                double[] arrayL = left._VArray, arrayR = right._VArray;
+
+                for (int i = 0; i < left._Size; i++)
                 {
-                    Delta[i] = left._VArray[i] - right._VArray[i];
+                    Delta[i] = arrayL[i] - arrayR[i];
                     AbsMax = Math.Max(AbsMax, Math.Abs(Delta[i]));
                 }
 
@@ -2869,7 +2879,7 @@ namespace Com
                 {
                     double SqrSum = 0;
 
-                    for (int i = 0; i < Delta.Length; i++)
+                    for (int i = 0; i < left._Size; i++)
                     {
                         double Factor = Delta[i] / AbsMax;
 
@@ -2915,9 +2925,11 @@ namespace Com
                     double ModProduct = left.Module * right.Module;
                     double CosA = 0;
 
+                    double[] arrayL = left._VArray, arrayR = right._VArray;
+
                     for (int i = 0; i < left._Size; i++)
                     {
-                        CosA += left._VArray[i] * right._VArray[i] / ModProduct;
+                        CosA += arrayL[i] * arrayR[i] / ModProduct;
                     }
 
                     return Math.Acos(CosA);
@@ -2954,9 +2966,11 @@ namespace Com
             {
                 double result = 0;
 
+                double[] arrayL = left._VArray, arrayR = right._VArray;
+
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result += left._VArray[i] * right._VArray[i];
+                    result += arrayL[i] * arrayR[i];
                 }
 
                 return result;
@@ -2994,21 +3008,23 @@ namespace Com
                 }
                 else
                 {
-                    Vector result = _GetZeroVector(left._Type, left._Size * (left._Size - 1) / 2);
+                    double[] result = new double[left._Size * (left._Size - 1) / 2];
 
                     int i = 0;
+
+                    double[] arrayL = left._VArray, arrayR = right._VArray;
 
                     for (int j = 0; j < left._Size - 1; j++)
                     {
                         for (int k = j + 1; k < left._Size; k++)
                         {
-                            result._VArray[i] = left._VArray[j] * right._VArray[k] - left._VArray[k] * right._VArray[j];
+                            result[i] = arrayL[j] * arrayR[k] - arrayL[k] * arrayR[j];
 
                             i++;
                         }
                     }
 
-                    return result;
+                    return UnsafeCreateInstance(left._Type, result);
                 }
             }
         }
@@ -3028,14 +3044,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = (double.IsNaN(vector._VArray[i]) ? 0 : Math.Sign(vector._VArray[i]));
+                    result[i] = (double.IsNaN(arrayR[i]) ? 0 : Math.Sign(arrayR[i]));
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3052,14 +3070,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = Math.Abs(vector._VArray[i]);
+                    result[i] = Math.Abs(arrayR[i]);
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3076,14 +3096,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = Math.Ceiling(vector._VArray[i]);
+                    result[i] = Math.Ceiling(arrayR[i]);
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3100,14 +3122,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = Math.Floor(vector._VArray[i]);
+                    result[i] = Math.Floor(arrayR[i]);
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3124,14 +3148,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = Math.Round(vector._VArray[i]);
+                    result[i] = Math.Round(arrayR[i]);
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3148,14 +3174,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = Math.Truncate(vector._VArray[i]);
+                    result[i] = Math.Truncate(arrayR[i]);
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3184,14 +3212,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(left._Type, left._Size);
+                double[] result = new double[left._Size];
+
+                double[] arrayL = left._VArray, arrayR = right._VArray;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._VArray[i] = Math.Max(left._VArray[i], right._VArray[i]);
+                    result[i] = Math.Max(arrayL[i], arrayR[i]);
                 }
 
-                return result;
+                return UnsafeCreateInstance(left._Type, result);
             }
         }
 
@@ -3220,14 +3250,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(left._Type, left._Size);
+                double[] result = new double[left._Size];
+
+                double[] arrayL = left._VArray, arrayR = right._VArray;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._VArray[i] = Math.Min(left._VArray[i], right._VArray[i]);
+                    result[i] = Math.Min(arrayL[i], arrayR[i]);
                 }
 
-                return result;
+                return UnsafeCreateInstance(left._Type, result);
             }
         }
 
@@ -3253,9 +3285,11 @@ namespace Com
             }
             else
             {
+                double[] arrayL = left._VArray, arrayR = right._VArray;
+
                 for (int i = 0; i < left._Size; i++)
                 {
-                    if (left._VArray[i] != right._VArray[i])
+                    if (arrayL[i] != arrayR[i])
                     {
                         return false;
                     }
@@ -3283,9 +3317,11 @@ namespace Com
             }
             else
             {
+                double[] arrayL = left._VArray, arrayR = right._VArray;
+
                 for (int i = 0; i < left._Size; i++)
                 {
-                    if (left._VArray[i] != right._VArray[i])
+                    if (arrayL[i] != arrayR[i])
                     {
                         return true;
                     }
@@ -3317,11 +3353,13 @@ namespace Com
             }
             else
             {
+                double[] arrayL = left._VArray, arrayR = right._VArray;
+
                 for (int i = 0; i < left._Size; i++)
                 {
-                    if (left._VArray[i] != right._VArray[i])
+                    if (arrayL[i] != arrayR[i])
                     {
-                        return (left._VArray[i] < right._VArray[i]);
+                        return (arrayL[i] < arrayR[i]);
                     }
                 }
 
@@ -3351,11 +3389,13 @@ namespace Com
             }
             else
             {
+                double[] arrayL = left._VArray, arrayR = right._VArray;
+
                 for (int i = 0; i < left._Size; i++)
                 {
-                    if (left._VArray[i] != right._VArray[i])
+                    if (arrayL[i] != arrayR[i])
                     {
-                        return (left._VArray[i] > right._VArray[i]);
+                        return (arrayL[i] > arrayR[i]);
                     }
                 }
 
@@ -3385,11 +3425,13 @@ namespace Com
             }
             else
             {
+                double[] arrayL = left._VArray, arrayR = right._VArray;
+
                 for (int i = 0; i < left._Size; i++)
                 {
-                    if (left._VArray[i] != right._VArray[i])
+                    if (arrayL[i] != arrayR[i])
                     {
-                        return (left._VArray[i] < right._VArray[i]);
+                        return (arrayL[i] < arrayR[i]);
                     }
                 }
 
@@ -3419,11 +3461,13 @@ namespace Com
             }
             else
             {
+                double[] arrayL = left._VArray, arrayR = right._VArray;
+
                 for (int i = 0; i < left._Size; i++)
                 {
-                    if (left._VArray[i] != right._VArray[i])
+                    if (arrayL[i] != arrayR[i])
                     {
-                        return (left._VArray[i] > right._VArray[i]);
+                        return (arrayL[i] > arrayR[i]);
                     }
                 }
 
@@ -3463,14 +3507,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = -vector._VArray[i];
+                    result[i] = -arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3490,14 +3536,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayL = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = vector._VArray[i] + n;
+                    result[i] = arrayL[i] + n;
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3515,14 +3563,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = n + vector._VArray[i];
+                    result[i] = n + arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3551,14 +3601,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(left._Type, left._Size);
+                double[] result = new double[left._Size];
+
+                double[] arrayL = left._VArray, arrayR = right._VArray;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._VArray[i] = left._VArray[i] + right._VArray[i];
+                    result[i] = arrayL[i] + arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(left._Type, result);
             }
         }
 
@@ -3578,14 +3630,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayL = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = vector._VArray[i] - n;
+                    result[i] = arrayL[i] - n;
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3603,14 +3657,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = n - vector._VArray[i];
+                    result[i] = n - arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3639,14 +3695,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(left._Type, left._Size);
+                double[] result = new double[left._Size];
+
+                double[] arrayL = left._VArray, arrayR = right._VArray;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._VArray[i] = left._VArray[i] - right._VArray[i];
+                    result[i] = arrayL[i] - arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(left._Type, result);
             }
         }
 
@@ -3666,14 +3724,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayL = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = vector._VArray[i] * n;
+                    result[i] = arrayL[i] * n;
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3691,14 +3751,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = n * vector._VArray[i];
+                    result[i] = n * arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3727,14 +3789,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(left._Type, left._Size);
+                double[] result = new double[left._Size];
+
+                double[] arrayL = left._VArray, arrayR = right._VArray;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._VArray[i] = left._VArray[i] * right._VArray[i];
+                    result[i] = arrayL[i] * arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(left._Type, result);
             }
         }
 
@@ -3754,14 +3818,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayL = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = vector._VArray[i] / n;
+                    result[i] = arrayL[i] / n;
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3779,14 +3845,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(vector._Type, vector._Size);
+                double[] result = new double[vector._Size];
+
+                double[] arrayR = vector._VArray;
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result._VArray[i] = n / vector._VArray[i];
+                    result[i] = n / arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(vector._Type, result);
             }
         }
 
@@ -3815,14 +3883,16 @@ namespace Com
             }
             else
             {
-                Vector result = _GetZeroVector(left._Type, left._Size);
+                double[] result = new double[left._Size];
+
+                double[] arrayL = left._VArray, arrayR = right._VArray;
 
                 for (int i = 0; i < left._Size; i++)
                 {
-                    result._VArray[i] = left._VArray[i] / right._VArray[i];
+                    result[i] = arrayL[i] / arrayR[i];
                 }
 
-                return result;
+                return UnsafeCreateInstance(left._Type, result);
             }
         }
 
