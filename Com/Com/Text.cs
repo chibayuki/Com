@@ -49,96 +49,106 @@ namespace Com
             {
                 string part1 = string.Empty, part2 = string.Empty, part3 = string.Empty, part4 = string.Empty;
 
-                int sign = Math.Sign(value);
-
-                part1 = (sign < 0 ? "-" : string.Empty);
-
-                value = Math.Abs(value);
-
-                significance = Math.Max(0, significance);
-
-                int exp = (int)Math.Floor(Math.Log10(value));
-
-                if (significance > 0)
+                if (value == 0 || (value > -1E-308 && value < 1E-308))
                 {
-                    exp -= (significance - 1);
-
-                    value = Math.Round(value / Math.Pow(10, exp));
+                    part2 = "0";
+                    part4 = (string.IsNullOrEmpty(unit) ? string.Empty : " " + unit);
                 }
                 else
                 {
+                    int sign = Math.Sign(value);
+
+                    part1 = (sign < 0 ? "-" : string.Empty);
+
+                    value = Math.Abs(value);
+
+                    significance = Math.Max(0, Math.Min(significance, 16));
+
+                    int exp = (int)Math.Floor(Math.Log10(value));
+
                     value /= Math.Pow(10, exp);
-                }
 
-                while (value >= 10)
-                {
-                    value /= 10;
-                    exp++;
-                }
-
-                if (useMagnitudeOrderCode)
-                {
-                    if (exp >= -24 && exp < 27)
+                    if (significance > 0)
                     {
-                        int mod = 0;
+                        exp -= (significance - 1);
 
-                        if (exp >= 0)
+                        value = Math.Round(value / Math.Pow(10, exp));
+                    }
+                    else
+                    {
+                        value /= Math.Pow(10, exp);
+                    }
+
+                    while (value >= 10)
+                    {
+                        value /= 10;
+                        exp++;
+                    }
+
+                    if (useMagnitudeOrderCode)
+                    {
+                        if (exp >= -24 && exp < 27)
                         {
-                            mod = exp % 3;
-                        }
-                        else
-                        {
-                            mod = (-exp) % 3;
+                            int mod = 0;
+
+                            if (exp >= 0)
+                            {
+                                mod = exp % 3;
+                            }
+                            else
+                            {
+                                mod = (-exp) % 3;
+
+                                if (mod > 0)
+                                {
+                                    mod = 3 - mod;
+                                }
+                            }
 
                             if (mod > 0)
                             {
-                                mod = 3 - mod;
+                                value *= Math.Pow(10, mod);
+                            }
+
+                            part2 = (significance > 0 ? value.ToString("N" + Math.Max(0, significance - 1 - mod)) : value.ToString());
+
+                            int mag = 0;
+
+                            if (exp >= 0)
+                            {
+                                mag = exp / 3;
+                            }
+                            else
+                            {
+                                mag = (exp + 1) / 3 - 1;
+                            }
+
+                            string magCode = (mag > 0 ? _PositiveMagnitudeOrderCode[mag - 1].ToString() : (mag < 0 ? _NegativeMagnitudeOrderCode[-mag - 1].ToString() : string.Empty));
+
+                            if (string.IsNullOrEmpty(unit))
+                            {
+                                part3 = magCode;
+                                part4 = string.Empty;
+                            }
+                            else
+                            {
+                                part3 = " " + magCode;
+                                part4 = unit;
                             }
                         }
-
-                        if (mod > 0)
-                        {
-                            value *= Math.Pow(10, mod);
-                        }
-
-                        part2 = (significance > 0 ? value.ToString("N" + Math.Max(0, significance - 1 - mod)) : value.ToString());
-
-                        int mag = 0;
-
-                        if (exp >= 0)
-                        {
-                            mag = exp / 3;
-                        }
                         else
                         {
-                            mag = (exp + 1) / 3 - 1;
-                        }
-
-                        string magCode = (mag > 0 ? _PositiveMagnitudeOrderCode[mag - 1].ToString() : (mag < 0 ? _NegativeMagnitudeOrderCode[-mag - 1].ToString() : string.Empty));
-
-                        if (string.IsNullOrEmpty(unit))
-                        {
-                            part3 = magCode;
-                            part4 = string.Empty;
-                        }
-                        else
-                        {
-                            part3 = " " + magCode;
-                            part4 = unit;
+                            part2 = (significance > 0 ? value.ToString("N" + Math.Max(0, significance - 1)) : value.ToString());
+                            part3 = (useNaturalExpression ? "×10^" + exp : (exp > 0 ? "E+" + exp : "E" + exp));
+                            part4 = (string.IsNullOrEmpty(unit) ? string.Empty : " " + unit);
                         }
                     }
                     else
                     {
                         part2 = (significance > 0 ? value.ToString("N" + Math.Max(0, significance - 1)) : value.ToString());
-                        part3 = (useNaturalExpression ? "×10^" + exp : (exp > 0 ? "E+" + exp : "E" + exp));
+                        part3 = (exp == 0 ? string.Empty : (useNaturalExpression ? "×10^" + exp : (exp > 0 ? "E+" + exp : "E" + exp)));
                         part4 = (string.IsNullOrEmpty(unit) ? string.Empty : " " + unit);
                     }
-                }
-                else
-                {
-                    part2 = (significance > 0 ? value.ToString("N" + Math.Max(0, significance - 1)) : value.ToString());
-                    part3 = (exp == 0 ? string.Empty : (useNaturalExpression ? "×10^" + exp : (exp > 0 ? "E+" + exp : "E" + exp)));
-                    part4 = (string.IsNullOrEmpty(unit) ? string.Empty : " " + unit);
                 }
 
                 return string.Concat(part1, part2, part3, part4);
