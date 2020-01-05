@@ -734,21 +734,23 @@ namespace Com
             {
                 return false;
             }
-
-            double[,] arrayR = matrix._MArray;
-
-            for (int x = 0; x < _Size.Width; x++)
+            else
             {
-                for (int y = 0; y < _Size.Height; y++)
+                double[,] arrayR = matrix._MArray;
+
+                for (int x = 0; x < _Size.Width; x++)
                 {
-                    if (!_MArray[x, y].Equals(arrayR[x, y]))
+                    for (int y = 0; y < _Size.Height; y++)
                     {
-                        return false;
+                        if (!_MArray[x, y].Equals(arrayR[x, y]))
+                        {
+                            return false;
+                        }
                     }
                 }
-            }
 
-            return true;
+                return true;
+            }
         }
 
         //
@@ -1212,11 +1214,13 @@ namespace Com
 
                 double[,] result = new double[size.Width, size.Height];
 
+                double[,] arrayL = matrix._MArray;
+
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result[x, y] = matrix._MArray[x, y] + n;
+                        result[x, y] = arrayL[x, y] + n;
                     }
                 }
 
@@ -1242,11 +1246,13 @@ namespace Com
 
                 double[,] result = new double[size.Width, size.Height];
 
+                double[,] arrayR = matrix._MArray;
+
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result[x, y] = n + matrix._MArray[x, y];
+                        result[x, y] = n + arrayR[x, y];
                     }
                 }
 
@@ -1321,11 +1327,13 @@ namespace Com
 
                 double[,] result = new double[size.Width, size.Height];
 
+                double[,] arrayL = matrix._MArray;
+
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result[x, y] = matrix._MArray[x, y] - n;
+                        result[x, y] = arrayL[x, y] - n;
                     }
                 }
 
@@ -1351,11 +1359,13 @@ namespace Com
 
                 double[,] result = new double[size.Width, size.Height];
 
+                double[,] arrayR = matrix._MArray;
+
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result[x, y] = n - matrix._MArray[x, y];
+                        result[x, y] = n - arrayR[x, y];
                     }
                 }
 
@@ -1430,11 +1440,13 @@ namespace Com
 
                 double[,] result = new double[size.Width, size.Height];
 
+                double[,] arrayL = matrix._MArray;
+
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result[x, y] = matrix._MArray[x, y] * n;
+                        result[x, y] = arrayL[x, y] * n;
                     }
                 }
 
@@ -1460,11 +1472,13 @@ namespace Com
 
                 double[,] result = new double[size.Width, size.Height];
 
+                double[,] arrayR = matrix._MArray;
+
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result[x, y] = n * matrix._MArray[x, y];
+                        result[x, y] = n * arrayR[x, y];
                     }
                 }
 
@@ -1688,11 +1702,13 @@ namespace Com
 
                 double[,] result = new double[size.Width, size.Height];
 
+                double[,] arrayL = matrix._MArray;
+
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result[x, y] = matrix._MArray[x, y] / n;
+                        result[x, y] = arrayL[x, y] / n;
                     }
                 }
 
@@ -1718,11 +1734,13 @@ namespace Com
 
                 double[,] result = new double[size.Width, size.Height];
 
+                double[,] arrayR = matrix._MArray;
+
                 for (int x = 0; x < size.Width; x++)
                 {
                     for (int y = 0; y < size.Height; y++)
                     {
-                        result[x, y] = n / matrix._MArray[x, y];
+                        result[x, y] = n / arrayR[x, y];
                     }
                 }
 

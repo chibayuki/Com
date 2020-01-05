@@ -37,7 +37,7 @@ namespace Com
 
         private const uint _TrueUint = uint.MaxValue, _FalseUint = uint.MinValue; // 所有位值为 true 或 false 的 32 位无符号整数。
 
-        private const int _MaxSize = 2146434944; // BitSet 允许包含的最大元素数量，等于 (System.Array.MaxArrayLength / Com.BitSet._BitsPerUint / 4) * Com.BitSet._BitsPerUint * 4。
+        private const int _MaxSize = 2146434944; // BitSet 允许包含的最大元素数量，等于 Floor(System.Array.MaxArrayLength / Com.BitSet._BitsPerUint / 4) * Com.BitSet._BitsPerUint * 4。
 
         //
 
@@ -581,9 +581,11 @@ namespace Com
             }
             else
             {
+                uint[] arrayR = bitSet._UintArray;
+
                 for (int i = 0; i < _UintArray.Length; i++)
                 {
-                    if (_UintArray[i] != bitSet._UintArray[i])
+                    if (_UintArray[i] != arrayR[i])
                     {
                         return false;
                     }
@@ -610,7 +612,7 @@ namespace Com
             {
                 return 1;
             }
-            else if(!(obj is BitSet))
+            else if (!(obj is BitSet))
             {
                 throw new ArgumentException();
             }
@@ -654,9 +656,11 @@ namespace Com
                 {
                     int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
+                    uint[] arrayR = bitSet._UintArray;
+
                     for (int i = Len - 1; i >= 0; i--)
                     {
-                        int result = _UintArray[i].CompareTo(bitSet._UintArray[i]);
+                        int result = _UintArray[i].CompareTo(arrayR[i]);
 
                         if (result != 0)
                         {
@@ -1473,9 +1477,20 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位与得到的结果。</returns>
         public BitSet And(BitSet bitSet)
         {
-            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size)
+            bool LIsNOrE = (_Size <= 0);
+            bool RIsNOrE = IsNullOrEmpty(bitSet);
+
+            if (LIsNOrE && RIsNOrE)
             {
                 return Empty;
+            }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
+            else if (_Size != bitSet._Size)
+            {
+                throw new ArithmeticException();
             }
             else
             {
@@ -1483,9 +1498,11 @@ namespace Com
 
                 int Len = _GetUintNumOfBitNum(_Size);
 
+                uint[] arrayR = bitSet._UintArray;
+
                 for (int i = 0; i < Len; i++)
                 {
-                    result._UintArray[i] = (_UintArray[i] & bitSet._UintArray[i]);
+                    result._UintArray[i] = (_UintArray[i] & arrayR[i]);
                 }
 
                 return result;
@@ -1509,9 +1526,11 @@ namespace Com
 
                 int Len = _GetUintNumOfBitNum(_Size);
 
+                uint[] arrayR = bitSet._UintArray;
+
                 for (int i = 0; i < Len; i++)
                 {
-                    result._UintArray[i] = (_UintArray[i] | bitSet._UintArray[i]);
+                    result._UintArray[i] = (_UintArray[i] | arrayR[i]);
                 }
 
                 return result;
@@ -1535,9 +1554,11 @@ namespace Com
 
                 int Len = _GetUintNumOfBitNum(_Size);
 
+                uint[] arrayR = bitSet._UintArray;
+
                 for (int i = 0; i < Len; i++)
                 {
-                    result._UintArray[i] = (_UintArray[i] ^ bitSet._UintArray[i]);
+                    result._UintArray[i] = (_UintArray[i] ^ arrayR[i]);
                 }
 
                 return result;
@@ -1702,9 +1723,11 @@ namespace Com
                 {
                     int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
+                    uint[] arrayL = left._UintArray, arrayR = right._UintArray;
+
                     for (int i = 0; i < Len; i++)
                     {
-                        if (left._UintArray[i] != right._UintArray[i])
+                        if (arrayL[i] != arrayR[i])
                         {
                             return false;
                         }
@@ -1743,9 +1766,11 @@ namespace Com
                 {
                     int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
+                    uint[] arrayL = left._UintArray, arrayR = right._UintArray;
+
                     for (int i = 0; i < Len; i++)
                     {
-                        if (left._UintArray[i] != right._UintArray[i])
+                        if (arrayL[i] != arrayR[i])
                         {
                             return true;
                         }
@@ -1784,11 +1809,13 @@ namespace Com
                 {
                     int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
+                    uint[] arrayL = left._UintArray, arrayR = right._UintArray;
+
                     for (int i = Len - 1; i >= 0; i--)
                     {
-                        if (left._UintArray[i] != right._UintArray[i])
+                        if (arrayL[i] != arrayR[i])
                         {
-                            return (left._UintArray[i] < right._UintArray[i]);
+                            return (arrayL[i] < arrayR[i]);
                         }
                     }
 
@@ -1825,11 +1852,13 @@ namespace Com
                 {
                     int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
+                    uint[] arrayL = left._UintArray, arrayR = right._UintArray;
+
                     for (int i = Len - 1; i >= 0; i--)
                     {
-                        if (left._UintArray[i] != right._UintArray[i])
+                        if (arrayL[i] != arrayR[i])
                         {
-                            return (left._UintArray[i] > right._UintArray[i]);
+                            return (arrayL[i] > arrayR[i]);
                         }
                     }
 
@@ -1866,11 +1895,13 @@ namespace Com
                 {
                     int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
+                    uint[] arrayL = left._UintArray, arrayR = right._UintArray;
+
                     for (int i = Len - 1; i >= 0; i--)
                     {
-                        if (left._UintArray[i] != right._UintArray[i])
+                        if (arrayL[i] != arrayR[i])
                         {
-                            return (left._UintArray[i] < right._UintArray[i]);
+                            return (arrayL[i] < arrayR[i]);
                         }
                     }
 
@@ -1907,11 +1938,13 @@ namespace Com
                 {
                     int Len = _GetUintNumOfBitNum(Math.Min(Last1L, Last1R) + 1);
 
+                    uint[] arrayL = left._UintArray, arrayR = right._UintArray;
+
                     for (int i = Len - 1; i >= 0; i--)
                     {
-                        if (left._UintArray[i] != right._UintArray[i])
+                        if (arrayL[i] != arrayR[i])
                         {
-                            return (left._UintArray[i] > right._UintArray[i]);
+                            return (arrayL[i] > arrayR[i]);
                         }
                     }
 
@@ -1930,9 +1963,16 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位与得到的结果。</returns>
         public static BitSet operator &(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            if (left is null)
             {
-                return Empty;
+                if (IsNullOrEmpty(right))
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else
             {
@@ -1948,9 +1988,16 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位或得到的结果。</returns>
         public static BitSet operator |(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            if (left is null)
             {
-                return Empty;
+                if (IsNullOrEmpty(right))
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else
             {
@@ -1966,9 +2013,16 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位异或得到的结果。</returns>
         public static BitSet operator ^(BitSet left, BitSet right)
         {
-            if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Size != right._Size)
+            if (left is null)
             {
-                return Empty;
+                if (IsNullOrEmpty(right))
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else
             {
@@ -1983,7 +2037,7 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象按位取反得到的结果。</returns>
         public static BitSet operator ~(BitSet bitSet)
         {
-            if (IsNullOrEmpty(bitSet))
+            if (bitSet is null)
             {
                 return Empty;
             }

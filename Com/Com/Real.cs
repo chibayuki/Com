@@ -1020,18 +1020,18 @@ namespace Com
         /// <returns>32 位整数，表示此 Real 与指定的 Real 对象进行次序比较的结果。</returns>
         public int CompareTo(Real real)
         {
-            bool ThisIsNaN = double.IsNaN(_Value);
-            bool OtherIsNaN = double.IsNaN(real._Value);
+            bool LIsNaN = double.IsNaN(_Value);
+            bool RIsNaN = double.IsNaN(real._Value);
 
-            if (ThisIsNaN || OtherIsNaN)
+            if (LIsNaN || RIsNaN)
             {
-                if (ThisIsNaN && OtherIsNaN)
+                if (LIsNaN && RIsNaN)
                 {
                     return 0;
                 }
                 else
                 {
-                    if (ThisIsNaN)
+                    if (LIsNaN)
                     {
                         return -1;
                     }
