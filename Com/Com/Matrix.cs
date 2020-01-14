@@ -854,6 +854,33 @@ namespace Com
         }
 
         /// <summary>
+        /// 按 Vector 对象表示的列向量设置表示此 Matrix 的指定列。
+        /// </summary>
+        /// <param name="x">指定列在此 Matrix 的宽度方向（列）的索引。</param>
+        /// <param name="vector">Vector 对象，表示的列向量。</param>
+        public void SetColumn(int x, Vector vector)
+        {
+            if ((_Size.Width <= 0 || _Size.Height <= 0) || (x < 0 || x >= _Size.Width))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if (Vector.IsNullOrEmpty(vector) || !vector.IsColumnVector || vector.Dimension != _Size.Height)
+            {
+                throw new ArithmeticException();
+            }
+
+            //
+
+            double[] values = vector.ToArray();
+
+            for (int i = 0; i < _Size.Height; i++)
+            {
+                _MArray[x, i] = values[i];
+            }
+        }
+
+        /// <summary>
         /// 获取表示此 Matrix 的指定行的 Vector 的新实例。
         /// </summary>
         /// <param name="y">指定行在此 Matrix 的高度方向（行）的索引。</param>
@@ -875,6 +902,33 @@ namespace Com
             }
 
             return Vector.UnsafeCreateInstance(Vector.Type.RowVector, values);
+        }
+
+        /// <summary>
+        /// 按 Vector 对象表示的行向量设置表示此 Matrix 的指定行。
+        /// </summary>
+        /// <param name="y">指定行在此 Matrix 的高度方向（行）的索引。</param>
+        /// <param name="vector">Vector 对象，表示的行向量。</param>
+        public void SetRow(int y, Vector vector)
+        {
+            if ((_Size.Width <= 0 || _Size.Height <= 0) || (y < 0 || y >= _Size.Height))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if (Vector.IsNullOrEmpty(vector) || !vector.IsRowVector || vector.Dimension != _Size.Width)
+            {
+                throw new ArithmeticException();
+            }
+
+            //
+
+            double[] values = vector.ToArray();
+
+            for (int i = 0; i < _Size.Width; i++)
+            {
+                _MArray[i, y] = values[i];
+            }
         }
 
         //
