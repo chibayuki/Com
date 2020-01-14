@@ -66,8 +66,6 @@ namespace Com
 
                     int exp = (int)Math.Floor(Math.Log10(value));
 
-                    value /= Math.Pow(10, exp);
-
                     if (significance > 0)
                     {
                         exp -= (significance - 1);

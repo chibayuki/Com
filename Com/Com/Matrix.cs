@@ -468,55 +468,51 @@ namespace Com
                 {
                     int order = Math.Min(_Size.Width, _Size.Height);
 
-                    int result = 0;
-
-                    for (int i = 1; i <= order; i++)
+                    if (_Size.Width == _Size.Height && Determinant != 0)
                     {
-                        bool Flag = false;
+                        return order;
+                    }
+                    else
+                    {
+                        bool allZero = true;
 
-                        for (int x = 0; x < _Size.Width - i + 1; x++)
+                        for (int x = 0; x < _Size.Width; x++)
                         {
-                            for (int y = 0; y < _Size.Height - i + 1; y++)
+                            for (int y = 0; y < _Size.Height; y++)
                             {
-                                Matrix sub = SubMatrix(x, y, i, i);
-
-                                if (IsNullOrEmpty(sub))
+                                if (_MArray[x, y] != 0)
                                 {
-                                    break;
+                                    allZero = false;
+
+                                    goto ALL_ZERO;
                                 }
-
-                                double det = sub.Determinant;
-
-                                if (InternalMethod.IsNaNOrInfinity(det))
-                                {
-                                    break;
-                                }
-
-                                if (det != 0)
-                                {
-                                    Flag = true;
-
-                                    break;
-                                }
-                            }
-
-                            if (Flag)
-                            {
-                                break;
                             }
                         }
 
-                        if (Flag)
+                        ALL_ZERO:
+                        if (allZero)
                         {
-                            result++;
+                            return 0;
                         }
                         else
                         {
-                            break;
+                            for (int rank = order; rank > 1; rank--)
+                            {
+                                for (int x = 0; x < _Size.Width - rank + 1; x++)
+                                {
+                                    for (int y = 0; y < _Size.Height - rank + 1; y++)
+                                    {
+                                        if (SubMatrix(x, y, rank, rank).Determinant != 0)
+                                        {
+                                            return rank;
+                                        }
+                                    }
+                                }
+                            }
+
+                            return 1;
                         }
                     }
-
-                    return result;
                 }
             }
         }
