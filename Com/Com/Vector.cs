@@ -455,34 +455,34 @@ namespace Com
             {
                 if (_Size <= 0)
                 {
-                    return double.NaN;
+                    throw new ArithmeticException();
+                }
+
+                //
+
+                double AbsMax = 0;
+
+                for (int i = 0; i < _Size; i++)
+                {
+                    AbsMax = Math.Max(AbsMax, Math.Abs(_VArray[i]));
+                }
+
+                if (AbsMax == 0)
+                {
+                    return 0;
                 }
                 else
                 {
-                    double AbsMax = 0;
+                    double SqrSum = 0;
 
                     for (int i = 0; i < _Size; i++)
                     {
-                        AbsMax = Math.Max(AbsMax, Math.Abs(_VArray[i]));
+                        double Factor = _VArray[i] / AbsMax;
+
+                        SqrSum += Factor * Factor;
                     }
 
-                    if (AbsMax == 0)
-                    {
-                        return 0;
-                    }
-                    else
-                    {
-                        double SqrSum = 0;
-
-                        for (int i = 0; i < _Size; i++)
-                        {
-                            double Factor = _VArray[i] / AbsMax;
-
-                            SqrSum += Factor * Factor;
-                        }
-
-                        return (AbsMax * Math.Sqrt(SqrSum));
-                    }
+                    return (AbsMax * Math.Sqrt(SqrSum));
                 }
             }
         }
@@ -496,19 +496,19 @@ namespace Com
             {
                 if (_Size <= 0)
                 {
-                    return double.NaN;
+                    throw new ArithmeticException();
                 }
-                else
+
+                //
+
+                double SqrSum = 0;
+
+                for (int i = 0; i < _Size; i++)
                 {
-                    double SqrSum = 0;
-
-                    for (int i = 0; i < _Size; i++)
-                    {
-                        SqrSum += _VArray[i] * _VArray[i];
-                    }
-
-                    return SqrSum;
+                    SqrSum += _VArray[i] * _VArray[i];
                 }
+
+                return SqrSum;
             }
         }
 
@@ -548,27 +548,27 @@ namespace Com
             {
                 if (_Size <= 0)
                 {
+                    throw new ArithmeticException();
+                }
+
+                //
+
+                double Mod = Module;
+
+                if (Mod <= 0)
+                {
                     return Empty;
                 }
                 else
                 {
-                    double Mod = Module;
+                    double[] result = new double[_Size];
 
-                    if (Mod <= 0)
+                    for (int i = 0; i < _Size; i++)
                     {
-                        return Empty;
+                        result[i] = _VArray[i] / Mod;
                     }
-                    else
-                    {
-                        double[] result = new double[_Size];
 
-                        for (int i = 0; i < _Size; i++)
-                        {
-                            result[i] = _VArray[i] / Mod;
-                        }
-
-                        return UnsafeCreateInstance(_Type, result);
-                    }
+                    return UnsafeCreateInstance(_Type, result);
                 }
             }
         }

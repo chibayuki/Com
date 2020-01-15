@@ -397,58 +397,62 @@ namespace Com
             {
                 if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
                 {
-                    return double.NaN;
+                    throw new ArithmeticException();
+                }
+
+                //
+
+                int order = _Size.Width;
+
+                if (order == 1)
+                {
+                    return _MArray[0, 0];
+                }
+                else if (order == 2)
+                {
+                    return (_MArray[0, 0] * _MArray[1, 1] - _MArray[1, 0] * _MArray[0, 1]);
                 }
                 else
                 {
-                    int order = _Size.Width;
+                    double det = 0;
+                    int detSign = 1;
 
-                    if (order == 0)
+                    for (int i = 0; i < order; i++)
                     {
-                        return 0;
-                    }
-                    else if (order == 1)
-                    {
-                        return _MArray[0, 0];
-                    }
-                    else if (order == 2)
-                    {
-                        return (_MArray[0, 0] * _MArray[1, 1] - _MArray[1, 0] * _MArray[0, 1]);
-                    }
-                    else
-                    {
-                        double det = 0;
-                        int detSign = 1;
+                        Size sizeTemp = new Size(order - 1, order - 1);
 
-                        for (int i = 0; i < order; i++)
+                        Matrix temp = new Matrix(sizeTemp);
+
+                        for (int y = 0; y < i; y++)
                         {
-                            Size sizeTemp = new Size(order - 1, order - 1);
-
-                            Matrix temp = new Matrix(sizeTemp);
-
                             for (int x = 0; x < sizeTemp.Width; x++)
                             {
-                                for (int y = 0; y < sizeTemp.Height; y++)
-                                {
-                                    temp._MArray[x, y] = _MArray[x + 1, (y >= i ? y + 1 : y)];
-                                }
-                            }
-
-                            double detTemp = temp.Determinant;
-
-                            if (InternalMethod.IsNaNOrInfinity(detTemp))
-                            {
-                                return double.NaN;
-                            }
-                            else
-                            {
-                                det += (_MArray[0, i] * detSign * detTemp);
-                                detSign = -detSign;
+                                temp._MArray[x, y] = _MArray[x + 1, y];
                             }
                         }
 
-                        return det;
+                        for (int y = i; y < sizeTemp.Height; y++)
+                        {
+                            for (int x = 0; x < sizeTemp.Width; x++)
+                            {
+                                temp._MArray[x, y] = _MArray[x + 1, y + 1];
+                            }
+                        }
+
+                        double detTemp = temp.Determinant;
+
+                        if (double.IsNaN(detTemp))
+                        {
+                            return double.NaN;
+                        }
+                        else
+                        {
+                            det += (_MArray[0, i] * detSign * detTemp);
+                            detSign = -detSign;
+                        }
                     }
+
+                    return det;
                 }
             }
         }
@@ -554,36 +558,36 @@ namespace Com
             {
                 if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
                 {
-                    return Empty;
+                    throw new ArithmeticException();
                 }
-                else
+
+                //
+
+                double[,] result = new double[_Size.Width, _Size.Height];
+
+                Size sizeTemp = new Size(_Size.Width - 1, _Size.Height - 1);
+
+                double[,] temp = new double[sizeTemp.Width, sizeTemp.Height];
+
+                for (int x = 0; x < _Size.Width; x++)
                 {
-                    Matrix result = new Matrix(_Size);
-
-                    for (int x = 0; x < _Size.Width; x++)
+                    for (int y = 0; y < _Size.Height; y++)
                     {
-                        for (int y = 0; y < _Size.Height; y++)
+                        for (int _x = 0; _x < sizeTemp.Width; _x++)
                         {
-                            Size sizeTemp = new Size(_Size.Width - 1, _Size.Height - 1);
-
-                            Matrix temp = new Matrix(sizeTemp);
-
-                            for (int _x = 0; _x < sizeTemp.Width; _x++)
+                            for (int _y = 0; _y < sizeTemp.Height; _y++)
                             {
-                                for (int _y = 0; _y < sizeTemp.Height; _y++)
-                                {
-                                    temp._MArray[_x, _y] = _MArray[(_x < x ? _x : _x + 1), (_y < y ? _y : _y + 1)];
-                                }
+                                temp[_x, _y] = _MArray[(_x < x ? _x : _x + 1), (_y < y ? _y : _y + 1)];
                             }
-
-                            double det = temp.Determinant;
-
-                            result._MArray[y, x] = ((x + y) % 2 == 0 ? 1 : -1) * det;
                         }
-                    }
 
-                    return result;
+                        double det = UnsafeCreateInstance(temp).Determinant;
+
+                        result[y, x] = ((x + y) % 2 == 0 ? 1 : -1) * det;
+                    }
                 }
+
+                return UnsafeCreateInstance(result);
             }
         }
 
@@ -596,41 +600,36 @@ namespace Com
             {
                 if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
                 {
+                    throw new ArithmeticException();
+                }
+
+                //
+
+                double det = Determinant;
+
+                if (InternalMethod.IsNaNOrInfinity(det) || det == 0)
+                {
                     return Empty;
                 }
                 else
                 {
-                    double det = Determinant;
+                    Matrix result = Adjoint;
 
-                    if (InternalMethod.IsNaNOrInfinity(det) || det == 0)
+                    if (IsNullOrEmpty(result))
                     {
                         return Empty;
                     }
                     else
                     {
-                        Matrix result = Adjoint;
-
-                        if (IsNullOrEmpty(result))
+                        for (int x = 0; x < _Size.Width; x++)
                         {
-                            return Empty;
-                        }
-                        else
-                        {
-                            for (int x = 0; x < _Size.Width; x++)
+                            for (int y = 0; y < _Size.Height; y++)
                             {
-                                for (int y = 0; y < _Size.Height; y++)
-                                {
-                                    result._MArray[x, y] /= det;
-
-                                    if (InternalMethod.IsNaNOrInfinity(result._MArray[x, y]))
-                                    {
-                                        return Empty;
-                                    }
-                                }
+                                result._MArray[x, y] /= det;
                             }
-
-                            return result;
                         }
+
+                        return result;
                     }
                 }
             }
@@ -1617,6 +1616,118 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回将 Matrix 对象与 Vector 对象相乘得到的 Vector 的新实例。
+        /// </summary>
+        /// <param name="left">Matrix 对象，表示被乘数。</param>
+        /// <param name="right">Vector 对象，表示乘数。</param>
+        /// <returns>Vector 对象，表示将 Matrix 对象与 Vector 对象相乘得到的结果。</returns>
+        public static Vector Multiply(Matrix left, Vector right)
+        {
+            bool LIsNOrE = IsNullOrEmpty(left);
+            bool RIsNOrE = Vector.IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
+            {
+                return Vector.Empty;
+            }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
+            else if (!right.IsColumnVector)
+            {
+                throw new ArithmeticException();
+            }
+            else
+            {
+                Size sizeL = left.Size;
+                int heightR = right.Dimension;
+
+                if (sizeL.Width != heightR)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    double[] result = new double[sizeL.Height];
+
+                    double[,] arrayL = left._MArray;
+
+                    for (int i = 0; i < heightR; i++)
+                    {
+                        double Ri = right[i];
+
+                        if (Ri != 0)
+                        {
+                            for (int y = 0; y < sizeL.Height; y++)
+                            {
+                                result[y] += (arrayL[i, y] * Ri);
+                            }
+                        }
+                    }
+
+                    return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, result);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回将 Vector 对象与 Matrix 对象相乘得到的 Vector 的新实例。
+        /// </summary>
+        /// <param name="left">Vector 对象，表示被乘数。</param>
+        /// <param name="right">Matrix 对象，表示乘数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Matrix 对象相乘得到的结果。</returns>
+        public static Vector Multiply(Vector left, Matrix right)
+        {
+            bool LIsNOrE = Vector.IsNullOrEmpty(left);
+            bool RIsNOrE = IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
+            {
+                return Vector.Empty;
+            }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
+            else if (!left.IsRowVector)
+            {
+                throw new ArithmeticException();
+            }
+            else
+            {
+                int widthL = left.Dimension;
+                Size sizeR = right.Size;
+
+                if (widthL != sizeR.Height)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    double[] result = new double[sizeR.Width];
+
+                    double[,] arrayR = right._MArray;
+
+                    for (int i = 0; i < widthL; i++)
+                    {
+                        double Li = left[i];
+
+                        if (Li != 0)
+                        {
+                            for (int x = 0; x < sizeR.Width; x++)
+                            {
+                                result[x] += (arrayR[x, i] * Li);
+                            }
+                        }
+                    }
+
+                    return Vector.UnsafeCreateInstance(Vector.Type.RowVector, result);
+                }
+            }
+        }
+
+        /// <summary>
         /// 返回将数组中所有 Matrix 对象依次左乘得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="matrices">左矩阵数组。</param>
@@ -1843,6 +1954,54 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回将 Matrix 对象与 Vector 对象左除得到的 Vector 的新实例。
+        /// </summary>
+        /// <param name="left">Matrix 对象，表示被除数。</param>
+        /// <param name="right">Vector 对象，表示除数。</param>
+        /// <returns>Vector 对象，表示将 Matrix 对象与 Vector 对象左除得到的结果。</returns>
+        public static Vector DivideLeft(Matrix left, Vector right)
+        {
+            bool LIsNOrE = IsNullOrEmpty(left);
+            bool RIsNOrE = Vector.IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
+            {
+                return Vector.Empty;
+            }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
+            else if (!right.IsColumnVector)
+            {
+                throw new ArithmeticException();
+            }
+            else
+            {
+                Size sizeL = left.Size;
+                int heightR = right.Dimension;
+
+                if (sizeL.Width != sizeL.Height || sizeL.Width != heightR)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Matrix invLeft = left.Invert;
+
+                    if (IsNullOrEmpty(invLeft))
+                    {
+                        throw new ArithmeticException();
+                    }
+                    else
+                    {
+                        return Multiply(invLeft, right);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// 返回将 Matrix 对象与 Matrix 对象右除得到的 Matrix 的新实例。
         /// </summary>
         /// <param name="left">Matrix 对象，表示被除数。</param>
@@ -1886,10 +2045,58 @@ namespace Com
             }
         }
 
+        /// <summary>
+        /// 返回将 Vector 对象与 Matrix 对象右除得到的 Vector 的新实例。
+        /// </summary>
+        /// <param name="left">Vector 对象，表示被除数。</param>
+        /// <param name="right">Matrix 对象，表示除数。</param>
+        /// <returns>Vector 对象，表示将 Vector 对象与 Matrix 对象右除得到的结果。</returns>
+        public static Vector DivideRight(Vector left, Matrix right)
+        {
+            bool LIsNOrE = Vector.IsNullOrEmpty(left);
+            bool RIsNOrE = IsNullOrEmpty(right);
+
+            if (LIsNOrE && RIsNOrE)
+            {
+                return Vector.Empty;
+            }
+            else if (LIsNOrE || RIsNOrE)
+            {
+                throw new ArithmeticException();
+            }
+            else if (!left.IsRowVector)
+            {
+                throw new ArithmeticException();
+            }
+            else
+            {
+                int widthL = left.Dimension;
+                Size sizeR = right.Size;
+
+                if (sizeR.Width != sizeR.Height || widthL != sizeR.Height)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Matrix invRight = right.Invert;
+
+                    if (IsNullOrEmpty(invRight))
+                    {
+                        throw new ArithmeticException();
+                    }
+                    else
+                    {
+                        return Multiply(left, invRight);
+                    }
+                }
+            }
+        }
+
         //
 
         /// <summary>
-        /// 返回由 Matrix 对象与 Vector 对象指定的非齐次线性方程组的解向量。
+        /// 返回由 Matrix 对象表示的系数矩阵与 Vector 对象表示的常数项指定的非齐次线性方程组的解向量。
         /// </summary>
         /// <param name="matrix">Matrix 对象，表示系数矩阵。</param>
         /// <param name="vector">Vector 对象，表示常数项。</param>
