@@ -1652,10 +1652,11 @@ namespace Com
                     double[] result = new double[sizeL.Height];
 
                     double[,] arrayL = left._MArray;
+                    double[] arrayR = right.UnsafeGetData();
 
                     for (int i = 0; i < heightR; i++)
                     {
-                        double Ri = right[i];
+                        double Ri = arrayR[i];
 
                         if (Ri != 0)
                         {
@@ -1707,11 +1708,12 @@ namespace Com
                 {
                     double[] result = new double[sizeR.Width];
 
+                    double[] arrayL = left.UnsafeGetData();
                     double[,] arrayR = right._MArray;
 
                     for (int i = 0; i < widthL; i++)
                     {
-                        double Li = left[i];
+                        double Li = arrayL[i];
 
                         if (Li != 0)
                         {
@@ -2136,15 +2138,15 @@ namespace Com
                     }
                     else
                     {
-                        Matrix solution = DivideLeft(matrix, vector.ToMatrix());
+                        Vector result = DivideLeft(matrix, vector);
 
-                        if (IsNullOrEmpty(solution) || solution.Size != new Size(1, order))
+                        if (Vector.IsNullOrEmpty(result) || result.Dimension != order)
                         {
                             throw new ArithmeticException();
                         }
                         else
                         {
-                            return solution.GetColumn(0);
+                            return result;
                         }
                     }
                 }

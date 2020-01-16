@@ -114,40 +114,26 @@ namespace Com
 
         //
 
-        private Matrix _ToMatrixForAffineTransform() // 获取此 Vector 用于仿射变换的矩阵。
+        internal double[] UnsafeGetData() // 以不安全方式获取此 Vector 的内部数据结构。
+        {
+            return _VArray;
+        }
+
+        private Vector _ForAffineTransform() // 获取此 Vector 用于仿射变换的扩展。
         {
             if (_Size <= 0)
             {
-                return Matrix.Empty;
+                return Empty;
             }
             else
             {
-                if (_Type == Type.ColumnVector)
-                {
-                    double[,] values = new double[1, _Size + 1];
+                double[] values = new double[_Size + 1];
 
-                    for (int i = 0; i < _Size; i++)
-                    {
-                        values[0, i] = _VArray[i];
-                    }
+                Array.Copy(_VArray, values, _Size);
 
-                    values[0, _Size] = 1;
+                values[_Size] = 1;
 
-                    return Matrix.UnsafeCreateInstance(values);
-                }
-                else
-                {
-                    double[,] values = new double[_Size + 1, 1];
-
-                    for (int i = 0; i < _Size; i++)
-                    {
-                        values[i, 0] = _VArray[i];
-                    }
-
-                    values[_Size, 0] = 1;
-
-                    return Matrix.UnsafeCreateInstance(values);
-                }
+                return UnsafeCreateInstance(_Type, values);
             }
         }
 
@@ -1712,33 +1698,24 @@ namespace Com
             }
             else
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector vector = _ForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    result = Matrix.Multiply(matrix, result);
-
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
-                    }
+                    vector = Matrix.Multiply(matrix, vector);
                 }
                 else
                 {
-                    result = Matrix.Multiply(result, matrix);
+                    vector = Matrix.Multiply(vector, matrix);
+                }
 
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Array.Copy(vector._VArray, _VArray, _Size);
                 }
             }
         }
@@ -1778,39 +1755,30 @@ namespace Com
                     }
                 }
 
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector vector = _ForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
                     for (int i = 0; i < matrices.Length; i++)
                     {
-                        result = Matrix.Multiply(matrices[i], result);
-                    }
-
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
+                        vector = Matrix.Multiply(matrices[i], vector);
                     }
                 }
                 else
                 {
                     for (int i = 0; i < matrices.Length; i++)
                     {
-                        result = Matrix.Multiply(result, matrices[i]);
+                        vector = Matrix.Multiply(vector, matrices[i]);
                     }
+                }
 
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Array.Copy(vector._VArray, _VArray, _Size);
                 }
             }
         }
@@ -1855,41 +1823,28 @@ namespace Com
             }
             else
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector vector = _ForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    result = Matrix.Multiply(matrix, result);
-
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
-                    }
+                    vector = Matrix.Multiply(matrix, vector);
                 }
                 else
                 {
-                    result = Matrix.Multiply(result, matrix);
+                    vector = Matrix.Multiply(vector, matrix);
+                }
 
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Vector result = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+                    Array.Copy(vector._VArray, result._VArray, _Size);
 
-                        return vector;
-                    }
+                    return result;
                 }
             }
         }
@@ -1932,47 +1887,34 @@ namespace Com
                     }
                 }
 
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector vector = _ForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
                     for (int i = 0; i < matrices.Length; i++)
                     {
-                        result = Matrix.Multiply(matrices[i], result);
-                    }
-
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
+                        vector = Matrix.Multiply(matrices[i], vector);
                     }
                 }
                 else
                 {
                     for (int i = 0; i < matrices.Length; i++)
                     {
-                        result = Matrix.Multiply(result, matrices[i]);
+                        vector = Matrix.Multiply(vector, matrices[i]);
                     }
+                }
 
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Vector result = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+                    Array.Copy(vector._VArray, result._VArray, _Size);
 
-                        return vector;
-                    }
+                    return result;
                 }
             }
         }
@@ -2017,33 +1959,24 @@ namespace Com
             }
             else
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector vector = _ForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    result = Matrix.DivideLeft(matrix, result);
-
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
-                    }
+                    vector = Matrix.DivideLeft(matrix, vector);
                 }
                 else
                 {
-                    result = Matrix.DivideRight(result, matrix);
+                    vector = Matrix.DivideRight(vector, matrix);
+                }
 
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Array.Copy(vector._VArray, _VArray, _Size);
                 }
             }
         }
@@ -2083,33 +2016,24 @@ namespace Com
                     }
                 }
 
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector vector = _ForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    result = Matrix.DivideLeft(Matrix.MultiplyLeft(matrices), result);
-
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Array.Copy(result.GetColumn(0)._VArray, _VArray, _Size);
-                    }
+                    vector = Matrix.DivideLeft(Matrix.MultiplyLeft(matrices), vector);
                 }
                 else
                 {
-                    result = Matrix.DivideRight(result, Matrix.MultiplyRight(matrices));
+                    vector = Matrix.DivideRight(vector, Matrix.MultiplyRight(matrices));
+                }
 
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Array.Copy(result.GetRow(0)._VArray, _VArray, _Size);
-                    }
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Array.Copy(vector._VArray, _VArray, _Size);
                 }
             }
         }
@@ -2154,41 +2078,28 @@ namespace Com
             }
             else
             {
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector vector = _ForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    result = Matrix.DivideLeft(matrix, result);
-
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
-                    }
+                    vector = Matrix.DivideLeft(matrix, vector);
                 }
                 else
                 {
-                    result = Matrix.DivideRight(result, matrix);
+                    vector = Matrix.DivideRight(vector, matrix);
+                }
 
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Vector result = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+                    Array.Copy(vector._VArray, result._VArray, _Size);
 
-                        return vector;
-                    }
+                    return result;
                 }
             }
         }
@@ -2231,41 +2142,28 @@ namespace Com
                     }
                 }
 
-                Matrix result = _ToMatrixForAffineTransform();
+                Vector vector = _ForAffineTransform();
 
                 if (_Type == Type.ColumnVector)
                 {
-                    result = Matrix.DivideLeft(Matrix.MultiplyLeft(matrices), result);
-
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(1, _Size + 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
-
-                        Array.Copy(result.GetColumn(0)._VArray, vector._VArray, _Size);
-
-                        return vector;
-                    }
+                    vector = Matrix.DivideLeft(Matrix.MultiplyLeft(matrices), vector);
                 }
                 else
                 {
-                    result = Matrix.DivideRight(result, Matrix.MultiplyRight(matrices));
+                    vector = Matrix.DivideRight(vector, Matrix.MultiplyRight(matrices));
+                }
 
-                    if (Matrix.IsNullOrEmpty(result) || result.Size != new Size(_Size + 1, 1))
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        Vector vector = _GetZeroVector(_Type, _Size);
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Vector result = _GetZeroVector(_Type, _Size);
 
-                        Array.Copy(result.GetRow(0)._VArray, vector._VArray, _Size);
+                    Array.Copy(vector._VArray, result._VArray, _Size);
 
-                        return vector;
-                    }
+                    return result;
                 }
             }
         }
