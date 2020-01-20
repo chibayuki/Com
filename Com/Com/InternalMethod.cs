@@ -36,6 +36,11 @@ namespace Com
             return (array is null || array.Length <= 0);
         }
 
+        public static bool IsNullOrEmpty<T>(T[] array) // 判断一维数组是否为 null 或不包含任何元素。
+        {
+            return (array is null || array.Length <= 0);
+        }
+
         public static bool IsNullOrEmpty<T>(List<T> list) // 判断列表是否为 null 或不包含任何元素。
         {
             return (list is null || list.Count <= 0);
