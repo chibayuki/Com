@@ -66,6 +66,13 @@ namespace Com
 
         private double[,] _MArray; // 用于存储矩阵元素的数组。
 
+        //
+
+        internal double[,] UnsafeGetData() // 以不安全方式获取此 Matrix 的内部数据结构。
+        {
+            return _MArray;
+        }
+
         #endregion
 
         #region 构造函数
@@ -237,7 +244,7 @@ namespace Com
         {
             get
             {
-                if ((_Size.Width <= 0 || _Size.Height <= 0) || (x < 0 || x >= _Size.Width) || (y < 0 || y >= _Size.Height))
+                if (IsEmpty || (x < 0 || x >= _Size.Width) || (y < 0 || y >= _Size.Height))
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -249,7 +256,7 @@ namespace Com
 
             set
             {
-                if ((_Size.Width <= 0 || _Size.Height <= 0) || (x < 0 || x >= _Size.Width) || (y < 0 || y >= _Size.Height))
+                if (IsEmpty || (x < 0 || x >= _Size.Width) || (y < 0 || y >= _Size.Height))
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -268,7 +275,7 @@ namespace Com
         {
             get
             {
-                if ((_Size.Width <= 0 || _Size.Height <= 0) || (index.X < 0 || index.X >= _Size.Width) || (index.Y < 0 || index.Y >= _Size.Height))
+                if (IsEmpty || (index.X < 0 || index.X >= _Size.Width) || (index.Y < 0 || index.Y >= _Size.Height))
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -280,7 +287,7 @@ namespace Com
 
             set
             {
-                if ((_Size.Width <= 0 || _Size.Height <= 0) || (index.X < 0 || index.X >= _Size.Width) || (index.Y < 0 || index.Y >= _Size.Height))
+                if (IsEmpty || (index.X < 0 || index.X >= _Size.Width) || (index.Y < 0 || index.Y >= _Size.Height))
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -313,7 +320,7 @@ namespace Com
         {
             get
             {
-                if (_Size.Width <= 0 || _Size.Height <= 0)
+                if (IsEmpty)
                 {
                     return Size.Empty;
                 }
@@ -342,7 +349,7 @@ namespace Com
         {
             get
             {
-                return Width;
+                return Size.Width;
             }
         }
 
@@ -364,7 +371,7 @@ namespace Com
         {
             get
             {
-                return Height;
+                return Size.Height;
             }
         }
 
@@ -375,7 +382,7 @@ namespace Com
         {
             get
             {
-                if (_Size.Width <= 0 || _Size.Height <= 0)
+                if (IsEmpty)
                 {
                     return 0;
                 }
@@ -395,7 +402,7 @@ namespace Com
         {
             get
             {
-                if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
+                if (IsEmpty || _Size.Width != _Size.Height)
                 {
                     throw new ArithmeticException();
                 }
@@ -464,7 +471,7 @@ namespace Com
         {
             get
             {
-                if (_Size.Width <= 0 || _Size.Height <= 0)
+                if (IsEmpty)
                 {
                     return -1;
                 }
@@ -528,7 +535,7 @@ namespace Com
         {
             get
             {
-                if (_Size.Width <= 0 || _Size.Height <= 0)
+                if (IsEmpty)
                 {
                     return Empty;
                 }
@@ -556,7 +563,7 @@ namespace Com
         {
             get
             {
-                if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
+                if (IsEmpty || _Size.Width != _Size.Height)
                 {
                     throw new ArithmeticException();
                 }
@@ -598,7 +605,7 @@ namespace Com
         {
             get
             {
-                if ((_Size.Width <= 0 || _Size.Height <= 0) || _Size.Width != _Size.Height)
+                if (IsEmpty || _Size.Width != _Size.Height)
                 {
                     throw new ArithmeticException();
                 }
@@ -694,7 +701,7 @@ namespace Com
         {
             string Str = string.Empty;
 
-            if (_Size.Width <= 0 || _Size.Height <= 0)
+            if (IsEmpty)
             {
                 Str = "Empty";
             }
@@ -754,7 +761,7 @@ namespace Com
         /// <returns>Matrix 对象，表示此 Matrix 的副本。</returns>
         public Matrix Copy()
         {
-            if (_Size.Width <= 0 || _Size.Height <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -774,7 +781,7 @@ namespace Com
         /// <returns>Matrix 对象，表示此 Matrix 的子矩阵。</returns>
         public Matrix SubMatrix(Point index, Size size)
         {
-            if ((_Size.Width <= 0 || _Size.Height <= 0) || (size.Width <= 0 || size.Height <= 0) || (index.X < 0 || index.X + size.Width > _Size.Width) || (index.Y < 0 || index.Y + size.Height > _Size.Height))
+            if (IsEmpty || (size.Width <= 0 || size.Height <= 0) || (index.X < 0 || index.X + size.Width > _Size.Width) || (index.Y < 0 || index.Y + size.Height > _Size.Height))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -804,7 +811,7 @@ namespace Com
         /// <returns>Matrix 对象，表示此 Matrix 的子矩阵。</returns>
         public Matrix SubMatrix(int x, int y, int width, int height)
         {
-            if ((_Size.Width <= 0 || _Size.Height <= 0) || (width <= 0 || height <= 0) || (x < 0 || x + width > _Size.Width) || (y < 0 || y + height > _Size.Height))
+            if (IsEmpty || (width <= 0 || height <= 0) || (x < 0 || x + width > _Size.Width) || (y < 0 || y + height > _Size.Height))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -833,7 +840,7 @@ namespace Com
         /// <returns>Vector 对象，表示此 Matrix 的指定列。</returns>
         public Vector GetColumn(int x)
         {
-            if ((_Size.Width <= 0 || _Size.Height <= 0) || (x < 0 || x >= _Size.Width))
+            if (IsEmpty || (x < 0 || x >= _Size.Width))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -862,7 +869,7 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
-            if ((_Size.Width <= 0 || _Size.Height <= 0) || (x < 0 || x >= _Size.Width))
+            if (IsEmpty || (x < 0 || x >= _Size.Width))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -889,7 +896,7 @@ namespace Com
         /// <returns>Vector 对象，表示此 Matrix 的指定行。</returns>
         public Vector GetRow(int y)
         {
-            if ((_Size.Width <= 0 || _Size.Height <= 0) || (y < 0 || y >= _Size.Height))
+            if (IsEmpty || (y < 0 || y >= _Size.Height))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -918,7 +925,7 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
-            if ((_Size.Width <= 0 || _Size.Height <= 0) || (y < 0 || y >= _Size.Height))
+            if (IsEmpty || (y < 0 || y >= _Size.Height))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -946,7 +953,7 @@ namespace Com
         /// <returns>双精度浮点数二维数组，表示转换的结果。</returns>
         public double[,] ToArray()
         {
-            if (_Size.Width <= 0 || _Size.Height <= 0)
+            if (IsEmpty)
             {
                 return new double[0, 0];
             }
@@ -1041,7 +1048,7 @@ namespace Com
             }
             else if (size.Width == 0 || size.Height == 0)
             {
-                return Empty;
+                throw new ArithmeticException();
             }
 
             //
@@ -1063,7 +1070,7 @@ namespace Com
             }
             else if (width == 0 || height == 0)
             {
-                return Empty;
+                throw new ArithmeticException();
             }
 
             //
@@ -1084,7 +1091,7 @@ namespace Com
             }
             else if (size.Width == 0 || size.Height == 0)
             {
-                return Empty;
+                throw new ArithmeticException();
             }
 
             //
@@ -1106,7 +1113,7 @@ namespace Com
             }
             else if (width == 0 || height == 0)
             {
-                return Empty;
+                throw new ArithmeticException();
             }
 
             //
@@ -2124,23 +2131,7 @@ namespace Com
 
             if (LIsEmpty || RIsEmpty)
             {
-                if (LIsEmpty)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    if (!right.IsRowVector)
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        _ = left.Invert;
-
-                        return Vector.Empty;
-                    }
-                }
+                throw new ArithmeticException();
             }
             else
             {
@@ -2232,23 +2223,7 @@ namespace Com
 
             if (LIsEmpty || RIsEmpty)
             {
-                if (RIsEmpty)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    if (!left.IsRowVector)
-                    {
-                        throw new ArithmeticException();
-                    }
-                    else
-                    {
-                        _ = right.Invert;
-
-                        return Vector.Empty;
-                    }
-                }
+                throw new ArithmeticException();
             }
             else
             {
@@ -2290,7 +2265,41 @@ namespace Com
 
             //
 
-            return DivideLeft(matrix, vector);
+            bool LIsEmpty = matrix.IsEmpty;
+            bool RIsEmpty = vector.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
+            {
+                throw new ArithmeticException();
+            }
+            else
+            {
+                if (!vector.IsRowVector)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Size sizeL = matrix.Size;
+                    int heightR = vector.Dimension;
+
+                    if (sizeL.Width != sizeL.Height || sizeL.Width != heightR)
+                    {
+                        throw new ArithmeticException();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            return Multiply(matrix.Invert, vector);
+                        }
+                        catch
+                        {
+                            return Vector.Empty;
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

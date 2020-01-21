@@ -53,22 +53,19 @@ namespace Com
             {
                 throw new OverflowException();
             }
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
 
             //
 
-            if (dimension == 0)
+            return new Vector()
             {
-                return Empty;
-            }
-            else
-            {
-                return new Vector()
-                {
-                    _Type = type,
-                    _Size = dimension,
-                    _VArray = new double[dimension]
-                };
-            }
+                _Type = type,
+                _Size = dimension,
+                _VArray = new double[dimension]
+            };
         }
 
         //
@@ -1135,14 +1132,17 @@ namespace Com
         /// <returns>双精度浮点数，表示此 Vector 与指定的 Vector 对象之间的距离。</returns>
         public double DistanceFrom(Vector vector)
         {
-            bool ThisIsNOrE = (_Size <= 0);
-            bool AnotherIsNOrE = IsNullOrEmpty(vector);
-
-            if (ThisIsNOrE && AnotherIsNOrE)
+            if (vector is null)
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
-            else if (ThisIsNOrE || AnotherIsNOrE)
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = vector.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
                 throw new ArithmeticException();
             }
@@ -1190,14 +1190,17 @@ namespace Com
         /// <returns>双精度浮点数，表示此 Vector 与指定的 Vector 对象之间的夹角（弧度）。</returns>
         public double AngleFrom(Vector vector)
         {
-            bool ThisIsNOrE = (_Size <= 0);
-            bool AnotherIsNOrE = IsNullOrEmpty(vector);
-
-            if (ThisIsNOrE && AnotherIsNOrE)
+            if (vector is null)
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
-            else if (ThisIsNOrE || AnotherIsNOrE)
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = vector.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
                 throw new ArithmeticException();
             }
@@ -1268,16 +1271,26 @@ namespace Com
         /// <param name="vector">Vector 对象表示的位移。</param>
         public void Offset(Vector vector)
         {
-            bool ThisIsNOrE = (_Size <= 0);
-            bool AnotherIsNOrE = IsNullOrEmpty(vector);
-
-            if (ThisIsNOrE && AnotherIsNOrE)
+            if (vector is null)
             {
-                return;
+                throw new ArgumentNullException();
             }
-            else if (ThisIsNOrE || AnotherIsNOrE)
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = vector.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (_Size != vector._Size)
             {
@@ -1345,16 +1358,26 @@ namespace Com
         /// <returns>Vector 对象，表示按 Vector 对象表示的位移将此 Vector 平移指定的量得到的结果。</returns>
         public Vector OffsetCopy(Vector vector)
         {
-            bool ThisIsNOrE = (_Size <= 0);
-            bool AnotherIsNOrE = IsNullOrEmpty(vector);
-
-            if (ThisIsNOrE && AnotherIsNOrE)
+            if (vector is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (ThisIsNOrE || AnotherIsNOrE)
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = vector.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (_Size != vector._Size)
             {
@@ -1413,16 +1436,26 @@ namespace Com
         /// <param name="vector">Vector 对象表示的缩放因数。</param>
         public void Scale(Vector vector)
         {
-            bool ThisIsNOrE = (_Size <= 0);
-            bool AnotherIsNOrE = IsNullOrEmpty(vector);
-
-            if (ThisIsNOrE && AnotherIsNOrE)
+            if (vector is null)
             {
-                return;
+                throw new ArgumentNullException();
             }
-            else if (ThisIsNOrE || AnotherIsNOrE)
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = vector.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (_Size != vector._Size)
             {
@@ -1490,16 +1523,26 @@ namespace Com
         /// <returns>Vector 对象，表示按 Vector 对象表示的缩放因数将此 Vector 缩放指定的倍数得到的结果。</returns>
         public Vector ScaleCopy(Vector vector)
         {
-            bool ThisIsNOrE = (_Size <= 0);
-            bool AnotherIsNOrE = IsNullOrEmpty(vector);
-
-            if (ThisIsNOrE && AnotherIsNOrE)
+            if (vector is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (ThisIsNOrE || AnotherIsNOrE)
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = vector.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (_Size != vector._Size)
             {
@@ -1681,16 +1724,30 @@ namespace Com
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public void AffineTransform(Matrix matrix)
         {
-            bool VIsNOrE = (_Size <= 0);
-            bool MIsNOrE = Matrix.IsNullOrEmpty(matrix);
-
-            if (VIsNOrE && MIsNOrE)
+            if (matrix is null)
             {
-                return;
+                throw new ArgumentNullException();
             }
-            else if (VIsNOrE || MIsNOrE)
+
+            //
+
+            bool VIsEmpty = IsEmpty;
+            bool MIsEmpty = matrix.IsEmpty;
+
+            if (VIsEmpty || MIsEmpty)
             {
-                throw new ArithmeticException();
+                if (VIsEmpty && MIsEmpty)
+                {
+                    return;
+                }
+                else if (MIsEmpty)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (matrix.Size != new Size(_Size + 1, _Size + 1))
             {
@@ -1731,15 +1788,23 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
+            for (int i = 0; i < matrices.Length; i++)
+            {
+                if (matrices[i] is null)
+                {
+                    throw new ArgumentNullException();
+                }
+            }
+
             //
 
             if (_Size <= 0)
             {
                 for (int i = 0; i < matrices.Length; i++)
                 {
-                    if (!Matrix.IsNullOrEmpty(matrices[i]))
+                    if (!matrices[i].IsEmpty)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArithmeticException();
                     }
                 }
             }
@@ -1749,9 +1814,9 @@ namespace Com
 
                 for (int i = 0; i < matrices.Length; i++)
                 {
-                    if (Matrix.IsNullOrEmpty(matrices[i]) || matrices[i].Size != AffineMatrixSize)
+                    if (matrices[i].IsEmpty || matrices[i].Size != AffineMatrixSize)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArithmeticException();
                     }
                 }
 
@@ -1806,16 +1871,30 @@ namespace Com
         /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换得到的结果。</returns>
         public Vector AffineTransformCopy(Matrix matrix)
         {
-            bool VIsNOrE = (_Size <= 0);
-            bool MIsNOrE = Matrix.IsNullOrEmpty(matrix);
-
-            if (VIsNOrE && MIsNOrE)
+            if (matrix is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (VIsNOrE || MIsNOrE)
+
+            //
+
+            bool VIsEmpty = IsEmpty;
+            bool MIsEmpty = matrix.IsEmpty;
+
+            if (VIsEmpty || MIsEmpty)
             {
-                throw new ArithmeticException();
+                if (VIsEmpty && MIsEmpty)
+                {
+                    return Empty;
+                }
+                else if (MIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (matrix.Size != new Size(_Size + 1, _Size + 1))
             {
@@ -1861,15 +1940,23 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
+            for (int i = 0; i < matrices.Length; i++)
+            {
+                if (matrices[i] is null)
+                {
+                    throw new ArgumentNullException();
+                }
+            }
+
             //
 
             if (_Size <= 0)
             {
                 for (int i = 0; i < matrices.Length; i++)
                 {
-                    if (!Matrix.IsNullOrEmpty(matrices[i]))
+                    if (!matrices[i].IsEmpty)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArithmeticException();
                     }
                 }
 
@@ -1881,9 +1968,9 @@ namespace Com
 
                 for (int i = 0; i < matrices.Length; i++)
                 {
-                    if (Matrix.IsNullOrEmpty(matrices[i]) || matrices[i].Size != AffineMatrixSize)
+                    if (matrices[i].IsEmpty || matrices[i].Size != AffineMatrixSize)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArithmeticException();
                     }
                 }
 
@@ -1942,14 +2029,17 @@ namespace Com
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         public void InverseAffineTransform(Matrix matrix)
         {
-            bool VIsNOrE = (_Size <= 0);
-            bool MIsNOrE = Matrix.IsNullOrEmpty(matrix);
-
-            if (VIsNOrE && MIsNOrE)
+            if (matrix is null)
             {
-                return;
+                throw new ArgumentNullException();
             }
-            else if (VIsNOrE || MIsNOrE)
+
+            //
+
+            bool VIsEmpty = IsEmpty;
+            bool MIsEmpty = matrix.IsEmpty;
+
+            if (VIsEmpty || MIsEmpty)
             {
                 throw new ArithmeticException();
             }
@@ -1992,17 +2082,19 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
+            for (int i = 0; i < matrices.Length; i++)
+            {
+                if (matrices[i] is null)
+                {
+                    throw new ArgumentNullException();
+                }
+            }
+
             //
 
             if (_Size <= 0)
             {
-                for (int i = 0; i < matrices.Length; i++)
-                {
-                    if (!Matrix.IsNullOrEmpty(matrices[i]))
-                    {
-                        throw new ArgumentNullException();
-                    }
-                }
+                throw new ArithmeticException();
             }
             else
             {
@@ -2010,9 +2102,9 @@ namespace Com
 
                 for (int i = 0; i < matrices.Length; i++)
                 {
-                    if (Matrix.IsNullOrEmpty(matrices[i]) || matrices[i].Size != AffineMatrixSize)
+                    if (matrices[i].IsEmpty || matrices[i].Size != AffineMatrixSize)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArithmeticException();
                     }
                 }
 
@@ -2061,14 +2153,17 @@ namespace Com
         /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行逆仿射变换得到的结果。</returns>
         public Vector InverseAffineTransformCopy(Matrix matrix)
         {
-            bool VIsNOrE = (_Size <= 0);
-            bool MIsNOrE = Matrix.IsNullOrEmpty(matrix);
-
-            if (VIsNOrE && MIsNOrE)
+            if (matrix is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (VIsNOrE || MIsNOrE)
+
+            //
+
+            bool VIsEmpty = IsEmpty;
+            bool MIsEmpty = matrix.IsEmpty;
+
+            if (VIsEmpty || MIsEmpty)
             {
                 throw new ArithmeticException();
             }
@@ -2116,19 +2211,19 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
+            for (int i = 0; i < matrices.Length; i++)
+            {
+                if (matrices[i] is null)
+                {
+                    throw new ArgumentNullException();
+                }
+            }
+
             //
 
             if (_Size <= 0)
             {
-                for (int i = 0; i < matrices.Length; i++)
-                {
-                    if (!Matrix.IsNullOrEmpty(matrices[i]))
-                    {
-                        throw new ArgumentNullException();
-                    }
-                }
-
-                return Empty;
+                throw new ArithmeticException();
             }
             else
             {
@@ -2136,9 +2231,9 @@ namespace Com
 
                 for (int i = 0; i < matrices.Length; i++)
                 {
-                    if (Matrix.IsNullOrEmpty(matrices[i]) || matrices[i].Size != AffineMatrixSize)
+                    if (matrices[i].IsEmpty || matrices[i].Size != AffineMatrixSize)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArithmeticException();
                     }
                 }
 
@@ -2315,17 +2410,14 @@ namespace Com
             {
                 throw new OverflowException();
             }
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
 
             //
 
-            if (dimension == 0)
-            {
-                return Empty;
-            }
-            else
-            {
-                return _GetZeroVector(type, dimension);
-            }
+            return _GetZeroVector(type, dimension);
         }
 
         /// <summary>
@@ -2339,17 +2431,14 @@ namespace Com
             {
                 throw new OverflowException();
             }
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
 
             //
 
-            if (dimension == 0)
-            {
-                return Empty;
-            }
-            else
-            {
-                return _GetZeroVector(Type.ColumnVector, dimension);
-            }
+            return _GetZeroVector(Type.ColumnVector, dimension);
         }
 
         /// <summary>
@@ -2361,25 +2450,27 @@ namespace Com
         /// <returns>Vector 对象，表示指定索引的基向量。</returns>
         public static Vector Base(Type type, int dimension, int index)
         {
-            if (dimension < 0 || (index < 0 || index >= dimension))
+            if (dimension < 0)
+            {
+                throw new OverflowException();
+            }
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
+
+            if (index < 0 || index >= dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            if (dimension == 0)
-            {
-                return Empty;
-            }
-            else
-            {
-                Vector result = _GetZeroVector(type, dimension);
+            Vector result = _GetZeroVector(type, dimension);
 
-                result._VArray[index] = 1;
+            result._VArray[index] = 1;
 
-                return result;
-            }
+            return result;
         }
 
         /// <summary>
@@ -2390,25 +2481,27 @@ namespace Com
         /// <returns>Vector 对象，表示指定索引的基向量。</returns>
         public static Vector Base(int dimension, int index)
         {
-            if (dimension <= 0 || (index < 0 || index >= dimension))
+            if (dimension < 0)
+            {
+                throw new OverflowException();
+            }
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
+
+            if (index < 0 || index >= dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            if (dimension == 0)
-            {
-                return Empty;
-            }
-            else
-            {
-                Vector result = _GetZeroVector(Type.ColumnVector, dimension);
+            Vector result = _GetZeroVector(Type.ColumnVector, dimension);
 
-                result._VArray[index] = 1;
+            result._VArray[index] = 1;
 
-                return result;
-            }
+            return result;
         }
 
         //
@@ -2427,7 +2520,12 @@ namespace Com
             {
                 throw new OverflowException();
             }
-            else if (index < 0 || index >= dimension)
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
+
+            if (index < 0 || index >= dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2436,13 +2534,15 @@ namespace Com
 
             Matrix result = Matrix.Identity(dimension + 1);
 
+            double[,] arrayM = result.UnsafeGetData();
+
             if (type == Type.ColumnVector)
             {
-                result[dimension, index] = d;
+                arrayM[dimension, index] = d;
             }
             else
             {
-                result[index, dimension] = d;
+                arrayM[index, dimension] = d;
             }
 
             return result;
@@ -2461,34 +2561,33 @@ namespace Com
             {
                 throw new OverflowException();
             }
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
 
             //
 
-            if (dimension == 0)
+            Matrix result = Matrix.Identity(dimension + 1);
+
+            double[,] arrayM = result.UnsafeGetData();
+
+            if (type == Type.ColumnVector)
             {
-                return Matrix.Empty;
+                for (int i = 0; i < dimension; i++)
+                {
+                    arrayM[dimension, i] = d;
+                }
             }
             else
             {
-                Matrix result = Matrix.Identity(dimension + 1);
-
-                if (type == Type.ColumnVector)
+                for (int i = 0; i < dimension; i++)
                 {
-                    for (int i = 0; i < dimension; i++)
-                    {
-                        result[dimension, i] = d;
-                    }
+                    arrayM[i, dimension] = d;
                 }
-                else
-                {
-                    for (int i = 0; i < dimension; i++)
-                    {
-                        result[i, dimension] = d;
-                    }
-                }
-
-                return result;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -2498,7 +2597,14 @@ namespace Com
         /// <returns>Matrix 对象，表示按 Vector 对象表示的位移将 Vector 对象平移指定的量的仿射矩阵。</returns>
         public static Matrix OffsetMatrix(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Matrix.Empty;
             }
@@ -2508,18 +2614,20 @@ namespace Com
 
                 Matrix result = Matrix.Identity(dimension + 1);
 
+                double[,] arrayM = result.UnsafeGetData();
+
                 if (vector._Type == Type.ColumnVector)
                 {
                     for (int i = 0; i < dimension; i++)
                     {
-                        result[dimension, i] = vector._VArray[i];
+                        arrayM[dimension, i] = vector._VArray[i];
                     }
                 }
                 else
                 {
                     for (int i = 0; i < dimension; i++)
                     {
-                        result[i, dimension] = vector._VArray[i];
+                        arrayM[i, dimension] = vector._VArray[i];
                     }
                 }
 
@@ -2541,7 +2649,12 @@ namespace Com
             {
                 throw new OverflowException();
             }
-            else if (index < 0 || index >= dimension)
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
+
+            if (index < 0 || index >= dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2550,7 +2663,9 @@ namespace Com
 
             Matrix result = Matrix.Identity(dimension + 1);
 
-            result[index, index] = s;
+            double[,] arrayM = result.UnsafeGetData();
+
+            arrayM[index, index] = s;
 
             return result;
         }
@@ -2568,24 +2683,23 @@ namespace Com
             {
                 throw new OverflowException();
             }
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
 
             //
 
-            if (dimension == 0)
-            {
-                return Matrix.Empty;
-            }
-            else
-            {
-                Matrix result = Matrix.Identity(dimension + 1);
+            Matrix result = Matrix.Identity(dimension + 1);
 
-                for (int i = 0; i < dimension; i++)
-                {
-                    result[i, i] = s;
-                }
+            double[,] arrayM = result.UnsafeGetData();
 
-                return result;
+            for (int i = 0; i < dimension; i++)
+            {
+                arrayM[i, i] = s;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -2595,7 +2709,14 @@ namespace Com
         /// <returns>Matrix 对象，表示按 Vector 对象表示的缩放因数将 Vector 对象缩放指定的倍数的仿射矩阵。</returns>
         public static Matrix ScaleMatrix(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Matrix.Empty;
             }
@@ -2605,9 +2726,11 @@ namespace Com
 
                 Matrix result = Matrix.Identity(dimension + 1);
 
+                double[,] arrayM = result.UnsafeGetData();
+
                 for (int i = 0; i < dimension; i++)
                 {
-                    result[i, i] = vector._VArray[i];
+                    arrayM[i, i] = vector._VArray[i];
                 }
 
                 return result;
@@ -2627,7 +2750,12 @@ namespace Com
             {
                 throw new OverflowException();
             }
-            else if (index < 0 || index >= dimension)
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
+
+            if (index < 0 || index >= dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2636,7 +2764,9 @@ namespace Com
 
             Matrix result = Matrix.Identity(dimension + 1);
 
-            result[index, index] = -1;
+            double[,] arrayM = result.UnsafeGetData();
+
+            arrayM[index, index] = -1;
 
             return result;
         }
@@ -2656,7 +2786,12 @@ namespace Com
             {
                 throw new OverflowException();
             }
-            else if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
+
+            if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2669,15 +2804,17 @@ namespace Com
 
             Matrix result = Matrix.Identity(dimension + 1);
 
+            double[,] arrayM = result.UnsafeGetData();
+
             double TanA = Math.Tan(angle);
 
             if (type == Type.ColumnVector)
             {
-                result[index2, index1] = TanA;
+                arrayM[index2, index1] = TanA;
             }
             else
             {
-                result[index1, index2] = TanA;
+                arrayM[index1, index2] = TanA;
             }
 
             return result;
@@ -2698,7 +2835,12 @@ namespace Com
             {
                 throw new OverflowException();
             }
-            else if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
+            else if (dimension == 0)
+            {
+                throw new ArithmeticException();
+            }
+
+            if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2711,21 +2853,23 @@ namespace Com
 
             Matrix result = Matrix.Identity(dimension + 1);
 
+            double[,] arrayM = result.UnsafeGetData();
+
             double CosA = Math.Cos(angle);
             double SinA = Math.Sin(angle);
 
-            result[index1, index1] = CosA;
-            result[index2, index2] = CosA;
+            arrayM[index1, index1] = CosA;
+            arrayM[index2, index2] = CosA;
 
             if (type == Type.ColumnVector)
             {
-                result[index1, index2] = SinA;
-                result[index2, index1] = -SinA;
+                arrayM[index1, index2] = SinA;
+                arrayM[index2, index1] = -SinA;
             }
             else
             {
-                result[index2, index1] = SinA;
-                result[index1, index2] = -SinA;
+                arrayM[index2, index1] = SinA;
+                arrayM[index1, index2] = -SinA;
             }
 
             return result;
@@ -2741,14 +2885,17 @@ namespace Com
         /// <returns>双精度浮点数，表示两个 Vector 对象之间的距离。</returns>
         public static double DistanceBetween(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
                 throw new ArithmeticException();
             }
@@ -2797,14 +2944,17 @@ namespace Com
         /// <returns>双精度浮点数，表示两个 Vector 对象之间的夹角（弧度）。</returns>
         public static double AngleBetween(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
                 throw new ArithmeticException();
             }
@@ -2845,14 +2995,17 @@ namespace Com
         /// <returns>双精度浮点数，表示两个 Vector 对象的数量积。</returns>
         public static double DotProduct(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return double.NaN;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
                 throw new ArithmeticException();
             }
@@ -2883,16 +3036,26 @@ namespace Com
         /// <returns>Vector 对象，表示两个 Vector 对象的向量积。</returns>
         public static Vector CrossProduct(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (left._Type != right._Type || left._Size != right._Size)
             {
@@ -2936,7 +3099,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量取符号数得到的结果</returns>
         public static Vector Sign(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -2962,7 +3132,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量取绝对值得到的结果</returns>
         public static Vector Abs(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -2988,7 +3165,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量舍入到较大的整数值得到的结果</returns>
         public static Vector Ceiling(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3014,7 +3198,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量舍入到较小的整数值得到的结果</returns>
         public static Vector Floor(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3040,7 +3231,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量舍入到最接近的整数值得到的结果</returns>
         public static Vector Round(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3066,7 +3264,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量截断小数部分取整得到的结果</returns>
         public static Vector Truncate(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3093,16 +3298,26 @@ namespace Com
         /// <returns>Vector 对象，表示将两个 Vector 对象的所有分量分别取最大值得到的结果</returns>
         public static Vector Max(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (left._Type != right._Type || left._Size != right._Size)
             {
@@ -3131,16 +3346,26 @@ namespace Com
         /// <returns>Vector 对象，表示将两个 Vector 对象的所有分量分别取最小值得到的结果</returns>
         public static Vector Min(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (left._Type != right._Type || left._Size != right._Size)
             {
@@ -3382,7 +3607,14 @@ namespace Com
         /// <returns>Vector 对象，表示在 Vector 对象的所有分量前添加正号得到的结果。</returns>
         public static Vector operator +(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3399,7 +3631,14 @@ namespace Com
         /// <returns>Vector 对象，表示在 Vector 对象的所有分量前添加负号得到的结果。</returns>
         public static Vector operator -(Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3428,7 +3667,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量与双精度浮点数相加得到的结果。</returns>
         public static Vector operator +(Vector vector, double n)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3455,7 +3701,14 @@ namespace Com
         /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的所有分量相加得到的结果。</returns>
         public static Vector operator +(double n, Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3482,16 +3735,26 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的所有分量对应相加得到的结果。</returns>
         public static Vector operator +(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (left._Type != right._Type || left._Size != right._Size)
             {
@@ -3522,7 +3785,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量与双精度浮点数相减得到的结果。</returns>
         public static Vector operator -(Vector vector, double n)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3549,7 +3819,14 @@ namespace Com
         /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的所有分量相减得到的结果。</returns>
         public static Vector operator -(double n, Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3576,16 +3853,26 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的所有分量对应相减得到的结果。</returns>
         public static Vector operator -(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (left._Type != right._Type || left._Size != right._Size)
             {
@@ -3616,7 +3903,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量与双精度浮点数相乘得到的结果。</returns>
         public static Vector operator *(Vector vector, double n)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3643,7 +3937,14 @@ namespace Com
         /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的所有分量相乘得到的结果。</returns>
         public static Vector operator *(double n, Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3670,16 +3971,26 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的所有分量对应相乘得到的结果。</returns>
         public static Vector operator *(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (left._Type != right._Type || left._Size != right._Size)
             {
@@ -3710,7 +4021,14 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象的所有分量与双精度浮点数相除得到的结果。</returns>
         public static Vector operator /(Vector vector, double n)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3737,7 +4055,14 @@ namespace Com
         /// <returns>Vector 对象，表示将双精度浮点数与 Vector 对象的所有分量相除得到的结果。</returns>
         public static Vector operator /(double n, Vector vector)
         {
-            if (IsNullOrEmpty(vector))
+            if (vector is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            if (vector.IsEmpty)
             {
                 return Empty;
             }
@@ -3764,16 +4089,26 @@ namespace Com
         /// <returns>Vector 对象，表示将 Vector 对象与 Vector 对象的所有分量对应相除得到的结果。</returns>
         public static Vector operator /(Vector left, Vector right)
         {
-            bool LIsNOrE = IsNullOrEmpty(left);
-            bool RIsNOrE = IsNullOrEmpty(right);
-
-            if (LIsNOrE && RIsNOrE)
+            if (left is null || right is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = left.IsEmpty;
+            bool RIsEmpty = right.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (left._Type != right._Type || left._Size != right._Size)
             {
