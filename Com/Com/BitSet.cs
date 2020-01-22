@@ -380,7 +380,7 @@ namespace Com
         {
             get
             {
-                if (_Size < 0)
+                if (_Size <= 0)
                 {
                     return 0;
                 }
@@ -546,7 +546,7 @@ namespace Com
         {
             string Str = string.Empty;
 
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 Str = "Empty";
             }
@@ -695,7 +695,7 @@ namespace Com
         /// <returns>BitSet 对象，表示此 BitSet 的副本。</returns>
         public BitSet Copy()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -720,7 +720,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int IndexOf(bool item)
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return -1;
             }
@@ -877,7 +877,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int LastIndexOf(bool item)
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return -1;
             }
@@ -1034,7 +1034,7 @@ namespace Com
         /// <returns>布尔值，表示是否存在与指定值相等的位值。</returns>
         public bool Contains(bool item)
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return false;
             }
@@ -1101,7 +1101,7 @@ namespace Com
         /// <returns>布尔值数组，数组元素表示此 BitSet 的位值的布尔值形式。</returns>
         public bool[] ToArray()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return new bool[0];
             }
@@ -1124,7 +1124,7 @@ namespace Com
         /// <returns>布尔值列表，列表元素表示此 BitSet 的位值的布尔值形式。</returns>
         public List<bool> ToList()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return new List<bool>(0);
             }
@@ -1346,7 +1346,7 @@ namespace Com
         /// <returns>32 位整数，表示此 BitSet 值为 true 的位值的数量。</returns>
         public int TrueBitCount()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return 0;
             }
@@ -1378,7 +1378,7 @@ namespace Com
         /// <returns>32 位整数，表示此 BitSet 值为 false 的位值的数量。</returns>
         public int FalseBitCount()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return 0;
             }
@@ -1394,7 +1394,7 @@ namespace Com
         /// <returns>32 位整数数组，该数组包含此 BitSet 值为 true 的位值的索引。</returns>
         public int[] TrueBitIndex()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return new int[0];
             }
@@ -1434,7 +1434,7 @@ namespace Com
         /// <returns>32 位整数数组，该数组包含此 BitSet 值为 false 的位值的索引。</returns>
         public int[] FalseBitIndex()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return new int[0];
             }
@@ -1477,16 +1477,26 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位与得到的结果。</returns>
         public BitSet And(BitSet bitSet)
         {
-            bool LIsNOrE = (_Size <= 0);
-            bool RIsNOrE = IsNullOrEmpty(bitSet);
-
-            if (LIsNOrE && RIsNOrE)
+            if (bitSet is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else if (LIsNOrE || RIsNOrE)
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = bitSet.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
             {
-                throw new ArithmeticException();
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
             }
             else if (_Size != bitSet._Size)
             {
@@ -1516,9 +1526,30 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位或得到的结果。</returns>
         public BitSet Or(BitSet bitSet)
         {
-            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size)
+            if (bitSet is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = bitSet.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
+            {
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
+            }
+            else if (_Size != bitSet._Size)
+            {
+                throw new ArithmeticException();
             }
             else
             {
@@ -1544,9 +1575,30 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 与指定的 BitSet 按位异或得到的结果。</returns>
         public BitSet Xor(BitSet bitSet)
         {
-            if (_Size <= 0 || IsNullOrEmpty(bitSet) || _Size != bitSet._Size)
+            if (bitSet is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            bool LIsEmpty = IsEmpty;
+            bool RIsEmpty = bitSet.IsEmpty;
+
+            if (LIsEmpty || RIsEmpty)
+            {
+                if (LIsEmpty && RIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
+            }
+            else if (_Size != bitSet._Size)
+            {
+                throw new ArithmeticException();
             }
             else
             {
@@ -1571,7 +1623,7 @@ namespace Com
         /// <returns>BitSet 对象，表示将此 BitSet 按位取反得到的结果。</returns>
         public BitSet Not()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -1608,7 +1660,7 @@ namespace Com
         /// <returns>字符串，表示此 BitSet 的二进制形式。</returns>
         public string ToBinaryString()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return string.Empty;
             }
@@ -1963,21 +2015,14 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位与得到的结果。</returns>
         public static BitSet operator &(BitSet left, BitSet right)
         {
-            if (left is null)
+            if (left is null || right is null)
             {
-                if (IsNullOrEmpty(right))
-                {
-                    return Empty;
-                }
-                else
-                {
-                    throw new ArithmeticException();
-                }
+                throw new ArgumentNullException();
             }
-            else
-            {
-                return left.And(right);
-            }
+
+            //
+
+            return left.And(right);
         }
 
         /// <summary>
@@ -1988,21 +2033,14 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位或得到的结果。</returns>
         public static BitSet operator |(BitSet left, BitSet right)
         {
-            if (left is null)
+            if (left is null || right is null)
             {
-                if (IsNullOrEmpty(right))
-                {
-                    return Empty;
-                }
-                else
-                {
-                    throw new ArithmeticException();
-                }
+                throw new ArgumentNullException();
             }
-            else
-            {
-                return left.Or(right);
-            }
+
+            //
+
+            return left.Or(right);
         }
 
         /// <summary>
@@ -2013,21 +2051,14 @@ namespace Com
         /// <returns>BitSet 对象，表示将 BitSet 对象与 BitSet 对象按位异或得到的结果。</returns>
         public static BitSet operator ^(BitSet left, BitSet right)
         {
-            if (left is null)
+            if (left is null || right is null)
             {
-                if (IsNullOrEmpty(right))
-                {
-                    return Empty;
-                }
-                else
-                {
-                    throw new ArithmeticException();
-                }
+                throw new ArgumentNullException();
             }
-            else
-            {
-                return left.Xor(right);
-            }
+
+            //
+
+            return left.Xor(right);
         }
 
         /// <summary>
@@ -2039,12 +2070,12 @@ namespace Com
         {
             if (bitSet is null)
             {
-                return Empty;
+                throw new ArgumentNullException();
             }
-            else
-            {
-                return bitSet.Not();
-            }
+
+            //
+
+            return bitSet.Not();
         }
 
         #endregion

@@ -118,7 +118,7 @@ namespace Com
 
         private Vector _ForAffineTransform() // 获取此 Vector 用于仿射变换的扩展。
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -280,7 +280,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     return false;
                 }
@@ -350,7 +350,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     return false;
                 }
@@ -376,7 +376,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     return false;
                 }
@@ -408,7 +408,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     return false;
                 }
@@ -436,7 +436,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     throw new ArithmeticException();
                 }
@@ -477,7 +477,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     throw new ArithmeticException();
                 }
@@ -504,7 +504,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     return Empty;
                 }
@@ -529,7 +529,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     throw new ArithmeticException();
                 }
@@ -563,7 +563,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0)
+                if (IsEmpty)
                 {
                     return Empty;
                 }
@@ -636,7 +636,7 @@ namespace Com
         {
             string Str = string.Empty;
 
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 Str = "Empty";
             }
@@ -764,7 +764,7 @@ namespace Com
         /// <returns>Vector 对象，表示此 Vector 的副本。</returns>
         public Vector Copy()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -783,7 +783,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item)
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return -1;
             }
@@ -837,7 +837,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item)
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return -1;
             }
@@ -891,7 +891,7 @@ namespace Com
         /// <returns>布尔值，表示是否存在与指定值相等的分量。</returns>
         public bool Contains(double item)
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return false;
             }
@@ -917,7 +917,7 @@ namespace Com
         /// <returns>双精度浮点数数组，数组元素表示此 Vector 的分量。</returns>
         public double[] ToArray()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return new double[0];
             }
@@ -937,7 +937,7 @@ namespace Com
         /// <returns>双精度浮点数列表，列表元素表示此 Vector 的分量。</returns>
         public List<double> ToList()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return new List<double>(0);
             }
@@ -953,7 +953,7 @@ namespace Com
         /// <returns>Matrix 对象，表示将此 Vector 转换为矩阵的结果。</returns>
         public Matrix ToMatrix()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Matrix.Empty;
             }
@@ -992,7 +992,7 @@ namespace Com
         /// <returns>Vector 对象，表示将此 Vector 表示的直角坐标系坐标转换为极坐标系、球坐标系或超球坐标系坐标得到的结果。</returns>
         public Vector ToSpherical()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -1078,7 +1078,7 @@ namespace Com
         /// <returns>Vector 对象，表示将此 Vector 表示的极坐标系、球坐标系或超球坐标系坐标转换为直角坐标系坐标得到的结果。</returns>
         public Vector ToCartesian()
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -1334,7 +1334,7 @@ namespace Com
         /// <returns>Vector 对象，表示按双精度浮点数表示的位移将此 Vector 的所有分量平移指定的量得到的结果。</returns>
         public Vector OffsetCopy(double d)
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -1499,7 +1499,7 @@ namespace Com
         /// <returns>Vector 对象，表示按双精度浮点数表示的缩放因数将此 Vector 的所有分量缩放指定的倍数得到的结果。</returns>
         public Vector ScaleCopy(double s)
         {
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 return Empty;
             }
@@ -1798,7 +1798,7 @@ namespace Com
 
             //
 
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 for (int i = 0; i < matrices.Length; i++)
                 {
@@ -1950,7 +1950,7 @@ namespace Com
 
             //
 
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 for (int i = 0; i < matrices.Length; i++)
                 {
@@ -2092,7 +2092,7 @@ namespace Com
 
             //
 
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 throw new ArithmeticException();
             }
@@ -2221,7 +2221,7 @@ namespace Com
 
             //
 
-            if (_Size <= 0)
+            if (IsEmpty)
             {
                 throw new ArithmeticException();
             }
