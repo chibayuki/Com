@@ -1,8 +1,8 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2019 chibayuki@foxmail.com
+Copyright © 2020 chibayuki@foxmail.com
 
 Com.ColorManipulation
-Version 19.10.14.2100
+Version 20.4.4.0000
 
 This file is part of Com
 
@@ -101,7 +101,7 @@ namespace Com
         /// <returns>Color 结构，表示指定颜色的相反色。</returns>
         public static Color GetInvertColor(Color color)
         {
-            return GetComplementaryColor((ColorX)color).ToColor();
+            return GetInvertColor((ColorX)color).ToColor();
         }
 
         /// <summary>
