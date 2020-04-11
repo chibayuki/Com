@@ -26,6 +26,8 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 > Scheme of substitution of control.
 
 ## Public Class
+#### Com.AffineTransformation
+> Containing one or a sequence of affine transformation, supporting complex affine transformations.
 #### Com.BitSet
 > Managing set of bits (up to 2146434944 bits) and providing basic bit operations.
 #### Com.Matrix
@@ -58,8 +60,8 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 > Real number (floating-point number in the order of magnitude between ±999999999999999).
 
 ## Public Interface
-#### Com.IAffine and Com.IAffine\<T\>
-> Method for affine transform.
+#### Com.IAffineTransformable and Com.IAffineTransformable\<T\>
+> Supporting affine transform.
 #### Com.IEuclideanVector and Com.IEuclideanVector\<T\>
 > Euclidean vector.
 #### Com.ILinearAlgebraVector and Com.ILinearAlgebraVector\<T\>
