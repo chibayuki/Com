@@ -30,6 +30,7 @@ namespace Com
 
         //
 
+        [InternalUnsafeCall(InternalUnsafeCallType.InputAddress)]
         internal static Matrix UnsafeCreateInstance(double[,] values) // 以不安全方式创建 Matrix 的新实例。
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -68,6 +69,7 @@ namespace Com
 
         //
 
+        [InternalUnsafeCall(InternalUnsafeCallType.OutputAddress)]
         internal double[,] UnsafeGetData() // 以不安全方式获取此 Matrix 的内部数据结构。
         {
             return _MArray;

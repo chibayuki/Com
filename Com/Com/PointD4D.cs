@@ -23,7 +23,7 @@ namespace Com
     /// <summary>
     /// 以一组有序的双精度浮点数表示的四维直角坐标系坐标。
     /// </summary>
-    public struct PointD4D : IEquatable<PointD4D>, IComparable, IComparable<PointD4D>, IEuclideanVector<PointD4D>, IAffine<PointD4D>
+    public struct PointD4D : IEquatable<PointD4D>, IComparable, IComparable<PointD4D>, IEuclideanVector<PointD4D>, IAffineTransformable<PointD4D>, IAffine<PointD4D>
     {
         #region 私有成员与内部成员
 
@@ -1229,6 +1229,56 @@ namespace Com
         //
 
         /// <summary>
+        /// 按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行仿射变换。
+        /// </summary>
+        /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
+        public void MatrixTransform(Matrix matrixLeft)
+        {
+            Vector result = ToColumnVector().MatrixTransformCopy(matrixLeft);
+
+            _UpdateByVector(result);
+        }
+
+        /// <summary>
+        /// 返回按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行仿射变换的 PointD4D 结构的新实例。
+        /// </summary>
+        /// <param name="matrixLeft">Matrix 对象列表，表示 5x5 仿射矩阵（左矩阵）。</param>
+        /// <returns>PointD4D 结构，表示按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行仿射变换得到的结果。</returns>
+        public PointD4D MatrixTransformCopy(Matrix matrixLeft)
+        {
+            Vector result = ToColumnVector().MatrixTransformCopy(matrixLeft);
+
+            return FromVector(result);
+        }
+
+        //
+
+        /// <summary>
+        /// 按 AffineTransformation 对象将此 PointD4D 结构进行仿射变换。
+        /// </summary>
+        /// <param name="affineTransformation">AffineTransformation 对象。</param>
+        public void AffineTransform(AffineTransformation affineTransformation)
+        {
+            Vector result = ToColumnVector().AffineTransformCopy(affineTransformation);
+
+            _UpdateByVector(result);
+        }
+
+        /// <summary>
+        /// 返回按 AffineTransformation 对象将此 PointD4D 结构进行仿射变换得到的结果。
+        /// </summary>
+        /// <param name="affineTransformation">AffineTransformation 对象。</param>
+        /// <returns>T，表示按 AffineTransformation 对象将此 PointD4D 结构进行仿射变换得到的结果。</returns>
+        public PointD4D AffineTransformCopy(AffineTransformation affineTransformation)
+        {
+            Vector result = ToColumnVector().AffineTransformCopy(affineTransformation);
+
+            return FromVector(result);
+        }
+
+        //
+
+        /// <summary>
         /// 按 PointD4D 结构表示的 X 基向量、Y 基向量、Z 基向量、U 基向量与偏移向量将此 PointD4D 结构进行仿射变换。
         /// </summary>
         /// <param name="ex">PointD4D 结构表示的 X 基向量。</param>
@@ -1236,6 +1286,7 @@ namespace Com
         /// <param name="ez">PointD4D 结构表示的 Z 基向量。</param>
         /// <param name="eu">PointD4D 结构表示的 U 基向量。</param>
         /// <param name="offset">PointD4D 结构表示的偏移向量。</param>
+        [Obsolete]
         public void AffineTransform(PointD4D ex, PointD4D ey, PointD4D ez, PointD4D eu, PointD4D offset)
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
@@ -1256,6 +1307,7 @@ namespace Com
         /// 按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行仿射变换。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
+        [Obsolete]
         public void AffineTransform(Matrix matrixLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1267,6 +1319,7 @@ namespace Com
         /// 按 Matrix 对象数组表示的 5x5 仿射矩阵（左矩阵）数组将此 PointD4D 结构进行仿射变换。
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象数组，表示 5x5 仿射矩阵（左矩阵）数组。</param>
+        [Obsolete]
         public void AffineTransform(params Matrix[] matricesLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
@@ -1278,6 +1331,7 @@ namespace Com
         /// 按 Matrix 对象列表表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD4D 结构进行仿射变换。
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象列表，表示 5x5 仿射矩阵（左矩阵）列表。</param>
+        [Obsolete]
         public void AffineTransform(List<Matrix> matricesLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
@@ -1294,6 +1348,7 @@ namespace Com
         /// <param name="eu">PointD4D 结构表示的 U 基向量。</param>
         /// <param name="offset">PointD4D 结构表示的偏移向量。</param>
         /// <returns>PointD4D 结构，表示按 PointD4D 结构表示的 X 基向量、Y 基向量、Z 基向量、U 基向量与偏移向量将此 PointD4D 结构进行仿射变换得到的结果。</returns>
+        [Obsolete]
         public PointD4D AffineTransformCopy(PointD4D ex, PointD4D ey, PointD4D ez, PointD4D eu, PointD4D offset)
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
@@ -1315,6 +1370,7 @@ namespace Com
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
         /// <returns>PointD4D 结构，表示按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行仿射变换得到的结果。</returns>
+        [Obsolete]
         public PointD4D AffineTransformCopy(Matrix matrixLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1327,6 +1383,7 @@ namespace Com
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象数组，表示 5x5 仿射矩阵（左矩阵）数组。</param>
         /// <returns>PointD4D 结构，表示按 Matrix 对象数组表示的 5x5 仿射矩阵（左矩阵）数组将此 PointD4D 结构进行仿射变换得到的结果。</returns>
+        [Obsolete]
         public PointD4D AffineTransformCopy(params Matrix[] matricesLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
@@ -1339,6 +1396,7 @@ namespace Com
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象列表，表示 5x5 仿射矩阵（左矩阵）列表。</param>
         /// <returns>PointD4D 结构，表示按 Matrix 对象列表表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD4D 结构进行仿射变换得到的结果。</returns>
+        [Obsolete]
         public PointD4D AffineTransformCopy(List<Matrix> matricesLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
@@ -1354,6 +1412,7 @@ namespace Com
         /// <param name="ez">PointD4D 结构表示的 Z 基向量。</param>
         /// <param name="eu">PointD4D 结构表示的 U 基向量。</param>
         /// <param name="offset">PointD4D 结构表示的偏移向量。</param>
+        [Obsolete]
         public void InverseAffineTransform(PointD4D ex, PointD4D ey, PointD4D ez, PointD4D eu, PointD4D offset)
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
@@ -1374,6 +1433,7 @@ namespace Com
         /// 按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
+        [Obsolete]
         public void InverseAffineTransform(Matrix matrixLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
@@ -1385,6 +1445,7 @@ namespace Com
         /// 按 Matrix 对象数组表示的 5x5 仿射矩阵（左矩阵）数组将此 PointD4D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象数组，表示 5x5 仿射矩阵（左矩阵）数组。</param>
+        [Obsolete]
         public void InverseAffineTransform(params Matrix[] matricesLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
@@ -1396,6 +1457,7 @@ namespace Com
         /// 按 Matrix 对象列表表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD4D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象列表，表示 5x5 仿射矩阵（左矩阵）列表。</param>
+        [Obsolete]
         public void InverseAffineTransform(List<Matrix> matricesLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
@@ -1412,6 +1474,7 @@ namespace Com
         /// <param name="eu">PointD4D 结构表示的 U 基向量。</param>
         /// <param name="offset">PointD4D 结构表示的偏移向量。</param>
         /// <returns>PointD4D 结构，表示按 PointD4D 结构表示的 X 基向量、Y 基向量、Z 基向量、U 基向量与偏移向量将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
+        [Obsolete]
         public PointD4D InverseAffineTransformCopy(PointD4D ex, PointD4D ey, PointD4D ez, PointD4D eu, PointD4D offset)
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
@@ -1433,6 +1496,7 @@ namespace Com
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 5x5 仿射矩阵（左矩阵）。</param>
         /// <returns>PointD4D 结构，表示按 Matrix 对象表示的 5x5 仿射矩阵（左矩阵）将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
+        [Obsolete]
         public PointD4D InverseAffineTransformCopy(Matrix matrixLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
@@ -1445,6 +1509,7 @@ namespace Com
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象数组，表示 5x5 仿射矩阵（左矩阵）数组。</param>
         /// <returns>PointD4D 结构，表示按 Matrix 对象数组表示的 5x5 仿射矩阵（左矩阵）数组将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
+        [Obsolete]
         public PointD4D InverseAffineTransformCopy(params Matrix[] matricesLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
@@ -1457,6 +1522,7 @@ namespace Com
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象列表，表示 5x5 仿射矩阵（左矩阵）列表。</param>
         /// <returns>PointD4D 结构，表示按 Matrix 对象列表表示的 5x5 仿射矩阵（左矩阵）列表将此 PointD4D 结构进行逆仿射变换得到的结果。</returns>
+        [Obsolete]
         public PointD4D InverseAffineTransformCopy(List<Matrix> matricesLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);

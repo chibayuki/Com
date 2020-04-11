@@ -23,7 +23,7 @@ namespace Com
     /// <summary>
     /// 以一组有序的双精度浮点数表示的向量。
     /// </summary>
-    public sealed class Vector : IEquatable<Vector>, IComparable, IComparable<Vector>, IEuclideanVector<Vector>, ILinearAlgebraVector<Vector>, IAffine<Vector>
+    public sealed class Vector : IEquatable<Vector>, IComparable, IComparable<Vector>, IEuclideanVector<Vector>, ILinearAlgebraVector<Vector>, IAffineTransformable<Vector>, IAffine<Vector>
     {
         /// <summary>
         /// 向量类型。
@@ -70,6 +70,7 @@ namespace Com
 
         //
 
+        [InternalUnsafeCall(InternalUnsafeCallType.InputAddress)]
         internal static Vector UnsafeCreateInstance(Type type, params double[] values) // 以不安全方式创建 Vector 的新实例。
         {
             if (InternalMethod.IsNullOrEmpty(values))
@@ -111,6 +112,7 @@ namespace Com
 
         //
 
+        [InternalUnsafeCall(InternalUnsafeCallType.OutputAddress)]
         internal double[] UnsafeGetData() // 以不安全方式获取此 Vector 的内部数据结构。
         {
             return _VArray;
@@ -131,6 +133,54 @@ namespace Com
                 values[_Size] = 1;
 
                 return UnsafeCreateInstance(_Type, values);
+            }
+        }
+
+        //
+
+        private void _AffineTransform(AffineTransformationAtomic atomic) // 按 AffineTransformationAtomic 对象将此 Vector 进行仿射变换。
+        {
+            if (atomic.IsInverse)
+            {
+                switch (atomic.Type)
+                {
+                    case AffineTransformationAtomicType.Offset: Offset(atomic.UnsafeGetIndex1(), -atomic.UnsafeGetValue()); break;
+                    case AffineTransformationAtomicType.OffsetMulti: Offset(-atomic.UnsafeGetValue()); break;
+
+                    case AffineTransformationAtomicType.Scale: Scale(atomic.UnsafeGetIndex1(), 1 / atomic.UnsafeGetValue()); break;
+                    case AffineTransformationAtomicType.ScaleMulti: Scale(1 / atomic.UnsafeGetValue()); break;
+
+                    case AffineTransformationAtomicType.Reflect: Reflect(atomic.UnsafeGetIndex1()); break;
+
+                    case AffineTransformationAtomicType.Shear: Shear(atomic.UnsafeGetIndex1(), atomic.UnsafeGetIndex2(), -atomic.UnsafeGetValue()); break;
+
+                    case AffineTransformationAtomicType.Rotate: Rotate(atomic.UnsafeGetIndex1(), atomic.UnsafeGetIndex2(), -atomic.UnsafeGetValue()); break;
+
+                    case AffineTransformationAtomicType.Matrix: MatrixTransform(atomic.UnsafeGetMatrix().Invert); break;
+
+                    default: throw new ArithmeticException();
+                }
+            }
+            else
+            {
+                switch (atomic.Type)
+                {
+                    case AffineTransformationAtomicType.Offset: Offset(atomic.UnsafeGetIndex1(), atomic.UnsafeGetValue()); break;
+                    case AffineTransformationAtomicType.OffsetMulti: Offset(atomic.UnsafeGetValue()); break;
+
+                    case AffineTransformationAtomicType.Scale: Scale(atomic.UnsafeGetIndex1(), atomic.UnsafeGetValue()); break;
+                    case AffineTransformationAtomicType.ScaleMulti: Scale(atomic.UnsafeGetValue()); break;
+
+                    case AffineTransformationAtomicType.Reflect: Reflect(atomic.UnsafeGetIndex1()); break;
+
+                    case AffineTransformationAtomicType.Shear: Shear(atomic.UnsafeGetIndex1(), atomic.UnsafeGetIndex2(), atomic.UnsafeGetValue()); break;
+
+                    case AffineTransformationAtomicType.Rotate: Rotate(atomic.UnsafeGetIndex1(), atomic.UnsafeGetIndex2(), atomic.UnsafeGetValue()); break;
+
+                    case AffineTransformationAtomicType.Matrix: MatrixTransform(atomic.UnsafeGetMatrix()); break;
+
+                    default: throw new ArithmeticException();
+                }
             }
         }
 
@@ -1722,7 +1772,7 @@ namespace Com
         /// 按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换。
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        public void AffineTransform(Matrix matrix)
+        public void MatrixTransform(Matrix matrix)
         {
             if (matrix is null)
             {
@@ -1778,9 +1828,173 @@ namespace Com
         }
 
         /// <summary>
+        /// 返回按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换的新实例。
+        /// </summary>
+        /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换得到的结果。</returns>
+        public Vector MatrixTransformCopy(Matrix matrix)
+        {
+            if (matrix is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            bool VIsEmpty = IsEmpty;
+            bool MIsEmpty = matrix.IsEmpty;
+
+            if (VIsEmpty || MIsEmpty)
+            {
+                if (VIsEmpty && MIsEmpty)
+                {
+                    return Empty;
+                }
+                else if (MIsEmpty)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
+            }
+            else if (matrix.Size != new Size(_Size + 1, _Size + 1))
+            {
+                throw new ArithmeticException();
+            }
+            else
+            {
+                Vector vector = _ForAffineTransform();
+
+                if (_Type == Type.ColumnVector)
+                {
+                    vector = Matrix.Multiply(matrix, vector);
+                }
+                else
+                {
+                    vector = Matrix.Multiply(vector, matrix);
+                }
+
+                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
+                {
+                    throw new ArithmeticException();
+                }
+                else
+                {
+                    Vector result = _GetZeroVector(_Type, _Size);
+
+                    Array.Copy(vector._VArray, result._VArray, _Size);
+
+                    return result;
+                }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 按 AffineTransformation 对象将此 Vector 进行仿射变换。
+        /// </summary>
+        /// <param name="affineTransformation">AffineTransformation 对象。</param>
+        public void AffineTransform(AffineTransformation affineTransformation)
+        {
+            if (affineTransformation is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            bool VIsEmpty = IsEmpty;
+            bool TIsEmpty = affineTransformation.IsEmpty;
+
+            if (VIsEmpty || TIsEmpty)
+            {
+                if (VIsEmpty && TIsEmpty)
+                {
+                    return;
+                }
+                else if (TIsEmpty)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
+            }
+            else
+            {
+                foreach (AffineTransformationAtomic a in affineTransformation.UnsafeGetSequence())
+                {
+                    _AffineTransform(a);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回按 AffineTransformation 对象将此 Vector 进行仿射变换得到的结果。
+        /// </summary>
+        /// <param name="affineTransformation">AffineTransformation 对象。</param>
+        /// <returns>Vector 对象，表示按 AffineTransformation 对象将此 Vector 进行仿射变换得到的结果。</returns>
+        public Vector AffineTransformCopy(AffineTransformation affineTransformation)
+        {
+            if (affineTransformation is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            //
+
+            bool VIsEmpty = IsEmpty;
+            bool TIsEmpty = affineTransformation.IsEmpty;
+
+            if (VIsEmpty || TIsEmpty)
+            {
+                if (VIsEmpty && TIsEmpty)
+                {
+                    return Empty;
+                }
+                else if (TIsEmpty)
+                {
+                    return Copy();
+                }
+                else
+                {
+                    throw new ArithmeticException();
+                }
+            }
+            else
+            {
+                Vector result = Copy();
+
+                foreach (AffineTransformationAtomic a in affineTransformation.UnsafeGetSequence())
+                {
+                    result._AffineTransform(a);
+                }
+
+                return result;
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换。
+        /// </summary>
+        /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        [Obsolete]
+        public void AffineTransform(Matrix matrix)
+        {
+            MatrixTransform(matrix);
+        }
+
+        /// <summary>
         /// 按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换。
         /// </summary>
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        [Obsolete]
         public void AffineTransform(params Matrix[] matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -1852,6 +2066,7 @@ namespace Com
         /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换。
         /// </summary>
         /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        [Obsolete]
         public void AffineTransform(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -1869,63 +2084,10 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换得到的结果。</returns>
+        [Obsolete]
         public Vector AffineTransformCopy(Matrix matrix)
         {
-            if (matrix is null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            //
-
-            bool VIsEmpty = IsEmpty;
-            bool MIsEmpty = matrix.IsEmpty;
-
-            if (VIsEmpty || MIsEmpty)
-            {
-                if (VIsEmpty && MIsEmpty)
-                {
-                    return Empty;
-                }
-                else if (MIsEmpty)
-                {
-                    return Empty;
-                }
-                else
-                {
-                    throw new ArithmeticException();
-                }
-            }
-            else if (matrix.Size != new Size(_Size + 1, _Size + 1))
-            {
-                throw new ArithmeticException();
-            }
-            else
-            {
-                Vector vector = _ForAffineTransform();
-
-                if (_Type == Type.ColumnVector)
-                {
-                    vector = Matrix.Multiply(matrix, vector);
-                }
-                else
-                {
-                    vector = Matrix.Multiply(vector, matrix);
-                }
-
-                if (IsNullOrEmpty(vector) || vector._Size != _Size + 1)
-                {
-                    throw new ArithmeticException();
-                }
-                else
-                {
-                    Vector result = _GetZeroVector(_Type, _Size);
-
-                    Array.Copy(vector._VArray, result._VArray, _Size);
-
-                    return result;
-                }
-            }
+            return MatrixTransformCopy(matrix);
         }
 
         /// <summary>
@@ -1933,6 +2095,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换得到的结果。</returns>
+        [Obsolete]
         public Vector AffineTransformCopy(params Matrix[] matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2011,6 +2174,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换得到的结果。</returns>
+        [Obsolete]
         public Vector AffineTransformCopy(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2027,6 +2191,7 @@ namespace Com
         /// 按 Matrix 对象表示的仿射矩阵将此 Vector 进行逆仿射变换。
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
+        [Obsolete]
         public void InverseAffineTransform(Matrix matrix)
         {
             if (matrix is null)
@@ -2075,6 +2240,7 @@ namespace Com
         /// 按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行逆仿射变换。
         /// </summary>
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        [Obsolete]
         public void InverseAffineTransform(params Matrix[] matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2134,6 +2300,7 @@ namespace Com
         /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换。
         /// </summary>
         /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
+        [Obsolete]
         public void InverseAffineTransform(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2151,6 +2318,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行逆仿射变换得到的结果。</returns>
+        [Obsolete]
         public Vector InverseAffineTransformCopy(Matrix matrix)
         {
             if (matrix is null)
@@ -2204,6 +2372,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行逆仿射变换得到的结果。</returns>
+        [Obsolete]
         public Vector InverseAffineTransformCopy(params Matrix[] matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2268,6 +2437,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换得到的结果。</returns>
+        [Obsolete]
         public Vector InverseAffineTransformCopy(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
