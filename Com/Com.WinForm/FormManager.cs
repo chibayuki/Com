@@ -4791,7 +4791,7 @@ namespace Com.WinForm
             }
             else
             {
-                return (!left.Equals(right));
+                return !left.Equals(right);
             }
         }
 
