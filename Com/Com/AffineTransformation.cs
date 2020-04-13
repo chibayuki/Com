@@ -34,7 +34,7 @@ namespace Com
         Matrix = 128, // 以矩阵为参数的仿射变换。
     }
 
-    internal sealed class AffineTransformationAtomic // 仿射变换的原子操作。
+    internal sealed class AffineTransformationAtomic : IEquatable<AffineTransformationAtomic> // 仿射变换的原子操作。
     {
         private AffineTransformationAtomicType _Type; // 此 AffineTransformationAtomic 的类型。
         private bool _IsInverse; // 此 AffineTransformationAtomic 是否表示逆变换。
@@ -137,6 +137,63 @@ namespace Com
 
         //
 
+        public override bool Equals(object obj) // 判断此 AffineTransformationAtomic 是否与指定的对象相等。
+        {
+            if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            else if (obj is null || !(obj is AffineTransformationAtomic))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals((AffineTransformationAtomic)obj);
+            }
+        }
+
+        public override int GetHashCode() // 返回此 AffineTransformationAtomic 的哈希代码。
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString() // 将此 AffineTransformationAtomic 转换为字符串。
+        {
+            string Str = string.Empty;
+
+            if (_IsInverse)
+            {
+                Str = string.Concat("Type=", _Type.ToString(), ",Inverse");
+            }
+            else
+            {
+                Str = string.Concat("Type=", _Type.ToString());
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
+        }
+
+        //
+
+        public bool Equals(AffineTransformationAtomic atomic) // 判断此 AffineTransformationAtomic 是否与指定的 AffineTransformationAtomic 对象相等。
+        {
+            if (object.ReferenceEquals(this, atomic))
+            {
+                return true;
+            }
+            else if (atomic is null)
+            {
+                return false;
+            }
+            else
+            {
+                return (_Type == atomic._Type && _IsInverse == atomic._IsInverse && _Value.Equals(atomic._Value) && _Index1 == atomic._Index1 && _Index2 == atomic._Index2 && Matrix.Equals(_Matrix, atomic._Matrix));
+            }
+        }
+
+        //
+
         [InternalUnsafeCall(InternalUnsafeCallType.WillNotCheckState)]
         public double UnsafeGetValue() // 以不安全方式获取此 AffineTransformationAtomic 的数值。
         {
@@ -211,6 +268,24 @@ namespace Com
 
         //
 
+        public static bool Equals(AffineTransformationAtomic left, AffineTransformationAtomic right) // 判断两个 AffineTransformationAtomic 对象是否相等。
+        {
+            if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (left is null || right is null)
+            {
+                return false;
+            }
+            else
+            {
+                return left.Equals(right);
+            }
+        }
+
+        //
+
         public static AffineTransformationAtomic FromOffset(int index, double d, bool isInverse = false) // 返回表示平移变换的 AffineTransformationAtomic 的新实例。
         {
             return new AffineTransformationAtomic(AffineTransformationAtomicType.Offset, isInverse, d, index);
@@ -260,12 +335,88 @@ namespace Com
         {
             return new AffineTransformationAtomic(AffineTransformationAtomicType.Matrix, isInverse, matrix?.Copy());
         }
+
+        //
+
+        public static bool operator ==(AffineTransformationAtomic left, AffineTransformationAtomic right) // 判断两个 AffineTransformation 对象是否相等。
+        {
+            if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (left is null || right is null)
+            {
+                return false;
+            }
+            else if (left._Type != right._Type || left._IsInverse != right._IsInverse)
+            {
+                return false;
+            }
+            else
+            {
+                switch (left._Type)
+                {
+                    case AffineTransformationAtomicType.Offset: return (left._Index1 == right._Index1 && left._Value == right._Value);
+                    case AffineTransformationAtomicType.OffsetMulti: return (left._Value == right._Value);
+
+                    case AffineTransformationAtomicType.Scale: return (left._Index1 == right._Index1 && left._Value == right._Value);
+                    case AffineTransformationAtomicType.ScaleMulti: return (left._Value == right._Value);
+
+                    case AffineTransformationAtomicType.Reflect: return (left._Index1 == right._Index1);
+
+                    case AffineTransformationAtomicType.Shear: return (left._Index1 == right._Index1 && left._Index2 == right._Index2 && left._Value == right._Value);
+
+                    case AffineTransformationAtomicType.Rotate: return (left._Index1 == right._Index1 && left._Index2 == right._Index2 && left._Value == right._Value);
+
+                    case AffineTransformationAtomicType.Matrix: return (left._Matrix == right._Matrix);
+
+                    default: throw new ArithmeticException();
+                }
+            }
+        }
+
+        public static bool operator !=(AffineTransformationAtomic left, AffineTransformationAtomic right) // 判断两个 AffineTransformation 对象是否不相等。
+        {
+            if (object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if (left is null || right is null)
+            {
+                return true;
+            }
+            else if (left._Type != right._Type || left._IsInverse != right._IsInverse)
+            {
+                return true;
+            }
+            else
+            {
+                switch (left._Type)
+                {
+                    case AffineTransformationAtomicType.Offset: return !(left._Index1 == right._Index1 && left._Value == right._Value);
+                    case AffineTransformationAtomicType.OffsetMulti: return !(left._Value == right._Value);
+
+                    case AffineTransformationAtomicType.Scale: return !(left._Index1 == right._Index1 && left._Value == right._Value);
+                    case AffineTransformationAtomicType.ScaleMulti: return !(left._Value == right._Value);
+
+                    case AffineTransformationAtomicType.Reflect: return !(left._Index1 == right._Index1);
+
+                    case AffineTransformationAtomicType.Shear: return !(left._Index1 == right._Index1 && left._Index2 == right._Index2 && left._Value == right._Value);
+
+                    case AffineTransformationAtomicType.Rotate: return !(left._Index1 == right._Index1 && left._Index2 == right._Index2 && left._Value == right._Value);
+
+                    case AffineTransformationAtomicType.Matrix: return !(left._Matrix == right._Matrix);
+
+                    default: throw new ArithmeticException();
+                }
+            }
+        }
     }
 
     /// <summary>
     /// 表示一个仿射变换，或者由多个仿射变换构成的序列。
     /// </summary>
-    public sealed class AffineTransformation : IAffineTransformable<AffineTransformation>
+    public sealed class AffineTransformation : IEquatable<AffineTransformation>, IAffineTransformable<AffineTransformation>
     {
         #region 私有成员与内部成员
 
@@ -376,6 +527,93 @@ namespace Com
         #endregion
 
         #region 方法
+
+        /// <summary>
+        /// 判断此 AffineTransformation 是否与指定的对象相等。
+        /// </summary>
+        /// <param name="obj">用于比较的对象。</param>
+        /// <returns>布尔值，表示此 AffineTransformation 是否与指定的对象相等。</returns>
+        public override bool Equals(object obj)
+        {
+            if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            else if (obj is null || !(obj is AffineTransformation))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals((AffineTransformation)obj);
+            }
+        }
+
+        /// <summary>
+        /// 返回此 AffineTransformation 的哈希代码。
+        /// </summary>
+        /// <returns>32 位整数，表示此 AffineTransformation 的哈希代码。</returns>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// 将此 AffineTransformation 转换为字符串。
+        /// </summary>
+        /// <returns>字符串，表示此 AffineTransformation 的字符串形式。</returns>
+        public override string ToString()
+        {
+            string Str = string.Empty;
+
+            if (IsEmpty)
+            {
+                Str = "Empty";
+            }
+            else
+            {
+                Str = string.Concat("Type=", (IsSingle ? "Single" : "Multiple"));
+            }
+
+            return string.Concat(base.GetType().Name, " [", Str, "]");
+        }
+
+        //
+
+        /// <summary>
+        /// 判断此 AffineTransformation 是否与指定的 AffineTransformation 对象相等。
+        /// </summary>
+        /// <param name="affineTransformation">用于比较的 AffineTransformation 对象。</param>
+        /// <returns>布尔值，表示此 AffineTransformation 是否与指定的 AffineTransformation 对象相等。</returns>
+        public bool Equals(AffineTransformation affineTransformation)
+        {
+            if (object.ReferenceEquals(this, affineTransformation))
+            {
+                return true;
+            }
+            else if (affineTransformation is null)
+            {
+                return false;
+            }
+            else if (_Sequence.Count != affineTransformation._Sequence.Count)
+            {
+                return false;
+            }
+            else
+            {
+                for (int i = 0; i < _Sequence.Count; i++)
+                {
+                    if (AffineTransformationAtomic.Equals(_Sequence[i], affineTransformation._Sequence[i]))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        //
 
         /// <summary>
         /// 获取此 AffineTransformation 的副本。
@@ -756,11 +994,35 @@ namespace Com
         /// <summary>
         /// 判断指定的 AffineTransformation 是否为 null 或表示空向量。
         /// </summary>
-        /// <param name="vector">用于判断的 AffineTransformation 对象。</param>
+        /// <param name="affineTransformation">用于判断的 AffineTransformation 对象。</param>
         /// <returns>布尔值，表示指定的 AffineTransformation 是否为 null 或表示空变换。</returns>
         public static bool IsNullOrEmpty(AffineTransformation affineTransformation)
         {
             return (affineTransformation is null || affineTransformation._Sequence.Count <= 0);
+        }
+
+        //
+
+        /// <summary>
+        /// 判断两个 AffineTransformation 对象是否相等。
+        /// </summary>
+        /// <param name="left">用于比较的第一个 AffineTransformation 对象。</param>
+        /// <param name="right">用于比较的第二个 AffineTransformation 对象。</param>
+        /// <returns>布尔值，表示两个 AffineTransformation 对象是否相等。</returns>
+        public static bool Equals(AffineTransformation left, AffineTransformation right)
+        {
+            if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (left is null || right is null)
+            {
+                return false;
+            }
+            else
+            {
+                return left.Equals(right);
+            }
         }
 
         //
@@ -948,6 +1210,70 @@ namespace Com
             result.MatrixTransform(matrix);
 
             return result;
+        }
+
+        #endregion
+
+        #region 运算符
+
+        /// <summary>
+        /// 判断两个 AffineTransformation 对象是否相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 AffineTransformation 对象。</param>
+        /// <param name="right">运算符右侧比较的 AffineTransformation 对象。</param>
+        /// <returns>布尔值，表示两个 AffineTransformation 对象是否相等。</returns>
+        public static bool operator ==(AffineTransformation left, AffineTransformation right)
+        {
+            if (object.ReferenceEquals(left, right))
+            {
+                return true;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Sequence.Count != right._Sequence.Count)
+            {
+                return false;
+            }
+            else
+            {
+                for (int i = 0; i < left._Sequence.Count; i++)
+                {
+                    if (left._Sequence[i] == right._Sequence[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 判断两个 AffineTransformation 对象是否不相等。
+        /// </summary>
+        /// <param name="left">运算符左侧比较的 AffineTransformation 对象。</param>
+        /// <param name="right">运算符右侧比较的 AffineTransformation 对象。</param>
+        /// <returns>布尔值，表示两个 AffineTransformation 对象是否不相等。</returns>
+        public static bool operator !=(AffineTransformation left, AffineTransformation right)
+        {
+            if (object.ReferenceEquals(left, right))
+            {
+                return false;
+            }
+            else if (IsNullOrEmpty(left) || IsNullOrEmpty(right) || left._Sequence.Count != right._Sequence.Count)
+            {
+                return true;
+            }
+            else
+            {
+                for (int i = 0; i < left._Sequence.Count; i++)
+                {
+                    if (left._Sequence[i] == right._Sequence[i])
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
 
         #endregion

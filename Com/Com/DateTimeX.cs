@@ -649,7 +649,7 @@ namespace Com
         {
             get
             {
-                return (!_Initialized);
+                return !_Initialized;
             }
         }
 
@@ -1450,7 +1450,7 @@ namespace Com
         /// <returns>布尔值，表示此 DateTimeX 结构是否与指定的 DateTimeX 结构相等。</returns>
         public bool Equals(DateTimeX dateTime)
         {
-            return (_Initialized.Equals(dateTime._Initialized) && _UtcOffset.Equals(dateTime._UtcOffset) && _TotalMilliseconds == dateTime._TotalMilliseconds && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond);
+            return (_Initialized == dateTime._Initialized && _UtcOffset.Equals(dateTime._UtcOffset) && _TotalMilliseconds.Equals(dateTime._TotalMilliseconds) && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond);
         }
 
         //

@@ -2176,7 +2176,7 @@ namespace Com
 
         private bool _CheckCache() // 检查缓存是否已经创建。
         {
-            return (!(_CachedChannels is null));
+            return !(_CachedChannels is null);
         }
 
         private void _InitializeCache() // 初始化缓存。
@@ -2191,7 +2191,7 @@ namespace Com
 
         private bool _SearchCache(_ColorSpace colorSpace) // 检索缓存中是否存在指定色彩空间的通道值。
         {
-            return (!(_CachedChannels[(int)colorSpace / _SpaceBase - 1] is null));
+            return !(_CachedChannels[(int)colorSpace / _SpaceBase - 1] is null);
         }
 
         private double[] _GetCache(_ColorSpace colorSpace) // 获取缓存中指定色彩空间的通道值。
@@ -3807,7 +3807,7 @@ namespace Com
         /// <returns>布尔值，表示此 ColorX 结构是否与指定的 ColorX 结构相等。</returns>
         public bool Equals(ColorX color)
         {
-            return (_CurrentColorSpace.Equals(color._CurrentColorSpace) && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && _CompareCache(_CachedChannels, color._CachedChannels));
+            return (_CurrentColorSpace == color._CurrentColorSpace && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && _CompareCache(_CachedChannels, color._CachedChannels));
         }
 
         //

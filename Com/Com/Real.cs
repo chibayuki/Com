@@ -983,7 +983,7 @@ namespace Com
         /// <returns>布尔值，表示此 Real 结构是否与指定的 Real 结构相等。</returns>
         public bool Equals(Real real)
         {
-            return (_Magnitude.Equals(real._Magnitude) && _Value.Equals(real._Value));
+            return (_Magnitude == real._Magnitude && _Value.Equals(real._Value));
         }
 
         //
