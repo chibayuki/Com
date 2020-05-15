@@ -2137,7 +2137,7 @@ namespace Com
             }
             else
             {
-                if (!right.IsRowVector)
+                if (!right.IsColumnVector)
                 {
                     throw new ArithmeticException();
                 }
@@ -2276,7 +2276,7 @@ namespace Com
             }
             else
             {
-                if (!vector.IsRowVector)
+                if (!vector.IsColumnVector)
                 {
                     throw new ArithmeticException();
                 }
@@ -2291,14 +2291,7 @@ namespace Com
                     }
                     else
                     {
-                        try
-                        {
-                            return Multiply(matrix.Invert, vector);
-                        }
-                        catch
-                        {
-                            return Vector.Empty;
-                        }
+                        return Multiply(matrix.Invert, vector);
                     }
                 }
             }
