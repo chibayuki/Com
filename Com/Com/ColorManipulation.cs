@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.ColorManipulation
-Version 20.4.4.0000
+Version 20.5.28.2000
 
 This file is part of Com
 

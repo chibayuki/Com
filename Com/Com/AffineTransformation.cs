@@ -1,8 +1,8 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2019 chibayuki@foxmail.com
+Copyright © 2020 chibayuki@foxmail.com
 
 Com.IAffine
-Version 19.11.7.0000
+Version 20.5.28.2000
 
 This file is part of Com
 

@@ -1,8 +1,8 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2019 chibayuki@foxmail.com
+Copyright © 2020 chibayuki@foxmail.com
 
 Com.WinForm.Theme
-Version 19.10.14.2100
+Version 20.5.28.2000
 
 This file is part of Com
 

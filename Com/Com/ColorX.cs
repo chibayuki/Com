@@ -1,8 +1,8 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2019 chibayuki@foxmail.com
+Copyright © 2020 chibayuki@foxmail.com
 
 Com.ColorX
-Version 19.11.12.0000
+Version 20.5.28.2000
 
 This file is part of Com
 
@@ -584,7 +584,7 @@ namespace Com
 
             Luminance = _ColorSpace.YUV + 1, // YUV 色彩空间的亮度（Y）。
             ChrominanceBlue, // YUV 色彩空间的蓝色色度（U）。
-            ChrominanceRed, // YUV 色彩空间的红色色度（V）。
+            ChrominanceRed // YUV 色彩空间的红色色度（V）。
         }
 
         //

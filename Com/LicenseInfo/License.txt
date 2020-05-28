@@ -1,6 +1,6 @@
-﻿Copyright © 2019 chibayuki@foxmail.com
+﻿Copyright © 2020 chibayuki@foxmail.com
 
 Com
-Version 19.10.14.2100
+Version 20.5.28.2000
 
 Com is released under the GPLv3 license, see GPLv3.txt for more information.
