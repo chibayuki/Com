@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.Matrix
-Version 20.5.28.2000
+Version 20.5.29.0000
 
 This file is part of Com
 
@@ -28,6 +28,8 @@ namespace Com
 
         private const int _MaxSize = 2146435071; // Matrix 允许包含的最大元素数量，等于 System.Array.MaxArrayLength。
 
+        private static readonly double[,] _EmptyData = new double[0, 0]; // 表示 Empty 对象的矩阵元素的数组。
+
         //
 
         [InternalUnsafeCall(InternalUnsafeCallType.InputAddress)]
@@ -38,7 +40,7 @@ namespace Com
                 return new Matrix()
                 {
                     _Size = Size.Empty,
-                    _MArray = new double[0, 0]
+                    _MArray = _EmptyData
                 };
             }
             else
@@ -99,7 +101,7 @@ namespace Com
             if (size.Width == 0 || size.Height == 0)
             {
                 _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                _MArray = _EmptyData;
             }
             else
             {
@@ -125,7 +127,7 @@ namespace Com
             if (size.Width == 0 || size.Height == 0)
             {
                 _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                _MArray = _EmptyData;
             }
             else
             {
@@ -159,7 +161,7 @@ namespace Com
             if (width == 0 || height == 0)
             {
                 _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                _MArray = _EmptyData;
             }
             else
             {
@@ -186,7 +188,7 @@ namespace Com
             if (width == 0 || height == 0)
             {
                 _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                _MArray = _EmptyData;
             }
             else
             {
@@ -212,7 +214,7 @@ namespace Com
             if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = Size.Empty;
-                _MArray = new double[0, 0];
+                _MArray = _EmptyData;
             }
             else
             {
@@ -656,7 +658,7 @@ namespace Com
                 return new Matrix()
                 {
                     _Size = Size.Empty,
-                    _MArray = new double[0, 0]
+                    _MArray = _EmptyData
                 };
             }
         }

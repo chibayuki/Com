@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.Vector
-Version 20.5.28.2000
+Version 20.5.29.0000
 
 This file is part of Com
 
@@ -45,6 +45,8 @@ namespace Com
 
         private const int _MaxSize = 2146435071; // Vector 允许包含的最大元素数量，等于 System.Array.MaxArrayLength。
 
+        private static readonly double[] _EmptyData = new double[0]; // 表示 Empty 对象在各基向量方向的分量的数组。
+
         //
 
         private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的零向量。
@@ -79,7 +81,7 @@ namespace Com
                 {
                     _Type = type,
                     _Size = 0,
-                    _VArray = new double[0]
+                    _VArray = _EmptyData
                 };
             }
             else
@@ -220,7 +222,7 @@ namespace Com
             else
             {
                 _Size = 0;
-                _VArray = new double[0];
+                _VArray = _EmptyData;
             }
         }
 
@@ -251,7 +253,7 @@ namespace Com
             else
             {
                 _Size = 0;
-                _VArray = new double[0];
+                _VArray = _EmptyData;
             }
         }
 
@@ -639,7 +641,7 @@ namespace Com
                 {
                     _Type = Type.ColumnVector,
                     _Size = 0,
-                    _VArray = new double[0]
+                    _VArray = _EmptyData
                 };
             }
         }

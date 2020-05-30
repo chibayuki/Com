@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.BitSet
-Version 20.5.28.2000
+Version 20.5.29.0000
 
 This file is part of Com
 
@@ -38,6 +38,8 @@ namespace Com
         private const uint _TrueUint = uint.MaxValue, _FalseUint = uint.MinValue; // 所有位值为 true 或 false 的 32 位无符号整数。
 
         private const int _MaxSize = 2146434944; // BitSet 允许包含的最大元素数量，等于 Floor(System.Array.MaxArrayLength / Com.BitSet._BitsPerUint / 4) * Com.BitSet._BitsPerUint * 4。
+
+        private static readonly uint[] _EmptyData = new uint[0]; // 表示 Empty 对象的 32 位无符号整数数组。
 
         //
 
@@ -102,7 +104,7 @@ namespace Com
             if (length == 0)
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
             else
             {
@@ -128,7 +130,7 @@ namespace Com
             if (length == 0)
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
             else
             {
@@ -161,7 +163,7 @@ namespace Com
             if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
             else
             {
@@ -196,7 +198,7 @@ namespace Com
             if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
             else
             {
@@ -228,7 +230,7 @@ namespace Com
             if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
             else
             {
@@ -260,7 +262,7 @@ namespace Com
             if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
             else
             {
@@ -291,7 +293,7 @@ namespace Com
             if (InternalMethod.IsNullOrEmpty(values))
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
             else
             {
@@ -402,7 +404,7 @@ namespace Com
                 if (value == 0)
                 {
                     _Size = 0;
-                    _UintArray = new uint[0];
+                    _UintArray = _EmptyData;
                 }
                 else
                 {
@@ -499,7 +501,7 @@ namespace Com
                 return new BitSet()
                 {
                     _Size = 0,
-                    _UintArray = new uint[0]
+                    _UintArray = _EmptyData
                 };
             }
         }
@@ -2114,7 +2116,7 @@ namespace Com
             if (_Size > 0)
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
         }
 
@@ -2281,7 +2283,7 @@ namespace Com
             if (_Size > 0)
             {
                 _Size = 0;
-                _UintArray = new uint[0];
+                _UintArray = _EmptyData;
             }
         }
 
