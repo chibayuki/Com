@@ -3589,7 +3589,7 @@ namespace Com
         /// <summary>
         /// 获取此 ColorX 结构的互补色。
         /// </summary>
-        [Obsolete]
+        [Obsolete("请改为使用 Complementary 属性")]
         public ColorX ComplementaryColor
         {
             get
@@ -3628,7 +3628,7 @@ namespace Com
         /// <summary>
         /// 获取此 ColorX 结构的灰度颜色。
         /// </summary>
-        [Obsolete]
+        [Obsolete("请改为使用 Grayscale 属性")]
         public ColorX GrayscaleColor
         {
             get

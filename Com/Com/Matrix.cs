@@ -1912,7 +1912,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">左矩阵列表。</param>
         /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次左乘得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 MultiplyLeft(IEnumerable<Matrix>) 方法")]
         public static Matrix MultiplyLeft(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -1984,7 +1984,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">右矩阵列表。</param>
         /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次右乘得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 MultiplyRight(IEnumerable<Matrix>) 方法")]
         public static Matrix MultiplyRight(List<Matrix> matrices)
         {
             return MultiplyRight(matrices.ToArray());

@@ -1458,7 +1458,7 @@ namespace Com
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>IComparable 对象，表示一组可排序对象的最大值。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 Max<T>(params T[]) 方法")]
         public static IComparable Max(params IComparable[] values)
         {
             return Max<IComparable>(values);
@@ -1966,7 +1966,7 @@ namespace Com
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>IComparable 对象，表示一组可排序对象的最小值。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 Min<T>(params T[]) 方法")]
         public static IComparable Min(params IComparable[] values)
         {
             return Min<IComparable>(values);
@@ -2578,7 +2578,7 @@ namespace Com
         /// </summary>
         /// <param name="values">用于计算的值。</param>
         /// <returns>(IComparable, IComparable) 元组，表示一组可排序对象的最小值与最大值。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 MinMax<T>(params T[]) 方法")]
         public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values)
         {
             return MinMax<IComparable>(values);

@@ -1986,7 +1986,7 @@ namespace Com
         /// 按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换。
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 MatrixTransform(Matrix) 方法")]
         public void AffineTransform(Matrix matrix)
         {
             MatrixTransform(matrix);
@@ -1996,7 +1996,7 @@ namespace Com
         /// 按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换。
         /// </summary>
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void AffineTransform(params Matrix[] matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2068,7 +2068,7 @@ namespace Com
         /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换。
         /// </summary>
         /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void AffineTransform(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2086,7 +2086,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 MatrixTransformCopy(Matrix) 方法")]
         public Vector AffineTransformCopy(Matrix matrix)
         {
             return MatrixTransformCopy(matrix);
@@ -2097,7 +2097,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public Vector AffineTransformCopy(params Matrix[] matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2176,7 +2176,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public Vector AffineTransformCopy(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2193,7 +2193,7 @@ namespace Com
         /// 按 Matrix 对象表示的仿射矩阵将此 Vector 进行逆仿射变换。
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void InverseAffineTransform(Matrix matrix)
         {
             if (matrix is null)
@@ -2242,7 +2242,7 @@ namespace Com
         /// 按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行逆仿射变换。
         /// </summary>
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void InverseAffineTransform(params Matrix[] matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2302,7 +2302,7 @@ namespace Com
         /// 按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换。
         /// </summary>
         /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void InverseAffineTransform(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2320,7 +2320,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行逆仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public Vector InverseAffineTransformCopy(Matrix matrix)
         {
             if (matrix is null)
@@ -2374,7 +2374,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">Matrix 对象数组，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行逆仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public Vector InverseAffineTransformCopy(params Matrix[] matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))
@@ -2439,7 +2439,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">Matrix 对象列表，对于列向量应全部为左矩阵，对于行向量应全部为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象列表表示的仿射矩阵列表将此 Vector 进行逆仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public Vector InverseAffineTransformCopy(List<Matrix> matrices)
         {
             if (InternalMethod.IsNullOrEmpty(matrices))

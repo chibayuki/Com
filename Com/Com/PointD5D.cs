@@ -1393,7 +1393,7 @@ namespace Com
         /// <param name="eu">PointD5D 结构表示的 U 基向量。</param>
         /// <param name="ev">PointD5D 结构表示的 V 基向量。</param>
         /// <param name="offset">PointD5D 结构表示的偏移向量。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 MatrixTransform(Matrix) 方法")]
         public void AffineTransform(PointD5D ex, PointD5D ey, PointD5D ez, PointD5D eu, PointD5D ev, PointD5D offset)
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
@@ -1415,7 +1415,7 @@ namespace Com
         /// 按 Matrix 对象表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行仿射变换。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 6x6 仿射矩阵（左矩阵）。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 MatrixTransform(Matrix) 方法")]
         public void AffineTransform(Matrix matrixLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1427,7 +1427,7 @@ namespace Com
         /// 按 Matrix 对象数组表示的 6x6 仿射矩阵（左矩阵）数组将此 PointD5D 结构进行仿射变换。
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象数组，表示 6x6 仿射矩阵（左矩阵）数组。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void AffineTransform(params Matrix[] matricesLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
@@ -1439,7 +1439,7 @@ namespace Com
         /// 按 Matrix 对象列表表示的 6x6 仿射矩阵（左矩阵）列表将此 PointD5D 结构进行仿射变换。
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象列表，表示 6x6 仿射矩阵（左矩阵）列表。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void AffineTransform(List<Matrix> matricesLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
@@ -1457,7 +1457,7 @@ namespace Com
         /// <param name="ev">PointD5D 结构表示的 V 基向量。</param>
         /// <param name="offset">PointD5D 结构表示的偏移向量。</param>
         /// <returns>PointD5D 结构，表示按 PointD5D 结构表示的 X 基向量、Y 基向量、Z 基向量、U 基向量、V 基向量与偏移向量将此 PointD5D 结构进行仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 MatrixTransformCopy(Matrix) 方法")]
         public PointD5D AffineTransformCopy(PointD5D ex, PointD5D ey, PointD5D ez, PointD5D eu, PointD5D ev, PointD5D offset)
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
@@ -1480,7 +1480,7 @@ namespace Com
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 6x6 仿射矩阵（左矩阵）。</param>
         /// <returns>PointD5D 结构，表示按 Matrix 对象表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 MatrixTransformCopy(Matrix) 方法")]
         public PointD5D AffineTransformCopy(Matrix matrixLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matrixLeft);
@@ -1493,7 +1493,7 @@ namespace Com
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象数组，表示 6x6 仿射矩阵（左矩阵）数组。</param>
         /// <returns>PointD5D 结构，表示按 Matrix 对象数组表示的 6x6 仿射矩阵（左矩阵）数组将此 PointD5D 结构进行仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public PointD5D AffineTransformCopy(params Matrix[] matricesLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
@@ -1506,7 +1506,7 @@ namespace Com
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象列表，表示 6x6 仿射矩阵（左矩阵）列表。</param>
         /// <returns>PointD5D 结构，表示按 Matrix 对象列表表示的 6x6 仿射矩阵（左矩阵）列表将此 PointD5D 结构进行仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public PointD5D AffineTransformCopy(List<Matrix> matricesLeft)
         {
             Vector result = ToColumnVector().AffineTransformCopy(matricesLeft);
@@ -1523,7 +1523,7 @@ namespace Com
         /// <param name="eu">PointD5D 结构表示的 U 基向量。</param>
         /// <param name="ev">PointD5D 结构表示的 V 基向量。</param>
         /// <param name="offset">PointD5D 结构表示的偏移向量。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void InverseAffineTransform(PointD5D ex, PointD5D ey, PointD5D ez, PointD5D eu, PointD5D ev, PointD5D offset)
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
@@ -1545,7 +1545,7 @@ namespace Com
         /// 按 Matrix 对象表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 6x6 仿射矩阵（左矩阵）。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void InverseAffineTransform(Matrix matrixLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
@@ -1557,7 +1557,7 @@ namespace Com
         /// 按 Matrix 对象数组表示的 6x6 仿射矩阵（左矩阵）数组将此 PointD5D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象数组，表示 6x6 仿射矩阵（左矩阵）数组。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void InverseAffineTransform(params Matrix[] matricesLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
@@ -1569,7 +1569,7 @@ namespace Com
         /// 按 Matrix 对象列表表示的 6x6 仿射矩阵（左矩阵）列表将此 PointD5D 结构进行逆仿射变换。
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象列表，表示 6x6 仿射矩阵（左矩阵）列表。</param>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransform(AffineTransformation) 方法")]
         public void InverseAffineTransform(List<Matrix> matricesLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
@@ -1587,7 +1587,7 @@ namespace Com
         /// <param name="ev">PointD5D 结构表示的 V 基向量。</param>
         /// <param name="offset">PointD5D 结构表示的偏移向量。</param>
         /// <returns>PointD5D 结构，表示按 PointD5D 结构表示的 X 基向量、Y 基向量、Z 基向量、U 基向量、V 基向量与偏移向量将此 PointD5D 结构进行逆仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public PointD5D InverseAffineTransformCopy(PointD5D ex, PointD5D ey, PointD5D ez, PointD5D eu, PointD5D ev, PointD5D offset)
         {
             Matrix matrixLeft = Matrix.UnsafeCreateInstance(new double[_Dimension + 1, _Dimension + 1]
@@ -1610,7 +1610,7 @@ namespace Com
         /// </summary>
         /// <param name="matrixLeft">Matrix 对象，表示 6x6 仿射矩阵（左矩阵）。</param>
         /// <returns>PointD5D 结构，表示按 Matrix 对象表示的 6x6 仿射矩阵（左矩阵）将此 PointD5D 结构进行逆仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public PointD5D InverseAffineTransformCopy(Matrix matrixLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matrixLeft);
@@ -1623,7 +1623,7 @@ namespace Com
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象数组，表示 6x6 仿射矩阵（左矩阵）数组。</param>
         /// <returns>PointD5D 结构，表示按 Matrix 对象数组表示的 6x6 仿射矩阵（左矩阵）数组将此 PointD5D 结构进行逆仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public PointD5D InverseAffineTransformCopy(params Matrix[] matricesLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);
@@ -1636,7 +1636,7 @@ namespace Com
         /// </summary>
         /// <param name="matricesLeft">Matrix 对象列表，表示 6x6 仿射矩阵（左矩阵）列表。</param>
         /// <returns>PointD5D 结构，表示按 Matrix 对象列表表示的 6x6 仿射矩阵（左矩阵）列表将此 PointD5D 结构进行逆仿射变换得到的结果。</returns>
-        [Obsolete]
+        [Obsolete("请改为使用 AffineTransformCopy(AffineTransformation) 方法")]
         public PointD5D InverseAffineTransformCopy(List<Matrix> matricesLeft)
         {
             Vector result = ToColumnVector().InverseAffineTransformCopy(matricesLeft);

@@ -20,7 +20,7 @@ namespace Com
     /// <summary>
     /// 表示用于支持仿射变换的方法。
     /// </summary>
-    [Obsolete]
+    [Obsolete("请改为使用 IAffineTransformable 接口")]
     public interface IAffine
     {
         /// <summary>
@@ -107,7 +107,7 @@ namespace Com
     /// <summary>
     /// 表示用于支持仿射变换的方法。
     /// </summary>
-    [Obsolete]
+    [Obsolete("请改为使用 IAffineTransformable<T> 接口")]
     public interface IAffine<T> : IAffine where T : IVector<double>
     {
         /// <summary>
