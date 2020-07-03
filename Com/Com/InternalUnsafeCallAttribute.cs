@@ -1,7 +1,7 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Copyright © 2020 chibayuki@foxmail.com
 
-Com.IAffine
+Com.InternalUnsafeCallAttribute
 Version 20.5.28.2000
 
 This file is part of Com
