@@ -20,7 +20,8 @@ using System.Runtime.InteropServices;
 
 namespace Com
 {
-    internal static class User32 // User32 接口。
+    // User32 接口。
+    internal static class User32
     {
         [DllImport("user32", CharSet = CharSet.Ansi, EntryPoint = "GetWindowLongA", ExactSpelling = true, SetLastError = true)]
         public static extern int GetWindowLongA(int hWnd, int nlndex);

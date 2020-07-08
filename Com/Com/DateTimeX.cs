@@ -63,7 +63,8 @@ namespace Com
 
         //
 
-        private static double _CheckUtcOffset(double utcOffset) // 对所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的值进行合法性检查，返回合法的值。
+        // 对所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的值进行合法性检查，返回合法的值。
+        private static double _CheckUtcOffset(double utcOffset)
         {
             if (InternalMethod.IsNaNOrInfinity(utcOffset))
             {
@@ -96,7 +97,8 @@ namespace Com
             }
         }
 
-        private static decimal _CheckTotalMilliseconds(decimal totalMilliseconds) // 对自公元时刻以来的总毫秒数的值进行合法性检查，返回合法的值。
+        // 对自公元时刻以来的总毫秒数的值进行合法性检查，返回合法的值。
+        private static decimal _CheckTotalMilliseconds(decimal totalMilliseconds)
         {
             decimal _totalMilliseconds = Math.Round(totalMilliseconds);
 
@@ -110,7 +112,8 @@ namespace Com
             return _totalMilliseconds;
         }
 
-        private static long _CheckYear(long year, double utcOffset) // 对年的值进行合法性检查，返回合法的值。
+        // 对年的值进行合法性检查，返回合法的值。
+        private static long _CheckYear(long year, double utcOffset)
         {
             if (year == 0)
             {
@@ -136,7 +139,8 @@ namespace Com
             }
         }
 
-        private static int _CheckMonth(int month) // 对月的值进行合法性检查，返回合法的值。
+        // 对月的值进行合法性检查，返回合法的值。
+        private static int _CheckMonth(int month)
         {
             if (month < _MinMonth || month > _MaxMonth)
             {
@@ -148,7 +152,8 @@ namespace Com
             return month;
         }
 
-        private static int _CheckDay(long year, int month, int day) // 对日的值进行合法性检查，返回合法的值。
+        // 对日的值进行合法性检查，返回合法的值。
+        private static int _CheckDay(long year, int month, int day)
         {
             if (day < _MinDay)
             {
@@ -167,7 +172,8 @@ namespace Com
             }
         }
 
-        private static int _CheckHour(int hour) // 对时的值进行合法性检查，返回合法的值。
+        // 对时的值进行合法性检查，返回合法的值。
+        private static int _CheckHour(int hour)
         {
             if (hour < _MinHour || hour > _MaxHour)
             {
@@ -179,7 +185,8 @@ namespace Com
             return hour;
         }
 
-        private static int _CheckMinute(int minute) // 对分的值进行合法性检查，返回合法的值。
+        // 对分的值进行合法性检查，返回合法的值。
+        private static int _CheckMinute(int minute)
         {
             if (minute < _MinMinute || minute > _MaxMinute)
             {
@@ -191,7 +198,8 @@ namespace Com
             return minute;
         }
 
-        private static int _CheckSecond(int second) // 对秒的值进行合法性检查，返回合法的值。
+        // 对秒的值进行合法性检查，返回合法的值。
+        private static int _CheckSecond(int second)
         {
             if (second < _MinSecond || second > _MaxSecond)
             {
@@ -203,7 +211,8 @@ namespace Com
             return second;
         }
 
-        private static int _CheckMillisecond(int millisecond) // 对毫秒的值进行合法性检查，返回合法的值。
+        // 对毫秒的值进行合法性检查，返回合法的值。
+        private static int _CheckMillisecond(int millisecond)
         {
             if (millisecond < _MinMillisecond || millisecond > _MaxMillisecond)
             {
@@ -217,7 +226,8 @@ namespace Com
 
         //
 
-        private static void _TotalMillisecondsToDateTime(decimal totalMilliseconds, out long year, out int month, out int day, out int hour, out int minute, out int second, out int millisecond) // 将自公元时刻以来的总毫秒数转换为年、月、日、时、分、秒与毫秒。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将自公元时刻以来的总毫秒数转换为年、月、日、时、分、秒与毫秒。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _TotalMillisecondsToDateTime(decimal totalMilliseconds, out long year, out int month, out int day, out int hour, out int minute, out int second, out int millisecond)
         {
             long TotalDays = (long)(Math.Floor(totalMilliseconds / _MillisecondsPerDay));
 
@@ -360,7 +370,8 @@ namespace Com
             millisecond = MS % _MillisecondsPerSecond;
         }
 
-        private static void _DateTimeToTotalMilliseconds(long year, int month, int day, int hour, int minute, int second, int millisecond, out decimal totalMilliseconds) // 将年、月、日、时、分、秒与毫秒转换为自公元时刻以来的总毫秒数。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将年、月、日、时、分、秒与毫秒转换为自公元时刻以来的总毫秒数。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _DateTimeToTotalMilliseconds(long year, int month, int day, int hour, int minute, int second, int millisecond, out decimal totalMilliseconds)
         {
             long TotalDays = 0;
 
@@ -400,13 +411,16 @@ namespace Com
 
         //
 
-        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, _UtcOffset); // 表示此 DateTimeX 结构所在时区时刻的最小可能值的 DateTimeX 结构的实例。
+        // 表示此 DateTimeX 结构所在时区时刻的最小可能值的 DateTimeX 结构的实例。
+        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, _UtcOffset);
 
-        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, _UtcOffset); // 表示此 DateTimeX 结构所在时区时刻的最大可能值的 DateTimeX 结构的实例。
+        // 表示此 DateTimeX 结构所在时区时刻的最大可能值的 DateTimeX 结构的实例。
+        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, _UtcOffset);
 
         //
 
-        private int _DayOfWeek // 获取此 DateTimeX 结构表示的日期是所在周的第几天（以周一为第一天）。
+        // 获取此 DateTimeX 结构表示的日期是所在周的第几天（以周一为第一天）。
+        private int _DayOfWeek
         {
             get
             {
@@ -425,7 +439,8 @@ namespace Com
 
         //
 
-        private void _CtorTotalMilliseconds(decimal totalMilliseconds, double utcOffset) // 为以自公元时刻以来的总毫秒数为参数的构造函数提供实现。
+        // 为以自公元时刻以来的总毫秒数为参数的构造函数提供实现。
+        private void _CtorTotalMilliseconds(decimal totalMilliseconds, double utcOffset)
         {
             _UtcOffset = _CheckUtcOffset(utcOffset);
 
@@ -440,7 +455,8 @@ namespace Com
             _Initialized = true;
         }
 
-        private void _CtorDateTime(long year, int month, int day, int hour, int minute, int second, int millisecond, double utcOffset) // 为以年、月、日、时、分、秒与毫秒为参数的构造函数提供实现。
+        // 为以年、月、日、时、分、秒与毫秒为参数的构造函数提供实现。
+        private void _CtorDateTime(long year, int month, int day, int hour, int minute, int second, int millisecond, double utcOffset)
         {
             _UtcOffset = _CheckUtcOffset(utcOffset);
 

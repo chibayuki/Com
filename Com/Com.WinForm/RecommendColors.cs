@@ -72,7 +72,8 @@ namespace Com.WinForm
 
         //
 
-        internal ColorX ControlButton // 控制按钮颜色。
+        // 控制按钮颜色。
+        internal ColorX ControlButton
         {
             get
             {
@@ -80,7 +81,8 @@ namespace Com.WinForm
             }
         }
 
-        internal ColorX ControlButton_DEC // 控制按钮颜色（降低对比度）。
+        // 控制按钮颜色（降低对比度）。
+        internal ColorX ControlButton_DEC
         {
             get
             {
@@ -88,7 +90,8 @@ namespace Com.WinForm
             }
         }
 
-        internal ColorX ControlButton_INC // 控制按钮颜色（提高对比度）。
+        // 控制按钮颜色（提高对比度）。
+        internal ColorX ControlButton_INC
         {
             get
             {
@@ -98,7 +101,8 @@ namespace Com.WinForm
 
         //
 
-        internal ColorX ExitButton // 退出按钮颜色。
+        // 退出按钮颜色。
+        internal ColorX ExitButton
         {
             get
             {
@@ -106,7 +110,8 @@ namespace Com.WinForm
             }
         }
 
-        internal ColorX ExitButton_DEC // 退出按钮颜色（降低对比度）。
+        // 退出按钮颜色（降低对比度）。
+        internal ColorX ExitButton_DEC
         {
             get
             {
@@ -114,7 +119,8 @@ namespace Com.WinForm
             }
         }
 
-        internal ColorX ExitButton_INC // 退出按钮颜色（提高对比度）。
+        // 退出按钮颜色（提高对比度）。
+        internal ColorX ExitButton_INC
         {
             get
             {
@@ -124,12 +130,14 @@ namespace Com.WinForm
 
         //
 
-        internal static bool BackColorFitLightText(ColorX color) // 返回表示指定的背景色是否与浅色文本相符的布尔值。
+        // 返回表示指定的背景色是否与浅色文本相符的布尔值。
+        internal static bool BackColorFitLightText(ColorX color)
         {
             return (color.Lightness_LAB < 70);
         }
 
-        internal static bool BackColorFitDarkText(ColorX color) // 返回表示指定的背景色是否与深色文本相符的布尔值。
+        // 返回表示指定的背景色是否与深色文本相符的布尔值。
+        internal static bool BackColorFitDarkText(ColorX color)
         {
             return (color.Lightness_LAB > 30);
         }
@@ -138,7 +146,8 @@ namespace Com.WinForm
 
         #region 构造函数
 
-        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor, bool isActive) // 使用主题、主题色、表示是否在窗口标题栏上显示主题色的布尔值、表示是否在窗口阴影显示主题色的布尔值与表示窗口是否处于活动状态的布尔值初始化 RecommendColors 的新实例。
+        // 使用主题、主题色、表示是否在窗口标题栏上显示主题色的布尔值、表示是否在窗口阴影显示主题色的布尔值与表示窗口是否处于活动状态的布尔值初始化 RecommendColors 的新实例。
+        internal RecommendColors(Theme theme, ColorX themeColor, bool showCaptionBarColor, bool showShadowColor, bool isActive)
         {
             switch (theme)
             {

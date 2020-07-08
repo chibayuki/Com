@@ -30,7 +30,8 @@ namespace Com.WinForm
         private static Hashtable _EventKeyTable = new Hashtable(); // 用于存储事件键值的哈希表。
         private static EventHandlerList _Events = new EventHandlerList(); // 用于存储事件委托的列表。
 
-        private static void _AddEventHandler(Control control, string eventName, Delegate eventHandler) // 向控件的指定事件添加一个委托。
+        // 向控件的指定事件添加一个委托。
+        private static void _AddEventHandler(Control control, string eventName, Delegate eventHandler)
         {
             try
             {
@@ -1107,7 +1108,8 @@ namespace Com.WinForm
             catch { }
         }
 
-        private static void _RemoveEventHandler(Control control, string eventName) // 删除控件的指定事件的所有委托。
+        // 删除控件的指定事件的所有委托。
+        private static void _RemoveEventHandler(Control control, string eventName)
         {
             try
             {

@@ -33,27 +33,32 @@ namespace Com
         private const int _32BitArgbShiftGreen = 8; // 32 位 ARGB 颜色的绿色分量（G）的位偏移量。
         private const int _32BitArgbShiftBlue = 0; // 32 位 ARGB 颜色的蓝色分量（B）的位偏移量。
 
-        private static int _MakeArgb(double alpha, double red, double green, double blue) // 将颜色的 Alpha、红色、绿色、蓝色分量（A、R、G、B）转换为 32 位 ARGB 值。
+        // 将颜色的 Alpha、红色、绿色、蓝色分量（A、R、G、B）转换为 32 位 ARGB 值。
+        private static int _MakeArgb(double alpha, double red, double green, double blue)
         {
             return (int)(((uint)Math.Round(alpha) << _32BitArgbShiftAlpha) | ((uint)Math.Round(red) << _32BitArgbShiftRed) | ((uint)Math.Round(green) << _32BitArgbShiftGreen) | ((uint)Math.Round(blue) << _32BitArgbShiftBlue));
         }
 
-        private static double _GetAlphaByArgb(int argb) // 根据 32 位 ARGB 值获取颜色的 Alpha 分量（A）。
+        // 根据 32 位 ARGB 值获取颜色的 Alpha 分量（A）。
+        private static double _GetAlphaByArgb(int argb)
         {
             return (((uint)argb >> _32BitArgbShiftAlpha) & 0xFFU);
         }
 
-        private static double _GetRedByArgb(int argb) // 根据 32 位 ARGB 值获取颜色的红色分量（R）。
+        // 根据 32 位 ARGB 值获取颜色的红色分量（R）。
+        private static double _GetRedByArgb(int argb)
         {
             return (((uint)argb >> _32BitArgbShiftRed) & 0xFFU);
         }
 
-        private static double _GetGreenByArgb(int argb) // 根据 32 位 ARGB 值获取颜色的绿色分量（G）。
+        // 根据 32 位 ARGB 值获取颜色的绿色分量（G）。
+        private static double _GetGreenByArgb(int argb)
         {
             return (((uint)argb >> _32BitArgbShiftGreen) & 0xFFU);
         }
 
-        private static double _GetBlueByArgb(int argb) // 根据 32 位 ARGB 值获取颜色的蓝色分量（B）。
+        // 根据 32 位 ARGB 值获取颜色的蓝色分量（B）。
+        private static double _GetBlueByArgb(int argb)
         {
             return (((uint)argb >> _32BitArgbShiftBlue) & 0xFFU);
         }
@@ -63,7 +68,8 @@ namespace Com
         private static Dictionary<int, string> _ColorNameTable = null; // 表示从 32 位 ARGB 值到颜色名称的映射。
         private static Dictionary<string, int> _ArgbTable = null; // 表示从颜色名称到 32 位 ARGB 值的映射。
 
-        private static void _EnsureColorNameAndArgbTable() // 初始化 32 位 ARGB 值与颜色名称的映射表。
+        // 初始化 32 位 ARGB 值与颜色名称的映射表。
+        private static void _EnsureColorNameAndArgbTable()
         {
             if (_ColorNameTable is null || _ArgbTable is null)
             {
@@ -507,7 +513,8 @@ namespace Com
             }
         }
 
-        private static string _GetColorNameByArgb(int argb) // 根据 32 位 ARGB 值获取颜色名称。
+        // 根据 32 位 ARGB 值获取颜色名称。
+        private static string _GetColorNameByArgb(int argb)
         {
             _EnsureColorNameAndArgbTable();
 
@@ -521,7 +528,8 @@ namespace Com
             }
         }
 
-        private static int? _GetArgbByColorName(string name) // 根据颜色名称获取 32 位 ARGB 值。
+        // 根据颜色名称获取 32 位 ARGB 值。
+        private static int? _GetArgbByColorName(string name)
         {
             _EnsureColorNameAndArgbTable();
 
@@ -545,7 +553,8 @@ namespace Com
         private const int _SpaceCount = 6; // 色彩空间数量。
         private const int _ChannelCount = 4; // 每个色彩空间的最大色彩通道数量。
 
-        private enum _ColorSpace // 色彩空间。
+        // 色彩空间。
+        private enum _ColorSpace
         {
             None = 0, // 不表示任何色彩空间。
 
@@ -557,7 +566,8 @@ namespace Com
             YUV = 6 * _SpaceBase // YUV 色彩空间。
         }
 
-        private enum _ColorChannel // 色彩通道。
+        // 色彩通道。
+        private enum _ColorChannel
         {
             None = 0, // 不表示任何色彩通道。
 
@@ -649,7 +659,8 @@ namespace Com
 
         //
 
-        private static double _CheckOpacity(double opacity) // 对颜色的不透明度的值进行合法性检查，返回合法的值。
+        // 对颜色的不透明度的值进行合法性检查，返回合法的值。
+        private static double _CheckOpacity(double opacity)
         {
             if (InternalMethod.IsNaNOrInfinity(opacity))
             {
@@ -682,7 +693,8 @@ namespace Com
             }
         }
 
-        private static double _CheckAlpha(double alpha) // 对颜色的 Alpha 通道（A）的值进行合法性检查，返回合法的值。
+        // 对颜色的 Alpha 通道（A）的值进行合法性检查，返回合法的值。
+        private static double _CheckAlpha(double alpha)
         {
             if (InternalMethod.IsNaNOrInfinity(alpha))
             {
@@ -715,7 +727,8 @@ namespace Com
             }
         }
 
-        private static double _CheckRed(double red) // 对颜色在 RGB 色彩空间的红色通道（R）的值进行合法性检查，返回合法的值。
+        // 对颜色在 RGB 色彩空间的红色通道（R）的值进行合法性检查，返回合法的值。
+        private static double _CheckRed(double red)
         {
             if (InternalMethod.IsNaNOrInfinity(red))
             {
@@ -748,7 +761,8 @@ namespace Com
             }
         }
 
-        private static double _CheckGreen(double green) // 对颜色在 RGB 色彩空间的绿色通道（G）的值进行合法性检查，返回合法的值。
+        // 对颜色在 RGB 色彩空间的绿色通道（G）的值进行合法性检查，返回合法的值。
+        private static double _CheckGreen(double green)
         {
             if (InternalMethod.IsNaNOrInfinity(green))
             {
@@ -781,7 +795,8 @@ namespace Com
             }
         }
 
-        private static double _CheckBlue(double blue) // 对颜色在 RGB 色彩空间的蓝色通道（B）的值进行合法性检查，返回合法的值。
+        // 对颜色在 RGB 色彩空间的蓝色通道（B）的值进行合法性检查，返回合法的值。
+        private static double _CheckBlue(double blue)
         {
             if (InternalMethod.IsNaNOrInfinity(blue))
             {
@@ -814,7 +829,8 @@ namespace Com
             }
         }
 
-        private static double _CheckHue_HSV(double hue) // 对颜色在 HSV 色彩空间的色相（H）的值进行合法性检查，返回合法的值。
+        // 对颜色在 HSV 色彩空间的色相（H）的值进行合法性检查，返回合法的值。
+        private static double _CheckHue_HSV(double hue)
         {
             if (InternalMethod.IsNaNOrInfinity(hue))
             {
@@ -847,7 +863,8 @@ namespace Com
             }
         }
 
-        private static double _CheckSaturation_HSV(double saturation) // 对颜色在 HSV 色彩空间的饱和度（S）的值进行合法性检查，返回合法的值。
+        // 对颜色在 HSV 色彩空间的饱和度（S）的值进行合法性检查，返回合法的值。
+        private static double _CheckSaturation_HSV(double saturation)
         {
             if (InternalMethod.IsNaNOrInfinity(saturation))
             {
@@ -880,7 +897,8 @@ namespace Com
             }
         }
 
-        private static double _CheckBrightness(double brightness) // 对颜色在 HSV 色彩空间的亮度（V）的值进行合法性检查，返回合法的值。
+        // 对颜色在 HSV 色彩空间的亮度（V）的值进行合法性检查，返回合法的值。
+        private static double _CheckBrightness(double brightness)
         {
             if (InternalMethod.IsNaNOrInfinity(brightness))
             {
@@ -913,7 +931,8 @@ namespace Com
             }
         }
 
-        private static double _CheckHue_HSL(double hue) // 对颜色在 HSL 色彩空间的色相（H）的值进行合法性检查，返回合法的值。
+        // 对颜色在 HSL 色彩空间的色相（H）的值进行合法性检查，返回合法的值。
+        private static double _CheckHue_HSL(double hue)
         {
             if (InternalMethod.IsNaNOrInfinity(hue))
             {
@@ -946,7 +965,8 @@ namespace Com
             }
         }
 
-        private static double _CheckSaturation_HSL(double saturation) // 对颜色在 HSL 色彩空间的饱和度（S）的值进行合法性检查，返回合法的值。
+        // 对颜色在 HSL 色彩空间的饱和度（S）的值进行合法性检查，返回合法的值。
+        private static double _CheckSaturation_HSL(double saturation)
         {
             if (InternalMethod.IsNaNOrInfinity(saturation))
             {
@@ -979,7 +999,8 @@ namespace Com
             }
         }
 
-        private static double _CheckLightness_HSL(double lightness) // 对颜色在 HSL 色彩空间的明度（L）的值进行合法性检查，返回合法的值。
+        // 对颜色在 HSL 色彩空间的明度（L）的值进行合法性检查，返回合法的值。
+        private static double _CheckLightness_HSL(double lightness)
         {
             if (InternalMethod.IsNaNOrInfinity(lightness))
             {
@@ -1012,7 +1033,8 @@ namespace Com
             }
         }
 
-        private static double _CheckCyan(double cyan) // 对颜色在 CMYK 色彩空间的青色通道（C）的值进行合法性检查，返回合法的值。
+        // 对颜色在 CMYK 色彩空间的青色通道（C）的值进行合法性检查，返回合法的值。
+        private static double _CheckCyan(double cyan)
         {
             if (InternalMethod.IsNaNOrInfinity(cyan))
             {
@@ -1045,7 +1067,8 @@ namespace Com
             }
         }
 
-        private static double _CheckMagenta(double magenta) // 对颜色在 CMYK 色彩空间的洋红色通道（M）的值进行合法性检查，返回合法的值。
+        // 对颜色在 CMYK 色彩空间的洋红色通道（M）的值进行合法性检查，返回合法的值。
+        private static double _CheckMagenta(double magenta)
         {
             if (InternalMethod.IsNaNOrInfinity(magenta))
             {
@@ -1078,7 +1101,8 @@ namespace Com
             }
         }
 
-        private static double _CheckYellow(double yellow) // 对颜色在 CMYK 色彩空间的黄色通道（Y）的值进行合法性检查，返回合法的值。
+        // 对颜色在 CMYK 色彩空间的黄色通道（Y）的值进行合法性检查，返回合法的值。
+        private static double _CheckYellow(double yellow)
         {
             if (InternalMethod.IsNaNOrInfinity(yellow))
             {
@@ -1111,7 +1135,8 @@ namespace Com
             }
         }
 
-        private static double _CheckBlack(double black) // 对颜色在 CMYK 色彩空间的黑色通道（K）的值进行合法性检查，返回合法的值。
+        // 对颜色在 CMYK 色彩空间的黑色通道（K）的值进行合法性检查，返回合法的值。
+        private static double _CheckBlack(double black)
         {
             if (InternalMethod.IsNaNOrInfinity(black))
             {
@@ -1144,7 +1169,8 @@ namespace Com
             }
         }
 
-        private static double _CheckLightness_LAB(double lightness) // 对颜色在 LAB 色彩空间的明度（L）的值进行合法性检查，返回合法的值。
+        // 对颜色在 LAB 色彩空间的明度（L）的值进行合法性检查，返回合法的值。
+        private static double _CheckLightness_LAB(double lightness)
         {
             if (InternalMethod.IsNaNOrInfinity(lightness))
             {
@@ -1177,7 +1203,8 @@ namespace Com
             }
         }
 
-        private static double _CheckGreenRed(double greenRed) // 对颜色在 LAB 色彩空间的绿色-红色通道（A）的值进行合法性检查，返回合法的值。
+        // 对颜色在 LAB 色彩空间的绿色-红色通道（A）的值进行合法性检查，返回合法的值。
+        private static double _CheckGreenRed(double greenRed)
         {
             if (InternalMethod.IsNaNOrInfinity(greenRed))
             {
@@ -1210,7 +1237,8 @@ namespace Com
             }
         }
 
-        private static double _CheckBlueYellow(double blueYellow) // 对颜色在 LAB 色彩空间的蓝色-黄色通道（B）的值进行合法性检查，返回合法的值。
+        // 对颜色在 LAB 色彩空间的蓝色-黄色通道（B）的值进行合法性检查，返回合法的值。
+        private static double _CheckBlueYellow(double blueYellow)
         {
             if (InternalMethod.IsNaNOrInfinity(blueYellow))
             {
@@ -1243,7 +1271,8 @@ namespace Com
             }
         }
 
-        private static double _CheckLuminance(double luminance) // 对颜色在 YUV 色彩空间的亮度（Y）的值进行合法性检查，返回合法的值。
+        // 对颜色在 YUV 色彩空间的亮度（Y）的值进行合法性检查，返回合法的值。
+        private static double _CheckLuminance(double luminance)
         {
             if (InternalMethod.IsNaNOrInfinity(luminance))
             {
@@ -1276,7 +1305,8 @@ namespace Com
             }
         }
 
-        private static double _CheckChrominanceBlue(double chrominanceBlue) // 对颜色在 YUV 色彩空间的蓝色色度（U）的值进行合法性检查，返回合法的值。
+        // 对颜色在 YUV 色彩空间的蓝色色度（U）的值进行合法性检查，返回合法的值。
+        private static double _CheckChrominanceBlue(double chrominanceBlue)
         {
             if (InternalMethod.IsNaNOrInfinity(chrominanceBlue))
             {
@@ -1309,7 +1339,8 @@ namespace Com
             }
         }
 
-        private static double _CheckChrominanceRed(double chrominanceRed) // 对颜色在 YUV 色彩空间的红色色度（V）的值进行合法性检查，返回合法的值。
+        // 对颜色在 YUV 色彩空间的红色色度（V）的值进行合法性检查，返回合法的值。
+        private static double _CheckChrominanceRed(double chrominanceRed)
         {
             if (InternalMethod.IsNaNOrInfinity(chrominanceRed))
             {
@@ -1344,7 +1375,8 @@ namespace Com
 
         //
 
-        private static void _OpacityToAlpha(double opacity, out double alpha) // 将颜色的不透明度转换为 Alpha 通道（A）的值。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色的不透明度转换为 Alpha 通道（A）的值。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _OpacityToAlpha(double opacity, out double alpha)
         {
             alpha = opacity / _MaxOpacity * _MaxAlpha;
 
@@ -1358,7 +1390,8 @@ namespace Com
             }
         }
 
-        private static void _AlphaToOpacity(double alpha, out double opacity) // 将颜色的 Alpha 通道（A）的值转换为不透明度。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色的 Alpha 通道（A）的值转换为不透明度。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _AlphaToOpacity(double alpha, out double opacity)
         {
             opacity = alpha / _MaxAlpha * _MaxOpacity;
 
@@ -1372,7 +1405,8 @@ namespace Com
             }
         }
 
-        private static void _RGBToHSV(double red, double green, double blue, out double hue, out double saturation, out double brightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSV 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 RGB 色彩空间的各分量转换为在 HSV 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _RGBToHSV(double red, double green, double blue, out double hue, out double saturation, out double brightness)
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -1470,7 +1504,8 @@ namespace Com
             }
         }
 
-        private static void _HSVToRGB(double hue, double saturation, double brightness, out double red, out double green, out double blue) // 将颜色在 HSV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 HSV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _HSVToRGB(double hue, double saturation, double brightness, out double red, out double green, out double blue)
         {
             hue /= _MaxHue_HSV;
             saturation /= _MaxSaturation_HSV;
@@ -1588,7 +1623,8 @@ namespace Com
             }
         }
 
-        private static void _RGBToHSL(double red, double green, double blue, out double hue, out double saturation, out double lightness) // 将颜色在 RGB 色彩空间的各分量转换为在 HSL 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 RGB 色彩空间的各分量转换为在 HSL 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _RGBToHSL(double red, double green, double blue, out double hue, out double saturation, out double lightness)
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -1686,7 +1722,8 @@ namespace Com
             }
         }
 
-        private static void _HSLToRGB(double hue, double saturation, double lightness, out double red, out double green, out double blue) // 将颜色在 HSL 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 HSL 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _HSLToRGB(double hue, double saturation, double lightness, out double red, out double green, out double blue)
         {
             hue /= _MaxHue_HSL;
             saturation /= _MaxSaturation_HSL;
@@ -1804,7 +1841,8 @@ namespace Com
             }
         }
 
-        private static void _RGBToCMYK(double red, double green, double blue, out double cyan, out double magenta, out double yellow, out double black) // 将颜色在 RGB 色彩空间的各分量转换为在 CMYK 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 RGB 色彩空间的各分量转换为在 CMYK 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _RGBToCMYK(double red, double green, double blue, out double cyan, out double magenta, out double yellow, out double black)
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -1879,7 +1917,8 @@ namespace Com
             }
         }
 
-        private static void _CMYKToRGB(double cyan, double magenta, double yellow, double black, out double red, out double green, out double blue) // 将颜色在 CMYK 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 CMYK 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _CMYKToRGB(double cyan, double magenta, double yellow, double black, out double red, out double green, out double blue)
         {
             cyan /= _MaxCyan;
             magenta /= _MaxMagenta;
@@ -1931,7 +1970,8 @@ namespace Com
             }
         }
 
-        private static void _RGBToLAB(double red, double green, double blue, out double lightness, out double greenRed, out double blueYellow) // 将颜色在 RGB 色彩空间的各分量转换为在 LAB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 RGB 色彩空间的各分量转换为在 LAB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _RGBToLAB(double red, double green, double blue, out double lightness, out double greenRed, out double blueYellow)
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -2007,7 +2047,8 @@ namespace Com
             }
         }
 
-        private static void _LABToRGB(double lightness, double greenRed, double blueYellow, out double red, out double green, out double blue) // 将颜色在 LAB 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 LAB 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _LABToRGB(double lightness, double greenRed, double blueYellow, out double red, out double green, out double blue)
         {
             double L = (lightness + 16) / 116;
             double a = greenRed / 500;
@@ -2083,7 +2124,8 @@ namespace Com
             }
         }
 
-        private static void _RGBToYUV(double red, double green, double blue, out double luminance, out double chrominanceBlue, out double chrominanceRed) // 将颜色在 RGB 色彩空间的各分量转换为在 YUV 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 RGB 色彩空间的各分量转换为在 YUV 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _RGBToYUV(double red, double green, double blue, out double luminance, out double chrominanceBlue, out double chrominanceRed)
         {
             red /= _MaxRed;
             green /= _MaxGreen;
@@ -2121,7 +2163,8 @@ namespace Com
             }
         }
 
-        private static void _YUVToRGB(double luminance, double chrominanceBlue, double chrominanceRed, out double red, out double green, out double blue) // 将颜色在 YUV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        // 将颜色在 YUV 色彩空间的各分量转换为在 RGB 色彩空间的各分量。此函数不检查输入参数的合法性，但保证输出参数的合法性。
+        private static void _YUVToRGB(double luminance, double chrominanceBlue, double chrominanceRed, out double red, out double green, out double blue)
         {
             red = luminance + 1.402 * chrominanceRed;
             green = luminance - (0.202008 * chrominanceBlue + 0.419198 * chrominanceRed) / 0.587;
@@ -2174,37 +2217,44 @@ namespace Com
 
         //
 
-        private bool _CheckCache() // 检查缓存是否已经创建。
+        // 检查缓存是否已经创建。
+        private bool _CheckCache()
         {
             return !(_CachedChannels is null);
         }
 
-        private void _InitializeCache() // 初始化缓存。
+        // 初始化缓存。
+        private void _InitializeCache()
         {
             _CachedChannels = new double[_SpaceCount][];
         }
 
-        private void _DiscardCache() // 丢弃缓存。
+        // 丢弃缓存。
+        private void _DiscardCache()
         {
             _CachedChannels = null;
         }
 
-        private bool _SearchCache(_ColorSpace colorSpace) // 检索缓存中是否存在指定色彩空间的通道值。
+        // 检索缓存中是否存在指定色彩空间的通道值。
+        private bool _SearchCache(_ColorSpace colorSpace)
         {
             return !(_CachedChannels[(int)colorSpace / _SpaceBase - 1] is null);
         }
 
-        private double[] _GetCache(_ColorSpace colorSpace) // 获取缓存中指定色彩空间的通道值。
+        // 获取缓存中指定色彩空间的通道值。
+        private double[] _GetCache(_ColorSpace colorSpace)
         {
             return _CachedChannels[(int)colorSpace / _SpaceBase - 1];
         }
 
-        private void _SetCache(_ColorSpace colorSpace, double[] channels) // 设置缓存中指定色彩空间的通道值。
+        // 设置缓存中指定色彩空间的通道值。
+        private void _SetCache(_ColorSpace colorSpace, double[] channels)
         {
             _CachedChannels[(int)colorSpace / _SpaceBase - 1] = channels;
         }
 
-        private static bool _CompareCache(double[][] cache1, double[][] cache2) // 比较两个缓存的内容是否相同。
+        // 比较两个缓存的内容是否相同。
+        private static bool _CompareCache(double[][] cache1, double[][] cache2)
         {
             if (object.ReferenceEquals(cache1, cache2))
             {
@@ -2269,7 +2319,8 @@ namespace Com
 
         //
 
-        private double[] _GetChannels(_ColorSpace colorSpace) // 获取颜色在指定色彩空间的所有分量。
+        // 获取颜色在指定色彩空间的所有分量。
+        private double[] _GetChannels(_ColorSpace colorSpace)
         {
             if (colorSpace == _ColorSpace.None)
             {
@@ -2416,7 +2467,8 @@ namespace Com
             }
         }
 
-        private double _GetChannel(_ColorChannel colorChannel) // 获取颜色在指定色彩通道的分量。
+        // 获取颜色在指定色彩通道的分量。
+        private double _GetChannel(_ColorChannel colorChannel)
         {
             if (colorChannel == _ColorChannel.None)
             {
@@ -2592,7 +2644,8 @@ namespace Com
             }
         }
 
-        private void _SetChannels(_ColorSpace colorSpace, params double[] channels) // 设置颜色在指定色彩空间的所有分量。
+        // 设置颜色在指定色彩空间的所有分量。
+        private void _SetChannels(_ColorSpace colorSpace, params double[] channels)
         {
             if (colorSpace == _ColorSpace.None)
             {
@@ -2668,7 +2721,8 @@ namespace Com
             _DiscardCache();
         }
 
-        private void _SetChannel(_ColorChannel colorChannel, double channel) // 设置颜色在指定色彩通道的分量。
+        // 设置颜色在指定色彩通道的分量。
+        private void _SetChannel(_ColorChannel colorChannel, double channel)
         {
             if (colorChannel == _ColorChannel.None)
             {

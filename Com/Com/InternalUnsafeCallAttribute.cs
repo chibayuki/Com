@@ -17,8 +17,9 @@ using System.Threading.Tasks;
 
 namespace Com
 {
+    // 表示内部不安全调用的类型。
     [Flags]
-    internal enum InternalUnsafeCallType // 表示内部不安全调用的类型。
+    internal enum InternalUnsafeCallType
     {
         ContainsUnsafeCode = 1, // 被调用方法内部使用了指针或不安全代码。
         InputAddress = 2, // 被调用方法要求输入外部对象的引用或指针。
@@ -27,15 +28,17 @@ namespace Com
         WillNotCheckState = 16 // 被调用方法在可能引发异常或导致不正确或未定义结果的情况下对内部状态不进行检查。
     }
 
+    // 表示内部不安全调用。
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-    internal sealed class InternalUnsafeCallAttribute : Attribute // 表示内部不安全调用。
+    internal sealed class InternalUnsafeCallAttribute : Attribute
     {
         private readonly InternalUnsafeCallType _Type; // 此内部不安全调用的类型。
         private string _Message; // 此内部不安全调用的说明信息。
 
         //
 
-        public InternalUnsafeCallAttribute(InternalUnsafeCallType type) // 使用 InternalUnsafeCallType 初始化 InternalUnsafeCallAttribute 的新实例。
+        // 使用 InternalUnsafeCallType 初始化 InternalUnsafeCallAttribute 的新实例。
+        public InternalUnsafeCallAttribute(InternalUnsafeCallType type)
         {
             _Type = type;
             _Message = string.Empty;
@@ -43,7 +46,8 @@ namespace Com
 
         //
 
-        public InternalUnsafeCallType Type // 获取此内部不安全调用的类型。
+        // 获取此内部不安全调用的类型。
+        public InternalUnsafeCallType Type
         {
             get
             {
@@ -51,7 +55,8 @@ namespace Com
             }
         }
 
-        public string Message // 获取或设置此内部不安全调用的说明信息。
+        // 获取或设置此内部不安全调用的说明信息。
+        public string Message
         {
             get
             {

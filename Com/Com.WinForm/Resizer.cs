@@ -40,7 +40,8 @@ namespace Com.WinForm
 
         private Bitmap _ResizerBitmap; // 窗口大小调节器绘图。
 
-        private void _UpdateResizerBitmap() // 更新窗口大小调节器绘图。
+        // 更新窗口大小调节器绘图。
+        private void _UpdateResizerBitmap()
         {
             if (!(_ResizerBitmap is null))
             {
@@ -79,7 +80,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _RepaintResizerBitmap() // 更新并重绘窗口大小调节器绘图。
+        // 更新并重绘窗口大小调节器绘图。
+        private void _RepaintResizerBitmap()
         {
             _UpdateResizerBitmap();
 
@@ -97,7 +99,8 @@ namespace Com.WinForm
 
         private bool _UpdateLayoutCanceled = false; // 是否已取消更新窗口布局。
 
-        private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 尝试更新窗口布局。
+        // 尝试更新窗口布局。
+        private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType)
         {
             if (!BackgroundWorker_UpdateLayoutDelay.IsBusy)
             {
@@ -109,7 +112,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _CancelUpdateLayout() // 取消更新窗口布局。
+        // 取消更新窗口布局。
+        private void _CancelUpdateLayout()
         {
             _UpdateLayoutCanceled = true;
         }
@@ -118,7 +122,8 @@ namespace Com.WinForm
 
         #region 回调函数
 
-        private void Resizer_Load(object sender, EventArgs e) // Resizer 的 Load 事件的回调函数。
+        // Resizer 的 Load 事件的回调函数。
+        private void Resizer_Load(object sender, EventArgs e)
         {
             Label_Top.BackColor = Label_Bottom.BackColor = Label_Left.BackColor = Label_Right.BackColor = Label_TopLeft.BackColor = Label_TopRight.BackColor = Label_BottomLeft.BackColor = Label_BottomRight.BackColor = Color.Transparent;
 
@@ -131,7 +136,8 @@ namespace Com.WinForm
             Resizer_SizeChanged(this, EventArgs.Empty);
         }
 
-        private void Resizer_SizeChanged(object sender, EventArgs e) // Resizer 的 SizeChanged 事件的回调函数。
+        // Resizer 的 SizeChanged 事件的回调函数。
+        private void Resizer_SizeChanged(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Maximized)
             {
@@ -166,14 +172,16 @@ namespace Com.WinForm
 
         //
 
-        private void Panel_Border_Paint(object sender, PaintEventArgs e) // Panel_Border 的 Paint 事件的回调函数。
+        // Panel_Border 的 Paint 事件的回调函数。
+        private void Panel_Border_Paint(object sender, PaintEventArgs e)
         {
             _RepaintResizerBitmap();
         }
 
         //
 
-        private void Label_Top_MouseDoubleClick(object sender, MouseEventArgs e) // Label_Top 的 MouseDoubleClick 事件的回调函数。
+        // Label_Top 的 MouseDoubleClick 事件的回调函数。
+        private void Label_Top_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (Me.FormStyle == FormStyle.Sizable)
             {
@@ -191,7 +199,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Top_MouseDown(object sender, MouseEventArgs e) // Label_Top 的 MouseDown 事件的回调函数。
+        // Label_Top 的 MouseDown 事件的回调函数。
+        private void Label_Top_MouseDown(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -210,7 +219,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Top_MouseUp(object sender, MouseEventArgs e) // Label_Top 的 MouseUp 事件的回调函数。
+        // Label_Top 的 MouseUp 事件的回调函数。
+        private void Label_Top_MouseUp(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -257,7 +267,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Top_MouseMove(object sender, MouseEventArgs e) // Label_Top 的 MouseMove 事件的回调函数。
+        // Label_Top 的 MouseMove 事件的回调函数。
+        private void Label_Top_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeIsResizing)
             {
@@ -318,7 +329,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Bottom_MouseDoubleClick(object sender, MouseEventArgs e) // Label_Bottom 的 MouseDoubleClick 事件的回调函数。
+        // Label_Bottom 的 MouseDoubleClick 事件的回调函数。
+        private void Label_Bottom_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (Me.FormStyle == FormStyle.Sizable)
             {
@@ -336,7 +348,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Bottom_MouseDown(object sender, MouseEventArgs e) // Label_Bottom 的 MouseDown 事件的回调函数。
+        // Label_Bottom 的 MouseDown 事件的回调函数。
+        private void Label_Bottom_MouseDown(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -355,7 +368,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Bottom_MouseUp(object sender, MouseEventArgs e) // Label_Bottom 的 MouseUp 事件的回调函数。
+        // Label_Bottom 的 MouseUp 事件的回调函数。
+        private void Label_Bottom_MouseUp(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -402,7 +416,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Bottom_MouseMove(object sender, MouseEventArgs e) // Label_Bottom 的 MouseMove 事件的回调函数。
+        // Label_Bottom 的 MouseMove 事件的回调函数。
+        private void Label_Bottom_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeIsResizing)
             {
@@ -449,7 +464,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Left_MouseDown(object sender, MouseEventArgs e) // Label_Left 的 MouseDown 事件的回调函数。
+        // Label_Left 的 MouseDown 事件的回调函数。
+        private void Label_Left_MouseDown(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -474,7 +490,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Left_MouseUp(object sender, MouseEventArgs e) // Label_Left 的 MouseUp 事件的回调函数。
+        // Label_Left 的 MouseUp 事件的回调函数。
+        private void Label_Left_MouseUp(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -510,7 +527,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Left_MouseMove(object sender, MouseEventArgs e) // Label_Left 的 MouseMove 事件的回调函数。
+        // Label_Left 的 MouseMove 事件的回调函数。
+        private void Label_Left_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeIsResizing)
             {
@@ -566,7 +584,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Right_MouseDown(object sender, MouseEventArgs e) // Label_Right 的 MouseDown 事件的回调函数。
+        // Label_Right 的 MouseDown 事件的回调函数。
+        private void Label_Right_MouseDown(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -591,7 +610,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Right_MouseUp(object sender, MouseEventArgs e) // Label_Right 的 MouseUp 事件的回调函数。
+        // Label_Right 的 MouseUp 事件的回调函数。
+        private void Label_Right_MouseUp(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -625,7 +645,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_Right_MouseMove(object sender, MouseEventArgs e) // Label_Right 的 MouseMove 事件的回调函数。
+        // Label_Right 的 MouseMove 事件的回调函数。
+        private void Label_Right_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeIsResizing)
             {
@@ -665,7 +686,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_TopLeft_MouseDown(object sender, MouseEventArgs e) // Label_TopLeft 的 MouseDown 事件的回调函数。
+        // Label_TopLeft 的 MouseDown 事件的回调函数。
+        private void Label_TopLeft_MouseDown(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -690,7 +712,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_TopLeft_MouseUp(object sender, MouseEventArgs e) // Label_TopLeft 的 MouseUp 事件的回调函数。
+        // Label_TopLeft 的 MouseUp 事件的回调函数。
+        private void Label_TopLeft_MouseUp(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -739,7 +762,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_TopLeft_MouseMove(object sender, MouseEventArgs e) // Label_TopLeft 的 MouseMove 事件的回调函数。
+        // Label_TopLeft 的 MouseMove 事件的回调函数。
+        private void Label_TopLeft_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeIsResizing)
             {
@@ -838,7 +862,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_TopRight_MouseDown(object sender, MouseEventArgs e) // Label_TopRight 的 MouseDown 事件的回调函数。
+        // Label_TopRight 的 MouseDown 事件的回调函数。
+        private void Label_TopRight_MouseDown(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -863,7 +888,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_TopRight_MouseUp(object sender, MouseEventArgs e) // Label_TopRight 的 MouseUp 事件的回调函数。
+        // Label_TopRight 的 MouseUp 事件的回调函数。
+        private void Label_TopRight_MouseUp(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -912,7 +938,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_TopRight_MouseMove(object sender, MouseEventArgs e) // Label_TopRight 的 MouseMove 事件的回调函数。
+        // Label_TopRight 的 MouseMove 事件的回调函数。
+        private void Label_TopRight_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeIsResizing)
             {
@@ -995,7 +1022,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_BottomLeft_MouseDown(object sender, MouseEventArgs e) // Label_BottomLeft 的 MouseDown 事件的回调函数。
+        // Label_BottomLeft 的 MouseDown 事件的回调函数。
+        private void Label_BottomLeft_MouseDown(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -1020,7 +1048,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_BottomLeft_MouseUp(object sender, MouseEventArgs e) // Label_BottomLeft 的 MouseUp 事件的回调函数。
+        // Label_BottomLeft 的 MouseUp 事件的回调函数。
+        private void Label_BottomLeft_MouseUp(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -1069,7 +1098,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_BottomLeft_MouseMove(object sender, MouseEventArgs e) // Label_BottomLeft 的 MouseMove 事件的回调函数。
+        // Label_BottomLeft 的 MouseMove 事件的回调函数。
+        private void Label_BottomLeft_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeIsResizing)
             {
@@ -1154,7 +1184,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_BottomRight_MouseDown(object sender, MouseEventArgs e) // Label_BottomRight 的 MouseDown 事件的回调函数。
+        // Label_BottomRight 的 MouseDown 事件的回调函数。
+        private void Label_BottomRight_MouseDown(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -1179,7 +1210,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_BottomRight_MouseUp(object sender, MouseEventArgs e) // Label_BottomRight 的 MouseUp 事件的回调函数。
+        // Label_BottomRight 的 MouseUp 事件的回调函数。
+        private void Label_BottomRight_MouseUp(object sender, MouseEventArgs e)
         {
             Me.CaptionBar.BringToFront();
             Me.Client.BringToFront();
@@ -1228,7 +1260,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Label_BottomRight_MouseMove(object sender, MouseEventArgs e) // Label_BottomRight 的 MouseMove 事件的回调函数。
+        // Label_BottomRight 的 MouseMove 事件的回调函数。
+        private void Label_BottomRight_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeIsResizing)
             {
@@ -1299,7 +1332,8 @@ namespace Com.WinForm
 
         //
 
-        private void BackgroundWorker_UpdateLayoutDelay_DoWork(object sender, DoWorkEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 DoWork 事件的回调函数。
+        // BackgroundWorker_UpdateLayoutDelay 的 DoWork 事件的回调函数。
+        private void BackgroundWorker_UpdateLayoutDelay_DoWork(object sender, DoWorkEventArgs e)
         {
             while ((DateTime.Now - _LastUpdateLayout).TotalMilliseconds < 16)
             {
@@ -1307,7 +1341,8 @@ namespace Com.WinForm
             }
         }
 
-        private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
+        // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
+        private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (!_UpdateLayoutCanceled)
             {
@@ -1321,7 +1356,8 @@ namespace Com.WinForm
 
         #region 构造函数
 
-        public Resizer(FormManager formManager) // 使用 FormManager 对象初始化 Resizer 的新实例。
+        // 使用 FormManager 对象初始化 Resizer 的新实例。
+        public Resizer(FormManager formManager)
         {
             InitializeComponent();
 
@@ -1334,7 +1370,8 @@ namespace Com.WinForm
 
         #region 方法
 
-        public void OnFormStyleChanged() // 在 FormStyleChanged 事件发生时发生。
+        // 在 FormStyleChanged 事件发生时发生。
+        public void OnFormStyleChanged()
         {
             if (Me.FormStyle == FormStyle.Sizable)
             {
@@ -1349,7 +1386,8 @@ namespace Com.WinForm
             }
         }
 
-        public void OnFormStateChanged() // 在 FormStateChanged 事件发生时发生。
+        // 在 FormStateChanged 事件发生时发生。
+        public void OnFormStateChanged()
         {
             this.Visible = (Me.FormState != FormState.Maximized && Me.FormState != FormState.FullScreen);
 
@@ -1361,7 +1399,8 @@ namespace Com.WinForm
             }
         }
 
-        public void OnThemeChanged() // 在 ThemeChanged 事件发生时发生。
+        // 在 ThemeChanged 事件发生时发生。
+        public void OnThemeChanged()
         {
             _RepaintResizerBitmap();
         }

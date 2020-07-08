@@ -55,7 +55,8 @@ namespace Com.WinForm
 
         private Bitmap _CaptionBarBitmap; // 标题栏绘图。
 
-        private void _UpdateCaptionBarBitmap() // 更新标题栏绘图。
+        // 更新标题栏绘图。
+        private void _UpdateCaptionBarBitmap()
         {
             if (!(_CaptionBarBitmap is null))
             {
@@ -169,7 +170,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _RepaintCaptionBarBitmap() // 更新并重绘标题栏绘图。
+        // 更新并重绘标题栏绘图。
+        private void _RepaintCaptionBarBitmap()
         {
             if (Me.FormState != FormState.FullScreen)
             {
@@ -187,7 +189,8 @@ namespace Com.WinForm
 
         //
 
-        private void _UpdateForStyleOrStateChanged() // 在 FormStyleChanged 或 FormStateChanged 事件发生时更新控件的属性。
+        // 在 FormStyleChanged 或 FormStateChanged 事件发生时更新控件的属性。
+        private void _UpdateForStyleOrStateChanged()
         {
             ToolStripMenuItem_Maximize.Enabled = (Me.FormState != FormState.Maximized);
             ToolStripMenuItem_Return.Enabled = (Me.FormState != FormState.Normal);
@@ -247,7 +250,8 @@ namespace Com.WinForm
             Panel_ControlBox.Width = PictureBox_Exit.Right;
         }
 
-        private void _UpdateControlBoxButtonImage() // 更新控制按钮的图像。
+        // 更新控制按钮的图像。
+        private void _UpdateControlBoxButtonImage()
         {
             Bitmap[,,] FullScreenImage = new Bitmap[2, 2, 2]
             {
@@ -299,7 +303,8 @@ namespace Com.WinForm
             PictureBox_Exit.Refresh();
         }
 
-        private void _UpdateControlBoxButtonBackColor(Control control, ColorX backColor) // 更新控制按钮的背景颜色。
+        // 更新控制按钮的背景颜色。
+        private void _UpdateControlBoxButtonBackColor(Control control, ColorX backColor)
         {
             if (Me.Effect.HasFlag(Effect.Fade))
             {
@@ -338,7 +343,8 @@ namespace Com.WinForm
 
         private bool _UpdateLayoutCanceled = false; // 是否已取消更新窗口布局。
 
-        private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 尝试更新窗口布局。
+        // 尝试更新窗口布局。
+        private void _TryToUpdateLayout(UpdateLayoutEventType updateLayoutEventType)
         {
             if (!BackgroundWorker_UpdateLayoutDelay.IsBusy)
             {
@@ -350,7 +356,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _CancelUpdateLayout() // 取消更新窗口布局。
+        // 取消更新窗口布局。
+        private void _CancelUpdateLayout()
         {
             _UpdateLayoutCanceled = true;
         }
@@ -359,7 +366,8 @@ namespace Com.WinForm
 
         #region 回调函数
 
-        private void CaptionBar_Load(object sender, EventArgs e) // CaptionBar 的 Load 事件的回调函数。
+        // CaptionBar 的 Load 事件的回调函数。
+        private void CaptionBar_Load(object sender, EventArgs e)
         {
             Panel_CaptionBar.BackColor = Color.Transparent;
 
@@ -390,12 +398,14 @@ namespace Com.WinForm
             Panel_FormIcon.Visible = Panel_ControlBox.Visible = false;
         }
 
-        private void CaptionBar_LocationChanged(object sender, EventArgs e) // CaptionBar 的 LocationChanged 事件的回调函数。
+        // CaptionBar 的 LocationChanged 事件的回调函数。
+        private void CaptionBar_LocationChanged(object sender, EventArgs e)
         {
             _RepaintCaptionBarBitmap();
         }
 
-        private void CaptionBar_SizeChanged(object sender, EventArgs e) // CaptionBar 的 SizeChanged 事件的回调函数。
+        // CaptionBar 的 SizeChanged 事件的回调函数。
+        private void CaptionBar_SizeChanged(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Maximized)
             {
@@ -425,7 +435,8 @@ namespace Com.WinForm
 
         //
 
-        private void Panel_CaptionBar_Paint(object sender, PaintEventArgs e) // Panel_CaptionBar 的 Paint 事件的回调函数。
+        // Panel_CaptionBar 的 Paint 事件的回调函数。
+        private void Panel_CaptionBar_Paint(object sender, PaintEventArgs e)
         {
             if (Me.FormState != FormState.FullScreen)
             {
@@ -441,7 +452,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Panel_CaptionBar_MouseDoubleClick(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseDoubleClick 事件的回调函数。
+        // Panel_CaptionBar 的 MouseDoubleClick 事件的回调函数。
+        private void Panel_CaptionBar_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -473,7 +485,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Panel_CaptionBar_MouseDown(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseDown 事件的回调函数。
+        // Panel_CaptionBar 的 MouseDown 事件的回调函数。
+        private void Panel_CaptionBar_MouseDown(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -491,7 +504,8 @@ namespace Com.WinForm
             }
         }
 
-        private void Panel_CaptionBar_MouseUp(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseUp 事件的回调函数。
+        // Panel_CaptionBar 的 MouseUp 事件的回调函数。
+        private void Panel_CaptionBar_MouseUp(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -623,7 +637,8 @@ namespace Com.WinForm
             Cursor.Clip = FormManager.PrimaryScreenBounds;
         }
 
-        private void Panel_CaptionBar_MouseMove(object sender, MouseEventArgs e) // Panel_CaptionBar 的 MouseMove 事件的回调函数。
+        // Panel_CaptionBar 的 MouseMove 事件的回调函数。
+        private void Panel_CaptionBar_MouseMove(object sender, MouseEventArgs e)
         {
             if (_MeWillMove)
             {
@@ -687,7 +702,8 @@ namespace Com.WinForm
 
         //
 
-        private void PictureBox_FormIcon_MouseDown(object sender, MouseEventArgs e) // PictureBox_FormIcon 的 MouseDown 事件的回调函数。
+        // PictureBox_FormIcon 的 MouseDown 事件的回调函数。
+        private void PictureBox_FormIcon_MouseDown(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -698,7 +714,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_FormIcon_MouseDoubleClick(object sender, MouseEventArgs e) // PictureBox_FormIcon 的 MouseDoubleClick 事件的回调函数。
+        // PictureBox_FormIcon 的 MouseDoubleClick 事件的回调函数。
+        private void PictureBox_FormIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -708,19 +725,22 @@ namespace Com.WinForm
             }
         }
 
-        private void Panel_FormIcon_MouseDown(object sender, MouseEventArgs e) // Panel_FormIcon 的 MouseDown 事件的回调函数。
+        // Panel_FormIcon 的 MouseDown 事件的回调函数。
+        private void Panel_FormIcon_MouseDown(object sender, MouseEventArgs e)
         {
             PictureBox_FormIcon_MouseDown(sender, e);
         }
 
-        private void Panel_FormIcon_MouseDoubleClick(object sender, MouseEventArgs e) // Panel_FormIcon 的 MouseDoubleClick 事件的回调函数。
+        // Panel_FormIcon 的 MouseDoubleClick 事件的回调函数。
+        private void Panel_FormIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             PictureBox_FormIcon_MouseDoubleClick(sender, e);
         }
 
         //
 
-        private void PictureBox_FullScreen_MouseClick(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseClick 事件的回调函数。
+        // PictureBox_FullScreen 的 MouseClick 事件的回调函数。
+        private void PictureBox_FullScreen_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -735,7 +755,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_FullScreen_MouseEnter(object sender, EventArgs e) // PictureBox_FullScreen 的 MouseEnter 事件的回调函数。
+        // PictureBox_FullScreen 的 MouseEnter 事件的回调函数。
+        private void PictureBox_FullScreen_MouseEnter(object sender, EventArgs e)
         {
             _FullScreenButtonIsPointed = true;
 
@@ -744,7 +765,8 @@ namespace Com.WinForm
             _UpdateControlBoxButtonImage();
         }
 
-        private void PictureBox_FullScreen_MouseLeave(object sender, EventArgs e) // PictureBox_FullScreen 的 MouseLeave 事件的回调函数。
+        // PictureBox_FullScreen 的 MouseLeave 事件的回调函数。
+        private void PictureBox_FullScreen_MouseLeave(object sender, EventArgs e)
         {
             _FullScreenButtonIsPointed = false;
             _FullScreenButtonIsPressed = false;
@@ -754,7 +776,8 @@ namespace Com.WinForm
             _UpdateControlBoxButtonImage();
         }
 
-        private void PictureBox_FullScreen_MouseDown(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseDown 事件的回调函数。
+        // PictureBox_FullScreen 的 MouseDown 事件的回调函数。
+        private void PictureBox_FullScreen_MouseDown(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -769,7 +792,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_FullScreen_MouseUp(object sender, MouseEventArgs e) // PictureBox_FullScreen 的 MouseUp 事件的回调函数。
+        // PictureBox_FullScreen 的 MouseUp 事件的回调函数。
+        private void PictureBox_FullScreen_MouseUp(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -793,7 +817,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Minimize_MouseClick(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseClick 事件的回调函数。
+        // PictureBox_Minimize 的 MouseClick 事件的回调函数。
+        private void PictureBox_Minimize_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -801,7 +826,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Minimize_MouseEnter(object sender, EventArgs e) // PictureBox_Minimize 的 MouseEnter 事件的回调函数。
+        // PictureBox_Minimize 的 MouseEnter 事件的回调函数。
+        private void PictureBox_Minimize_MouseEnter(object sender, EventArgs e)
         {
             _MinimizeButtonIsPointed = true;
 
@@ -810,7 +836,8 @@ namespace Com.WinForm
             _UpdateControlBoxButtonImage();
         }
 
-        private void PictureBox_Minimize_MouseLeave(object sender, EventArgs e) // PictureBox_Minimize 的 MouseLeave 事件的回调函数。
+        // PictureBox_Minimize 的 MouseLeave 事件的回调函数。
+        private void PictureBox_Minimize_MouseLeave(object sender, EventArgs e)
         {
             _MinimizeButtonIsPointed = false;
             _MinimizeButtonIsPressed = false;
@@ -820,7 +847,8 @@ namespace Com.WinForm
             _UpdateControlBoxButtonImage();
         }
 
-        private void PictureBox_Minimize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseDown 事件的回调函数。
+        // PictureBox_Minimize 的 MouseDown 事件的回调函数。
+        private void PictureBox_Minimize_MouseDown(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -835,7 +863,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Minimize_MouseUp(object sender, MouseEventArgs e) // PictureBox_Minimize 的 MouseUp 事件的回调函数。
+        // PictureBox_Minimize 的 MouseUp 事件的回调函数。
+        private void PictureBox_Minimize_MouseUp(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -859,7 +888,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Maximize_MouseClick(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseClick 事件的回调函数。
+        // PictureBox_Maximize 的 MouseClick 事件的回调函数。
+        private void PictureBox_Maximize_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -874,7 +904,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Maximize_MouseEnter(object sender, EventArgs e) // PictureBox_Maximize 的 MouseEnter 事件的回调函数。
+        // PictureBox_Maximize 的 MouseEnter 事件的回调函数。
+        private void PictureBox_Maximize_MouseEnter(object sender, EventArgs e)
         {
             _MaximizeButtonIsPointed = true;
 
@@ -883,7 +914,8 @@ namespace Com.WinForm
             _UpdateControlBoxButtonImage();
         }
 
-        private void PictureBox_Maximize_MouseLeave(object sender, EventArgs e) // PictureBox_Maximize 的 MouseLeave 事件的回调函数。
+        // PictureBox_Maximize 的 MouseLeave 事件的回调函数。
+        private void PictureBox_Maximize_MouseLeave(object sender, EventArgs e)
         {
             _MaximizeButtonIsPointed = false;
             _MaximizeButtonIsPressed = false;
@@ -893,7 +925,8 @@ namespace Com.WinForm
             _UpdateControlBoxButtonImage();
         }
 
-        private void PictureBox_Maximize_MouseDown(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseDown 事件的回调函数。
+        // PictureBox_Maximize 的 MouseDown 事件的回调函数。
+        private void PictureBox_Maximize_MouseDown(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -908,7 +941,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Maximize_MouseUp(object sender, MouseEventArgs e) // PictureBox_Maximize 的 MouseUp 事件的回调函数。
+        // PictureBox_Maximize 的 MouseUp 事件的回调函数。
+        private void PictureBox_Maximize_MouseUp(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -932,7 +966,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Exit_MouseClick(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseClick 事件的回调函数。
+        // PictureBox_Exit 的 MouseClick 事件的回调函数。
+        private void PictureBox_Exit_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -940,7 +975,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Exit_MouseEnter(object sender, EventArgs e) // PictureBox_Exit 的 MouseEnter 事件的回调函数。
+        // PictureBox_Exit 的 MouseEnter 事件的回调函数。
+        private void PictureBox_Exit_MouseEnter(object sender, EventArgs e)
         {
             _ExitButtonIsPointed = true;
 
@@ -949,7 +985,8 @@ namespace Com.WinForm
             _UpdateControlBoxButtonImage();
         }
 
-        private void PictureBox_Exit_MouseLeave(object sender, EventArgs e) // PictureBox_Exit 的 MouseLeave 事件的回调函数。
+        // PictureBox_Exit 的 MouseLeave 事件的回调函数。
+        private void PictureBox_Exit_MouseLeave(object sender, EventArgs e)
         {
             _ExitButtonIsPointed = false;
             _ExitButtonIsPressed = false;
@@ -959,7 +996,8 @@ namespace Com.WinForm
             _UpdateControlBoxButtonImage();
         }
 
-        private void PictureBox_Exit_MouseDown(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseDown 事件的回调函数。
+        // PictureBox_Exit 的 MouseDown 事件的回调函数。
+        private void PictureBox_Exit_MouseDown(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -974,7 +1012,8 @@ namespace Com.WinForm
             }
         }
 
-        private void PictureBox_Exit_MouseUp(object sender, MouseEventArgs e) // PictureBox_Exit 的 MouseUp 事件的回调函数。
+        // PictureBox_Exit 的 MouseUp 事件的回调函数。
+        private void PictureBox_Exit_MouseUp(object sender, MouseEventArgs e)
         {
             Me.Client.BringToFront();
             Me.Client.Focus();
@@ -1000,39 +1039,46 @@ namespace Com.WinForm
 
         //
 
-        private void ContextMenuStrip_Main_Enter(object sender, EventArgs e) // ContextMenuStrip_Main 的 Enter 事件的回调函数。
+        // ContextMenuStrip_Main 的 Enter 事件的回调函数。
+        private void ContextMenuStrip_Main_Enter(object sender, EventArgs e)
         {
             Me.MainMenuIsActive = true;
         }
 
-        private void ContextMenuStrip_Main_Leave(object sender, EventArgs e) // ContextMenuStrip_Main 的 Leave 事件的回调函数。
+        // ContextMenuStrip_Main 的 Leave 事件的回调函数。
+        private void ContextMenuStrip_Main_Leave(object sender, EventArgs e)
         {
             Me.MainMenuIsActive = false;
         }
 
-        private void ToolStripMenuItem_Return_Click(object sender, EventArgs e) // ToolStripMenuItem_Return 的 Click 事件的回调函数。
+        // ToolStripMenuItem_Return 的 Click 事件的回调函数。
+        private void ToolStripMenuItem_Return_Click(object sender, EventArgs e)
         {
             Me.Return();
         }
 
-        private void ToolStripMenuItem_Minimize_Click(object sender, EventArgs e) // ToolStripMenuItem_Minimize 的 Click 事件的回调函数。
+        // ToolStripMenuItem_Minimize 的 Click 事件的回调函数。
+        private void ToolStripMenuItem_Minimize_Click(object sender, EventArgs e)
         {
             Me.Minimize();
         }
 
-        private void ToolStripMenuItem_Maximize_Click(object sender, EventArgs e) // ToolStripMenuItem_Maximize 的 Click 事件的回调函数。
+        // ToolStripMenuItem_Maximize 的 Click 事件的回调函数。
+        private void ToolStripMenuItem_Maximize_Click(object sender, EventArgs e)
         {
             Me.Maximize();
         }
 
-        private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e) // ToolStripMenuItem_Exit 的 Click 事件的回调函数。
+        // ToolStripMenuItem_Exit 的 Click 事件的回调函数。
+        private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
         {
             Me.Close();
         }
 
         //
 
-        private void BackgroundWorker_UpdateLayoutDelay_DoWork(object sender, DoWorkEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 DoWork 事件的回调函数。
+        // BackgroundWorker_UpdateLayoutDelay 的 DoWork 事件的回调函数。
+        private void BackgroundWorker_UpdateLayoutDelay_DoWork(object sender, DoWorkEventArgs e)
         {
             while ((DateTime.Now - _LastUpdateLayout).TotalMilliseconds < 16)
             {
@@ -1040,7 +1086,8 @@ namespace Com.WinForm
             }
         }
 
-        private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
+        // BackgroundWorker_UpdateLayoutDelay 的 RunWorkerCompleted 事件的回调函数。
+        private void BackgroundWorker_UpdateLayoutDelay_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (!_UpdateLayoutCanceled)
             {
@@ -1052,7 +1099,8 @@ namespace Com.WinForm
 
         //
 
-        private void Timer_FullScreenMonitor_Tick(object sender, EventArgs e) // Timer_FullScreenMonitor 的 Tick 事件的回调函数。
+        // Timer_FullScreenMonitor 的 Tick 事件的回调函数。
+        private void Timer_FullScreenMonitor_Tick(object sender, EventArgs e)
         {
             if (Me.FormState == FormState.FullScreen)
             {
@@ -1150,7 +1198,8 @@ namespace Com.WinForm
 
         #region 构造函数
 
-        public CaptionBar(FormManager formManager) // 使用 FormManager 对象初始化 CaptionBar 的新实例。
+        // 使用 FormManager 对象初始化 CaptionBar 的新实例。
+        public CaptionBar(FormManager formManager)
         {
             InitializeComponent();
 
@@ -1163,13 +1212,15 @@ namespace Com.WinForm
 
         #region 方法
 
-        public void OnLoading() // 在 Loading 事件发生时发生。
+        // 在 Loading 事件发生时发生。
+        public void OnLoading()
         {
             Panel_FormIcon.Visible = Me.ShowIconOnCaptionBar;
             Panel_ControlBox.Visible = true;
         }
 
-        public void OnClosing() // 在 Closing 事件发生时发生。
+        // 在 Closing 事件发生时发生。
+        public void OnClosing()
         {
             PictureBox_Exit.Enabled = ToolStripMenuItem_Exit.Enabled = false;
 
@@ -1177,7 +1228,8 @@ namespace Com.WinForm
             Panel_FormIcon.MouseDoubleClick -= Panel_FormIcon_MouseDoubleClick;
         }
 
-        public void OnFormStyleChanged() // 在 FormStyleChanged 事件发生时发生。
+        // 在 FormStyleChanged 事件发生时发生。
+        public void OnFormStyleChanged()
         {
             _UpdateForStyleOrStateChanged();
 
@@ -1194,7 +1246,8 @@ namespace Com.WinForm
             CaptionBar_SizeChanged(this, EventArgs.Empty);
         }
 
-        public void OnFormStateChanged() // 在 FormStateChanged 事件发生时发生。
+        // 在 FormStateChanged 事件发生时发生。
+        public void OnFormStateChanged()
         {
             _UpdateForStyleOrStateChanged();
 
@@ -1224,12 +1277,14 @@ namespace Com.WinForm
             Timer_FullScreenMonitor.Enabled = (Me.FormState == FormState.FullScreen);
         }
 
-        public void OnCaptionChanged() // 在 CaptionChanged 事件发生时发生。
+        // 在 CaptionChanged 事件发生时发生。
+        public void OnCaptionChanged()
         {
             _RepaintCaptionBarBitmap();
         }
 
-        public void OnThemeChanged() // 在 ThemeChanged 事件发生时发生。
+        // 在 ThemeChanged 事件发生时发生。
+        public void OnThemeChanged()
         {
             this.BackColor = Me.RecommendColors.CaptionBar.ToColor();
 
@@ -1252,12 +1307,14 @@ namespace Com.WinForm
             ToolStripMenuItem_Return.ForeColor = ToolStripMenuItem_Minimize.ForeColor = ToolStripMenuItem_Maximize.ForeColor = ToolStripMenuItem_Exit.ForeColor = Me.RecommendColors.MenuItemText.ToColor();
         }
 
-        public void OnActivated() // 在 Activated 事件发生时发生。
+        // 在 Activated 事件发生时发生。
+        public void OnActivated()
         {
             PictureBox_FormIcon.Image = Me.Client.Icon.ToBitmap();
         }
 
-        public void OnDeactivate() // 在 Deactivate 事件发生时发生。
+        // 在 Deactivate 事件发生时发生。
+        public void OnDeactivate()
         {
             ColorMatrix CrMtrx = new ColorMatrix();
 

@@ -31,7 +31,8 @@ namespace Com.WinForm
 
         private Bitmap _FormSplashBitmap; // 启动屏幕绘图。
 
-        private void _UpdateSplashBitmap() // 更新启动屏幕绘图。
+        // 更新启动屏幕绘图。
+        private void _UpdateSplashBitmap()
         {
             Size SplashSize = new Size(Panel_SplashScreen.Width, Math.Max(24, Math.Min(Panel_SplashScreen.Height, 64)));
 
@@ -73,7 +74,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _RepaintSplashBitmap() // 更新并重绘启动屏幕绘图。
+        // 更新并重绘启动屏幕绘图。
+        private void _RepaintSplashBitmap()
         {
             if (Panel_SplashScreen.Visible)
             {
@@ -90,7 +92,8 @@ namespace Com.WinForm
 
         #region 回调函数
 
-        private void SplashScreen_Load(object sender, EventArgs e) // SplashScreen 的 Load 事件的回调函数。
+        // SplashScreen 的 Load 事件的回调函数。
+        private void SplashScreen_Load(object sender, EventArgs e)
         {
             PictureBox_AppLogo.Image = Me.Client.Icon.ToBitmap();
 
@@ -104,7 +107,8 @@ namespace Com.WinForm
             Panel_SplashScreen.Visible = Me.IsMainForm;
         }
 
-        private void SplashScreen_SizeChanged(object sender, EventArgs e) // SplashScreen 的 SizeChanged 事件的回调函数。
+        // SplashScreen 的 SizeChanged 事件的回调函数。
+        private void SplashScreen_SizeChanged(object sender, EventArgs e)
         {
             Panel_SplashScreen.Size = this.Size;
 
@@ -115,7 +119,8 @@ namespace Com.WinForm
 
         //
 
-        private void Panel_Splash_Paint(object sender, PaintEventArgs e) // Panel_Splash 的 Paint 事件的回调函数。
+        // Panel_Splash 的 Paint 事件的回调函数。
+        private void Panel_Splash_Paint(object sender, PaintEventArgs e)
         {
             if (Panel_SplashScreen.Visible)
             {
@@ -135,7 +140,8 @@ namespace Com.WinForm
 
         #region 构造函数
 
-        public SplashScreen(FormManager formManager) // 使用 FormManager 对象初始化 SplashScreen 的新实例。
+        // 使用 FormManager 对象初始化 SplashScreen 的新实例。
+        public SplashScreen(FormManager formManager)
         {
             InitializeComponent();
 
@@ -148,17 +154,20 @@ namespace Com.WinForm
 
         #region 方法
 
-        public void OnLoading() // 在 Loading 事件发生时发生。
+        // 在 Loading 事件发生时发生。
+        public void OnLoading()
         {
             Panel_Splash.Visible = true;
         }
 
-        public void OnClosing() // 在 Closing 事件发生时发生。
+        // 在 Closing 事件发生时发生。
+        public void OnClosing()
         {
             Panel_SplashScreen.Visible = false;
         }
 
-        public void OnThemeChanged() // 在 ThemeChanged 事件发生时发生。
+        // 在 ThemeChanged 事件发生时发生。
+        public void OnThemeChanged()
         {
             this.BackColor = Me.RecommendColors.FormBackground.ToColor();
             Panel_SplashScreen.BackColor = Me.RecommendColors.CaptionBar.ToColor();

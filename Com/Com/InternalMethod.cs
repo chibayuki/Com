@@ -17,31 +17,37 @@ using System.Threading.Tasks;
 
 namespace Com
 {
-    internal static class InternalMethod // 内部方法。
+    // 内部方法。
+    internal static class InternalMethod
     {
-        public static bool IsNaNOrInfinity(double n) // 判断双精度浮点数是否为非数字或无穷大。
+        // 判断双精度浮点数是否为非数字或无穷大。
+        public static bool IsNaNOrInfinity(double n)
         {
             return (double.IsNaN(n) || double.IsInfinity(n));
         }
 
-        public static bool IsNaNOrInfinity(float n) // 判断单精度浮点数是否为非数字或无穷大。
+        // 判断单精度浮点数是否为非数字或无穷大。
+        public static bool IsNaNOrInfinity(float n)
         {
             return (float.IsNaN(n) || float.IsInfinity(n));
         }
 
         //
 
-        public static bool IsNullOrEmpty(Array array) // 判断数组是否为 null 或不包含任何元素。
+        // 判断数组是否为 null 或不包含任何元素。
+        public static bool IsNullOrEmpty(Array array)
         {
             return (array is null || array.Length <= 0);
         }
 
-        public static bool IsNullOrEmpty<T>(T[] array) // 判断一维数组是否为 null 或不包含任何元素。
+        // 判断一维数组是否为 null 或不包含任何元素。
+        public static bool IsNullOrEmpty<T>(T[] array)
         {
             return (array is null || array.Length <= 0);
         }
 
-        public static bool IsNullOrEmpty<T>(List<T> list) // 判断列表是否为 null 或不包含任何元素。
+        // 判断列表是否为 null 或不包含任何元素。
+        public static bool IsNullOrEmpty<T>(List<T> list)
         {
             return (list is null || list.Count <= 0);
         }

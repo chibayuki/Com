@@ -32,8 +32,9 @@ namespace Com
 
         //
 
+        // 以不安全方式创建 Matrix 的新实例。
         [InternalUnsafeCall(InternalUnsafeCallType.InputAddress)]
-        internal static Matrix UnsafeCreateInstance(double[,] values) // 以不安全方式创建 Matrix 的新实例。
+        internal static Matrix UnsafeCreateInstance(double[,] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
             {
@@ -71,8 +72,9 @@ namespace Com
 
         //
 
+        // 以不安全方式获取此 Matrix 的内部数据结构。
         [InternalUnsafeCall(InternalUnsafeCallType.OutputAddress)]
-        internal double[,] UnsafeGetData() // 以不安全方式获取此 Matrix 的内部数据结构。
+        internal double[,] UnsafeGetData()
         {
             return _MArray;
         }
@@ -81,7 +83,8 @@ namespace Com
 
         #region 构造函数
 
-        private Matrix() // 不使用任何参数初始化 Matrix 的新实例。
+        // 不使用任何参数初始化 Matrix 的新实例。
+        private Matrix()
         {
         }
 

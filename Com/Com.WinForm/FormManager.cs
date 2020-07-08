@@ -28,7 +28,8 @@ namespace Com.WinForm
     {
         #region 私有成员与内部成员
 
-        internal static Rectangle PrimaryScreenBounds // 获取主屏幕的边界。
+        // 获取主屏幕的边界。
+        internal static Rectangle PrimaryScreenBounds
         {
             get
             {
@@ -36,7 +37,8 @@ namespace Com.WinForm
             }
         }
 
-        internal static Rectangle PrimaryScreenClient // 获取主屏幕的工作区。
+        // 获取主屏幕的工作区。
+        internal static Rectangle PrimaryScreenClient
         {
             get
             {
@@ -55,7 +57,8 @@ namespace Com.WinForm
 
         private Form _Client = null; // 表示工作区的 Form 对象。
 
-        internal Form Client // 获取表示工作区的 Form 对象。
+        // 获取表示工作区的 Form 对象。
+        internal Form Client
         {
             get
             {
@@ -65,7 +68,8 @@ namespace Com.WinForm
 
         private CaptionBar _CaptionBar = null; // 表示窗口标题栏的 CaptionBar 对象。
 
-        internal CaptionBar CaptionBar // 获取表示窗口标题栏的 CaptionBar 对象。
+        // 获取表示窗口标题栏的 CaptionBar 对象。
+        internal CaptionBar CaptionBar
         {
             get
             {
@@ -75,7 +79,8 @@ namespace Com.WinForm
 
         private Resizer _Resizer = null; // 表示窗口大小调节器的 Resizer 对象。
 
-        internal Resizer Resizer // 获取表示窗口大小调节器的 Resizer 对象。
+        // 获取表示窗口大小调节器的 Resizer 对象。
+        internal Resizer Resizer
         {
             get
             {
@@ -85,7 +90,8 @@ namespace Com.WinForm
 
         private SplashScreen _SplashScreen = null; // 表示启动屏幕的 SplashScreen 对象。
 
-        internal SplashScreen SplashScreen // 获取表示启动屏幕的 SplashScreen 对象。
+        // 获取表示启动屏幕的 SplashScreen 对象。
+        internal SplashScreen SplashScreen
         {
             get
             {
@@ -99,7 +105,8 @@ namespace Com.WinForm
 
         private bool _IsMainForm = false; // 表示此窗口是否为主窗口的布尔值。
 
-        internal bool IsMainForm // 获取表示此窗口是否为主窗口的布尔值。
+        // 获取表示此窗口是否为主窗口的布尔值。
+        internal bool IsMainForm
         {
             get
             {
@@ -112,7 +119,8 @@ namespace Com.WinForm
         private FormManager _Owner = null; // 拥有此窗口的窗口的窗口管理器。
         private List<FormManager> _Owned = new List<FormManager>(1); // 表示此窗口拥有的所有窗口的窗口管理器列表。
 
-        private void _AddOwned(FormManager formManager) // 向表示此窗口拥有的所有窗口的窗口管理器列表添加一个窗口管理器。
+        // 向表示此窗口拥有的所有窗口的窗口管理器列表添加一个窗口管理器。
+        private void _AddOwned(FormManager formManager)
         {
             if (!(formManager is null) && !_Owned.Contains(formManager))
             {
@@ -125,7 +133,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _RemoveOwned(FormManager formManager) // 从表示此窗口拥有的所有窗口的窗口管理器列表删除一个窗口管理器。
+        // 从表示此窗口拥有的所有窗口的窗口管理器列表删除一个窗口管理器。
+        private void _RemoveOwned(FormManager formManager)
         {
             if (!(formManager is null) && _Owned.Contains(formManager))
             {
@@ -158,7 +167,8 @@ namespace Com.WinForm
 
         private bool _MainMenuIsActive = false; // 表示主菜单是否处于激活状态的布尔值。
 
-        internal bool MainMenuIsActive // 设置主菜单是否处于激活状态的布尔值。
+        // 设置主菜单是否处于激活状态的布尔值。
+        internal bool MainMenuIsActive
         {
             set
             {
@@ -175,7 +185,8 @@ namespace Com.WinForm
         private const int _ControlBoxButtonWidth = 46; // 控制按钮的宽度。
         private const int _ControlBoxButtonHeight = 32; // 控制按钮的高度。
 
-        internal int ControlBoxButtonWidth // 获取控制按钮的宽度。
+        // 获取控制按钮的宽度。
+        internal int ControlBoxButtonWidth
         {
             get
             {
@@ -183,7 +194,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int ControlBoxButtonHeight // 获取控制按钮的高度。
+        // 获取控制按钮的高度。
+        internal int ControlBoxButtonHeight
         {
             get
             {
@@ -191,7 +203,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Size ControlBoxButtonSize // 获取控制按钮的大小。
+        // 获取控制按钮的大小。
+        internal Size ControlBoxButtonSize
         {
             get
             {
@@ -203,7 +216,8 @@ namespace Com.WinForm
 
         private const int _ResizerSize = 8; // 窗口大小调节器的大小。
 
-        internal int ResizerSize // 获取窗口大小调节器的大小。
+        // 获取窗口大小调节器的大小。
+        internal int ResizerSize
         {
             get
             {
@@ -232,7 +246,8 @@ namespace Com.WinForm
         private int _MinimumWidth = 0; // 窗口的最小宽度。
         private int _MinimumHeight = 0; // 窗口的最小高度。
 
-        internal int MinimumWidth // 获取或设置窗口的最小宽度。
+        // 获取或设置窗口的最小宽度。
+        internal int MinimumWidth
         {
             get
             {
@@ -245,7 +260,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int MinimumHeight // 获取或设置窗口的最小高度。
+        // 获取或设置窗口的最小高度。
+        internal int MinimumHeight
         {
             get
             {
@@ -261,7 +277,8 @@ namespace Com.WinForm
         private int _MaximumWidth = 0; // 窗口的最大宽度。
         private int _MaximumHeight = 0; // 窗口的最大高度。
 
-        internal int MaximumWidth // 获取或设置窗口的最大宽度。
+        // 获取或设置窗口的最大宽度。
+        internal int MaximumWidth
         {
             get
             {
@@ -274,7 +291,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int MaximumHeight // 获取或设置窗口的最大高度。
+        // 获取或设置窗口的最大高度。
+        internal int MaximumHeight
         {
             get
             {
@@ -310,7 +328,8 @@ namespace Com.WinForm
 
         //
 
-        internal double CaptionBarOpacityRatio // 获取窗口标题栏的不透明度系数。
+        // 获取窗口标题栏的不透明度系数。
+        internal double CaptionBarOpacityRatio
         {
             get
             {
@@ -318,7 +337,8 @@ namespace Com.WinForm
             }
         }
 
-        internal double ShadowOpacityRatio // 获取窗口阴影的不透明度系数。
+        // 获取窗口阴影的不透明度系数。
+        internal double ShadowOpacityRatio
         {
             get
             {
@@ -337,7 +357,8 @@ namespace Com.WinForm
 
         private FormState _PreviousFormState = FormState.Normal; // FormState 的此前值。
 
-        internal FormState ActualFormState // 获取 FormState 的实际值（非 FormState.Minimized 值）。
+        // 获取 FormState 的实际值（非 FormState.Minimized 值）。
+        internal FormState ActualFormState
         {
             get
             {
@@ -345,7 +366,8 @@ namespace Com.WinForm
             }
         }
 
-        internal FormState PreviousFormState // 获取 FormState 的此前值。
+        // 获取 FormState 的此前值。
+        internal FormState PreviousFormState
         {
             get
             {
@@ -360,7 +382,8 @@ namespace Com.WinForm
         private int _Bounds_Current_Width = int.MinValue; // 当前状态窗口的宽度。
         private int _Bounds_Current_Height = int.MinValue; // 当前状态窗口的高度。
 
-        internal int Bounds_Current_X // 获取或设置当前状态窗口在桌面的左边距。
+        // 获取或设置当前状态窗口在桌面的左边距。
+        internal int Bounds_Current_X
         {
             get
             {
@@ -373,7 +396,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Current_Y // 获取或设置当前状态窗口在桌面的上边距。
+        // 获取或设置当前状态窗口在桌面的上边距。
+        internal int Bounds_Current_Y
         {
             get
             {
@@ -386,7 +410,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Current_Right // 获取当前状态窗口在桌面的右边距。
+        // 获取当前状态窗口在桌面的右边距。
+        internal int Bounds_Current_Right
         {
             get
             {
@@ -394,7 +419,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Current_Bottom // 获取当前状态窗口在桌面的下边距。
+        // 获取当前状态窗口在桌面的下边距。
+        internal int Bounds_Current_Bottom
         {
             get
             {
@@ -402,7 +428,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Current_Width // 获取或设置当前状态窗口的宽度。
+        // 获取或设置当前状态窗口的宽度。
+        internal int Bounds_Current_Width
         {
             get
             {
@@ -422,7 +449,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Current_Height // 获取或设置当前状态窗口的高度。
+        // 获取或设置当前状态窗口的高度。
+        internal int Bounds_Current_Height
         {
             get
             {
@@ -442,7 +470,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Point Bounds_Current_Location // 获取或设置当前状态窗口在桌面的位置。
+        // 获取或设置当前状态窗口在桌面的位置。
+        internal Point Bounds_Current_Location
         {
             get
             {
@@ -456,7 +485,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Size Bounds_Current_Size // 获取或设置当前状态窗口的大小。
+        // 获取或设置当前状态窗口的大小。
+        internal Size Bounds_Current_Size
         {
             get
             {
@@ -478,7 +508,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Rectangle Bounds_Current // 获取或设置当前状态窗口的位置与大小。
+        // 获取或设置当前状态窗口的位置与大小。
+        internal Rectangle Bounds_Current
         {
             get
             {
@@ -508,7 +539,8 @@ namespace Com.WinForm
         private int _Bounds_Normal_Width = int.MinValue; // 普通状态窗口的宽度。
         private int _Bounds_Normal_Height = int.MinValue; // 普通状态窗口的高度。
 
-        internal int Bounds_Normal_X // 获取或设置普通状态窗口在桌面的左边距。
+        // 获取或设置普通状态窗口在桌面的左边距。
+        internal int Bounds_Normal_X
         {
             get
             {
@@ -521,7 +553,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Normal_Y // 获取或设置普通状态窗口在桌面的上边距。
+        // 获取或设置普通状态窗口在桌面的上边距。
+        internal int Bounds_Normal_Y
         {
             get
             {
@@ -534,7 +567,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Normal_Right // 获取普通状态窗口在桌面的右边距。
+        // 获取普通状态窗口在桌面的右边距。
+        internal int Bounds_Normal_Right
         {
             get
             {
@@ -542,7 +576,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Normal_Bottom // 获取普通状态窗口在桌面的下边距。
+        // 获取普通状态窗口在桌面的下边距。
+        internal int Bounds_Normal_Bottom
         {
             get
             {
@@ -550,7 +585,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Normal_Width // 获取或设置普通状态窗口的宽度。
+        // 获取或设置普通状态窗口的宽度。
+        internal int Bounds_Normal_Width
         {
             get
             {
@@ -563,7 +599,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_Normal_Height // 获取或设置普通状态窗口的高度。
+        // 获取或设置普通状态窗口的高度。
+        internal int Bounds_Normal_Height
         {
             get
             {
@@ -576,7 +613,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Point Bounds_Normal_Location // 获取或设置普通状态窗口在桌面的位置。
+        // 获取或设置普通状态窗口在桌面的位置。
+        internal Point Bounds_Normal_Location
         {
             get
             {
@@ -590,7 +628,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Size Bounds_Normal_Size // 获取或设置普通状态窗口的大小。
+        // 获取或设置普通状态窗口的大小。
+        internal Size Bounds_Normal_Size
         {
             get
             {
@@ -604,7 +643,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Rectangle Bounds_Normal // 获取或设置普通状态窗口的位置与大小。
+        // 获取或设置普通状态窗口的位置与大小。
+        internal Rectangle Bounds_Normal
         {
             get
             {
@@ -625,7 +665,8 @@ namespace Com.WinForm
         private int _Bounds_QuarterScreen_Width = 0; // 占据桌面四分之一状态窗口的宽度。
         private int _Bounds_QuarterScreen_Height = 0; // 占据桌面四分之一状态窗口的高度。
 
-        internal int Bounds_QuarterScreen_X // 获取或设置占据桌面四分之一状态窗口在桌面的左边距。
+        // 获取或设置占据桌面四分之一状态窗口在桌面的左边距。
+        internal int Bounds_QuarterScreen_X
         {
             get
             {
@@ -638,7 +679,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_QuarterScreen_Y // 获取或设置占据桌面四分之一状态窗口在桌面的上边距。
+        // 获取或设置占据桌面四分之一状态窗口在桌面的上边距。
+        internal int Bounds_QuarterScreen_Y
         {
             get
             {
@@ -651,7 +693,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_QuarterScreen_Right // 获取占据桌面四分之一状态窗口在桌面的右边距。
+        // 获取占据桌面四分之一状态窗口在桌面的右边距。
+        internal int Bounds_QuarterScreen_Right
         {
             get
             {
@@ -659,7 +702,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_QuarterScreen_Bottom // 获取占据桌面四分之一状态窗口在桌面的下边距。
+        // 获取占据桌面四分之一状态窗口在桌面的下边距。
+        internal int Bounds_QuarterScreen_Bottom
         {
             get
             {
@@ -667,7 +711,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_QuarterScreen_Width // 获取或设置占据桌面四分之一状态窗口的宽度。
+        // 获取或设置占据桌面四分之一状态窗口的宽度。
+        internal int Bounds_QuarterScreen_Width
         {
             get
             {
@@ -680,7 +725,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_QuarterScreen_Height // 获取或设置占据桌面四分之一状态窗口的高度。
+        // 获取或设置占据桌面四分之一状态窗口的高度。
+        internal int Bounds_QuarterScreen_Height
         {
             get
             {
@@ -693,7 +739,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Point Bounds_QuarterScreen_Location // 获取或设置占据桌面四分之一状态窗口在桌面的位置。
+        // 获取或设置占据桌面四分之一状态窗口在桌面的位置。
+        internal Point Bounds_QuarterScreen_Location
         {
             get
             {
@@ -707,7 +754,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Size Bounds_QuarterScreen_Size // 获取或设置占据桌面四分之一状态窗口的大小。
+        // 获取或设置占据桌面四分之一状态窗口的大小。
+        internal Size Bounds_QuarterScreen_Size
         {
             get
             {
@@ -721,7 +769,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Rectangle Bounds_QuarterScreen // 获取或设置占据桌面四分之一状态窗口的位置与大小。
+        // 获取或设置占据桌面四分之一状态窗口的位置与大小。
+        internal Rectangle Bounds_QuarterScreen
         {
             get
             {
@@ -742,7 +791,8 @@ namespace Com.WinForm
         private int _Bounds_BeforeFullScreen_Width = 0; // 进入全屏幕状态前窗口的宽度。
         private int _Bounds_BeforeFullScreen_Height = 0; // 进入全屏幕状态前窗口的高度。
 
-        internal int Bounds_BeforeFullScreen_X // 获取或设置进入全屏幕状态前窗口在桌面的左边距。
+        // 获取或设置进入全屏幕状态前窗口在桌面的左边距。
+        internal int Bounds_BeforeFullScreen_X
         {
             get
             {
@@ -755,7 +805,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_BeforeFullScreen_Y // 获取或设置进入全屏幕状态前窗口在桌面的上边距。
+        // 获取或设置进入全屏幕状态前窗口在桌面的上边距。
+        internal int Bounds_BeforeFullScreen_Y
         {
             get
             {
@@ -768,7 +819,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_BeforeFullScreen_Right // 获取进入全屏幕状态前窗口在桌面的右边距。
+        // 获取进入全屏幕状态前窗口在桌面的右边距。
+        internal int Bounds_BeforeFullScreen_Right
         {
             get
             {
@@ -776,7 +828,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_BeforeFullScreen_Bottom // 获取进入全屏幕状态前窗口在桌面的下边距。
+        // 获取进入全屏幕状态前窗口在桌面的下边距。
+        internal int Bounds_BeforeFullScreen_Bottom
         {
             get
             {
@@ -784,7 +837,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_BeforeFullScreen_Width // 获取或设置进入全屏幕状态前窗口的宽度。
+        // 获取或设置进入全屏幕状态前窗口的宽度。
+        internal int Bounds_BeforeFullScreen_Width
         {
             get
             {
@@ -797,7 +851,8 @@ namespace Com.WinForm
             }
         }
 
-        internal int Bounds_BeforeFullScreen_Height // 获取或设置进入全屏幕状态前窗口的高度。
+        // 获取或设置进入全屏幕状态前窗口的高度。
+        internal int Bounds_BeforeFullScreen_Height
         {
             get
             {
@@ -810,7 +865,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Point Bounds_BeforeFullScreen_Location // 获取或设置进入全屏幕状态前窗口在桌面的位置。
+        // 获取或设置进入全屏幕状态前窗口在桌面的位置。
+        internal Point Bounds_BeforeFullScreen_Location
         {
             get
             {
@@ -824,7 +880,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Size Bounds_BeforeFullScreen_Size // 获取或设置进入全屏幕状态前窗口的大小。
+        // 获取或设置进入全屏幕状态前窗口的大小。
+        internal Size Bounds_BeforeFullScreen_Size
         {
             get
             {
@@ -838,7 +895,8 @@ namespace Com.WinForm
             }
         }
 
-        internal Rectangle Bounds_BeforeFullScreen // 获取或设置进入全屏幕状态前窗口的位置与大小。
+        // 获取或设置进入全屏幕状态前窗口的位置与大小。
+        internal Rectangle Bounds_BeforeFullScreen
         {
             get
             {
@@ -856,7 +914,8 @@ namespace Com.WinForm
 
         //
 
-        private void _UpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 更新窗口布局，并触发指定的事件。
+        // 更新窗口布局，并触发指定的事件。
+        private void _UpdateLayout(UpdateLayoutEventType updateLayoutEventType)
         {
             if (_FormState == FormState.FullScreen)
             {
@@ -891,12 +950,14 @@ namespace Com.WinForm
             }
         }
 
-        internal void UpdateLayout(UpdateLayoutEventType updateLayoutEventType) // 更新窗口布局，并触发指定的事件。
+        // 更新窗口布局，并触发指定的事件。
+        internal void UpdateLayout(UpdateLayoutEventType updateLayoutEventType)
         {
             _UpdateLayout(updateLayoutEventType);
         }
 
-        private void _SetBoundsAndUpdateLayout(Rectangle bounds, UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 设置窗口的位置与大小，并以指定的行为更新窗口布局，触发指定的事件。
+        // 设置窗口的位置与大小，并以指定的行为更新窗口布局，触发指定的事件。
+        private void _SetBoundsAndUpdateLayout(Rectangle bounds, UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             if (updateLayoutBehavior == UpdateLayoutBehavior.None)
             {
@@ -952,47 +1013,56 @@ namespace Com.WinForm
         private Predicate<EventArgs> _ExitFullScreenVerification = null; // 用于验证是否允许窗口退出全屏幕模式的方法。
         private Predicate<EventArgs> _CloseVerification = null; // 设置用于验证是否允许窗口关闭的方法。
 
-        private bool _CanReturn() // 判断是否允许窗口还原。
+        // 判断是否允许窗口还原。
+        private bool _CanReturn()
         {
             return (_Initialized && (_FormState != FormState.FullScreen && _FormState != FormState.Normal) && (_ReturnVerification is null || (!(_ReturnVerification is null) && _ReturnVerification(EventArgs.Empty))));
         }
 
-        internal bool CanReturn() // 判断是否允许窗口还原。
+        // 判断是否允许窗口还原。
+        internal bool CanReturn()
         {
             return _CanReturn();
         }
 
-        private bool _CanMinimize() // 判断是否允许窗口最小化。
+        // 判断是否允许窗口最小化。
+        private bool _CanMinimize()
         {
             return (_Initialized && _EnableMinimize && _Client.WindowState != FormWindowState.Minimized);
         }
 
-        private bool _CanMaximize() // 判断是否允许窗口最大化。
+        // 判断是否允许窗口最大化。
+        private bool _CanMaximize()
         {
             return (_Initialized && _EnableMaximize && _Client.WindowState != FormWindowState.Minimized && (_FormState != FormState.FullScreen && _FormState != FormState.Maximized) && (_MaximizeVerification is null || (!(_MaximizeVerification is null) && _MaximizeVerification(EventArgs.Empty))));
         }
 
-        private bool _CanEnterFullScreen() // 判断是否允许窗口进入全屏幕模式。
+        // 判断是否允许窗口进入全屏幕模式。
+        private bool _CanEnterFullScreen()
         {
             return (_Initialized && _EnableFullScreen && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen && (_EnterFullScreenVerification is null || (!(_EnterFullScreenVerification is null) && _EnterFullScreenVerification(EventArgs.Empty))));
         }
 
-        private bool _CanExitFullScreen() // 判断是否允许窗口退出全屏幕模式。
+        // 判断是否允许窗口退出全屏幕模式。
+        private bool _CanExitFullScreen()
         {
             return (_Initialized && _Client.WindowState != FormWindowState.Minimized && _FormState == FormState.FullScreen && (_ExitFullScreenVerification is null || (!(_ExitFullScreenVerification is null) && _ExitFullScreenVerification(EventArgs.Empty))));
         }
 
-        private bool _CanHighAsScreen() // 判断是否允许窗口与桌面的高度相同。
+        // 判断是否允许窗口与桌面的高度相同。
+        private bool _CanHighAsScreen()
         {
             return (_Initialized && _FormStyle == FormStyle.Sizable && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen);
         }
 
-        private bool _CanQuarterScreen() // 判断是否允许窗口占据桌面的四分之一区域。
+        // 判断是否允许窗口占据桌面的四分之一区域。
+        private bool _CanQuarterScreen()
         {
             return (_Initialized && _FormStyle == FormStyle.Sizable && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen);
         }
 
-        private bool _CanClose() // 判断是否允许窗口关闭。
+        // 判断是否允许窗口关闭。
+        private bool _CanClose()
         {
             return (_Initialized && (_CloseVerification is null || (!(_CloseVerification is null) && _CloseVerification(EventArgs.Empty))));
         }
@@ -1001,7 +1071,8 @@ namespace Com.WinForm
 
         private EventHandlerList _Events = new EventHandlerList(); // 窗口事件委托列表。
 
-        private void _TrigEvent(object eventKey) // 引发窗口事件。
+        // 引发窗口事件。
+        private void _TrigEvent(object eventKey)
         {
             EventHandler Method = _Events[eventKey] as EventHandler;
 
@@ -1011,98 +1082,116 @@ namespace Com.WinForm
             }
         }
 
-        private void _OnLoading() // 引发 Loading 事件。
+        // 引发 Loading 事件。
+        private void _OnLoading()
         {
             _TrigEvent(EventKey.Loading);
         }
 
-        private void _OnLoaded() // 引发 Loaded 事件。
+        // 引发 Loaded 事件。
+        private void _OnLoaded()
         {
             _TrigEvent(EventKey.Loaded);
         }
 
-        private void _OnClosing() // 引发 Closing 事件。
+        // 引发 Closing 事件。
+        private void _OnClosing()
         {
             _TrigEvent(EventKey.Closing);
         }
 
-        private void _OnClosed() // 引发 Closed 事件。
+        // 引发 Closed 事件。
+        private void _OnClosed()
         {
             _TrigEvent(EventKey.Closed);
         }
 
-        private void _OnActivated() // 引发 Activated 事件。
+        // 引发 Activated 事件。
+        private void _OnActivated()
         {
             _TrigEvent(EventKey.Activated);
         }
 
-        private void _OnDeactivate() // 引发 Deactivate 事件。
+        // 引发 Deactivate 事件。
+        private void _OnDeactivate()
         {
             _TrigEvent(EventKey.Deactivate);
         }
 
-        private void _OnMove() // 引发 Move 事件。
+        // 引发 Move 事件。
+        private void _OnMove()
         {
             _TrigEvent(EventKey.Move);
         }
 
-        private void _OnLocationChanged() // 引发 LocationChanged 事件。
+        // 引发 LocationChanged 事件。
+        private void _OnLocationChanged()
         {
             _OnMove();
 
             _TrigEvent(EventKey.LocationChanged);
         }
 
-        private void _OnResize() // 引发 Resize 事件。
+        // 引发 Resize 事件。
+        private void _OnResize()
         {
             _TrigEvent(EventKey.Resize);
         }
 
-        private void _OnSizeChanged() // 引发 SizeChanged 事件。
+        // 引发 SizeChanged 事件。
+        private void _OnSizeChanged()
         {
             _OnResize();
 
             _TrigEvent(EventKey.SizeChanged);
         }
 
-        private void _OnFormStateChanged() // 引发 FormStateChanged 事件。
+        // 引发 FormStateChanged 事件。
+        private void _OnFormStateChanged()
         {
             _TrigEvent(EventKey.FormStateChanged);
         }
 
-        private void _OnEnabledChanged() // 引发 EnabledChanged 事件。
+        // 引发 EnabledChanged 事件。
+        private void _OnEnabledChanged()
         {
             _TrigEvent(EventKey.EnabledChanged);
         }
 
-        private void _OnVisibleChanged() // 引发 VisibleChanged 事件。
+        // 引发 VisibleChanged 事件。
+        private void _OnVisibleChanged()
         {
             _TrigEvent(EventKey.VisibleChanged);
         }
 
-        private void _OnOpacityChanged() // 引发 OpacityChanged 事件。
+        // 引发 OpacityChanged 事件。
+        private void _OnOpacityChanged()
         {
             _TrigEvent(EventKey.OpacityChanged);
         }
 
-        private void _OnCaptionChanged() // 引发 CaptionChanged 事件。
+        // 引发 CaptionChanged 事件。
+        private void _OnCaptionChanged()
         {
             _TrigEvent(EventKey.CaptionChanged);
         }
 
-        private void _OnThemeChanged() // 引发 ThemeChanged 事件。
+        // 引发 ThemeChanged 事件。
+        private void _OnThemeChanged()
         {
             _TrigEvent(EventKey.ThemeChanged);
         }
 
-        private void _OnThemeColorChanged() // 引发 ThemeColorChanged 事件。
+        // 引发 ThemeColorChanged 事件。
+        private void _OnThemeColorChanged()
         {
             _TrigEvent(EventKey.ThemeColorChanged);
         }
 
         //
 
-        private void _Return(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口还原至普通大小。
+        // 使窗口还原至普通大小。
+        private void _Return(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             if (_Client.WindowState == FormWindowState.Minimized)
             {
@@ -1131,7 +1220,8 @@ namespace Com.WinForm
             }
         }
 
-        internal void ReturnByMoveForm() // 通过移动最大化、与桌面高度相同或占据桌面四分之一的窗口，使窗口还原至普通大小。
+        // 通过移动最大化、与桌面高度相同或占据桌面四分之一的窗口，使窗口还原至普通大小。
+        internal void ReturnByMoveForm()
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.Normal;
@@ -1148,7 +1238,8 @@ namespace Com.WinForm
             _SetBoundsAndUpdateLayout(NewBounds, UpdateLayoutBehavior.None, UpdateLayoutEventType.None);
         }
 
-        internal void ReturnFromHighAsScreen() // 使窗口由与桌面高度相同状态还原至普通大小。
+        // 使窗口由与桌面高度相同状态还原至普通大小。
+        internal void ReturnFromHighAsScreen()
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.Normal;
@@ -1168,7 +1259,8 @@ namespace Com.WinForm
             _OnFormStateChanged();
         }
 
-        private void _Minimize() // 使窗口最小化至任务栏。
+        // 使窗口最小化至任务栏。
+        private void _Minimize()
         {
             if (_Client.WindowState != FormWindowState.Minimized)
             {
@@ -1176,7 +1268,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _Maximize(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口最大化。
+        // 使窗口最大化。
+        private void _Maximize(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.Maximized;
@@ -1198,7 +1291,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _EnterFullScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口进入全屏幕模式。
+        // 使窗口进入全屏幕模式。
+        private void _EnterFullScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _FormState_BeforeFullScreen = _FormState;
             Bounds_BeforeFullScreen = Bounds_Current;
@@ -1225,7 +1319,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _ExitFullScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口退出全屏幕模式。
+        // 使窗口退出全屏幕模式。
+        private void _ExitFullScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             if (_FormStyle != FormStyle.Sizable)
             {
@@ -1255,7 +1350,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _LeftHalfScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的左半区域。
+        // 使窗口占据桌面的左半区域。
+        private void _LeftHalfScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
@@ -1280,7 +1376,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _RightHalfScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的右半区域。
+        // 使窗口占据桌面的右半区域。
+        private void _RightHalfScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
@@ -1305,7 +1402,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _HighAsScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口与桌面的高度相同。
+        // 使窗口与桌面的高度相同。
+        private void _HighAsScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.HighAsScreen;
@@ -1330,7 +1428,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _TopLeftQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的左上四分之一区域。
+        // 使窗口占据桌面的左上四分之一区域。
+        private void _TopLeftQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
@@ -1355,7 +1454,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _TopRightQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的右上四分之一区域。
+        // 使窗口占据桌面的右上四分之一区域。
+        private void _TopRightQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
@@ -1380,7 +1480,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _BottomLeftQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的左下四分之一区域。
+        // 使窗口占据桌面的左下四分之一区域。
+        private void _BottomLeftQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
@@ -1405,7 +1506,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _BottomRightQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType) // 使窗口占据桌面的右下四分之一区域。
+        // 使窗口占据桌面的右下四分之一区域。
+        private void _BottomRightQuarterScreen(UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
         {
             _PreviousFormState = _FormState;
             _FormState = FormState.QuarterScreen;
@@ -1430,7 +1532,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _Close() // 关闭窗口。
+        // 关闭窗口。
+        private void _Close()
         {
             _Client.Closed -= Client_Closed;
             _CaptionBar.Closed -= CaptionBar_Closed;
@@ -1524,7 +1627,8 @@ namespace Com.WinForm
             }
         }
 
-        private void _AltF4(object sender, EventArgs e) // 通过 Alt + F4 或其他非正常方式关闭窗口。
+        // 通过 Alt + F4 或其他非正常方式关闭窗口。
+        private void _AltF4(object sender, EventArgs e)
         {
             _ResolutionMonitor.Enabled = false;
             _ActivationMonitor.Enabled = false;
@@ -1569,7 +1673,8 @@ namespace Com.WinForm
 
         //
 
-        private void _Ctor(Form client, FormManager owner) // 为以 Form 对象与 FormManager 对象为参数的构造函数提供实现。
+        // 为以 Form 对象与 FormManager 对象为参数的构造函数提供实现。
+        private void _Ctor(Form client, FormManager owner)
         {
             if (client is null)
             {
@@ -1690,7 +1795,8 @@ namespace Com.WinForm
 
         #region 回调函数
 
-        private void Client_Load(object sender, EventArgs e) // _Client 的 Load 事件的回调函数。
+        // _Client 的 Load 事件的回调函数。
+        private void Client_Load(object sender, EventArgs e)
         {
             _Client.Visible = false;
 
@@ -1935,12 +2041,14 @@ namespace Com.WinForm
             _FormLoadingAsyncWorker.RunWorkerAsync();
         }
 
-        private void Client_Closed(object sender, EventArgs e) // _Client 的 Closed 事件的回调函数。
+        // _Client 的 Closed 事件的回调函数。
+        private void Client_Closed(object sender, EventArgs e)
         {
             _AltF4(sender, e);
         }
 
-        private void Client_SizeChanged(object sender, EventArgs e) // _Client 的 SizeChanged 事件的回调函数。
+        // _Client 的 SizeChanged 事件的回调函数。
+        private void Client_SizeChanged(object sender, EventArgs e)
         {
             if (_Client.WindowState == FormWindowState.Maximized || (!_EnableMinimize && _Client.WindowState == FormWindowState.Minimized))
             {
@@ -1962,29 +2070,34 @@ namespace Com.WinForm
             }
         }
 
-        private void CaptionBar_Closed(object sender, EventArgs e) // _CaptionBar 的 Closed 事件的回调函数。
+        // _CaptionBar 的 Closed 事件的回调函数。
+        private void CaptionBar_Closed(object sender, EventArgs e)
         {
             _AltF4(sender, e);
         }
 
-        private void Resizer_Closed(object sender, EventArgs e) // _Resizer 的 Closed 事件的回调函数。
+        // _Resizer 的 Closed 事件的回调函数。
+        private void Resizer_Closed(object sender, EventArgs e)
         {
             _AltF4(sender, e);
         }
 
-        private void SplashScreen_Closed(object sender, EventArgs e) // _SplashScreen 的 Closed 事件的回调函数。
+        // _SplashScreen 的 Closed 事件的回调函数。
+        private void SplashScreen_Closed(object sender, EventArgs e)
         {
             _AltF4(sender, e);
         }
 
         //
 
-        private void FormLoadingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) // _FormLoadingAsyncWorker 的 DoWork 事件的回调函数。
+        // _FormLoadingAsyncWorker 的 DoWork 事件的回调函数。
+        private void FormLoadingAsyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             _OnLoading();
         }
 
-        private void FormLoadingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // _FormLoadingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
+        // _FormLoadingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
+        private void FormLoadingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _Client.Visible = _Visible;
             _SplashScreen.Visible = false;
@@ -1998,7 +2111,8 @@ namespace Com.WinForm
             _LoadingNow = false;
         }
 
-        private void FormClosingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) // _FormClosingAsyncWorker 的 DoWork 事件的回调函数。
+        // _FormClosingAsyncWorker 的 DoWork 事件的回调函数。
+        private void FormClosingAsyncWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             if (!_FormLoadingAsyncWorker.IsBusy)
             {
@@ -2006,7 +2120,8 @@ namespace Com.WinForm
             }
         }
 
-        private void FormClosingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) // _FormClosingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
+        // _FormClosingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
+        private void FormClosingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _ResolutionMonitor.Enabled = false;
             _ActivationMonitor.Enabled = false;
@@ -2089,7 +2204,8 @@ namespace Com.WinForm
 
         //
 
-        private void ResolutionMonitor_Tick(object sender, EventArgs e) // _ResolutionMonitor 的 Tick 事件的回调函数。
+        // _ResolutionMonitor 的 Tick 事件的回调函数。
+        private void ResolutionMonitor_Tick(object sender, EventArgs e)
         {
             Rectangle CurScrClient = PrimaryScreenClient;
 
@@ -2218,47 +2334,56 @@ namespace Com.WinForm
 
         //
 
-        private void Client_Activated(object sender, EventArgs e) // _Client 的 Activated 事件的回调函数。
+        // _Client 的 Activated 事件的回调函数。
+        private void Client_Activated(object sender, EventArgs e)
         {
             _ClientIsActive = true;
         }
 
-        private void Client_Deactivate(object sender, EventArgs e) // _Client 的 Deactivate 事件的回调函数。
+        // _Client 的 Deactivate 事件的回调函数。
+        private void Client_Deactivate(object sender, EventArgs e)
         {
             _ClientIsActive = false;
         }
 
-        private void CaptionBar_Activated(object sender, EventArgs e) // _CaptionBar 的 Activated 事件的回调函数。
+        // _CaptionBar 的 Activated 事件的回调函数。
+        private void CaptionBar_Activated(object sender, EventArgs e)
         {
             _CaptionBarIsActive = true;
         }
 
-        private void CaptionBar_Deactivate(object sender, EventArgs e) // _CaptionBar 的 Deactivate 事件的回调函数。
+        // _CaptionBar 的 Deactivate 事件的回调函数。
+        private void CaptionBar_Deactivate(object sender, EventArgs e)
         {
             _CaptionBarIsActive = false;
         }
 
-        private void Resizer_Activated(object sender, EventArgs e) // _Resizer 的 Activated 事件的回调函数。
+        // _Resizer 的 Activated 事件的回调函数。
+        private void Resizer_Activated(object sender, EventArgs e)
         {
             _ResizerIsActive = true;
         }
 
-        private void Resizer_Deactivate(object sender, EventArgs e) // _Resizer 的 Deactivate 事件的回调函数。
+        // _Resizer 的 Deactivate 事件的回调函数。
+        private void Resizer_Deactivate(object sender, EventArgs e)
         {
             _ResizerIsActive = false;
         }
 
-        private void SplashScreen_Activated(object sender, EventArgs e) // _SplashScreen 的 Activated 事件的回调函数。
+        // _SplashScreen 的 Activated 事件的回调函数。
+        private void SplashScreen_Activated(object sender, EventArgs e)
         {
             _SplashScreenIsActive = true;
         }
 
-        private void SplashScreen_Deactivate(object sender, EventArgs e) // _SplashScreen 的 Deactivate 事件的回调函数。
+        // _SplashScreen 的 Deactivate 事件的回调函数。
+        private void SplashScreen_Deactivate(object sender, EventArgs e)
         {
             _SplashScreenIsActive = false;
         }
 
-        private void ActivationMonitor_Tick(object sender, EventArgs e) // _ActivationMonitor 的 Tick 事件的回调函数。
+        // _ActivationMonitor 的 Tick 事件的回调函数。
+        private void ActivationMonitor_Tick(object sender, EventArgs e)
         {
             bool Active = (_ClientIsActive || _CaptionBarIsActive || _ResizerIsActive || _SplashScreenIsActive || _MainMenuIsActive);
 

@@ -28,7 +28,8 @@ namespace Com
 
         //
 
-        private static double[] _StdNormalRandom() // 返回两个概率密度服从标准正态分布的随机双精度浮点数。
+        // 返回两个概率密度服从标准正态分布的随机双精度浮点数。
+        private static double[] _StdNormalRandom()
         {
             double r0 = 0, r1 = 0, v0 = 0, v1 = 0, sum = 0;
 
@@ -51,7 +52,8 @@ namespace Com
 
         //
 
-        private static Real _Gamma(double n) // 计算指定双精度浮点数的伽马函数。
+        // 计算指定双精度浮点数的伽马函数。
+        private static Real _Gamma(double n)
         {
             if (InternalMethod.IsNaNOrInfinity(n))
             {
@@ -217,7 +219,8 @@ namespace Com
             }
         }
 
-        private static Real _Factorial(double n) // 计算指定双精度浮点数的阶乘。
+        // 计算指定双精度浮点数的阶乘。
+        private static Real _Factorial(double n)
         {
             if (InternalMethod.IsNaNOrInfinity(n))
             {
@@ -229,7 +232,8 @@ namespace Com
             }
         }
 
-        private static Real _Arrangement(double total, double selection) // 计算从有限个元素中任取若干个元素的排列数。
+        // 计算从有限个元素中任取若干个元素的排列数。
+        private static Real _Arrangement(double total, double selection)
         {
             if (InternalMethod.IsNaNOrInfinity(total) || InternalMethod.IsNaNOrInfinity(selection))
             {
@@ -315,7 +319,8 @@ namespace Com
             }
         }
 
-        private static Real _Combination(double total, double selection) // 计算从有限个元素中任取若干个元素的组合数。
+        // 计算从有限个元素中任取若干个元素的组合数。
+        private static Real _Combination(double total, double selection)
         {
             if (InternalMethod.IsNaNOrInfinity(total) || InternalMethod.IsNaNOrInfinity(selection))
             {

@@ -29,7 +29,8 @@ namespace Com
 
         //
 
-        private static readonly double[] _PositiveMagnitudeGeometricValues = new double[] // 用于在一定范围内进行类型转换的正数量级等比数列。
+        // 用于在一定范围内进行类型转换的正数量级等比数列。
+        private static readonly double[] _PositiveMagnitudeGeometricValues = new double[]
         {
             1E+000, 1E+001, 1E+002, 1E+003, 1E+004, 1E+005, 1E+006, 1E+007, 1E+008, 1E+009,
             1E+010, 1E+011, 1E+012, 1E+013, 1E+014, 1E+015, 1E+016, 1E+017, 1E+018, 1E+019,
@@ -64,7 +65,8 @@ namespace Com
             1E+300, 1E+301, 1E+302, 1E+303, 1E+304, 1E+305, 1E+306, 1E+307, 1E+308, double.MaxValue
         };
 
-        private static readonly double[] _NegativeMagnitudeGeometricValues = new double[] // 用于在一定范围内进行类型转换的负数量级等比数列。
+        // 用于在一定范围内进行类型转换的负数量级等比数列。
+        private static readonly double[] _NegativeMagnitudeGeometricValues = new double[]
         {
             1E-000, 1E-001, 1E-002, 1E-003, 1E-004, 1E-005, 1E-006, 1E-007, 1E-008, 1E-009,
             1E-010, 1E-011, 1E-012, 1E-013, 1E-014, 1E-015, 1E-016, 1E-017, 1E-018, 1E-019,
@@ -120,7 +122,8 @@ namespace Com
 
         //
 
-        private void _Rectify() // 校正此 Real 结构的值与数量级。
+        // 校正此 Real 结构的值与数量级。
+        private void _Rectify()
         {
             if (InternalMethod.IsNaNOrInfinity(_Value) || _Value == 0)
             {
@@ -205,14 +208,16 @@ namespace Com
 
         //
 
-        private enum _Parity // 奇偶性。
+        // 奇偶性。
+        private enum _Parity
         {
             NonParity = -1, // 非奇非偶，表示既约分数的分母能够被 2 整除的有理数以及其他不满足下述偶或奇的定义的数。
             Even, // 偶，表示既约分数的分母不能被 2 整除且分子能够被 2 整除的有理数。
             Odd // 奇，表示既约分数的分母与分子均不能被 2 整除的有理数。
         }
 
-        private _Parity _GetParity() // 获取此 Real 结构的奇偶性。
+        // 获取此 Real 结构的奇偶性。
+        private _Parity _GetParity()
         {
             if (InternalMethod.IsNaNOrInfinity(_Value))
             {

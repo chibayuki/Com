@@ -39,7 +39,8 @@ namespace Com
 
         //
 
-        private void _UpdateByVector(Vector vector) // 按 Vector 对象更新此 PointD3D 结构。
+        // 按 Vector 对象更新此 PointD3D 结构。
+        private void _UpdateByVector(Vector vector)
         {
             if (Vector.IsNullOrEmpty(vector) || vector.Dimension != _Dimension)
             {

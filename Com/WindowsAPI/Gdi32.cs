@@ -19,7 +19,8 @@ using System.Runtime.InteropServices;
 
 namespace Com
 {
-    internal static class Gdi32 // Gdi32 接口。
+    // Gdi32 接口。
+    internal static class Gdi32
     {
         [DllImport("gdi32.dll", CharSet = CharSet.Auto, EntryPoint = "CreateCompatibleDC", SetLastError = true)]
         public static extern IntPtr CreateCompatibleDC(IntPtr hDc);

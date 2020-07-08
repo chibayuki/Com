@@ -24,7 +24,8 @@ namespace Com
     {
         #region 私有成员与内部成员
 
-        private static Complex _MultiplyByImaginaryOne(Complex comp) // 返回将虚数单位 i 与 Complex 结构的相乘得到的 Complex 结构的新实例。
+        // 返回将虚数单位 i 与 Complex 结构的相乘得到的 Complex 结构的新实例。
+        private static Complex _MultiplyByImaginaryOne(Complex comp)
         {
             return new Complex(-comp._Imaginary, comp.Real);
         }

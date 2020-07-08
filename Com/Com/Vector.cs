@@ -49,7 +49,8 @@ namespace Com
 
         //
 
-        private static Vector _GetZeroVector(Type type, int dimension) // 获取指定向量类型与维度的零向量。
+        // 获取指定向量类型与维度的零向量。
+        private static Vector _GetZeroVector(Type type, int dimension)
         {
             if (dimension < 0 || dimension > _MaxSize)
             {
@@ -72,8 +73,9 @@ namespace Com
 
         //
 
+        // 以不安全方式创建 Vector 的新实例。
         [InternalUnsafeCall(InternalUnsafeCallType.InputAddress)]
-        internal static Vector UnsafeCreateInstance(Type type, params double[] values) // 以不安全方式创建 Vector 的新实例。
+        internal static Vector UnsafeCreateInstance(Type type, params double[] values)
         {
             if (InternalMethod.IsNullOrEmpty(values))
             {
@@ -114,13 +116,15 @@ namespace Com
 
         //
 
+        // 以不安全方式获取此 Vector 的内部数据结构。
         [InternalUnsafeCall(InternalUnsafeCallType.OutputAddress)]
-        internal double[] UnsafeGetData() // 以不安全方式获取此 Vector 的内部数据结构。
+        internal double[] UnsafeGetData()
         {
             return _VArray;
         }
 
-        private Vector _ForAffineTransform() // 获取此 Vector 用于仿射变换的扩展。
+        // 获取此 Vector 用于仿射变换的扩展。
+        private Vector _ForAffineTransform()
         {
             if (IsEmpty)
             {
@@ -140,7 +144,8 @@ namespace Com
 
         //
 
-        private void _AffineTransform(AffineTransformationAtomic atomic) // 按 AffineTransformationAtomic 对象将此 Vector 进行仿射变换。
+        // 按 AffineTransformationAtomic 对象将此 Vector 进行仿射变换。
+        private void _AffineTransform(AffineTransformationAtomic atomic)
         {
             if (atomic.IsInverse)
             {
@@ -190,7 +195,8 @@ namespace Com
 
         #region 构造函数
 
-        private Vector() // 不使用任何参数初始化 Vector 的新实例。
+        // 不使用任何参数初始化 Vector 的新实例。
+        private Vector()
         {
         }
 

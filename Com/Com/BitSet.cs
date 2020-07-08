@@ -43,7 +43,8 @@ namespace Com
 
         //
 
-        private static int _GetUintNumOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数的数量。
+        // 根据位值的数量计算 32 位无符号整数的数量。
+        private static int _GetUintNumOfBitNum(int bitNum)
         {
             if (bitNum <= 0)
             {
@@ -55,7 +56,8 @@ namespace Com
             }
         }
 
-        private static int _GetUintArrayLengthOfBitNum(int bitNum) // 根据位值的数量计算 32 位无符号整数数组的长度。
+        // 根据位值的数量计算 32 位无符号整数数组的长度。
+        private static int _GetUintArrayLengthOfBitNum(int bitNum)
         {
             if (bitNum <= 0)
             {
@@ -84,7 +86,8 @@ namespace Com
 
         #region 构造函数
 
-        private BitSet() // 不使用任何参数初始化 BitSet 的新实例。
+        // 不使用任何参数初始化 BitSet 的新实例。
+        private BitSet()
         {
         }
 
