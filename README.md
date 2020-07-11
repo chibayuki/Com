@@ -3,7 +3,7 @@
 # Com
 Com是通用组件，是用于支持线性代数运算、位运算、大型日期时间、高精度非线性色彩处理、动画呈现、窗口管理等功能的DLL。
 
-## 公开的静态类
+## 静态类
 #### Com.Animation
 > 使用指定的帧率、帧数与绘制方法呈现动画。
 #### Com.BitOperation
@@ -25,7 +25,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 #### Com.WinForm.ControlSubstitution
 > 提供控件的替代使用方案。
 
-## 公开的类
+## 类
 #### Com.AffineTransformation
 > 表示仿射变换或仿射变换序列，用于支持复杂的仿射变换。
 #### Com.BitSet
@@ -39,7 +39,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 #### Com.WinForm.RecommendColors
 > 窗口管理器提供的建议配色方案。
 
-## 公开的结构
+## 结构
 #### Com.ColorX
 > 浮点精度的色彩表示方案，支持RGB、HSV、HSL、CMYK、LAB、YUV等色彩空间。
 #### Com.Complex
@@ -59,7 +59,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 #### Com.Real
 > 表示实数（数量级介于±999999999999999的浮点数）。
 
-## 公开的接口
+## 接口
 #### Com.IAffineTransformable 与 Com.IAffineTransformable\<T\>
 > 表示支持仿射变换。
 #### Com.IEuclideanVector 与 Com.IEuclideanVector\<T\>
@@ -69,7 +69,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 #### Com.IVector\<T\>
 > 表示向量（包含确定数量与值的元素的可迭代的有限有序集合）。
 
-## 公开的枚举
+## 枚举
 #### Com.Vector.Type
 > 表示向量类型。
 #### Com.WinForm.Effect
@@ -81,7 +81,7 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 #### Com.WinForm.Theme
 > 表示窗口配色主题。
 
-## 公开的委托
+## 委托
 #### Com.Animation.Frame
 > 表示用于绘制动画的某一帧的方法。
 
