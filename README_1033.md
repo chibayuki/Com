@@ -3,7 +3,7 @@
 # Com
 Com is a common component, which is a DLL for supporting linear algebra, bit operation, large date-time, high precision nonlinear color processing, animation presentation, window management, etc.
 
-## Public Static Class
+## Static Classes
 #### Com.Animation
 > Presenting animation by frame rate, frame number and drawing method.
 #### Com.BitOperation
@@ -25,7 +25,7 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.WinForm.ControlSubstitution
 > Scheme of substitution of control.
 
-## Public Class
+## Classes
 #### Com.AffineTransformation
 > Containing one or a sequence of affine transformation, supporting complex affine transformations.
 #### Com.BitSet
@@ -39,7 +39,7 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.WinForm.RecommendColors
 > Color scheme provided by FormManager.
 
-## Public Structure
+## Structures
 #### Com.ColorX
 > Floating-point precision color expression based on RGB, HSV, HSL, CMYK, LAB, YUV, etc.
 #### Com.Complex
@@ -59,7 +59,7 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.Real
 > Real number (floating-point number in the order of magnitude between ±999999999999999).
 
-## Public Interface
+## Interfaces
 #### Com.IAffineTransformable and Com.IAffineTransformable\<T\>
 > Supporting affine transform.
 #### Com.IEuclideanVector and Com.IEuclideanVector\<T\>
@@ -69,7 +69,7 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.IVector\<T\>
 > Vector (a finite, ordered, and iterable set, which contains certain number of elements with clear values).
 
-## Public Enumerate
+## Enumerates
 #### Com.Vector.Type
 > Type of vector.
 #### Com.WinForm.Effect
@@ -81,7 +81,7 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.WinForm.Theme
 > Theme of color scheme of winform window.
 
-## Public Delegate
+## Delegates
 #### Com.Animation.Frame
 > Method of presenting animation frames.
 
