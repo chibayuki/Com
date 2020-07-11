@@ -1483,7 +1483,7 @@ namespace Com
         /// 返回按 AffineTransformation 对象将此 PointD6D 结构进行仿射变换得到的结果。
         /// </summary>
         /// <param name="affineTransformation">AffineTransformation 对象。</param>
-        /// <returns>T，表示按 AffineTransformation 对象将此 PointD6D 结构进行仿射变换得到的结果。</returns>
+        /// <returns>PointD6D 结构，表示按 AffineTransformation 对象将此 PointD6D 结构进行仿射变换得到的结果。</returns>
         public PointD6D AffineTransformCopy(AffineTransformation affineTransformation)
         {
             Vector result = ToColumnVector().AffineTransformCopy(affineTransformation);
