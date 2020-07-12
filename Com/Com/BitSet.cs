@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.BitSet
-Version 20.5.29.0000
+Version 20.7.12.1800
 
 This file is part of Com
 

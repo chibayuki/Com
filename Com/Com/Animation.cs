@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.Animation
-Version 20.5.28.2000
+Version 20.7.12.1800
 
 This file is part of Com
 
