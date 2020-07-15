@@ -1547,21 +1547,35 @@ namespace Com
             }
             else
             {
-                if (_U == prjCenter._U)
+                if (XYZ == prjCenter.XYZ)
                 {
-                    return PointD3D.NaN;
+                    if (_U == prjCenter._U || ((_U > prjCenter._U) == (focalLength > 0)))
+                    {
+                        return XYZ;
+                    }
+                    else
+                    {
+                        return PointD3D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_U - prjCenter._U);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_U == prjCenter._U)
                     {
                         return PointD3D.NaN;
                     }
                     else
                     {
-                        return (Scale * XYZ + (1 - Scale) * prjCenter.XYZ);
+                        double Scale = focalLength / (_U - prjCenter._U);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD3D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * XYZ + (1 - Scale) * prjCenter.XYZ);
+                        }
                     }
                 }
             }
@@ -1581,21 +1595,35 @@ namespace Com
             }
             else
             {
-                if (_X == prjCenter._X)
+                if (YZU == prjCenter.YZU)
                 {
-                    return PointD3D.NaN;
+                    if (_X == prjCenter._X || ((_X > prjCenter._X) == (focalLength > 0)))
+                    {
+                        return YZU;
+                    }
+                    else
+                    {
+                        return PointD3D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_X - prjCenter._X);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_X == prjCenter._X)
                     {
                         return PointD3D.NaN;
                     }
                     else
                     {
-                        return (Scale * YZU + (1 - Scale) * prjCenter.YZU);
+                        double Scale = focalLength / (_X - prjCenter._X);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD3D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * YZU + (1 - Scale) * prjCenter.YZU);
+                        }
                     }
                 }
             }
@@ -1615,21 +1643,35 @@ namespace Com
             }
             else
             {
-                if (_Y == prjCenter._Y)
+                if (ZUX == prjCenter.ZUX)
                 {
-                    return PointD3D.NaN;
+                    if (_Y == prjCenter._Y || ((_Y > prjCenter._Y) == (focalLength > 0)))
+                    {
+                        return ZUX;
+                    }
+                    else
+                    {
+                        return PointD3D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_Y - prjCenter._Y);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_Y == prjCenter._Y)
                     {
                         return PointD3D.NaN;
                     }
                     else
                     {
-                        return (Scale * ZUX + (1 - Scale) * prjCenter.ZUX);
+                        double Scale = focalLength / (_Y - prjCenter._Y);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD3D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * ZUX + (1 - Scale) * prjCenter.ZUX);
+                        }
                     }
                 }
             }
@@ -1649,21 +1691,35 @@ namespace Com
             }
             else
             {
-                if (_Z == prjCenter._Z)
+                if (UXY == prjCenter.UXY)
                 {
-                    return PointD3D.NaN;
+                    if (_Z == prjCenter._Z || ((_Z > prjCenter._Z) == (focalLength > 0)))
+                    {
+                        return UXY;
+                    }
+                    else
+                    {
+                        return PointD3D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_Z - prjCenter._Z);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_Z == prjCenter._Z)
                     {
                         return PointD3D.NaN;
                     }
                     else
                     {
-                        return (Scale * UXY + (1 - Scale) * prjCenter.UXY);
+                        double Scale = focalLength / (_Z - prjCenter._Z);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD3D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * UXY + (1 - Scale) * prjCenter.UXY);
+                        }
                     }
                 }
             }

@@ -1777,21 +1777,35 @@ namespace Com
             }
             else
             {
-                if (_W == prjCenter._W)
+                if (XYZUV == prjCenter.XYZUV)
                 {
-                    return PointD5D.NaN;
+                    if (_W == prjCenter._W || ((_W > prjCenter._W) == (focalLength > 0)))
+                    {
+                        return XYZUV;
+                    }
+                    else
+                    {
+                        return PointD5D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_W - prjCenter._W);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_W == prjCenter._W)
                     {
                         return PointD5D.NaN;
                     }
                     else
                     {
-                        return (Scale * XYZUV + (1 - Scale) * prjCenter.XYZUV);
+                        double Scale = focalLength / (_W - prjCenter._W);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD5D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * XYZUV + (1 - Scale) * prjCenter.XYZUV);
+                        }
                     }
                 }
             }
@@ -1811,21 +1825,35 @@ namespace Com
             }
             else
             {
-                if (_X == prjCenter._X)
+                if (YZUVW == prjCenter.YZUVW)
                 {
-                    return PointD5D.NaN;
+                    if (_X == prjCenter._X || ((_X > prjCenter._X) == (focalLength > 0)))
+                    {
+                        return YZUVW;
+                    }
+                    else
+                    {
+                        return PointD5D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_X - prjCenter._X);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_X == prjCenter._X)
                     {
                         return PointD5D.NaN;
                     }
                     else
                     {
-                        return (Scale * YZUVW + (1 - Scale) * prjCenter.YZUVW);
+                        double Scale = focalLength / (_X - prjCenter._X);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD5D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * YZUVW + (1 - Scale) * prjCenter.YZUVW);
+                        }
                     }
                 }
             }
@@ -1845,21 +1873,35 @@ namespace Com
             }
             else
             {
-                if (_Y == prjCenter._Y)
+                if (ZUVWX == prjCenter.ZUVWX)
                 {
-                    return PointD5D.NaN;
+                    if (_Y == prjCenter._Y || ((_Y > prjCenter._Y) == (focalLength > 0)))
+                    {
+                        return ZUVWX;
+                    }
+                    else
+                    {
+                        return PointD5D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_Y - prjCenter._Y);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_Y == prjCenter._Y)
                     {
                         return PointD5D.NaN;
                     }
                     else
                     {
-                        return (Scale * ZUVWX + (1 - Scale) * prjCenter.ZUVWX);
+                        double Scale = focalLength / (_Y - prjCenter._Y);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD5D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * ZUVWX + (1 - Scale) * prjCenter.ZUVWX);
+                        }
                     }
                 }
             }
@@ -1879,21 +1921,35 @@ namespace Com
             }
             else
             {
-                if (_Z == prjCenter._Z)
+                if (UVWXY == prjCenter.UVWXY)
                 {
-                    return PointD5D.NaN;
+                    if (_Z == prjCenter._Z || ((_Z > prjCenter._Z) == (focalLength > 0)))
+                    {
+                        return UVWXY;
+                    }
+                    else
+                    {
+                        return PointD5D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_Z - prjCenter._Z);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_Z == prjCenter._Z)
                     {
                         return PointD5D.NaN;
                     }
                     else
                     {
-                        return (Scale * UVWXY + (1 - Scale) * prjCenter.UVWXY);
+                        double Scale = focalLength / (_Z - prjCenter._Z);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD5D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * UVWXY + (1 - Scale) * prjCenter.UVWXY);
+                        }
                     }
                 }
             }
@@ -1913,21 +1969,35 @@ namespace Com
             }
             else
             {
-                if (_U == prjCenter._U)
+                if (VWXYZ == prjCenter.VWXYZ)
                 {
-                    return PointD5D.NaN;
+                    if (_U == prjCenter._U || ((_U > prjCenter._U) == (focalLength > 0)))
+                    {
+                        return VWXYZ;
+                    }
+                    else
+                    {
+                        return PointD5D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_U - prjCenter._U);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_U == prjCenter._U)
                     {
                         return PointD5D.NaN;
                     }
                     else
                     {
-                        return (Scale * VWXYZ + (1 - Scale) * prjCenter.VWXYZ);
+                        double Scale = focalLength / (_U - prjCenter._U);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD5D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * VWXYZ + (1 - Scale) * prjCenter.VWXYZ);
+                        }
                     }
                 }
             }
@@ -1947,21 +2017,35 @@ namespace Com
             }
             else
             {
-                if (_V == prjCenter._V)
+                if (WXYZU == prjCenter.WXYZU)
                 {
-                    return PointD5D.NaN;
+                    if (_V == prjCenter._V || ((_V > prjCenter._V) == (focalLength > 0)))
+                    {
+                        return WXYZU;
+                    }
+                    else
+                    {
+                        return PointD5D.NaN;
+                    }
                 }
                 else
                 {
-                    double Scale = focalLength / (_V - prjCenter._V);
-
-                    if (InternalMethod.IsNaNOrInfinity(Scale) || Scale <= 0)
+                    if (_V == prjCenter._V)
                     {
                         return PointD5D.NaN;
                     }
                     else
                     {
-                        return (Scale * WXYZU + (1 - Scale) * prjCenter.WXYZU);
+                        double Scale = focalLength / (_V - prjCenter._V);
+
+                        if (InternalMethod.IsNaNOrInfinity(Scale) || Scale < 0)
+                        {
+                            return PointD5D.NaN;
+                        }
+                        else
+                        {
+                            return (Scale * WXYZU + (1 - Scale) * prjCenter.WXYZU);
+                        }
                     }
                 }
             }
