@@ -1521,7 +1521,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干年得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="years">64 位整数表示的年，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="years">64 位整数表示的年数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干年得到的结果。</returns>
         public DateTimeX AddYears(long years)
         {
@@ -1577,7 +1577,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干个月得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="months">64 位整数表示的月，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="months">64 位整数表示的月数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干个月得到的结果。</returns>
         public DateTimeX AddMonths(long months)
         {
@@ -1648,7 +1648,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干周得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="weeks">双精度浮点数表示的周，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="weeks">双精度浮点数表示的周数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干周得到的结果。</returns>
         public DateTimeX AddWeeks(double weeks)
         {
@@ -1696,7 +1696,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干天得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="days">双精度浮点数表示的天，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="days">双精度浮点数表示的天数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干天得到的结果。</returns>
         public DateTimeX AddDays(double days)
         {
@@ -1744,7 +1744,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干小时得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="hours">双精度浮点数表示的小时，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="hours">双精度浮点数表示的小时数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干小时得到的结果。</returns>
         public DateTimeX AddHours(double hours)
         {
@@ -1792,7 +1792,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干分钟得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="minutes">双精度浮点数表示的分钟，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="minutes">双精度浮点数表示的分钟数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干分钟得到的结果。</returns>
         public DateTimeX AddMinutes(double minutes)
         {
@@ -1840,7 +1840,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干秒得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="seconds">双精度浮点数表示的秒，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="seconds">双精度浮点数表示的秒数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干秒得到的结果。</returns>
         public DateTimeX AddSeconds(double seconds)
         {
@@ -1888,7 +1888,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干毫秒得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="milliseconds">十进制浮点数表示的毫秒，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="milliseconds">十进制浮点数表示的毫秒数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干毫秒得到的结果。</returns>
         public DateTimeX AddMilliseconds(decimal milliseconds)
         {
@@ -1929,7 +1929,7 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干毫秒得到的 DateTimeX 结构的新实例。
         /// </summary>
-        /// <param name="milliseconds">双精度浮点数表示的毫秒，用于相加到此 DateTimeX 结构。</param>
+        /// <param name="milliseconds">双精度浮点数表示的毫秒数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干毫秒得到的结果。</returns>
         public DateTimeX AddMilliseconds(double milliseconds)
         {
