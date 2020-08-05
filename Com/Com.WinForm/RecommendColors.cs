@@ -24,7 +24,7 @@ namespace Com.WinForm
     /// </summary>
     public sealed class RecommendColors : IEquatable<RecommendColors>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private ColorX _FormBackground; // 窗口背景颜色。
         private ColorX _CaptionBar; // 窗口标题栏颜色。

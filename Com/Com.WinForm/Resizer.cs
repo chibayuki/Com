@@ -26,7 +26,7 @@ namespace Com.WinForm
 {
     internal partial class Resizer : Form // 窗口大小调节器。
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private FormManager Me; // 窗口管理器。
 
