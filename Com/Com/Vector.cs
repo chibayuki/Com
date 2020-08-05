@@ -41,7 +41,7 @@ namespace Com
             RowVector
         }
 
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private const int _MaxSize = 2146435071; // Vector 允许包含的最大元素数量，等于 System.Array.MaxArrayLength。
 

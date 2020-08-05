@@ -448,7 +448,7 @@ namespace Com
     /// </summary>
     public sealed class AffineTransformation : IEquatable<AffineTransformation>, IAffineTransformable<AffineTransformation>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         // 以不安全方式创建 AffineTransformation 的新实例。
         [InternalUnsafeCall(InternalUnsafeCallType.InputAddress)]

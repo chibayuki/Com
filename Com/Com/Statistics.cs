@@ -22,7 +22,7 @@ namespace Com
     /// </summary>
     public static class Statistics
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private static readonly Random _Rand = new Random(); // 用于生成随机数的 Random 类的实例。
 

@@ -26,7 +26,7 @@ namespace Com
     /// </summary>
     public struct ColorX : IEquatable<ColorX>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private const int _32BitArgbShiftAlpha = 24; // 32 位 ARGB 颜色的 Alpha 分量（A）的位偏移量。
         private const int _32BitArgbShiftRed = 16; // 32 位 ARGB 颜色的红色分量（R）的位偏移量。

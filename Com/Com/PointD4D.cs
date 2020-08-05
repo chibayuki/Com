@@ -25,7 +25,7 @@ namespace Com
     /// </summary>
     public struct PointD4D : IEquatable<PointD4D>, IComparable, IComparable<PointD4D>, IEuclideanVector<PointD4D>, IAffineTransformable<PointD4D>, IAffine<PointD4D>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private const int _Dimension = 4; // PointD4D 结构的维度。
 

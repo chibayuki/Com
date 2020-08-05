@@ -24,7 +24,7 @@ namespace Com
     /// </summary>
     public sealed class Matrix : IEquatable<Matrix>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private const int _MaxSize = 2146435071; // Matrix 允许包含的最大元素数量，等于 System.Array.MaxArrayLength。
 

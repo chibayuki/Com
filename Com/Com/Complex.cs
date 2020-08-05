@@ -22,7 +22,7 @@ namespace Com
     /// </summary>
     public struct Complex : IEquatable<Complex>, IComparable, IComparable<Complex>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         // 返回将虚数单位 i 与 Complex 结构的相乘得到的 Complex 结构的新实例。
         private static Complex _MultiplyByImaginaryOne(Complex comp)

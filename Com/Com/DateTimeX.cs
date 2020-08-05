@@ -22,7 +22,7 @@ namespace Com
     /// </summary>
     public struct DateTimeX : IEquatable<DateTimeX>, IComparable, IComparable<DateTimeX>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private const double _MinUtcOffset = -24, _MaxUtcOffset = 24, _Utc = 0; // 所在时区的标准时间与协调世界时（UTC）之间的时差的小时数的最小值、最大值与表示与协调世界时（UTC）之间为零时差的值。
 

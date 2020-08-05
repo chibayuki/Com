@@ -25,7 +25,7 @@ namespace Com
     /// </summary>
     public struct PointD6D : IEquatable<PointD6D>, IComparable, IComparable<PointD6D>, IEuclideanVector<PointD6D>, IAffineTransformable<PointD6D>, IAffine<PointD6D>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private const int _Dimension = 6; // PointD6D 结构的维度。
 

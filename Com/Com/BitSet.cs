@@ -24,7 +24,7 @@ namespace Com
     /// </summary>
     public sealed class BitSet : IEquatable<BitSet>, IComparable, IComparable<BitSet>, IVector<bool>
     {
-        #region 私有成员与内部成员
+        #region 非公开成员
 
         private const int _BitsPerByte = 8; // 8 位无符号整数包含的位值数量。
         private const int _BitsPerUshort = 16; // 16 位无符号整数包含的位值数量。
