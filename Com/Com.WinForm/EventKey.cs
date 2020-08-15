@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.WinForm.EventKey
-Version 20.7.12.1800
+Version 20.8.15.1420
 
 This file is part of Com
 
