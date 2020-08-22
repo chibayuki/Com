@@ -480,6 +480,213 @@ namespace Com
             return _Sequence;
         }
 
+        //
+
+        // 获取表示将此 AffineTransformation 压缩为单一变换的 AffineTransformationAtomic 的新实例。
+        private AffineTransformationAtomic _CompressAsAtomic(Vector.Type type, int dimension)
+        {
+            if (_Sequence.Count <= 0)
+            {
+                return null;
+            }
+            else if (_Sequence.Count == 1)
+            {
+                return _Sequence[0];
+            }
+            else
+            {
+                AffineTransformationAtomic atomic = _Sequence[0];
+
+                bool canOnlyToMatrix = false;
+
+                if (atomic.Type == AffineTransformationAtomicType.Matrix)
+                {
+                    canOnlyToMatrix = true;
+                }
+                else
+                {
+                    for (int i = 1; i < _Sequence.Count; i++)
+                    {
+                        if (_Sequence[i].Type == AffineTransformationAtomicType.Matrix || _Sequence[i].Type != atomic.Type)
+                        {
+                            canOnlyToMatrix = true;
+
+                            break;
+                        }
+                        else
+                        {
+                            switch (atomic.Type)
+                            {
+                                case AffineTransformationAtomicType.Offset:
+                                case AffineTransformationAtomicType.Scale:
+                                case AffineTransformationAtomicType.Reflect:
+                                    if (_Sequence[i].UnsafeGetIndex1() != atomic.UnsafeGetIndex1())
+                                    {
+                                        canOnlyToMatrix = true;
+
+                                        goto DO_COMPRESS;
+                                    }
+                                    break;
+
+                                case AffineTransformationAtomicType.Shear:
+                                case AffineTransformationAtomicType.Rotate:
+                                    if (_Sequence[i].UnsafeGetIndex1() != atomic.UnsafeGetIndex1() || _Sequence[i].UnsafeGetIndex2() != atomic.UnsafeGetIndex2())
+                                    {
+                                        canOnlyToMatrix = true;
+
+                                        goto DO_COMPRESS;
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                DO_COMPRESS:
+                if (canOnlyToMatrix)
+                {
+                    return AffineTransformationAtomic.FromMatrix(ToMatrix(type, dimension));
+                }
+                else
+                {
+                    switch (atomic.Type)
+                    {
+                        case AffineTransformationAtomicType.Offset:
+                        case AffineTransformationAtomicType.OffsetMulti:
+                            {
+                                double value = 0;
+
+                                for (int i = 0; i < _Sequence.Count; i++)
+                                {
+                                    if (_Sequence[i].IsInverse)
+                                    {
+                                        value -= _Sequence[i].UnsafeGetValue();
+                                    }
+                                    else
+                                    {
+                                        value += _Sequence[i].UnsafeGetValue();
+                                    }
+                                }
+
+                                if (value == 0)
+                                {
+                                    return null;
+                                }
+                                else
+                                {
+                                    if (atomic.Type == AffineTransformationAtomicType.Offset)
+                                    {
+                                        return AffineTransformationAtomic.FromOffset(atomic.UnsafeGetIndex1(), value);
+                                    }
+                                    else
+                                    {
+                                        return AffineTransformationAtomic.FromOffset(value);
+                                    }
+                                }
+                            }
+
+                        case AffineTransformationAtomicType.Scale:
+                        case AffineTransformationAtomicType.ScaleMulti:
+                            {
+                                double value = 1;
+
+                                for (int i = 0; i < _Sequence.Count; i++)
+                                {
+                                    if (_Sequence[i].IsInverse)
+                                    {
+                                        value /= _Sequence[i].UnsafeGetValue();
+                                    }
+                                    else
+                                    {
+                                        value *= _Sequence[i].UnsafeGetValue();
+                                    }
+                                }
+
+                                if (value == 1)
+                                {
+                                    return null;
+                                }
+                                else
+                                {
+                                    if (atomic.Type == AffineTransformationAtomicType.Offset)
+                                    {
+                                        return AffineTransformationAtomic.FromScale(atomic.UnsafeGetIndex1(), value);
+                                    }
+                                    else
+                                    {
+                                        return AffineTransformationAtomic.FromScale(value);
+                                    }
+                                }
+                            }
+
+                        case AffineTransformationAtomicType.Reflect:
+                            if (_Sequence.Count % 2 == 0)
+                            {
+                                return null;
+                            }
+                            else
+                            {
+                                return AffineTransformationAtomic.FromReflect(atomic.UnsafeGetIndex1());
+                            }
+
+                        case AffineTransformationAtomicType.Shear:
+                            {
+                                double value = 0;
+
+                                for (int i = 0; i < _Sequence.Count; i++)
+                                {
+                                    if (_Sequence[i].IsInverse)
+                                    {
+                                        value -= Math.Tan(_Sequence[i].UnsafeGetValue());
+                                    }
+                                    else
+                                    {
+                                        value += Math.Tan(_Sequence[i].UnsafeGetValue());
+                                    }
+                                }
+
+                                if (value == 0)
+                                {
+                                    return null;
+                                }
+                                else
+                                {
+                                    return AffineTransformationAtomic.FromShear(atomic.UnsafeGetIndex1(), atomic.UnsafeGetIndex2(), Math.Atan(value));
+                                }
+                            }
+
+                        case AffineTransformationAtomicType.Rotate:
+                            {
+                                double value = 0;
+
+                                for (int i = 0; i < _Sequence.Count; i++)
+                                {
+                                    if (_Sequence[i].IsInverse)
+                                    {
+                                        value -= _Sequence[i].UnsafeGetValue();
+                                    }
+                                    else
+                                    {
+                                        value += _Sequence[i].UnsafeGetValue();
+                                    }
+                                }
+
+                                if (value == 0)
+                                {
+                                    return null;
+                                }
+                                else
+                                {
+                                    return AffineTransformationAtomic.FromRotate(atomic.UnsafeGetIndex1(), atomic.UnsafeGetIndex2(), value);
+                                }
+                            }
+
+                        default: throw new ArithmeticException();
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region 构造函数
@@ -739,6 +946,55 @@ namespace Com
                 else
                 {
                     return Matrix.MultiplyRight(matrices);
+                }
+            }
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 AffineTransformation 压缩为单一变换。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
+        public void Compress(Vector.Type type, int dimension)
+        {
+            if (_Sequence.Count > 0)
+            {
+                AffineTransformationAtomic atomic = _CompressAsAtomic(type, dimension);
+
+                _Sequence = new List<AffineTransformationAtomic>();
+
+                if (atomic != null)
+                {
+                    _Sequence.Add(atomic);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取表示将此 AffineTransformation 压缩为单一变换的 AffineTransformation 的新实例。
+        /// </summary>
+        /// <param name="type">向量类型。</param>
+        /// <param name="dimension">向量维度。</param>
+        /// <returns>AffineTransformation 对象，表示将此 AffineTransformation 压缩后的单一变换。</returns>
+        public AffineTransformation CompressCopy(Vector.Type type, int dimension)
+        {
+            if (_Sequence.Count <= 0)
+            {
+                return Empty;
+            }
+            else
+            {
+                AffineTransformationAtomic atomic = _CompressAsAtomic(type, dimension);
+
+                if (atomic == null)
+                {
+                    return Empty;
+                }
+                else
+                {
+                    return new AffineTransformation(atomic);
                 }
             }
         }
