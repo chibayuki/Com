@@ -2166,14 +2166,6 @@ namespace Com
 
         #region System.Collections.ICollection
 
-        int ICollection.Count
-        {
-            get
-            {
-                return Size;
-            }
-        }
-
         object ICollection.SyncRoot
         {
             get
@@ -2267,14 +2259,6 @@ namespace Com
         #endregion
 
         #region System.Collections.Generic.ICollection<T>
-
-        int ICollection<bool>.Count
-        {
-            get
-            {
-                return Size;
-            }
-        }
 
         void ICollection<bool>.Add(bool item)
         {
