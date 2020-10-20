@@ -1020,6 +1020,30 @@ namespace Com
         //
 
         /// <summary>
+        /// 将此 PointD6D 结构的所有分量复制到双精度浮点数数组中。
+        /// </summary>
+        /// <param name="array">双精度浮点数数组。</param>
+        /// <param name="index">双精度浮点数数组的起始索引。</param>
+        public void CopyTo(double[] array, int index)
+        {
+            if (array is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (array.Length - index < _Dimension)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            ToArray().CopyTo(array, index);
+        }
+
+        //
+
+        /// <summary>
         /// 返回将此 PointD6D 结构表示的直角坐标系坐标转换为超球坐标系坐标的 PointD6D 结构的新实例。
         /// </summary>
         /// <returns>PointD6D 结构，表示将此 PointD6D 结构表示的直角坐标系坐标转换为超球坐标系坐标得到的结果。</returns>
@@ -2853,7 +2877,7 @@ namespace Com
                 throw new RankException();
             }
 
-            if (array.Length < _Dimension)
+            if (array.Length - index < _Dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2952,14 +2976,6 @@ namespace Com
         void ICollection<double>.Clear()
         {
             this = new PointD6D();
-        }
-
-        void ICollection<double>.CopyTo(double[] array, int index)
-        {
-            if (!(array is null) && array.Length >= _Dimension)
-            {
-                ToArray().CopyTo(array, index);
-            }
         }
 
         bool ICollection<double>.Remove(double item)

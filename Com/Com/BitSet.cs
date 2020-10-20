@@ -82,6 +82,27 @@ namespace Com
 
         private uint[] _UintArray; // 用于存储位值的 32 位无符号整数数组。
 
+        //
+
+        // 获取元素，不做索引越界检查。
+        private bool _GetItemWithoutCheckBounds(int index)
+        {
+            return ((_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0);
+        }
+
+        // 设置元素，不做索引越界检查。
+        private void _SetItemWithoutCheckBounds(int index, bool bitValue)
+        {
+            if (bitValue)
+            {
+                _UintArray[index / _BitsPerUint] |= (((uint)1) << (index % _BitsPerUint));
+            }
+            else
+            {
+                _UintArray[index / _BitsPerUint] &= (~(((uint)1) << (index % _BitsPerUint)));
+            }
+        }
+
         #endregion
 
         #region 构造函数
@@ -332,12 +353,26 @@ namespace Com
         {
             get
             {
-                return Get(index);
+                if (_Size <= 0 || (index < 0 || index >= _Size))
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                //
+
+                return _GetItemWithoutCheckBounds(index);
             }
 
             set
             {
-                Set(index, value);
+                if (_Size <= 0 || (index < 0 || index >= _Size))
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                //
+
+                _SetItemWithoutCheckBounds(index, value);
             }
         }
 
@@ -779,7 +814,7 @@ namespace Com
                 {
                     for (int j = startIndex; j < startIndex + count; j++)
                     {
-                        if (Get(j))
+                        if (_GetItemWithoutCheckBounds(j))
                         {
                             return j;
                         }
@@ -793,7 +828,7 @@ namespace Com
                         {
                             for (int j = startIndex; j < (_Left + 1) * _BitsPerUint; j++)
                             {
-                                if (Get(j))
+                                if (_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -803,7 +838,7 @@ namespace Com
                         {
                             for (int j = _Right * _BitsPerUint; j < startIndex + count; j++)
                             {
-                                if (Get(j))
+                                if (_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -813,7 +848,7 @@ namespace Com
                         {
                             for (int j = i * _BitsPerUint; j < (i + 1) * _BitsPerUint; j++)
                             {
-                                if (Get(j))
+                                if (_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -828,7 +863,7 @@ namespace Com
                 {
                     for (int j = startIndex; j < startIndex + count; j++)
                     {
-                        if (!Get(j))
+                        if (!_GetItemWithoutCheckBounds(j))
                         {
                             return j;
                         }
@@ -842,7 +877,7 @@ namespace Com
                         {
                             for (int j = startIndex; j < (_Left + 1) * _BitsPerUint; j++)
                             {
-                                if (!Get(j))
+                                if (!_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -852,7 +887,7 @@ namespace Com
                         {
                             for (int j = _Right * _BitsPerUint; j < startIndex + count; j++)
                             {
-                                if (!Get(j))
+                                if (!_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -862,7 +897,7 @@ namespace Com
                         {
                             for (int j = i * _BitsPerUint; j < (i + 1) * _BitsPerUint; j++)
                             {
-                                if (!Get(j))
+                                if (!_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -936,7 +971,7 @@ namespace Com
                 {
                     for (int j = startIndex; j > startIndex - count; j--)
                     {
-                        if (Get(j))
+                        if (_GetItemWithoutCheckBounds(j))
                         {
                             return j;
                         }
@@ -950,7 +985,7 @@ namespace Com
                         {
                             for (int j = startIndex; j >= _Right * _BitsPerUint; j--)
                             {
-                                if (Get(j))
+                                if (_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -960,7 +995,7 @@ namespace Com
                         {
                             for (int j = (_Left + 1) * _BitsPerUint - 1; j > startIndex - count; j--)
                             {
-                                if (Get(j))
+                                if (_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -970,7 +1005,7 @@ namespace Com
                         {
                             for (int j = (i + 1) * _BitsPerUint - 1; j >= i * _BitsPerUint; j--)
                             {
-                                if (Get(j))
+                                if (_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -985,7 +1020,7 @@ namespace Com
                 {
                     for (int j = startIndex; j > startIndex - count; j--)
                     {
-                        if (!Get(j))
+                        if (!_GetItemWithoutCheckBounds(j))
                         {
                             return j;
                         }
@@ -999,7 +1034,7 @@ namespace Com
                         {
                             for (int j = startIndex; j >= _Right * _BitsPerUint; j--)
                             {
-                                if (!Get(j))
+                                if (!_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -1009,7 +1044,7 @@ namespace Com
                         {
                             for (int j = (_Left + 1) * _BitsPerUint - 1; j > startIndex - count; j--)
                             {
-                                if (!Get(j))
+                                if (!_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -1019,7 +1054,7 @@ namespace Com
                         {
                             for (int j = (i + 1) * _BitsPerUint - 1; j >= i * _BitsPerUint; j--)
                             {
-                                if (!Get(j))
+                                if (!_GetItemWithoutCheckBounds(j))
                                 {
                                     return j;
                                 }
@@ -1055,7 +1090,7 @@ namespace Com
                         {
                             for (int j = i * _BitsPerUint; j < _Size; j++)
                             {
-                                if (Get(j))
+                                if (_GetItemWithoutCheckBounds(j))
                                 {
                                     return true;
                                 }
@@ -1078,7 +1113,7 @@ namespace Com
                         {
                             for (int j = i * _BitsPerUint; j < _Size; j++)
                             {
-                                if (!Get(j))
+                                if (!_GetItemWithoutCheckBounds(j))
                                 {
                                     return true;
                                 }
@@ -1116,7 +1151,7 @@ namespace Com
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    result[i] = Get(i);
+                    result[i] = _GetItemWithoutCheckBounds(i);
                 }
 
                 return result;
@@ -1139,11 +1174,35 @@ namespace Com
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    result.Add(Get(i));
+                    result.Add(_GetItemWithoutCheckBounds(i));
                 }
 
                 return result;
             }
+        }
+
+        //
+
+        /// <summary>
+        /// 将此 BitSet 的所有位值复制到布尔值数组中。
+        /// </summary>
+        /// <param name="array">布尔值数组。</param>
+        /// <param name="index">布尔值数组的起始索引。</param>
+        public void CopyTo(bool[] array, int index)
+        {
+            if (array is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (array.Length - index < _Size)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            ToArray().CopyTo(array, index);
         }
 
         //
@@ -1186,7 +1245,7 @@ namespace Com
 
             //
 
-            return ((_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0);
+            return _GetItemWithoutCheckBounds(index);
         }
 
         /// <summary>
@@ -1203,14 +1262,7 @@ namespace Com
 
             //
 
-            if (bitValue)
-            {
-                _UintArray[index / _BitsPerUint] |= (((uint)1) << (index % _BitsPerUint));
-            }
-            else
-            {
-                _UintArray[index / _BitsPerUint] &= (~(((uint)1) << (index % _BitsPerUint)));
-            }
+            _SetItemWithoutCheckBounds(index, bitValue);
         }
 
         /// <summary>
@@ -1675,7 +1727,7 @@ namespace Com
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    BitCharArray[_Size - 1 - i] = (Get(i) ? '1' : '0');
+                    BitCharArray[_Size - 1 - i] = (_GetItemWithoutCheckBounds(i) ? '1' : '0');
                 }
 
                 return new string(BitCharArray);
@@ -2184,7 +2236,24 @@ namespace Com
 
         void ICollection.CopyTo(Array array, int index)
         {
-            throw new NotSupportedException();
+            if (array is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (array.Rank != 1)
+            {
+                throw new RankException();
+            }
+
+            if (array.Length - index < _Size)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            ToArray().CopyTo(array, index);
         }
 
         #endregion
@@ -2211,14 +2280,19 @@ namespace Com
             {
                 get
                 {
-                    if (IsNullOrEmpty(_BitSet) || (_Index < 0 || _Index >= _BitSet._Size))
+                    if (_BitSet is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
+                    if (_BitSet.IsEmpty || (_Index < 0 || _Index >= _BitSet._Size))
                     {
                         throw new IndexOutOfRangeException();
                     }
 
                     //
 
-                    return _BitSet.Get(_Index);
+                    return _BitSet._GetItemWithoutCheckBounds(_Index);
                 }
             }
 
@@ -2274,11 +2348,6 @@ namespace Com
             }
         }
 
-        void ICollection<bool>.CopyTo(bool[] array, int index)
-        {
-            throw new NotSupportedException();
-        }
-
         bool ICollection<bool>.Remove(bool item)
         {
             throw new NotSupportedException();
@@ -2313,14 +2382,19 @@ namespace Com
             {
                 get
                 {
-                    if (IsNullOrEmpty(_BitSet) || (_Index < 0 || _Index >= _BitSet._Size))
+                    if (_BitSet is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
+                    if (_BitSet.IsEmpty || (_Index < 0 || _Index >= _BitSet._Size))
                     {
                         throw new IndexOutOfRangeException();
                     }
 
                     //
 
-                    return _BitSet.Get(_Index);
+                    return _BitSet._GetItemWithoutCheckBounds(_Index);
                 }
             }
 
@@ -2347,14 +2421,19 @@ namespace Com
             {
                 get
                 {
-                    if (IsNullOrEmpty(_BitSet) || (_Index < 0 || _Index >= _BitSet._Size))
+                    if (_BitSet is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
+                    if (_BitSet.IsEmpty || (_Index < 0 || _Index >= _BitSet._Size))
                     {
                         throw new IndexOutOfRangeException();
                     }
 
                     //
 
-                    return _BitSet.Get(_Index);
+                    return _BitSet._GetItemWithoutCheckBounds(_Index);
                 }
             }
         }

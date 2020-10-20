@@ -1045,6 +1045,33 @@ namespace Com
         //
 
         /// <summary>
+        /// 将此 Vector 的所有分量复制到双精度浮点数数组中。
+        /// </summary>
+        /// <param name="array">双精度浮点数数组。</param>
+        /// <param name="index">双精度浮点数数组的起始索引。</param>
+        public void CopyTo(double[] array, int index)
+        {
+            if (array is null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (array.Length - index < _Size)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            if (_Size > 0)
+            {
+                _VArray.CopyTo(array, index);
+            }
+        }
+
+        //
+
+        /// <summary>
         /// 返回将此 Vector 表示的直角坐标系坐标转换为极坐标系、球坐标系或超球坐标系坐标的新实例。
         /// </summary>
         /// <returns>Vector 对象，表示将此 Vector 表示的直角坐标系坐标转换为极坐标系、球坐标系或超球坐标系坐标得到的结果。</returns>
@@ -4455,7 +4482,7 @@ namespace Com
                 throw new RankException();
             }
 
-            if (array.Length < _Size)
+            if (array.Length - index < _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -4492,7 +4519,12 @@ namespace Com
             {
                 get
                 {
-                    if (IsNullOrEmpty(_Vector) || (_Index < 0 || _Index >= _Vector._Size))
+                    if (_Vector is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
+                    if (_Vector.IsEmpty || (_Index < 0 || _Index >= _Vector._Size))
                     {
                         throw new IndexOutOfRangeException();
                     }
@@ -4562,14 +4594,6 @@ namespace Com
             }
         }
 
-        void ICollection<double>.CopyTo(double[] array, int index)
-        {
-            if (_Size > 0 && (!(array is null) && array.Length >= _Size))
-            {
-                _VArray.CopyTo(array, index);
-            }
-        }
-
         bool ICollection<double>.Remove(double item)
         {
             throw new NotSupportedException();
@@ -4604,7 +4628,12 @@ namespace Com
             {
                 get
                 {
-                    if (IsNullOrEmpty(_Vector) || _Index < 0 || _Index >= _Vector._Size)
+                    if (_Vector is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
+                    if (_Vector.IsEmpty || _Index < 0 || _Index >= _Vector._Size)
                     {
                         throw new IndexOutOfRangeException();
                     }
@@ -4638,7 +4667,12 @@ namespace Com
             {
                 get
                 {
-                    if (IsNullOrEmpty(_Vector) || (_Index < 0 || _Index >= _Vector._Size))
+                    if (_Vector is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
+                    if (_Vector.IsEmpty || (_Index < 0 || _Index >= _Vector._Size))
                     {
                         throw new IndexOutOfRangeException();
                     }
