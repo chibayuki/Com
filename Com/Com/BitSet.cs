@@ -2150,9 +2150,14 @@ namespace Com
 
             set
             {
-                if (value is null || !(value is bool))
+                if (value is null)
                 {
                     throw new ArgumentNullException();
+                }
+
+                if (!(value is bool))
+                {
+                    throw new ArgumentException();
                 }
 
                 //

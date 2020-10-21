@@ -4379,9 +4379,14 @@ namespace Com
 
             set
             {
-                if (value is null || !(value is double))
+                if (value is null)
                 {
                     throw new ArgumentNullException();
+                }
+
+                if (!(value is double))
+                {
+                    throw new ArgumentException();
                 }
 
                 //
