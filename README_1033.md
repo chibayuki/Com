@@ -1,3 +1,16 @@
+[![GitHub stars](https://img.shields.io/github/stars/chibayuki/Com.svg?style=social&label=Stars)](https://github.com/chibayuki/Com/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/chibayuki/Com.svg?style=social&label=Fork)](https://github.com/chibayuki/Com/network/members)
+[![GitHub watchers](https://img.shields.io/github/watchers/chibayuki/Com.svg?style=social&label=Watch)](https://github.com/chibayuki/Com/watchers)
+[![GitHub followers](https://img.shields.io/github/followers/chibayuki.svg?style=social&label=Follow)](https://github.com/chibayuki?tab=followers)
+
+[![GitHub issues](https://img.shields.io/github/issues/chibayuki/Com.svg)](https://github.com/chibayuki/Com/issues)
+[![GitHub license](https://img.shields.io/github/license/chibayuki/Com.svg)](https://github.com/chibayuki/Com/Com/LicenseInfo/GPLv3.txt)
+[![GitHub last commit](https://img.shields.io/github/last-commit/chibayuki/Com.svg)](https://github.com/chibayuki/Com/commits)
+[![GitHub release](https://img.shields.io/github/release/chibayuki/Com.svg)](https://github.com/chibayuki/Com/releases)
+[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/chibayuki/Com.svg)](https://github.com/chibayuki/Com)
+[![HitCount](http://hits.dwyl.io/chibayuki/Com.svg)](http://hits.dwyl.io/chibayuki/Com)
+[![Language](https://img.shields.io/badge/language-C%23-green.svg)](https://github.com/chibayuki/Com)
+
 ###### Language\(语言\): \[English\] / \[[中文](README.md)\]
 
 # Com
@@ -30,6 +43,10 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 > Containing one or a sequence of affine transformation, supporting complex affine transformations.
 #### Com.BitSet
 > Managing set of bits (up to 2146434944 bits) and providing basic bit operations.
+#### Com.FrequencyCounter
+> Frequency counter, which can calculate the frequency of an event realtime.
+#### Com.IndexableQueue
+> A FIFO container, supporting access by index.
 #### Com.Matrix
 > Matrix, supporting linear transformations.
 #### Com.Vector
@@ -38,6 +55,10 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 > Window manager of winform.
 #### Com.WinForm.RecommendColors
 > Color scheme provided by FormManager.
+#### Com.WinForm.UIMessage
+> Message of UI.
+#### Com.WinForm.UIMessageProcessor
+> Processor of UIMessage.
 
 ## Structures
 #### Com.ColorX
@@ -58,6 +79,8 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 > Coordinate (vector) in 6D Euclidean space.
 #### Com.Real
 > Real number (floating-point number in the order of magnitude between ±999999999999999).
+#### Com.TimeSpanX
+> A timespan.
 
 ## Interfaces
 #### Com.IAffineTransformable and Com.IAffineTransformable\<T\>
@@ -80,10 +103,18 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 > Style of winform window.
 #### Com.WinForm.Theme
 > Theme of color scheme of winform window.
+#### Com.WinForm.UIMessageState
+> State of UIMessage.
+#### Com.WinForm.UIMessageProcessorState
+> State of UIMessageProcessor.
 
 ## Delegates
 #### Com.Animation.Frame
 > Method of presenting animation frames.
+#### Com.WinForm.UIMessageProcessedHandler
+> Method of UIMessage processed.
+#### Com.WinForm.UIMessageProcessorStoppedHandler
+> Method of UIMessageProcessor stopped.
 
 ## License
 Com is released under [GPLv3](Com/LicenseInfo/GPLv3.txt).
