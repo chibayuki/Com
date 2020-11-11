@@ -71,12 +71,16 @@
     <Compile Include="Com.WinForm\CaptionBar.Designer.cs">
       <DependentUpon>CaptionBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Com.WinForm\UIMessage.cs" />
+    <Compile Include="Com.WinForm\UIMessageProcessor.cs" />
     <Compile Include="Com.WinForm\UpdateLayoutBehavior.cs" />
     <Compile Include="Com.WinForm\UpdateLayoutEventType.cs" />
     <Compile Include="Com\AffineTransformation.cs" />
     <Compile Include="Com\BitSet.cs" />
     <Compile Include="Com\ColorManipulation.cs" />
     <Compile Include="Com\Constant.cs" />
+    <Compile Include="Com\IndexableQueue.cs" />
+    <Compile Include="Com\FrequencyCounter.cs" />
     <Compile Include="Com\IAffine.cs" />
     <Compile Include="Com\IAffineTransformable.cs" />
     <Compile Include="Com\IEuclideanVector.cs" />
@@ -87,6 +91,7 @@
     <Compile Include="Com\PointD5D.cs" />
     <Compile Include="Com\PointD6D.cs" />
     <Compile Include="Com\Real.cs" />
+    <Compile Include="Com\TimeSpanX.cs" />
     <Compile Include="Com\Vector.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.DateTimeX
-Version 20.8.15.1420
+Version 20.10.27.1900
 
 This file is part of Com
 
@@ -125,16 +125,13 @@ namespace Com
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+                else if (year > (utcOffset > 0 ? _MaxYear + 1 : _MaxYear))
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
                 else
                 {
-                    if (year > (utcOffset > 0 ? _MaxYear + 1 : _MaxYear))
-                    {
-                        throw new ArgumentOutOfRangeException();
-                    }
-                    else
-                    {
-                        return year;
-                    }
+                    return year;
                 }
             }
         }
@@ -159,16 +156,13 @@ namespace Com
             {
                 throw new ArgumentOutOfRangeException();
             }
+            else if (day > DaysInMonth(year, month))
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             else
             {
-                if (day > DaysInMonth(year, month))
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                else
-                {
-                    return day;
-                }
+                return day;
             }
         }
 
@@ -412,10 +406,10 @@ namespace Com
         //
 
         // 表示此 DateTimeX 结构所在时区时刻的最小可能值的 DateTimeX 结构的实例。
-        private DateTimeX _ThisMinValue => new DateTimeX(_MinTotalMilliseconds, _UtcOffset);
+        private DateTimeX _LocalMinValue => new DateTimeX(_MinTotalMilliseconds, _UtcOffset);
 
         // 表示此 DateTimeX 结构所在时区时刻的最大可能值的 DateTimeX 结构的实例。
-        private DateTimeX _ThisMaxValue => new DateTimeX(_MaxTotalMilliseconds, _UtcOffset);
+        private DateTimeX _LocalMaxValue => new DateTimeX(_MaxTotalMilliseconds, _UtcOffset);
 
         //
 
@@ -1509,6 +1503,16 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回将此 DateTimeX 结构与 TimeSpanX 结构相加得到的 DateTimeX 结构的新实例。
+        /// </summary>
+        /// <param name="timeSpan">TimeSpanX 结构，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构与 TimeSpanX 结构相加得到的结果。</returns>
+        public DateTimeX Add(TimeSpanX timeSpan)
+        {
+            return AddMilliseconds(timeSpan.TotalMilliseconds);
+        }
+
+        /// <summary>
         /// 返回将此 DateTimeX 结构与 TimeSpan 结构相加得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="timeSpan">TimeSpan 结构，用于相加到此 DateTimeX 结构。</param>
@@ -1552,23 +1556,20 @@ namespace Com
                         NewYear -= 1;
                     }
 
-                    if (NewYear < _ThisMinValue.Year)
+                    if (NewYear < _LocalMinValue.Year)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewYear > _LocalMaxValue.Year)
                     {
                         throw new ArgumentOutOfRangeException();
                     }
                     else
                     {
-                        if (NewYear > _ThisMaxValue.Year)
-                        {
-                            throw new ArgumentOutOfRangeException();
-                        }
-                        else
-                        {
-                            int NewMonth = Month;
-                            int NewDay = Math.Min(Day, DaysInMonth(NewYear, NewMonth));
+                        int NewMonth = Month;
+                        int NewDay = Math.Min(Day, DaysInMonth(NewYear, NewMonth));
 
-                            return new DateTimeX(NewYear, NewMonth, NewDay, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
-                        }
+                        return new DateTimeX(NewYear, NewMonth, NewDay, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
                     }
                 }
             }
@@ -1620,17 +1621,17 @@ namespace Com
                         NewYear -= 1;
                     }
 
-                    DateTimeX ThisMinValue = _ThisMinValue;
+                    DateTimeX LocalMinValue = _LocalMinValue;
 
-                    if (NewYear < ThisMinValue._Year || (NewYear == ThisMinValue._Year && NewMonth < ThisMinValue._Month))
+                    if (NewYear < LocalMinValue._Year || (NewYear == LocalMinValue._Year && NewMonth < LocalMinValue._Month))
                     {
                         throw new ArgumentOutOfRangeException();
                     }
                     else
                     {
-                        DateTimeX ThisMaxValue = _ThisMaxValue;
+                        DateTimeX LocalMaxValue = _LocalMaxValue;
 
-                        if (NewYear > ThisMaxValue._Year || (NewYear == ThisMaxValue._Year && NewMonth > ThisMaxValue._Month))
+                        if (NewYear > LocalMaxValue._Year || (NewYear == LocalMaxValue._Year && NewMonth > LocalMaxValue._Month))
                         {
                             throw new ArgumentOutOfRangeException();
                         }
@@ -1676,6 +1677,47 @@ namespace Com
                 else
                 {
                     decimal NewTotalMS = _TotalMilliseconds + (decimal)weeks * _MillisecondsPerWeek;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回将此 DateTimeX 结构加上若干天得到的 DateTimeX 结构的新实例。
+        /// </summary>
+        /// <param name="days">十进制浮点数表示的天数，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干天得到的结果。</returns>
+        public DateTimeX AddDays(decimal days)
+        {
+            if (days == 0)
+            {
+                return this;
+            }
+            else
+            {
+                if ((double)_TotalMilliseconds + (double)days * _MillisecondsPerDay < (double)decimal.MinValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else if ((double)_TotalMilliseconds + (double)days * _MillisecondsPerDay > (double)decimal.MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    decimal NewTotalMS = _TotalMilliseconds + days * _MillisecondsPerDay;
 
                     if (NewTotalMS < _MinTotalMilliseconds)
                     {
@@ -1744,6 +1786,47 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干小时得到的 DateTimeX 结构的新实例。
         /// </summary>
+        /// <param name="hours">十进制浮点数表示的小时数，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干小时得到的结果。</returns>
+        public DateTimeX AddHours(decimal hours)
+        {
+            if (hours == 0)
+            {
+                return this;
+            }
+            else
+            {
+                if ((double)_TotalMilliseconds + (double)hours * _MillisecondsPerHour < (double)decimal.MinValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else if ((double)_TotalMilliseconds + (double)hours * _MillisecondsPerHour > (double)decimal.MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    decimal NewTotalMS = _TotalMilliseconds + hours * _MillisecondsPerHour;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回将此 DateTimeX 结构加上若干小时得到的 DateTimeX 结构的新实例。
+        /// </summary>
         /// <param name="hours">双精度浮点数表示的小时数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干小时得到的结果。</returns>
         public DateTimeX AddHours(double hours)
@@ -1792,6 +1875,47 @@ namespace Com
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干分钟得到的 DateTimeX 结构的新实例。
         /// </summary>
+        /// <param name="minutes">十进制浮点数表示的分钟数，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干分钟得到的结果。</returns>
+        public DateTimeX AddMinutes(decimal minutes)
+        {
+            if (minutes == 0)
+            {
+                return this;
+            }
+            else
+            {
+                if ((double)_TotalMilliseconds + (double)minutes * _MillisecondsPerMinute < (double)decimal.MinValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else if ((double)_TotalMilliseconds + (double)minutes * _MillisecondsPerMinute > (double)decimal.MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    decimal NewTotalMS = _TotalMilliseconds + minutes * _MillisecondsPerMinute;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回将此 DateTimeX 结构加上若干分钟得到的 DateTimeX 结构的新实例。
+        /// </summary>
         /// <param name="minutes">双精度浮点数表示的分钟数，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干分钟得到的结果。</returns>
         public DateTimeX AddMinutes(double minutes)
@@ -1820,6 +1944,47 @@ namespace Com
                 else
                 {
                     decimal NewTotalMS = _TotalMilliseconds + (decimal)minutes * _MillisecondsPerMinute;
+
+                    if (NewTotalMS < _MinTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else if (NewTotalMS > _MaxTotalMilliseconds)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    else
+                    {
+                        return new DateTimeX(NewTotalMS, _UtcOffset);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回将此 DateTimeX 结构加上若干秒得到的 DateTimeX 结构的新实例。
+        /// </summary>
+        /// <param name="seconds">十进制浮点数表示的秒数，用于相加到此 DateTimeX 结构。</param>
+        /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构加上若干秒得到的结果。</returns>
+        public DateTimeX AddSeconds(decimal seconds)
+        {
+            if (seconds == 0)
+            {
+                return this;
+            }
+            else
+            {
+                if ((double)_TotalMilliseconds + (double)seconds * _MillisecondsPerSecond < (double)decimal.MinValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else if ((double)_TotalMilliseconds + (double)seconds * _MillisecondsPerSecond > (double)decimal.MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                else
+                {
+                    decimal NewTotalMS = _TotalMilliseconds + seconds * _MillisecondsPerSecond;
 
                     if (NewTotalMS < _MinTotalMilliseconds)
                     {
@@ -2238,6 +2403,17 @@ namespace Com
         //
 
         /// <summary>
+        /// 返回将 DateTimeX 结构与 TimeSpanX 结构相加得到的 DateTimeX 结构的新实例。
+        /// </summary>
+        /// <param name="dateTime">DateTimeX 结构，表示被加数。</param>
+        /// <param name="timeSpan">TimeSpanX 结构，表示加数。</param>
+        /// <returns>DateTimeX 结构，表示将 DateTimeX 结构与 TimeSpanX 结构相加得到的结果。</returns>
+        public static DateTimeX operator +(DateTimeX dateTime, TimeSpanX timeSpan)
+        {
+            return dateTime.AddMilliseconds(timeSpan.TotalMilliseconds);
+        }
+
+        /// <summary>
         /// 返回将 DateTimeX 结构与 TimeSpan 结构相加得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="dateTime">DateTimeX 结构，表示被加数。</param>
@@ -2246,6 +2422,17 @@ namespace Com
         public static DateTimeX operator +(DateTimeX dateTime, TimeSpan timeSpan)
         {
             return dateTime.AddMilliseconds(timeSpan.TotalMilliseconds);
+        }
+
+        /// <summary>
+        /// 返回将 DateTimeX 结构与 TimeSpanX 结构相减得到的 DateTimeX 结构的新实例。
+        /// </summary>
+        /// <param name="dateTime">DateTimeX 结构，表示被减数。</param>
+        /// <param name="timeSpan">TimeSpanX 结构，表示减数。</param>
+        /// <returns>DateTimeX 结构，表示将 DateTimeX 结构与 TimeSpanX 结构相减得到的结果。</returns>
+        public static DateTimeX operator -(DateTimeX dateTime, TimeSpanX timeSpan)
+        {
+            return dateTime.AddMilliseconds(-(timeSpan.TotalMilliseconds));
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 Copyright © 2020 chibayuki@foxmail.com
 
 Com.WinForm.SplashScreen
-Version 20.8.15.1420
+Version 20.10.27.1900
 
 This file is part of Com
 
