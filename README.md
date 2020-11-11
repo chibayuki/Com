@@ -1,3 +1,16 @@
+[![GitHub stars](https://img.shields.io/github/stars/chibayuki/Com.svg?style=social&label=Stars)](https://github.com/chibayuki/Com/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/chibayuki/Com.svg?style=social&label=Fork)](https://github.com/chibayuki/Com/network/members)
+[![GitHub watchers](https://img.shields.io/github/watchers/chibayuki/Com.svg?style=social&label=Watch)](https://github.com/chibayuki/Com/watchers)
+[![GitHub followers](https://img.shields.io/github/followers/chibayuki.svg?style=social&label=Follow)](https://github.com/chibayuki?tab=followers)
+
+[![GitHub issues](https://img.shields.io/github/issues/chibayuki/Com.svg)](https://github.com/chibayuki/Com/issues)
+[![GitHub license](https://img.shields.io/github/license/chibayuki/Com.svg)](https://github.com/chibayuki/Com/Com/LicenseInfo/GPLv3.txt)
+[![GitHub last commit](https://img.shields.io/github/last-commit/chibayuki/Com.svg)](https://github.com/chibayuki/Com/commits)
+[![GitHub release](https://img.shields.io/github/release/chibayuki/Com.svg)](https://github.com/chibayuki/Com/releases)
+[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/chibayuki/Com.svg)](https://github.com/chibayuki/Com)
+[![HitCount](http://hits.dwyl.io/chibayuki/Com.svg)](http://hits.dwyl.io/chibayuki/Com)
+[![Language](https://img.shields.io/badge/language-C%23-green.svg)](https://github.com/chibayuki/Com)
+
 ###### 语言\(Language\): \[中文\] / \[[English](README_1033.md)\]
 
 # Com
@@ -30,6 +43,10 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 > 表示仿射变换或仿射变换序列，用于支持复杂的仿射变换。
 #### Com.BitSet
 > 管理位（Bit）的集合（至多2146434944位），提供基本的位运算功能。
+#### Com.FrequencyCounter
+> 频率计数器，用于实时计算在过去一小段时间间隔内某一事件发生的频率。
+#### Com.IndexableQueue
+> 允许通过索引访问元素的先进先出容器。
 #### Com.Matrix
 > 表示矩阵，并为线性变换提供实现。
 #### Com.Vector
@@ -38,6 +55,10 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 > 窗口管理器。
 #### Com.WinForm.RecommendColors
 > 窗口管理器提供的建议配色方案。
+#### Com.WinForm.UIMessage
+> 界面消息。
+#### Com.WinForm.UIMessageProcessor
+> 界面消息处理器。
 
 ## 结构
 #### Com.ColorX
@@ -58,6 +79,8 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 > 六维欧式空间中表示的坐标（向量）。
 #### Com.Real
 > 表示实数（数量级介于±999999999999999的浮点数）。
+#### Com.TimeSpanX
+> 表示一个时间间隔。
 
 ## 接口
 #### Com.IAffineTransformable 与 Com.IAffineTransformable\<T\>
@@ -80,10 +103,18 @@ Com是通用组件，是用于支持线性代数运算、位运算、大型日�
 > 表示窗口样式。
 #### Com.WinForm.Theme
 > 表示窗口配色主题。
+#### Com.WinForm.UIMessageState
+> 界面消息状态。
+#### Com.WinForm.UIMessageProcessorState
+> 界面消息处理器状态。
 
 ## 委托
 #### Com.Animation.Frame
 > 表示用于绘制动画的某一帧的方法。
+#### Com.WinForm.UIMessageProcessedHandler
+> 表示当界面消息处理完成时应执行的方法。
+#### Com.WinForm.UIMessageProcessorStoppedHandler
+> 表示当界面消息处理器停止时应执行的方法。
 
 ## 许可
 Com基于[GPLv3](Com/LicenseInfo/GPLv3.txt)发布。
