@@ -80,7 +80,7 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.Real
 > Real number (floating-point number in the order of magnitude between ±999999999999999).
 #### Com.TimeSpanX
-> A timespan.
+> Large timespan.
 
 ## Interfaces
 #### Com.IAffineTransformable and Com.IAffineTransformable\<T\>
@@ -112,9 +112,9 @@ Com is a common component, which is a DLL for supporting linear algebra, bit ope
 #### Com.Animation.Frame
 > Method of presenting animation frames.
 #### Com.WinForm.UIMessageProcessedHandler
-> Method of UIMessage processed.
+> Method to be invoked when UIMessage processed.
 #### Com.WinForm.UIMessageProcessorStoppedHandler
-> Method of UIMessageProcessor stopped.
+> Method to be invoked when UIMessageProcessor stopped.
 
 ## License
 Com is released under [GPLv3](Com/LicenseInfo/GPLv3.txt).
