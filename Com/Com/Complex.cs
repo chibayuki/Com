@@ -309,11 +309,7 @@ namespace Com
         /// <returns>布尔值，表示此 Complex 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            else if (obj is null || !(obj is Complex))
+            if (obj is null || !(obj is Complex))
             {
                 return false;
             }
@@ -413,11 +409,7 @@ namespace Com
         /// <returns>32 位整数，表示将此 Complex 结构与指定的对象进行次序比较得到的结果。</returns>
         public int CompareTo(object obj)
         {
-            if (object.ReferenceEquals(this, obj))
-            {
-                return 0;
-            }
-            else if (obj is null)
+            if (obj is null)
             {
                 return 1;
             }

@@ -3807,11 +3807,7 @@ namespace Com
         /// <returns>布尔值，表示此 ColorX 结构是否与指定的对象相等。</returns>
         public override bool Equals(object obj)
         {
-            if (object.ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            else if (obj is null || !(obj is ColorX))
+            if (obj is null || !(obj is ColorX))
             {
                 return false;
             }
@@ -3836,7 +3832,7 @@ namespace Com
         /// <returns>字符串，表示此 ColorX 结构的字符串形式。</returns>
         public override string ToString()
         {
-            string Str = string.Empty;
+            string Str;
 
             switch (_CurrentColorSpace)
             {
