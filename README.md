@@ -8,7 +8,6 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/chibayuki/Com.svg)](https://github.com/chibayuki/Com/commits)
 [![GitHub release](https://img.shields.io/github/release/chibayuki/Com.svg)](https://github.com/chibayuki/Com/releases)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/chibayuki/Com.svg)](https://github.com/chibayuki/Com)
-[![HitCount](http://hits.dwyl.io/chibayuki/Com.svg)](http://hits.dwyl.io/chibayuki/Com)
 [![Language](https://img.shields.io/badge/language-C%23-green.svg)](https://github.com/chibayuki/Com)
 
 ###### 语言\(Language\): \[中文\] / \[[English](README_1033.md)\]
