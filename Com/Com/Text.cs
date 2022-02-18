@@ -378,27 +378,52 @@ namespace Com
             }
             else
             {
-                Font Ft = font;
-                SizeF Sz = TextRenderer.MeasureText(text, Ft);
+                Font min = new Font(font.Name, 1, font.Style, font.Unit, font.GdiCharSet, font.GdiVerticalFont);
+                Font max = new Font(font.Name, 256, font.Style, font.Unit, font.GdiCharSet, font.GdiVerticalFont);
 
-                while (Sz.Width <= size.Width || Sz.Height <= size.Height)
+                SizeF sz = TextRenderer.MeasureText(text, min);
+
+                while (sz.Width > size.Width || sz.Height > size.Height)
                 {
-                    Ft = new Font(Ft.Name, Ft.Size * 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet, Ft.GdiVerticalFont);
-                    Sz = TextRenderer.MeasureText(text, Ft);
+                    Font ft = new Font(font.Name, min.Size / 2, font.Style, font.Unit, font.GdiCharSet, font.GdiVerticalFont);
+                    min.Dispose();
+                    min = ft;
+
+                    sz = TextRenderer.MeasureText(text, min);
                 }
 
-                while (Sz.Width > size.Width || Sz.Height > size.Height)
+                sz = TextRenderer.MeasureText(text, max);
+
+                while (sz.Width < size.Width && sz.Height < size.Height)
                 {
-                    if (Ft.Size <= 1F)
+                    Font ft = new Font(font.Name, max.Size * 2, font.Style, font.Unit, font.GdiCharSet, font.GdiVerticalFont);
+                    max.Dispose();
+                    max = ft;
+
+                    sz = TextRenderer.MeasureText(text, max);
+                }
+
+                while (max.Size - min.Size > min.Size / 20)
+                {
+                    Font ft = new Font(font.Name, (min.Size + max.Size) / 2, font.Style, font.Unit, font.GdiCharSet, font.GdiVerticalFont);
+
+                    sz = TextRenderer.MeasureText(text, ft);
+
+                    if (sz.Width > size.Width || sz.Height > size.Height)
                     {
-                        break;
+                        max.Dispose();
+                        max = ft;
                     }
-
-                    Ft = new Font(Ft.Name, Ft.Size / 1.05F, Ft.Style, Ft.Unit, Ft.GdiCharSet, Ft.GdiVerticalFont);
-                    Sz = TextRenderer.MeasureText(text, Ft);
+                    else if (sz.Width < size.Width && sz.Height < size.Height)
+                    {
+                        min.Dispose();
+                        min = ft;
+                    }
                 }
 
-                return Ft;
+                max.Dispose();
+
+                return min;
             }
         }
 
