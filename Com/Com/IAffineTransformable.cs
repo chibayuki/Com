@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2020 chibayuki@foxmail.com
+Copyright © 2022 chibayuki@foxmail.com
 
 Com.IAffineTransform
 Version 20.10.27.1900
