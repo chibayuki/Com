@@ -1334,35 +1334,42 @@ namespace Com
         /// <returns>AffineTransformation 对象，表示将 AffineTransformation 对象数组合并的结果。</returns>
         public static AffineTransformation Join(params AffineTransformation[] affineTransformations)
         {
-            if (InternalMethod.IsNullOrEmpty(affineTransformations))
+            if (affineTransformations is null)
             {
                 throw new ArgumentNullException();
             }
 
             //
 
-            int capacity = 0;
-
-            for (int i = 0; i < affineTransformations.Length; i++)
+            if (affineTransformations.Length <= 0)
             {
-                if (affineTransformations[i] is null)
-                {
-                    throw new ArgumentNullException();
-                }
-                else
-                {
-                    capacity += affineTransformations[i]._Sequence.Count;
-                }
+                return Empty;
             }
-
-            List<AffineTransformationAtomic> sequence = new List<AffineTransformationAtomic>(capacity);
-
-            for (int i = 0; i < affineTransformations.Length; i++)
+            else
             {
-                sequence.AddRange(affineTransformations[i]._Sequence);
-            }
+                int capacity = 0;
 
-            return _UnsafeCreateInstance(sequence);
+                for (int i = 0; i < affineTransformations.Length; i++)
+                {
+                    if (affineTransformations[i] is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+                    else
+                    {
+                        capacity += affineTransformations[i]._Sequence.Count;
+                    }
+                }
+
+                List<AffineTransformationAtomic> sequence = new List<AffineTransformationAtomic>(capacity);
+
+                for (int i = 0; i < affineTransformations.Length; i++)
+                {
+                    sequence.AddRange(affineTransformations[i]._Sequence);
+                }
+
+                return _UnsafeCreateInstance(sequence);
+            }
         }
 
         /// <summary>
