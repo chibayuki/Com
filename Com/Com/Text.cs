@@ -414,7 +414,7 @@ namespace Com
                         max.Dispose();
                         max = ft;
                     }
-                    else if (sz.Width < size.Width && sz.Height < size.Height)
+                    else
                     {
                         min.Dispose();
                         min = ft;
