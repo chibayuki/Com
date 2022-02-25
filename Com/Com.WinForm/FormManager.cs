@@ -214,7 +214,7 @@ namespace Com.WinForm
 
         //
 
-        private const int _ResizerSize = 8; // 窗口大小调节器的大小。
+        private const int _ResizerSize = 10; // 窗口大小调节器的大小。
 
         // 获取窗口大小调节器的大小。
         internal int ResizerSize
@@ -342,7 +342,7 @@ namespace Com.WinForm
         {
             get
             {
-                return (_ShowShadowColor ? (_IsActive ? 0.15 : 0.09) : (_IsActive ? 0.1 : 0.06));
+                return (_ShowShadowColor ? (_IsActive ? 0.18 : 0.12) : (_IsActive ? 0.12 : 0.08));
             }
         }
 

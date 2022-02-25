@@ -154,7 +154,7 @@ namespace Com.WinForm
             Label_Bottom.Size = new Size(Panel_Border.Width - Label_BottomLeft.Width - Label_BottomRight.Width, Me.ResizerSize);
             Label_Left.Size = new Size(Me.ResizerSize, Panel_Border.Height - Label_TopLeft.Height - Label_BottomLeft.Height);
             Label_Right.Size = new Size(Me.ResizerSize, Panel_Border.Height - Label_TopRight.Height - Label_BottomRight.Height);
-            Label_TopLeft.Size = Label_TopRight.Size = Label_BottomLeft.Size = Label_BottomRight.Size = new Size(4 * Me.ResizerSize, 4 * Me.ResizerSize);
+            Label_TopLeft.Size = Label_TopRight.Size = Label_BottomLeft.Size = Label_BottomRight.Size = new Size(2 * Me.ResizerSize, 2 * Me.ResizerSize);
 
             Label_Top.Location = new Point(Label_TopLeft.Width, 0);
             Label_Bottom.Location = new Point(Label_BottomLeft.Width, Panel_Border.Height - Label_Bottom.Height);
