@@ -153,6 +153,37 @@ namespace Com
             }
         }
 
+        /// <summary>
+        /// 判断平面直角坐标系中两条直线段是否相交。
+        /// </summary>
+        /// <param name="line1">第一条直线段。</param>
+        /// <param name="line2">第二条直线段。</param>
+        /// <returns>布尔值，表示两条直线段是否相交。</returns>
+        public static bool TwoLinesIntersect((PointD pt1, PointD pt2) line1, (PointD pt1, PointD pt2) line2)
+        {
+            if (line1.pt1.IsNaNOrInfinity || line1.pt2.IsNaNOrInfinity || line2.pt1.IsNaNOrInfinity || line2.pt2.IsNaNOrInfinity)
+            {
+                return false;
+            }
+            else
+            {
+                // （1）若两条直线段相交，则它们在 X、Y 轴的投影也相交，据此首先排除一种不相交的情形：
+                if (Math.Max(line1.pt1.X, line1.pt2.X) <= Math.Min(line2.pt1.X, line2.pt2.X) || Math.Max(line1.pt1.Y, line1.pt2.Y) <= Math.Min(line2.pt1.Y, line2.pt2.Y) || Math.Max(line2.pt1.X, line2.pt2.X) <= Math.Min(line1.pt1.X, line1.pt2.X) || Math.Max(line2.pt1.Y, line2.pt2.Y) <= Math.Min(line1.pt1.Y, line1.pt2.Y))
+                {
+                    return false;
+                }
+
+                // （2）若两条直线段相交，则其中任一直线段的两个端点分别位于另一直线段两侧：
+                Func<PointD, PointD, double> CrossProduct = (pt1, pt2) => pt1.X * pt2.Y - pt1.Y * pt2.X;
+                if (Math.Sign(CrossProduct(line1.pt2 - line1.pt1, line2.pt1 - line1.pt1)) * Math.Sign(CrossProduct(line1.pt2 - line1.pt1, line2.pt2 - line1.pt1)) < 0 && Math.Sign(CrossProduct(line2.pt2 - line2.pt1, line1.pt1 - line2.pt1)) * Math.Sign(CrossProduct(line2.pt2 - line2.pt1, line1.pt2 - line2.pt1)) < 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
         #endregion
 
         #region 角度
@@ -496,41 +527,24 @@ namespace Com
             }
             else
             {
-                PointD RectCenter = new PointD(rect.Width / 2, rect.Height / 2);
-
-                double RectRadius = Math.Sqrt(Math.Pow(rect.Width, 2) + Math.Pow(rect.Height, 2)) / 2;
-
-                double Dist_RC_P1 = RectCenter.DistanceFrom(pt1);
-                double Dist_RC_P2 = RectCenter.DistanceFrom(pt2);
-
-                if (Dist_RC_P1 <= RectRadius || Dist_RC_P2 <= RectRadius)
+                // （1）若直线段的至少一个端点在矩形内部，则直线段与矩形相交：
+                if(PointIsVisibleInRectangle(pt1, rect)|| PointIsVisibleInRectangle(pt2, rect))
                 {
                     return true;
                 }
-                else
+
+                // （2）若直线段与矩形的至少一条边相交，则直线段与矩形相交：
+                (PointD, PointD) line = (pt1, pt2);
+                PointD LT = rect.Location;
+                PointD LB = new PointD(rect.X, rect.Bottom);
+                PointD RB = new PointD(rect.Right, rect.Bottom);
+                PointD RT = new PointD(rect.Right, rect.Y);
+                if (TwoLinesIntersect(line, (LT, LB))|| TwoLinesIntersect(line, (LB, RB))|| TwoLinesIntersect(line, (RB, RT))|| TwoLinesIntersect(line, (RT, LT)))
                 {
-                    double A, B, C;
-
-                    CalcLineGeneralFunction(pt1, pt2, out A, out B, out C);
-
-                    double Dist_RC_FP = GetDistanceBetweenPointAndLine(RectCenter, A, B, C);
-
-                    if (Dist_RC_FP > RectRadius)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        if ((A * pt1.X + B * pt1.Y + C) * (A * pt2.X + B * pt2.Y + C) > 0)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    }
+                    return true;
                 }
+
+                return false;
             }
         }
 

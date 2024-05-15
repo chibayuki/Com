@@ -92,7 +92,10 @@ namespace Com
                             }
                         }
 
-                        Grph.DrawLine(new Pen(new SolidBrush(color), width), pt1.ToPointF(), pt2.ToPointF());
+                        using (Pen pen = new Pen(color, width))
+                        {
+                            Grph.DrawLine(pen, pt1.ToPointF(), pt2.ToPointF());
+                        }
                     }
 
                     return true;
@@ -136,34 +139,37 @@ namespace Com
                             Grph.SmoothingMode = SmoothingMode.AntiAlias;
                         }
 
-                        // 绘制等差 15 / Pow(2, n) 度法向直线系（半径从 deltaRadius * normalIncreasePeriod 像素起，每扩大 2 倍，相邻法线之间的圆心角减小 1/2）：
-
-                        for (int i = 0; i < Math.Log(radius / (deltaRadius * normalIncreasePeriod)) / Math.Log(2); i++)
+                        using (Pen pen = new Pen(color, 1F))
                         {
-                            double Rx = deltaRadius * normalIncreasePeriod * Math.Pow(2, i); // 起点的半径。
-                            double Tx = 12 * Math.Pow(2, i); // 等分线的圆心角等于 PI / Tx * (2 * n + 1)，n = 1, 2, …, 2 * Tx - 1。
+                            // 绘制等差 15 / Pow(2, n) 度法向直线系（半径从 deltaRadius * normalIncreasePeriod 像素起，每扩大 2 倍，相邻法线之间的圆心角减小 1/2）：
 
-                            for (int j = 1; j <= 2 * Tx - 1; j += 2)
+                            for (int i = 0; i < Math.Log(radius / (deltaRadius * normalIncreasePeriod)) / Math.Log(2); i++)
                             {
-                                Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X + Rx * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + Rx * Math.Sin(Constant.Pi / Tx * j))), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + radius * Math.Sin(Constant.Pi / Tx * j))));
+                                double Rx = deltaRadius * normalIncreasePeriod * Math.Pow(2, i); // 起点的半径。
+                                double Tx = 12 * Math.Pow(2, i); // 等分线的圆心角等于 PI / Tx * (2 * n + 1)，n = 1, 2, …, 2 * Tx - 1。
+
+                                for (int j = 1; j <= 2 * Tx - 1; j += 2)
+                                {
+                                    Grph.DrawLine(pen, new PointF((float)(offset.X + Rx * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + Rx * Math.Sin(Constant.Pi / Tx * j))), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi / Tx * j)), (float)(offset.Y + radius * Math.Sin(Constant.Pi / Tx * j))));
+                                }
                             }
+
+                            // 绘制等差 30 度法向直线系：
+
+                            for (int i = 0; i < 12; i++)
+                            {
+                                Grph.DrawLine(pen, new PointF((float)(offset.X), (float)(offset.Y)), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi * i / 6)), (float)(offset.Y + radius * Math.Sin(Constant.Pi * i / 6))));
+                            }
+
+                            // 绘制同心圆：
+
+                            for (int i = 1; i < radius / deltaRadius; i++)
+                            {
+                                Grph.DrawEllipse(pen, new RectangleF((float)(offset.X - deltaRadius * i), (float)(offset.Y - deltaRadius * i), (float)(2 * deltaRadius * i), (float)(2 * deltaRadius * i)));
+                            }
+
+                            Grph.DrawEllipse(pen, new RectangleF((float)(offset.X - radius), (float)(offset.Y - radius), (float)(2 * radius), (float)(2 * radius)));
                         }
-
-                        // 绘制等差 30 度法向直线系：
-
-                        for (int i = 0; i < 12; i++)
-                        {
-                            Grph.DrawLine(new Pen(color, 1F), new PointF((float)(offset.X), (float)(offset.Y)), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi * i / 6)), (float)(offset.Y + radius * Math.Sin(Constant.Pi * i / 6))));
-                        }
-
-                        // 绘制同心圆：
-
-                        for (int i = 1; i < radius / deltaRadius; i++)
-                        {
-                            Grph.DrawEllipse(new Pen(color, 1F), new RectangleF((float)(offset.X - deltaRadius * i), (float)(offset.Y - deltaRadius * i), (float)(2 * deltaRadius * i), (float)(2 * deltaRadius * i)));
-                        }
-
-                        Grph.DrawEllipse(new Pen(color, 1F), new RectangleF((float)(offset.X - radius), (float)(offset.Y - radius), (float)(2 * radius), (float)(2 * radius)));
                     }
 
                     return true;
@@ -212,7 +218,10 @@ namespace Com
 
                                 //
 
-                                Grph.DrawEllipse(new Pen(color, width), new RectangleF((float)(offset.X - radius), (float)(offset.Y - radius), (float)(radius * 2), (float)(radius * 2)));
+                                using (Pen pen = new Pen(color, width))
+                                {
+                                    Grph.DrawEllipse(pen, new RectangleF((float)(offset.X - radius), (float)(offset.Y - radius), (float)(radius * 2), (float)(radius * 2)));
+                                }
                             }
 
                             return true;
@@ -235,7 +244,10 @@ namespace Com
 
                                 //
 
-                                Grph.FillEllipse(new SolidBrush(color), new RectangleF((float)(offset.X - radius), (float)(offset.Y - radius), (float)(radius * 2), (float)(radius * 2)));
+                                using (Brush br = new SolidBrush(color))
+                                {
+                                    Grph.FillEllipse(br, new RectangleF((float)(offset.X - radius), (float)(offset.Y - radius), (float)(radius * 2), (float)(radius * 2)));
+                                }
                             }
 
                             return true;
@@ -332,13 +344,16 @@ namespace Com
                                         L_PF.Add(PD.ToPointF());
                                     }
 
-                                    if (L_PF.Count == 2)
+                                    using (Pen pen = new Pen(color, width))
                                     {
-                                        Grph.DrawLine(new Pen(color, width), L_PF[0], L_PF[1]);
-                                    }
-                                    else if (L_PF.Count > 2)
-                                    {
-                                        Grph.DrawLines(new Pen(color, width), L_PF.ToArray());
+                                        if (L_PF.Count == 2)
+                                        {
+                                            Grph.DrawLine(pen, L_PF[0], L_PF[1]);
+                                        }
+                                        else if (L_PF.Count > 2)
+                                        {
+                                            Grph.DrawLines(pen, L_PF.ToArray());
+                                        }
                                     }
                                 }
                                 else
@@ -437,13 +452,16 @@ namespace Com
                                         L_PF.Add(L_PD[i].ToPointF());
                                     }
 
-                                    if (L_PF.Count == 2)
+                                    using (Pen pen = new Pen(color, width))
                                     {
-                                        Grph.DrawLine(new Pen(color, width), L_PF[0], L_PF[1]);
-                                    }
-                                    else if (L_PF.Count > 2)
-                                    {
-                                        Grph.DrawLines(new Pen(color, width), L_PF.ToArray());
+                                        if (L_PF.Count == 2)
+                                        {
+                                            Grph.DrawLine(pen, L_PF[0], L_PF[1]);
+                                        }
+                                        else if (L_PF.Count > 2)
+                                        {
+                                            Grph.DrawLines(pen, L_PF.ToArray());
+                                        }
                                     }
                                 }
                             }
@@ -470,7 +488,10 @@ namespace Com
 
                                 if (!Geometry.CircumferenceIsVisibleInRectangle(offset, radius, new RectangleF(new Point(), bmp.Size)))
                                 {
-                                    Grph.FillRectangle(new SolidBrush(color), new Rectangle(new Point(), bmp.Size));
+                                    using (Brush br = new SolidBrush(color))
+                                    {
+                                        Grph.FillRectangle(br, new Rectangle(new Point(), bmp.Size));
+                                    }
                                 }
                                 else
                                 {
@@ -512,11 +533,17 @@ namespace Com
 
                                         if (L_PF.Count == 2)
                                         {
-                                            Grph.DrawLine(new Pen(color, width), L_PF[0], L_PF[1]);
+                                            using (Pen pen = new Pen(color, width))
+                                            {
+                                                Grph.DrawLine(pen, L_PF[0], L_PF[1]);
+                                            }
                                         }
                                         else if (L_PF.Count > 2)
                                         {
-                                            Grph.FillPolygon(new SolidBrush(color), L_PF.ToArray());
+                                            using (Brush br = new SolidBrush(color))
+                                            {
+                                                Grph.FillPolygon(br, L_PF.ToArray());
+                                            }
                                         }
                                     }
                                     else
@@ -645,11 +672,17 @@ namespace Com
 
                                         if (L_PF.Count == 2)
                                         {
-                                            Grph.DrawLine(new Pen(color, width), L_PF[0], L_PF[1]);
+                                            using (Pen pen = new Pen(color, width))
+                                            {
+                                                Grph.DrawLine(pen, L_PF[0], L_PF[1]);
+                                            }
                                         }
                                         else if (L_PF.Count > 2)
                                         {
-                                            Grph.FillPolygon(new SolidBrush(color), L_PF.ToArray());
+                                            using (Brush br = new SolidBrush(color))
+                                            {
+                                                Grph.FillPolygon(br, L_PF.ToArray());
+                                            }
                                         }
                                     }
                                 }
@@ -792,13 +825,16 @@ namespace Com
                                         L_PF.Add(PD.ToPointF());
                                     }
 
-                                    if (L_PF.Count == 2)
+                                    using (Pen pen = new Pen(color, width))
                                     {
-                                        Grph.DrawLine(new Pen(color, width), L_PF[0], L_PF[1]);
-                                    }
-                                    else if (L_PF.Count > 2)
-                                    {
-                                        Grph.DrawLines(new Pen(color, width), L_PF.ToArray());
+                                        if (L_PF.Count == 2)
+                                        {
+                                            Grph.DrawLine(pen, L_PF[0], L_PF[1]);
+                                        }
+                                        else if (L_PF.Count > 2)
+                                        {
+                                            Grph.DrawLines(pen, L_PF.ToArray());
+                                        }
                                     }
                                 }
                                 else
@@ -908,13 +944,16 @@ namespace Com
                                         L_PF.Add(L_PD[i].ToPointF());
                                     }
 
-                                    if (L_PF.Count == 2)
+                                    using (Pen pen = new Pen(color, width))
                                     {
-                                        Grph.DrawLine(new Pen(color, width), L_PF[0], L_PF[1]);
-                                    }
-                                    else if (L_PF.Count > 2)
-                                    {
-                                        Grph.DrawLines(new Pen(color, width), L_PF.ToArray());
+                                        if (L_PF.Count == 2)
+                                        {
+                                            Grph.DrawLine(pen, L_PF[0], L_PF[1]);
+                                        }
+                                        else if (L_PF.Count > 2)
+                                        {
+                                            Grph.DrawLines(pen, L_PF.ToArray());
+                                        }
                                     }
                                 }
                             }
@@ -941,7 +980,10 @@ namespace Com
 
                                 if (Geometry.PointIsVisibleInRhombus(RectCenter, EllipseCenter, semiMajorAxis - RectRadius / Math.Sqrt(1 - Math.Pow(eccentricity, 2)), semiMajorAxis * Math.Sqrt(1 - Math.Pow(eccentricity, 2)) - RectRadius, rotateAngle))
                                 {
-                                    Grph.FillRectangle(new SolidBrush(color), new Rectangle(new Point(), bmp.Size));
+                                    using (Brush br = new SolidBrush(color))
+                                    {
+                                        Grph.FillRectangle(br, new Rectangle(new Point(), bmp.Size));
+                                    }
                                 }
                                 else
                                 {
@@ -1005,11 +1047,17 @@ namespace Com
 
                                         if (L_PF.Count == 2)
                                         {
-                                            Grph.DrawLine(new Pen(color, width), L_PF[0], L_PF[1]);
+                                            using (Pen pen = new Pen(color, width))
+                                            {
+                                                Grph.DrawLine(pen, L_PF[0], L_PF[1]);
+                                            }
                                         }
                                         else if (L_PF.Count > 2)
                                         {
-                                            Grph.FillPolygon(new SolidBrush(color), L_PF.ToArray());
+                                            using (Brush br = new SolidBrush(color))
+                                            {
+                                                Grph.FillPolygon(br, L_PF.ToArray());
+                                            }
                                         }
                                     }
                                     else
@@ -1149,11 +1197,17 @@ namespace Com
 
                                         if (L_PF.Count == 2)
                                         {
-                                            Grph.DrawLine(new Pen(color, width), L_PF[0], L_PF[1]);
+                                            using (Pen pen = new Pen(color, width))
+                                            {
+                                                Grph.DrawLine(pen, L_PF[0], L_PF[1]);
+                                            }
                                         }
                                         else if (L_PF.Count > 2)
                                         {
-                                            Grph.FillPolygon(new SolidBrush(color), L_PF.ToArray());
+                                            using (Brush br = new SolidBrush(color))
+                                            {
+                                                Grph.FillPolygon(br, L_PF.ToArray());
+                                            }
                                         }
                                     }
                                 }
@@ -1225,22 +1279,43 @@ namespace Com
 
                             if (Off >= 2)
                             {
-                                Grph.DrawString(text, font, new SolidBrush(Color.FromArgb(32, backColor)), new PointF(pt.X + Off, pt.Y + Off));
-                                Grph.DrawString(text, font, new SolidBrush(Color.FromArgb(64, backColor)), new PointF(pt.X + Off / 2, pt.Y + Off / 2));
-                                Grph.DrawString(text, font, new SolidBrush(Color.FromArgb(96, backColor)), new PointF(pt.X + Off / 4, pt.Y + Off / 2));
+                                using (Brush br = new SolidBrush(Color.FromArgb(32, backColor)))
+                                {
+                                    Grph.DrawString(text, font, br, new PointF(pt.X + Off, pt.Y + Off));
+                                }
+                                using (Brush br = new SolidBrush(Color.FromArgb(64, backColor)))
+                                {
+                                    Grph.DrawString(text, font, br, new PointF(pt.X + Off / 2, pt.Y + Off / 2));
+                                }
+                                using (Brush br = new SolidBrush(Color.FromArgb(96, backColor)))
+                                {
+                                    Grph.DrawString(text, font, br, new PointF(pt.X + Off / 4, pt.Y + Off / 2));
+                                }
                             }
                             else if (Off >= 1)
                             {
-                                Grph.DrawString(text, font, new SolidBrush(Color.FromArgb(64, backColor)), new PointF(pt.X + Off, pt.Y + Off));
-                                Grph.DrawString(text, font, new SolidBrush(Color.FromArgb(128, backColor)), new PointF(pt.X + Off / 2, pt.Y + Off / 2));
+                                using (Brush br = new SolidBrush(Color.FromArgb(64, backColor)))
+                                {
+                                    Grph.DrawString(text, font, br, new PointF(pt.X + Off, pt.Y + Off));
+                                }
+                                using (Brush br = new SolidBrush(Color.FromArgb(128, backColor)))
+                                {
+                                    Grph.DrawString(text, font, br, new PointF(pt.X + Off / 2, pt.Y + Off / 2));
+                                }
                             }
                             else if (Off >= 0.5 || frontColor != backColor)
                             {
-                                Grph.DrawString(text, font, new SolidBrush(Color.FromArgb(192, backColor)), new PointF(pt.X + Off, pt.Y + Off));
+                                using (Brush br = new SolidBrush(Color.FromArgb(192, backColor)))
+                                {
+                                    Grph.DrawString(text, font, br, new PointF(pt.X + Off, pt.Y + Off));
+                                }
                             }
                         }
 
-                        Grph.DrawString(text, font, new SolidBrush(frontColor), pt);
+                        using (Brush br = new SolidBrush(frontColor))
+                        {
+                            Grph.DrawString(text, font, br, pt);
+                        }
                     }
 
                     return true;
