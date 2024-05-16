@@ -174,8 +174,7 @@ namespace Com
                 }
 
                 // （2）若两条直线段相交，则其中任一直线段的两个端点分别位于另一直线段两侧：
-                Func<PointD, PointD, double> CrossProduct = (pt1, pt2) => pt1.X * pt2.Y - pt1.Y * pt2.X;
-                if (Math.Sign(CrossProduct(line1.pt2 - line1.pt1, line2.pt1 - line1.pt1)) * Math.Sign(CrossProduct(line1.pt2 - line1.pt1, line2.pt2 - line1.pt1)) < 0 && Math.Sign(CrossProduct(line2.pt2 - line2.pt1, line1.pt1 - line2.pt1)) * Math.Sign(CrossProduct(line2.pt2 - line2.pt1, line1.pt2 - line2.pt1)) < 0)
+                if (Math.Sign(PointD.CrossProduct(line1.pt2 - line1.pt1, line2.pt1 - line1.pt1)) * Math.Sign(PointD.CrossProduct(line1.pt2 - line1.pt1, line2.pt2 - line1.pt1)) < 0 && Math.Sign(PointD.CrossProduct(line2.pt2 - line2.pt1, line1.pt1 - line2.pt1)) * Math.Sign(PointD.CrossProduct(line2.pt2 - line2.pt1, line1.pt2 - line2.pt1)) < 0)
                 {
                     return true;
                 }

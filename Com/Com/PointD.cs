@@ -2265,10 +2265,10 @@ namespace Com
         /// </summary>
         /// <param name="left">第一个 PointD 结构。</param>
         /// <param name="right">第二个 PointD 结构。</param>
-        /// <returns>Vector 对象，表示两个 PointD 结构的向量积。</returns>
-        public static Vector CrossProduct(PointD left, PointD right)
+        /// <returns>双精度浮点数，表示两个 PointD 结构的向量积。</returns>
+        public static double CrossProduct(PointD left, PointD right)
         {
-            return Vector.UnsafeCreateInstance(Vector.Type.ColumnVector, left._X * right._Y - left._Y * right._X);
+            return (left._X * right._Y - left._Y * right._X);
         }
 
         //

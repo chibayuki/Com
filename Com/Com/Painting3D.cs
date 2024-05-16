@@ -509,10 +509,7 @@ namespace Com
                                                         Grph.DrawLines(Pn, Element);
                                                     }
 
-                                                    if (!(Br is null))
-                                                    {
-                                                        Br.Dispose();
-                                                    }
+                                                    Br?.Dispose();
                                                 }
                                                 catch { }
                                             }
