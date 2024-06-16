@@ -3782,12 +3782,26 @@ namespace Com.WinForm
         {
             get
             {
-                return new Point(Bounds_Current_X, Bounds_Current_Y + _CaptionBarHeight);
+                if (_FormState == FormState.FullScreen)
+                {
+                    return Bounds_Current_Location;
+                }
+                else
+                {
+                    return new Point(Bounds_Current_X, Bounds_Current_Y + _CaptionBarHeight);
+                }
             }
 
             set
             {
-                Location = new Point(value.X, value.Y - _CaptionBarHeight);
+                if (_FormState == FormState.FullScreen)
+                {
+                    Location = value;
+                }
+                else
+                {
+                    Location = new Point(value.X, value.Y - _CaptionBarHeight);
+                }
             }
         }
 
@@ -3798,12 +3812,26 @@ namespace Com.WinForm
         {
             get
             {
-                return new Size(Bounds_Current_Width, Bounds_Current_Height - _CaptionBarHeight);
+                if (_FormState == FormState.FullScreen)
+                {
+                    return Bounds_Current_Size;
+                }
+                else
+                {
+                    return new Size(Bounds_Current_Width, Bounds_Current_Height - _CaptionBarHeight);
+                }
             }
 
             set
             {
-                Size = new Size(value.Width, value.Height + _CaptionBarHeight);
+                if (_FormState == FormState.FullScreen)
+                {
+                    Size = value;
+                }
+                else
+                {
+                    Size = new Size(value.Width, value.Height + _CaptionBarHeight);
+                }
             }
         }
 
@@ -3814,12 +3842,26 @@ namespace Com.WinForm
         {
             get
             {
-                return new Rectangle(new Point(Bounds_Current_X, Bounds_Current_Y + _CaptionBarHeight), new Size(Bounds_Current_Width, Bounds_Current_Height - _CaptionBarHeight));
+                if (_FormState == FormState.FullScreen)
+                {
+                    return Bounds_Current;
+                }
+                else
+                {
+                    return new Rectangle(new Point(Bounds_Current_X, Bounds_Current_Y + _CaptionBarHeight), new Size(Bounds_Current_Width, Bounds_Current_Height - _CaptionBarHeight));
+                }
             }
 
             set
             {
-                Bounds = new Rectangle(new Point(value.X, value.Y - _CaptionBarHeight), new Size(value.Width, value.Height + _CaptionBarHeight));
+                if (_FormState == FormState.FullScreen)
+                {
+                    Bounds = value;
+                }
+                else
+                {
+                    Bounds = new Rectangle(new Point(value.X, value.Y - _CaptionBarHeight), new Size(value.Width, value.Height + _CaptionBarHeight));
+                }
             }
         }
 
