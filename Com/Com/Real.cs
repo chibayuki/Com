@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Real
 Version 20.10.27.1900
@@ -137,7 +137,7 @@ namespace Com
 
                     if (_Magnitude > _MaxMagnitude - MagShift)
                     {
-                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                        _Value = _Value > 0 ? double.PositiveInfinity : double.NegativeInfinity;
                         _Magnitude = 0;
 
                         return;
@@ -163,7 +163,7 @@ namespace Com
 
                     if (_Magnitude < _MinMagnitude + MagShift)
                     {
-                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                        _Value = _Value > 0 ? double.PositiveInfinity : double.NegativeInfinity;
                         _Magnitude = 0;
 
                         return;
@@ -199,7 +199,7 @@ namespace Com
                     }
                     else if (_Magnitude > _MaxMagnitude)
                     {
-                        _Value = (_Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                        _Value = _Value > 0 ? double.PositiveInfinity : double.NegativeInfinity;
                         _Magnitude = 0;
                     }
                 }
@@ -531,116 +531,56 @@ namespace Com
         /// <summary>
         /// 获取表示此 Real 结构是否为非数字的布尔值。
         /// </summary>
-        public bool IsNaN
-        {
-            get
-            {
-                return double.IsNaN(_Value);
-            }
-        }
+        public bool IsNaN => double.IsNaN(_Value);
 
         /// <summary>
         /// 获取表示此 Real 结构是否为正无穷大的布尔值。
         /// </summary>
-        public bool IsPositiveInfinity
-        {
-            get
-            {
-                return double.IsPositiveInfinity(_Value);
-            }
-        }
+        public bool IsPositiveInfinity => double.IsPositiveInfinity(_Value);
 
         /// <summary>
         /// 获取表示此 Real 结构是否为负无穷大的布尔值。
         /// </summary>
-        public bool IsNegativeInfinity
-        {
-            get
-            {
-                return double.IsNegativeInfinity(_Value);
-            }
-        }
+        public bool IsNegativeInfinity => double.IsNegativeInfinity(_Value);
 
         /// <summary>
         /// 获取表示此 Real 结构是否为无穷大的布尔值。
         /// </summary>
-        public bool IsInfinity
-        {
-            get
-            {
-                return double.IsInfinity(_Value);
-            }
-        }
+        public bool IsInfinity => double.IsInfinity(_Value);
 
         /// <summary>
         /// 获取表示此 Real 结构是否为非数字或无穷大的布尔值。
         /// </summary>
-        public bool IsNaNOrInfinity
-        {
-            get
-            {
-                return InternalMethod.IsNaNOrInfinity(_Value);
-            }
-        }
+        public bool IsNaNOrInfinity => InternalMethod.IsNaNOrInfinity(_Value);
 
         //
 
         /// <summary>
         /// 获取表示此 Real 结构是否为 0 的布尔值。
         /// </summary>
-        public bool IsZero
-        {
-            get
-            {
-                return (_Value == 0);
-            }
-        }
+        public bool IsZero => _Value == 0;
 
         /// <summary>
         /// 获取表示此 Real 结构是否为 1 的布尔值。
         /// </summary>
-        public bool IsOne
-        {
-            get
-            {
-                return (_Value == 1 && _Magnitude == 0);
-            }
-        }
+        public bool IsOne => _Value == 1 && _Magnitude == 0;
 
         /// <summary>
         /// 获取表示此 Real 结构是否为 -1 的布尔值。
         /// </summary>
-        public bool IsMinusOne
-        {
-            get
-            {
-                return (_Value == -1 && _Magnitude == 0);
-            }
-        }
+        public bool IsMinusOne => _Value == -1 && _Magnitude == 0;
 
         //
 
         /// <summary>
         /// 获取表示此 Real 结构是否为正数的布尔值。
         /// </summary>
-        public bool IsPositive
-        {
-            get
-            {
-                return (_Value > 0);
-            }
-        }
+        public bool IsPositive => _Value > 0;
 
         /// <summary>
         /// 获取表示此 Real 结构是否为负数的布尔值。
         /// </summary>
-        public bool IsNegative
-        {
-            get
-            {
-                return (_Value < 0);
-            }
-        }
+        public bool IsNegative => _Value < 0;
 
         //
 
@@ -678,7 +618,7 @@ namespace Com
                         double Val = _Value * _PositiveMagnitudeGeometricValues[_Magnitude];
                         double Trunc = Math.Truncate(Val);
 
-                        return (Val == Trunc);
+                        return Val == Trunc;
                     }
                 }
             }
@@ -718,7 +658,7 @@ namespace Com
                         double Val = _Value * _PositiveMagnitudeGeometricValues[_Magnitude];
                         double Trunc = Math.Truncate(Val);
 
-                        return (Val != Trunc);
+                        return Val != Trunc;
                     }
                 }
             }
@@ -729,24 +669,12 @@ namespace Com
         /// <summary>
         /// 获取表示此 Real 结构是否为偶数的布尔值。
         /// </summary>
-        public bool IsEven
-        {
-            get
-            {
-                return (_GetParity() == _Parity.Even);
-            }
-        }
+        public bool IsEven => _GetParity() == _Parity.Even;
 
         /// <summary>
         /// 获取表示此 Real 结构是否为奇数的布尔值。
         /// </summary>
-        public bool IsOdd
-        {
-            get
-            {
-                return (_GetParity() == _Parity.Odd);
-            }
-        }
+        public bool IsOdd => _GetParity() == _Parity.Odd;
 
         //
 
@@ -755,10 +683,7 @@ namespace Com
         /// </summary>
         public double Value
         {
-            get
-            {
-                return _Value;
-            }
+            get => _Value;
 
             set
             {
@@ -773,10 +698,7 @@ namespace Com
         /// </summary>
         public long Magnitude
         {
-            get
-            {
-                return _Magnitude;
-            }
+            get => _Magnitude;
 
             set
             {
@@ -886,10 +808,7 @@ namespace Com
         /// 返回此 Real 结构的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 Real 结构的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 Real 结构转换为字符串。
@@ -982,10 +901,7 @@ namespace Com
         /// </summary>
         /// <param name="real">用于比较的 Real 结构。</param>
         /// <returns>布尔值，表示此 Real 结构是否与指定的 Real 结构相等。</returns>
-        public bool Equals(Real real)
-        {
-            return (_Magnitude == real._Magnitude && _Value.Equals(real._Value));
-        }
+        public bool Equals(Real real) => _Magnitude == real._Magnitude && _Value.Equals(real._Value);
 
         //
 
@@ -1065,10 +981,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 Real 结构。</param>
         /// <param name="right">用于比较的第二个 Real 结构。</param>
         /// <returns>布尔值，表示两个 Real 结构是否相等。</returns>
-        public static bool Equals(Real left, Real right)
-        {
-            return left.Equals(right);
-        }
+        public static bool Equals(Real left, Real right) => left.Equals(right);
 
         //
 
@@ -1078,10 +991,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 Real 结构。</param>
         /// <param name="right">用于比较的第二个 Real 结构。</param>
         /// <returns>32 位整数，表示对两个 Real 对象进行次序比较的结果。</returns>
-        public static int Compare(Real left, Real right)
-        {
-            return left.CompareTo(right);
-        }
+        public static int Compare(Real left, Real right) => left.CompareTo(right);
 
         //
 
@@ -1206,7 +1116,7 @@ namespace Com
             }
             else
             {
-                return (_Ten ^ real);
+                return _Ten ^ real;
             }
         }
 
@@ -1238,7 +1148,7 @@ namespace Com
             }
             else
             {
-                return (_E ^ real);
+                return _E ^ real;
             }
         }
 
@@ -1248,10 +1158,7 @@ namespace Com
         /// <param name="left">Real 结构，表示底数。</param>
         /// <param name="right">Real 结构，表示指数。</param>
         /// <returns>Real 结构，表示对 Real 结构计算幂得到的结果。</returns>
-        public static Real Pow(Real left, Real right)
-        {
-            return (left ^ right);
-        }
+        public static Real Pow(Real left, Real right) => left ^ right;
 
         /// <summary>
         /// 返回对 Real 结构计算常用对数得到的 Real 结构的新实例。
@@ -1297,10 +1204,7 @@ namespace Com
         /// </summary>
         /// <param name="real">Real 结构，表示幂。</param>
         /// <returns>Real 结构，表示对 Real 结构计算自然对数得到的结果。</returns>
-        public static Real Log(Real real)
-        {
-            return (Log10(real) / _LgE);
-        }
+        public static Real Log(Real real) => Log10(real) / _LgE;
 
         /// <summary>
         /// 返回对 Real 结构计算对数得到的 Real 结构的新实例。
@@ -1308,10 +1212,7 @@ namespace Com
         /// <param name="left">Real 结构，表示幂。</param>
         /// <param name="right">Real 结构，表示底数。</param>
         /// <returns>Real 结构，表示对 Real 结构计算对数得到的结果。</returns>
-        public static Real Log(Real left, Real right)
-        {
-            return (Log10(left) / Log10(right));
-        }
+        public static Real Log(Real left, Real right) => Log10(left) / Log10(right);
 
         //
 
@@ -1531,7 +1432,7 @@ namespace Com
                 }
                 else
                 {
-                    return ((Exp(real) - Exp(-real)) / 2);
+                    return (Exp(real) - Exp(-real)) / 2;
                 }
             }
         }
@@ -1563,7 +1464,7 @@ namespace Com
                 }
                 else
                 {
-                    return ((Exp(real) + Exp(-real)) / 2);
+                    return (Exp(real) + Exp(-real)) / 2;
                 }
             }
         }
@@ -1616,30 +1517,21 @@ namespace Com
         /// </summary>
         /// <param name="real">Real 结构，表示双曲正弦值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反双曲正弦得到的结果。</returns>
-        public static Real Asinh(Real real)
-        {
-            return Log(real + Sqrt(Sqr(real) + One));
-        }
+        public static Real Asinh(Real real) => Log(real + Sqrt(Sqr(real) + One));
 
         /// <summary>
         /// 返回对 Real 结构计算反双曲余弦得到的 Real 结构的新实例。
         /// </summary>
         /// <param name="real">Real 结构，表示双曲余弦值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反双曲余弦得到的结果。</returns>
-        public static Real Acosh(Real real)
-        {
-            return Log(real + Sqrt(Sqr(real) + MinusOne));
-        }
+        public static Real Acosh(Real real) => Log(real + Sqrt(Sqr(real) + MinusOne));
 
         /// <summary>
         /// 返回对 Real 结构计算反双曲正切得到的 Real 结构的新实例。
         /// </summary>
         /// <param name="real">Real 结构，表示双曲正切值。</param>
         /// <returns>Real 结构，表示对 Real 结构计算反双曲正切得到的结果。</returns>
-        public static Real Atanh(Real real)
-        {
-            return (Log((One + real) / (One - real)) / 2);
-        }
+        public static Real Atanh(Real real) => Log((One + real) / (One - real)) / 2;
 
         //
 
@@ -1977,7 +1869,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否相等。</returns>
         public static bool operator ==(Real left, Real right)
         {
-            return (left._Magnitude == right._Magnitude && left._Value == right._Value);
+            return left._Magnitude == right._Magnitude && left._Value == right._Value;
         }
 
         /// <summary>
@@ -1988,7 +1880,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Real 结构是否不相等。</returns>
         public static bool operator !=(Real left, Real right)
         {
-            return (left._Magnitude != right._Magnitude || left._Value != right._Value);
+            return left._Magnitude != right._Magnitude || left._Value != right._Value;
         }
 
         /// <summary>
@@ -2007,10 +1899,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -2059,33 +1951,33 @@ namespace Com
                 }
                 else if (left._Value == 0)
                 {
-                    return (right._Value > 0);
+                    return right._Value > 0;
                 }
                 else
                 {
-                    return (left._Value < 0);
+                    return left._Value < 0;
                 }
             }
             else
             {
                 if (left._Magnitude == right._Magnitude)
                 {
-                    return (left._Value < right._Value);
+                    return left._Value < right._Value;
                 }
                 else if (Math.Sign(left._Value) == Math.Sign(right._Value))
                 {
                     if (left._Value > 0)
                     {
-                        return (left._Magnitude < right._Magnitude);
+                        return left._Magnitude < right._Magnitude;
                     }
                     else
                     {
-                        return (left._Magnitude > right._Magnitude);
+                        return left._Magnitude > right._Magnitude;
                     }
                 }
                 else
                 {
-                    return (left._Value < right._Value);
+                    return left._Value < right._Value;
                 }
             }
         }
@@ -2106,10 +1998,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -2158,33 +2050,33 @@ namespace Com
                 }
                 else if (left._Value == 0)
                 {
-                    return (right._Value < 0);
+                    return right._Value < 0;
                 }
                 else
                 {
-                    return (left._Value > 0);
+                    return left._Value > 0;
                 }
             }
             else
             {
                 if (left._Magnitude == right._Magnitude)
                 {
-                    return (left._Value > right._Value);
+                    return left._Value > right._Value;
                 }
                 else if (Math.Sign(left._Value) == Math.Sign(right._Value))
                 {
                     if (left._Value > 0)
                     {
-                        return (left._Magnitude > right._Magnitude);
+                        return left._Magnitude > right._Magnitude;
                     }
                     else
                     {
-                        return (left._Magnitude < right._Magnitude);
+                        return left._Magnitude < right._Magnitude;
                     }
                 }
                 else
                 {
-                    return (left._Value > right._Value);
+                    return left._Value > right._Value;
                 }
             }
         }
@@ -2205,10 +2097,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -2257,33 +2149,33 @@ namespace Com
                 }
                 else if (left._Value == 0)
                 {
-                    return (right._Value >= 0);
+                    return right._Value >= 0;
                 }
                 else
                 {
-                    return (left._Value <= 0);
+                    return left._Value <= 0;
                 }
             }
             else
             {
                 if (left._Magnitude == right._Magnitude)
                 {
-                    return (left._Value <= right._Value);
+                    return left._Value <= right._Value;
                 }
                 else if (Math.Sign(left._Value) == Math.Sign(right._Value))
                 {
                     if (left._Value > 0)
                     {
-                        return (left._Magnitude < right._Magnitude);
+                        return left._Magnitude < right._Magnitude;
                     }
                     else
                     {
-                        return (left._Magnitude > right._Magnitude);
+                        return left._Magnitude > right._Magnitude;
                     }
                 }
                 else
                 {
-                    return (left._Value < right._Value);
+                    return left._Value < right._Value;
                 }
             }
         }
@@ -2304,10 +2196,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -2356,33 +2248,33 @@ namespace Com
                 }
                 else if (left._Value == 0)
                 {
-                    return (right._Value <= 0);
+                    return right._Value <= 0;
                 }
                 else
                 {
-                    return (left._Value >= 0);
+                    return left._Value >= 0;
                 }
             }
             else
             {
                 if (left._Magnitude == right._Magnitude)
                 {
-                    return (left._Value >= right._Value);
+                    return left._Value >= right._Value;
                 }
                 else if (Math.Sign(left._Value) == Math.Sign(right._Value))
                 {
                     if (left._Value > 0)
                     {
-                        return (left._Magnitude > right._Magnitude);
+                        return left._Magnitude > right._Magnitude;
                     }
                     else
                     {
-                        return (left._Magnitude < right._Magnitude);
+                        return left._Magnitude < right._Magnitude;
                     }
                 }
                 else
                 {
-                    return (left._Value > right._Value);
+                    return left._Value > right._Value;
                 }
             }
         }
@@ -2461,7 +2353,7 @@ namespace Com
             }
             else
             {
-                return (real + One);
+                return real + One;
             }
         }
 
@@ -2493,7 +2385,7 @@ namespace Com
             }
             else
             {
-                return (real + MinusOne);
+                return real + MinusOne;
             }
         }
 
@@ -2515,10 +2407,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -2623,10 +2515,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -2731,10 +2623,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -2825,10 +2717,10 @@ namespace Com
             }
             else
             {
-                bool LIsOne = (left == One);
-                bool LIsMinusOne = (left == MinusOne);
-                bool RIsOne = (right == One);
-                bool RIsMinusOne = (right == MinusOne);
+                bool LIsOne = left == One;
+                bool LIsMinusOne = left == MinusOne;
+                bool RIsOne = right == One;
+                bool RIsMinusOne = right == MinusOne;
 
                 if (LIsOne || RIsOne)
                 {
@@ -2912,10 +2804,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -2975,10 +2867,10 @@ namespace Com
             }
             else
             {
-                bool LIsOne = (left == One);
-                bool LIsMinusOne = (left == MinusOne);
-                bool RIsOne = (right == One);
-                bool RIsMinusOne = (right == MinusOne);
+                bool LIsOne = left == One;
+                bool LIsMinusOne = left == MinusOne;
+                bool RIsOne = right == One;
+                bool RIsMinusOne = right == MinusOne;
 
                 if (LIsOne || RIsOne)
                 {
@@ -3022,7 +2914,7 @@ namespace Com
                     {
                         double NewVal = left._Value / right._Value;
 
-                        if (NewMag - 1 == _MaxMagnitude && (NewVal > -1 && NewVal < 1))
+                        if (NewMag - 1 == _MaxMagnitude && NewVal > -1 && NewVal < 1)
                         {
                             return new Real(NewVal * 10, _MaxMagnitude);
                         }
@@ -3111,7 +3003,7 @@ namespace Com
                     }
                     else
                     {
-                        result._Value = (result._Value * 10) % ValAbsR;
+                        result._Value = result._Value * 10 % ValAbsR;
                         result._Magnitude--;
                     }
 
@@ -3155,10 +3047,10 @@ namespace Com
             {
                 bool LIsPosInf = double.IsPositiveInfinity(left._Value);
                 bool LIsNegInf = double.IsNegativeInfinity(left._Value);
-                bool LIsInf = (LIsPosInf || LIsNegInf);
+                bool LIsInf = LIsPosInf || LIsNegInf;
                 bool RIsPosInf = double.IsPositiveInfinity(right._Value);
                 bool RIsNegInf = double.IsNegativeInfinity(right._Value);
-                bool RIsInf = (RIsPosInf || RIsNegInf);
+                bool RIsInf = RIsPosInf || RIsNegInf;
 
                 if (LIsInf && RIsInf)
                 {
@@ -3316,10 +3208,10 @@ namespace Com
             }
             else
             {
-                bool LIsOne = (left == One);
-                bool LIsMinusOne = (left == MinusOne);
-                bool RIsOne = (right == One);
-                bool RIsMinusOne = (right == MinusOne);
+                bool LIsOne = left == One;
+                bool LIsMinusOne = left == MinusOne;
+                bool RIsOne = right == One;
+                bool RIsMinusOne = right == MinusOne;
 
                 if (LIsOne || RIsOne)
                 {
@@ -3426,14 +3318,14 @@ namespace Com
                         {
                             switch (right._GetParity())
                             {
-                                case _Parity.Even: return (One / FastPower(-left, -right));
-                                case _Parity.Odd: return (MinusOne / FastPower(-left, -right));
+                                case _Parity.Even: return One / FastPower(-left, -right);
+                                case _Parity.Odd: return MinusOne / FastPower(-left, -right);
                                 default: return NaN;
                             }
                         }
                         else
                         {
-                            return (One / FastPower(left, -right));
+                            return One / FastPower(left, -right);
                         }
                     }
                     else
@@ -3492,7 +3384,7 @@ namespace Com
                 }
                 else if (real._Magnitude > 308)
                 {
-                    return (real._Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                    return real._Value > 0 ? double.PositiveInfinity : double.NegativeInfinity;
                 }
                 else if (real._Magnitude < -324)
                 {
@@ -3502,11 +3394,11 @@ namespace Com
                 {
                     if (real < double.MinValue || real > double.MaxValue)
                     {
-                        return (real._Value > 0 ? double.PositiveInfinity : double.NegativeInfinity);
+                        return real._Value > 0 ? double.PositiveInfinity : double.NegativeInfinity;
                     }
                     else
                     {
-                        return ((real._Magnitude > 0 ? real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude] : (real._Magnitude == -1 ? real._Value * 0.1 : (real._Value * 0.1) * _NegativeMagnitudeGeometricValues[-real._Magnitude - 1])));
+                        return real._Magnitude > 0 ? real._Value * _PositiveMagnitudeGeometricValues[real._Magnitude] : (real._Magnitude == -1 ? real._Value * 0.1 : real._Value * 0.1 * _NegativeMagnitudeGeometricValues[-real._Magnitude - 1]);
                     }
                 }
             }
@@ -3546,7 +3438,7 @@ namespace Com
                 }
                 else if (real._Magnitude > 38)
                 {
-                    return (real._Value > 0 ? float.PositiveInfinity : float.NegativeInfinity);
+                    return real._Value > 0 ? float.PositiveInfinity : float.NegativeInfinity;
                 }
                 else if (real._Magnitude < -45)
                 {
@@ -3558,7 +3450,7 @@ namespace Com
 
                     if (Val < float.MinValue || Val > float.MaxValue)
                     {
-                        return (real._Value > 0 ? float.PositiveInfinity : float.NegativeInfinity);
+                        return real._Value > 0 ? float.PositiveInfinity : float.NegativeInfinity;
                     }
                     else
                     {

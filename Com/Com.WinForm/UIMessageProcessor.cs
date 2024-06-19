@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.WinForm.UIMessage
 Version 20.10.27.1900
@@ -78,22 +78,13 @@ namespace Com.WinForm
         private long _ProcessingAsyncMessageCount = 0; // 正在处理的异步消息的数量。
 
         // 获取正在处理的异步消息的数量。
-        private long _GetProcessingAsyncMessageCount()
-        {
-            return Interlocked.Read(ref _ProcessingAsyncMessageCount);
-        }
+        private long _GetProcessingAsyncMessageCount() => Interlocked.Read(ref _ProcessingAsyncMessageCount);
 
         // 增加正在处理的异步消息的数量。
-        private void _IncreaseProcessingAsyncMessageCount()
-        {
-            Interlocked.Increment(ref _ProcessingAsyncMessageCount);
-        }
+        private void _IncreaseProcessingAsyncMessageCount() => Interlocked.Increment(ref _ProcessingAsyncMessageCount);
 
         // 减少正在处理的异步消息的数量。
-        private void _DecreaseProcessingAsyncMessageCount()
-        {
-            Interlocked.Decrement(ref _ProcessingAsyncMessageCount);
-        }
+        private void _DecreaseProcessingAsyncMessageCount() => Interlocked.Decrement(ref _ProcessingAsyncMessageCount);
 
         //
 
@@ -280,10 +271,7 @@ namespace Com.WinForm
         /// 处理一个消息。
         /// </summary>
         /// <param name="message">消息。</param>
-        protected virtual void ProcessMessage(UIMessage message)
-        {
-            throw new NotImplementedException();
-        }
+        protected virtual void ProcessMessage(UIMessage message) => throw new NotImplementedException();
 
         /// <summary>
         /// 执行一次消息循环。
@@ -588,7 +576,7 @@ namespace Com.WinForm
 
             try
             {
-                Queue<UIMessage> messageQueue = (message.AllowAsync ? _AsyncMessages : _SyncMessages);
+                Queue<UIMessage> messageQueue = message.AllowAsync ? _AsyncMessages : _SyncMessages;
 
                 messageQueue.Enqueue(message);
             }

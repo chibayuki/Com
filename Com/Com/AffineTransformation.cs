@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.AffineTransformation
 Version 20.10.27.1900
@@ -109,41 +109,23 @@ namespace Com
         //
 
         // 获取此 AffineTransformationAtomic 的类型。
-        public AffineTransformationAtomicType Type
-        {
-            get
-            {
-                return _Type;
-            }
-        }
+        public AffineTransformationAtomicType Type => _Type;
 
         // 获取表示此 AffineTransformationAtomic 是否表示逆变换的布尔值。
-        public bool IsInverse
-        {
-            get
-            {
-                return _IsInverse;
-            }
-        }
+        public bool IsInverse => _IsInverse;
 
         // 获取此 AffineTransformationAtomic 的逆变换。
-        public AffineTransformationAtomic Invert
+        public AffineTransformationAtomic Invert => new AffineTransformationAtomic()
         {
-            get
-            {
-                return new AffineTransformationAtomic()
-                {
-                    _Type = this._Type,
-                    _IsInverse = !this._IsInverse,
+            _Type = this._Type,
+            _IsInverse = !this._IsInverse,
 
-                    _Value = this._Value,
-                    _Index1 = this._Index1,
-                    _Index2 = this._Index2,
+            _Value = this._Value,
+            _Index1 = this._Index1,
+            _Index2 = this._Index2,
 
-                    _Matrix = this._Matrix
-                };
-            }
-        }
+            _Matrix = this._Matrix
+        };
 
         //
 
@@ -165,10 +147,7 @@ namespace Com
         }
 
         // 返回此 AffineTransformationAtomic 的哈希代码。
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         // 将此 AffineTransformationAtomic 转换为字符串。
         public override string ToString()
@@ -202,7 +181,7 @@ namespace Com
             }
             else
             {
-                return (_Type == atomic._Type && _IsInverse == atomic._IsInverse && _Value.Equals(atomic._Value) && _Index1 == atomic._Index1 && _Index2 == atomic._Index2 && Matrix.Equals(_Matrix, atomic._Matrix));
+                return _Type == atomic._Type && _IsInverse == atomic._IsInverse && _Value.Equals(atomic._Value) && _Index1 == atomic._Index1 && _Index2 == atomic._Index2 && Matrix.Equals(_Matrix, atomic._Matrix);
             }
         }
 
@@ -210,31 +189,19 @@ namespace Com
 
         // 以不安全方式获取此 AffineTransformationAtomic 的数值。
         [InternalUnsafeCall(InternalUnsafeCallType.WillNotCheckState)]
-        public double UnsafeGetValue()
-        {
-            return _Value;
-        }
+        public double UnsafeGetValue() => _Value;
 
         // 以不安全方式获取此 AffineTransformationAtomic 的第一个基向量索引。
         [InternalUnsafeCall(InternalUnsafeCallType.WillNotCheckState)]
-        public int UnsafeGetIndex1()
-        {
-            return _Index1;
-        }
+        public int UnsafeGetIndex1() => _Index1;
 
         // 以不安全方式获取此 AffineTransformationAtomic 的第二个基向量索引。
         [InternalUnsafeCall(InternalUnsafeCallType.WillNotCheckState)]
-        public int UnsafeGetIndex2()
-        {
-            return _Index2;
-        }
+        public int UnsafeGetIndex2() => _Index2;
 
         // 以不安全方式获取此 AffineTransformationAtomic 的矩阵。
         [InternalUnsafeCall(InternalUnsafeCallType.WillNotCheckState | InternalUnsafeCallType.OutputAddress)]
-        public Matrix UnsafeGetMatrix()
-        {
-            return _Matrix;
-        }
+        public Matrix UnsafeGetMatrix() => _Matrix;
 
         //
 
@@ -257,7 +224,7 @@ namespace Com
 
                     case AffineTransformationAtomicType.Rotate: return Vector.RotateMatrix(type, dimension, _Index1, _Index2, -_Value);
 
-                    case AffineTransformationAtomicType.Matrix: return (_Matrix?.Invert);
+                    case AffineTransformationAtomicType.Matrix: return _Matrix?.Invert;
 
                     default: throw new ArithmeticException();
                 }
@@ -278,7 +245,7 @@ namespace Com
 
                     case AffineTransformationAtomicType.Rotate: return Vector.RotateMatrix(type, dimension, _Index1, _Index2, _Value);
 
-                    case AffineTransformationAtomicType.Matrix: return (_Matrix?.Copy());
+                    case AffineTransformationAtomicType.Matrix: return _Matrix?.Copy();
 
                     default: throw new ArithmeticException();
                 }
@@ -307,62 +274,38 @@ namespace Com
         //
 
         // 返回表示平移变换的 AffineTransformationAtomic 的新实例。
-        public static AffineTransformationAtomic FromOffset(int index, double d, bool isInverse = false)
-        {
-            return new AffineTransformationAtomic(AffineTransformationAtomicType.Offset, isInverse, d, index);
-        }
+        public static AffineTransformationAtomic FromOffset(int index, double d, bool isInverse = false) => new AffineTransformationAtomic(AffineTransformationAtomicType.Offset, isInverse, d, index);
 
         // 返回表示平移变换（复合）的 AffineTransformationAtomic 的新实例。
-        public static AffineTransformationAtomic FromOffset(double d, bool isInverse = false)
-        {
-            return new AffineTransformationAtomic(AffineTransformationAtomicType.OffsetMulti, isInverse, d);
-        }
+        public static AffineTransformationAtomic FromOffset(double d, bool isInverse = false) => new AffineTransformationAtomic(AffineTransformationAtomicType.OffsetMulti, isInverse, d);
 
         //
 
         // 返回表示缩放变换的 AffineTransformationAtomic 的新实例。
-        public static AffineTransformationAtomic FromScale(int index, double s, bool isInverse = false)
-        {
-            return new AffineTransformationAtomic(AffineTransformationAtomicType.Scale, isInverse, s, index);
-        }
+        public static AffineTransformationAtomic FromScale(int index, double s, bool isInverse = false) => new AffineTransformationAtomic(AffineTransformationAtomicType.Scale, isInverse, s, index);
 
         // 返回表示缩放变换（复合）的 AffineTransformationAtomic 的新实例。
-        public static AffineTransformationAtomic FromScale(double s, bool isInverse = false)
-        {
-            return new AffineTransformationAtomic(AffineTransformationAtomicType.ScaleMulti, isInverse, s);
-        }
+        public static AffineTransformationAtomic FromScale(double s, bool isInverse = false) => new AffineTransformationAtomic(AffineTransformationAtomicType.ScaleMulti, isInverse, s);
 
         //
 
         // 返回表示翻转变换的 AffineTransformationAtomic 的新实例。
-        public static AffineTransformationAtomic FromReflect(int index, bool isInverse = false)
-        {
-            return new AffineTransformationAtomic(AffineTransformationAtomicType.Reflect, isInverse, double.NaN, index);
-        }
+        public static AffineTransformationAtomic FromReflect(int index, bool isInverse = false) => new AffineTransformationAtomic(AffineTransformationAtomicType.Reflect, isInverse, double.NaN, index);
 
         //
 
         // 返回表示错切变换的 AffineTransformationAtomic 的新实例。
-        public static AffineTransformationAtomic FromShear(int index1, int index2, double angle, bool isInverse = false)
-        {
-            return new AffineTransformationAtomic(AffineTransformationAtomicType.Shear, isInverse, angle, index1, index2);
-        }
+        public static AffineTransformationAtomic FromShear(int index1, int index2, double angle, bool isInverse = false) => new AffineTransformationAtomic(AffineTransformationAtomicType.Shear, isInverse, angle, index1, index2);
 
         //
 
         // 返回表示旋转变换的 AffineTransformationAtomic 的新实例。
-        public static AffineTransformationAtomic FromRotate(int index1, int index2, double angle, bool isInverse = false)
-        {
-            return new AffineTransformationAtomic(AffineTransformationAtomicType.Rotate, isInverse, angle, index1, index2);
-        }
+        public static AffineTransformationAtomic FromRotate(int index1, int index2, double angle, bool isInverse = false) => new AffineTransformationAtomic(AffineTransformationAtomicType.Rotate, isInverse, angle, index1, index2);
 
         //
 
         // 返回表示以矩阵为参数的仿射变换的 AffineTransformationAtomic 的新实例。
-        public static AffineTransformationAtomic FromMatrix(Matrix matrix, bool isInverse = false)
-        {
-            return new AffineTransformationAtomic(AffineTransformationAtomicType.Matrix, isInverse, matrix?.Copy());
-        }
+        public static AffineTransformationAtomic FromMatrix(Matrix matrix, bool isInverse = false) => new AffineTransformationAtomic(AffineTransformationAtomicType.Matrix, isInverse, matrix?.Copy());
 
         //
 
@@ -385,19 +328,19 @@ namespace Com
             {
                 switch (left._Type)
                 {
-                    case AffineTransformationAtomicType.Offset: return (left._Index1 == right._Index1 && left._Value == right._Value);
-                    case AffineTransformationAtomicType.OffsetMulti: return (left._Value == right._Value);
+                    case AffineTransformationAtomicType.Offset: return left._Index1 == right._Index1 && left._Value == right._Value;
+                    case AffineTransformationAtomicType.OffsetMulti: return left._Value == right._Value;
 
-                    case AffineTransformationAtomicType.Scale: return (left._Index1 == right._Index1 && left._Value == right._Value);
-                    case AffineTransformationAtomicType.ScaleMulti: return (left._Value == right._Value);
+                    case AffineTransformationAtomicType.Scale: return left._Index1 == right._Index1 && left._Value == right._Value;
+                    case AffineTransformationAtomicType.ScaleMulti: return left._Value == right._Value;
 
-                    case AffineTransformationAtomicType.Reflect: return (left._Index1 == right._Index1);
+                    case AffineTransformationAtomicType.Reflect: return left._Index1 == right._Index1;
 
-                    case AffineTransformationAtomicType.Shear: return (left._Index1 == right._Index1 && left._Index2 == right._Index2 && left._Value == right._Value);
+                    case AffineTransformationAtomicType.Shear: return left._Index1 == right._Index1 && left._Index2 == right._Index2 && left._Value == right._Value;
 
-                    case AffineTransformationAtomicType.Rotate: return (left._Index1 == right._Index1 && left._Index2 == right._Index2 && left._Value == right._Value);
+                    case AffineTransformationAtomicType.Rotate: return left._Index1 == right._Index1 && left._Index2 == right._Index2 && left._Value == right._Value;
 
-                    case AffineTransformationAtomicType.Matrix: return (left._Matrix == right._Matrix);
+                    case AffineTransformationAtomicType.Matrix: return left._Matrix == right._Matrix;
 
                     default: throw new ArithmeticException();
                 }
@@ -475,10 +418,7 @@ namespace Com
 
         // 以不安全方式获取此 AffineTransformation 的原子操作序列。
         [InternalUnsafeCall(InternalUnsafeCallType.OutputAddress)]
-        internal List<AffineTransformationAtomic> UnsafeGetSequence()
-        {
-            return _Sequence;
-        }
+        internal List<AffineTransformationAtomic> UnsafeGetSequence() => _Sequence;
 
         //
 
@@ -716,37 +656,19 @@ namespace Com
         /// <summary>
         /// 获取表示此 AffineTransformation 是否为空变换的布尔值。
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (_Sequence.Count <= 0);
-            }
-        }
+        public bool IsEmpty => _Sequence.Count <= 0;
 
         //
 
         /// <summary>
         /// 获取表示此 AffineTransformation 是否为单一变换的布尔值。
         /// </summary>
-        public bool IsSingle
-        {
-            get
-            {
-                return (_Sequence.Count == 1);
-            }
-        }
+        public bool IsSingle => _Sequence.Count == 1;
 
         /// <summary>
         /// 获取表示此 AffineTransformation 是否为复合变换的布尔值。
         /// </summary>
-        public bool IsMultiple
-        {
-            get
-            {
-                return (_Sequence.Count > 1);
-            }
-        }
+        public bool IsMultiple => _Sequence.Count > 1;
 
         #endregion
 
@@ -755,16 +677,7 @@ namespace Com
         /// <summary>
         /// 获取表示空变换的 AffineTransformation 的新实例。
         /// </summary>
-        public static AffineTransformation Empty
-        {
-            get
-            {
-                return new AffineTransformation()
-                {
-                    _Sequence = new List<AffineTransformationAtomic>()
-                };
-            }
-        }
+        public static AffineTransformation Empty => new AffineTransformation() { _Sequence = new List<AffineTransformationAtomic>() };
 
         #endregion
 
@@ -795,10 +708,7 @@ namespace Com
         /// 返回此 AffineTransformation 的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 AffineTransformation 的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 AffineTransformation 转换为字符串。
@@ -814,7 +724,7 @@ namespace Com
             }
             else
             {
-                Str = string.Concat("Type=", (IsSingle ? "Single" : "Multiple"));
+                Str = string.Concat("Type=", IsSingle ? "Single" : "Multiple");
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");
@@ -988,7 +898,7 @@ namespace Com
             {
                 AffineTransformationAtomic atomic = _CompressAsAtomic(type, dimension);
 
-                if (atomic == null)
+                if (atomic is null)
                 {
                     return Empty;
                 }
@@ -1047,19 +957,13 @@ namespace Com
         /// </summary>
         /// <param name="index">索引，用于指定平移的分量所在方向的基向量。</param>
         /// <param name="d">双精度浮点数表示的位移。</param>
-        public void Offset(int index, double d)
-        {
-            _Sequence.Add(AffineTransformationAtomic.FromOffset(index, d));
-        }
+        public void Offset(int index, double d) => _Sequence.Add(AffineTransformationAtomic.FromOffset(index, d));
 
         /// <summary>
         /// 按双精度浮点数表示的位移对所有分量平移指定的量。
         /// </summary>
         /// <param name="d">双精度浮点数表示的位移。</param>
-        public void Offset(double d)
-        {
-            _Sequence.Add(AffineTransformationAtomic.FromOffset(d));
-        }
+        public void Offset(double d) => _Sequence.Add(AffineTransformationAtomic.FromOffset(d));
 
         /// <summary>
         /// 返回表示按双精度浮点数表示的位移对指定的基向量方向的分量平移指定的量的 AffineTransformation 的新实例。
@@ -1097,19 +1001,13 @@ namespace Com
         /// </summary>
         /// <param name="index">索引，用于指定缩放的分量所在方向的基向量。</param>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        public void Scale(int index, double s)
-        {
-            _Sequence.Add(AffineTransformationAtomic.FromScale(index, s));
-        }
+        public void Scale(int index, double s) => _Sequence.Add(AffineTransformationAtomic.FromScale(index, s));
 
         /// <summary>
         /// 按双精度浮点数表示的缩放因数对所有分量缩放指定的倍数。
         /// </summary>
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
-        public void Scale(double s)
-        {
-            _Sequence.Add(AffineTransformationAtomic.FromScale(s));
-        }
+        public void Scale(double s) => _Sequence.Add(AffineTransformationAtomic.FromScale(s));
 
         /// <summary>
         /// 返回表示按双精度浮点数表示的缩放因数对指定的基向量方向的分量缩放指定的倍数的 AffineTransformation 的新实例。
@@ -1146,10 +1044,7 @@ namespace Com
         /// 对指定的基向量方向的分量翻转。
         /// </summary>
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
-        public void Reflect(int index)
-        {
-            _Sequence.Add(AffineTransformationAtomic.FromReflect(index));
-        }
+        public void Reflect(int index) => _Sequence.Add(AffineTransformationAtomic.FromReflect(index));
 
         /// <summary>
         /// 返回表示对指定的基向量方向的分量翻转的 AffineTransformation 的新实例。
@@ -1173,10 +1068,7 @@ namespace Com
         /// <param name="index1">索引，用于指定与错切方向同向的基向量。</param>
         /// <param name="index2">索引，用于指定与错切方向共面正交的基向量。</param>
         /// <param name="angle">双精度浮点数，表示沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
-        public void Shear(int index1, int index2, double angle)
-        {
-            _Sequence.Add(AffineTransformationAtomic.FromShear(index1, index2, angle));
-        }
+        public void Shear(int index1, int index2, double angle) => _Sequence.Add(AffineTransformationAtomic.FromShear(index1, index2, angle));
 
         /// <summary>
         /// 返回表示按双精度浮点数表示的弧度错切指定的角度的 AffineTransformation 的新实例。
@@ -1202,10 +1094,7 @@ namespace Com
         /// <param name="index1">索引，用于指定构成旋转轨迹所在平面的第一个基向量。</param>
         /// <param name="index2">索引，用于指定构成旋转轨迹所在平面的第二个基向量。</param>
         /// <param name="angle">双精度浮点数，表示绕索引 index1 与 index2 指定的基向量构成的平面的法向空间旋转的角度（弧度）（以索引 index1 指定的基向量为 0 弧度，从索引 index1 指定的基向量指向索引 index2 指定的基向量的方向为正方向）。</param>
-        public void Rotate(int index1, int index2, double angle)
-        {
-            _Sequence.Add(AffineTransformationAtomic.FromRotate(index1, index2, angle));
-        }
+        public void Rotate(int index1, int index2, double angle) => _Sequence.Add(AffineTransformationAtomic.FromRotate(index1, index2, angle));
 
         /// <summary>
         /// 返回表示按双精度浮点数表示的弧度旋转指定的角度的 AffineTransformation 的新实例。
@@ -1229,10 +1118,7 @@ namespace Com
         /// 按仿射矩阵进行仿射变换。
         /// </summary>
         /// <param name="matrix">仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
-        public void MatrixTransform(Matrix matrix)
-        {
-            _Sequence.Add(AffineTransformationAtomic.FromMatrix(matrix));
-        }
+        public void MatrixTransform(Matrix matrix) => _Sequence.Add(AffineTransformationAtomic.FromMatrix(matrix));
 
         /// <summary>
         /// 返回表示按仿射矩阵进行仿射变换的 AffineTransformation 的新实例。
@@ -1296,10 +1182,7 @@ namespace Com
         /// </summary>
         /// <param name="affineTransformation">用于判断的 AffineTransformation 对象。</param>
         /// <returns>布尔值，表示指定的 AffineTransformation 是否为 null 或表示空变换。</returns>
-        public static bool IsNullOrEmpty(AffineTransformation affineTransformation)
-        {
-            return (affineTransformation is null || affineTransformation._Sequence.Count <= 0);
-        }
+        public static bool IsNullOrEmpty(AffineTransformation affineTransformation) => affineTransformation is null || affineTransformation._Sequence.Count <= 0;
 
         //
 

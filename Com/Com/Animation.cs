@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Animation
 Version 20.10.27.1900
@@ -169,10 +169,7 @@ namespace Com
         /// <param name="frameCount">动画的总帧数。</param>
         /// <param name="msPerFrame">动画每帧持续的毫秒数。</param>
         /// <param name="keyFrameDensity">表示自动画的第一帧起，每连续若干帧中的第一帧为关键帧。</param>
-        public static void Show(Frame frame, int frameCount, int msPerFrame, int keyFrameDensity)
-        {
-            Show(frame, frameCount, msPerFrame, keyFrameDensity, null);
-        }
+        public static void Show(Frame frame, int frameCount, int msPerFrame, int keyFrameDensity) => Show(frame, frameCount, msPerFrame, keyFrameDensity, null);
 
         /// <summary>
         /// 按照指定的方法、总帧数、每帧的持续时长与关键帧列表绘制动画。
@@ -181,10 +178,7 @@ namespace Com
         /// <param name="frameCount">动画的总帧数。</param>
         /// <param name="msPerFrame">动画每帧持续的毫秒数。</param>
         /// <param name="keyFrameList">包含所有关键帧次序数的列表。</param>
-        public static void Show(Frame frame, int frameCount, int msPerFrame, List<int> keyFrameList)
-        {
-            Show(frame, frameCount, msPerFrame, 0, keyFrameList);
-        }
+        public static void Show(Frame frame, int frameCount, int msPerFrame, List<int> keyFrameList) => Show(frame, frameCount, msPerFrame, 0, keyFrameList);
 
         /// <summary>
         /// 按照指定的方法、总帧数与每帧的持续时长绘制动画。
@@ -192,9 +186,6 @@ namespace Com
         /// <param name="frame">用于绘制动画的某一帧的方法。</param>
         /// <param name="frameCount">动画的总帧数。</param>
         /// <param name="msPerFrame">动画每帧持续的毫秒数。</param>
-        public static void Show(Frame frame, int frameCount, int msPerFrame)
-        {
-            Show(frame, frameCount, msPerFrame, 0, null);
-        }
+        public static void Show(Frame frame, int frameCount, int msPerFrame) => Show(frame, frameCount, msPerFrame, 0, null);
     }
 }

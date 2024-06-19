@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Painting3D
 Version 20.10.27.1900
@@ -62,7 +62,7 @@ namespace Com
         {
             try
             {
-                if (bmp is null || center.IsNaNOrInfinity || (size.IsNaNOrInfinity || size.IsZero) || (color.IsEmpty || color.A == 0) || InternalMethod.IsNaNOrInfinity(edgeWidth) || InternalMethod.IsNullOrEmpty(affineMatrices) || (InternalMethod.IsNaNOrInfinity(focalLength) || focalLength < 0) || illuminationDirection.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(exposure))
+                if (bmp is null || center.IsNaNOrInfinity || size.IsNaNOrInfinity || size.IsZero || color.IsEmpty || color.A == 0 || InternalMethod.IsNaNOrInfinity(edgeWidth) || InternalMethod.IsNullOrEmpty(affineMatrices) || InternalMethod.IsNaNOrInfinity(focalLength) || focalLength < 0 || illuminationDirection.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(exposure))
                 {
                     return false;
                 }
@@ -290,7 +290,7 @@ namespace Com
                                 double CosA = Math.Cos(A);
                                 double CosSqrA = CosA * CosA;
 
-                                double _IlluminationIntensity = (A < Constant.HalfPi ? -CosSqrA : (A > Constant.HalfPi ? CosSqrA : 0));
+                                double _IlluminationIntensity = A < Constant.HalfPi ? -CosSqrA : (A > Constant.HalfPi ? CosSqrA : 0);
 
                                 if (color.A < 255 && A != Constant.HalfPi)
                                 {
@@ -298,11 +298,11 @@ namespace Com
 
                                     if (A < Constant.HalfPi)
                                     {
-                                        _IlluminationIntensity += (Transmittance * Math.Abs(CosA) * CosSqrA);
+                                        _IlluminationIntensity += Transmittance * Math.Abs(CosA) * CosSqrA;
                                     }
                                     else
                                     {
-                                        _IlluminationIntensity -= ((1 - Transmittance) * (1 - Math.Abs(CosA)) * CosSqrA);
+                                        _IlluminationIntensity -= (1 - Transmittance) * (1 - Math.Abs(CosA)) * CosSqrA;
                                     }
                                 }
 
@@ -457,7 +457,7 @@ namespace Com
                                         {
                                             if (edgeWidth > 0)
                                             {
-                                                float EdgeWidth = (focalLength == 0 ? edgeWidth : (float)(focalLength / (ElementZAvg[EIndex] - PrjCenter.Z) * edgeWidth));
+                                                float EdgeWidth = focalLength == 0 ? edgeWidth : (float)(focalLength / (ElementZAvg[EIndex] - PrjCenter.Z) * edgeWidth);
 
                                                 try
                                                 {
@@ -546,10 +546,7 @@ namespace Com
         /// <param name="exposure">曝光，取值范围为 [-100, 100]。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double focalLength, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias)
-        {
-            return PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, focalLength, illuminationDirection, illuminationDirectionIsAfterAffineTransform, exposure, antiAlias);
-        }
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double focalLength, PointD3D illuminationDirection, bool illuminationDirectionIsAfterAffineTransform, double exposure, bool antiAlias) => PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, focalLength, illuminationDirection, illuminationDirectionIsAfterAffineTransform, exposure, antiAlias);
 
         /// <summary>
         /// 绘制一个长方体，并返回表示是否已经实际完成绘图的布尔值。
@@ -563,10 +560,7 @@ namespace Com
         /// <param name="focalLength">焦距。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrices, double focalLength, bool antiAlias)
-        {
-            return PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrices, focalLength, PointD3D.Zero, false, 0, antiAlias);
-        }
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, List<Matrix> affineMatrices, double focalLength, bool antiAlias) => PaintCuboid(bmp, center, size, color, edgeWidth, affineMatrices, focalLength, PointD3D.Zero, false, 0, antiAlias);
 
         /// <summary>
         /// 绘制一个长方体，并返回表示是否已经实际完成绘图的布尔值。
@@ -580,9 +574,6 @@ namespace Com
         /// <param name="focalLength">焦距。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double focalLength, bool antiAlias)
-        {
-            return PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, focalLength, PointD3D.Zero, false, 0, antiAlias);
-        }
+        public static bool PaintCuboid(Bitmap bmp, PointD3D center, PointD3D size, Color color, float edgeWidth, Matrix affineMatrix, double focalLength, bool antiAlias) => PaintCuboid(bmp, center, size, color, edgeWidth, new List<Matrix>(1) { affineMatrix }, focalLength, PointD3D.Zero, false, 0, antiAlias);
     }
 }

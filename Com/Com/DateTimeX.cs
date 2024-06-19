@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.DateTimeX
 Version 20.10.27.1900
@@ -223,7 +223,7 @@ namespace Com
         // 将自公元时刻以来的总毫秒数转换为年、月、日、时、分、秒与毫秒。此函数不检查输入参数的合法性，但保证输出参数的合法性。
         private static void _TotalMillisecondsToDateTime(decimal totalMilliseconds, out long year, out int month, out int day, out int hour, out int minute, out int second, out int millisecond)
         {
-            long TotalDays = (long)(Math.Floor(totalMilliseconds / _MillisecondsPerDay));
+            long TotalDays = (long)Math.Floor(totalMilliseconds / _MillisecondsPerDay);
 
             long Year = 1;
             int DayOfYear = 1;
@@ -345,7 +345,7 @@ namespace Com
 
             year = Year;
 
-            int[] DaysToMonth = (Leap ? _DaysToMonth366 : _DaysToMonth365);
+            int[] DaysToMonth = Leap ? _DaysToMonth366 : _DaysToMonth365;
 
             int Month = 1;
 
@@ -369,7 +369,7 @@ namespace Com
         {
             long TotalDays = 0;
 
-            int[] DaysToMonth = (IsLeapYear(year) ? _DaysToMonth366 : _DaysToMonth365);
+            int[] DaysToMonth = IsLeapYear(year) ? _DaysToMonth366 : _DaysToMonth365;
 
             if (year > 0)
             {
@@ -418,15 +418,15 @@ namespace Com
         {
             get
             {
-                long TotalDays = (long)(Math.Floor((_TotalMilliseconds + (decimal)_UtcOffset * _MillisecondsPerHour) / _MillisecondsPerDay));
+                long TotalDays = (long)Math.Floor((_TotalMilliseconds + (decimal)_UtcOffset * _MillisecondsPerHour) / _MillisecondsPerDay);
 
                 if (TotalDays >= 0)
                 {
-                    return (1 + (int)(TotalDays % 7));
+                    return 1 + (int)(TotalDays % 7);
                 }
                 else
                 {
-                    return (7 - (int)((-TotalDays - 1) % 7));
+                    return 7 - (int)((-TotalDays - 1) % 7);
                 }
             }
         }
@@ -655,81 +655,39 @@ namespace Com
         /// <summary>
         /// 获取表示此 DateTimeX 结构是否未初始化的布尔值。
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return !_Initialized;
-            }
-        }
+        public bool IsEmpty => !_Initialized;
 
         //
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构是否为公元时刻的布尔值。
         /// </summary>
-        public bool IsChristianEra
-        {
-            get
-            {
-                return (_TotalMilliseconds == _ChristianTotalMilliseconds);
-            }
-        }
+        public bool IsChristianEra => _TotalMilliseconds == _ChristianTotalMilliseconds;
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构是否为时刻的最小可能值的布尔值。
         /// </summary>
-        public bool IsMinValue
-        {
-            get
-            {
-                return (_TotalMilliseconds == _MinTotalMilliseconds);
-            }
-        }
+        public bool IsMinValue => _TotalMilliseconds == _MinTotalMilliseconds;
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构是否为时刻的最大可能值的布尔值。
         /// </summary>
-        public bool IsMaxValue
-        {
-            get
-            {
-                return (_TotalMilliseconds == _MaxTotalMilliseconds);
-            }
-        }
+        public bool IsMaxValue => _TotalMilliseconds == _MaxTotalMilliseconds;
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构是否为一个公元后的时刻（含公元时刻）的布尔值。
         /// </summary>
-        public bool IsAnnoDomini
-        {
-            get
-            {
-                return (_TotalMilliseconds >= _ChristianTotalMilliseconds);
-            }
-        }
+        public bool IsAnnoDomini => _TotalMilliseconds >= _ChristianTotalMilliseconds;
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构是否为一个公元前的时刻（不含公元时刻）的布尔值。
         /// </summary>
-        public bool IsBeforeChrist
-        {
-            get
-            {
-                return (_TotalMilliseconds < _ChristianTotalMilliseconds);
-            }
-        }
+        public bool IsBeforeChrist => _TotalMilliseconds < _ChristianTotalMilliseconds;
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构的年是否为闰年的布尔值。
         /// </summary>
-        public bool IsLeap
-        {
-            get
-            {
-                return (IsLeapYear(Year));
-            }
-        }
+        public bool IsLeap => IsLeapYear(Year);
 
         //
 
@@ -738,15 +696,8 @@ namespace Com
         /// </summary>
         public double UtcOffset
         {
-            get
-            {
-                return _UtcOffset;
-            }
-
-            set
-            {
-                _CtorTotalMilliseconds(_TotalMilliseconds, value);
-            }
+            get => _UtcOffset;
+            set => _CtorTotalMilliseconds(_TotalMilliseconds, value);
         }
 
         /// <summary>
@@ -754,15 +705,8 @@ namespace Com
         /// </summary>
         public decimal TotalMilliseconds
         {
-            get
-            {
-                return _TotalMilliseconds;
-            }
-
-            set
-            {
-                _CtorTotalMilliseconds(value, _UtcOffset);
-            }
+            get => _TotalMilliseconds;
+            set => _CtorTotalMilliseconds(value, _UtcOffset);
         }
 
         /// <summary>
@@ -782,10 +726,7 @@ namespace Com
                 }
             }
 
-            set
-            {
-                _CtorDateTime(value, Month, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
-            }
+            set => _CtorDateTime(value, Month, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
         }
 
         /// <summary>
@@ -805,10 +746,7 @@ namespace Com
                 }
             }
 
-            set
-            {
-                _CtorDateTime(Year, value, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
-            }
+            set => _CtorDateTime(Year, value, Day, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
         }
 
         /// <summary>
@@ -828,10 +766,7 @@ namespace Com
                 }
             }
 
-            set
-            {
-                _CtorDateTime(Year, Month, value, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
-            }
+            set => _CtorDateTime(Year, Month, value, _Hour, _Minute, _Second, _Millisecond, _UtcOffset);
         }
 
         /// <summary>
@@ -839,15 +774,8 @@ namespace Com
         /// </summary>
         public int Hour
         {
-            get
-            {
-                return _Hour;
-            }
-
-            set
-            {
-                _CtorDateTime(Year, Month, Day, value, _Minute, _Second, _Millisecond, _UtcOffset);
-            }
+            get => _Hour;
+            set => _CtorDateTime(Year, Month, Day, value, _Minute, _Second, _Millisecond, _UtcOffset);
         }
 
         /// <summary>
@@ -855,15 +783,8 @@ namespace Com
         /// </summary>
         public int Minute
         {
-            get
-            {
-                return _Minute;
-            }
-
-            set
-            {
-                _CtorDateTime(Year, Month, Day, _Hour, value, _Second, _Millisecond, _UtcOffset);
-            }
+            get => _Minute;
+            set => _CtorDateTime(Year, Month, Day, _Hour, value, _Second, _Millisecond, _UtcOffset);
         }
 
         /// <summary>
@@ -871,15 +792,8 @@ namespace Com
         /// </summary>
         public int Second
         {
-            get
-            {
-                return _Second;
-            }
-
-            set
-            {
-                _CtorDateTime(Year, Month, Day, _Hour, _Minute, value, _Millisecond, _UtcOffset);
-            }
+            get => _Second;
+            set => _CtorDateTime(Year, Month, Day, _Hour, _Minute, value, _Millisecond, _UtcOffset);
         }
 
         /// <summary>
@@ -887,15 +801,8 @@ namespace Com
         /// </summary>
         public int Millisecond
         {
-            get
-            {
-                return _Millisecond;
-            }
-
-            set
-            {
-                _CtorDateTime(Year, Month, Day, _Hour, _Minute, _Second, value, _UtcOffset);
-            }
+            get => _Millisecond;
+            set => _CtorDateTime(Year, Month, Day, _Hour, _Minute, _Second, value, _UtcOffset);
         }
 
         //
@@ -903,37 +810,19 @@ namespace Com
         /// <summary>
         /// 获取表示此 DateTimeX 结构的日期部分的 DateTimeX 结构的实例，时间值为午夜。
         /// </summary>
-        public DateTimeX Date
-        {
-            get
-            {
-                return new DateTimeX(Year, Month, Day, _UtcOffset);
-            }
-        }
+        public DateTimeX Date => new DateTimeX(Year, Month, Day, _UtcOffset);
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构的当天的时间的 TimeSpan 结构的实例，表示自午夜以来的时间间隔。
         /// </summary>
-        public TimeSpan TimeOfDay
-        {
-            get
-            {
-                return new TimeSpan(0, _Hour, _Minute, _Second, _Millisecond);
-            }
-        }
+        public TimeSpan TimeOfDay => new TimeSpan(0, _Hour, _Minute, _Second, _Millisecond);
 
         //
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的日期是所在年的第几周（以 1 月 1 日所在周为第一周）。
         /// </summary>
-        public int WeekOfYear
-        {
-            get
-            {
-                return ((DayOfYear - (2 - new DateTimeX(Year, _UtcOffset)._DayOfWeek)) / 7 + 1);
-            }
-        }
+        public int WeekOfYear => (DayOfYear - (2 - new DateTimeX(Year, _UtcOffset)._DayOfWeek)) / 7 + 1;
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的日期是所在年的第几天（以 1 月 1 日为第一天）。
@@ -942,110 +831,56 @@ namespace Com
         {
             get
             {
-                int[] DaysToMonth = (IsLeapYear(Year) ? _DaysToMonth366 : _DaysToMonth365);
+                int[] DaysToMonth = IsLeapYear(Year) ? _DaysToMonth366 : _DaysToMonth365;
 
-                return (DaysToMonth[Month - 1] + Day);
+                return DaysToMonth[Month - 1] + Day;
             }
         }
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的时刻是所在年的第几小时（以 1 月 1 日 0 时为第一小时）。
         /// </summary>
-        public int HourOfYear
-        {
-            get
-            {
-                return ((DayOfYear - 1) * _HoursPerDay + _Hour + 1);
-            }
-        }
+        public int HourOfYear => (DayOfYear - 1) * _HoursPerDay + _Hour + 1;
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的时刻是所在年的第几分钟（以 1 月 1 日 0 时 0 分为第一分钟）。
         /// </summary>
-        public int MinuteOfYear
-        {
-            get
-            {
-                return ((DayOfYear - 1) * _MinutesPerDay + _Hour * _MinutesPerHour + _Minute + 1);
-            }
-        }
+        public int MinuteOfYear => (DayOfYear - 1) * _MinutesPerDay + _Hour * _MinutesPerHour + _Minute + 1;
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的时刻是所在年的第几秒（以 1 月 1 日 0 时 0 分 0 秒为第一秒）。
         /// </summary>
-        public int SecondOfYear
-        {
-            get
-            {
-                return ((DayOfYear - 1) * _SecondsPerDay + _Hour * _SecondsPerHour + _Minute * _SecondsPerMinute + _Second + 1);
-            }
-        }
+        public int SecondOfYear => (DayOfYear - 1) * _SecondsPerDay + _Hour * _SecondsPerHour + _Minute * _SecondsPerMinute + _Second + 1;
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的时刻是所在年的第几毫秒（以 1 月 1 日 0 时 0 分 0 秒 0 毫秒为第一毫秒）。
         /// </summary>
-        public long MillisecondOfYear
-        {
-            get
-            {
-                return ((long)(DayOfYear - 1) * _MillisecondsPerDay + _Hour * _MillisecondsPerHour + _Minute * _MillisecondsPerMinute + _Second * _MillisecondsPerSecond + _Millisecond + 1);
-            }
-        }
+        public long MillisecondOfYear => (long)(DayOfYear - 1) * _MillisecondsPerDay + _Hour * _MillisecondsPerHour + _Minute * _MillisecondsPerMinute + _Second * _MillisecondsPerSecond + _Millisecond + 1;
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构表示的日期是一周中的某天的枚举。
         /// </summary>
-        public DayOfWeek DayOfWeek
-        {
-            get
-            {
-                return (DayOfWeek)(_DayOfWeek % 7);
-            }
-        }
+        public DayOfWeek DayOfWeek => (DayOfWeek)(_DayOfWeek % 7);
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的时刻是所在天的第几小时（以 0 时为第一小时）。
         /// </summary>
-        public int HourOfDay
-        {
-            get
-            {
-                return (_Hour + 1);
-            }
-        }
+        public int HourOfDay => _Hour + 1;
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的时刻是所在天的第几分钟（以 0 时 0 分为第一分钟）。
         /// </summary>
-        public int MinuteOfDay
-        {
-            get
-            {
-                return (_Hour * _MinutesPerHour + _Minute + 1);
-            }
-        }
+        public int MinuteOfDay => _Hour * _MinutesPerHour + _Minute + 1;
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的时刻是所在天的第几秒（以 0 时 0 分 0 秒为第一秒）。
         /// </summary>
-        public int SecondOfDay
-        {
-            get
-            {
-                return (_Hour * _SecondsPerHour + _Minute * _SecondsPerMinute + _Second + 1);
-            }
-        }
+        public int SecondOfDay => _Hour * _SecondsPerHour + _Minute * _SecondsPerMinute + _Second + 1;
 
         /// <summary>
         /// 获取此 DateTimeX 结构表示的时刻是所在天的第几毫秒（以 0 时 0 分 0 秒 0 毫秒为第一毫秒）。
         /// </summary>
-        public int MillisecondOfDay
-        {
-            get
-            {
-                return (_Hour * _MillisecondsPerHour + _Minute * _MillisecondsPerMinute + _Second * _MillisecondsPerSecond + _Millisecond + 1);
-            }
-        }
+        public int MillisecondOfDay => _Hour * _MillisecondsPerHour + _Minute * _MillisecondsPerMinute + _Second * _MillisecondsPerSecond + _Millisecond + 1;
 
         //
 
@@ -1312,46 +1147,22 @@ namespace Com
         /// <summary>
         /// 获取表示此 DateTimeX 结构日期部分的长字符串。
         /// </summary>
-        public string DateLongString
-        {
-            get
-            {
-                return string.Concat((Year < 0 ? "公元前" + (-Year) : Year.ToString()), "年", Month, "月", Day, "日");
-            }
-        }
+        public string DateLongString => string.Concat(Year < 0 ? "公元前" + (-Year) : Year.ToString(), "年", Month, "月", Day, "日");
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构日期部分的短字符串。
         /// </summary>
-        public string DateShortString
-        {
-            get
-            {
-                return string.Concat((Year < 0 ? "BC" + (-Year) : Year.ToString()), "/" + Month, "/" + Day);
-            }
-        }
+        public string DateShortString => string.Concat(Year < 0 ? "BC" + (-Year) : Year.ToString(), "/" + Month, "/" + Day);
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构时间部分的长字符串。
         /// </summary>
-        public string TimeLongString
-        {
-            get
-            {
-                return string.Concat(_Hour, ":", _Minute.ToString("D2"), ":", _Second.ToString("D2"), ".", _Millisecond.ToString("D3"));
-            }
-        }
+        public string TimeLongString => string.Concat(_Hour, ":", _Minute.ToString("D2"), ":", _Second.ToString("D2"), ".", _Millisecond.ToString("D3"));
 
         /// <summary>
         /// 获取表示此 DateTimeX 结构时间部分的短字符串。
         /// </summary>
-        public string TimeShortString
-        {
-            get
-            {
-                return string.Concat(_Hour, ":", _Minute.ToString("D2"));
-            }
-        }
+        public string TimeShortString => string.Concat(_Hour, ":", _Minute.ToString("D2"));
 
         #endregion
 
@@ -1360,46 +1171,22 @@ namespace Com
         /// <summary>
         /// 获取以本地时区表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
         /// </summary>
-        public static DateTimeX Now
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now, _LocalUtcOffset);
-            }
-        }
+        public static DateTimeX Now => new DateTimeX(DateTime.Now, _LocalUtcOffset);
 
         /// <summary>
         /// 获取以协调世界时（UTC）表示的此计算机上的当前日期与时间的 DateTimeX 结构的实例。
         /// </summary>
-        public static DateTimeX UtcNow
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now, _Utc);
-            }
-        }
+        public static DateTimeX UtcNow => new DateTimeX(DateTime.Now, _Utc);
 
         /// <summary>
         /// 获取以本地时区表示的此计算机上的当前日期的 DateTimeX 结构的实例。
         /// </summary>
-        public static DateTimeX Today
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now.Date, _LocalUtcOffset);
-            }
-        }
+        public static DateTimeX Today => new DateTimeX(DateTime.Now.Date, _LocalUtcOffset);
 
         /// <summary>
         /// 获取以协调世界时（UTC）表示的此计算机上的当前日期的 DateTimeX 结构的实例。
         /// </summary>
-        public static DateTimeX UtcToday
-        {
-            get
-            {
-                return new DateTimeX(DateTime.Now.Date, _Utc);
-            }
-        }
+        public static DateTimeX UtcToday => new DateTimeX(DateTime.Now.Date, _Utc);
 
         #endregion
 
@@ -1426,10 +1213,7 @@ namespace Com
         /// 返回此 DateTimeX 结构的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 DateTimeX 结构的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 DateTimeX 结构转换为字符串。
@@ -1439,11 +1223,11 @@ namespace Com
         {
             if (!_Initialized)
             {
-                return (base.GetType().Name + " [Empty]");
+                return base.GetType().Name + " [Empty]";
             }
             else
             {
-                return string.Concat((Year < 0 ? "BC" + (-Year) : Year.ToString()), "/", Month, "/", Day, " ", _Hour, ":", _Minute.ToString("D2"), ":", _Second.ToString("D2"));
+                return string.Concat(Year < 0 ? "BC" + (-Year) : Year.ToString(), "/", Month, "/", Day, " ", _Hour, ":", _Minute.ToString("D2"), ":", _Second.ToString("D2"));
             }
         }
 
@@ -1454,10 +1238,7 @@ namespace Com
         /// </summary>
         /// <param name="dateTime">用于比较的 DateTimeX 结构。</param>
         /// <returns>布尔值，表示此 DateTimeX 结构是否与指定的 DateTimeX 结构相等。</returns>
-        public bool Equals(DateTimeX dateTime)
-        {
-            return (_Initialized == dateTime._Initialized && _UtcOffset.Equals(dateTime._UtcOffset) && _TotalMilliseconds.Equals(dateTime._TotalMilliseconds) && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond);
-        }
+        public bool Equals(DateTimeX dateTime) => _Initialized == dateTime._Initialized && _UtcOffset.Equals(dateTime._UtcOffset) && _TotalMilliseconds.Equals(dateTime._TotalMilliseconds) && _Year == dateTime._Year && _Month == dateTime._Month && _Day == dateTime._Day && _Hour == dateTime._Hour && _Minute == dateTime._Minute && _Second == dateTime._Second && _Millisecond == dateTime._Millisecond;
 
         //
 
@@ -1487,10 +1268,7 @@ namespace Com
         /// </summary>
         /// <param name="dateTime">用于比较的 DateTimeX 结构。</param>
         /// <returns>32 位整数，表示将此 DateTimeX 结构与指定的 DateTimeX 结构进行次序比较得到的结果。</returns>
-        public int CompareTo(DateTimeX dateTime)
-        {
-            return _TotalMilliseconds.CompareTo(dateTime._TotalMilliseconds);
-        }
+        public int CompareTo(DateTimeX dateTime) => _TotalMilliseconds.CompareTo(dateTime._TotalMilliseconds);
 
         //
 
@@ -1499,20 +1277,14 @@ namespace Com
         /// </summary>
         /// <param name="timeSpan">TimeSpanX 结构，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构与 TimeSpanX 结构相加得到的结果。</returns>
-        public DateTimeX Add(TimeSpanX timeSpan)
-        {
-            return AddMilliseconds(timeSpan.TotalMilliseconds);
-        }
+        public DateTimeX Add(TimeSpanX timeSpan) => AddMilliseconds(timeSpan.TotalMilliseconds);
 
         /// <summary>
         /// 返回将此 DateTimeX 结构与 TimeSpan 结构相加得到的 DateTimeX 结构的新实例。
         /// </summary>
         /// <param name="timeSpan">TimeSpan 结构，用于相加到此 DateTimeX 结构。</param>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构与 TimeSpan 结构相加得到的结果。</returns>
-        public DateTimeX Add(TimeSpan timeSpan)
-        {
-            return AddMilliseconds(timeSpan.TotalMilliseconds);
-        }
+        public DateTimeX Add(TimeSpan timeSpan) => AddMilliseconds(timeSpan.TotalMilliseconds);
 
         /// <summary>
         /// 返回将此 DateTimeX 结构加上若干年得到的 DateTimeX 结构的新实例。
@@ -2137,19 +1909,13 @@ namespace Com
         /// 返回将此 DateTimeX 结构转换为以本地时区表示的 DateTimeX 结构的新实例。
         /// </summary>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以本地时区表示的 DateTimeX 结构得到的结果。</returns>
-        public DateTimeX ToLocalTime()
-        {
-            return new DateTimeX(_TotalMilliseconds, _LocalUtcOffset);
-        }
+        public DateTimeX ToLocalTime() => new DateTimeX(_TotalMilliseconds, _LocalUtcOffset);
 
         /// <summary>
         /// 返回将此 DateTimeX 结构转换为以协调世界时（UTC）表示的 DateTimeX 结构的新实例。
         /// </summary>
         /// <returns>DateTimeX 结构，表示将此 DateTimeX 结构转换为以协调世界时（UTC）表示的 DateTimeX 结构得到的结果。</returns>
-        public DateTimeX ToUniversalTime()
-        {
-            return new DateTimeX(_TotalMilliseconds, _Utc);
-        }
+        public DateTimeX ToUniversalTime() => new DateTimeX(_TotalMilliseconds, _Utc);
 
         //
 
@@ -2157,37 +1923,25 @@ namespace Com
         /// 返回表示此 DateTimeX 结构的长日期字符串。
         /// </summary>
         /// <returns>字符串，表示此 DateTimeX 结构的长日期字符串形式。</returns>
-        public string ToLongDateString()
-        {
-            return DateLongString;
-        }
+        public string ToLongDateString() => DateLongString;
 
         /// <summary>
         /// 返回表示此 DateTimeX 结构的短日期字符串。
         /// </summary>
         /// <returns>字符串，表示此 DateTimeX 结构的短日期字符串形式。</returns>
-        public string ToShortDateString()
-        {
-            return DateShortString;
-        }
+        public string ToShortDateString() => DateShortString;
 
         /// <summary>
         /// 返回表示此 DateTimeX 结构的长时间字符串。
         /// </summary>
         /// <returns>字符串，表示此 DateTimeX 结构的长时间字符串形式。</returns>
-        public string ToLongTimeString()
-        {
-            return TimeLongString;
-        }
+        public string ToLongTimeString() => TimeLongString;
 
         /// <summary>
         /// 返回表示此 DateTimeX 结构的短时间字符串。
         /// </summary>
         /// <returns>字符串，表示此 DateTimeX 结构的短时间字符串形式。</returns>
-        public string ToShortTimeString()
-        {
-            return TimeShortString;
-        }
+        public string ToShortTimeString() => TimeShortString;
 
         #endregion
 
@@ -2199,10 +1953,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 DateTimeX 结构。</param>
         /// <param name="right">用于比较的第二个 DateTimeX 结构。</param>
         /// <returns>布尔值，表示两个 DateTimeX 结构是否相等。</returns>
-        public static bool Equals(DateTimeX left, DateTimeX right)
-        {
-            return left.Equals(right);
-        }
+        public static bool Equals(DateTimeX left, DateTimeX right) => left.Equals(right);
 
         //
 
@@ -2212,10 +1963,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 DateTimeX 结构。</param>
         /// <param name="right">用于比较的第二个 DateTimeX 结构。</param>
         /// <returns>32 位整数，表示将两个 DateTimeX 结构进行次序比较得到的结果。</returns>
-        public static int Compare(DateTimeX left, DateTimeX right)
-        {
-            return left.CompareTo(right);
-        }
+        public static int Compare(DateTimeX left, DateTimeX right) => left.CompareTo(right);
 
         //
 
@@ -2238,7 +1986,7 @@ namespace Com
                 year = -year - 1;
             }
 
-            return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) && (year % 3200 != 0 || year % 172800 == 0));
+            return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) && (year % 3200 != 0 || year % 172800 == 0);
         }
 
         //
@@ -2257,7 +2005,7 @@ namespace Com
 
             //
 
-            return (IsLeapYear(year) ? 366 : 365);
+            return IsLeapYear(year) ? 366 : 365;
         }
 
         /// <summary>
@@ -2268,16 +2016,16 @@ namespace Com
         /// <returns>32 位整数，表示指定年的指定月的天数。</returns>
         public static int DaysInMonth(long year, int month)
         {
-            if (year == 0 || (month < _MinMonth || month > _MaxMonth))
+            if (year == 0 || month < _MinMonth || month > _MaxMonth)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            int[] DaysToMonth = (IsLeapYear(year) ? _DaysToMonth366 : _DaysToMonth365);
+            int[] DaysToMonth = IsLeapYear(year) ? _DaysToMonth366 : _DaysToMonth365;
 
-            return (DaysToMonth[month] - DaysToMonth[month - 1]);
+            return DaysToMonth[month] - DaysToMonth[month - 1];
         }
 
         #endregion
@@ -2298,7 +2046,7 @@ namespace Com
             }
             else
             {
-                return (left._TotalMilliseconds == right._TotalMilliseconds);
+                return left._TotalMilliseconds == right._TotalMilliseconds;
             }
         }
 
@@ -2316,7 +2064,7 @@ namespace Com
             }
             else
             {
-                return (left._TotalMilliseconds != right._TotalMilliseconds);
+                return left._TotalMilliseconds != right._TotalMilliseconds;
             }
         }
 
@@ -2334,7 +2082,7 @@ namespace Com
             }
             else
             {
-                return (left._TotalMilliseconds < right._TotalMilliseconds);
+                return left._TotalMilliseconds < right._TotalMilliseconds;
             }
         }
 
@@ -2352,7 +2100,7 @@ namespace Com
             }
             else
             {
-                return (left._TotalMilliseconds > right._TotalMilliseconds);
+                return left._TotalMilliseconds > right._TotalMilliseconds;
             }
         }
 
@@ -2370,7 +2118,7 @@ namespace Com
             }
             else
             {
-                return (left._TotalMilliseconds <= right._TotalMilliseconds);
+                return left._TotalMilliseconds <= right._TotalMilliseconds;
             }
         }
 
@@ -2388,7 +2136,7 @@ namespace Com
             }
             else
             {
-                return (left._TotalMilliseconds >= right._TotalMilliseconds);
+                return left._TotalMilliseconds >= right._TotalMilliseconds;
             }
         }
 
@@ -2424,7 +2172,7 @@ namespace Com
         /// <returns>DateTimeX 结构，表示将 DateTimeX 结构与 TimeSpanX 结构相减得到的结果。</returns>
         public static DateTimeX operator -(DateTimeX dateTime, TimeSpanX timeSpan)
         {
-            return dateTime.AddMilliseconds(-(timeSpan.TotalMilliseconds));
+            return dateTime.AddMilliseconds(-timeSpan.TotalMilliseconds);
         }
 
         /// <summary>
@@ -2435,7 +2183,7 @@ namespace Com
         /// <returns>DateTimeX 结构，表示将 DateTimeX 结构与 TimeSpan 结构相减得到的结果。</returns>
         public static DateTimeX operator -(DateTimeX dateTime, TimeSpan timeSpan)
         {
-            return dateTime.AddMilliseconds(-(timeSpan.TotalMilliseconds));
+            return dateTime.AddMilliseconds(-timeSpan.TotalMilliseconds);
         }
 
         //

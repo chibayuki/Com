@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.InternalUnsafeCallAttribute
 Version 20.10.27.1900
@@ -47,26 +47,13 @@ namespace Com
         //
 
         // 获取此内部不安全调用的类型。
-        public InternalUnsafeCallType Type
-        {
-            get
-            {
-                return _Type;
-            }
-        }
+        public InternalUnsafeCallType Type => _Type;
 
         // 获取或设置此内部不安全调用的说明信息。
         public string Message
         {
-            get
-            {
-                return _Message;
-            }
-
-            set
-            {
-                _Message = value;
-            }
+            get => _Message;
+            set => _Message = value;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.TimespanX
 Version 20.10.27.1900
@@ -139,92 +139,44 @@ namespace Com
         /// <summary>
         /// 获取表示此 TimespanX 结构是否为零时间间隔的布尔值。
         /// </summary>
-        public bool IsZero
-        {
-            get
-            {
-                return (_TotalMilliseconds == _ZeroTotalMilliseconds);
-            }
-        }
+        public bool IsZero => _TotalMilliseconds == _ZeroTotalMilliseconds;
 
         /// <summary>
         /// 获取表示此 TimespanX 结构是否为时间间隔的最小可能值的布尔值。
         /// </summary>
-        public bool IsMinValue
-        {
-            get
-            {
-                return (_TotalMilliseconds == _MinTotalMilliseconds);
-            }
-        }
+        public bool IsMinValue => _TotalMilliseconds == _MinTotalMilliseconds;
 
         /// <summary>
         /// 获取表示此 TimespanX 结构是否为时间间隔的最大可能值的布尔值。
         /// </summary>
-        public bool IsMaxValue
-        {
-            get
-            {
-                return (_TotalMilliseconds == _MaxTotalMilliseconds);
-            }
-        }
+        public bool IsMaxValue => _TotalMilliseconds == _MaxTotalMilliseconds;
 
         //
 
         /// <summary>
         /// 获取此 TimespanX 结构的天数。
         /// </summary>
-        public long Days
-        {
-            get
-            {
-                return (long)(_TotalMilliseconds / _MillisecondsPerDay);
-            }
-        }
+        public long Days => (long)(_TotalMilliseconds / _MillisecondsPerDay);
 
         /// <summary>
         /// 获取此 TimespanX 结构的小时数。
         /// </summary>
-        public int Hours
-        {
-            get
-            {
-                return (int)((_TotalMilliseconds / _MillisecondsPerHour) % _HoursPerDay);
-            }
-        }
+        public int Hours => (int)(_TotalMilliseconds / _MillisecondsPerHour % _HoursPerDay);
 
         /// <summary>
         /// 获取此 TimespanX 结构的分钟数。
         /// </summary>
-        public int Minutes
-        {
-            get
-            {
-                return (int)((_TotalMilliseconds / _MillisecondsPerMinute) % _MinutesPerHour);
-            }
-        }
+        public int Minutes => (int)(_TotalMilliseconds / _MillisecondsPerMinute % _MinutesPerHour);
 
         /// <summary>
         /// 获取此 TimespanX 结构的秒数。
         /// </summary>
-        public int Seconds
-        {
-            get
-            {
-                return (int)((_TotalMilliseconds / _MillisecondsPerSecond) % _SecondsPerMinute);
-            }
-        }
+        public int Seconds => (int)(_TotalMilliseconds / _MillisecondsPerSecond % _SecondsPerMinute);
 
         /// <summary>
         /// 获取此 TimespanX 结构的毫秒数。
         /// </summary>
-        public int Milliseconds
-        {
-            get
-            {
-                return (int)(_TotalMilliseconds % _MillisecondsPerSecond);
-            }
-        }
+        public int Milliseconds => (int)(_TotalMilliseconds % _MillisecondsPerSecond);
 
         //
 
@@ -233,15 +185,8 @@ namespace Com
         /// </summary>
         public decimal TotalDays
         {
-            get
-            {
-                return (_TotalMilliseconds / _MillisecondsPerDay);
-            }
-
-            set
-            {
-                _TotalMilliseconds = _CheckTotalMilliseconds(value * _MillisecondsPerDay);
-            }
+            get => _TotalMilliseconds / _MillisecondsPerDay;
+            set => _TotalMilliseconds = _CheckTotalMilliseconds(value * _MillisecondsPerDay);
         }
 
         /// <summary>
@@ -249,15 +194,8 @@ namespace Com
         /// </summary>
         public decimal TotalHours
         {
-            get
-            {
-                return (_TotalMilliseconds / _MillisecondsPerHour);
-            }
-
-            set
-            {
-                _TotalMilliseconds = _CheckTotalMilliseconds(value * _MillisecondsPerHour);
-            }
+            get => _TotalMilliseconds / _MillisecondsPerHour;
+            set => _TotalMilliseconds = _CheckTotalMilliseconds(value * _MillisecondsPerHour);
         }
 
         /// <summary>
@@ -265,15 +203,8 @@ namespace Com
         /// </summary>
         public decimal TotalMinutes
         {
-            get
-            {
-                return (_TotalMilliseconds / _MillisecondsPerMinute);
-            }
-
-            set
-            {
-                _TotalMilliseconds = _CheckTotalMilliseconds(value * _MillisecondsPerMinute);
-            }
+            get => _TotalMilliseconds / _MillisecondsPerMinute;
+            set => _TotalMilliseconds = _CheckTotalMilliseconds(value * _MillisecondsPerMinute);
         }
 
         /// <summary>
@@ -281,15 +212,8 @@ namespace Com
         /// </summary>
         public decimal TotalSeconds
         {
-            get
-            {
-                return (_TotalMilliseconds / _MillisecondsPerSecond);
-            }
-
-            set
-            {
-                _TotalMilliseconds = _CheckTotalMilliseconds(value * _MillisecondsPerSecond);
-            }
+            get => _TotalMilliseconds / _MillisecondsPerSecond;
+            set => _TotalMilliseconds = _CheckTotalMilliseconds(value * _MillisecondsPerSecond);
         }
 
         /// <summary>
@@ -297,15 +221,8 @@ namespace Com
         /// </summary>
         public decimal TotalMilliseconds
         {
-            get
-            {
-                return _TotalMilliseconds;
-            }
-
-            set
-            {
-                _TotalMilliseconds = _CheckTotalMilliseconds(value);
-            }
+            get => _TotalMilliseconds;
+            set => _TotalMilliseconds = _CheckTotalMilliseconds(value);
         }
 
         #endregion
@@ -333,10 +250,7 @@ namespace Com
         /// 返回此 TimeSpanX 结构的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 TimeSpanX 结构的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 TimeSpanX 结构转换为字符串。
@@ -396,10 +310,7 @@ namespace Com
         /// <param name="timeSpan">用于比较的 TimeSpanX 结构。</param>
         /// <returns>布尔值，表示此 TimeSpanX
         /// 结构是否与指定的 TimeSpanX 结构相等。</returns>
-        public bool Equals(TimeSpanX timeSpan)
-        {
-            return (_TotalMilliseconds.Equals(timeSpan._TotalMilliseconds));
-        }
+        public bool Equals(TimeSpanX timeSpan) => _TotalMilliseconds.Equals(timeSpan._TotalMilliseconds);
 
         //
 
@@ -429,10 +340,7 @@ namespace Com
         /// </summary>
         /// <param name="timeSpan">用于比较的 TimeSpanX 结构。</param>
         /// <returns>32 位整数，表示将此 TimeSpanX 结构与指定的 TimeSpanX 结构进行次序比较得到的结果。</returns>
-        public int CompareTo(TimeSpanX timeSpan)
-        {
-            return _TotalMilliseconds.CompareTo(timeSpan._TotalMilliseconds);
-        }
+        public int CompareTo(TimeSpanX timeSpan) => _TotalMilliseconds.CompareTo(timeSpan._TotalMilliseconds);
 
         //
 
@@ -441,20 +349,14 @@ namespace Com
         /// </summary>
         /// <param name="timeSpan">TimeSpanX 结构，用于相加到此 TimeSpanX 结构。</param>
         /// <returns>TimeSpanX 结构，表示将此 TimeSpanX 结构与 TimeSpanX 结构相加得到的结果。</returns>
-        public TimeSpanX Add(TimeSpanX timeSpan)
-        {
-            return AddMilliseconds(timeSpan._TotalMilliseconds);
-        }
+        public TimeSpanX Add(TimeSpanX timeSpan) => AddMilliseconds(timeSpan._TotalMilliseconds);
 
         /// <summary>
         /// 返回将此 TimeSpanX 结构与 TimeSpan 结构相加得到的 TimeSpanX 结构的新实例。
         /// </summary>
         /// <param name="timeSpan">TimeSpan 结构，用于相加到此 TimeSpanX 结构。</param>
         /// <returns>TimeSpanX 结构，表示将此 TimeSpanX 结构与 TimeSpan 结构相加得到的结果。</returns>
-        public TimeSpanX Add(TimeSpan timeSpan)
-        {
-            return AddMilliseconds(timeSpan.TotalMilliseconds);
-        }
+        public TimeSpanX Add(TimeSpan timeSpan) => AddMilliseconds(timeSpan.TotalMilliseconds);
 
         /// <summary>
         /// 返回将此 TimeSpanX 结构加上若干天得到的 TimeSpanX 结构的新实例。
@@ -911,10 +813,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 TimeSpanX 结构。</param>
         /// <param name="right">用于比较的第二个 TimeSpanX 结构。</param>
         /// <returns>布尔值，表示两个 TimeSpanX 结构是否相等。</returns>
-        public static bool Equals(TimeSpanX left, TimeSpanX right)
-        {
-            return left.Equals(right);
-        }
+        public static bool Equals(TimeSpanX left, TimeSpanX right) => left.Equals(right);
 
         //
 
@@ -924,10 +823,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 TimeSpanX 结构。</param>
         /// <param name="right">用于比较的第二个 TimeSpanX 结构。</param>
         /// <returns>32 位整数，表示将两个 TimeSpanX 结构进行次序比较得到的结果。</returns>
-        public static int Compare(TimeSpanX left, TimeSpanX right)
-        {
-            return left.CompareTo(right);
-        }
+        public static int Compare(TimeSpanX left, TimeSpanX right) => left.CompareTo(right);
 
         #endregion
 
@@ -941,7 +837,7 @@ namespace Com
         /// <returns>布尔值，表示两个 TimeSpanX 结构是否表示相同的时刻。</returns>
         public static bool operator ==(TimeSpanX left, TimeSpanX right)
         {
-            return (left._TotalMilliseconds == right._TotalMilliseconds);
+            return left._TotalMilliseconds == right._TotalMilliseconds;
         }
 
         /// <summary>
@@ -952,7 +848,7 @@ namespace Com
         /// <returns>布尔值，表示两个 TimeSpanX 结构是否表示不同的时刻。</returns>
         public static bool operator !=(TimeSpanX left, TimeSpanX right)
         {
-            return (left._TotalMilliseconds != right._TotalMilliseconds);
+            return left._TotalMilliseconds != right._TotalMilliseconds;
         }
 
         /// <summary>
@@ -963,7 +859,7 @@ namespace Com
         /// <returns>布尔值，表示两个 TimeSpanX 结构表示的时刻是否前者早于后者。</returns>
         public static bool operator <(TimeSpanX left, TimeSpanX right)
         {
-            return (left._TotalMilliseconds < right._TotalMilliseconds);
+            return left._TotalMilliseconds < right._TotalMilliseconds;
         }
 
         /// <summary>
@@ -974,7 +870,7 @@ namespace Com
         /// <returns>布尔值，表示两个 TimeSpanX 结构表示的时刻是否前者晚于后者。</returns>
         public static bool operator >(TimeSpanX left, TimeSpanX right)
         {
-            return (left._TotalMilliseconds > right._TotalMilliseconds);
+            return left._TotalMilliseconds > right._TotalMilliseconds;
         }
 
         /// <summary>
@@ -985,7 +881,7 @@ namespace Com
         /// <returns>布尔值，表示两个 TimeSpanX 结构表示的时刻是否前者早于或等于后者。</returns>
         public static bool operator <=(TimeSpanX left, TimeSpanX right)
         {
-            return (left._TotalMilliseconds <= right._TotalMilliseconds);
+            return left._TotalMilliseconds <= right._TotalMilliseconds;
         }
 
         /// <summary>
@@ -996,7 +892,7 @@ namespace Com
         /// <returns>布尔值，表示两个 TimeSpanX 结构表示的时刻是否前者晚于或等于后者。</returns>
         public static bool operator >=(TimeSpanX left, TimeSpanX right)
         {
-            return (left._TotalMilliseconds >= right._TotalMilliseconds);
+            return left._TotalMilliseconds >= right._TotalMilliseconds;
         }
 
         //
@@ -1064,7 +960,7 @@ namespace Com
         /// <returns>TimeSpanX 结构，表示将 TimeSpanX 结构与 TimeSpanX 结构相减得到的结果。</returns>
         public static TimeSpanX operator -(TimeSpanX left, TimeSpanX right)
         {
-            return left.AddMilliseconds(-(right._TotalMilliseconds));
+            return left.AddMilliseconds(-right._TotalMilliseconds);
         }
 
         /// <summary>
@@ -1075,7 +971,7 @@ namespace Com
         /// <returns>TimeSpanX 结构，表示将 TimeSpanX 结构与 TimeSpan 结构相减得到的结果。</returns>
         public static TimeSpanX operator -(TimeSpanX left, TimeSpan right)
         {
-            return left.AddMilliseconds(-(right.TotalMilliseconds));
+            return left.AddMilliseconds(-right.TotalMilliseconds);
         }
 
         /// <summary>
@@ -1086,7 +982,7 @@ namespace Com
         /// <returns>TimeSpanX 结构，表示将 TimeSpan 结构与 TimeSpanX 结构相减得到的结果。</returns>
         public static TimeSpanX operator -(TimeSpan left, TimeSpanX right)
         {
-            return right.AddMilliseconds(-(left.TotalMilliseconds));
+            return right.AddMilliseconds(-left.TotalMilliseconds);
         }
 
         //

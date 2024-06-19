@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.WinForm.CaptionBar
 Version 20.10.27.1900
@@ -91,7 +91,7 @@ namespace Com.WinForm
 
                 if (Me.ShowCaption && Me.Caption.Length > 0)
                 {
-                    Rectangle CaptionArea = new Rectangle(new Point((Me.ShowIconOnCaptionBar ? Panel_FormIcon.Right : 0), 0), new Size(Math.Max(1, Panel_ControlBox.Left - (Me.ShowIconOnCaptionBar ? Panel_FormIcon.Right : 0)), Math.Max(1, Panel_CaptionBar.Height)));
+                    Rectangle CaptionArea = new Rectangle(new Point(Me.ShowIconOnCaptionBar ? Panel_FormIcon.Right : 0, 0), new Size(Math.Max(1, Panel_ControlBox.Left - (Me.ShowIconOnCaptionBar ? Panel_FormIcon.Right : 0)), Math.Max(1, Panel_CaptionBar.Height)));
 
                     Font CaptionFont = Me.CaptionFont;
 
@@ -154,7 +154,7 @@ namespace Com.WinForm
 
                         if (Me.ShowCaptionBarColor && Me.IsActive)
                         {
-                            Color Cr_Caption_Bk = (!RecommendColors.BackColorFitLightText(Me.RecommendColors.CaptionBar) ? Color.FromArgb(128, Color.White) : Color.FromArgb(96, Color.Black));
+                            Color Cr_Caption_Bk = !RecommendColors.BackColorFitLightText(Me.RecommendColors.CaptionBar) ? Color.FromArgb(128, Color.White) : Color.FromArgb(96, Color.Black);
 
                             CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk), new PointF(CaptionLocF.X - 0.5F, CaptionLocF.Y));
                             CreateFormCaptionBmp.DrawString(Caption, CaptionFont, new SolidBrush(Cr_Caption_Bk), new PointF(CaptionLocF.X + 0.5F, CaptionLocF.Y));
@@ -192,16 +192,16 @@ namespace Com.WinForm
         // 在 FormStyleChanged 或 FormStateChanged 事件发生时更新控件的属性。
         private void _UpdateForStyleOrStateChanged()
         {
-            ToolStripMenuItem_Maximize.Enabled = (Me.FormState != FormState.Maximized);
-            ToolStripMenuItem_Return.Enabled = (Me.FormState != FormState.Normal);
+            ToolStripMenuItem_Maximize.Enabled = Me.FormState != FormState.Maximized;
+            ToolStripMenuItem_Return.Enabled = Me.FormState != FormState.Normal;
 
             //
 
             ToolTip_ControlBox.Hide(PictureBox_FullScreen);
-            ToolTip_ControlBox.SetToolTip(PictureBox_FullScreen, (Me.FormState == FormState.FullScreen ? "退出全屏" : "全屏"));
+            ToolTip_ControlBox.SetToolTip(PictureBox_FullScreen, Me.FormState == FormState.FullScreen ? "退出全屏" : "全屏");
 
             ToolTip_ControlBox.Hide(PictureBox_Maximize);
-            ToolTip_ControlBox.SetToolTip(PictureBox_Maximize, (Me.FormState == FormState.Maximized ? "向下还原" : "最大化"));
+            ToolTip_ControlBox.SetToolTip(PictureBox_Maximize, Me.FormState == FormState.Maximized ? "向下还原" : "最大化");
 
             //
 
@@ -241,11 +241,11 @@ namespace Com.WinForm
             ToolStripMenuItem_Maximize.Visible = PictureBox_Maximize.Visible = EnableMaximize;
             ToolStripMenuItem_Return.Visible = EnableReturn;
 
-            ToolStripSeparator_Main.Visible = (EnableReturn || EnableMinimize || EnableMaximize);
+            ToolStripSeparator_Main.Visible = EnableReturn || EnableMinimize || EnableMaximize;
 
-            PictureBox_Minimize.Left = (EnableFullScreen ? PictureBox_FullScreen.Right : PictureBox_FullScreen.Left);
-            PictureBox_Maximize.Left = (EnableMinimize ? PictureBox_Minimize.Right : PictureBox_Minimize.Left);
-            PictureBox_Exit.Left = (EnableMaximize ? PictureBox_Maximize.Right : PictureBox_Maximize.Left);
+            PictureBox_Minimize.Left = EnableFullScreen ? PictureBox_FullScreen.Right : PictureBox_FullScreen.Left;
+            PictureBox_Maximize.Left = EnableMinimize ? PictureBox_Minimize.Right : PictureBox_Minimize.Left;
+            PictureBox_Exit.Left = EnableMaximize ? PictureBox_Maximize.Right : PictureBox_Maximize.Left;
 
             Panel_ControlBox.Width = PictureBox_Exit.Right;
         }
@@ -265,7 +265,7 @@ namespace Com.WinForm
                 }
             };
 
-            PictureBox_FullScreen.Image = FullScreenImage[(!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? (ColorX)PictureBox_FullScreen.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1), (Me.ActualFormState == FormState.FullScreen ? 0 : 1), (_FullScreenButtonIsPointed || _FullScreenButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_FullScreen.Image = FullScreenImage[!RecommendColors.BackColorFitLightText(_FullScreenButtonIsPointed || _FullScreenButtonIsPressed ? (ColorX)PictureBox_FullScreen.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1, Me.ActualFormState == FormState.FullScreen ? 0 : 1, _FullScreenButtonIsPointed || _FullScreenButtonIsPressed || Me.IsActive ? 0 : 1];
 
             Bitmap[,] MinimizeImage = new Bitmap[2, 2]
             {
@@ -273,7 +273,7 @@ namespace Com.WinForm
                 { Properties.Resources.ControlBox_Active_LightImage_Minimize_16, Properties.Resources.ControlBox_Inactive_LightImage_Minimize_16 }
             };
 
-            PictureBox_Minimize.Image = MinimizeImage[(!RecommendColors.BackColorFitLightText(_MinimizeButtonIsPointed || _MinimizeButtonIsPressed ? (ColorX)PictureBox_Minimize.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1), (_MinimizeButtonIsPointed || _MinimizeButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_Minimize.Image = MinimizeImage[!RecommendColors.BackColorFitLightText(_MinimizeButtonIsPointed || _MinimizeButtonIsPressed ? (ColorX)PictureBox_Minimize.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1, _MinimizeButtonIsPointed || _MinimizeButtonIsPressed || Me.IsActive ? 0 : 1];
 
             Bitmap[,,] MaximizeImage = new Bitmap[2, 2, 2]
             {
@@ -287,7 +287,7 @@ namespace Com.WinForm
                 }
             };
 
-            PictureBox_Maximize.Image = MaximizeImage[(!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? (ColorX)PictureBox_Maximize.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1), (Me.ActualFormState == FormState.Maximized ? 0 : 1), (_MaximizeButtonIsPointed || _MaximizeButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_Maximize.Image = MaximizeImage[!RecommendColors.BackColorFitLightText(_MaximizeButtonIsPointed || _MaximizeButtonIsPressed ? (ColorX)PictureBox_Maximize.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1, Me.ActualFormState == FormState.Maximized ? 0 : 1, _MaximizeButtonIsPointed || _MaximizeButtonIsPressed || Me.IsActive ? 0 : 1];
 
             Bitmap[,] ExitImage = new Bitmap[2, 2]
             {
@@ -295,7 +295,7 @@ namespace Com.WinForm
                 { Properties.Resources.ControlBox_Active_LightImage_Exit_16, Properties.Resources.ControlBox_Inactive_LightImage_Exit_16 }
             };
 
-            PictureBox_Exit.Image = ExitImage[(!RecommendColors.BackColorFitLightText(_ExitButtonIsPointed || _ExitButtonIsPressed ? (ColorX)PictureBox_Exit.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1), (_ExitButtonIsPointed || _ExitButtonIsPressed || Me.IsActive ? 0 : 1)];
+            PictureBox_Exit.Image = ExitImage[!RecommendColors.BackColorFitLightText(_ExitButtonIsPointed || _ExitButtonIsPressed ? (ColorX)PictureBox_Exit.BackColor : Me.RecommendColors.CaptionBar) ? 0 : 1, _ExitButtonIsPointed || _ExitButtonIsPressed || Me.IsActive ? 0 : 1];
 
             PictureBox_FullScreen.Refresh();
             PictureBox_Minimize.Refresh();
@@ -312,7 +312,7 @@ namespace Com.WinForm
 
                 Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Progress = (frameId == frameCount ? 1 : (double)frameId / frameCount);
+                    double Progress = frameId == frameCount ? 1 : (double)frameId / frameCount;
 
                     if (frameId == frameCount)
                     {
@@ -357,10 +357,7 @@ namespace Com.WinForm
         }
 
         // 取消更新窗口布局。
-        private void _CancelUpdateLayout()
-        {
-            _UpdateLayoutCanceled = true;
-        }
+        private void _CancelUpdateLayout() => _UpdateLayoutCanceled = true;
 
         #endregion
 
@@ -399,10 +396,7 @@ namespace Com.WinForm
         }
 
         // CaptionBar 的 LocationChanged 事件的回调函数。
-        private void CaptionBar_LocationChanged(object sender, EventArgs e)
-        {
-            _RepaintCaptionBarBitmap();
-        }
+        private void CaptionBar_LocationChanged(object sender, EventArgs e) => _RepaintCaptionBarBitmap();
 
         // CaptionBar 的 SizeChanged 事件的回调函数。
         private void CaptionBar_SizeChanged(object sender, EventArgs e)
@@ -726,16 +720,10 @@ namespace Com.WinForm
         }
 
         // Panel_FormIcon 的 MouseDown 事件的回调函数。
-        private void Panel_FormIcon_MouseDown(object sender, MouseEventArgs e)
-        {
-            PictureBox_FormIcon_MouseDown(sender, e);
-        }
+        private void Panel_FormIcon_MouseDown(object sender, MouseEventArgs e) => PictureBox_FormIcon_MouseDown(sender, e);
 
         // Panel_FormIcon 的 MouseDoubleClick 事件的回调函数。
-        private void Panel_FormIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            PictureBox_FormIcon_MouseDoubleClick(sender, e);
-        }
+        private void Panel_FormIcon_MouseDoubleClick(object sender, MouseEventArgs e) => PictureBox_FormIcon_MouseDoubleClick(sender, e);
 
         //
 
@@ -1040,40 +1028,22 @@ namespace Com.WinForm
         //
 
         // ContextMenuStrip_Main 的 Enter 事件的回调函数。
-        private void ContextMenuStrip_Main_Enter(object sender, EventArgs e)
-        {
-            Me.MainMenuIsActive = true;
-        }
+        private void ContextMenuStrip_Main_Enter(object sender, EventArgs e) => Me.MainMenuIsActive = true;
 
         // ContextMenuStrip_Main 的 Leave 事件的回调函数。
-        private void ContextMenuStrip_Main_Leave(object sender, EventArgs e)
-        {
-            Me.MainMenuIsActive = false;
-        }
+        private void ContextMenuStrip_Main_Leave(object sender, EventArgs e) => Me.MainMenuIsActive = false;
 
         // ToolStripMenuItem_Return 的 Click 事件的回调函数。
-        private void ToolStripMenuItem_Return_Click(object sender, EventArgs e)
-        {
-            Me.Return();
-        }
+        private void ToolStripMenuItem_Return_Click(object sender, EventArgs e) => Me.Return();
 
         // ToolStripMenuItem_Minimize 的 Click 事件的回调函数。
-        private void ToolStripMenuItem_Minimize_Click(object sender, EventArgs e)
-        {
-            Me.Minimize();
-        }
+        private void ToolStripMenuItem_Minimize_Click(object sender, EventArgs e) => Me.Minimize();
 
         // ToolStripMenuItem_Maximize 的 Click 事件的回调函数。
-        private void ToolStripMenuItem_Maximize_Click(object sender, EventArgs e)
-        {
-            Me.Maximize();
-        }
+        private void ToolStripMenuItem_Maximize_Click(object sender, EventArgs e) => Me.Maximize();
 
         // ToolStripMenuItem_Exit 的 Click 事件的回调函数。
-        private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e)
-        {
-            Me.Close();
-        }
+        private void ToolStripMenuItem_Exit_Click(object sender, EventArgs e) => Me.Close();
 
         //
 
@@ -1108,7 +1078,7 @@ namespace Com.WinForm
 
                 Animation.Frame FrameShow = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Progress = frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2);
 
                     this.Opacity = _Opacity * Progress;
                     this.Height = (int)(Panel_ControlBox.Height * Progress);
@@ -1118,7 +1088,7 @@ namespace Com.WinForm
 
                 Animation.Frame FrameHide = (frameId, frameCount, msPerFrame) =>
                 {
-                    double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                    double Progress = frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2);
 
                     this.Opacity = _Opacity * (1 - Progress);
                     this.Height = (int)(Panel_ControlBox.Height * (1 - Progress));
@@ -1274,14 +1244,11 @@ namespace Com.WinForm
 
             //
 
-            Timer_FullScreenMonitor.Enabled = (Me.FormState == FormState.FullScreen);
+            Timer_FullScreenMonitor.Enabled = Me.FormState == FormState.FullScreen;
         }
 
         // 在 CaptionChanged 事件发生时发生。
-        public void OnCaptionChanged()
-        {
-            _RepaintCaptionBarBitmap();
-        }
+        public void OnCaptionChanged() => _RepaintCaptionBarBitmap();
 
         // 在 ThemeChanged 事件发生时发生。
         public void OnThemeChanged()
@@ -1308,10 +1275,7 @@ namespace Com.WinForm
         }
 
         // 在 Activated 事件发生时发生。
-        public void OnActivated()
-        {
-            PictureBox_FormIcon.Image = Me.Client.Icon.ToBitmap();
-        }
+        public void OnActivated() => PictureBox_FormIcon.Image = Me.Client.Icon.ToBitmap();
 
         // 在 Deactivate 事件发生时发生。
         public void OnDeactivate()

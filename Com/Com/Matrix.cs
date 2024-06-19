@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Matrix
 Version 20.10.27.1900
@@ -74,10 +74,7 @@ namespace Com
 
         // 以不安全方式获取此 Matrix 的内部数据结构。
         [InternalUnsafeCall(InternalUnsafeCallType.OutputAddress)]
-        internal double[,] UnsafeGetData()
-        {
-            return _MArray;
-        }
+        internal double[,] UnsafeGetData() => _MArray;
 
         #endregion
 
@@ -251,7 +248,7 @@ namespace Com
         {
             get
             {
-                if (IsEmpty || (x < 0 || x >= _Size.Width) || (y < 0 || y >= _Size.Height))
+                if (IsEmpty || x < 0 || x >= _Size.Width || y < 0 || y >= _Size.Height)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -263,7 +260,7 @@ namespace Com
 
             set
             {
-                if (IsEmpty || (x < 0 || x >= _Size.Width) || (y < 0 || y >= _Size.Height))
+                if (IsEmpty || x < 0 || x >= _Size.Width || y < 0 || y >= _Size.Height)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -282,7 +279,7 @@ namespace Com
         {
             get
             {
-                if (IsEmpty || (index.X < 0 || index.X >= _Size.Width) || (index.Y < 0 || index.Y >= _Size.Height))
+                if (IsEmpty || index.X < 0 || index.X >= _Size.Width || index.Y < 0 || index.Y >= _Size.Height)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -294,7 +291,7 @@ namespace Com
 
             set
             {
-                if (IsEmpty || (index.X < 0 || index.X >= _Size.Width) || (index.Y < 0 || index.Y >= _Size.Height))
+                if (IsEmpty || index.X < 0 || index.X >= _Size.Width || index.Y < 0 || index.Y >= _Size.Height)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -310,13 +307,7 @@ namespace Com
         /// <summary>
         /// 获取表示此 Matrix 是否为空矩阵的布尔值。
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (_Size.Width <= 0 || _Size.Height <= 0);
-            }
-        }
+        public bool IsEmpty => _Size.Width <= 0 || _Size.Height <= 0;
 
         //
 
@@ -341,46 +332,22 @@ namespace Com
         /// <summary>
         /// 获取此 Matrix 的宽度（列数）。
         /// </summary>
-        public int Width
-        {
-            get
-            {
-                return Size.Width;
-            }
-        }
+        public int Width => Size.Width;
 
         /// <summary>
         /// 获取此 Matrix 的列数（宽度）。
         /// </summary>
-        public int Column
-        {
-            get
-            {
-                return Size.Width;
-            }
-        }
+        public int Column => Size.Width;
 
         /// <summary>
         /// 获取此 Matrix 的高度（行数）。
         /// </summary>
-        public int Height
-        {
-            get
-            {
-                return Size.Height;
-            }
-        }
+        public int Height => Size.Height;
 
         /// <summary>
         /// 获取此 Matrix 的行数（高度）。
         /// </summary>
-        public int Row
-        {
-            get
-            {
-                return Size.Height;
-            }
-        }
+        public int Row => Size.Height;
 
         /// <summary>
         /// 获取此 Matrix 包含的元素数量。
@@ -395,7 +362,7 @@ namespace Com
                 }
                 else
                 {
-                    return (_Size.Width * _Size.Height);
+                    return _Size.Width * _Size.Height;
                 }
             }
         }
@@ -424,7 +391,7 @@ namespace Com
                 }
                 else if (order == 2)
                 {
-                    return (_MArray[0, 0] * _MArray[1, 1] - _MArray[1, 0] * _MArray[0, 1]);
+                    return _MArray[0, 0] * _MArray[1, 1] - _MArray[1, 0] * _MArray[0, 1];
                 }
                 else
                 {
@@ -461,7 +428,7 @@ namespace Com
                         }
                         else
                         {
-                            det += (_MArray[0, i] * detSign * detTemp);
+                            det += _MArray[0, i] * detSign * detTemp;
                             detSign = -detSign;
                         }
                     }
@@ -591,7 +558,7 @@ namespace Com
                         {
                             for (int _y = 0; _y < sizeTemp.Height; _y++)
                             {
-                                temp[_x, _y] = _MArray[(_x < x ? _x : _x + 1), (_y < y ? _y : _y + 1)];
+                                temp[_x, _y] = _MArray[_x < x ? _x : _x + 1, _y < y ? _y : _y + 1];
                             }
                         }
 
@@ -654,17 +621,11 @@ namespace Com
         /// <summary>
         /// 获取表示空矩阵的 Matrix 的新实例。
         /// </summary>
-        public static Matrix Empty
+        public static Matrix Empty => new Matrix()
         {
-            get
-            {
-                return new Matrix()
-                {
-                    _Size = Size.Empty,
-                    _MArray = _EmptyData
-                };
-            }
-        }
+            _Size = Size.Empty,
+            _MArray = _EmptyData
+        };
 
         #endregion
 
@@ -695,10 +656,7 @@ namespace Com
         /// 返回此 Matrix 的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 Matrix 的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 Matrix 转换为字符串。
@@ -788,7 +746,7 @@ namespace Com
         /// <returns>Matrix 对象，表示此 Matrix 的子矩阵。</returns>
         public Matrix SubMatrix(Point index, Size size)
         {
-            if (IsEmpty || (size.Width <= 0 || size.Height <= 0) || (index.X < 0 || index.X + size.Width > _Size.Width) || (index.Y < 0 || index.Y + size.Height > _Size.Height))
+            if (IsEmpty || size.Width <= 0 || size.Height <= 0 || index.X < 0 || index.X + size.Width > _Size.Width || index.Y < 0 || index.Y + size.Height > _Size.Height)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -818,7 +776,7 @@ namespace Com
         /// <returns>Matrix 对象，表示此 Matrix 的子矩阵。</returns>
         public Matrix SubMatrix(int x, int y, int width, int height)
         {
-            if (IsEmpty || (width <= 0 || height <= 0) || (x < 0 || x + width > _Size.Width) || (y < 0 || y + height > _Size.Height))
+            if (IsEmpty || width <= 0 || height <= 0 || x < 0 || x + width > _Size.Width || y < 0 || y + height > _Size.Height)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -847,7 +805,7 @@ namespace Com
         /// <returns>Vector 对象，表示此 Matrix 的指定列。</returns>
         public Vector GetColumn(int x)
         {
-            if (IsEmpty || (x < 0 || x >= _Size.Width))
+            if (IsEmpty || x < 0 || x >= _Size.Width)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -876,7 +834,7 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
-            if (IsEmpty || (x < 0 || x >= _Size.Width))
+            if (IsEmpty || x < 0 || x >= _Size.Width)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -903,7 +861,7 @@ namespace Com
         /// <returns>Vector 对象，表示此 Matrix 的指定行。</returns>
         public Vector GetRow(int y)
         {
-            if (IsEmpty || (y < 0 || y >= _Size.Height))
+            if (IsEmpty || y < 0 || y >= _Size.Height)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -932,7 +890,7 @@ namespace Com
                 throw new ArgumentNullException();
             }
 
-            if (IsEmpty || (y < 0 || y >= _Size.Height))
+            if (IsEmpty || y < 0 || y >= _Size.Height)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -983,10 +941,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">用于判断的 Matrix 对象。</param>
         /// <returns>布尔值，表示指定的 Matrix 是否为 null 或表示空矩阵。</returns>
-        public static bool IsNullOrEmpty(Matrix matrix)
-        {
-            return (matrix is null || (matrix._Size.Width <= 0 || matrix._Size.Height <= 0));
-        }
+        public static bool IsNullOrEmpty(Matrix matrix) => matrix is null || matrix._Size.Width <= 0 || matrix._Size.Height <= 0;
 
         //
 
@@ -1671,7 +1626,7 @@ namespace Com
                                 {
                                     for (int y = 0; y < size.Height; y++)
                                     {
-                                        result[x, y] += (arrayL[i, y] * Rxi);
+                                        result[x, y] += arrayL[i, y] * Rxi;
                                     }
                                 }
                             }
@@ -1689,7 +1644,7 @@ namespace Com
                                 {
                                     for (int x = 0; x < size.Width; x++)
                                     {
-                                        result[x, y] += (Liy * arrayR[x, i]);
+                                        result[x, y] += Liy * arrayR[x, i];
                                     }
                                 }
                             }
@@ -1764,7 +1719,7 @@ namespace Com
                             {
                                 for (int y = 0; y < sizeL.Height; y++)
                                 {
-                                    result[y] += (arrayL[i, y] * Ri);
+                                    result[y] += arrayL[i, y] * Ri;
                                 }
                             }
                         }
@@ -1838,7 +1793,7 @@ namespace Com
                             {
                                 for (int x = 0; x < sizeR.Width; x++)
                                 {
-                                    result[x] += (arrayR[x, i] * Li);
+                                    result[x] += arrayR[x, i] * Li;
                                 }
                             }
                         }
@@ -1977,10 +1932,7 @@ namespace Com
         /// </summary>
         /// <param name="matrices">右矩阵枚举容器。</param>
         /// <returns>Matrix 对象，表示将枚举容器中所有 Matrix 对象依次右乘得到的结果。</returns>
-        public static Matrix MultiplyRight(IEnumerable<Matrix> matrices)
-        {
-            return MultiplyRight(matrices.ToArray());
-        }
+        public static Matrix MultiplyRight(IEnumerable<Matrix> matrices) => MultiplyRight(matrices.ToArray());
 
         /// <summary>
         /// 返回将列表中所有 Matrix 对象依次右乘得到的 Matrix 的新实例。
@@ -1988,10 +1940,7 @@ namespace Com
         /// <param name="matrices">右矩阵列表。</param>
         /// <returns>Matrix 对象，表示将列表中所有 Matrix 对象依次右乘得到的结果。</returns>
         [Obsolete("请改为使用 MultiplyRight(IEnumerable<Matrix>) 方法")]
-        public static Matrix MultiplyRight(List<Matrix> matrices)
-        {
-            return MultiplyRight(matrices.ToArray());
-        }
+        public static Matrix MultiplyRight(List<Matrix> matrices) => MultiplyRight(matrices.ToArray());
 
         /// <summary>
         /// 返回将 Matrix 对象与双精度浮点数相除得到的 Matrix 的新实例。

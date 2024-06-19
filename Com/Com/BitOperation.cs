@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.BitOperation
 Version 20.10.27.1900
@@ -55,7 +55,7 @@ namespace Com
 
             //
 
-            return (byte)(~(1U << bit));
+            return (byte)~(1U << bit);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Com
 
             //
 
-            bin &= (byte)(~(1U << bit));
+            bin &= (byte)~(1U << bit);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Com
 
             //
 
-            return ((bin & (1U << bit)) != 0);
+            return (bin & (1U << bit)) != 0;
         }
 
         /// <summary>
@@ -151,10 +151,7 @@ namespace Com
         /// </summary>
         /// <param name="bin">8 位无符号整数。</param>
         /// <returns>8 位无符号整数的值为 0 的二进制位的数量。</returns>
-        public static int GetBit0CountOfBinary(byte bin)
-        {
-            return (8 - GetBit1CountOfBinary(bin));
-        }
+        public static int GetBit0CountOfBinary(byte bin) => 8 - GetBit1CountOfBinary(bin);
 
         /// <summary>
         /// 返回一个列表，列表元素表示 8 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
@@ -235,7 +232,7 @@ namespace Com
 
             //
 
-            return (ushort)(~(1U << bit));
+            return (ushort)~(1U << bit);
         }
 
         /// <summary>
@@ -269,7 +266,7 @@ namespace Com
 
             //
 
-            bin &= (ushort)(~(1U << bit));
+            bin &= (ushort)~(1U << bit);
         }
 
         /// <summary>
@@ -304,7 +301,7 @@ namespace Com
 
             //
 
-            return ((bin & (1U << bit)) != 0);
+            return (bin & (1U << bit)) != 0;
         }
 
         /// <summary>
@@ -331,10 +328,7 @@ namespace Com
         /// </summary>
         /// <param name="bin">16 位无符号整数。</param>
         /// <returns>16 位无符号整数的值为 0 的二进制位的数量。</returns>
-        public static int GetBit0CountOfBinary(ushort bin)
-        {
-            return (16 - GetBit1CountOfBinary(bin));
-        }
+        public static int GetBit0CountOfBinary(ushort bin) => 16 - GetBit1CountOfBinary(bin);
 
         /// <summary>
         /// 返回一个列表，列表元素表示 16 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
@@ -398,7 +392,7 @@ namespace Com
 
             //
 
-            return (1U << bit);
+            return 1U << bit;
         }
 
         /// <summary>
@@ -415,7 +409,7 @@ namespace Com
 
             //
 
-            return (~(1U << bit));
+            return ~(1U << bit);
         }
 
         /// <summary>
@@ -432,7 +426,7 @@ namespace Com
 
             //
 
-            bin |= (1U << bit);
+            bin |= 1U << bit;
         }
 
         /// <summary>
@@ -449,7 +443,7 @@ namespace Com
 
             //
 
-            bin &= (~(1U << bit));
+            bin &= ~(1U << bit);
         }
 
         /// <summary>
@@ -466,7 +460,7 @@ namespace Com
 
             //
 
-            bin ^= (1U << bit);
+            bin ^= 1U << bit;
         }
 
         /// <summary>
@@ -484,7 +478,7 @@ namespace Com
 
             //
 
-            return ((bin & (1U << bit)) != 0);
+            return (bin & (1U << bit)) != 0;
         }
 
         /// <summary>
@@ -498,7 +492,7 @@ namespace Com
 
             while (bin > 0)
             {
-                bin &= (bin - 1);
+                bin &= bin - 1;
 
                 Count++;
             }
@@ -511,10 +505,7 @@ namespace Com
         /// </summary>
         /// <param name="bin">32 位无符号整数。</param>
         /// <returns>32 位无符号整数的值为 0 的二进制位的数量。</returns>
-        public static int GetBit0CountOfBinary(uint bin)
-        {
-            return (32 - GetBit1CountOfBinary(bin));
-        }
+        public static int GetBit0CountOfBinary(uint bin) => 32 - GetBit1CountOfBinary(bin);
 
         /// <summary>
         /// 返回一个列表，列表元素表示 32 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。
@@ -578,7 +569,7 @@ namespace Com
 
             //
 
-            return (1UL << bit);
+            return 1UL << bit;
         }
 
         /// <summary>
@@ -595,7 +586,7 @@ namespace Com
 
             //
 
-            return (~(1UL << bit));
+            return ~(1UL << bit);
         }
 
         /// <summary>
@@ -612,7 +603,7 @@ namespace Com
 
             //
 
-            bin |= (1UL << bit);
+            bin |= 1UL << bit;
         }
 
         /// <summary>
@@ -629,7 +620,7 @@ namespace Com
 
             //
 
-            bin &= (~(1UL << bit));
+            bin &= ~(1UL << bit);
         }
 
         /// <summary>
@@ -646,7 +637,7 @@ namespace Com
 
             //
 
-            bin ^= (1UL << bit);
+            bin ^= 1UL << bit;
         }
 
         /// <summary>
@@ -664,7 +655,7 @@ namespace Com
 
             //
 
-            return ((bin & (1UL << bit)) != 0);
+            return (bin & (1UL << bit)) != 0;
         }
 
         /// <summary>
@@ -678,7 +669,7 @@ namespace Com
 
             while (bin > 0)
             {
-                bin &= (bin - 1);
+                bin &= bin - 1;
 
                 Count++;
             }
@@ -691,10 +682,7 @@ namespace Com
         /// </summary>
         /// <param name="bin">64 位无符号整数。</param>
         /// <returns>64 位无符号整数的值为 0 的二进制位的数量。</returns>
-        public static int GetBit0CountOfBinary(ulong bin)
-        {
-            return (64 - GetBit1CountOfBinary(bin));
-        }
+        public static int GetBit0CountOfBinary(ulong bin) => 64 - GetBit1CountOfBinary(bin);
 
         /// <summary>
         /// 返回一个列表，列表元素表示 64 位无符号整数值为 1 的二进制位在该整数的二进制序列中从低位到高位的次序数（最低位的次序数为 0）。

@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.FrequencyCounter
 Version 20.10.27.1900
@@ -32,7 +32,7 @@ namespace Com
 
             public _TicksWithCount(long ticks, int count)
             {
-                if ((ticks < DateTime.MinValue.Ticks || ticks > DateTime.MaxValue.Ticks) || count <= 0)
+                if (ticks < DateTime.MinValue.Ticks || ticks > DateTime.MaxValue.Ticks || count <= 0)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -50,29 +50,15 @@ namespace Com
             // 获取或设置此 _TicksWithCount 对象的计时周期数。
             public long Ticks
             {
-                get
-                {
-                    return _Ticks;
-                }
-
-                set
-                {
-                    _Ticks = value;
-                }
+                get => _Ticks;
+            set => _Ticks = value;
             }
 
             // 获取或设置此 _TicksWithCount 对象的计数。
             public long Count
             {
-                get
-                {
-                    return _Count;
-                }
-
-                set
-                {
-                    _Count = value;
-                }
+                get => _Count;
+            set => _Count = value;
             }
         }
 
@@ -130,7 +116,7 @@ namespace Com
 
                     if (_TicksHistory.Count == 2)
                     {
-                        return (_TicksHistory.Tail.Count * _TicksPerSecond / (ticks - _TicksHistory.Head.Ticks));
+                        return _TicksHistory.Tail.Count * _TicksPerSecond / (ticks - _TicksHistory.Head.Ticks);
                     }
                     else
                     {
@@ -158,7 +144,7 @@ namespace Com
                             head = _TicksHistory[_TicksHistory.Count - 2];
                         }
 
-                        return (count * _TicksPerSecond / (ticks - head.Ticks));
+                        return count * _TicksPerSecond / (ticks - head.Ticks);
                     }
                 }
                 else
@@ -171,13 +157,7 @@ namespace Com
         /// <summary>
         /// 获取此 FrequencyCounter 对象的周期（秒）。
         /// </summary>
-        public double Period
-        {
-            get
-            {
-                return (1 / Frequency);
-            }
-        }
+        public double Period => 1 / Frequency;
 
         #endregion
 
@@ -234,18 +214,12 @@ namespace Com
         /// <summary>
         /// 更新此 FrequencyCounter 对象一次计数。
         /// </summary>
-        public void Update()
-        {
-            Update(1);
-        }
+        public void Update() => Update(1);
 
         /// <summary>
         /// 重置此 FrequencyCounter 对象。
         /// </summary>
-        public void Reset()
-        {
-            _TicksHistory.Clear();
-        }
+        public void Reset() => _TicksHistory.Clear();
 
         #endregion
     }

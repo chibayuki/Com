@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Complex
 Version 20.10.27.1900
@@ -25,10 +25,7 @@ namespace Com
         #region 非公开成员
 
         // 返回将虚数单位 i 与 Complex 结构的相乘得到的 Complex 结构的新实例。
-        private static Complex _MultiplyByImaginaryOne(Complex comp)
-        {
-            return new Complex(-comp._Imaginary, comp.Real);
-        }
+        private static Complex _MultiplyByImaginaryOne(Complex comp) => new Complex(-comp._Imaginary, comp.Real);
 
         //
 
@@ -103,70 +100,34 @@ namespace Com
         /// <summary>
         /// 获取表示此 Complex 结构是否为非数字的布尔值。
         /// </summary>
-        public bool IsNaN
-        {
-            get
-            {
-                return (double.IsNaN(_Real) || double.IsNaN(_Imaginary));
-            }
-        }
+        public bool IsNaN => double.IsNaN(_Real) || double.IsNaN(_Imaginary);
 
         /// <summary>
         /// 获取表示此 Complex 结构是否为无穷大的布尔值。
         /// </summary>
-        public bool IsInfinity
-        {
-            get
-            {
-                return (!IsNaN && (double.IsInfinity(_Real) || double.IsInfinity(_Imaginary)));
-            }
-        }
+        public bool IsInfinity => !IsNaN && (double.IsInfinity(_Real) || double.IsInfinity(_Imaginary));
 
         /// <summary>
         /// 获取表示此 Complex 结构是否为非数字或无穷大的布尔值。
         /// </summary>
-        public bool IsNaNOrInfinity
-        {
-            get
-            {
-                return (InternalMethod.IsNaNOrInfinity(_Real) || InternalMethod.IsNaNOrInfinity(_Imaginary));
-            }
-        }
+        public bool IsNaNOrInfinity => InternalMethod.IsNaNOrInfinity(_Real) || InternalMethod.IsNaNOrInfinity(_Imaginary);
 
         //
 
         /// <summary>
         /// 获取表示此 Complex 结构是否为 0 的布尔值。
         /// </summary>
-        public bool IsZero
-        {
-            get
-            {
-                return (_Real == 0 && _Imaginary == 0);
-            }
-        }
+        public bool IsZero => _Real == 0 && _Imaginary == 0;
 
         /// <summary>
         /// 获取表示此 Complex 结构是否为实数单位 1 的布尔值。
         /// </summary>
-        public bool IsOne
-        {
-            get
-            {
-                return (_Real == 1 && _Imaginary == 0);
-            }
-        }
+        public bool IsOne => _Real == 1 && _Imaginary == 0;
 
         /// <summary>
         /// 获取表示此 Complex 结构是否为虚数单位 i 的布尔值。
         /// </summary>
-        public bool IsImaginaryOne
-        {
-            get
-            {
-                return (_Real == 0 && _Imaginary == 1);
-            }
-        }
+        public bool IsImaginaryOne => _Real == 0 && _Imaginary == 1;
 
         //
 
@@ -175,15 +136,8 @@ namespace Com
         /// </summary>
         public double Real
         {
-            get
-            {
-                return _Real;
-            }
-
-            set
-            {
-                _Real = value;
-            }
+            get => _Real;
+            set => _Real = value;
         }
 
         /// <summary>
@@ -191,15 +145,8 @@ namespace Com
         /// </summary>
         public double Imaginary
         {
-            get
-            {
-                return _Imaginary;
-            }
-
-            set
-            {
-                _Imaginary = value;
-            }
+            get => _Imaginary;
+            set => _Imaginary = value;
         }
 
         //
@@ -227,7 +174,7 @@ namespace Com
 
                     double SqrSum = AbsRe * AbsRe + AbsIm * AbsIm;
 
-                    return (AbsMax * Math.Sqrt(SqrSum));
+                    return AbsMax * Math.Sqrt(SqrSum);
                 }
             }
         }
@@ -235,37 +182,19 @@ namespace Com
         /// <summary>
         /// 获取此 Complex 结构的模的平方。
         /// </summary>
-        public double ModuleSquared
-        {
-            get
-            {
-                return (_Real * _Real + _Imaginary * _Imaginary);
-            }
-        }
+        public double ModuleSquared => _Real * _Real + _Imaginary * _Imaginary;
 
         /// <summary>
         /// 获取此 Complex 结构的辐角（弧度）（以实轴正方向为 0 弧度，从实轴正方向指向虚轴正方向的方向为正方向）。
         /// </summary>
-        public double Argument
-        {
-            get
-            {
-                return Math.Atan2(_Imaginary, _Real);
-            }
-        }
+        public double Argument => Math.Atan2(_Imaginary, _Real);
 
         //
 
         /// <summary>
         /// 获取此 Complex 结构的相反数。
         /// </summary>
-        public Complex Opposite
-        {
-            get
-            {
-                return new Complex(-_Real, -_Imaginary);
-            }
-        }
+        public Complex Opposite => new Complex(-_Real, -_Imaginary);
 
         /// <summary>
         /// 获取此 Complex 结构的倒数。
@@ -290,13 +219,7 @@ namespace Com
         /// <summary>
         /// 获取此 Complex 结构的共轭复数。
         /// </summary>
-        public Complex Conjugate
-        {
-            get
-            {
-                return new Complex(_Real, -_Imaginary);
-            }
-        }
+        public Complex Conjugate => new Complex(_Real, -_Imaginary);
 
         #endregion
 
@@ -323,10 +246,7 @@ namespace Com
         /// 返回此 Complex 结构的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 Complex 结构的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 Complex 结构转换为字符串。
@@ -362,18 +282,18 @@ namespace Com
                         }
                         else
                         {
-                            return (_Imaginary + " i");
+                            return _Imaginary + " i";
                         }
                     }
                     else
                     {
                         if (_Imaginary == 1)
                         {
-                            return (_Real + " + i");
+                            return _Real + " + i";
                         }
                         else if (_Imaginary == -1)
                         {
-                            return (_Real + " - i");
+                            return _Real + " - i";
                         }
                         else if (_Imaginary > 0)
                         {
@@ -381,7 +301,7 @@ namespace Com
                         }
                         else
                         {
-                            return string.Concat(_Real, " - ", (-_Imaginary), " i");
+                            return string.Concat(_Real, " - ", -_Imaginary, " i");
                         }
                     }
                 }
@@ -395,10 +315,7 @@ namespace Com
         /// </summary>
         /// <param name="comp">用于比较的 Complex 结构。</param>
         /// <returns>布尔值，表示此 Complex 结构是否与指定的 Complex 结构相等。</returns>
-        public bool Equals(Complex comp)
-        {
-            return (_Real.Equals(comp._Real) && _Imaginary.Equals(comp._Imaginary));
-        }
+        public bool Equals(Complex comp) => _Real.Equals(comp._Real) && _Imaginary.Equals(comp._Imaginary);
 
         //
 
@@ -428,10 +345,7 @@ namespace Com
         /// </summary>
         /// <param name="comp">用于比较的 Complex 结构。</param>
         /// <returns>32 位整数，表示将此 Complex 结构与指定的 Complex 结构进行次序比较得到的结果。</returns>
-        public int CompareTo(Complex comp)
-        {
-            return Module.CompareTo(comp.Module);
-        }
+        public int CompareTo(Complex comp) => Module.CompareTo(comp.Module);
 
         //
 
@@ -439,10 +353,7 @@ namespace Com
         /// 返回将此 Complex 结构转换为 PointD 结构的新实例。
         /// </summary>
         /// <returns>PointD 结构，表示将此 Complex 结构转换为 PointD 结构得到的结果。</returns>
-        public PointD ToPointD()
-        {
-            return new PointD(_Real, _Imaginary);
-        }
+        public PointD ToPointD() => new PointD(_Real, _Imaginary);
 
         #endregion
 
@@ -454,10 +365,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 Complex 结构。</param>
         /// <param name="right">用于比较的第二个 Complex 结构。</param>
         /// <returns>布尔值，表示两个 Complex 结构是否相等。</returns>
-        public static bool Equals(Complex left, Complex right)
-        {
-            return left.Equals(right);
-        }
+        public static bool Equals(Complex left, Complex right) => left.Equals(right);
 
         //
 
@@ -467,10 +375,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 Complex 结构。</param>
         /// <param name="right">用于比较的第二个 Complex 结构。</param>
         /// <returns>32 位整数，表示将两个 Complex 结构进行次序比较得到的结果。</returns>
-        public static int Compare(Complex left, Complex right)
-        {
-            return left.CompareTo(right);
-        }
+        public static int Compare(Complex left, Complex right) => left.CompareTo(right);
 
         //
 
@@ -479,10 +384,7 @@ namespace Com
         /// </summary>
         /// <param name="pt">PointD 结构。</param>
         /// <returns>Complex 结构，表示将 PointD 结构转换为 Complex 结构得到的结果。</returns>
-        public static Complex FromPointD(PointD pt)
-        {
-            return new Complex(pt);
-        }
+        public static Complex FromPointD(PointD pt) => new Complex(pt);
 
         //
 
@@ -492,10 +394,7 @@ namespace Com
         /// <param name="module">表示 Complex 结构的模。</param>
         /// <param name="argument">表示 Complex 结构的辐角（弧度）。</param>
         /// <returns>Complex 结构，表示将 Complex 结构的极坐标分量模与辐角（弧度）转换为 Complex 结构得到的结果。</returns>
-        public static Complex FromPolarCoordinates(double module, double argument)
-        {
-            return new Complex(module * Math.Cos(argument), module * Math.Sin(argument));
-        }
+        public static Complex FromPolarCoordinates(double module, double argument) => new Complex(module * Math.Cos(argument), module * Math.Sin(argument));
 
         //
 
@@ -504,10 +403,7 @@ namespace Com
         /// </summary>
         /// <param name="comp">Complex 结构，表示底数。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算平方得到的结果。</returns>
-        public static Complex Sqr(Complex comp)
-        {
-            return new Complex(comp._Real * comp._Real - comp._Imaginary * comp._Imaginary, 2 * comp._Real * comp._Imaginary);
-        }
+        public static Complex Sqr(Complex comp) => new Complex(comp._Real * comp._Real - comp._Imaginary * comp._Imaginary, 2 * comp._Real * comp._Imaginary);
 
         /// <summary>
         /// 返回对 Complex 结构计算平方根得到的 Complex 结构的新实例。
@@ -639,10 +535,7 @@ namespace Com
         /// </summary>
         /// <param name="comp">Complex 结构，表示幂。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算自然对数得到的结果。</returns>
-        public static Complex Log(Complex comp)
-        {
-            return new Complex(Math.Log(comp.Module), comp.Argument);
-        }
+        public static Complex Log(Complex comp) => new Complex(Math.Log(comp.Module), comp.Argument);
 
         /// <summary>
         /// 返回对 Complex 结构计算复对数得到的 Complex 结构的新实例。
@@ -658,7 +551,7 @@ namespace Com
             }
             else
             {
-                return (Log(left) / Log(right));
+                return Log(left) / Log(right);
             }
         }
 
@@ -676,7 +569,7 @@ namespace Com
             }
             else
             {
-                return (Log(left) / Math.Log(right));
+                return Log(left) / Math.Log(right);
             }
         }
 
@@ -694,7 +587,7 @@ namespace Com
             }
             else
             {
-                return (Math.Log(left) / Log(right));
+                return Math.Log(left) / Log(right);
             }
         }
 
@@ -731,100 +624,70 @@ namespace Com
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算正切得到的结果。</returns>
-        public static Complex Tan(Complex comp)
-        {
-            return (Sin(comp) / Cos(comp));
-        }
+        public static Complex Tan(Complex comp) => Sin(comp) / Cos(comp);
 
         /// <summary>
         /// 返回对 Complex 结构计算反正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示正弦值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反正弦得到的结果。</returns>
-        public static Complex Asin(Complex comp)
-        {
-            return (-_MultiplyByImaginaryOne(Log(_MultiplyByImaginaryOne(comp) + Sqrt(1 - Sqr(comp)))));
-        }
+        public static Complex Asin(Complex comp) => -_MultiplyByImaginaryOne(Log(_MultiplyByImaginaryOne(comp) + Sqrt(1 - Sqr(comp))));
 
         /// <summary>
         /// 返回对 Complex 结构计算反余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示余弦值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反余弦得到的结果。</returns>
-        public static Complex Acos(Complex comp)
-        {
-            return (-_MultiplyByImaginaryOne(Log(comp + Sqrt(Sqr(comp) - 1))));
-        }
+        public static Complex Acos(Complex comp) => -_MultiplyByImaginaryOne(Log(comp + Sqrt(Sqr(comp) - 1)));
 
         /// <summary>
         /// 返回对 Complex 结构计算反正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示正切值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反正切得到的结果。</returns>
-        public static Complex Atan(Complex comp)
-        {
-            return (_MultiplyByImaginaryOne(Log((1 - _MultiplyByImaginaryOne(comp)) / (1 + _MultiplyByImaginaryOne(comp)))) / 2);
-        }
+        public static Complex Atan(Complex comp) => _MultiplyByImaginaryOne(Log((1 - _MultiplyByImaginaryOne(comp)) / (1 + _MultiplyByImaginaryOne(comp)))) / 2;
 
         /// <summary>
         /// 返回对 Complex 结构计算双曲正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算双曲正弦得到的结果。</returns>
-        public static Complex Sinh(Complex comp)
-        {
-            return (-_MultiplyByImaginaryOne(Sin(_MultiplyByImaginaryOne(comp))));
-        }
+        public static Complex Sinh(Complex comp) => -_MultiplyByImaginaryOne(Sin(_MultiplyByImaginaryOne(comp)));
 
         /// <summary>
         /// 返回对 Complex 结构计算双曲余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算双曲余弦得到的结果。</returns>
-        public static Complex Cosh(Complex comp)
-        {
-            return Cos(_MultiplyByImaginaryOne(comp));
-        }
+        public static Complex Cosh(Complex comp) => Cos(_MultiplyByImaginaryOne(comp));
 
         /// <summary>
         /// 返回对 Complex 结构计算双曲正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示以弧度计量的角度。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算双曲正切得到的结果。</returns>
-        public static Complex Tanh(Complex comp)
-        {
-            return (-_MultiplyByImaginaryOne(Tan(_MultiplyByImaginaryOne(comp))));
-        }
+        public static Complex Tanh(Complex comp) => -_MultiplyByImaginaryOne(Tan(_MultiplyByImaginaryOne(comp)));
 
         /// <summary>
         /// 返回对 Complex 结构计算反双曲正弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲正弦值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反双曲正弦得到的结果。</returns>
-        public static Complex Asinh(Complex comp)
-        {
-            return Log(comp + Sqrt(Sqr(comp) + 1));
-        }
+        public static Complex Asinh(Complex comp) => Log(comp + Sqrt(Sqr(comp) + 1));
 
         /// <summary>
         /// 返回对 Complex 结构计算反双曲余弦得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲余弦值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反双曲余弦得到的结果。</returns>
-        public static Complex Acosh(Complex comp)
-        {
-            return Log(comp + Sqrt(Sqr(comp) - 1));
-        }
+        public static Complex Acosh(Complex comp) => Log(comp + Sqrt(Sqr(comp) - 1));
 
         /// <summary>
         /// 返回对 Complex 结构计算反双曲正切得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，表示双曲正切值。</param>
         /// <returns>Complex 结构，表示对 Complex 结构计算反双曲正切得到的结果。</returns>
-        public static Complex Atanh(Complex comp)
-        {
-            return (Log((1 + comp) / (1 - comp)) / 2);
-        }
+        public static Complex Atanh(Complex comp) => Log((1 + comp) / (1 - comp)) / 2;
 
         //
 
@@ -833,60 +696,42 @@ namespace Com
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量取符号数得到的结果。</returns>
-        public static Complex Sign(Complex comp)
-        {
-            return new Complex((double.IsNaN(comp._Real) ? 0 : Math.Sign(comp._Real)), (double.IsNaN(comp._Imaginary) ? 0 : Math.Sign(comp._Imaginary)));
-        }
+        public static Complex Sign(Complex comp) => new Complex(double.IsNaN(comp._Real) ? 0 : Math.Sign(comp._Real), double.IsNaN(comp._Imaginary) ? 0 : Math.Sign(comp._Imaginary));
 
         /// <summary>
         /// 返回将 Complex 结构的所有分量取绝对值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量取绝对值得到的结果。</returns>
-        public static Complex Abs(Complex comp)
-        {
-            return new Complex(Math.Abs(comp._Real), Math.Abs(comp._Imaginary));
-        }
+        public static Complex Abs(Complex comp) => new Complex(Math.Abs(comp._Real), Math.Abs(comp._Imaginary));
 
         /// <summary>
         /// 返回将 Complex 结构的所有分量舍入到较大的整数值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到较大的整数值得到的结果。</returns>
-        public static Complex Ceiling(Complex comp)
-        {
-            return new Complex(Math.Ceiling(comp._Real), Math.Ceiling(comp._Imaginary));
-        }
+        public static Complex Ceiling(Complex comp) => new Complex(Math.Ceiling(comp._Real), Math.Ceiling(comp._Imaginary));
 
         /// <summary>
         /// 返回将 Complex 结构的所有分量舍入到较小的整数值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到较小的整数值得到的结果。</returns>
-        public static Complex Floor(Complex comp)
-        {
-            return new Complex(Math.Floor(comp._Real), Math.Floor(comp._Imaginary));
-        }
+        public static Complex Floor(Complex comp) => new Complex(Math.Floor(comp._Real), Math.Floor(comp._Imaginary));
 
         /// <summary>
         /// 返回将 Complex 结构的所有分量舍入到最接近的整数值得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量舍入到最接近的整数值得到的结果。</returns>
-        public static Complex Round(Complex comp)
-        {
-            return new Complex(Math.Round(comp._Real), Math.Round(comp._Imaginary));
-        }
+        public static Complex Round(Complex comp) => new Complex(Math.Round(comp._Real), Math.Round(comp._Imaginary));
 
         /// <summary>
         /// 返回将 Complex 结构的所有分量截断小数部分取整得到的 Complex 结构的新实例。
         /// </summary>
         /// <param name="comp">Complex 结构，用于转换的结构。</param>
         /// <returns>Complex 结构，表示将 Complex 结构的所有分量截断小数部分取整得到的结果。</returns>
-        public static Complex Truncate(Complex comp)
-        {
-            return new Complex(Math.Truncate(comp._Real), Math.Truncate(comp._Imaginary));
-        }
+        public static Complex Truncate(Complex comp) => new Complex(Math.Truncate(comp._Real), Math.Truncate(comp._Imaginary));
 
         /// <summary>
         /// 返回将两个 Complex 结构的所有分量分别取最大值得到的 Complex 结构的新实例。
@@ -894,10 +739,7 @@ namespace Com
         /// <param name="left">Complex 结构，用于比较的第一个结构。</param>
         /// <param name="right">Complex 结构，用于比较的第二个结构。</param>
         /// <returns>Complex 结构，表示将两个 Complex 结构的所有分量分别取最大值得到的结果。</returns>
-        public static Complex Max(Complex left, Complex right)
-        {
-            return new Complex(Math.Max(left._Real, right._Real), Math.Max(left._Imaginary, right._Imaginary));
-        }
+        public static Complex Max(Complex left, Complex right) => new Complex(Math.Max(left._Real, right._Real), Math.Max(left._Imaginary, right._Imaginary));
 
         /// <summary>
         /// 返回将两个 Complex 结构的所有分量分别取最小值得到的 Complex 结构的新实例。
@@ -905,10 +747,7 @@ namespace Com
         /// <param name="left">Complex 结构，用于比较的第一个结构。</param>
         /// <param name="right">Complex 结构，用于比较的第二个结构。</param>
         /// <returns>Complex 结构，表示将两个 Complex 结构的所有分量分别取最小值得到的结果。</returns>
-        public static Complex Min(Complex left, Complex right)
-        {
-            return new Complex(Math.Min(left._Real, right._Real), Math.Min(left._Imaginary, right._Imaginary));
-        }
+        public static Complex Min(Complex left, Complex right) => new Complex(Math.Min(left._Real, right._Real), Math.Min(left._Imaginary, right._Imaginary));
 
         #endregion
 
@@ -922,7 +761,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构是否相等。</returns>
         public static bool operator ==(Complex left, Complex right)
         {
-            return (left._Real == right._Real && left._Imaginary == right._Imaginary);
+            return left._Real == right._Real && left._Imaginary == right._Imaginary;
         }
 
         /// <summary>
@@ -933,7 +772,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构是否不相等。</returns>
         public static bool operator !=(Complex left, Complex right)
         {
-            return (left._Real != right._Real || left._Imaginary != right._Imaginary);
+            return left._Real != right._Real || left._Imaginary != right._Imaginary;
         }
 
         /// <summary>
@@ -944,7 +783,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构的模是否前者小于后者。</returns>
         public static bool operator <(Complex left, Complex right)
         {
-            return (left.Module < right.Module);
+            return left.Module < right.Module;
         }
 
         /// <summary>
@@ -955,7 +794,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构的模是否前者大于后者。</returns>
         public static bool operator >(Complex left, Complex right)
         {
-            return (left.Module > right.Module);
+            return left.Module > right.Module;
         }
 
         /// <summary>
@@ -966,7 +805,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构的模是否前者小于或等于后者。</returns>
         public static bool operator <=(Complex left, Complex right)
         {
-            return (left.Module <= right.Module);
+            return left.Module <= right.Module;
         }
 
         /// <summary>
@@ -977,7 +816,7 @@ namespace Com
         /// <returns>布尔值，表示两个 Complex 结构的模是否前者大于或等于后者。</returns>
         public static bool operator >=(Complex left, Complex right)
         {
-            return (left.Module >= right.Module);
+            return left.Module >= right.Module;
         }
 
         //

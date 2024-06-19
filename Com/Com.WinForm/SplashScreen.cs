@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.WinForm.SplashScreen
 Version 20.10.27.1900
@@ -155,16 +155,10 @@ namespace Com.WinForm
         #region 方法
 
         // 在 Loading 事件发生时发生。
-        public void OnLoading()
-        {
-            Panel_Splash.Visible = true;
-        }
+        public void OnLoading() => Panel_Splash.Visible = true;
 
         // 在 Closing 事件发生时发生。
-        public void OnClosing()
-        {
-            Panel_SplashScreen.Visible = false;
-        }
+        public void OnClosing() => Panel_SplashScreen.Visible = false;
 
         // 在 ThemeChanged 事件发生时发生。
         public void OnThemeChanged()

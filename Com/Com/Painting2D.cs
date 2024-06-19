@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Painting2D
 Version 20.10.27.1900
@@ -42,7 +42,7 @@ namespace Com
         {
             try
             {
-                if (bmp is null || (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width <= 0))
+                if (bmp is null || pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity || color.IsEmpty || color.A == 0 || InternalMethod.IsNaNOrInfinity(width) || width <= 0)
                 {
                     return false;
                 }
@@ -122,7 +122,7 @@ namespace Com
         {
             try
             {
-                if (bmp is null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || (InternalMethod.IsNaNOrInfinity(deltaRadius) || deltaRadius <= 0) || normalIncreasePeriod <= 0 || (color.IsEmpty || color.A == 0))
+                if (bmp is null || offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(radius) || radius <= 0 || InternalMethod.IsNaNOrInfinity(deltaRadius) || deltaRadius <= 0 || normalIncreasePeriod <= 0 || color.IsEmpty || color.A == 0)
                 {
                     return false;
                 }
@@ -158,7 +158,7 @@ namespace Com
 
                             for (int i = 0; i < 12; i++)
                             {
-                                Grph.DrawLine(pen, new PointF((float)(offset.X), (float)(offset.Y)), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi * i / 6)), (float)(offset.Y + radius * Math.Sin(Constant.Pi * i / 6))));
+                                Grph.DrawLine(pen, new PointF((float)offset.X, (float)offset.Y), new PointF((float)(offset.X + radius * Math.Cos(Constant.Pi * i / 6)), (float)(offset.Y + radius * Math.Sin(Constant.Pi * i / 6))));
                             }
 
                             // 绘制同心圆：
@@ -195,7 +195,7 @@ namespace Com
         {
             try
             {
-                if (bmp is null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0))
+                if (bmp is null || offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(radius) || radius <= 0 || color.IsEmpty || color.A == 0 || InternalMethod.IsNaNOrInfinity(width) || width < 0)
                 {
                     return false;
                 }
@@ -279,7 +279,7 @@ namespace Com
         {
             try
             {
-                if (bmp is null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || InternalMethod.IsNaNOrInfinity(refPhase) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0) || (minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv) || (InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0))
+                if (bmp is null || offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(radius) || radius <= 0 || InternalMethod.IsNaNOrInfinity(refPhase) || color.IsEmpty || color.A == 0 || InternalMethod.IsNaNOrInfinity(width) || width < 0 || minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv || InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0)
                 {
                     return false;
                 }
@@ -710,10 +710,7 @@ namespace Com
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias)
-        {
-            return PaintLargeCircle(bmp, offset, radius, refPhase, color, width, antiAlias, 32, 256, 4);
-        }
+        public static bool PaintLargeCircle(Bitmap bmp, PointD offset, double radius, double refPhase, Color color, float width, bool antiAlias) => PaintLargeCircle(bmp, offset, radius, refPhase, color, width, antiAlias, 32, 256, 4);
 
         /// <summary>
         /// 绘制一个大型椭圆，并返回表示是否已经实际完成绘图的布尔值。
@@ -735,7 +732,7 @@ namespace Com
         {
             try
             {
-                if (bmp is null || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0) || InternalMethod.IsNaNOrInfinity(rotateAngle) || InternalMethod.IsNaNOrInfinity(refPhase) || (color.IsEmpty || color.A == 0) || (InternalMethod.IsNaNOrInfinity(width) || width < 0) || (minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv) || (InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0))
+                if (bmp is null || offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0 || InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || InternalMethod.IsNaNOrInfinity(rotateAngle) || InternalMethod.IsNaNOrInfinity(refPhase) || color.IsEmpty || color.A == 0 || InternalMethod.IsNaNOrInfinity(width) || width < 0 || minDiv <= 0 || maxDiv <= 0 || minDiv > maxDiv || InternalMethod.IsNaNOrInfinity(divArc) || divArc <= 0)
                 {
                     return false;
                 }
@@ -1237,10 +1234,7 @@ namespace Com
         /// <param name="width">线条宽度，0 表示填充。</param>
         /// <param name="antiAlias">是否使用抗锯齿模式绘图。</param>
         /// <returns>布尔值，表示是否已经实际完成绘图。</returns>
-        public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias)
-        {
-            return PaintLargeEllipse(bmp, offset, semiMajorAxis, eccentricity, rotateAngle, refPhase, color, width, antiAlias, 32, 256, 4);
-        }
+        public static bool PaintLargeEllipse(Bitmap bmp, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle, double refPhase, Color color, float width, bool antiAlias) => PaintLargeEllipse(bmp, offset, semiMajorAxis, eccentricity, rotateAngle, refPhase, color, width, antiAlias, 32, 256, 4);
 
         /// <summary>
         /// 绘制一行带有阴影效果的文本，阴影位于文本右下方，并返回表示是否已经实际完成绘图的布尔值。
@@ -1258,7 +1252,7 @@ namespace Com
         {
             try
             {
-                if (bmp is null || string.IsNullOrWhiteSpace(text) || font is null || (frontColor.IsEmpty || frontColor.A == 0) || ((PointD)pt).IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(offset) || offset < 0))
+                if (bmp is null || string.IsNullOrWhiteSpace(text) || font is null || frontColor.IsEmpty || frontColor.A == 0 || ((PointD)pt).IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(offset) || offset < 0)
                 {
                     return false;
                 }

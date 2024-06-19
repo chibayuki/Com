@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.IO
 Version 20.10.27.1900
@@ -95,10 +95,7 @@ namespace Com
         /// <param name="recursive">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         /// <param name="merge">如果存在同名文件夹，是否合并文件夹内容。</param>
         /// <returns>布尔值，表示此操作是否成功。</returns>
-        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive, bool merge)
-        {
-            return CopyFolder(sourceFolder, destFolder, recursive, merge, false);
-        }
+        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive, bool merge) => CopyFolder(sourceFolder, destFolder, recursive, merge, false);
 
         /// <summary>
         /// 将源文件夹内的所有内容复制到目标文件夹内，并返回表示此操作是否成功的布尔值。如果存在同名文件夹，将不合并文件夹内容。如果存在同名文件，将不覆盖目标文件。
@@ -107,10 +104,7 @@ namespace Com
         /// <param name="destFolder">目标文件夹。</param>
         /// <param name="recursive">如果存在子文件夹，是否递归复制所有子文件夹内的内容。</param>
         /// <returns>布尔值，表示此操作是否成功。</returns>
-        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive)
-        {
-            return CopyFolder(sourceFolder, destFolder, recursive, false, false);
-        }
+        public static bool CopyFolder(string sourceFolder, string destFolder, bool recursive) => CopyFolder(sourceFolder, destFolder, recursive, false, false);
 
         /// <summary>
         /// 将源文件夹内的所有内容复制到目标文件夹内，并返回表示此操作是否成功的布尔值。如果存在子文件夹，将不递归复制子文件夹内的内容。如果存在同名文件夹，将不合并文件夹内容。如果存在同名文件，将不覆盖目标文件。
@@ -118,9 +112,6 @@ namespace Com
         /// <param name="sourceFolder">源文件夹。</param>
         /// <param name="destFolder">目标文件夹。</param>
         /// <returns>布尔值，表示此操作是否成功。</returns>
-        public static bool CopyFolder(string sourceFolder, string destFolder)
-        {
-            return CopyFolder(sourceFolder, destFolder, false, false, false);
-        }
+        public static bool CopyFolder(string sourceFolder, string destFolder) => CopyFolder(sourceFolder, destFolder, false, false, false);
     }
 }

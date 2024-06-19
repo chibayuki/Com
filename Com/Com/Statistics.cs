@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Statistics
 Version 20.10.27.1900
@@ -69,7 +69,7 @@ namespace Com
 
                     while (i < trunc - 8)
                     {
-                        result *= ((long)(i * (i + 1) * (i + 2) * (i + 3)) * ((i + 4) * (i + 5) * (i + 6) * (i + 7)));
+                        result *= (long)(i * (i + 1) * (i + 2) * (i + 3)) * ((i + 4) * (i + 5) * (i + 6) * (i + 7));
 
                         i += 8;
                     }
@@ -92,7 +92,7 @@ namespace Com
 
                     while (i < trunc - 16)
                     {
-                        result *= ((double)i * (i + 1) * (i + 2) * (i + 3) * (i + 4) * (i + 5) * (i + 6) * (i + 7) * (i + 8) * (i + 9) * (i + 10) * (i + 11) * (i + 12) * (i + 13) * (i + 14) * (i + 15));
+                        result *= (double)i * (i + 1) * (i + 2) * (i + 3) * (i + 4) * (i + 5) * (i + 6) * (i + 7) * (i + 8) * (i + 9) * (i + 10) * (i + 11) * (i + 12) * (i + 13) * (i + 14) * (i + 15);
 
                         i += 16;
                     }
@@ -115,14 +115,14 @@ namespace Com
 
                     while (i < trunc - 16)
                     {
-                        result *= ((i + mod) * (i + 1 + mod) * (i + 2 + mod) * (i + 3 + mod) * (i + 4 + mod) * (i + 5 + mod) * (i + 6 + mod) * (i + 7 + mod) * (i + 8 + mod) * (i + 9 + mod) * (i + 10 + mod) * (i + 11 + mod) * (i + 12 + mod) * (i + 13 + mod) * (i + 14 + mod) * (i + 15 + mod));
+                        result *= (i + mod) * (i + 1 + mod) * (i + 2 + mod) * (i + 3 + mod) * (i + 4 + mod) * (i + 5 + mod) * (i + 6 + mod) * (i + 7 + mod) * (i + 8 + mod) * (i + 9 + mod) * (i + 10 + mod) * (i + 11 + mod) * (i + 12 + mod) * (i + 13 + mod) * (i + 14 + mod) * (i + 15 + mod);
 
                         i += 16;
                     }
 
                     while (i < trunc)
                     {
-                        result *= (i + mod);
+                        result *= i + mod;
 
                         i++;
                     }
@@ -154,7 +154,7 @@ namespace Com
 
                     double Base = val + Coeff.Length - 2.5;
 
-                    return (Constant.SqrtDoublePi * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum);
+                    return Constant.SqrtDoublePi * Math.Pow(Base, val - 0.5) * Math.Exp(-Base) * Sum;
                 };
 
                 Func<double, Real> GammaPositive = (val) =>
@@ -162,12 +162,12 @@ namespace Com
                     long Trunc = (long)Math.Truncate(val);
                     double Mod = val - Trunc;
 
-                    return (GammaTruncI64Mod(Trunc, Mod) * Gamma0To1(Mod));
+                    return GammaTruncI64Mod(Trunc, Mod) * Gamma0To1(Mod);
                 };
 
                 Func<double, Real> GammaNegative = (val) =>
                 {
-                    return (Constant.Pi / Math.Sin(Constant.Pi * val) / GammaPositive(1 - val));
+                    return Constant.Pi / Math.Sin(Constant.Pi * val) / GammaPositive(1 - val);
                 };
 
                 if (n == Math.Truncate(n))
@@ -244,7 +244,7 @@ namespace Com
                 double TruncTotal = Math.Truncate(total);
                 double TruncSelection = Math.Truncate(selection);
 
-                if ((total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15) && (selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15))
+                if (total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15 && selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15)
                 {
                     long TotalI64 = (long)TruncTotal;
                     long SelectionI64 = (long)TruncSelection;
@@ -264,7 +264,7 @@ namespace Com
 
                             while (i > Delta + 16)
                             {
-                                result *= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+                                result *= (double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15);
 
                                 i -= 16;
                             }
@@ -282,7 +282,7 @@ namespace Com
 
                             while (i > TotalI64 + 16)
                             {
-                                result /= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+                                result /= (double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15);
 
                                 i -= 16;
                             }
@@ -309,7 +309,7 @@ namespace Com
                     }
                     else
                     {
-                        return (_Factorial(total) / _Factorial(Delta));
+                        return _Factorial(total) / _Factorial(Delta);
                     }
                 }
                 else
@@ -331,7 +331,7 @@ namespace Com
                 double TruncTotal = Math.Truncate(total);
                 double TruncSelection = Math.Truncate(selection);
 
-                if ((total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15) && (selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15))
+                if (total == TruncTotal && TruncTotal >= 0 && TruncTotal < 1E15 && selection == TruncSelection && TruncSelection > -1E15 && TruncSelection < 1E15)
                 {
                     long TotalI64 = (long)TruncTotal;
                     long SelectionI64 = (long)TruncSelection;
@@ -358,7 +358,7 @@ namespace Com
 
                                 while (i > Delta + 16)
                                 {
-                                    result *= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+                                    result *= (double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15);
 
                                     i -= 16;
                                 }
@@ -376,7 +376,7 @@ namespace Com
 
                                 while (i > TotalI64 + 16)
                                 {
-                                    result /= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+                                    result /= (double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15);
 
                                     i -= 16;
                                 }
@@ -395,7 +395,7 @@ namespace Com
 
                                 while (i > 1 + 16)
                                 {
-                                    result /= ((double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15));
+                                    result /= (double)i * (i - 1) * (i - 2) * (i - 3) * (i - 4) * (i - 5) * (i - 6) * (i - 7) * (i - 8) * (i - 9) * (i - 10) * (i - 11) * (i - 12) * (i - 13) * (i - 14) * (i - 15);
 
                                     i -= 16;
                                 }
@@ -429,7 +429,7 @@ namespace Com
                         }
                         else
                         {
-                            return (_Factorial(total) / _Factorial(selection) / _Factorial(Delta));
+                            return _Factorial(total) / _Factorial(selection) / _Factorial(Delta);
                         }
                     }
                 }
@@ -448,10 +448,7 @@ namespace Com
         /// 返回一个概率密度平均分布的非负随机 32 位整数。
         /// </summary>
         /// <returns>32 位整数，表示概率密度平均分布的非负随机数。</returns>
-        public static int RandomInteger()
-        {
-            return _Rand.Next();
-        }
+        public static int RandomInteger() => _Rand.Next();
 
         /// <summary>
         /// 返回一个在 0 与右端点指定的区间内概率密度平均分布的非负随机 32 位整数。
@@ -508,10 +505,7 @@ namespace Com
         /// 返回一个小于 1 的概率密度平均分布的非负随机双精度浮点数。
         /// </summary>
         /// <returns>双精度浮点数，表示概率密度平均分布的非负随机数。</returns>
-        public static double RandomDouble()
-        {
-            return _Rand.NextDouble();
-        }
+        public static double RandomDouble() => _Rand.NextDouble();
 
         /// <summary>
         /// 返回一个在 0 与右端点指定的区间内概率密度平均分布的非负随机双精度浮点数。
@@ -533,7 +527,7 @@ namespace Com
             }
             else
             {
-                return (right * _Rand.NextDouble());
+                return right * _Rand.NextDouble();
             }
         }
 
@@ -558,7 +552,7 @@ namespace Com
             }
             else
             {
-                return (left + (right - left) * _Rand.NextDouble());
+                return left + (right - left) * _Rand.NextDouble();
             }
         }
 
@@ -568,10 +562,7 @@ namespace Com
         /// 返回一个概率密度服从标准正态分布的随机 32 位整数。
         /// </summary>
         /// <returns>32 位整数，表示概率密度服从标准正态分布的随机数。</returns>
-        public static int NormalDistributionRandomInteger()
-        {
-            return (int)Math.Round(_StdNormalRandom()[0]);
-        }
+        public static int NormalDistributionRandomInteger() => (int)Math.Round(_StdNormalRandom()[0]);
 
         /// <summary>
         /// 返回一个概率密度服从正态分布的随机 32 位整数。
@@ -595,10 +586,7 @@ namespace Com
         /// 返回一个概率密度服从标准正态分布的随机双精度浮点数。
         /// </summary>
         /// <returns>双精度浮点数，表示概率密度服从标准正态分布的随机数。</returns>
-        public static double NormalDistributionRandomDouble()
-        {
-            return _StdNormalRandom()[0];
-        }
+        public static double NormalDistributionRandomDouble() => _StdNormalRandom()[0];
 
         /// <summary>
         /// 返回一个概率密度服从正态分布的随机双精度浮点数。
@@ -615,7 +603,7 @@ namespace Com
 
             //
 
-            return (_StdNormalRandom()[0] * sd * sd + ev);
+            return _StdNormalRandom()[0] * sd * sd + ev;
         }
 
         #endregion
@@ -693,7 +681,7 @@ namespace Com
                     {
                         if (value > 0)
                         {
-                            return (p * Math.Pow(1 - p, value - 1));
+                            return p * Math.Pow(1 - p, value - 1);
                         }
                         else
                         {
@@ -728,7 +716,7 @@ namespace Com
             }
             else
             {
-                if (M > 0 && n > 0 && (value >= 0 && value <= n))
+                if (M > 0 && n > 0 && value >= 0 && value <= n)
                 {
                     return (double)(_Combination(M, value) / _Combination(N, n) * _Combination(N - M, n - value));
                 }
@@ -754,7 +742,7 @@ namespace Com
             }
             else
             {
-                if (n > 0 && (p >= 0 && p <= 1))
+                if (n > 0 && p >= 0 && p <= 1)
                 {
                     if (value >= 0 && value <= n)
                     {
@@ -874,11 +862,11 @@ namespace Com
                         }
                         else
                         {
-                            return (-Math.Exp(-lambda * val));
+                            return -Math.Exp(-lambda * val);
                         }
                     };
 
-                    return (Prim(right) - Prim(left));
+                    return Prim(right) - Prim(left);
                 }
                 else
                 {
@@ -900,7 +888,7 @@ namespace Com
             }
             else
             {
-                return (Math.Exp(-0.5 * value * value) / Constant.SqrtDoublePi);
+                return Math.Exp(-0.5 * value * value) / Constant.SqrtDoublePi;
             }
         }
 
@@ -1464,10 +1452,7 @@ namespace Com
         /// <param name="values">用于计算的值。</param>
         /// <returns>IComparable 对象，表示一组可排序对象的最大值。</returns>
         [Obsolete("请改为使用 Max<T>(params T[]) 方法")]
-        public static IComparable Max(params IComparable[] values)
-        {
-            return Max<IComparable>(values);
-        }
+        public static IComparable Max(params IComparable[] values) => Max<IComparable>(values);
 
         //
 
@@ -1972,10 +1957,7 @@ namespace Com
         /// <param name="values">用于计算的值。</param>
         /// <returns>IComparable 对象，表示一组可排序对象的最小值。</returns>
         [Obsolete("请改为使用 Min<T>(params T[]) 方法")]
-        public static IComparable Min(params IComparable[] values)
-        {
-            return Min<IComparable>(values);
-        }
+        public static IComparable Min(params IComparable[] values) => Min<IComparable>(values);
 
         //
 
@@ -2584,10 +2566,7 @@ namespace Com
         /// <param name="values">用于计算的值。</param>
         /// <returns>(IComparable, IComparable) 元组，表示一组可排序对象的最小值与最大值。</returns>
         [Obsolete("请改为使用 MinMax<T>(params T[]) 方法")]
-        public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values)
-        {
-            return MinMax<IComparable>(values);
-        }
+        public static (IComparable Min, IComparable Max) MinMax(params IComparable[] values) => MinMax<IComparable>(values);
 
         //
 
@@ -2607,7 +2586,7 @@ namespace Com
 
             (int Min, int Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         /// <summary>
@@ -2626,7 +2605,7 @@ namespace Com
 
             (int Min, int Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         /// <summary>
@@ -2645,7 +2624,7 @@ namespace Com
 
             (int Min, int Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         /// <summary>
@@ -2664,7 +2643,7 @@ namespace Com
 
             (int Min, int Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         /// <summary>
@@ -2709,7 +2688,7 @@ namespace Com
 
             (long Min, long Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         /// <summary>
@@ -2754,7 +2733,7 @@ namespace Com
 
             (double Min, double Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         /// <summary>
@@ -2773,7 +2752,7 @@ namespace Com
 
             (decimal Min, decimal Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         /// <summary>
@@ -2792,7 +2771,7 @@ namespace Com
 
             (float Min, float Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         /// <summary>
@@ -2811,7 +2790,7 @@ namespace Com
 
             (double Min, double Max) = MinMax(values);
 
-            return (Max - Min);
+            return Max - Min;
         }
 
         //
@@ -2842,7 +2821,7 @@ namespace Com
 
                     while (i < Len - 16)
                     {
-                        result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                        result += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                         i += 16;
                     }
@@ -2889,7 +2868,7 @@ namespace Com
 
                     while (i < Len - 16)
                     {
-                        result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                        result += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                         i += 16;
                     }
@@ -2936,7 +2915,7 @@ namespace Com
 
                     while (i < Len - 16)
                     {
-                        result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                        result += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                         i += 16;
                     }
@@ -2983,7 +2962,7 @@ namespace Com
 
                     while (i < Len - 16)
                     {
-                        result += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                        result += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                         i += 16;
                     }
@@ -3030,7 +3009,7 @@ namespace Com
 
                     while (i < Len - 16)
                     {
-                        result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                        result += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                         i += 16;
                     }
@@ -3077,7 +3056,7 @@ namespace Com
 
                     while (i < Len - 16)
                     {
-                        result += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                        result += (long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                         i += 16;
                     }
@@ -3124,7 +3103,7 @@ namespace Com
 
                     while (i < Len - 16)
                     {
-                        result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                        result += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                         i += 16;
                     }
@@ -3169,7 +3148,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    result += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    result += (double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3213,7 +3192,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    result += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3257,7 +3236,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    result += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3301,7 +3280,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    result += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    result += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3347,7 +3326,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3359,7 +3338,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3391,7 +3370,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3403,7 +3382,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3435,7 +3414,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3447,7 +3426,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3479,7 +3458,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3491,7 +3470,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3523,7 +3502,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3535,7 +3514,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3567,7 +3546,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3579,7 +3558,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3611,7 +3590,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3623,7 +3602,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3655,7 +3634,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3667,7 +3646,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3699,7 +3678,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3711,7 +3690,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3743,7 +3722,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3787,7 +3766,7 @@ namespace Com
 
                 while (i < Len - 16)
                 {
-                    sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3799,7 +3778,7 @@ namespace Com
                     i++;
                 }
 
-                return (sum / Len);
+                return sum / Len;
             }
             else
             {
@@ -3852,7 +3831,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -3929,7 +3908,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4006,7 +3985,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4083,7 +4062,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (int)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4160,7 +4139,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4237,7 +4216,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (long)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4314,7 +4293,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4391,7 +4370,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4468,7 +4447,7 @@ namespace Com
                         }
                     }
 
-                    sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4545,7 +4524,7 @@ namespace Com
                         }
                     }
 
-                    sum += ((double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += (double)values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4622,7 +4601,7 @@ namespace Com
                         }
                     }
 
-                    sum += (values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15]);
+                    sum += values[i] + values[i + 1] + values[i + 2] + values[i + 3] + values[i + 4] + values[i + 5] + values[i + 6] + values[i + 7] + values[i + 8] + values[i + 9] + values[i + 10] + values[i + 11] + values[i + 12] + values[i + 13] + values[i + 14] + values[i + 15];
 
                     i += 16;
                 }
@@ -4686,7 +4665,7 @@ namespace Com
                 SqrSum += Delta * Delta;
             }
 
-            return (SqrSum / Len);
+            return SqrSum / Len;
         }
 
         /// <summary>
@@ -4715,7 +4694,7 @@ namespace Com
                 SqrSum += Delta * Delta;
             }
 
-            return (SqrSum / (Len - 1));
+            return SqrSum / (Len - 1);
         }
 
         /// <summary>
@@ -4759,7 +4738,7 @@ namespace Com
                     SqrSum += Delta * Delta;
                 }
 
-                return (AbsMax * Math.Sqrt(SqrSum / Len));
+                return AbsMax * Math.Sqrt(SqrSum / Len);
             }
         }
 
@@ -4804,7 +4783,7 @@ namespace Com
                     SqrSum += Delta * Delta;
                 }
 
-                return (AbsMax * Math.Sqrt(SqrSum / (Len - 1)));
+                return AbsMax * Math.Sqrt(SqrSum / (Len - 1));
             }
         }
 

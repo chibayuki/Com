@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.BitSet
 Version 20.10.27.1900
@@ -52,7 +52,7 @@ namespace Com
             }
             else
             {
-                return ((bitNum - 1) / _BitsPerUint + 1);
+                return (bitNum - 1) / _BitsPerUint + 1;
             }
         }
 
@@ -85,21 +85,18 @@ namespace Com
         //
 
         // 获取元素，不做索引越界检查。
-        private bool _GetItemWithoutCheckBounds(int index)
-        {
-            return ((_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0);
-        }
+        private bool _GetItemWithoutCheckBounds(int index) => (_UintArray[index / _BitsPerUint] & (((uint)1) << (index % _BitsPerUint))) != 0;
 
         // 设置元素，不做索引越界检查。
         private void _SetItemWithoutCheckBounds(int index, bool bitValue)
         {
             if (bitValue)
             {
-                _UintArray[index / _BitsPerUint] |= (((uint)1) << (index % _BitsPerUint));
+                _UintArray[index / _BitsPerUint] |= ((uint)1) << (index % _BitsPerUint);
             }
             else
             {
-                _UintArray[index / _BitsPerUint] &= (~(((uint)1) << (index % _BitsPerUint)));
+                _UintArray[index / _BitsPerUint] &= ~(((uint)1) << (index % _BitsPerUint));
             }
         }
 
@@ -172,7 +169,7 @@ namespace Com
 
                     if (_Size % _BitsPerUint != 0)
                     {
-                        _UintArray[Len - 1] >>= (_BitsPerUint - _Size % _BitsPerUint);
+                        _UintArray[Len - 1] >>= _BitsPerUint - _Size % _BitsPerUint;
                     }
                 }
             }
@@ -240,7 +237,7 @@ namespace Com
 
                 for (int i = 0; i < length; i++)
                 {
-                    _UintArray[i / _BytesPerUint] |= (((uint)values[i]) << (_BitsPerByte * (i % _BytesPerUint)));
+                    _UintArray[i / _BytesPerUint] |= ((uint)values[i]) << (_BitsPerByte * (i % _BytesPerUint));
                 }
             }
         }
@@ -272,7 +269,7 @@ namespace Com
 
                 for (int i = 0; i < length; i++)
                 {
-                    _UintArray[i / _UshortsPerUint] |= (((uint)values[i]) << (_BitsPerUshort * (i % _UshortsPerUint)));
+                    _UintArray[i / _UshortsPerUint] |= ((uint)values[i]) << (_BitsPerUshort * (i % _UshortsPerUint));
                 }
             }
         }
@@ -353,7 +350,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0 || (index < 0 || index >= _Size))
+                if (_Size <= 0 || index < 0 || index >= _Size)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -365,7 +362,7 @@ namespace Com
 
             set
             {
-                if (_Size <= 0 || (index < 0 || index >= _Size))
+                if (_Size <= 0 || index < 0 || index >= _Size)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -381,35 +378,17 @@ namespace Com
         /// <summary>
         /// 获取表示此 BitSet 是否不包含任何元素的布尔值。
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (_Size <= 0);
-            }
-        }
+        public bool IsEmpty => _Size <= 0;
 
         /// <summary>
         /// 获取表示此 BitSet 是否只读的布尔值。
         /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// 获取表示此 BitSet 是否具有固定的大小的布尔值。
         /// </summary>
-        public bool IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsFixedSize => false;
 
         //
 
@@ -499,13 +478,7 @@ namespace Com
         /// <summary>
         /// 获取此 BitSet 包含的元素数量。
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return Size;
-            }
-        }
+        public int Count => Size;
 
         /// <summary>
         /// 获取此 BitSet 在其内部数据结构不调整大小的情况下能够容纳的元素数量。
@@ -520,7 +493,7 @@ namespace Com
                 }
                 else
                 {
-                    return (_UintArray.Length * _BitsPerUint);
+                    return _UintArray.Length * _BitsPerUint;
                 }
             }
         }
@@ -532,17 +505,11 @@ namespace Com
         /// <summary>
         /// 获取表示不包含任何元素的 BitSet 的新实例。
         /// </summary>
-        public static BitSet Empty
+        public static BitSet Empty => new BitSet()
         {
-            get
-            {
-                return new BitSet()
-                {
-                    _Size = 0,
-                    _UintArray = _EmptyData
-                };
-            }
-        }
+            _Size = 0,
+            _UintArray = _EmptyData
+        };
 
         #endregion
 
@@ -573,10 +540,7 @@ namespace Com
         /// 返回此 BitSet 的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 BitSet 的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 BitSet 转换为字符串。
@@ -778,7 +742,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int IndexOf(bool item, int startIndex)
         {
-            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size))
+            if (_Size <= 0 || startIndex < 0 || startIndex >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -797,7 +761,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int IndexOf(bool item, int startIndex, int count)
         {
-            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size) || count <= 0)
+            if (_Size <= 0 || startIndex < 0 || startIndex >= _Size || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -935,7 +899,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int LastIndexOf(bool item, int startIndex)
         {
-            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size))
+            if (_Size <= 0 || startIndex < 0 || startIndex >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -954,7 +918,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的位值的索引。</returns>
         public int LastIndexOf(bool item, int startIndex, int count)
         {
-            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size) || count <= 0)
+            if (_Size <= 0 || startIndex < 0 || startIndex >= _Size || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1238,7 +1202,7 @@ namespace Com
         /// <returns>布尔值，表示此 BitSet 指定索引位置的位值。</returns>
         public bool Get(int index)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -1255,7 +1219,7 @@ namespace Com
         /// <param name="bitValue">位值。</param>
         public void Set(int index, bool bitValue)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -1284,7 +1248,7 @@ namespace Com
 
                     if (_Size % _BitsPerUint != 0)
                     {
-                        _UintArray[Len - 1] >>= (_BitsPerUint - _Size % _BitsPerUint);
+                        _UintArray[Len - 1] >>= _BitsPerUint - _Size % _BitsPerUint;
                     }
                 }
                 else
@@ -1305,7 +1269,7 @@ namespace Com
         /// <param name="index">索引。</param>
         public void TrueForBit(int index)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1321,7 +1285,7 @@ namespace Com
         /// <param name="index">索引。</param>
         public void FalseForBit(int index)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1337,14 +1301,14 @@ namespace Com
         /// <param name="index">索引。</param>
         public void InverseBit(int index)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             //
 
-            _UintArray[index / _BitsPerUint] ^= (((uint)1) << (index % _BitsPerUint));
+            _UintArray[index / _BitsPerUint] ^= ((uint)1) << (index % _BitsPerUint);
         }
 
         /// <summary>
@@ -1380,7 +1344,7 @@ namespace Com
 
                 for (int i = 0; i < Len; i++)
                 {
-                    _UintArray[i] = (~_UintArray[i]);
+                    _UintArray[i] = ~_UintArray[i];
                 }
 
                 if (_Size % _BitsPerUint != 0)
@@ -1419,7 +1383,7 @@ namespace Com
 
                     while (Bin > 0)
                     {
-                        Bin &= (Bin - 1);
+                        Bin &= Bin - 1;
 
                         Count++;
                     }
@@ -1441,7 +1405,7 @@ namespace Com
             }
             else
             {
-                return (_Size - TrueBitCount());
+                return _Size - TrueBitCount();
             }
         }
 
@@ -1569,7 +1533,7 @@ namespace Com
 
                 for (int i = 0; i < Len; i++)
                 {
-                    result._UintArray[i] = (_UintArray[i] & arrayR[i]);
+                    result._UintArray[i] = _UintArray[i] & arrayR[i];
                 }
 
                 return result;
@@ -1618,7 +1582,7 @@ namespace Com
 
                 for (int i = 0; i < Len; i++)
                 {
-                    result._UintArray[i] = (_UintArray[i] | arrayR[i]);
+                    result._UintArray[i] = _UintArray[i] | arrayR[i];
                 }
 
                 return result;
@@ -1667,7 +1631,7 @@ namespace Com
 
                 for (int i = 0; i < Len; i++)
                 {
-                    result._UintArray[i] = (_UintArray[i] ^ arrayR[i]);
+                    result._UintArray[i] = _UintArray[i] ^ arrayR[i];
                 }
 
                 return result;
@@ -1692,7 +1656,7 @@ namespace Com
 
                 for (int i = 0; i < Len; i++)
                 {
-                    result._UintArray[i] = (~_UintArray[i]);
+                    result._UintArray[i] = ~_UintArray[i];
                 }
 
                 if (_Size % _BitsPerUint != 0)
@@ -1727,7 +1691,7 @@ namespace Com
 
                 for (int i = 0; i < _Size; i++)
                 {
-                    BitCharArray[_Size - 1 - i] = (_GetItemWithoutCheckBounds(i) ? '1' : '0');
+                    BitCharArray[_Size - 1 - i] = _GetItemWithoutCheckBounds(i) ? '1' : '0';
                 }
 
                 return new string(BitCharArray);
@@ -1743,10 +1707,7 @@ namespace Com
         /// </summary>
         /// <param name="bitSet">用于判断的 BitSet 对象。</param>
         /// <returns>布尔值，表示指定的 BitSet 是否为 null 或不包含任何元素。</returns>
-        public static bool IsNullOrEmpty(BitSet bitSet)
-        {
-            return (bitSet is null || bitSet._Size <= 0);
-        }
+        public static bool IsNullOrEmpty(BitSet bitSet) => bitSet is null || bitSet._Size <= 0;
 
         //
 
@@ -1912,7 +1873,7 @@ namespace Com
 
                 if (Last1L != Last1R)
                 {
-                    return (Last1L < Last1R);
+                    return Last1L < Last1R;
                 }
                 else
                 {
@@ -1924,7 +1885,7 @@ namespace Com
                     {
                         if (arrayL[i] != arrayR[i])
                         {
-                            return (arrayL[i] < arrayR[i]);
+                            return arrayL[i] < arrayR[i];
                         }
                     }
 
@@ -1955,7 +1916,7 @@ namespace Com
 
                 if (Last1L != Last1R)
                 {
-                    return (Last1L > Last1R);
+                    return Last1L > Last1R;
                 }
                 else
                 {
@@ -1967,7 +1928,7 @@ namespace Com
                     {
                         if (arrayL[i] != arrayR[i])
                         {
-                            return (arrayL[i] > arrayR[i]);
+                            return arrayL[i] > arrayR[i];
                         }
                     }
 
@@ -1998,7 +1959,7 @@ namespace Com
 
                 if (Last1L != Last1R)
                 {
-                    return (Last1L < Last1R);
+                    return Last1L < Last1R;
                 }
                 else
                 {
@@ -2010,7 +1971,7 @@ namespace Com
                     {
                         if (arrayL[i] != arrayR[i])
                         {
-                            return (arrayL[i] < arrayR[i]);
+                            return arrayL[i] < arrayR[i];
                         }
                     }
 
@@ -2041,7 +2002,7 @@ namespace Com
 
                 if (Last1L != Last1R)
                 {
-                    return (Last1L > Last1R);
+                    return Last1L > Last1R;
                 }
                 else
                 {
@@ -2053,7 +2014,7 @@ namespace Com
                     {
                         if (arrayL[i] != arrayR[i])
                         {
-                            return (arrayL[i] > arrayR[i]);
+                            return arrayL[i] > arrayR[i];
                         }
                     }
 
@@ -2143,10 +2104,7 @@ namespace Com
 
         object IList.this[int index]
         {
-            get
-            {
-                return Get(index);
-            }
+            get => Get(index);
 
             set
             {
@@ -2166,10 +2124,7 @@ namespace Com
             }
         }
 
-        int IList.Add(object item)
-        {
-            throw new NotSupportedException();
-        }
+        int IList.Add(object item) => throw new NotSupportedException();
 
         void IList.Clear()
         {
@@ -2204,40 +2159,19 @@ namespace Com
             }
         }
 
-        void IList.Insert(int index, object item)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.Insert(int index, object item) => throw new NotSupportedException();
 
-        void IList.Remove(object item)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.Remove(object item) => throw new NotSupportedException();
 
-        void IList.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.RemoveAt(int index) => throw new NotSupportedException();
 
         #endregion
 
         #region System.Collections.ICollection
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                return this;
-            }
-        }
+        object ICollection.SyncRoot => this;
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
         void ICollection.CopyTo(Array array, int index)
         {
@@ -2265,10 +2199,7 @@ namespace Com
 
         #region System.Collections.IEnumerable
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(this);
 
         private sealed class Enumerator : IEnumerator // 实现 System.Collections.IEnumerator 的迭代器。
         {
@@ -2290,7 +2221,7 @@ namespace Com
                         throw new ArgumentNullException();
                     }
 
-                    if (_BitSet.IsEmpty || (_Index < 0 || _Index >= _BitSet._Size))
+                    if (_BitSet.IsEmpty || _Index < 0 || _Index >= _BitSet._Size)
                     {
                         throw new IndexOutOfRangeException();
                     }
@@ -2315,34 +2246,22 @@ namespace Com
                 }
             }
 
-            void IEnumerator.Reset()
-            {
-                _Index = -1;
-            }
+            void IEnumerator.Reset() => _Index = -1;
         }
 
         #endregion
 
         #region System.Collections.Generic.IList<T>
 
-        void IList<bool>.Insert(int index, bool item)
-        {
-            throw new NotSupportedException();
-        }
+        void IList<bool>.Insert(int index, bool item) => throw new NotSupportedException();
 
-        void IList<bool>.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
-        }
+        void IList<bool>.RemoveAt(int index) => throw new NotSupportedException();
 
         #endregion
 
         #region System.Collections.Generic.ICollection<T>
 
-        void ICollection<bool>.Add(bool item)
-        {
-            throw new NotSupportedException();
-        }
+        void ICollection<bool>.Add(bool item) => throw new NotSupportedException();
 
         void ICollection<bool>.Clear()
         {
@@ -2353,19 +2272,13 @@ namespace Com
             }
         }
 
-        bool ICollection<bool>.Remove(bool item)
-        {
-            throw new NotSupportedException();
-        }
+        bool ICollection<bool>.Remove(bool item) => throw new NotSupportedException();
 
         #endregion
 
         #region System.Collections.Generic.IEnumerable<out T>
 
-        IEnumerator<bool> IEnumerable<bool>.GetEnumerator()
-        {
-            return new GenericEnumerator(this);
-        }
+        IEnumerator<bool> IEnumerable<bool>.GetEnumerator() => new GenericEnumerator(this);
 
         private sealed class GenericEnumerator : IEnumerator<bool> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
         {
@@ -2378,10 +2291,7 @@ namespace Com
                 _Index = -1;
             }
 
-            void IDisposable.Dispose()
-            {
-                _BitSet = null;
-            }
+            void IDisposable.Dispose() => _BitSet = null;
 
             object IEnumerator.Current
             {
@@ -2392,7 +2302,7 @@ namespace Com
                         throw new ArgumentNullException();
                     }
 
-                    if (_BitSet.IsEmpty || (_Index < 0 || _Index >= _BitSet._Size))
+                    if (_BitSet.IsEmpty || _Index < 0 || _Index >= _BitSet._Size)
                     {
                         throw new IndexOutOfRangeException();
                     }
@@ -2417,10 +2327,7 @@ namespace Com
                 }
             }
 
-            void IEnumerator.Reset()
-            {
-                _Index = -1;
-            }
+            void IEnumerator.Reset() => _Index = -1;
 
             bool IEnumerator<bool>.Current
             {
@@ -2431,7 +2338,7 @@ namespace Com
                         throw new ArgumentNullException();
                     }
 
-                    if (_BitSet.IsEmpty || (_Index < 0 || _Index >= _BitSet._Size))
+                    if (_BitSet.IsEmpty || _Index < 0 || _Index >= _BitSet._Size)
                     {
                         throw new IndexOutOfRangeException();
                     }

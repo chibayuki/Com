@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.WinForm.FormManager
 Version 20.10.27.1900
@@ -29,22 +29,10 @@ namespace Com.WinForm
         #region 非公开成员
 
         // 获取主屏幕的边界。
-        internal static Rectangle PrimaryScreenBounds
-        {
-            get
-            {
-                return Screen.PrimaryScreen.Bounds;
-            }
-        }
+        internal static Rectangle PrimaryScreenBounds => Screen.PrimaryScreen.Bounds;
 
         // 获取主屏幕的工作区。
-        internal static Rectangle PrimaryScreenClient
-        {
-            get
-            {
-                return Screen.PrimaryScreen.WorkingArea;
-            }
-        }
+        internal static Rectangle PrimaryScreenClient => Screen.PrimaryScreen.WorkingArea;
 
         //
 
@@ -58,46 +46,22 @@ namespace Com.WinForm
         private Form _Client = null; // 表示工作区的 Form 对象。
 
         // 获取表示工作区的 Form 对象。
-        internal Form Client
-        {
-            get
-            {
-                return _Client;
-            }
-        }
+        internal Form Client => _Client;
 
         private CaptionBar _CaptionBar = null; // 表示窗口标题栏的 CaptionBar 对象。
 
         // 获取表示窗口标题栏的 CaptionBar 对象。
-        internal CaptionBar CaptionBar
-        {
-            get
-            {
-                return _CaptionBar;
-            }
-        }
+        internal CaptionBar CaptionBar => _CaptionBar;
 
         private Resizer _Resizer = null; // 表示窗口大小调节器的 Resizer 对象。
 
         // 获取表示窗口大小调节器的 Resizer 对象。
-        internal Resizer Resizer
-        {
-            get
-            {
-                return _Resizer;
-            }
-        }
+        internal Resizer Resizer => _Resizer;
 
         private SplashScreen _SplashScreen = null; // 表示启动屏幕的 SplashScreen 对象。
 
         // 获取表示启动屏幕的 SplashScreen 对象。
-        internal SplashScreen SplashScreen
-        {
-            get
-            {
-                return _SplashScreen;
-            }
-        }
+        internal SplashScreen SplashScreen => _SplashScreen;
 
         //
 
@@ -106,13 +70,7 @@ namespace Com.WinForm
         private bool _IsMainForm = false; // 表示此窗口是否为主窗口的布尔值。
 
         // 获取表示此窗口是否为主窗口的布尔值。
-        internal bool IsMainForm
-        {
-            get
-            {
-                return _IsMainForm;
-            }
-        }
+        internal bool IsMainForm => _IsMainForm;
 
         //
 
@@ -170,10 +128,7 @@ namespace Com.WinForm
         // 设置主菜单是否处于激活状态的布尔值。
         internal bool MainMenuIsActive
         {
-            set
-            {
-                _MainMenuIsActive = value;
-            }
+            set => _MainMenuIsActive = value;
         }
 
         private Timer _ActivationMonitor = null; // 用于监听窗口激活状态变更的 Timer。
@@ -186,44 +141,20 @@ namespace Com.WinForm
         private const int _ControlBoxButtonHeight = 32; // 控制按钮的高度。
 
         // 获取控制按钮的宽度。
-        internal int ControlBoxButtonWidth
-        {
-            get
-            {
-                return _ControlBoxButtonWidth;
-            }
-        }
+        internal int ControlBoxButtonWidth => _ControlBoxButtonWidth;
 
         // 获取控制按钮的高度。
-        internal int ControlBoxButtonHeight
-        {
-            get
-            {
-                return _ControlBoxButtonHeight;
-            }
-        }
+        internal int ControlBoxButtonHeight => _ControlBoxButtonHeight;
 
         // 获取控制按钮的大小。
-        internal Size ControlBoxButtonSize
-        {
-            get
-            {
-                return new Size(_ControlBoxButtonWidth, _ControlBoxButtonHeight);
-            }
-        }
+        internal Size ControlBoxButtonSize => new Size(_ControlBoxButtonWidth, _ControlBoxButtonHeight);
 
         //
 
         private const int _ResizerSize = 10; // 窗口大小调节器的大小。
 
         // 获取窗口大小调节器的大小。
-        internal int ResizerSize
-        {
-            get
-            {
-                return _ResizerSize;
-            }
-        }
+        internal int ResizerSize => _ResizerSize;
 
         //
 
@@ -249,29 +180,15 @@ namespace Com.WinForm
         // 获取或设置窗口的最小宽度。
         internal int MinimumWidth
         {
-            get
-            {
-                return Math.Max(_ControlBoxButtonWidth, Math.Min(_MinimumWidth, PrimaryScreenBounds.Width));
-            }
-
-            set
-            {
-                _MinimumWidth = value;
-            }
+            get => Math.Max(_ControlBoxButtonWidth, Math.Min(_MinimumWidth, PrimaryScreenBounds.Width));
+            set => _MinimumWidth = value;
         }
 
         // 获取或设置窗口的最小高度。
         internal int MinimumHeight
         {
-            get
-            {
-                return Math.Max(_CaptionBarHeight + 2, Math.Min(_MinimumHeight, PrimaryScreenBounds.Height));
-            }
-
-            set
-            {
-                _MinimumHeight = value;
-            }
+            get => Math.Max(_CaptionBarHeight + 2, Math.Min(_MinimumHeight, PrimaryScreenBounds.Height));
+            set => _MinimumHeight = value;
         }
 
         private int _MaximumWidth = 0; // 窗口的最大宽度。
@@ -280,29 +197,15 @@ namespace Com.WinForm
         // 获取或设置窗口的最大宽度。
         internal int MaximumWidth
         {
-            get
-            {
-                return Math.Max(1, (_MaximumWidth > 0 ? Math.Min(_MaximumWidth, PrimaryScreenBounds.Width) : PrimaryScreenBounds.Width));
-            }
-
-            set
-            {
-                _MaximumWidth = value;
-            }
+            get => Math.Max(1, _MaximumWidth > 0 ? Math.Min(_MaximumWidth, PrimaryScreenBounds.Width) : PrimaryScreenBounds.Width);
+            set => _MaximumWidth = value;
         }
 
         // 获取或设置窗口的最大高度。
         internal int MaximumHeight
         {
-            get
-            {
-                return Math.Max(1, (_MaximumHeight > 0 ? Math.Min(_MaximumHeight, PrimaryScreenBounds.Height) : PrimaryScreenBounds.Height));
-            }
-
-            set
-            {
-                _MaximumHeight = value;
-            }
+            get => Math.Max(1, _MaximumHeight > 0 ? Math.Min(_MaximumHeight, PrimaryScreenBounds.Height) : PrimaryScreenBounds.Height);
+            set => _MaximumHeight = value;
         }
 
         //
@@ -329,22 +232,10 @@ namespace Com.WinForm
         //
 
         // 获取窗口标题栏的不透明度系数。
-        internal double CaptionBarOpacityRatio
-        {
-            get
-            {
-                return (_EnableCaptionBarTransparent && _IsActive ? 0.9 : 1.0);
-            }
-        }
+        internal double CaptionBarOpacityRatio => _EnableCaptionBarTransparent && _IsActive ? 0.9 : 1.0;
 
         // 获取窗口阴影的不透明度系数。
-        internal double ShadowOpacityRatio
-        {
-            get
-            {
-                return (_ShowShadowColor ? (_IsActive ? 0.18 : 0.12) : (_IsActive ? 0.12 : 0.08));
-            }
-        }
+        internal double ShadowOpacityRatio => _ShowShadowColor ? (_IsActive ? 0.18 : 0.12) : (_IsActive ? 0.12 : 0.08);
 
         //
 
@@ -358,22 +249,10 @@ namespace Com.WinForm
         private FormState _PreviousFormState = FormState.Normal; // FormState 的此前值。
 
         // 获取 FormState 的实际值（非 FormState.Minimized 值）。
-        internal FormState ActualFormState
-        {
-            get
-            {
-                return _FormState;
-            }
-        }
+        internal FormState ActualFormState => _FormState;
 
         // 获取 FormState 的此前值。
-        internal FormState PreviousFormState
-        {
-            get
-            {
-                return _PreviousFormState;
-            }
-        }
+        internal FormState PreviousFormState => _PreviousFormState;
 
         //
 
@@ -385,56 +264,27 @@ namespace Com.WinForm
         // 获取或设置当前状态窗口在桌面的左边距。
         internal int Bounds_Current_X
         {
-            get
-            {
-                return _Bounds_Current_X;
-            }
-
-            set
-            {
-                _Bounds_Current_X = value;
-            }
+            get => _Bounds_Current_X;
+            set => _Bounds_Current_X = value;
         }
 
         // 获取或设置当前状态窗口在桌面的上边距。
         internal int Bounds_Current_Y
         {
-            get
-            {
-                return _Bounds_Current_Y;
-            }
-
-            set
-            {
-                _Bounds_Current_Y = value;
-            }
+            get => _Bounds_Current_Y;
+            set => _Bounds_Current_Y = value;
         }
 
         // 获取当前状态窗口在桌面的右边距。
-        internal int Bounds_Current_Right
-        {
-            get
-            {
-                return (_Bounds_Current_X + _Bounds_Current_Width);
-            }
-        }
+        internal int Bounds_Current_Right => _Bounds_Current_X + _Bounds_Current_Width;
 
         // 获取当前状态窗口在桌面的下边距。
-        internal int Bounds_Current_Bottom
-        {
-            get
-            {
-                return (_Bounds_Current_Y + _Bounds_Current_Height);
-            }
-        }
+        internal int Bounds_Current_Bottom => _Bounds_Current_Y + _Bounds_Current_Height;
 
         // 获取或设置当前状态窗口的宽度。
         internal int Bounds_Current_Width
         {
-            get
-            {
-                return _Bounds_Current_Width;
-            }
+            get => _Bounds_Current_Width;
 
             set
             {
@@ -452,10 +302,7 @@ namespace Com.WinForm
         // 获取或设置当前状态窗口的高度。
         internal int Bounds_Current_Height
         {
-            get
-            {
-                return _Bounds_Current_Height;
-            }
+            get => _Bounds_Current_Height;
 
             set
             {
@@ -473,10 +320,7 @@ namespace Com.WinForm
         // 获取或设置当前状态窗口在桌面的位置。
         internal Point Bounds_Current_Location
         {
-            get
-            {
-                return new Point(_Bounds_Current_X, _Bounds_Current_Y);
-            }
+            get => new Point(_Bounds_Current_X, _Bounds_Current_Y);
 
             set
             {
@@ -488,10 +332,7 @@ namespace Com.WinForm
         // 获取或设置当前状态窗口的大小。
         internal Size Bounds_Current_Size
         {
-            get
-            {
-                return new Size(_Bounds_Current_Width, _Bounds_Current_Height);
-            }
+            get => new Size(_Bounds_Current_Width, _Bounds_Current_Height);
 
             set
             {
@@ -511,10 +352,7 @@ namespace Com.WinForm
         // 获取或设置当前状态窗口的位置与大小。
         internal Rectangle Bounds_Current
         {
-            get
-            {
-                return new Rectangle(_Bounds_Current_X, _Bounds_Current_Y, _Bounds_Current_Width, _Bounds_Current_Height);
-            }
+            get => new Rectangle(_Bounds_Current_X, _Bounds_Current_Y, _Bounds_Current_Width, _Bounds_Current_Height);
 
             set
             {
@@ -542,84 +380,41 @@ namespace Com.WinForm
         // 获取或设置普通状态窗口在桌面的左边距。
         internal int Bounds_Normal_X
         {
-            get
-            {
-                return _Bounds_Normal_X;
-            }
-
-            set
-            {
-                _Bounds_Normal_X = value;
-            }
+            get => _Bounds_Normal_X;
+            set => _Bounds_Normal_X = value;
         }
 
         // 获取或设置普通状态窗口在桌面的上边距。
         internal int Bounds_Normal_Y
         {
-            get
-            {
-                return _Bounds_Normal_Y;
-            }
-
-            set
-            {
-                _Bounds_Normal_Y = value;
-            }
+            get => _Bounds_Normal_Y;
+            set => _Bounds_Normal_Y = value;
         }
 
         // 获取普通状态窗口在桌面的右边距。
-        internal int Bounds_Normal_Right
-        {
-            get
-            {
-                return (_Bounds_Normal_X + _Bounds_Normal_Width);
-            }
-        }
+        internal int Bounds_Normal_Right => _Bounds_Normal_X + _Bounds_Normal_Width;
 
         // 获取普通状态窗口在桌面的下边距。
-        internal int Bounds_Normal_Bottom
-        {
-            get
-            {
-                return (_Bounds_Normal_Y + _Bounds_Normal_Height);
-            }
-        }
+        internal int Bounds_Normal_Bottom => _Bounds_Normal_Y + _Bounds_Normal_Height;
 
         // 获取或设置普通状态窗口的宽度。
         internal int Bounds_Normal_Width
         {
-            get
-            {
-                return _Bounds_Normal_Width;
-            }
-
-            set
-            {
-                _Bounds_Normal_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
-            }
+            get => _Bounds_Normal_Width;
+            set => _Bounds_Normal_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
         }
 
         // 获取或设置普通状态窗口的高度。
         internal int Bounds_Normal_Height
         {
-            get
-            {
-                return _Bounds_Normal_Height;
-            }
-
-            set
-            {
-                _Bounds_Normal_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
-            }
+            get => _Bounds_Normal_Height;
+            set => _Bounds_Normal_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
         }
 
         // 获取或设置普通状态窗口在桌面的位置。
         internal Point Bounds_Normal_Location
         {
-            get
-            {
-                return new Point(_Bounds_Normal_X, _Bounds_Normal_Y);
-            }
+            get => new Point(_Bounds_Normal_X, _Bounds_Normal_Y);
 
             set
             {
@@ -631,10 +426,7 @@ namespace Com.WinForm
         // 获取或设置普通状态窗口的大小。
         internal Size Bounds_Normal_Size
         {
-            get
-            {
-                return new Size(_Bounds_Normal_Width, _Bounds_Normal_Height);
-            }
+            get => new Size(_Bounds_Normal_Width, _Bounds_Normal_Height);
 
             set
             {
@@ -646,10 +438,7 @@ namespace Com.WinForm
         // 获取或设置普通状态窗口的位置与大小。
         internal Rectangle Bounds_Normal
         {
-            get
-            {
-                return new Rectangle(_Bounds_Normal_X, _Bounds_Normal_Y, _Bounds_Normal_Width, _Bounds_Normal_Height);
-            }
+            get => new Rectangle(_Bounds_Normal_X, _Bounds_Normal_Y, _Bounds_Normal_Width, _Bounds_Normal_Height);
 
             set
             {
@@ -668,84 +457,41 @@ namespace Com.WinForm
         // 获取或设置占据桌面四分之一状态窗口在桌面的左边距。
         internal int Bounds_QuarterScreen_X
         {
-            get
-            {
-                return _Bounds_QuarterScreen_X;
-            }
-
-            set
-            {
-                _Bounds_QuarterScreen_X = value;
-            }
+            get => _Bounds_QuarterScreen_X;
+            set => _Bounds_QuarterScreen_X = value;
         }
 
         // 获取或设置占据桌面四分之一状态窗口在桌面的上边距。
         internal int Bounds_QuarterScreen_Y
         {
-            get
-            {
-                return _Bounds_QuarterScreen_Y;
-            }
-
-            set
-            {
-                _Bounds_QuarterScreen_Y = value;
-            }
+            get => _Bounds_QuarterScreen_Y;
+            set => _Bounds_QuarterScreen_Y = value;
         }
 
         // 获取占据桌面四分之一状态窗口在桌面的右边距。
-        internal int Bounds_QuarterScreen_Right
-        {
-            get
-            {
-                return (_Bounds_QuarterScreen_X + _Bounds_QuarterScreen_Width);
-            }
-        }
+        internal int Bounds_QuarterScreen_Right => _Bounds_QuarterScreen_X + _Bounds_QuarterScreen_Width;
 
         // 获取占据桌面四分之一状态窗口在桌面的下边距。
-        internal int Bounds_QuarterScreen_Bottom
-        {
-            get
-            {
-                return (_Bounds_QuarterScreen_Y + _Bounds_QuarterScreen_Height);
-            }
-        }
+        internal int Bounds_QuarterScreen_Bottom => _Bounds_QuarterScreen_Y + _Bounds_QuarterScreen_Height;
 
         // 获取或设置占据桌面四分之一状态窗口的宽度。
         internal int Bounds_QuarterScreen_Width
         {
-            get
-            {
-                return _Bounds_QuarterScreen_Width;
-            }
-
-            set
-            {
-                _Bounds_QuarterScreen_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
-            }
+            get => _Bounds_QuarterScreen_Width;
+            set => _Bounds_QuarterScreen_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
         }
 
         // 获取或设置占据桌面四分之一状态窗口的高度。
         internal int Bounds_QuarterScreen_Height
         {
-            get
-            {
-                return _Bounds_QuarterScreen_Height;
-            }
-
-            set
-            {
-                _Bounds_QuarterScreen_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
-            }
+            get => _Bounds_QuarterScreen_Height;
+            set => _Bounds_QuarterScreen_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
         }
 
         // 获取或设置占据桌面四分之一状态窗口在桌面的位置。
         internal Point Bounds_QuarterScreen_Location
         {
-            get
-            {
-                return new Point(_Bounds_QuarterScreen_X, _Bounds_QuarterScreen_Y);
-            }
+            get => new Point(_Bounds_QuarterScreen_X, _Bounds_QuarterScreen_Y);
 
             set
             {
@@ -757,10 +503,7 @@ namespace Com.WinForm
         // 获取或设置占据桌面四分之一状态窗口的大小。
         internal Size Bounds_QuarterScreen_Size
         {
-            get
-            {
-                return new Size(_Bounds_QuarterScreen_Width, _Bounds_QuarterScreen_Height);
-            }
+            get => new Size(_Bounds_QuarterScreen_Width, _Bounds_QuarterScreen_Height);
 
             set
             {
@@ -772,10 +515,7 @@ namespace Com.WinForm
         // 获取或设置占据桌面四分之一状态窗口的位置与大小。
         internal Rectangle Bounds_QuarterScreen
         {
-            get
-            {
-                return new Rectangle(_Bounds_QuarterScreen_X, _Bounds_QuarterScreen_Y, _Bounds_QuarterScreen_Width, _Bounds_QuarterScreen_Height);
-            }
+            get => new Rectangle(_Bounds_QuarterScreen_X, _Bounds_QuarterScreen_Y, _Bounds_QuarterScreen_Width, _Bounds_QuarterScreen_Height);
 
             set
             {
@@ -794,84 +534,41 @@ namespace Com.WinForm
         // 获取或设置进入全屏幕状态前窗口在桌面的左边距。
         internal int Bounds_BeforeFullScreen_X
         {
-            get
-            {
-                return _Bounds_BeforeFullScreen_X;
-            }
-
-            set
-            {
-                _Bounds_BeforeFullScreen_X = value;
-            }
+            get => _Bounds_BeforeFullScreen_X;
+            set => _Bounds_BeforeFullScreen_X = value;
         }
 
         // 获取或设置进入全屏幕状态前窗口在桌面的上边距。
         internal int Bounds_BeforeFullScreen_Y
         {
-            get
-            {
-                return _Bounds_BeforeFullScreen_Y;
-            }
-
-            set
-            {
-                _Bounds_BeforeFullScreen_Y = value;
-            }
+            get => _Bounds_BeforeFullScreen_Y;
+            set => _Bounds_BeforeFullScreen_Y = value;
         }
 
         // 获取进入全屏幕状态前窗口在桌面的右边距。
-        internal int Bounds_BeforeFullScreen_Right
-        {
-            get
-            {
-                return (_Bounds_BeforeFullScreen_X + _Bounds_BeforeFullScreen_Width);
-            }
-        }
+        internal int Bounds_BeforeFullScreen_Right => _Bounds_BeforeFullScreen_X + _Bounds_BeforeFullScreen_Width;
 
         // 获取进入全屏幕状态前窗口在桌面的下边距。
-        internal int Bounds_BeforeFullScreen_Bottom
-        {
-            get
-            {
-                return (_Bounds_BeforeFullScreen_Y + _Bounds_BeforeFullScreen_Height);
-            }
-        }
+        internal int Bounds_BeforeFullScreen_Bottom => _Bounds_BeforeFullScreen_Y + _Bounds_BeforeFullScreen_Height;
 
         // 获取或设置进入全屏幕状态前窗口的宽度。
         internal int Bounds_BeforeFullScreen_Width
         {
-            get
-            {
-                return _Bounds_BeforeFullScreen_Width;
-            }
-
-            set
-            {
-                _Bounds_BeforeFullScreen_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
-            }
+            get => _Bounds_BeforeFullScreen_Width;
+            set => _Bounds_BeforeFullScreen_Width = Math.Max(MinimumWidth, Math.Min(value, MaximumWidth));
         }
 
         // 获取或设置进入全屏幕状态前窗口的高度。
         internal int Bounds_BeforeFullScreen_Height
         {
-            get
-            {
-                return _Bounds_BeforeFullScreen_Height;
-            }
-
-            set
-            {
-                _Bounds_BeforeFullScreen_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
-            }
+            get => _Bounds_BeforeFullScreen_Height;
+            set => _Bounds_BeforeFullScreen_Height = Math.Max(MinimumHeight, Math.Min(value, MaximumHeight));
         }
 
         // 获取或设置进入全屏幕状态前窗口在桌面的位置。
         internal Point Bounds_BeforeFullScreen_Location
         {
-            get
-            {
-                return new Point(_Bounds_BeforeFullScreen_X, _Bounds_BeforeFullScreen_Y);
-            }
+            get => new Point(_Bounds_BeforeFullScreen_X, _Bounds_BeforeFullScreen_Y);
 
             set
             {
@@ -883,10 +580,7 @@ namespace Com.WinForm
         // 获取或设置进入全屏幕状态前窗口的大小。
         internal Size Bounds_BeforeFullScreen_Size
         {
-            get
-            {
-                return new Size(_Bounds_BeforeFullScreen_Width, _Bounds_BeforeFullScreen_Height);
-            }
+            get => new Size(_Bounds_BeforeFullScreen_Width, _Bounds_BeforeFullScreen_Height);
 
             set
             {
@@ -898,10 +592,7 @@ namespace Com.WinForm
         // 获取或设置进入全屏幕状态前窗口的位置与大小。
         internal Rectangle Bounds_BeforeFullScreen
         {
-            get
-            {
-                return new Rectangle(_Bounds_BeforeFullScreen_X, _Bounds_BeforeFullScreen_Y, _Bounds_BeforeFullScreen_Width, _Bounds_BeforeFullScreen_Height);
-            }
+            get => new Rectangle(_Bounds_BeforeFullScreen_X, _Bounds_BeforeFullScreen_Y, _Bounds_BeforeFullScreen_Width, _Bounds_BeforeFullScreen_Height);
 
             set
             {
@@ -951,10 +642,7 @@ namespace Com.WinForm
         }
 
         // 更新窗口布局，并触发指定的事件。
-        internal void UpdateLayout(UpdateLayoutEventType updateLayoutEventType)
-        {
-            _UpdateLayout(updateLayoutEventType);
-        }
+        internal void UpdateLayout(UpdateLayoutEventType updateLayoutEventType) => _UpdateLayout(updateLayoutEventType);
 
         // 设置窗口的位置与大小，并以指定的行为更新窗口布局，触发指定的事件。
         private void _SetBoundsAndUpdateLayout(Rectangle bounds, UpdateLayoutBehavior updateLayoutBehavior, UpdateLayoutEventType updateLayoutEventType)
@@ -980,7 +668,7 @@ namespace Com.WinForm
 
                     Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                     {
-                        double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                        double Progress = frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2);
 
                         Bounds_Current = new Rectangle(((PointD)oldBounds.Location * (1 - Progress) + (PointD)bounds.Location * Progress).ToPoint(), ((PointD)oldBounds.Size * (1 - Progress) + (PointD)bounds.Size * Progress).ToSize());
 
@@ -1014,58 +702,31 @@ namespace Com.WinForm
         private Predicate<EventArgs> _CloseVerification = null; // 设置用于验证是否允许窗口关闭的方法。
 
         // 判断是否允许窗口还原。
-        private bool _CanReturn()
-        {
-            return (_Initialized && (_FormState != FormState.FullScreen && _FormState != FormState.Normal) && (_ReturnVerification is null || (!(_ReturnVerification is null) && _ReturnVerification(EventArgs.Empty))));
-        }
+        private bool _CanReturn() => _Initialized && _FormState != FormState.FullScreen && _FormState != FormState.Normal && (_ReturnVerification is null || (!(_ReturnVerification is null) && _ReturnVerification(EventArgs.Empty)));
 
         // 判断是否允许窗口还原。
-        internal bool CanReturn()
-        {
-            return _CanReturn();
-        }
+        internal bool CanReturn() => _CanReturn();
 
         // 判断是否允许窗口最小化。
-        private bool _CanMinimize()
-        {
-            return (_Initialized && _EnableMinimize && _Client.WindowState != FormWindowState.Minimized);
-        }
+        private bool _CanMinimize() => _Initialized && _EnableMinimize && _Client.WindowState != FormWindowState.Minimized;
 
         // 判断是否允许窗口最大化。
-        private bool _CanMaximize()
-        {
-            return (_Initialized && _EnableMaximize && _Client.WindowState != FormWindowState.Minimized && (_FormState != FormState.FullScreen && _FormState != FormState.Maximized) && (_MaximizeVerification is null || (!(_MaximizeVerification is null) && _MaximizeVerification(EventArgs.Empty))));
-        }
+        private bool _CanMaximize() => _Initialized && _EnableMaximize && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen && _FormState != FormState.Maximized && (_MaximizeVerification is null || (!(_MaximizeVerification is null) && _MaximizeVerification(EventArgs.Empty)));
 
         // 判断是否允许窗口进入全屏幕模式。
-        private bool _CanEnterFullScreen()
-        {
-            return (_Initialized && _EnableFullScreen && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen && (_EnterFullScreenVerification is null || (!(_EnterFullScreenVerification is null) && _EnterFullScreenVerification(EventArgs.Empty))));
-        }
+        private bool _CanEnterFullScreen() => _Initialized && _EnableFullScreen && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen && (_EnterFullScreenVerification is null || (!(_EnterFullScreenVerification is null) && _EnterFullScreenVerification(EventArgs.Empty)));
 
         // 判断是否允许窗口退出全屏幕模式。
-        private bool _CanExitFullScreen()
-        {
-            return (_Initialized && _Client.WindowState != FormWindowState.Minimized && _FormState == FormState.FullScreen && (_ExitFullScreenVerification is null || (!(_ExitFullScreenVerification is null) && _ExitFullScreenVerification(EventArgs.Empty))));
-        }
+        private bool _CanExitFullScreen() => _Initialized && _Client.WindowState != FormWindowState.Minimized && _FormState == FormState.FullScreen && (_ExitFullScreenVerification is null || (!(_ExitFullScreenVerification is null) && _ExitFullScreenVerification(EventArgs.Empty)));
 
         // 判断是否允许窗口与桌面的高度相同。
-        private bool _CanHighAsScreen()
-        {
-            return (_Initialized && _FormStyle == FormStyle.Sizable && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen);
-        }
+        private bool _CanHighAsScreen() => _Initialized && _FormStyle == FormStyle.Sizable && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen;
 
         // 判断是否允许窗口占据桌面的四分之一区域。
-        private bool _CanQuarterScreen()
-        {
-            return (_Initialized && _FormStyle == FormStyle.Sizable && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen);
-        }
+        private bool _CanQuarterScreen() => _Initialized && _FormStyle == FormStyle.Sizable && _Client.WindowState != FormWindowState.Minimized && _FormState != FormState.FullScreen;
 
         // 判断是否允许窗口关闭。
-        private bool _CanClose()
-        {
-            return (_Initialized && (_CloseVerification is null || (!(_CloseVerification is null) && _CloseVerification(EventArgs.Empty))));
-        }
+        private bool _CanClose() => _Initialized && (_CloseVerification is null || (!(_CloseVerification is null) && _CloseVerification(EventArgs.Empty)));
 
         //
 
@@ -1083,46 +744,25 @@ namespace Com.WinForm
         }
 
         // 引发 Loading 事件。
-        private void _OnLoading()
-        {
-            _TrigEvent(EventKey.Loading);
-        }
+        private void _OnLoading() => _TrigEvent(EventKey.Loading);
 
         // 引发 Loaded 事件。
-        private void _OnLoaded()
-        {
-            _TrigEvent(EventKey.Loaded);
-        }
+        private void _OnLoaded() => _TrigEvent(EventKey.Loaded);
 
         // 引发 Closing 事件。
-        private void _OnClosing()
-        {
-            _TrigEvent(EventKey.Closing);
-        }
+        private void _OnClosing() => _TrigEvent(EventKey.Closing);
 
         // 引发 Closed 事件。
-        private void _OnClosed()
-        {
-            _TrigEvent(EventKey.Closed);
-        }
+        private void _OnClosed() => _TrigEvent(EventKey.Closed);
 
         // 引发 Activated 事件。
-        private void _OnActivated()
-        {
-            _TrigEvent(EventKey.Activated);
-        }
+        private void _OnActivated() => _TrigEvent(EventKey.Activated);
 
         // 引发 Deactivate 事件。
-        private void _OnDeactivate()
-        {
-            _TrigEvent(EventKey.Deactivate);
-        }
+        private void _OnDeactivate() => _TrigEvent(EventKey.Deactivate);
 
         // 引发 Move 事件。
-        private void _OnMove()
-        {
-            _TrigEvent(EventKey.Move);
-        }
+        private void _OnMove() => _TrigEvent(EventKey.Move);
 
         // 引发 LocationChanged 事件。
         private void _OnLocationChanged()
@@ -1133,10 +773,7 @@ namespace Com.WinForm
         }
 
         // 引发 Resize 事件。
-        private void _OnResize()
-        {
-            _TrigEvent(EventKey.Resize);
-        }
+        private void _OnResize() => _TrigEvent(EventKey.Resize);
 
         // 引发 SizeChanged 事件。
         private void _OnSizeChanged()
@@ -1147,46 +784,25 @@ namespace Com.WinForm
         }
 
         // 引发 FormStateChanged 事件。
-        private void _OnFormStateChanged()
-        {
-            _TrigEvent(EventKey.FormStateChanged);
-        }
+        private void _OnFormStateChanged() => _TrigEvent(EventKey.FormStateChanged);
 
         // 引发 EnabledChanged 事件。
-        private void _OnEnabledChanged()
-        {
-            _TrigEvent(EventKey.EnabledChanged);
-        }
+        private void _OnEnabledChanged() => _TrigEvent(EventKey.EnabledChanged);
 
         // 引发 VisibleChanged 事件。
-        private void _OnVisibleChanged()
-        {
-            _TrigEvent(EventKey.VisibleChanged);
-        }
+        private void _OnVisibleChanged() => _TrigEvent(EventKey.VisibleChanged);
 
         // 引发 OpacityChanged 事件。
-        private void _OnOpacityChanged()
-        {
-            _TrigEvent(EventKey.OpacityChanged);
-        }
+        private void _OnOpacityChanged() => _TrigEvent(EventKey.OpacityChanged);
 
         // 引发 CaptionChanged 事件。
-        private void _OnCaptionChanged()
-        {
-            _TrigEvent(EventKey.CaptionChanged);
-        }
+        private void _OnCaptionChanged() => _TrigEvent(EventKey.CaptionChanged);
 
         // 引发 ThemeChanged 事件。
-        private void _OnThemeChanged()
-        {
-            _TrigEvent(EventKey.ThemeChanged);
-        }
+        private void _OnThemeChanged() => _TrigEvent(EventKey.ThemeChanged);
 
         // 引发 ThemeColorChanged 事件。
-        private void _OnThemeColorChanged()
-        {
-            _TrigEvent(EventKey.ThemeColorChanged);
-        }
+        private void _OnThemeColorChanged() => _TrigEvent(EventKey.ThemeColorChanged);
 
         //
 
@@ -1577,7 +1193,7 @@ namespace Com.WinForm
                     {
                         Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                         {
-                            double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                            double Progress = frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2);
 
                             _Opacity = Opa * (1 - Progress);
 
@@ -1832,7 +1448,7 @@ namespace Com.WinForm
             Rectangle CurScrClient = PrimaryScreenClient;
 
             Rectangle Bounds_Screen = CurScrClient;
-            Rectangle Bounds_Parent = (_Owner is null ? CurScrClient : _Owner.Bounds);
+            Rectangle Bounds_Parent = _Owner is null ? CurScrClient : _Owner.Bounds;
 
             switch (_Client.StartPosition)
             {
@@ -1959,7 +1575,7 @@ namespace Com.WinForm
 
                 _EnterFullScreen(UpdateLayoutBehavior.Static, UpdateLayoutEventType.None);
             }
-            else if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.Maximized && _FormState != FormState.FullScreen))
+            else if (_FormStyle != FormStyle.Sizable && _FormState != FormState.Normal && _FormState != FormState.Maximized && _FormState != FormState.FullScreen)
             {
                 _Return(UpdateLayoutBehavior.Static, UpdateLayoutEventType.None);
             }
@@ -1974,7 +1590,7 @@ namespace Com.WinForm
 
                     Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                     {
-                        double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                        double Progress = frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2);
 
                         _Opacity = Opa * Progress;
 
@@ -2042,10 +1658,7 @@ namespace Com.WinForm
         }
 
         // _Client 的 Closed 事件的回调函数。
-        private void Client_Closed(object sender, EventArgs e)
-        {
-            _AltF4(sender, e);
-        }
+        private void Client_Closed(object sender, EventArgs e) => _AltF4(sender, e);
 
         // _Client 的 SizeChanged 事件的回调函数。
         private void Client_SizeChanged(object sender, EventArgs e)
@@ -2071,30 +1684,18 @@ namespace Com.WinForm
         }
 
         // _CaptionBar 的 Closed 事件的回调函数。
-        private void CaptionBar_Closed(object sender, EventArgs e)
-        {
-            _AltF4(sender, e);
-        }
+        private void CaptionBar_Closed(object sender, EventArgs e) => _AltF4(sender, e);
 
         // _Resizer 的 Closed 事件的回调函数。
-        private void Resizer_Closed(object sender, EventArgs e)
-        {
-            _AltF4(sender, e);
-        }
+        private void Resizer_Closed(object sender, EventArgs e) => _AltF4(sender, e);
 
         // _SplashScreen 的 Closed 事件的回调函数。
-        private void SplashScreen_Closed(object sender, EventArgs e)
-        {
-            _AltF4(sender, e);
-        }
+        private void SplashScreen_Closed(object sender, EventArgs e) => _AltF4(sender, e);
 
         //
 
         // _FormLoadingAsyncWorker 的 DoWork 事件的回调函数。
-        private void FormLoadingAsyncWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            _OnLoading();
-        }
+        private void FormLoadingAsyncWorker_DoWork(object sender, DoWorkEventArgs e) => _OnLoading();
 
         // _FormLoadingAsyncWorker 的 RunWorkerCompleted 事件的回调函数。
         private void FormLoadingAsyncWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -2149,7 +1750,7 @@ namespace Com.WinForm
                 {
                     Animation.Frame Frame = (frameId, frameCount, msPerFrame) =>
                     {
-                        double Progress = (frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2));
+                        double Progress = frameId == frameCount ? 1 : 1 - Math.Pow(1 - (double)frameId / frameCount, 2);
 
                         _Opacity = Opa * (1 - Progress);
 
@@ -2335,57 +1936,33 @@ namespace Com.WinForm
         //
 
         // _Client 的 Activated 事件的回调函数。
-        private void Client_Activated(object sender, EventArgs e)
-        {
-            _ClientIsActive = true;
-        }
+        private void Client_Activated(object sender, EventArgs e) => _ClientIsActive = true;
 
         // _Client 的 Deactivate 事件的回调函数。
-        private void Client_Deactivate(object sender, EventArgs e)
-        {
-            _ClientIsActive = false;
-        }
+        private void Client_Deactivate(object sender, EventArgs e) => _ClientIsActive = false;
 
         // _CaptionBar 的 Activated 事件的回调函数。
-        private void CaptionBar_Activated(object sender, EventArgs e)
-        {
-            _CaptionBarIsActive = true;
-        }
+        private void CaptionBar_Activated(object sender, EventArgs e) => _CaptionBarIsActive = true;
 
         // _CaptionBar 的 Deactivate 事件的回调函数。
-        private void CaptionBar_Deactivate(object sender, EventArgs e)
-        {
-            _CaptionBarIsActive = false;
-        }
+        private void CaptionBar_Deactivate(object sender, EventArgs e) => _CaptionBarIsActive = false;
 
         // _Resizer 的 Activated 事件的回调函数。
-        private void Resizer_Activated(object sender, EventArgs e)
-        {
-            _ResizerIsActive = true;
-        }
+        private void Resizer_Activated(object sender, EventArgs e) => _ResizerIsActive = true;
 
         // _Resizer 的 Deactivate 事件的回调函数。
-        private void Resizer_Deactivate(object sender, EventArgs e)
-        {
-            _ResizerIsActive = false;
-        }
+        private void Resizer_Deactivate(object sender, EventArgs e) => _ResizerIsActive = false;
 
         // _SplashScreen 的 Activated 事件的回调函数。
-        private void SplashScreen_Activated(object sender, EventArgs e)
-        {
-            _SplashScreenIsActive = true;
-        }
+        private void SplashScreen_Activated(object sender, EventArgs e) => _SplashScreenIsActive = true;
 
         // _SplashScreen 的 Deactivate 事件的回调函数。
-        private void SplashScreen_Deactivate(object sender, EventArgs e)
-        {
-            _SplashScreenIsActive = false;
-        }
+        private void SplashScreen_Deactivate(object sender, EventArgs e) => _SplashScreenIsActive = false;
 
         // _ActivationMonitor 的 Tick 事件的回调函数。
         private void ActivationMonitor_Tick(object sender, EventArgs e)
         {
-            bool Active = (_ClientIsActive || _CaptionBarIsActive || _ResizerIsActive || _SplashScreenIsActive || _MainMenuIsActive);
+            bool Active = _ClientIsActive || _CaptionBarIsActive || _ResizerIsActive || _SplashScreenIsActive || _MainMenuIsActive;
 
             if (_IsActive != Active)
             {
@@ -2454,37 +2031,19 @@ namespace Com.WinForm
         /// <summary>
         /// 获取拥有此窗口的窗口的窗口管理器。
         /// </summary>
-        public FormManager Owner
-        {
-            get
-            {
-                return _Owner;
-            }
-        }
+        public FormManager Owner => _Owner;
 
         /// <summary>
         /// 获取表示此窗口拥有的所有窗口的窗口管理器数组。
         /// </summary>
-        public FormManager[] Owned
-        {
-            get
-            {
-                return _Owned.ToArray();
-            }
-        }
+        public FormManager[] Owned => _Owned.ToArray();
 
         //
 
         /// <summary>
         /// 获取表示窗口是否处于激活状态的布尔值。
         /// </summary>
-        public bool IsActive
-        {
-            get
-            {
-                return _IsActive;
-            }
-        }
+        public bool IsActive => _IsActive;
 
         //
 
@@ -2493,10 +2052,7 @@ namespace Com.WinForm
         /// </summary>
         public FormStyle FormStyle
         {
-            get
-            {
-                return _FormStyle;
-            }
+            get => _FormStyle;
 
             set
             {
@@ -2511,7 +2067,7 @@ namespace Com.WinForm
                             _CaptionBar.OnFormStyleChanged();
                             _Resizer.OnFormStyleChanged();
 
-                            if (_FormStyle != FormStyle.Sizable && (_FormState != FormState.Normal && _FormState != FormState.Maximized && _FormState != FormState.FullScreen))
+                            if (_FormStyle != FormStyle.Sizable && _FormState != FormState.Normal && _FormState != FormState.Maximized && _FormState != FormState.FullScreen)
                             {
                                 _Return(UpdateLayoutBehavior.Animate, UpdateLayoutEventType.Result);
                             }
@@ -2528,10 +2084,7 @@ namespace Com.WinForm
         /// </summary>
         public bool EnableMinimize
         {
-            get
-            {
-                return _EnableMinimize;
-            }
+            get => _EnableMinimize;
 
             set
             {
@@ -2575,10 +2128,7 @@ namespace Com.WinForm
         /// </summary>
         public bool EnableMaximize
         {
-            get
-            {
-                return _EnableMaximize;
-            }
+            get => _EnableMaximize;
 
             set
             {
@@ -2617,10 +2167,7 @@ namespace Com.WinForm
         /// </summary>
         public bool EnableFullScreen
         {
-            get
-            {
-                return _EnableFullScreen;
-            }
+            get => _EnableFullScreen;
 
             set
             {
@@ -2659,10 +2206,7 @@ namespace Com.WinForm
         /// </summary>
         public bool ShowIconOnCaptionBar
         {
-            get
-            {
-                return _ShowIconOnCaptionBar;
-            }
+            get => _ShowIconOnCaptionBar;
 
             set
             {
@@ -2688,10 +2232,7 @@ namespace Com.WinForm
         /// </summary>
         public bool ShowInTaskbar
         {
-            get
-            {
-                return _ShowInTaskbar;
-            }
+            get => _ShowInTaskbar;
 
             set
             {
@@ -2726,10 +2267,7 @@ namespace Com.WinForm
         /// </summary>
         public bool TopMost
         {
-            get
-            {
-                return _TopMost;
-            }
+            get => _TopMost;
 
             set
             {
@@ -2757,15 +2295,8 @@ namespace Com.WinForm
         /// </summary>
         public Effect Effect
         {
-            get
-            {
-                return _Effect;
-            }
-
-            set
-            {
-                _Effect = value;
-            }
+            get => _Effect;
+            set => _Effect = value;
         }
 
         //
@@ -2775,10 +2306,7 @@ namespace Com.WinForm
         /// </summary>
         public Size MinimumSize
         {
-            get
-            {
-                return new Size(MinimumWidth, MinimumHeight);
-            }
+            get => new Size(MinimumWidth, MinimumHeight);
 
             set
             {
@@ -2808,10 +2336,7 @@ namespace Com.WinForm
         /// </summary>
         public Size MaximumSize
         {
-            get
-            {
-                return new Size(MaximumWidth, MaximumHeight);
-            }
+            get => new Size(MaximumWidth, MaximumHeight);
 
             set
             {
@@ -2843,10 +2368,7 @@ namespace Com.WinForm
         /// </summary>
         public int CaptionBarHeight
         {
-            get
-            {
-                return _CaptionBarHeight;
-            }
+            get => _CaptionBarHeight;
 
             set
             {
@@ -2871,10 +2393,7 @@ namespace Com.WinForm
         /// </summary>
         public bool Enabled
         {
-            get
-            {
-                return _Enabled;
-            }
+            get => _Enabled;
 
             set
             {
@@ -2902,10 +2421,7 @@ namespace Com.WinForm
         /// </summary>
         public bool Visible
         {
-            get
-            {
-                return _Visible;
-            }
+            get => _Visible;
 
             set
             {
@@ -2940,10 +2456,7 @@ namespace Com.WinForm
         /// </summary>
         public double Opacity
         {
-            get
-            {
-                return _Opacity;
-            }
+            get => _Opacity;
 
             set
             {
@@ -2994,14 +2507,11 @@ namespace Com.WinForm
         /// </summary>
         public string Caption
         {
-            get
-            {
-                return (_Caption is null ? string.Empty : _Caption);
-            }
+            get => _Caption is null ? string.Empty : _Caption;
 
             set
             {
-                string Cap = (value is null ? string.Empty : value);
+                string Cap = value is null ? string.Empty : value;
 
                 if (_Caption != Cap)
                 {
@@ -3032,10 +2542,7 @@ namespace Com.WinForm
         /// </summary>
         public bool ShowCaption
         {
-            get
-            {
-                return _ShowCaption;
-            }
+            get => _ShowCaption;
 
             set
             {
@@ -3061,10 +2568,7 @@ namespace Com.WinForm
         /// </summary>
         public Font CaptionFont
         {
-            get
-            {
-                return _CaptionFont;
-            }
+            get => _CaptionFont;
 
             set
             {
@@ -3093,10 +2597,7 @@ namespace Com.WinForm
         /// </summary>
         public ContentAlignment CaptionAlign
         {
-            get
-            {
-                return _CaptionAlign;
-            }
+            get => _CaptionAlign;
 
             set
             {
@@ -3125,10 +2626,7 @@ namespace Com.WinForm
         /// </summary>
         public Bitmap CaptionBarBackgroundImage
         {
-            get
-            {
-                return _CaptionBarBackgroundImage;
-            }
+            get => _CaptionBarBackgroundImage;
 
             set
             {
@@ -3151,10 +2649,7 @@ namespace Com.WinForm
         /// </summary>
         public Theme Theme
         {
-            get
-            {
-                return _Theme;
-            }
+            get => _Theme;
 
             set
             {
@@ -3188,10 +2683,7 @@ namespace Com.WinForm
         /// </summary>
         public ColorX ThemeColor
         {
-            get
-            {
-                return _ThemeColor;
-            }
+            get => _ThemeColor;
 
             set
             {
@@ -3225,10 +2717,7 @@ namespace Com.WinForm
         /// </summary>
         public bool ShowCaptionBarColor
         {
-            get
-            {
-                return _ShowCaptionBarColor;
-            }
+            get => _ShowCaptionBarColor;
 
             set
             {
@@ -3256,10 +2745,7 @@ namespace Com.WinForm
         /// </summary>
         public bool EnableCaptionBarTransparent
         {
-            get
-            {
-                return _EnableCaptionBarTransparent;
-            }
+            get => _EnableCaptionBarTransparent;
 
             set
             {
@@ -3288,10 +2774,7 @@ namespace Com.WinForm
         /// </summary>
         public bool ShowShadowColor
         {
-            get
-            {
-                return _ShowShadowColor;
-            }
+            get => _ShowShadowColor;
 
             set
             {
@@ -3317,13 +2800,7 @@ namespace Com.WinForm
         /// <summary>
         /// 获取当前主题建议的颜色。
         /// </summary>
-        public RecommendColors RecommendColors
-        {
-            get
-            {
-                return _RecommendColors;
-            }
-        }
+        public RecommendColors RecommendColors => _RecommendColors;
 
         //
 
@@ -3412,10 +2889,7 @@ namespace Com.WinForm
         /// </summary>
         public int X
         {
-            get
-            {
-                return Bounds_Current_X;
-            }
+            get => Bounds_Current_X;
 
             set
             {
@@ -3459,10 +2933,7 @@ namespace Com.WinForm
         /// </summary>
         public int Y
         {
-            get
-            {
-                return Bounds_Current_Y;
-            }
+            get => Bounds_Current_Y;
 
             set
             {
@@ -3502,64 +2973,35 @@ namespace Com.WinForm
         /// </summary>
         public int Left
         {
-            get
-            {
-                return X;
-            }
-
-            set
-            {
-                X = value;
-            }
+            get => X;
+            set => X = value;
         }
 
         /// <summary>
         /// 获取窗口在桌面的右边距。
         /// </summary>
-        public int Right
-        {
-            get
-            {
-                return Bounds_Current_Right;
-            }
-        }
+        public int Right => Bounds_Current_Right;
 
         /// <summary>
         /// 获取或设置窗口在桌面的上边距。
         /// </summary>
         public int Top
         {
-            get
-            {
-                return Y;
-            }
-
-            set
-            {
-                Y = value;
-            }
+            get => Y;
+            set => Y = value;
         }
 
         /// <summary>
         /// 获取窗口在桌面的下边距。
         /// </summary>
-        public int Bottom
-        {
-            get
-            {
-                return Bounds_Current_Bottom;
-            }
-        }
+        public int Bottom => Bounds_Current_Bottom;
 
         /// <summary>
         /// 获取或设置窗口在桌面的位置。
         /// </summary>
         public Point Location
         {
-            get
-            {
-                return Bounds_Current_Location;
-            }
+            get => Bounds_Current_Location;
 
             set
             {
@@ -3603,10 +3045,7 @@ namespace Com.WinForm
         /// </summary>
         public int Width
         {
-            get
-            {
-                return Bounds_Current_Width;
-            }
+            get => Bounds_Current_Width;
 
             set
             {
@@ -3646,10 +3085,7 @@ namespace Com.WinForm
         /// </summary>
         public int Height
         {
-            get
-            {
-                return Bounds_Current_Height;
-            }
+            get => Bounds_Current_Height;
 
             set
             {
@@ -3685,10 +3121,7 @@ namespace Com.WinForm
         /// </summary>
         public Size Size
         {
-            get
-            {
-                return Bounds_Current_Size;
-            }
+            get => Bounds_Current_Size;
 
             set
             {
@@ -3728,10 +3161,7 @@ namespace Com.WinForm
         /// </summary>
         public Rectangle Bounds
         {
-            get
-            {
-                return Bounds_Current;
-            }
+            get => Bounds_Current;
 
             set
             {
@@ -3872,10 +3302,7 @@ namespace Com.WinForm
         /// </summary>
         public Predicate<EventArgs> ReturnVerification
         {
-            set
-            {
-                _ReturnVerification = value;
-            }
+            set => _ReturnVerification = value;
         }
 
         /// <summary>
@@ -3883,10 +3310,7 @@ namespace Com.WinForm
         /// </summary>
         public Predicate<EventArgs> MaximizeVerification
         {
-            set
-            {
-                _MaximizeVerification = value;
-            }
+            set => _MaximizeVerification = value;
         }
 
         /// <summary>
@@ -3894,10 +3318,7 @@ namespace Com.WinForm
         /// </summary>
         public Predicate<EventArgs> EnterFullScreenVerification
         {
-            set
-            {
-                _EnterFullScreenVerification = value;
-            }
+            set => _EnterFullScreenVerification = value;
         }
 
         /// <summary>
@@ -3905,10 +3326,7 @@ namespace Com.WinForm
         /// </summary>
         public Predicate<EventArgs> ExitFullScreenVerification
         {
-            set
-            {
-                _ExitFullScreenVerification = value;
-            }
+            set => _ExitFullScreenVerification = value;
         }
 
         /// <summary>
@@ -3916,10 +3334,7 @@ namespace Com.WinForm
         /// </summary>
         public Predicate<EventArgs> CloseVerification
         {
-            set
-            {
-                _CloseVerification = value;
-            }
+            set => _CloseVerification = value;
         }
 
         #endregion
@@ -4329,10 +3744,7 @@ namespace Com.WinForm
         /// 返回此 FormManager 的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 FormManager 的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 FormManager 转换为字符串。

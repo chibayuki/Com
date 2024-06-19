@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.WinForm.RecommendColors
 Version 20.10.27.1900
@@ -73,74 +73,32 @@ namespace Com.WinForm
         //
 
         // 控制按钮颜色。
-        internal ColorX ControlButton
-        {
-            get
-            {
-                return _ControlButton;
-            }
-        }
+        internal ColorX ControlButton => _ControlButton;
 
         // 控制按钮颜色（降低对比度）。
-        internal ColorX ControlButton_DEC
-        {
-            get
-            {
-                return _ControlButton_DEC;
-            }
-        }
+        internal ColorX ControlButton_DEC => _ControlButton_DEC;
 
         // 控制按钮颜色（提高对比度）。
-        internal ColorX ControlButton_INC
-        {
-            get
-            {
-                return _ControlButton_INC;
-            }
-        }
+        internal ColorX ControlButton_INC => _ControlButton_INC;
 
         //
 
         // 退出按钮颜色。
-        internal ColorX ExitButton
-        {
-            get
-            {
-                return _ExitButton;
-            }
-        }
+        internal ColorX ExitButton => _ExitButton;
 
         // 退出按钮颜色（降低对比度）。
-        internal ColorX ExitButton_DEC
-        {
-            get
-            {
-                return _ExitButton_DEC;
-            }
-        }
+        internal ColorX ExitButton_DEC => _ExitButton_DEC;
 
         // 退出按钮颜色（提高对比度）。
-        internal ColorX ExitButton_INC
-        {
-            get
-            {
-                return _ExitButton_INC;
-            }
-        }
+        internal ColorX ExitButton_INC => _ExitButton_INC;
 
         //
 
         // 返回表示指定的背景色是否与浅色文本相符的布尔值。
-        internal static bool BackColorFitLightText(ColorX color)
-        {
-            return (color.Lightness_LAB < 70);
-        }
+        internal static bool BackColorFitLightText(ColorX color) => color.Lightness_LAB < 70;
 
         // 返回表示指定的背景色是否与深色文本相符的布尔值。
-        internal static bool BackColorFitDarkText(ColorX color)
-        {
-            return (color.Lightness_LAB > 30);
-        }
+        internal static bool BackColorFitDarkText(ColorX color) => color.Lightness_LAB > 30;
 
         #endregion
 
@@ -165,7 +123,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = !BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240);
                             }
                             else
                             {
@@ -181,7 +139,7 @@ namespace Com.WinForm
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.Grayscale);
+                            _Shadow = isActive ? _Main : _Main.Grayscale;
                         }
                         else
                         {
@@ -239,7 +197,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = !BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240);
                             }
                             else
                             {
@@ -255,7 +213,7 @@ namespace Com.WinForm
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.Grayscale);
+                            _Shadow = isActive ? _Main : _Main.Grayscale;
                         }
                         else
                         {
@@ -313,7 +271,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = !BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240);
                             }
                             else
                             {
@@ -329,7 +287,7 @@ namespace Com.WinForm
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.Grayscale);
+                            _Shadow = isActive ? _Main : _Main.Grayscale;
                         }
                         else
                         {
@@ -387,7 +345,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = !BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240);
                             }
                             else
                             {
@@ -403,7 +361,7 @@ namespace Com.WinForm
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.Grayscale);
+                            _Shadow = isActive ? _Main : _Main.Grayscale;
                         }
                         else
                         {
@@ -461,7 +419,7 @@ namespace Com.WinForm
                             if (showCaptionBarColor)
                             {
                                 _CaptionBar = _Main;
-                                _Caption = (!BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240));
+                                _Caption = !BackColorFitLightText(_CaptionBar) ? Color.FromArgb(16, 16, 16) : Color.FromArgb(240, 240, 240);
                             }
                             else
                             {
@@ -477,7 +435,7 @@ namespace Com.WinForm
 
                         if (showShadowColor)
                         {
-                            _Shadow = (isActive ? _Main : _Main.Grayscale);
+                            _Shadow = isActive ? _Main : _Main.Grayscale;
                         }
                         else
                         {
@@ -558,315 +516,153 @@ namespace Com.WinForm
         /// <summary>
         /// 获取窗口背景颜色。
         /// </summary>
-        public ColorX FormBackground
-        {
-            get
-            {
-                return _FormBackground;
-            }
-        }
+        public ColorX FormBackground => _FormBackground;
 
         /// <summary>
         /// 获取窗口标题栏颜色。
         /// </summary>
-        public ColorX CaptionBar
-        {
-            get
-            {
-                return _CaptionBar;
-            }
-        }
+        public ColorX CaptionBar => _CaptionBar;
 
         /// <summary>
         /// 获取窗口标题颜色。
         /// </summary>
-        public ColorX Caption
-        {
-            get
-            {
-                return _Caption;
-            }
-        }
+        public ColorX Caption => _Caption;
 
         /// <summary>
         /// 获取窗口阴影颜色。
         /// </summary>
-        public ColorX Shadow
-        {
-            get
-            {
-                return _Shadow;
-            }
-        }
+        public ColorX Shadow => _Shadow;
 
         //
 
         /// <summary>
         /// 获取菜单项背景颜色。
         /// </summary>
-        public ColorX MenuItemBackground
-        {
-            get
-            {
-                return _MenuItemBackground;
-            }
-        }
+        public ColorX MenuItemBackground => _MenuItemBackground;
 
         /// <summary>
         /// 获取菜单项文字颜色。
         /// </summary>
-        public ColorX MenuItemText
-        {
-            get
-            {
-                return _MenuItemText;
-            }
-        }
+        public ColorX MenuItemText => _MenuItemText;
 
         //
 
         /// <summary>
         /// 获取主要颜色。
         /// </summary>
-        public ColorX Main
-        {
-            get
-            {
-                return _Main;
-            }
-        }
+        public ColorX Main => _Main;
 
         /// <summary>
         /// 获取主要颜色（降低对比度）。
         /// </summary>
-        public ColorX Main_DEC
-        {
-            get
-            {
-                return _Main_DEC;
-            }
-        }
+        public ColorX Main_DEC => _Main_DEC;
 
         /// <summary>
         /// 获取主要颜色（提高对比度）。
         /// </summary>
-        public ColorX Main_INC
-        {
-            get
-            {
-                return _Main_INC;
-            }
-        }
+        public ColorX Main_INC => _Main_INC;
 
         //
 
         /// <summary>
         /// 获取文本颜色。
         /// </summary>
-        public ColorX Text
-        {
-            get
-            {
-                return _Text;
-            }
-        }
+        public ColorX Text => _Text;
 
         /// <summary>
         /// 获取文本颜色（降低对比度）。
         /// </summary>
-        public ColorX Text_DEC
-        {
-            get
-            {
-                return _Text_DEC;
-            }
-        }
+        public ColorX Text_DEC => _Text_DEC;
 
         /// <summary>
         /// 获取文本颜色（提高对比度）。
         /// </summary>
-        public ColorX Text_INC
-        {
-            get
-            {
-                return _Text_INC;
-            }
-        }
+        public ColorX Text_INC => _Text_INC;
 
         //
 
         /// <summary>
         /// 获取背景颜色。
         /// </summary>
-        public ColorX Background
-        {
-            get
-            {
-                return _Background;
-            }
-        }
+        public ColorX Background => _Background;
 
         /// <summary>
         /// 获取背景颜色（降低对比度）。
         /// </summary>
-        public ColorX Background_DEC
-        {
-            get
-            {
-                return _Background_DEC;
-            }
-        }
+        public ColorX Background_DEC => _Background_DEC;
 
         /// <summary>
         /// 获取背景颜色（提高对比度）。
         /// </summary>
-        public ColorX Background_INC
-        {
-            get
-            {
-                return _Background_INC;
-            }
-        }
+        public ColorX Background_INC => _Background_INC;
 
         //
 
         /// <summary>
         /// 获取边框颜色。
         /// </summary>
-        public ColorX Border
-        {
-            get
-            {
-                return _Border;
-            }
-        }
+        public ColorX Border => _Border;
 
         /// <summary>
         /// 获取边框颜色（降低对比度）。
         /// </summary>
-        public ColorX Border_DEC
-        {
-            get
-            {
-                return _Border_DEC;
-            }
-        }
+        public ColorX Border_DEC => _Border_DEC;
 
         /// <summary>
         /// 获取边框颜色（提高对比度）。
         /// </summary>
-        public ColorX Border_INC
-        {
-            get
-            {
-                return _Border_INC;
-            }
-        }
+        public ColorX Border_INC => _Border_INC;
 
         //
 
         /// <summary>
         /// 获取按钮颜色。
         /// </summary>
-        public ColorX Button
-        {
-            get
-            {
-                return _Button;
-            }
-        }
+        public ColorX Button => _Button;
 
         /// <summary>
         /// 获取按钮颜色（降低对比度）。
         /// </summary>
-        public ColorX Button_DEC
-        {
-            get
-            {
-                return _Button_DEC;
-            }
-        }
+        public ColorX Button_DEC => _Button_DEC;
 
         /// <summary>
         /// 获取按钮颜色（提高对比度）。
         /// </summary>
-        public ColorX Button_INC
-        {
-            get
-            {
-                return _Button_INC;
-            }
-        }
+        public ColorX Button_INC => _Button_INC;
 
         //
 
         /// <summary>
         /// 获取滑块颜色。
         /// </summary>
-        public ColorX Slider
-        {
-            get
-            {
-                return _Slider;
-            }
-        }
+        public ColorX Slider => _Slider;
 
         /// <summary>
         /// 获取滑块颜色（降低对比度）。
         /// </summary>
-        public ColorX Slider_DEC
-        {
-            get
-            {
-                return _Slider_DEC;
-            }
-        }
+        public ColorX Slider_DEC => _Slider_DEC;
 
         /// <summary>
         /// 获取滑块颜色（提高对比度）。
         /// </summary>
-        public ColorX Slider_INC
-        {
-            get
-            {
-                return _Slider_INC;
-            }
-        }
+        public ColorX Slider_INC => _Slider_INC;
 
         //
 
         /// <summary>
         /// 获取滚动条颜色。
         /// </summary>
-        public ColorX ScrollBar
-        {
-            get
-            {
-                return _ScrollBar;
-            }
-        }
+        public ColorX ScrollBar => _ScrollBar;
 
         /// <summary>
         /// 获取滚动条颜色（降低对比度）。
         /// </summary>
-        public ColorX ScrollBar_DEC
-        {
-            get
-            {
-                return _ScrollBar_DEC;
-            }
-        }
+        public ColorX ScrollBar_DEC => _ScrollBar_DEC;
 
         /// <summary>
         /// 获取滚动条颜色（提高对比度）。
         /// </summary>
-        public ColorX ScrollBar_INC
-        {
-            get
-            {
-                return _ScrollBar_INC;
-            }
-        }
+        public ColorX ScrollBar_INC => _ScrollBar_INC;
 
         #endregion
 
@@ -897,19 +693,13 @@ namespace Com.WinForm
         /// 返回此 RecommendColors 的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 RecommendColors 的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 RecommendColors 转换为字符串。
         /// </summary>
         /// <returns>字符串，表示此 RecommendColors 的字符串形式。</returns>
-        public override string ToString()
-        {
-            return base.GetType().Name;
-        }
+        public override string ToString() => base.GetType().Name;
 
         //
 
@@ -930,7 +720,7 @@ namespace Com.WinForm
             }
             else
             {
-                return (_FormBackground.Equals(recommendColors._FormBackground) && _CaptionBar.Equals(recommendColors._CaptionBar) && _Caption.Equals(recommendColors._Caption) && _ControlButton.Equals(recommendColors._ControlButton) && _ControlButton_DEC.Equals(recommendColors._ControlButton_DEC) && _ControlButton_INC.Equals(recommendColors._ControlButton_INC) && _ExitButton.Equals(recommendColors._ExitButton) && _ExitButton_DEC.Equals(recommendColors._ExitButton_DEC) && _ExitButton_INC.Equals(recommendColors._ExitButton_INC) && _MenuItemBackground.Equals(recommendColors._MenuItemBackground) && _MenuItemText.Equals(recommendColors._MenuItemText) && _Main.Equals(recommendColors._Main) && _Main_DEC.Equals(recommendColors._Main_DEC) && _Main_INC.Equals(recommendColors._Main_INC) && _Text.Equals(recommendColors._Text) && _Text_DEC.Equals(recommendColors._Text_DEC) && _Text_INC.Equals(recommendColors._Text_INC) && _Background.Equals(recommendColors._Background) && _Background_DEC.Equals(recommendColors._Background_DEC) && _Background_INC.Equals(recommendColors._Background_INC) && _Border.Equals(recommendColors._Border) && _Border_DEC.Equals(recommendColors._Border_DEC) && _Border_INC.Equals(recommendColors._Border_INC) && _Button.Equals(recommendColors._Button) && _Button_DEC.Equals(recommendColors._Button_DEC) && _Button_INC.Equals(recommendColors._Button_INC) && _Slider.Equals(recommendColors._Slider) && _Slider_DEC.Equals(recommendColors._Slider_DEC) && _Slider_INC.Equals(recommendColors._Slider_INC) && _ScrollBar.Equals(recommendColors._ScrollBar) && _ScrollBar_DEC.Equals(recommendColors._ScrollBar_DEC) && _ScrollBar_INC.Equals(recommendColors._ScrollBar_INC));
+                return _FormBackground.Equals(recommendColors._FormBackground) && _CaptionBar.Equals(recommendColors._CaptionBar) && _Caption.Equals(recommendColors._Caption) && _ControlButton.Equals(recommendColors._ControlButton) && _ControlButton_DEC.Equals(recommendColors._ControlButton_DEC) && _ControlButton_INC.Equals(recommendColors._ControlButton_INC) && _ExitButton.Equals(recommendColors._ExitButton) && _ExitButton_DEC.Equals(recommendColors._ExitButton_DEC) && _ExitButton_INC.Equals(recommendColors._ExitButton_INC) && _MenuItemBackground.Equals(recommendColors._MenuItemBackground) && _MenuItemText.Equals(recommendColors._MenuItemText) && _Main.Equals(recommendColors._Main) && _Main_DEC.Equals(recommendColors._Main_DEC) && _Main_INC.Equals(recommendColors._Main_INC) && _Text.Equals(recommendColors._Text) && _Text_DEC.Equals(recommendColors._Text_DEC) && _Text_INC.Equals(recommendColors._Text_INC) && _Background.Equals(recommendColors._Background) && _Background_DEC.Equals(recommendColors._Background_DEC) && _Background_INC.Equals(recommendColors._Background_INC) && _Border.Equals(recommendColors._Border) && _Border_DEC.Equals(recommendColors._Border_DEC) && _Border_INC.Equals(recommendColors._Border_INC) && _Button.Equals(recommendColors._Button) && _Button_DEC.Equals(recommendColors._Button_DEC) && _Button_INC.Equals(recommendColors._Button_INC) && _Slider.Equals(recommendColors._Slider) && _Slider_DEC.Equals(recommendColors._Slider_DEC) && _Slider_INC.Equals(recommendColors._Slider_INC) && _ScrollBar.Equals(recommendColors._ScrollBar) && _ScrollBar_DEC.Equals(recommendColors._ScrollBar_DEC) && _ScrollBar_INC.Equals(recommendColors._ScrollBar_INC);
             }
         }
 
@@ -982,7 +772,7 @@ namespace Com.WinForm
             }
             else
             {
-                return (left._FormBackground == right._FormBackground && left._CaptionBar == right._CaptionBar && left._Caption == right._Caption && left._ControlButton == right._ControlButton && left._ControlButton_DEC == right._ControlButton_DEC && left._ControlButton_INC == right._ControlButton_INC && left._ExitButton == right._ExitButton && left._ExitButton_DEC == right._ExitButton_DEC && left._ExitButton_INC == right._ExitButton_INC && left._MenuItemBackground == right._MenuItemBackground && left._MenuItemText == right._MenuItemText && left._Main == right._Main && left._Main_DEC == right._Main_DEC && left._Main_INC == right._Main_INC && left._Text == right._Text && left._Text_DEC == right._Text_DEC && left._Text_INC == right._Text_INC && left._Background == right._Background && left._Background_DEC == right._Background_DEC && left._Background_INC == right._Background_INC && left._Border == right._Border && left._Border_DEC == right._Border_DEC && left._Border_INC == right._Border_INC && left._Button == right._Button && left._Button_DEC == right._Button_DEC && left._Button_INC == right._Button_INC && left._Slider == right._Slider && left._Slider_DEC == right._Slider_DEC && left._Slider_INC == right._Slider_INC && left._ScrollBar == right._ScrollBar && left._ScrollBar_DEC == right._ScrollBar_DEC && left._ScrollBar_INC == right._ScrollBar_INC);
+                return left._FormBackground == right._FormBackground && left._CaptionBar == right._CaptionBar && left._Caption == right._Caption && left._ControlButton == right._ControlButton && left._ControlButton_DEC == right._ControlButton_DEC && left._ControlButton_INC == right._ControlButton_INC && left._ExitButton == right._ExitButton && left._ExitButton_DEC == right._ExitButton_DEC && left._ExitButton_INC == right._ExitButton_INC && left._MenuItemBackground == right._MenuItemBackground && left._MenuItemText == right._MenuItemText && left._Main == right._Main && left._Main_DEC == right._Main_DEC && left._Main_INC == right._Main_INC && left._Text == right._Text && left._Text_DEC == right._Text_DEC && left._Text_INC == right._Text_INC && left._Background == right._Background && left._Background_DEC == right._Background_DEC && left._Background_INC == right._Background_INC && left._Border == right._Border && left._Border_DEC == right._Border_DEC && left._Border_INC == right._Border_INC && left._Button == right._Button && left._Button_DEC == right._Button_DEC && left._Button_INC == right._Button_INC && left._Slider == right._Slider && left._Slider_DEC == right._Slider_DEC && left._Slider_INC == right._Slider_INC && left._ScrollBar == right._ScrollBar && left._ScrollBar_DEC == right._ScrollBar_DEC && left._ScrollBar_INC == right._ScrollBar_INC;
             }
         }
 
@@ -1004,7 +794,7 @@ namespace Com.WinForm
             }
             else
             {
-                return (left._FormBackground != right._FormBackground || left._CaptionBar != right._CaptionBar || left._Caption != right._Caption || left._ControlButton != right._ControlButton || left._ControlButton_DEC != right._ControlButton_DEC || left._ControlButton_INC != right._ControlButton_INC || left._ExitButton != right._ExitButton || left._ExitButton_DEC != right._ExitButton_DEC || left._ExitButton_INC != right._ExitButton_INC || left._MenuItemBackground != right._MenuItemBackground || left._MenuItemText != right._MenuItemText || left._Main != right._Main || left._Main_DEC != right._Main_DEC || left._Main_INC != right._Main_INC || left._Text != right._Text || left._Text_DEC != right._Text_DEC || left._Text_INC != right._Text_INC || left._Background != right._Background || left._Background_DEC != right._Background_DEC || left._Background_INC != right._Background_INC || left._Border != right._Border || left._Border_DEC != right._Border_DEC || left._Border_INC != right._Border_INC || left._Button != right._Button || left._Button_DEC != right._Button_DEC || left._Button_INC != right._Button_INC || left._Slider != right._Slider || left._Slider_DEC != right._Slider_DEC || left._Slider_INC != right._Slider_INC || left._ScrollBar != right._ScrollBar || left._ScrollBar_DEC != right._ScrollBar_DEC || left._ScrollBar_INC != right._ScrollBar_INC);
+                return left._FormBackground != right._FormBackground || left._CaptionBar != right._CaptionBar || left._Caption != right._Caption || left._ControlButton != right._ControlButton || left._ControlButton_DEC != right._ControlButton_DEC || left._ControlButton_INC != right._ControlButton_INC || left._ExitButton != right._ExitButton || left._ExitButton_DEC != right._ExitButton_DEC || left._ExitButton_INC != right._ExitButton_INC || left._MenuItemBackground != right._MenuItemBackground || left._MenuItemText != right._MenuItemText || left._Main != right._Main || left._Main_DEC != right._Main_DEC || left._Main_INC != right._Main_INC || left._Text != right._Text || left._Text_DEC != right._Text_DEC || left._Text_INC != right._Text_INC || left._Background != right._Background || left._Background_DEC != right._Background_DEC || left._Background_INC != right._Background_INC || left._Border != right._Border || left._Border_DEC != right._Border_DEC || left._Border_INC != right._Border_INC || left._Button != right._Button || left._Button_DEC != right._Button_DEC || left._Button_INC != right._Button_INC || left._Slider != right._Slider || left._Slider_DEC != right._Slider_DEC || left._Slider_INC != right._Slider_INC || left._ScrollBar != right._ScrollBar || left._ScrollBar_DEC != right._ScrollBar_DEC || left._ScrollBar_INC != right._ScrollBar_INC;
             }
         }
 

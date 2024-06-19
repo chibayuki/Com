@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.ColorX
 Version 20.10.27.1900
@@ -34,34 +34,19 @@ namespace Com
         private const int _32BitArgbShiftBlue = 0; // 32 位 ARGB 颜色的蓝色分量（B）的位偏移量。
 
         // 将颜色的 Alpha、红色、绿色、蓝色分量（A、R、G、B）转换为 32 位 ARGB 值。
-        private static int _MakeArgb(double alpha, double red, double green, double blue)
-        {
-            return (int)(((uint)Math.Round(alpha) << _32BitArgbShiftAlpha) | ((uint)Math.Round(red) << _32BitArgbShiftRed) | ((uint)Math.Round(green) << _32BitArgbShiftGreen) | ((uint)Math.Round(blue) << _32BitArgbShiftBlue));
-        }
+        private static int _MakeArgb(double alpha, double red, double green, double blue) => (int)(((uint)Math.Round(alpha) << _32BitArgbShiftAlpha) | ((uint)Math.Round(red) << _32BitArgbShiftRed) | ((uint)Math.Round(green) << _32BitArgbShiftGreen) | ((uint)Math.Round(blue) << _32BitArgbShiftBlue));
 
         // 根据 32 位 ARGB 值获取颜色的 Alpha 分量（A）。
-        private static double _GetAlphaByArgb(int argb)
-        {
-            return (((uint)argb >> _32BitArgbShiftAlpha) & 0xFFU);
-        }
+        private static double _GetAlphaByArgb(int argb) => ((uint)argb >> _32BitArgbShiftAlpha) & 0xFFU;
 
         // 根据 32 位 ARGB 值获取颜色的红色分量（R）。
-        private static double _GetRedByArgb(int argb)
-        {
-            return (((uint)argb >> _32BitArgbShiftRed) & 0xFFU);
-        }
+        private static double _GetRedByArgb(int argb) => ((uint)argb >> _32BitArgbShiftRed) & 0xFFU;
 
         // 根据 32 位 ARGB 值获取颜色的绿色分量（G）。
-        private static double _GetGreenByArgb(int argb)
-        {
-            return (((uint)argb >> _32BitArgbShiftGreen) & 0xFFU);
-        }
+        private static double _GetGreenByArgb(int argb) => ((uint)argb >> _32BitArgbShiftGreen) & 0xFFU;
 
         // 根据 32 位 ARGB 值获取颜色的蓝色分量（B）。
-        private static double _GetBlueByArgb(int argb)
-        {
-            return (((uint)argb >> _32BitArgbShiftBlue) & 0xFFU);
-        }
+        private static double _GetBlueByArgb(int argb) => ((uint)argb >> _32BitArgbShiftBlue) & 0xFFU;
 
         //
 
@@ -1985,7 +1970,7 @@ namespace Com
                 }
                 else
                 {
-                    return (t / 12.92);
+                    return t / 12.92;
                 }
             };
 
@@ -2007,7 +1992,7 @@ namespace Com
                 }
                 else
                 {
-                    return (t / (3 * Delta * Delta) + 4.0 / 29);
+                    return t / (3 * Delta * Delta) + 4.0 / 29;
                 }
             };
 
@@ -2060,11 +2045,11 @@ namespace Com
 
                 if (t > Delta)
                 {
-                    return (t * t * t);
+                    return t * t * t;
                 }
                 else
                 {
-                    return ((t - 4.0 / 29) * (3 * Delta * Delta));
+                    return (t - 4.0 / 29) * (3 * Delta * Delta);
                 }
             };
 
@@ -2080,11 +2065,11 @@ namespace Com
             {
                 if (t > 0.04045 / 12.92)
                 {
-                    return (Math.Pow(t, 1 / 2.4) * 1.055 - 0.055);
+                    return Math.Pow(t, 1 / 2.4) * 1.055 - 0.055;
                 }
                 else
                 {
-                    return (t * 12.92);
+                    return t * 12.92;
                 }
             };
 
@@ -2218,40 +2203,22 @@ namespace Com
         //
 
         // 检查缓存是否已经创建。
-        private bool _CheckCache()
-        {
-            return !(_CachedChannels is null);
-        }
+        private bool _CheckCache() => !(_CachedChannels is null);
 
         // 初始化缓存。
-        private void _InitializeCache()
-        {
-            _CachedChannels = new double[_SpaceCount][];
-        }
+        private void _InitializeCache() => _CachedChannels = new double[_SpaceCount][];
 
         // 丢弃缓存。
-        private void _DiscardCache()
-        {
-            _CachedChannels = null;
-        }
+        private void _DiscardCache() => _CachedChannels = null;
 
         // 检索缓存中是否存在指定色彩空间的通道值。
-        private bool _SearchCache(_ColorSpace colorSpace)
-        {
-            return !(_CachedChannels[(int)colorSpace / _SpaceBase - 1] is null);
-        }
+        private bool _SearchCache(_ColorSpace colorSpace) => !(_CachedChannels[(int)colorSpace / _SpaceBase - 1] is null);
 
         // 获取缓存中指定色彩空间的通道值。
-        private double[] _GetCache(_ColorSpace colorSpace)
-        {
-            return _CachedChannels[(int)colorSpace / _SpaceBase - 1];
-        }
+        private double[] _GetCache(_ColorSpace colorSpace) => _CachedChannels[(int)colorSpace / _SpaceBase - 1];
 
         // 设置缓存中指定色彩空间的通道值。
-        private void _SetCache(_ColorSpace colorSpace, double[] channels)
-        {
-            _CachedChannels[(int)colorSpace / _SpaceBase - 1] = channels;
-        }
+        private void _SetCache(_ColorSpace colorSpace, double[] channels) => _CachedChannels[(int)colorSpace / _SpaceBase - 1] = channels;
 
         // 比较两个缓存的内容是否相同。
         private static bool _CompareCache(double[][] cache1, double[][] cache2)
@@ -3059,13 +3026,7 @@ namespace Com
         /// <summary>
         /// 获取表示此 ColorX 结构是否未初始化的布尔值。
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (_CurrentColorSpace == _ColorSpace.None);
-            }
-        }
+        public bool IsEmpty => _CurrentColorSpace == _ColorSpace.None;
 
         /// <summary>
         /// 获取表示此 ColorX 结构是否为透明色的布尔值。
@@ -3080,7 +3041,7 @@ namespace Com
                 }
                 else
                 {
-                    return (_Opacity == _MinOpacity);
+                    return _Opacity == _MinOpacity;
                 }
             }
         }
@@ -3101,7 +3062,7 @@ namespace Com
                     double alpha = Alpha;
                     double[] rgb = _GetChannels(_ColorSpace.RGB);
 
-                    return (alpha == Math.Truncate(alpha) && rgb[0] == Math.Truncate(rgb[0]) && rgb[1] == Math.Truncate(rgb[1]) && rgb[2] == Math.Truncate(rgb[2]));
+                    return alpha == Math.Truncate(alpha) && rgb[0] == Math.Truncate(rgb[0]) && rgb[1] == Math.Truncate(rgb[1]) && rgb[2] == Math.Truncate(rgb[2]);
                 }
             }
         }
@@ -3113,10 +3074,7 @@ namespace Com
         /// </summary>
         public double Opacity
         {
-            get
-            {
-                return _Opacity;
-            }
+            get => _Opacity;
 
             set
             {
@@ -3165,15 +3123,8 @@ namespace Com
         /// </summary>
         public double Red
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Red);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Red, value);
-            }
+            get => _GetChannel(_ColorChannel.Red);
+            set => _SetChannel(_ColorChannel.Red, value);
         }
 
         /// <summary>
@@ -3181,15 +3132,8 @@ namespace Com
         /// </summary>
         public double Green
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Green);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Green, value);
-            }
+            get => _GetChannel(_ColorChannel.Green);
+            set => _SetChannel(_ColorChannel.Green, value);
         }
 
         /// <summary>
@@ -3197,15 +3141,8 @@ namespace Com
         /// </summary>
         public double Blue
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Blue);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Blue, value);
-            }
+            get => _GetChannel(_ColorChannel.Blue);
+            set => _SetChannel(_ColorChannel.Blue, value);
         }
 
         //
@@ -3215,15 +3152,8 @@ namespace Com
         /// </summary>
         public double Hue_HSV
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Hue_HSV);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Hue_HSV, value);
-            }
+            get => _GetChannel(_ColorChannel.Hue_HSV);
+            set => _SetChannel(_ColorChannel.Hue_HSV, value);
         }
 
         /// <summary>
@@ -3231,15 +3161,8 @@ namespace Com
         /// </summary>
         public double Saturation_HSV
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Saturation_HSV);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Saturation_HSV, value);
-            }
+            get => _GetChannel(_ColorChannel.Saturation_HSV);
+            set => _SetChannel(_ColorChannel.Saturation_HSV, value);
         }
 
         /// <summary>
@@ -3247,15 +3170,8 @@ namespace Com
         /// </summary>
         public double Brightness
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Brightness);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Brightness, value);
-            }
+            get => _GetChannel(_ColorChannel.Brightness);
+            set => _SetChannel(_ColorChannel.Brightness, value);
         }
 
         //
@@ -3265,15 +3181,8 @@ namespace Com
         /// </summary>
         public double Hue_HSL
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Hue_HSL);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Hue_HSL, value);
-            }
+            get => _GetChannel(_ColorChannel.Hue_HSL);
+            set => _SetChannel(_ColorChannel.Hue_HSL, value);
         }
 
         /// <summary>
@@ -3281,15 +3190,8 @@ namespace Com
         /// </summary>
         public double Saturation_HSL
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Saturation_HSL);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Saturation_HSL, value);
-            }
+            get => _GetChannel(_ColorChannel.Saturation_HSL);
+            set => _SetChannel(_ColorChannel.Saturation_HSL, value);
         }
 
         /// <summary>
@@ -3297,15 +3199,8 @@ namespace Com
         /// </summary>
         public double Lightness_HSL
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Lightness_HSL);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Lightness_HSL, value);
-            }
+            get => _GetChannel(_ColorChannel.Lightness_HSL);
+            set => _SetChannel(_ColorChannel.Lightness_HSL, value);
         }
 
         //
@@ -3315,15 +3210,8 @@ namespace Com
         /// </summary>
         public double Cyan
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Cyan);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Cyan, value);
-            }
+            get => _GetChannel(_ColorChannel.Cyan);
+            set => _SetChannel(_ColorChannel.Cyan, value);
         }
 
         /// <summary>
@@ -3331,15 +3219,8 @@ namespace Com
         /// </summary>
         public double Magenta
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Magenta);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Magenta, value);
-            }
+            get => _GetChannel(_ColorChannel.Magenta);
+            set => _SetChannel(_ColorChannel.Magenta, value);
         }
 
         /// <summary>
@@ -3347,15 +3228,8 @@ namespace Com
         /// </summary>
         public double Yellow
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Yellow);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Yellow, value);
-            }
+            get => _GetChannel(_ColorChannel.Yellow);
+            set => _SetChannel(_ColorChannel.Yellow, value);
         }
 
         /// <summary>
@@ -3363,15 +3237,8 @@ namespace Com
         /// </summary>
         public double Black
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Black);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Black, value);
-            }
+            get => _GetChannel(_ColorChannel.Black);
+            set => _SetChannel(_ColorChannel.Black, value);
         }
 
         //
@@ -3381,15 +3248,8 @@ namespace Com
         /// </summary>
         public double Lightness_LAB
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Lightness_LAB);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Lightness_LAB, value);
-            }
+            get => _GetChannel(_ColorChannel.Lightness_LAB);
+            set => _SetChannel(_ColorChannel.Lightness_LAB, value);
         }
 
         /// <summary>
@@ -3397,15 +3257,8 @@ namespace Com
         /// </summary>
         public double GreenRed
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.GreenRed);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.GreenRed, value);
-            }
+            get => _GetChannel(_ColorChannel.GreenRed);
+            set => _SetChannel(_ColorChannel.GreenRed, value);
         }
 
         /// <summary>
@@ -3413,15 +3266,8 @@ namespace Com
         /// </summary>
         public double BlueYellow
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.BlueYellow);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.BlueYellow, value);
-            }
+            get => _GetChannel(_ColorChannel.BlueYellow);
+            set => _SetChannel(_ColorChannel.BlueYellow, value);
         }
 
         //
@@ -3431,15 +3277,8 @@ namespace Com
         /// </summary>
         public double Luminance
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.Luminance);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.Luminance, value);
-            }
+            get => _GetChannel(_ColorChannel.Luminance);
+            set => _SetChannel(_ColorChannel.Luminance, value);
         }
 
         /// <summary>
@@ -3447,15 +3286,8 @@ namespace Com
         /// </summary>
         public double ChrominanceBlue
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.ChrominanceBlue);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.ChrominanceBlue, value);
-            }
+            get => _GetChannel(_ColorChannel.ChrominanceBlue);
+            set => _SetChannel(_ColorChannel.ChrominanceBlue, value);
         }
 
         /// <summary>
@@ -3463,15 +3295,8 @@ namespace Com
         /// </summary>
         public double ChrominanceRed
         {
-            get
-            {
-                return _GetChannel(_ColorChannel.ChrominanceRed);
-            }
-
-            set
-            {
-                _SetChannel(_ColorChannel.ChrominanceRed, value);
-            }
+            get => _GetChannel(_ColorChannel.ChrominanceRed);
+            set => _SetChannel(_ColorChannel.ChrominanceRed, value);
         }
 
         //
@@ -3488,10 +3313,7 @@ namespace Com
                 return new PointD3D(rgb[0], rgb[1], rgb[2]);
             }
 
-            set
-            {
-                _SetChannels(_ColorSpace.RGB, value.ToArray());
-            }
+            set => _SetChannels(_ColorSpace.RGB, value.ToArray());
         }
 
         /// <summary>
@@ -3506,10 +3328,7 @@ namespace Com
                 return new PointD3D(hsv[0], hsv[1], hsv[2]);
             }
 
-            set
-            {
-                _SetChannels(_ColorSpace.HSV, value.ToArray());
-            }
+            set => _SetChannels(_ColorSpace.HSV, value.ToArray());
         }
 
         /// <summary>
@@ -3524,10 +3343,7 @@ namespace Com
                 return new PointD3D(hsl[0], hsl[1], hsl[2]);
             }
 
-            set
-            {
-                _SetChannels(_ColorSpace.HSL, value.ToArray());
-            }
+            set => _SetChannels(_ColorSpace.HSL, value.ToArray());
         }
 
         /// <summary>
@@ -3542,10 +3358,7 @@ namespace Com
                 return new PointD4D(cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
             }
 
-            set
-            {
-                _SetChannels(_ColorSpace.CMYK, value.ToArray());
-            }
+            set => _SetChannels(_ColorSpace.CMYK, value.ToArray());
         }
 
         /// <summary>
@@ -3560,10 +3373,7 @@ namespace Com
                 return new PointD3D(lab[0], lab[1], lab[2]);
             }
 
-            set
-            {
-                _SetChannels(_ColorSpace.LAB, value.ToArray());
-            }
+            set => _SetChannels(_ColorSpace.LAB, value.ToArray());
         }
 
         /// <summary>
@@ -3578,10 +3388,7 @@ namespace Com
                 return new PointD3D(yuv[0], yuv[1], yuv[2]);
             }
 
-            set
-            {
-                _SetChannels(_ColorSpace.YUV, value.ToArray());
-            }
+            set => _SetChannels(_ColorSpace.YUV, value.ToArray());
         }
 
         //
@@ -3644,13 +3451,7 @@ namespace Com
         /// 获取此 ColorX 结构的互补色。
         /// </summary>
         [Obsolete("请改为使用 Complementary 属性")]
-        public ColorX ComplementaryColor
-        {
-            get
-            {
-                return Complementary;
-            }
-        }
+        public ColorX ComplementaryColor => Complementary;
 
         /// <summary>
         /// 获取此 ColorX 结构的灰度颜色。
@@ -3683,13 +3484,7 @@ namespace Com
         /// 获取此 ColorX 结构的灰度颜色。
         /// </summary>
         [Obsolete("请改为使用 Grayscale 属性")]
-        public ColorX GrayscaleColor
-        {
-            get
-            {
-                return Grayscale;
-            }
-        }
+        public ColorX GrayscaleColor => Grayscale;
 
         //
 
@@ -3710,11 +3505,11 @@ namespace Com
 
                 if (Len < 8)
                 {
-                    return ("#" + HexCode.PadLeft(8, '0'));
+                    return "#" + HexCode.PadLeft(8, '0');
                 }
                 else
                 {
-                    return ("#" + HexCode);
+                    return "#" + HexCode;
                 }
             }
         }
@@ -3738,16 +3533,16 @@ namespace Com
                 {
                     if (Len < 6)
                     {
-                        return ("#" + HexCode.PadLeft(6, '0'));
+                        return "#" + HexCode.PadLeft(6, '0');
                     }
                     else
                     {
-                        return ("#" + HexCode.Substring(Len - 6, 6));
+                        return "#" + HexCode.Substring(Len - 6, 6);
                     }
                 }
                 else
                 {
-                    return ("#" + HexCode);
+                    return "#" + HexCode;
                 }
             }
         }
@@ -3785,11 +3580,11 @@ namespace Com
 
                         if (Len < 8)
                         {
-                            return ("#" + HexCode.PadLeft(8, '0'));
+                            return "#" + HexCode.PadLeft(8, '0');
                         }
                         else
                         {
-                            return ("#" + HexCode);
+                            return "#" + HexCode;
                         }
                     }
                 }
@@ -3821,10 +3616,7 @@ namespace Com
         /// 返回此 ColorX 结构的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 ColorX 结构的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 ColorX 结构转换为字符串。
@@ -3855,10 +3647,7 @@ namespace Com
         /// </summary>
         /// <param name="color">用于比较的 ColorX 结构。</param>
         /// <returns>布尔值，表示此 ColorX 结构是否与指定的 ColorX 结构相等。</returns>
-        public bool Equals(ColorX color)
-        {
-            return (_CurrentColorSpace == color._CurrentColorSpace && _Opacity.Equals(color._Opacity) && (_Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4)) && _CompareCache(_CachedChannels, color._CachedChannels));
-        }
+        public bool Equals(ColorX color) => _CurrentColorSpace == color._CurrentColorSpace && _Opacity.Equals(color._Opacity) && _Channel1.Equals(color._Channel1) && _Channel2.Equals(color._Channel2) && _Channel3.Equals(color._Channel3) && _Channel4.Equals(color._Channel4) && _CompareCache(_CachedChannels, color._CachedChannels);
 
         //
 
@@ -4209,10 +3998,7 @@ namespace Com
         /// <param name="left">用于比较的第一个 ColorX 结构。</param>
         /// <param name="right">用于比较的第二个 ColorX 结构。</param>
         /// <returns>布尔值，表示两个 ColorX 结构是否相等。</returns>
-        public static bool Equals(ColorX left, ColorX right)
-        {
-            return left.Equals(right);
-        }
+        public static bool Equals(ColorX left, ColorX right) => left.Equals(right);
 
         //
 
@@ -4222,20 +4008,14 @@ namespace Com
         /// <param name="alpha">Alpha 通道（A）的值。</param>
         /// <param name="color">Color 结构。</param>
         /// <returns>ColorX 结构，表示将 Color 结构转换为 ColorX 结构得到的结果。</returns>
-        public static ColorX FromColor(int alpha, Color color)
-        {
-            return new ColorX(Color.FromArgb(alpha, color));
-        }
+        public static ColorX FromColor(int alpha, Color color) => new ColorX(Color.FromArgb(alpha, color));
 
         /// <summary>
         /// 返回将 Color 结构转换为 ColorX 结构的新实例。
         /// </summary>
         /// <param name="color">Color 结构。</param>
         /// <returns>ColorX 结构，表示将 Color 结构转换为 ColorX 结构得到的结果。</returns>
-        public static ColorX FromColor(Color color)
-        {
-            return new ColorX(color);
-        }
+        public static ColorX FromColor(Color color) => new ColorX(color);
 
         //
 
@@ -4310,10 +4090,7 @@ namespace Com
         /// </summary>
         /// <param name="argb">颜色在 RGB 色彩空间的 32 位 ARGB 值。</param>
         /// <returns>ColorX 结构，表示将颜色在 RGB 色彩空间的 32 位 ARGB 值转换为 ColorX 结构得到的结果。</returns>
-        public static ColorX FromRGB(int argb)
-        {
-            return new ColorX(argb);
-        }
+        public static ColorX FromRGB(int argb) => new ColorX(argb);
 
         //
 
@@ -4708,10 +4485,7 @@ namespace Com
         /// </summary>
         /// <param name="name">颜色的名称。</param>
         /// <returns>ColorX 结构，表示将颜色的名称转换为 ColorX 结构得到的结果。</returns>
-        public static ColorX FromName(string name)
-        {
-            return new ColorX(name);
-        }
+        public static ColorX FromName(string name) => new ColorX(name);
 
         //
 
@@ -4719,10 +4493,7 @@ namespace Com
         /// 返回一个不透明度为 100%，其他分量为随机数的 ColorX 结构的新实例。
         /// </summary>
         /// <returns>ColorX 结构，表示不透明度为 100%，其他分量为随机数的 ColorX 结构。</returns>
-        public static ColorX RandomColor()
-        {
-            return FromRGB(Statistics.RandomDouble(_MinRed, _MaxRed), Statistics.RandomDouble(_MinGreen, _MaxGreen), Statistics.RandomDouble(_MinBlue, _MaxBlue));
-        }
+        public static ColorX RandomColor() => FromRGB(Statistics.RandomDouble(_MinRed, _MaxRed), Statistics.RandomDouble(_MinGreen, _MaxGreen), Statistics.RandomDouble(_MinBlue, _MaxBlue));
 
         #endregion
 
@@ -4742,7 +4513,7 @@ namespace Com
             }
             else
             {
-                return (left._CurrentColorSpace == right._CurrentColorSpace && left._Opacity == right._Opacity && (left._Channel1 == right._Channel1 && left._Channel2 == right._Channel2 && left._Channel3 == right._Channel3 && left._Channel4 == right._Channel4));
+                return left._CurrentColorSpace == right._CurrentColorSpace && left._Opacity == right._Opacity && left._Channel1 == right._Channel1 && left._Channel2 == right._Channel2 && left._Channel3 == right._Channel3 && left._Channel4 == right._Channel4;
             }
         }
 
@@ -4760,7 +4531,7 @@ namespace Com
             }
             else
             {
-                return (left._CurrentColorSpace != right._CurrentColorSpace || left._Opacity != right._Opacity || (left._Channel1 != right._Channel1 || left._Channel2 != right._Channel2 || left._Channel3 != right._Channel3 || left._Channel4 != right._Channel4));
+                return left._CurrentColorSpace != right._CurrentColorSpace || left._Opacity != right._Opacity || left._Channel1 != right._Channel1 || left._Channel2 != right._Channel2 || left._Channel3 != right._Channel3 || left._Channel4 != right._Channel4;
             }
         }
 

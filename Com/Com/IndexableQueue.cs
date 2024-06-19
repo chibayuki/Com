@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.IndexableQueue
 Version 20.10.27.1900
@@ -26,11 +26,11 @@ namespace Com
     {
         #region 非公开成员
 
-        private static readonly T[] _EmptyData = new T[0]; // 表示 Empty 对象的数据数组。
+        private static readonly T[] _EmptyData = Array.Empty<T>(); // 表示 Empty 对象的数据数组。
 
         //
 
-        private bool _AutoExpand;
+        private bool _AutoExpand; // 是否自动扩展容量。
         private int _Capacity; // 容量。
         private int _Count; // 元素数目。
         private int _HeadIndex; // 队首元素的索引。
@@ -40,16 +40,10 @@ namespace Com
         //
 
         // 获取元素，不做索引越界检查。
-        private T _GetItemWithoutCheckBounds(int index)
-        {
-            return _TArray[(_HeadIndex + index) % _Capacity];
-        }
+        private T _GetItemWithoutCheckBounds(int index) => _TArray[(_HeadIndex + index) % _Capacity];
 
         // 设置元素，不做索引越界检查。
-        private void _SetItemWithoutCheckBounds(int index, T value)
-        {
-            _TArray[(_HeadIndex + index) % _Capacity] = value;
-        }
+        private void _SetItemWithoutCheckBounds(int index, T value) => _TArray[(_HeadIndex + index) % _Capacity] = value;
 
         #endregion
 
@@ -248,81 +242,39 @@ namespace Com
         /// <summary>
         /// 获取表示此 IndexableQueue 对象是否自动扩展容量的布尔值。
         /// </summary>
-        public bool AutoExpand
-        {
-            get
-            {
-                return _AutoExpand;
-            }
-        }
+        public bool AutoExpand => _AutoExpand;
 
         /// <summary>
         /// 获取此 IndexableQueue 对象的容量。
         /// </summary>
-        public int Capacity
-        {
-            get
-            {
-                return _Capacity;
-            }
-        }
+        public int Capacity => _Capacity;
 
         /// <summary>
         /// 获取此 IndexableQueue 对象的元素数目。
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return _Count;
-            }
-        }
+        public int Count => _Count;
 
         //
 
         /// <summary>
         /// 获取表示此 IndexableQueue 对象是否为空的布尔值。
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (_Count <= 0);
-            }
-        }
+        public bool IsEmpty => _Count <= 0;
 
         /// <summary>
         /// 获取表示此 IndexableQueue 对象是否已满的布尔值。
         /// </summary>
-        public bool IsFull
-        {
-            get
-            {
-                return (_Capacity > 0 && _Count >= _Capacity);
-            }
-        }
+        public bool IsFull => _Capacity > 0 && _Count >= _Capacity;
 
         /// <summary>
         /// 获取表示此 IndexableQueue 是否只读的布尔值。
         /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// 获取表示此 IndexableQueue 是否具有固定的大小的布尔值。
         /// </summary>
-        public bool IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsFixedSize => false;
 
         #endregion
 
@@ -353,7 +305,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的元素的索引。</returns>
         public int IndexOf(T item, int startIndex)
         {
-            if (_Count <= 0 || (startIndex < 0 || startIndex >= _Count))
+            if (_Count <= 0 || startIndex < 0 || startIndex >= _Count)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -372,7 +324,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的元素的索引。</returns>
         public int IndexOf(T item, int startIndex, int count)
         {
-            if (_Count <= 0 || (startIndex < 0 || startIndex >= _Count) || count <= 0)
+            if (_Count <= 0 || startIndex < 0 || startIndex >= _Count || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -417,7 +369,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的元素的索引。</returns>
         public int LastIndexOf(T item, int startIndex)
         {
-            if (_Count <= 0 || (startIndex < 0 || startIndex >= _Count))
+            if (_Count <= 0 || startIndex < 0 || startIndex >= _Count)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -436,7 +388,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的元素的索引。</returns>
         public int LastIndexOf(T item, int startIndex, int count)
         {
-            if (_Count <= 0 || (startIndex < 0 || startIndex >= _Count) || count <= 0)
+            if (_Count <= 0 || startIndex < 0 || startIndex >= _Count || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -780,26 +732,18 @@ namespace Com
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
+            get => this[index];
 
             set
             {
-                if (default(T) == null)
+                if (default(T) != null && value is null)
                 {
-                    if (!(value is T))
-                    {
-                        throw new ArgumentException();
-                    }
+                    throw new ArgumentNullException();
                 }
-                else
+
+                if (!(value is T))
                 {
-                    if (value is null || !(value is T))
-                    {
-                        throw new ArgumentNullException();
-                    }
+                    throw new ArgumentException();
                 }
 
                 //
@@ -810,19 +754,14 @@ namespace Com
 
         int IList.Add(object item)
         {
-            if (default(T) == null)
+            if (default(T) != null && item is null)
             {
-                if (!(item is T))
-                {
-                    throw new ArgumentException();
-                }
+                throw new ArgumentNullException();
             }
-            else
+
+            if (!(item is T))
             {
-                if (item is null || !(item is T))
-                {
-                    throw new ArgumentNullException();
-                }
+                throw new ArgumentException();
             }
 
             //
@@ -834,19 +773,14 @@ namespace Com
 
         bool IList.Contains(object item)
         {
-            if (default(T) == null)
+            if (default(T) != null && item is null)
             {
-                if (!(item is T))
-                {
-                    return false;
-                }
+                return false;
             }
-            else
+
+            if (!(item is T))
             {
-                if (item is null || !(item is T))
-                {
-                    return false;
-                }
+                return false;
             }
 
             return Contains((T)item);
@@ -854,58 +788,32 @@ namespace Com
 
         int IList.IndexOf(object item)
         {
-            if (default(T) == null)
+            if (default(T) != null && item is null)
             {
-                if (!(item is T))
-                {
-                    return -1;
-                }
+                return -1;
             }
-            else
+
+            if (!(item is T))
             {
-                if (item is null || !(item is T))
-                {
-                    return -1;
-                }
+                return -1;
             }
 
             return IndexOf((T)item);
         }
 
-        void IList.Insert(int index, object item)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.Insert(int index, object item) => throw new NotSupportedException();
 
-        void IList.Remove(object item)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.Remove(object item) => throw new NotSupportedException();
 
-        void IList.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.RemoveAt(int index) => throw new NotSupportedException();
 
         #endregion
 
         #region System.Collections.ICollection
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                return this;
-            }
-        }
+        object ICollection.SyncRoot => this;
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
         void ICollection.CopyTo(Array array, int index)
         {
@@ -936,10 +844,7 @@ namespace Com
 
         #region System.Collections.IEnumerable
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(this);
 
         private sealed class Enumerator : IEnumerator // 实现 System.Collections.IEnumerator 的迭代器。
         {
@@ -950,127 +855,6 @@ namespace Com
             {
                 _Queue = queue;
                 _Index = -1;
-            }
-
-            object IEnumerator.Current
-            {
-                get
-                {
-                    if (_Queue is null)
-                    {
-                        throw new ArgumentNullException();
-                    }
-
-                    if (_Queue.IsEmpty || (_Index < 0 || _Index >= _Queue._Count))
-                    {
-                        throw new IndexOutOfRangeException();
-                    }
-
-                    //
-
-                    return _Queue._GetItemWithoutCheckBounds(_Index);
-                }
-            }
-
-            bool IEnumerator.MoveNext()
-            {
-                if ((_Queue is null || _Queue.IsEmpty) || _Index >= _Queue._Count - 1)
-                {
-                    return false;
-                }
-                else
-                {
-                    _Index++;
-
-                    return true;
-                }
-            }
-
-            void IEnumerator.Reset()
-            {
-                _Index = -1;
-            }
-        }
-
-        #endregion
-
-        #region System.Collections.Generic.IList<T>
-
-        void IList<T>.Insert(int index, T item)
-        {
-            throw new NotSupportedException();
-        }
-
-        void IList<T>.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
-        }
-
-        #endregion
-
-        #region System.Collections.Generic.ICollection<T>
-
-        bool ICollection<T>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        void ICollection<T>.Add(T item)
-        {
-            Enqueue(item);
-        }
-
-        void ICollection<T>.CopyTo(T[] array, int index)
-        {
-            if (array is null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (array.Length - index < _Count)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            //
-
-            if (_Count > 0)
-            {
-                ToArray().CopyTo(array, index);
-            }
-        }
-
-        bool ICollection<T>.Remove(T item)
-        {
-            throw new NotSupportedException();
-        }
-
-        #endregion
-
-        #region System.Collections.Generic.IEnumerable<out T>
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return new GenericEnumerator(this);
-        }
-
-        private sealed class GenericEnumerator : IEnumerator<T> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
-        {
-            private IndexableQueue<T> _Queue;
-            private int _Index;
-
-            internal GenericEnumerator(IndexableQueue<T> queue)
-            {
-                _Queue = queue;
-                _Index = -1;
-            }
-
-            void IDisposable.Dispose()
-            {
-                _Queue = null;
             }
 
             object IEnumerator.Current
@@ -1095,7 +879,7 @@ namespace Com
 
             bool IEnumerator.MoveNext()
             {
-                if ((_Queue is null || _Queue.IsEmpty) || _Index >= _Queue._Count - 1)
+                if (_Queue is null || _Queue.IsEmpty || _Index >= _Queue._Count - 1)
                 {
                     return false;
                 }
@@ -1107,10 +891,101 @@ namespace Com
                 }
             }
 
-            void IEnumerator.Reset()
+            void IEnumerator.Reset() => _Index = -1;
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.IList<T>
+
+        void IList<T>.Insert(int index, T item) => throw new NotSupportedException();
+
+        void IList<T>.RemoveAt(int index) => throw new NotSupportedException();
+
+        #endregion
+
+        #region System.Collections.Generic.ICollection<T>
+
+        bool ICollection<T>.IsReadOnly => false;
+
+        void ICollection<T>.Add(T item) => Enqueue(item);
+
+        void ICollection<T>.CopyTo(T[] array, int index)
+        {
+            if (array is null)
             {
+                throw new ArgumentNullException();
+            }
+
+            if (array.Length - index < _Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            //
+
+            if (_Count > 0)
+            {
+                ToArray().CopyTo(array, index);
+            }
+        }
+
+        bool ICollection<T>.Remove(T item) => throw new NotSupportedException();
+
+        #endregion
+
+        #region System.Collections.Generic.IEnumerable<out T>
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => new GenericEnumerator(this);
+
+        private sealed class GenericEnumerator : IEnumerator<T> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
+        {
+            private IndexableQueue<T> _Queue;
+            private int _Index;
+
+            internal GenericEnumerator(IndexableQueue<T> queue)
+            {
+                _Queue = queue;
                 _Index = -1;
             }
+
+            void IDisposable.Dispose() => _Queue = null;
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (_Queue is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
+                    if (_Queue.IsEmpty || _Index < 0 || _Index >= _Queue._Count)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+
+                    //
+
+                    return _Queue._GetItemWithoutCheckBounds(_Index);
+                }
+            }
+
+            bool IEnumerator.MoveNext()
+            {
+                if (_Queue is null || _Queue.IsEmpty || _Index >= _Queue._Count - 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    _Index++;
+
+                    return true;
+                }
+            }
+
+            void IEnumerator.Reset() => _Index = -1;
 
             T IEnumerator<T>.Current
             {
@@ -1121,7 +996,7 @@ namespace Com
                         throw new ArgumentNullException();
                     }
 
-                    if (_Queue.IsEmpty || (_Index < 0 || _Index >= _Queue._Count))
+                    if (_Queue.IsEmpty || _Index < 0 || _Index >= _Queue._Count)
                     {
                         throw new IndexOutOfRangeException();
                     }

@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Geometry
 Version 20.10.27.1900
@@ -75,7 +75,7 @@ namespace Com
                 }
                 else
                 {
-                    return ((A * pt.X + B * pt.Y + C) / Math.Sqrt(A * A + B * B));
+                    return (A * pt.X + B * pt.Y + C) / Math.Sqrt(A * A + B * B);
                 }
             }
         }
@@ -224,7 +224,7 @@ namespace Com
             {
                 double result = angle;
 
-                double perigon = (asDegree ? 360 : Constant.DoublePi);
+                double perigon = asDegree ? 360 : Constant.DoublePi;
 
                 if (angle < 0 || angle >= perigon)
                 {
@@ -233,11 +233,11 @@ namespace Com
 
                 if (zeroCentered)
                 {
-                    double flat = (asDegree ? 180 : Constant.Pi);
+                    double flat = asDegree ? 180 : Constant.Pi;
 
                     if (result >= flat)
                     {
-                        return (result - flat);
+                        return result - flat;
                     }
                     else
                     {
@@ -257,20 +257,14 @@ namespace Com
         /// <param name="angle">用于转换的角度。</param>
         /// <param name="asDegree">用于转换的角度是否以角度制表示。</param>
         /// <returns>双精度浮点数，表示将一个角度映射到范围为一个周角的区间得到的结果。</returns>
-        public static double AngleMapping(double angle, bool asDegree)
-        {
-            return AngleMapping(angle, asDegree, false);
-        }
+        public static double AngleMapping(double angle, bool asDegree) => AngleMapping(angle, asDegree, false);
 
         /// <summary>
         /// 将一个角度（弧度）映射到 [0, 2 * PI) 区间。
         /// </summary>
         /// <param name="angle">用于转换的角度（弧度）。</param>
         /// <returns>双精度浮点数，表示将一个角度（弧度）映射到 [0, 2 * PI) 区间得到的结果。</returns>
-        public static double AngleMapping(double angle)
-        {
-            return AngleMapping(angle, false, false);
-        }
+        public static double AngleMapping(double angle) => AngleMapping(angle, false, false);
 
         //
 
@@ -279,20 +273,14 @@ namespace Com
         /// </summary>
         /// <param name="angle">用于转换的角度（弧度）。</param>
         /// <returns>双精度浮点数，表示将一个角度由弧度制转换为角度制得到的结果。</returns>
-        public static double RadianToDegree(double angle)
-        {
-            return (angle * Constant.DegsPerRad);
-        }
+        public static double RadianToDegree(double angle) => angle * Constant.DegsPerRad;
 
         /// <summary>
         /// 将一个角度由角度制转换为弧度制。
         /// </summary>
         /// <param name="angle">用于转换的角度（角度）。</param>
         /// <returns>双精度浮点数，表示将一个角度由角度制转换为弧度制得到的结果。</returns>
-        public static double DegreeToRadian(double angle)
-        {
-            return (angle / Constant.DegsPerRad);
-        }
+        public static double DegreeToRadian(double angle) => angle / Constant.DegsPerRad;
 
         #endregion
 
@@ -330,7 +318,7 @@ namespace Com
             {
                 Point PTC = ctrl.PointToClient(Cursor.Position);
 
-                return (PTC.X >= 0 && PTC.X < ctrl.Width && PTC.Y >= 0 && PTC.Y < ctrl.Height);
+                return PTC.X >= 0 && PTC.X < ctrl.Width && PTC.Y >= 0 && PTC.Y < ctrl.Height;
             }
         }
 
@@ -348,7 +336,7 @@ namespace Com
             }
             else
             {
-                return (pt.X >= 0 && pt.X < ctrl.Width && pt.Y >= 0 && pt.Y < ctrl.Height);
+                return pt.X >= 0 && pt.X < ctrl.Width && pt.Y >= 0 && pt.Y < ctrl.Height;
             }
         }
 
@@ -368,7 +356,7 @@ namespace Com
             {
                 Point PTC = ctrl.PointToClient(pt);
 
-                return (PTC.X >= 0 && PTC.X < ctrl.Width && PTC.Y >= 0 && PTC.Y < ctrl.Height);
+                return PTC.X >= 0 && PTC.X < ctrl.Width && PTC.Y >= 0 && PTC.Y < ctrl.Height;
             }
         }
 
@@ -440,7 +428,7 @@ namespace Com
             }
             else
             {
-                return (pt.X >= rect.X && pt.X < rect.Right && pt.Y >= rect.Y && pt.Y < rect.Bottom);
+                return pt.X >= rect.X && pt.X < rect.Right && pt.Y >= rect.Y && pt.Y < rect.Bottom;
             }
         }
 
@@ -453,13 +441,13 @@ namespace Com
         /// <returns>布尔值，表示在一个圆内部能否看到一个点。</returns>
         public static bool PointIsVisibleInCircle(PointD pt, PointD offset, double radius)
         {
-            if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0))
+            if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(radius) || radius <= 0)
             {
                 return false;
             }
             else
             {
-                return (pt.DistanceFrom(offset) < radius);
+                return pt.DistanceFrom(offset) < radius;
             }
         }
 
@@ -474,7 +462,7 @@ namespace Com
         /// <returns>布尔值，表示在一个椭圆内部能否看到一个点。</returns>
         public static bool PointIsVisibleInEllipse(PointD pt, PointD offset, double semiMajorAxis, double eccentricity, double rotateAngle)
         {
-            if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || InternalMethod.IsNaNOrInfinity(rotateAngle))
+            if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0 || InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1 || InternalMethod.IsNaNOrInfinity(rotateAngle))
             {
                 return false;
             }
@@ -484,7 +472,7 @@ namespace Com
 
                 double FocalDistSum = pt.DistanceFrom(offset) + pt.DistanceFrom(_Offset);
 
-                return (FocalDistSum < 2 * semiMajorAxis);
+                return FocalDistSum < 2 * semiMajorAxis;
             }
         }
 
@@ -499,7 +487,7 @@ namespace Com
         /// <returns>布尔值，表示在一个菱形内部能否看到一个点。</returns>
         public static bool PointIsVisibleInRhombus(PointD pt, PointD offset, double semiMajorAxis, double semiMinorAxis, double rotateAngle)
         {
-            if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(semiMinorAxis) || semiMinorAxis <= 0) || InternalMethod.IsNaNOrInfinity(rotateAngle))
+            if (pt.IsNaNOrInfinity || offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0 || InternalMethod.IsNaNOrInfinity(semiMinorAxis) || semiMinorAxis <= 0 || InternalMethod.IsNaNOrInfinity(rotateAngle))
             {
                 return false;
             }
@@ -507,7 +495,7 @@ namespace Com
             {
                 pt.Rotate(-rotateAngle, offset);
 
-                return (Math.Abs(pt.X - offset.X) * semiMinorAxis + Math.Abs(pt.Y - offset.Y) * semiMajorAxis < semiMajorAxis * semiMinorAxis);
+                return Math.Abs(pt.X - offset.X) * semiMinorAxis + Math.Abs(pt.Y - offset.Y) * semiMajorAxis < semiMajorAxis * semiMinorAxis;
             }
         }
 
@@ -557,7 +545,7 @@ namespace Com
         /// <returns>布尔值，表示在一个圆内部能否看到一个直线段的部分或全部。</returns>
         public static bool LineIsVisibleInCircle(PointD pt1, PointD pt2, PointD offset, double radius)
         {
-            if (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity || offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0))
+            if (pt1.IsNaNOrInfinity || pt2.IsNaNOrInfinity || offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(radius) || radius <= 0)
             {
                 return false;
             }
@@ -606,7 +594,7 @@ namespace Com
         /// <returns>布尔值，表示在一个矩形内部能否看到一个圆的内部或者圆周的部分或全部。</returns>
         public static bool CircleInnerIsVisibleInRectangle(PointD offset, double radius, RectangleF rect)
         {
-            if (offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || rect.Size.IsEmpty)
+            if (offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(radius) || radius <= 0 || rect.Size.IsEmpty)
             {
                 return false;
             }
@@ -676,7 +664,7 @@ namespace Com
         /// <returns>布尔值，表示在一个矩形内部能否看到一个圆的圆周的部分或全部。</returns>
         public static bool CircumferenceIsVisibleInRectangle(PointD offset, double radius, RectangleF rect)
         {
-            if (offset.IsNaNOrInfinity || (InternalMethod.IsNaNOrInfinity(radius) || radius <= 0) || rect.Size.IsEmpty)
+            if (offset.IsNaNOrInfinity || InternalMethod.IsNaNOrInfinity(radius) || radius <= 0 || rect.Size.IsEmpty)
             {
                 return false;
             }
@@ -730,7 +718,7 @@ namespace Com
                 {
                     if (2 * radius >= Math.Sqrt(Math.Pow(rect.Width, 2) + Math.Pow(rect.Height, 2)))
                     {
-                        if (((offset.X >= rect.X - radius && offset.X <= rect.Right + radius) && (offset.Y >= rect.Y - radius && offset.Y <= rect.Bottom + radius)) && !((offset.X >= rect.Right - Constant.HalfSqrt2 * radius && offset.X <= rect.X + Constant.HalfSqrt2 * radius) && (offset.Y >= rect.Bottom - Constant.HalfSqrt2 * radius && offset.Y <= rect.Y + Constant.HalfSqrt2 * radius)))
+                        if (offset.X >= rect.X - radius && offset.X <= rect.Right + radius && offset.Y >= rect.Y - radius && offset.Y <= rect.Bottom + radius && !(offset.X >= rect.Right - Constant.HalfSqrt2 * radius && offset.X <= rect.X + Constant.HalfSqrt2 * radius && offset.Y >= rect.Bottom - Constant.HalfSqrt2 * radius && offset.Y <= rect.Y + Constant.HalfSqrt2 * radius))
                         {
                             return true;
                         }
@@ -767,13 +755,13 @@ namespace Com
         /// <returns>双精度浮点数，表示椭圆在指定相位的半径。</returns>
         public static double GetRadiusOfEllipse(double semiMajorAxis, double eccentricity, double phase)
         {
-            if ((InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || InternalMethod.IsNaNOrInfinity(phase))
+            if (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0 || InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1 || InternalMethod.IsNaNOrInfinity(phase))
             {
                 return double.NaN;
             }
             else
             {
-                return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase), 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
+                return semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase), 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2));
             }
         }
 
@@ -786,13 +774,13 @@ namespace Com
         /// <returns>双精度浮点数，表示椭圆在指定相位的焦半径。</returns>
         public static double GetFocalRadiusOfEllipse(double semiMajorAxis, double eccentricity, double phase)
         {
-            if ((InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1) || InternalMethod.IsNaNOrInfinity(phase))
+            if (InternalMethod.IsNaNOrInfinity(semiMajorAxis) || semiMajorAxis <= 0 || InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1 || InternalMethod.IsNaNOrInfinity(phase))
             {
                 return double.NaN;
             }
             else
             {
-                return (semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase) - eccentricity, 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2)));
+                return semiMajorAxis * Math.Sqrt(Math.Pow(Math.Cos(phase) - eccentricity, 2) + (1 - Math.Pow(eccentricity, 2)) * Math.Pow(Math.Sin(phase), 2));
             }
         }
 
@@ -804,13 +792,13 @@ namespace Com
         /// <returns>双精度浮点数，表示将椭圆的圆心角转换为相位（弧度）（以近焦点相位为 0 弧度，从 +X 轴指向 +Y 轴的方向为正方向）得到的结果。</returns>
         public static double EllipseCentralAngleToPhase(double centralAngle, double eccentricity)
         {
-            if (InternalMethod.IsNaNOrInfinity(centralAngle) || (InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1))
+            if (InternalMethod.IsNaNOrInfinity(centralAngle) || InternalMethod.IsNaNOrInfinity(eccentricity) || eccentricity < 0 || eccentricity >= 1)
             {
                 return double.NaN;
             }
             else
             {
-                return (Math.Atan(Math.Tan(centralAngle) / Math.Sqrt(1 - Math.Pow(eccentricity, 2))) + Math.Round(centralAngle / Constant.Pi) * Constant.Pi);
+                return Math.Atan(Math.Tan(centralAngle) / Math.Sqrt(1 - Math.Pow(eccentricity, 2))) + Math.Round(centralAngle / Constant.Pi) * Constant.Pi;
             }
         }
 

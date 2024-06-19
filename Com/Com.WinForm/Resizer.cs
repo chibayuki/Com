@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.WinForm.Resizer
 Version 20.10.27.1900
@@ -67,7 +67,7 @@ namespace Com.WinForm
                         {
                             using (GraphicsPath Path = Geometry.CreateRoundedRectanglePath(new Rectangle(new Point(i, i), new Size(_ResizerBitmap.Width - 2 * i - 1, _ResizerBitmap.Height - 2 * i - 1)), Me.ResizerSize - i + 2))
                             {
-                                int N = (Pn.Width >= 3F ? 1 : (Pn.Width == 2F ? 2 : (Pn.Width == 1 ? 3 : 0)));
+                                int N = Pn.Width >= 3F ? 1 : (Pn.Width == 2F ? 2 : (Pn.Width == 1 ? 3 : 0));
 
                                 for (int j = 0; j < N; j++)
                                 {
@@ -113,10 +113,7 @@ namespace Com.WinForm
         }
 
         // 取消更新窗口布局。
-        private void _CancelUpdateLayout()
-        {
-            _UpdateLayoutCanceled = true;
-        }
+        private void _CancelUpdateLayout() => _UpdateLayoutCanceled = true;
 
         #endregion
 
@@ -173,10 +170,7 @@ namespace Com.WinForm
         //
 
         // Panel_Border 的 Paint 事件的回调函数。
-        private void Panel_Border_Paint(object sender, PaintEventArgs e)
-        {
-            _RepaintResizerBitmap();
-        }
+        private void Panel_Border_Paint(object sender, PaintEventArgs e) => _RepaintResizerBitmap();
 
         //
 
@@ -1389,7 +1383,7 @@ namespace Com.WinForm
         // 在 FormStateChanged 事件发生时发生。
         public void OnFormStateChanged()
         {
-            this.Visible = (Me.FormState != FormState.Maximized && Me.FormState != FormState.FullScreen);
+            this.Visible = Me.FormState != FormState.Maximized && Me.FormState != FormState.FullScreen;
 
             if (this.Visible)
             {
@@ -1400,10 +1394,7 @@ namespace Com.WinForm
         }
 
         // 在 ThemeChanged 事件发生时发生。
-        public void OnThemeChanged()
-        {
-            _RepaintResizerBitmap();
-        }
+        public void OnThemeChanged() => _RepaintResizerBitmap();
 
         #endregion
     }

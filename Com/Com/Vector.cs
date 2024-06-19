@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.Vector
 Version 20.10.27.1900
@@ -118,10 +118,7 @@ namespace Com
 
         // 以不安全方式获取此 Vector 的内部数据结构。
         [InternalUnsafeCall(InternalUnsafeCallType.OutputAddress)]
-        internal double[] UnsafeGetData()
-        {
-            return _VArray;
-        }
+        internal double[] UnsafeGetData() => _VArray;
 
         // 获取此 Vector 用于仿射变换的扩展。
         private Vector _ForAffineTransform()
@@ -275,7 +272,7 @@ namespace Com
         {
             get
             {
-                if (_Size <= 0 || (index < 0 || index >= _Size))
+                if (_Size <= 0 || index < 0 || index >= _Size)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -287,7 +284,7 @@ namespace Com
 
             set
             {
-                if (_Size <= 0 || (index < 0 || index >= _Size))
+                if (_Size <= 0 || index < 0 || index >= _Size)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -323,13 +320,7 @@ namespace Com
         /// <summary>
         /// 获取表示此 Vector 是否为空向量的布尔值。
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (_Size <= 0);
-            }
-        }
+        public bool IsEmpty => _Size <= 0;
 
         /// <summary>
         /// 获取表示此 Vector 是否为零向量的布尔值。
@@ -360,46 +351,22 @@ namespace Com
         /// <summary>
         /// 获取表示此 Vector 是否为列向量的布尔值。
         /// </summary>
-        public bool IsColumnVector
-        {
-            get
-            {
-                return (_Size > 0 && _Type == Type.ColumnVector);
-            }
-        }
+        public bool IsColumnVector => _Size > 0 && _Type == Type.ColumnVector;
 
         /// <summary>
         /// 获取表示此 Vector 是否为行向量的布尔值。
         /// </summary>
-        public bool IsRowVector
-        {
-            get
-            {
-                return (_Size > 0 && _Type == Type.RowVector);
-            }
-        }
+        public bool IsRowVector => _Size > 0 && _Type == Type.RowVector;
 
         /// <summary>
         /// 获取表示此 Vector 是否只读的布尔值。
         /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// 获取表示此 Vector 是否具有固定的维度的布尔值。
         /// </summary>
-        public bool IsFixedSize
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsFixedSize => true;
 
         /// <summary>
         /// 获取表示此 Vector 是否包含非数字分量的布尔值。
@@ -523,7 +490,7 @@ namespace Com
                         SqrSum += Factor * Factor;
                     }
 
-                    return (AbsMax * Math.Sqrt(SqrSum));
+                    return AbsMax * Math.Sqrt(SqrSum);
                 }
             }
         }
@@ -627,7 +594,7 @@ namespace Com
                 }
                 else
                 {
-                    return new Vector((_Type == Type.ColumnVector ? Type.RowVector : Type.ColumnVector), _VArray);
+                    return new Vector(_Type == Type.ColumnVector ? Type.RowVector : Type.ColumnVector, _VArray);
                 }
             }
         }
@@ -639,18 +606,12 @@ namespace Com
         /// <summary>
         /// 获取表示空向量的 Vector 的新实例。
         /// </summary>
-        public static Vector Empty
+        public static Vector Empty => new Vector()
         {
-            get
-            {
-                return new Vector()
-                {
-                    _Type = Type.ColumnVector,
-                    _Size = 0,
-                    _VArray = _EmptyData
-                };
-            }
-        }
+            _Type = Type.ColumnVector,
+            _Size = 0,
+            _VArray = _EmptyData
+        };
 
         #endregion
 
@@ -681,10 +642,7 @@ namespace Com
         /// 返回此 Vector 的哈希代码。
         /// </summary>
         /// <returns>32 位整数，表示此 Vector 的哈希代码。</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// 将此 Vector 转换为字符串。
@@ -700,7 +658,7 @@ namespace Com
             }
             else
             {
-                Str = string.Concat("Type=", (_Type == Type.ColumnVector ? "ColumnVector" : "RowVector"), ", Dimension=", _Size);
+                Str = string.Concat("Type=", _Type == Type.ColumnVector ? "ColumnVector" : "RowVector", ", Dimension=", _Size);
             }
 
             return string.Concat(base.GetType().Name, " [", Str, "]");
@@ -859,7 +817,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item, int startIndex)
         {
-            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size))
+            if (_Size <= 0 || startIndex < 0 || startIndex >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -878,7 +836,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int IndexOf(double item, int startIndex, int count)
         {
-            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size) || count <= 0)
+            if (_Size <= 0 || startIndex < 0 || startIndex >= _Size || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -913,7 +871,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item, int startIndex)
         {
-            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size))
+            if (_Size <= 0 || startIndex < 0 || startIndex >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -932,7 +890,7 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的分量的索引。</returns>
         public int LastIndexOf(double item, int startIndex, int count)
         {
-            if (_Size <= 0 || (startIndex < 0 || startIndex >= _Size) || count <= 0)
+            if (_Size <= 0 || startIndex < 0 || startIndex >= _Size || count <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1101,11 +1059,11 @@ namespace Com
 
                             if (x < 0)
                             {
-                                return (Angle + Constant.Pi);
+                                return Angle + Constant.Pi;
                             }
                             else if (y < 0)
                             {
-                                return (Angle + Constant.DoublePi);
+                                return Angle + Constant.DoublePi;
                             }
                             else
                             {
@@ -1130,7 +1088,7 @@ namespace Com
 
                                 if (x < 0)
                                 {
-                                    return (Angle + Constant.Pi);
+                                    return Angle + Constant.Pi;
                                 }
                                 else
                                 {
@@ -1263,7 +1221,7 @@ namespace Com
                         SqrSum += Factor * Factor;
                     }
 
-                    return (AbsMax * Math.Sqrt(SqrSum));
+                    return AbsMax * Math.Sqrt(SqrSum);
                 }
             }
         }
@@ -1325,7 +1283,7 @@ namespace Com
         /// <param name="d">双精度浮点数表示的位移。</param>
         public void Offset(int index, double d)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1398,7 +1356,7 @@ namespace Com
         /// <returns>Vector 对象，表示按双精度浮点数表示的位移将此 Vector 在指定的基向量方向的分量平移指定的量得到的结果。</returns>
         public Vector OffsetCopy(int index, double d)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1490,7 +1448,7 @@ namespace Com
         /// <param name="s">双精度浮点数表示的缩放因数。</param>
         public void Scale(int index, double s)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1563,7 +1521,7 @@ namespace Com
         /// <returns>Vector 对象，表示按双精度浮点数表示的缩放因数将此 Vector 在指定的基向量方向的分量缩放指定的倍数得到的结果。</returns>
         public Vector ScaleCopy(int index, double s)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1654,7 +1612,7 @@ namespace Com
         /// <param name="index">索引，用于指定翻转的分量所在方向的基向量。</param>
         public void Reflect(int index)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1671,7 +1629,7 @@ namespace Com
         /// <returns>Vector 对象，表示将此 Vector 在指定的基向量方向的分量翻转得到的结果。</returns>
         public Vector ReflectCopy(int index)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1695,7 +1653,7 @@ namespace Com
         /// <param name="angle">双精度浮点数，表示此 Vector 沿索引 index1 指定的基向量方向且共面正交于 index2 指定的基向量方向错切的角度（弧度）。</param>
         public void Shear(int index1, int index2, double angle)
         {
-            if (_Size < 2 || (index1 < 0 || index1 >= _Size) || (index2 < 0 || index2 >= _Size))
+            if (_Size < 2 || index1 < 0 || index1 >= _Size || index2 < 0 || index2 >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -1718,7 +1676,7 @@ namespace Com
         /// <returns>Vector 对象，表示按双精度浮点数表示的弧度将此 Vector 错切指定的角度得到的结果。</returns>
         public Vector ShearCopy(int index1, int index2, double angle)
         {
-            if (_Size < 2 || (index1 < 0 || index1 >= _Size) || (index2 < 0 || index2 >= _Size))
+            if (_Size < 2 || index1 < 0 || index1 >= _Size || index2 < 0 || index2 >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2020,10 +1978,7 @@ namespace Com
         /// </summary>
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         [Obsolete("请改为使用 MatrixTransform(Matrix) 方法")]
-        public void AffineTransform(Matrix matrix)
-        {
-            MatrixTransform(matrix);
-        }
+        public void AffineTransform(Matrix matrix) => MatrixTransform(matrix);
 
         /// <summary>
         /// 按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换。
@@ -2120,10 +2075,7 @@ namespace Com
         /// <param name="matrix">Matrix 对象表示的仿射矩阵，对于列向量应为左矩阵，对于行向量应为右矩阵。</param>
         /// <returns>Vector 对象，表示按 Matrix 对象表示的仿射矩阵将此 Vector 进行仿射变换得到的结果。</returns>
         [Obsolete("请改为使用 MatrixTransformCopy(Matrix) 方法")]
-        public Vector AffineTransformCopy(Matrix matrix)
-        {
-            return MatrixTransformCopy(matrix);
-        }
+        public Vector AffineTransformCopy(Matrix matrix) => MatrixTransformCopy(matrix);
 
         /// <summary>
         /// 返回按 Matrix 对象数组表示的仿射矩阵数组将此 Vector 进行仿射变换的新实例。
@@ -2494,7 +2446,7 @@ namespace Com
         /// <returns>双精度浮点数，表示此 Vector 与指定索引的基向量之间的夹角（弧度）。</returns>
         public double AngleFromBase(int index)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2518,7 +2470,7 @@ namespace Com
         /// <returns>双精度浮点数，表示此 Vector 与正交于指定索引的基向量的子空间之间的夹角（弧度）。</returns>
         public double AngleFromSpace(int index)
         {
-            if (_Size <= 0 || (index < 0 || index >= _Size))
+            if (_Size <= 0 || index < 0 || index >= _Size)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -2531,7 +2483,7 @@ namespace Com
             }
             else
             {
-                return (Constant.HalfPi - AngleFromBase(index));
+                return Constant.HalfPi - AngleFromBase(index);
             }
         }
 
@@ -2544,10 +2496,7 @@ namespace Com
         /// </summary>
         /// <param name="vector">用于判断的 Vector 对象。</param>
         /// <returns>布尔值，表示指定的 Vector 是否为 null 或表示空向量。</returns>
-        public static bool IsNullOrEmpty(Vector vector)
-        {
-            return (vector is null || vector._Size <= 0);
-        }
+        public static bool IsNullOrEmpty(Vector vector) => vector is null || vector._Size <= 0;
 
         //
 
@@ -2996,7 +2945,7 @@ namespace Com
                 throw new ArithmeticException();
             }
 
-            if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
+            if (dimension < 2 || index1 < 0 || index1 >= dimension || index2 < 0 || index2 >= dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -3045,7 +2994,7 @@ namespace Com
                 throw new ArithmeticException();
             }
 
-            if (dimension < 2 || (index1 < 0 || index1 >= dimension) || (index2 < 0 || index2 >= dimension))
+            if (dimension < 2 || index1 < 0 || index1 >= dimension || index2 < 0 || index2 >= dimension)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -3136,7 +3085,7 @@ namespace Com
                         SqrSum += Factor * Factor;
                     }
 
-                    return (AbsMax * Math.Sqrt(SqrSum));
+                    return AbsMax * Math.Sqrt(SqrSum);
                 }
             }
         }
@@ -3323,7 +3272,7 @@ namespace Com
 
                 for (int i = 0; i < vector._Size; i++)
                 {
-                    result[i] = (double.IsNaN(arrayR[i]) ? 0 : Math.Sign(arrayR[i]));
+                    result[i] = double.IsNaN(arrayR[i]) ? 0 : Math.Sign(arrayR[i]);
                 }
 
                 return UnsafeCreateInstance(vector._Type, result);
@@ -3677,7 +3626,7 @@ namespace Com
             }
             else if (left._Size != right._Size)
             {
-                return (left._Size < right._Size);
+                return left._Size < right._Size;
             }
             else
             {
@@ -3687,7 +3636,7 @@ namespace Com
                 {
                     if (arrayL[i] != arrayR[i])
                     {
-                        return (arrayL[i] < arrayR[i]);
+                        return arrayL[i] < arrayR[i];
                     }
                 }
 
@@ -3713,7 +3662,7 @@ namespace Com
             }
             else if (left._Size != right._Size)
             {
-                return (left._Size > right._Size);
+                return left._Size > right._Size;
             }
             else
             {
@@ -3723,7 +3672,7 @@ namespace Com
                 {
                     if (arrayL[i] != arrayR[i])
                     {
-                        return (arrayL[i] > arrayR[i]);
+                        return arrayL[i] > arrayR[i];
                     }
                 }
 
@@ -3749,7 +3698,7 @@ namespace Com
             }
             else if (left._Size != right._Size)
             {
-                return (left._Size < right._Size);
+                return left._Size < right._Size;
             }
             else
             {
@@ -3759,7 +3708,7 @@ namespace Com
                 {
                     if (arrayL[i] != arrayR[i])
                     {
-                        return (arrayL[i] < arrayR[i]);
+                        return arrayL[i] < arrayR[i];
                     }
                 }
 
@@ -3785,7 +3734,7 @@ namespace Com
             }
             else if (left._Size != right._Size)
             {
-                return (left._Size > right._Size);
+                return left._Size > right._Size;
             }
             else
             {
@@ -3795,7 +3744,7 @@ namespace Com
                 {
                     if (arrayL[i] != arrayR[i])
                     {
-                        return (arrayL[i] > arrayR[i]);
+                        return arrayL[i] > arrayR[i];
                     }
                 }
 
@@ -4342,29 +4291,13 @@ namespace Com
 
         int IVector<double>.Size
         {
-            get
-            {
-                return Dimension;
-            }
-
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => Dimension;
+            set => throw new NotSupportedException();
         }
 
-        int IVector<double>.Capacity
-        {
-            get
-            {
-                return Dimension;
-            }
-        }
+        int IVector<double>.Capacity => Dimension;
 
-        void IVector<double>.Trim()
-        {
-            throw new NotSupportedException();
-        }
+        void IVector<double>.Trim() => throw new NotSupportedException();
 
         #endregion
 
@@ -4372,10 +4305,7 @@ namespace Com
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
+            get => this[index];
 
             set
             {
@@ -4395,10 +4325,7 @@ namespace Com
             }
         }
 
-        int IList.Add(object item)
-        {
-            throw new NotSupportedException();
-        }
+        int IList.Add(object item) => throw new NotSupportedException();
 
         void IList.Clear()
         {
@@ -4432,48 +4359,21 @@ namespace Com
             }
         }
 
-        void IList.Insert(int index, object item)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.Insert(int index, object item) => throw new NotSupportedException();
 
-        void IList.Remove(object item)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.Remove(object item) => throw new NotSupportedException();
 
-        void IList.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
-        }
+        void IList.RemoveAt(int index) => throw new NotSupportedException();
 
         #endregion
 
         #region System.Collections.ICollection
 
-        int ICollection.Count
-        {
-            get
-            {
-                return Dimension;
-            }
-        }
+        int ICollection.Count => Dimension;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                return this;
-            }
-        }
+        object ICollection.SyncRoot => this;
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
         void ICollection.CopyTo(Array array, int index)
         {
@@ -4504,10 +4404,7 @@ namespace Com
 
         #region System.Collections.IEnumerable
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new Enumerator(this);
-        }
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator(this);
 
         private sealed class Enumerator : IEnumerator // 实现 System.Collections.IEnumerator 的迭代器。
         {
@@ -4518,115 +4415,6 @@ namespace Com
             {
                 _Vector = vector;
                 _Index = -1;
-            }
-
-            object IEnumerator.Current
-            {
-                get
-                {
-                    if (_Vector is null)
-                    {
-                        throw new ArgumentNullException();
-                    }
-
-                    if (_Vector.IsEmpty || (_Index < 0 || _Index >= _Vector._Size))
-                    {
-                        throw new IndexOutOfRangeException();
-                    }
-
-                    //
-
-                    return _Vector._VArray[_Index];
-                }
-            }
-
-            bool IEnumerator.MoveNext()
-            {
-                if (IsNullOrEmpty(_Vector) || _Index >= _Vector._Size - 1)
-                {
-                    return false;
-                }
-                else
-                {
-                    _Index++;
-
-                    return true;
-                }
-            }
-
-            void IEnumerator.Reset()
-            {
-                _Index = -1;
-            }
-        }
-
-        #endregion
-
-        #region System.Collections.Generic.IList<T>
-
-        void IList<double>.Insert(int index, double item)
-        {
-            throw new NotSupportedException();
-        }
-
-        void IList<double>.RemoveAt(int index)
-        {
-            throw new NotSupportedException();
-        }
-
-        #endregion
-
-        #region System.Collections.Generic.ICollection<T>
-
-        int ICollection<double>.Count
-        {
-            get
-            {
-                return Dimension;
-            }
-        }
-
-        void ICollection<double>.Add(double item)
-        {
-            throw new NotSupportedException();
-        }
-
-        void ICollection<double>.Clear()
-        {
-            if (_Size > 0)
-            {
-                Array.Clear(_VArray, 0, _Size);
-            }
-        }
-
-        bool ICollection<double>.Remove(double item)
-        {
-            throw new NotSupportedException();
-        }
-
-        #endregion
-
-        #region System.Collections.Generic.IEnumerable<out T>
-
-        IEnumerator<double> IEnumerable<double>.GetEnumerator()
-        {
-            return new GenericEnumerator(this);
-        }
-
-        private sealed class GenericEnumerator : IEnumerator<double> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
-        {
-            private Vector _Vector;
-            private int _Index;
-
-            internal GenericEnumerator(Vector vector)
-            {
-                _Vector = vector;
-                _Index = -1;
-            }
-
-            void IDisposable.Dispose()
-            {
-                _Vector = null;
             }
 
             object IEnumerator.Current
@@ -4663,10 +4451,89 @@ namespace Com
                 }
             }
 
-            void IEnumerator.Reset()
+            void IEnumerator.Reset() => _Index = -1;
+        }
+
+        #endregion
+
+        #region System.Collections.Generic.IList<T>
+
+        void IList<double>.Insert(int index, double item) => throw new NotSupportedException();
+
+        void IList<double>.RemoveAt(int index) => throw new NotSupportedException();
+
+        #endregion
+
+        #region System.Collections.Generic.ICollection<T>
+
+        int ICollection<double>.Count => Dimension;
+
+        void ICollection<double>.Add(double item) => throw new NotSupportedException();
+
+        void ICollection<double>.Clear()
+        {
+            if (_Size > 0)
             {
+                Array.Clear(_VArray, 0, _Size);
+            }
+        }
+
+        bool ICollection<double>.Remove(double item) => throw new NotSupportedException();
+
+        #endregion
+
+        #region System.Collections.Generic.IEnumerable<out T>
+
+        IEnumerator<double> IEnumerable<double>.GetEnumerator() => new GenericEnumerator(this);
+
+        private sealed class GenericEnumerator : IEnumerator<double> // 实现 System.Collections.Generic.IEnumerator<out T> 的迭代器。
+        {
+            private Vector _Vector;
+            private int _Index;
+
+            internal GenericEnumerator(Vector vector)
+            {
+                _Vector = vector;
                 _Index = -1;
             }
+
+            void IDisposable.Dispose() => _Vector = null;
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    if (_Vector is null)
+                    {
+                        throw new ArgumentNullException();
+                    }
+
+                    if (_Vector.IsEmpty || _Index < 0 || _Index >= _Vector._Size)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+
+                    //
+
+                    return _Vector._VArray[_Index];
+                }
+            }
+
+            bool IEnumerator.MoveNext()
+            {
+                if (IsNullOrEmpty(_Vector) || _Index >= _Vector._Size - 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    _Index++;
+
+                    return true;
+                }
+            }
+
+            void IEnumerator.Reset() => _Index = -1;
 
             double IEnumerator<double>.Current
             {
@@ -4677,7 +4544,7 @@ namespace Com
                         throw new ArgumentNullException();
                     }
 
-                    if (_Vector.IsEmpty || (_Index < 0 || _Index >= _Vector._Size))
+                    if (_Vector.IsEmpty || _Index < 0 || _Index >= _Vector._Size)
                     {
                         throw new IndexOutOfRangeException();
                     }

@@ -1,5 +1,5 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-Copyright © 2022 chibayuki@foxmail.com
+Copyright © 2024 chibayuki@foxmail.com
 
 Com.WinForm.UIMessage
 Version 20.10.27.1900
@@ -357,68 +357,32 @@ namespace Com.WinForm
         /// <summary>
         /// 获取此界面消息的唯一码。
         /// </summary>
-        public long Uid
-        {
-            get
-            {
-                return _Uid;
-            }
-        }
+        public long Uid => _Uid;
 
         /// <summary>
         /// 获取此界面消息的消息码。
         /// </summary>
-        public int MessageCode
-        {
-            get
-            {
-                return _MessageCode;
-            }
-        }
+        public int MessageCode => _MessageCode;
 
         /// <summary>
         /// 获取表示此界面消息是否允许异步处理的布尔值。
         /// </summary>
-        public bool AllowAsync
-        {
-            get
-            {
-                return _AllowAsync;
-            }
-        }
+        public bool AllowAsync => _AllowAsync;
 
         /// <summary>
         /// 获取表示此界面消息是否允许丢弃的布尔值。
         /// </summary>
-        public bool AllowDiscard
-        {
-            get
-            {
-                return _AllowDiscard;
-            }
-        }
+        public bool AllowDiscard => _AllowDiscard;
 
         /// <summary>
         /// 获取表示此界面消息是否需要答复（引发回调方法）的布尔值。
         /// </summary>
-        public bool NeedReply
-        {
-            get
-            {
-                return _NeedReply;
-            }
-        }
+        public bool NeedReply => _NeedReply;
 
         /// <summary>
         /// 获取表示此界面消息被丢弃时是否需要答复（引发回调方法）的布尔值。
         /// </summary>
-        public bool ReplyWhenDiscarded
-        {
-            get
-            {
-                return _ReplyWhenDiscarded;
-            }
-        }
+        public bool ReplyWhenDiscarded => _ReplyWhenDiscarded;
 
         //
 
