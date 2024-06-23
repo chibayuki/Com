@@ -421,11 +421,11 @@ namespace Com
 
                         //
 
-                        using (Graphics Grph = Graphics.FromImage(bmp))
+                        using (Graphics graph = Graphics.FromImage(bmp))
                         {
                             if (antiAlias)
                             {
-                                Grph.SmoothingMode = SmoothingMode.AntiAlias;
+                                graph.SmoothingMode = SmoothingMode.AntiAlias;
                             }
 
                             //
@@ -448,7 +448,7 @@ namespace Com
                                             {
                                                 using (SolidBrush Br = new SolidBrush(EColor))
                                                 {
-                                                    Grph.FillPolygon(Br, Element);
+                                                    graph.FillPolygon(Br, Element);
                                                 }
                                             }
                                             catch { }
@@ -506,7 +506,7 @@ namespace Com
 
                                                     using (Pen Pn = new Pen(Br, EdgeWidth))
                                                     {
-                                                        Grph.DrawLines(Pn, Element);
+                                                        graph.DrawLines(Pn, Element);
                                                     }
 
                                                     Br?.Dispose();

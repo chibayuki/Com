@@ -515,7 +515,7 @@ namespace Com
             else
             {
                 // （1）若直线段的至少一个端点在矩形内部，则直线段与矩形相交：
-                if(PointIsVisibleInRectangle(pt1, rect)|| PointIsVisibleInRectangle(pt2, rect))
+                if (PointIsVisibleInRectangle(pt1, rect) || PointIsVisibleInRectangle(pt2, rect))
                 {
                     return true;
                 }
@@ -526,7 +526,7 @@ namespace Com
                 PointD LB = new PointD(rect.X, rect.Bottom);
                 PointD RB = new PointD(rect.Right, rect.Bottom);
                 PointD RT = new PointD(rect.Right, rect.Y);
-                if (TwoLinesIntersect(line, (LT, LB))|| TwoLinesIntersect(line, (LB, RB))|| TwoLinesIntersect(line, (RB, RT))|| TwoLinesIntersect(line, (RT, LT)))
+                if (TwoLinesIntersect(line, (LT, LB)) || TwoLinesIntersect(line, (LB, RB)) || TwoLinesIntersect(line, (RB, RT)) || TwoLinesIntersect(line, (RT, LT)))
                 {
                     return true;
                 }

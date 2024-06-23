@@ -1329,7 +1329,7 @@ namespace Com.WinForm
         // BackgroundWorker_UpdateLayoutDelay 的 DoWork 事件的回调函数。
         private void BackgroundWorker_UpdateLayoutDelay_DoWork(object sender, DoWorkEventArgs e)
         {
-            while ((DateTime.Now - _LastUpdateLayout).TotalMilliseconds < 16)
+            while ((DateTime.UtcNow - _LastUpdateLayout).TotalMilliseconds < 16)
             {
                 Thread.Sleep(4);
             }
@@ -1342,7 +1342,7 @@ namespace Com.WinForm
             {
                 Me.UpdateLayout(_UpdateLayoutEventType);
 
-                _LastUpdateLayout = DateTime.Now;
+                _LastUpdateLayout = DateTime.UtcNow;
             }
         }
 

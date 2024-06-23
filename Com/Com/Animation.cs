@@ -42,25 +42,25 @@ namespace Com
         /// <param name="keyFrameList">包含所有关键帧次序数的列表。</param>
         public static void Show(Frame frame, int frameCount, int msPerFrame, int keyFrameDensity, List<int> keyFrameList)
         {
+            if (frame is null)
+            {
+                throw new ArgumentNullException(nameof(frame));
+            }
+
+            if (frameCount <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(frameCount));
+            }
+
+            if (msPerFrame <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(msPerFrame));
+            }
+
+            //
+
             try
             {
-                if (frame is null)
-                {
-                    throw new ArgumentNullException(nameof(frame));
-                }
-
-                if (frameCount <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(frameCount));
-                }
-
-                if (msPerFrame <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(msPerFrame));
-                }
-
-                //
-
                 if (keyFrameList is null)
                 {
                     keyFrameList = new List<int>(0);
@@ -106,11 +106,11 @@ namespace Com
 
                 //
 
-                int MSTotal = 0;
+                int msTotal = 0;
 
                 for (int frameId = 1; frameId <= frameCount; frameId++)
                 {
-                    DateTime DTFrame = DateTime.Now;
+                    DateTime dtFrame = DateTime.UtcNow;
 
                     frame(frameId, frameCount, msPerFrame);
 
@@ -131,31 +131,31 @@ namespace Com
 
                     if (frameId < frameCount)
                     {
-                        int MSFrame = Math.Max(1, (int)Math.Round((DateTime.Now - DTFrame).TotalMilliseconds));
+                        int msFrame = Math.Max(1, (int)Math.Round((DateTime.UtcNow - dtFrame).TotalMilliseconds));
 
-                        MSTotal += MSFrame;
+                        msTotal += msFrame;
 
-                        if (MSTotal < (frameId - 0.5) * msPerFrame)
+                        if (msTotal < (frameId - 0.5) * msPerFrame)
                         {
-                            DateTime DTSleep = DateTime.Now;
+                            DateTime dtSleep = DateTime.UtcNow;
 
-                            Thread.Sleep(Math.Max(1, frameId * msPerFrame - MSTotal));
+                            Thread.Sleep(Math.Max(1, frameId * msPerFrame - msTotal));
 
-                            int MSSleep = Math.Max(1, (int)Math.Round((DateTime.Now - DTSleep).TotalMilliseconds));
+                            int msSleep = Math.Max(1, (int)Math.Round((DateTime.UtcNow - dtSleep).TotalMilliseconds));
 
-                            MSTotal += MSSleep;
+                            msTotal += msSleep;
                         }
-                        else if (frameId < frameCount - 1 && MSTotal > (frameId + 0.5) * msPerFrame)
+                        else if (frameId < frameCount - 1 && msTotal > (frameId + 0.5) * msPerFrame)
                         {
-                            int frameIdNew = Math.Min(frameCount, Math.Max((int)Math.Round((double)MSTotal / msPerFrame) + 1, frameId + 1));
+                            int frameIdNew = Math.Min(frameCount, Math.Max((int)Math.Round((double)msTotal / msPerFrame) + 1, frameId + 1));
 
                             if (keyFrameList.Count > 0)
                             {
-                                int NextKeyFrame = Math.Min(frameCount, Math.Max(keyFrameList[keyFrameList.Count - 1], frameId + 1));
+                                int nextKeyFrame = Math.Min(frameCount, Math.Max(keyFrameList[keyFrameList.Count - 1], frameId + 1));
 
-                                if (frameIdNew >= NextKeyFrame)
+                                if (frameIdNew >= nextKeyFrame)
                                 {
-                                    frameIdNew = NextKeyFrame;
+                                    frameIdNew = nextKeyFrame;
                                 }
                             }
 
