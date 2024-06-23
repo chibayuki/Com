@@ -2009,20 +2009,14 @@ namespace Com.WinForm
         /// 使用 Form 对象初始化 FormManager 的新实例。
         /// </summary>
         /// <param name="client">Form 对象，表示工作区。</param>
-        public FormManager(Form client)
-        {
-            _Ctor(client, null);
-        }
+        public FormManager(Form client) => _Ctor(client, null);
 
         /// <summary>
         /// 使用 Form 对象与 FormManager 对象初始化 FormManager 的新实例。
         /// </summary>
         /// <param name="client">Form 对象，表示工作区。</param>
         /// <param name="owner">FormManager 对象，表示拥有此窗口的窗口的窗口管理器。</param>
-        public FormManager(Form client, FormManager owner)
-        {
-            _Ctor(client, owner);
-        }
+        public FormManager(Form client, FormManager owner) => _Ctor(client, owner);
 
         #endregion
 

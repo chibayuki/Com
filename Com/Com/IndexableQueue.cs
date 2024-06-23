@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 namespace Com
 {
@@ -40,9 +41,11 @@ namespace Com
         //
 
         // 获取元素，不做索引越界检查。
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private T _GetItemWithoutCheckBounds(int index) => _TArray[(_HeadIndex + index) % _Capacity];
 
         // 设置元素，不做索引越界检查。
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void _SetItemWithoutCheckBounds(int index, T value) => _TArray[(_HeadIndex + index) % _Capacity] = value;
 
         #endregion
@@ -96,9 +99,7 @@ namespace Com
         /// 使用指定的容量初始化 IndexableQueue 的新实例。
         /// </summary>
         /// <param name="capacity">容量。</param>
-        public IndexableQueue(int capacity) : this(capacity, true)
-        {
-        }
+        public IndexableQueue(int capacity) : this(capacity, true) { }
 
         /// <summary>
         /// 使用包含多个元素的集合与表示是否自动扩展容量的布尔值初始化 IndexableQueue 的新实例。
@@ -109,7 +110,7 @@ namespace Com
         {
             if (items is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(items));
             }
 
             //
@@ -136,9 +137,7 @@ namespace Com
         /// 使用包含多个元素的集合初始化 IndexableQueue 的新实例。
         /// </summary>
         /// <param name="items">包含多个元素的集合。</param>
-        public IndexableQueue(IEnumerable<T> items) : this(items, true)
-        {
-        }
+        public IndexableQueue(IEnumerable<T> items) : this(items, true) { }
 
         #endregion
 
@@ -154,7 +153,7 @@ namespace Com
             {
                 if (index < 0 || index >= _Count)
                 {
-                    throw new IndexOutOfRangeException();
+                    throw new IndexOutOfRangeException(nameof(index));
                 }
 
                 //
@@ -166,7 +165,7 @@ namespace Com
             {
                 if (index < 0 || index >= _Count)
                 {
-                    throw new IndexOutOfRangeException();
+                    throw new IndexOutOfRangeException(nameof(index));
                 }
 
                 //
@@ -305,9 +304,9 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的元素的索引。</returns>
         public int IndexOf(T item, int startIndex)
         {
-            if (_Count <= 0 || startIndex < 0 || startIndex >= _Count)
+            if (startIndex < 0 || startIndex >= _Count)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new IndexOutOfRangeException(nameof(startIndex));
             }
 
             //
@@ -324,9 +323,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的元素的索引。</returns>
         public int IndexOf(T item, int startIndex, int count)
         {
-            if (_Count <= 0 || startIndex < 0 || startIndex >= _Count || count <= 0)
+            if (startIndex < 0 || startIndex >= _Count)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new IndexOutOfRangeException(nameof(startIndex));
+            }
+
+            if (count <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             //
@@ -369,9 +373,9 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的元素的索引。</returns>
         public int LastIndexOf(T item, int startIndex)
         {
-            if (_Count <= 0 || startIndex < 0 || startIndex >= _Count)
+            if (startIndex < 0 || startIndex >= _Count)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new IndexOutOfRangeException(nameof(startIndex));
             }
 
             //
@@ -388,9 +392,14 @@ namespace Com
         /// <returns>32 位整数，表示第一个与指定值相等的元素的索引。</returns>
         public int LastIndexOf(T item, int startIndex, int count)
         {
-            if (_Count <= 0 || startIndex < 0 || startIndex >= _Count || count <= 0)
+            if (startIndex < 0 || startIndex >= _Count)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new IndexOutOfRangeException(nameof(startIndex));
+            }
+
+            if (count <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             //
@@ -443,7 +452,7 @@ namespace Com
         {
             if (IsEmpty)
             {
-                return new T[0];
+                return Array.Empty<T>();
             }
             else
             {
@@ -539,7 +548,7 @@ namespace Com
         {
             if (items is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(items));
             }
 
             //
@@ -558,7 +567,7 @@ namespace Com
         {
             if (items is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(items));
             }
 
             //
@@ -584,7 +593,7 @@ namespace Com
 
             T result = _TArray[_HeadIndex];
 
-            _TArray[_HeadIndex] = default(T);
+            _TArray[_HeadIndex] = default;
             _HeadIndex = (_HeadIndex + 1) % _Capacity;
             _Count--;
 
@@ -612,7 +621,7 @@ namespace Com
 
             if (count <= 0 || count > _Count)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             //
@@ -621,7 +630,7 @@ namespace Com
             {
                 for (int i = 0; i < count; i++)
                 {
-                    _TArray[_HeadIndex] = default(T);
+                    _TArray[_HeadIndex] = default;
                     _HeadIndex = (_HeadIndex + 1) % _Capacity;
                 }
             }
@@ -631,7 +640,7 @@ namespace Com
                 {
                     T item = _TArray[_HeadIndex];
 
-                    _TArray[_HeadIndex] = default(T);
+                    _TArray[_HeadIndex] = default;
                     _HeadIndex = (_HeadIndex + 1) % _Capacity;
 
                     items.Add(item);
@@ -720,7 +729,7 @@ namespace Com
 
             for (int i = 0; i < _Capacity; i++)
             {
-                _TArray[i] = default(T);
+                _TArray[i] = default;
             }
         }
 
@@ -738,7 +747,7 @@ namespace Com
             {
                 if (default(T) != null && value is null)
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 if (!(value is T))
@@ -756,7 +765,7 @@ namespace Com
         {
             if (default(T) != null && item is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(item));
             }
 
             if (!(item is T))
@@ -819,7 +828,7 @@ namespace Com
         {
             if (array is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (array.Rank != 1)
@@ -829,7 +838,7 @@ namespace Com
 
             if (array.Length - index < _Count)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new IndexOutOfRangeException(nameof(index));
             }
 
             //
@@ -863,12 +872,12 @@ namespace Com
                 {
                     if (_Queue is null)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArgumentNullException(nameof(_Queue));
                     }
 
-                    if (_Queue.IsEmpty || _Index < 0 || _Index >= _Queue._Count)
+                    if (_Index < 0 || _Index >= _Queue._Count)
                     {
-                        throw new IndexOutOfRangeException();
+                        throw new IndexOutOfRangeException(nameof(_Index));
                     }
 
                     //
@@ -879,7 +888,7 @@ namespace Com
 
             bool IEnumerator.MoveNext()
             {
-                if (_Queue is null || _Queue.IsEmpty || _Index >= _Queue._Count - 1)
+                if ((_Queue is null || _Queue.IsEmpty) || _Index >= _Queue._Count - 1)
                 {
                     return false;
                 }
@@ -914,12 +923,12 @@ namespace Com
         {
             if (array is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (array.Length - index < _Count)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new IndexOutOfRangeException(nameof(index));
             }
 
             //
@@ -957,12 +966,12 @@ namespace Com
                 {
                     if (_Queue is null)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArgumentNullException(nameof(_Queue));
                     }
 
-                    if (_Queue.IsEmpty || _Index < 0 || _Index >= _Queue._Count)
+                    if (_Index < 0 || _Index >= _Queue._Count)
                     {
-                        throw new IndexOutOfRangeException();
+                        throw new IndexOutOfRangeException(nameof(_Index));
                     }
 
                     //
@@ -973,7 +982,7 @@ namespace Com
 
             bool IEnumerator.MoveNext()
             {
-                if (_Queue is null || _Queue.IsEmpty || _Index >= _Queue._Count - 1)
+                if ((_Queue is null || _Queue.IsEmpty) || _Index >= _Queue._Count - 1)
                 {
                     return false;
                 }
@@ -993,12 +1002,12 @@ namespace Com
                 {
                     if (_Queue is null)
                     {
-                        throw new ArgumentNullException();
+                        throw new ArgumentNullException(nameof(_Queue));
                     }
 
-                    if (_Queue.IsEmpty || _Index < 0 || _Index >= _Queue._Count)
+                    if (_Index < 0 || _Index >= _Queue._Count)
                     {
-                        throw new IndexOutOfRangeException();
+                        throw new IndexOutOfRangeException(nameof(_Index));
                     }
 
                     //

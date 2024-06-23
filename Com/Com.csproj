@@ -71,28 +71,37 @@
     <Compile Include="Com.WinForm\CaptionBar.Designer.cs">
       <DependentUpon>CaptionBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Com.WinForm\UIMessageProcessorState.cs" />
+    <Compile Include="Com.WinForm\UIMessageState.cs" />
     <Compile Include="Com.WinForm\UIMessage.cs" />
     <Compile Include="Com.WinForm\UIMessageProcessor.cs" />
     <Compile Include="Com.WinForm\UpdateLayoutBehavior.cs" />
     <Compile Include="Com.WinForm\UpdateLayoutEventType.cs" />
-    <Compile Include="Com\AffineTransformation.cs" />
-    <Compile Include="Com\BitSet.cs" />
-    <Compile Include="Com\ColorManipulation.cs" />
-    <Compile Include="Com\Constant.cs" />
+    <Compile Include="Com\Algebra\AffineTransformationAtomicType.cs" />
+    <Compile Include="Com\Algebra\AffineTransformationAtomic.cs" />
+    <Compile Include="Com\Algebra\AffineTransformation.cs" />
+    <Compile Include="Com\Numeric\BitSet.cs" />
+    <Compile Include="Com\Chromatics\ColorManipulation.cs" />
+    <Compile Include="Com\Internal\Constant.cs" />
     <Compile Include="Com\IndexableQueue.cs" />
-    <Compile Include="Com\FrequencyCounter.cs" />
-    <Compile Include="Com\IAffine.cs" />
-    <Compile Include="Com\IAffineTransformable.cs" />
-    <Compile Include="Com\IEuclideanVector.cs" />
-    <Compile Include="Com\ILinearAlgebraVector.cs" />
-    <Compile Include="Com\InternalMethod.cs" />
-    <Compile Include="Com\InternalUnsafeCallAttribute.cs" />
-    <Compile Include="Com\IVector.cs" />
-    <Compile Include="Com\PointD5D.cs" />
-    <Compile Include="Com\PointD6D.cs" />
-    <Compile Include="Com\Real.cs" />
-    <Compile Include="Com\TimeSpanX.cs" />
-    <Compile Include="Com\Vector.cs" />
+    <Compile Include="Com\Statistics\FrequencyCounter.cs" />
+    <Compile Include="Com\Algebra\IAffine.cs" />
+    <Compile Include="Com\Algebra\IAffineTransformable.cs" />
+    <Compile Include="Com\Algebra\IEuclideanVector.cs" />
+    <Compile Include="Com\Algebra\ILinearAlgebraVector.cs" />
+    <Compile Include="Com\Internal\InternalMethod.cs" />
+    <Compile Include="Com\Internal\InternalUnsafeCallType.cs" />
+    <Compile Include="Com\Internal\InternalUnsafeCallAttribute.cs" />
+    <Compile Include="Com\Algebra\IVector.cs" />
+    <Compile Include="Com\Algebra\PointD5D.cs" />
+    <Compile Include="Com\Algebra\PointD6D.cs" />
+    <Compile Include="Com\Numeric\Real.cs" />
+    <Compile Include="Com\Statistics\Distribution.cs" />
+    <Compile Include="Com\Statistics\Random.cs" />
+    <Compile Include="Com\Statistics\Combinatorics.cs" />
+    <Compile Include="Com\Chronograph\TimeSpanX.cs" />
+    <Compile Include="Com\Algebra\Vector.cs" />
+    <Compile Include="Com\Algebra\VectorType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,19 +113,19 @@
     <Compile Include="WindowsAPI\User32.cs" />
     <Compile Include="Com\Animation.cs" />
     <Compile Include="Com\BitOperation.cs" />
-    <Compile Include="Com\ColorX.cs" />
-    <Compile Include="Com\Complex.cs" />
+    <Compile Include="Com\Chromatics\ColorX.cs" />
+    <Compile Include="Com\Numeric\Complex.cs" />
     <Compile Include="Com\Geometry.cs" />
-    <Compile Include="Com\DateTimeX.cs" />
+    <Compile Include="Com\Chronograph\DateTimeX.cs" />
     <Compile Include="Com\IO.cs" />
-    <Compile Include="Com\Matrix.cs" />
+    <Compile Include="Com\Algebra\Matrix.cs" />
     <Compile Include="Com\Painting2D.cs" />
     <Compile Include="Com\Painting3D.cs" />
-    <Compile Include="Com\PointD.cs" />
-    <Compile Include="Com\PointD3D.cs" />
-    <Compile Include="Com\PointD4D.cs" />
+    <Compile Include="Com\Algebra\PointD.cs" />
+    <Compile Include="Com\Algebra\PointD3D.cs" />
+    <Compile Include="Com\Algebra\PointD4D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Com\Statistics.cs" />
+    <Compile Include="Com\Statistics\StatisticsExtension.cs" />
     <Compile Include="Com\Text.cs" />
   </ItemGroup>
   <ItemGroup>

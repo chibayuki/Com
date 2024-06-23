@@ -46,12 +46,17 @@ namespace Com
             {
                 if (frame is null)
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException(nameof(frame));
                 }
 
-                if (frameCount <= 0 || msPerFrame <= 0)
+                if (frameCount <= 0)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(frameCount));
+                }
+
+                if (msPerFrame <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(msPerFrame));
                 }
 
                 //

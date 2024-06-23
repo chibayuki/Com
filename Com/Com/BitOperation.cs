@@ -33,7 +33,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 8)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -50,7 +50,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 8)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -67,7 +67,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 8)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -84,7 +84,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 8)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -101,7 +101,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 8)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -119,7 +119,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 8)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -210,7 +210,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 16)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -227,7 +227,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 16)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -244,7 +244,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 16)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -261,7 +261,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 16)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -278,7 +278,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 16)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -296,7 +296,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 16)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -387,7 +387,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 32)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -404,7 +404,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 32)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -421,7 +421,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 32)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -438,7 +438,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 32)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -455,7 +455,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 32)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -473,7 +473,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 32)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -564,7 +564,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 64)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -581,7 +581,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 64)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -598,7 +598,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 64)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -615,7 +615,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 64)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -632,7 +632,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 64)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //
@@ -650,7 +650,7 @@ namespace Com
         {
             if (bit < 0 || bit >= 64)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(bit));
             }
 
             //

@@ -28,42 +28,6 @@ namespace Com.WinForm
     public delegate void UIMessageProcessedHandler(Control sender, UIMessage message);
 
     /// <summary>
-    /// 界面消息状态。
-    /// </summary>
-    public enum UIMessageState
-    {
-        /// <summary>
-        /// 已创建消息，但尚未推送给消息处理器。
-        /// </summary>
-        Created = 0,
-
-        /// <summary>
-        /// 此消息已推送给消息处理器，但消息处理器尚未开始处理。
-        /// </summary>
-        WaitingToProcess,
-
-        /// <summary>
-        /// 消息处理器已开始处理此消息，但尚未完成。
-        /// </summary>
-        Processing,
-
-        /// <summary>
-        /// 消息处理器已成功处理此消息。
-        /// </summary>
-        ProcessCompleted,
-
-        /// <summary>
-        /// 消息处理器已处理此消息，但发生了异常。
-        /// </summary>
-        ProcessFailed,
-
-        /// <summary>
-        /// 消息处理器已丢弃此消息。
-        /// </summary>
-        Discarded
-    }
-
-    /// <summary>
     /// 界面消息。
     /// </summary>
     public class UIMessage
@@ -260,10 +224,7 @@ namespace Com.WinForm
         /// </summary>
         /// <param name="messageCode">消息码。</param>
         /// <param name="allowAsync">是否允许异步处理。</param>
-        public UIMessage(int messageCode, bool allowAsync) : this(messageCode)
-        {
-            _AllowAsync = allowAsync;
-        }
+        public UIMessage(int messageCode, bool allowAsync) : this(messageCode) => _AllowAsync = allowAsync;
 
         /// <summary>
         /// 使用消息码、表示是否允许异步处理的布尔值与表示是否允许丢弃的布尔值初始化 UIMessage 的新实例。
@@ -285,9 +246,14 @@ namespace Com.WinForm
         /// <param name="callbackMethod">回调方法。</param>
         public UIMessage(int messageCode, Control sender, UIMessageProcessedHandler callbackMethod) : this(messageCode)
         {
-            if (sender is null || callbackMethod is null)
+            if (sender is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(sender));
+            }
+
+            if (callbackMethod is null)
+            {
+                throw new ArgumentNullException(nameof(callbackMethod));
             }
 
             //
@@ -304,10 +270,7 @@ namespace Com.WinForm
         /// <param name="sender">发送界面消息的控件。</param>
         /// <param name="callbackMethod">回调方法。</param>
         /// <param name="allowAsync">是否允许异步处理。</param>
-        public UIMessage(int messageCode, Control sender, UIMessageProcessedHandler callbackMethod, bool allowAsync) : this(messageCode, sender, callbackMethod)
-        {
-            _AllowAsync = allowAsync;
-        }
+        public UIMessage(int messageCode, Control sender, UIMessageProcessedHandler callbackMethod, bool allowAsync) : this(messageCode, sender, callbackMethod) => _AllowAsync = allowAsync;
 
         /// <summary>
         /// 使用消息码、发送界面消息的控件、回调方法、表示是否允许异步处理的布尔值与表示是否允许丢弃的布尔值初始化 UIMessage 的新实例。
@@ -611,7 +574,7 @@ namespace Com.WinForm
             {
                 if (value is null)
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 //
@@ -663,7 +626,7 @@ namespace Com.WinForm
             {
                 if (value is null)
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 //

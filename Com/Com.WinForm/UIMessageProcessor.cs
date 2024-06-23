@@ -1,7 +1,7 @@
 ﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Copyright © 2024 chibayuki@foxmail.com
 
-Com.WinForm.UIMessage
+Com.WinForm.UIMessageProcessor
 Version 20.10.27.1900
 
 This file is part of Com
@@ -27,27 +27,6 @@ namespace Com.WinForm
     /// <param name="sender">调用 Stop 方法的控件。</param>
     /// <param name="messageProcessor">界面消息处理器。</param>
     public delegate void UIMessageProcessorStoppedHandler(Control sender, UIMessageProcessor messageProcessor);
-
-    /// <summary>
-    /// 界面消息处理器状态。
-    /// </summary>
-    public enum UIMessageProcessorState
-    {
-        /// <summary>
-        /// 消息处理器尚未开始运行消息循环或已停止运行消息循环。
-        /// </summary>
-        Stopped = 0,
-
-        /// <summary>
-        /// 消息处理器正在运行消息循环。
-        /// </summary>
-        Running,
-
-        /// <summary>
-        /// 消息处理器正在停止运行消息循环，仍有未处理完的消息在处理。
-        /// </summary>
-        Stopping
-    }
 
     /// <summary>
     /// 界面消息处理器。
@@ -311,7 +290,7 @@ namespace Com.WinForm
 
                     if (processAsyncMessageCount < 0)
                     {
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException(nameof(processAsyncMessageCount));
                     }
                     else if (processAsyncMessageCount > 0)
                     {
@@ -421,7 +400,7 @@ namespace Com.WinForm
 
                     if (processSyncMessageCount < 0)
                     {
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException(nameof(processSyncMessageCount));
                     }
                     else if (processSyncMessageCount > 0)
                     {
@@ -529,9 +508,14 @@ namespace Com.WinForm
         /// <param name="callbackMethod">回调方法。</param>
         public void Stop(Control sender, UIMessageProcessorStoppedHandler callbackMethod)
         {
-            if (sender is null || callbackMethod is null)
+            if (sender is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(sender));
+            }
+
+            if (callbackMethod is null)
+            {
+                throw new ArgumentNullException(nameof(callbackMethod));
             }
 
             if (State != UIMessageProcessorState.Running)
@@ -557,7 +541,7 @@ namespace Com.WinForm
         {
             if (message is null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(message));
             }
 
             if (State != UIMessageProcessorState.Running)
