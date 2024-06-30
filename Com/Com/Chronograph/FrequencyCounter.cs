@@ -44,8 +44,8 @@ namespace Com
 
                 //
 
-                Ticks = ticks;
-                Count = count;
+                _Ticks = ticks;
+                _Count = count;
             }
 
             public _TicksWithCount(long ticks) : this(ticks, 1) { }
@@ -68,6 +68,7 @@ namespace Com
         //
 
         private long _SampleTicks; // 采样周期的计时周期数。
+        private long _ExtendSampleTicks; // 扩展的采样周期的计时周期数。
         private IndexableQueue<_TicksWithCount> _TicksHistory; // 历史计时计数队列。
 
         #endregion
@@ -76,25 +77,68 @@ namespace Com
 
         /// <summary>
         /// 使用指定的采样周期初始化 FrequencyCounter 的新实例。
+        /// <param name="samplePeriod">采样周期。</param>
+        /// <param name="extendSamplePeriod">扩展的采样周期。</param>
+        /// </summary>
+        public FrequencyCounter(TimeSpan samplePeriod, TimeSpan extendSamplePeriod)
+        {
+            if (samplePeriod.Ticks <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(samplePeriod));
+            }
+
+            if (extendSamplePeriod.Ticks < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(extendSamplePeriod));
+            }
+
+            //
+
+            _SampleTicks = samplePeriod.Ticks;
+            _ExtendSampleTicks = extendSamplePeriod.Ticks;
+            _TicksHistory = new IndexableQueue<_TicksWithCount>(32, false);
+        }
+
+        /// <summary>
+        /// 使用指定的采样周期初始化 FrequencyCounter 的新实例。
+        /// <param name="samplePeriod">采样周期。</param>
+        /// </summary>
+        public FrequencyCounter(TimeSpan samplePeriod) : this(samplePeriod, TimeSpan.Zero) { }
+
+        /// <summary>
+        /// 使用指定的采样周期初始化 FrequencyCounter 的新实例。
         /// </summary>
         /// <param name="sampleSeconds">采样周期（秒）。</param>
-        public FrequencyCounter(double sampleSeconds)
+        /// <param name="extendSampleSeconds">扩展的采样周期（秒）。</param>
+        public FrequencyCounter(double sampleSeconds, double extendSampleSeconds)
         {
-            if (double.IsNaN(sampleSeconds) || double.IsInfinity(sampleSeconds) || sampleSeconds <= 0)
+            if (InternalMethod.IsNaNOrInfinity(sampleSeconds) || sampleSeconds < 1.0 / TimeSpan.TicksPerSecond || sampleSeconds > TimeSpan.MaxValue.Seconds)
             {
                 throw new ArgumentOutOfRangeException(nameof(sampleSeconds));
+            }
+
+            if (InternalMethod.IsNaNOrInfinity(extendSampleSeconds) || extendSampleSeconds < 0 || extendSampleSeconds > TimeSpan.MaxValue.Seconds)
+            {
+                throw new ArgumentOutOfRangeException(nameof(extendSampleSeconds));
             }
 
             //
 
             _SampleTicks = Math.Max(1, (long)Math.Round(sampleSeconds * TimeSpan.TicksPerSecond));
+            _ExtendSampleTicks = (long)Math.Round(extendSampleSeconds * TimeSpan.TicksPerSecond);
             _TicksHistory = new IndexableQueue<_TicksWithCount>(32, false);
         }
 
         /// <summary>
+        /// 使用指定的采样周期初始化 FrequencyCounter 的新实例。
+        /// </summary>
+        /// <param name="sampleSeconds">采样周期（秒）。</param>
+        public FrequencyCounter(double sampleSeconds) : this(sampleSeconds, 0) { }
+
+        /// <summary>
         /// 使用默认的采样周期初始化 FrequencyCounter 的新实例。
         /// </summary>
-        public FrequencyCounter() : this(1) { }
+        public FrequencyCounter() : this(1, 0) { }
 
         #endregion
 
@@ -109,39 +153,35 @@ namespace Com
             {
                 if (_TicksHistory.Count >= 2)
                 {
-                    long ticks = DateTime.UtcNow.Ticks;
+                    long currentTicks = DateTime.UtcNow.Ticks;
+                    double deltaTicks = 0;
+                    double count = 0;
 
-                    if (_TicksHistory.Count == 2)
+                    for (int i = _TicksHistory.Count - 1; i >= 1; i--)
                     {
-                        return _TicksHistory.Tail.Count * TimeSpan.TicksPerSecond / (ticks - _TicksHistory.Head.Ticks);
+                        deltaTicks = currentTicks - _TicksHistory[i - 1].Ticks;
+
+                        if (deltaTicks <= _SampleTicks)
+                        {
+                            count += _TicksHistory[i].Count;
+                        }
+                        else if (count <= 0 && deltaTicks <= _ExtendSampleTicks)
+                        {
+                            count += _TicksHistory[i].Count;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    if (deltaTicks > 0)
+                    {
+                        return count / deltaTicks * TimeSpan.TicksPerSecond;
                     }
                     else
                     {
-                        long count = 0;
-
-                        _TicksWithCount head = _TicksHistory.Head;
-
-                        for (int i = _TicksHistory.Count - 1; i >= 1; i--)
-                        {
-                            head = _TicksHistory[i - 1];
-
-                            if (ticks - head.Ticks <= _SampleTicks)
-                            {
-                                count += _TicksHistory[i].Count;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-
-                        if (count <= 0)
-                        {
-                            count = _TicksHistory.Tail.Count;
-                            head = _TicksHistory[_TicksHistory.Count - 2];
-                        }
-
-                        return count * TimeSpan.TicksPerSecond / (ticks - head.Ticks);
+                        return 0;
                     }
                 }
                 else
@@ -155,6 +195,16 @@ namespace Com
         /// 获取此 FrequencyCounter 对象的周期（秒）。
         /// </summary>
         public double Period => 1 / Frequency;
+
+        /// <summary>
+        /// 获取此 FrequencyCounter 对象的采样周期。
+        /// </summary>
+        public TimeSpan SamplePeriod => TimeSpan.FromTicks(_SampleTicks);
+
+        /// <summary>
+        /// 获取此 FrequencyCounter 对象的扩展的采样周期。
+        /// </summary>
+        public TimeSpan ExtendSamplePeriod => TimeSpan.FromTicks(_ExtendSampleTicks);
 
         #endregion
 
@@ -173,38 +223,40 @@ namespace Com
 
             //
 
-            long ticks = DateTime.UtcNow.Ticks;
+            long currentTicks = DateTime.UtcNow.Ticks;
 
             if (_TicksHistory.IsEmpty)
             {
-                _TicksHistory.Enqueue(new _TicksWithCount(ticks, count));
+                _TicksHistory.Enqueue(new _TicksWithCount(currentTicks, count));
             }
             else
             {
                 _TicksWithCount tail = _TicksHistory.Tail;
 
-                if (ticks < tail.Ticks)
+                if (currentTicks < tail.Ticks)
                 {
                     Reset();
+
+                    _TicksHistory.Enqueue(new _TicksWithCount(currentTicks, count));
                 }
-                else if (ticks == tail.Ticks)
+                else if (currentTicks == tail.Ticks)
                 {
                     tail.Count += count;
                 }
                 else
                 {
-                    if (_TicksHistory.IsFull && ticks - _TicksHistory.Head.Ticks <= _SampleTicks)
+                    while (_TicksHistory.Count > 2 && currentTicks - _TicksHistory.Head.Ticks > _SampleTicks)
+                    {
+                        _TicksHistory.Dequeue();
+                    }
+
+                    if (_TicksHistory.IsFull && currentTicks - _TicksHistory.Head.Ticks <= _SampleTicks)
                     {
                         _TicksHistory.Resize(_TicksHistory.Capacity * 2);
                     }
 
-                    _TicksHistory.Enqueue(new _TicksWithCount(ticks, count));
+                    _TicksHistory.Enqueue(new _TicksWithCount(currentTicks, count));
                 }
-            }
-
-            while (_TicksHistory.Count > 2 && ticks - _TicksHistory.Head.Ticks > _SampleTicks)
-            {
-                _TicksHistory.Dequeue();
             }
         }
 
