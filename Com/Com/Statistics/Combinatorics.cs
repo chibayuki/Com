@@ -138,7 +138,7 @@ namespace Com
                 };
 
                 Func<double, Real> GammaNegative = (val) => Constant.Pi / Math.Sin(Constant.Pi * val) / GammaPositive(1 - val);
-                
+
                 if (n == Math.Truncate(n))
                 {
                     if (n == 1 || n == 2)

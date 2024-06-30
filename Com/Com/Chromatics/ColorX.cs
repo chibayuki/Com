@@ -2911,7 +2911,7 @@ namespace Com
                 }
             }
 
-            SET_CHANNEL:
+        SET_CHANNEL:
             switch (channelIndex)
             {
                 case 0: _Channel1 = channel; break;

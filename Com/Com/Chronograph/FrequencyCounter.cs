@@ -30,11 +30,16 @@ namespace Com
             private long _Ticks; // 计时周期数。
             private long _Count; // 计数。
 
-            public _TicksWithCount(long ticks, int count)
+            public _TicksWithCount(long ticks, long count)
             {
-                if ((ticks < DateTime.MinValue.Ticks || ticks > DateTime.MaxValue.Ticks) || count <= 0)
+                if (ticks < DateTime.MinValue.Ticks || ticks > DateTime.MaxValue.Ticks)
                 {
                     throw new ArgumentOutOfRangeException(nameof(ticks));
+                }
+
+                if (count <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(count));
                 }
 
                 //
@@ -49,24 +54,20 @@ namespace Com
             public long Ticks
             {
                 get => _Ticks;
-            set => _Ticks = value;
+                set => _Ticks = value;
             }
 
             // 获取或设置此 _TicksWithCount 对象的计数。
             public long Count
             {
                 get => _Count;
-            set => _Count = value;
+                set => _Count = value;
             }
         }
 
         //
 
-        private const double _TicksPerSecond = 1E7; // 每秒的计时周期数。
-
-        //
-
-        private long _DeltaTTicks; // 采样时间间隔的计时周期数。
+        private long _SampleTicks; // 采样周期的计时周期数。
         private IndexableQueue<_TicksWithCount> _TicksHistory; // 历史计时计数队列。
 
         #endregion
@@ -74,24 +75,24 @@ namespace Com
         #region 构造函数
 
         /// <summary>
-        /// 使用指定的采样时间间隔初始化 FrequencyCounter 的新实例。
+        /// 使用指定的采样周期初始化 FrequencyCounter 的新实例。
         /// </summary>
-        /// <param name="deltaTSeconds">采样时间间隔（秒）。</param>
-        public FrequencyCounter(double deltaTSeconds)
+        /// <param name="sampleSeconds">采样周期（秒）。</param>
+        public FrequencyCounter(double sampleSeconds)
         {
-            if (double.IsNaN(deltaTSeconds) || double.IsInfinity(deltaTSeconds) || deltaTSeconds <= 0)
+            if (double.IsNaN(sampleSeconds) || double.IsInfinity(sampleSeconds) || sampleSeconds <= 0)
             {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException(nameof(sampleSeconds));
             }
 
             //
 
-            _DeltaTTicks = Math.Max(1, (long)Math.Round(deltaTSeconds * _TicksPerSecond));
+            _SampleTicks = Math.Max(1, (long)Math.Round(sampleSeconds * TimeSpan.TicksPerSecond));
             _TicksHistory = new IndexableQueue<_TicksWithCount>(32, false);
         }
 
         /// <summary>
-        /// 使用默认的采样时间间隔初始化 FrequencyCounter 的新实例。
+        /// 使用默认的采样周期初始化 FrequencyCounter 的新实例。
         /// </summary>
         public FrequencyCounter() : this(1) { }
 
@@ -112,7 +113,7 @@ namespace Com
 
                     if (_TicksHistory.Count == 2)
                     {
-                        return _TicksHistory.Tail.Count * _TicksPerSecond / (ticks - _TicksHistory.Head.Ticks);
+                        return _TicksHistory.Tail.Count * TimeSpan.TicksPerSecond / (ticks - _TicksHistory.Head.Ticks);
                     }
                     else
                     {
@@ -124,7 +125,7 @@ namespace Com
                         {
                             head = _TicksHistory[i - 1];
 
-                            if (ticks - head.Ticks <= _DeltaTTicks)
+                            if (ticks - head.Ticks <= _SampleTicks)
                             {
                                 count += _TicksHistory[i].Count;
                             }
@@ -140,7 +141,7 @@ namespace Com
                             head = _TicksHistory[_TicksHistory.Count - 2];
                         }
 
-                        return count * _TicksPerSecond / (ticks - head.Ticks);
+                        return count * TimeSpan.TicksPerSecond / (ticks - head.Ticks);
                     }
                 }
                 else
@@ -192,7 +193,7 @@ namespace Com
                 }
                 else
                 {
-                    if (_TicksHistory.IsFull && ticks - _TicksHistory.Head.Ticks <= _DeltaTTicks)
+                    if (_TicksHistory.IsFull && ticks - _TicksHistory.Head.Ticks <= _SampleTicks)
                     {
                         _TicksHistory.Resize(_TicksHistory.Capacity * 2);
                     }
@@ -201,7 +202,7 @@ namespace Com
                 }
             }
 
-            while (_TicksHistory.Count > 2 && ticks - _TicksHistory.Head.Ticks > _DeltaTTicks)
+            while (_TicksHistory.Count > 2 && ticks - _TicksHistory.Head.Ticks > _SampleTicks)
             {
                 _TicksHistory.Dequeue();
             }

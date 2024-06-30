@@ -84,7 +84,7 @@
     <Compile Include="Com\Chromatics\ColorManipulation.cs" />
     <Compile Include="Com\Internal\Constant.cs" />
     <Compile Include="Com\IndexableQueue.cs" />
-    <Compile Include="Com\Statistics\FrequencyCounter.cs" />
+    <Compile Include="Com\Chronograph\FrequencyCounter.cs" />
     <Compile Include="Com\Algebra\IAffine.cs" />
     <Compile Include="Com\Algebra\IAffineTransformable.cs" />
     <Compile Include="Com\Algebra\IEuclideanVector.cs" />

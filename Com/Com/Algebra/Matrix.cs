@@ -458,7 +458,7 @@ namespace Com
                             }
                         }
 
-                        ALL_ZERO:
+                    ALL_ZERO:
                         if (allZero)
                         {
                             return 0;

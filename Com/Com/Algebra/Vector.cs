@@ -1668,7 +1668,7 @@ namespace Com
             {
                 throw new IndexOutOfRangeException(nameof(index2));
             }
-            
+
             if (index1 == index2)
             {
                 throw new ArgumentException();
@@ -1697,7 +1697,7 @@ namespace Com
             {
                 throw new IndexOutOfRangeException(nameof(index2));
             }
-            
+
             if (index1 == index2)
             {
                 throw new ArgumentException();
@@ -1731,7 +1731,7 @@ namespace Com
             {
                 throw new IndexOutOfRangeException(nameof(index2));
             }
-            
+
             if (index1 == index2)
             {
                 throw new ArgumentException();
@@ -1767,7 +1767,7 @@ namespace Com
             {
                 throw new IndexOutOfRangeException(nameof(index2));
             }
-            
+
             if (index1 == index2)
             {
                 throw new ArgumentException();
@@ -3015,7 +3015,7 @@ namespace Com
             {
                 throw new IndexOutOfRangeException(nameof(index2));
             }
-            
+
             if (index1 == index2)
             {
                 throw new ArgumentException();
@@ -3082,7 +3082,7 @@ namespace Com
             {
                 throw new IndexOutOfRangeException(nameof(index2));
             }
-            
+
             if (index1 == index2)
             {
                 throw new ArgumentException();
