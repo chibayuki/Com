@@ -263,7 +263,7 @@ namespace Com
         /// <summary>
         /// 获取表示此 IndexableQueue 对象是否已满的布尔值。
         /// </summary>
-        public bool IsFull => _Capacity > 0 && _Count >= _Capacity;
+        public bool IsFull => _Count >= _Capacity;
 
         /// <summary>
         /// 获取表示此 IndexableQueue 是否只读的布尔值。
