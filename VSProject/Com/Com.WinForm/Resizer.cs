@@ -2,7 +2,7 @@
 Copyright © 2024 chibayuki@foxmail.com
 
 Com.WinForm.Resizer
-Version 20.10.27.1900
+Version 24.7.21.1040
 
 This file is part of Com
 
